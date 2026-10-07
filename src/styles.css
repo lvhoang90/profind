@@ -460,3 +460,5 @@ html,body{max-width:100%;overflow-x:clip}
 .psp-tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px}.psp-t{width:100%;border-collapse:collapse;font-size:.8rem;min-width:620px}.psp-t th,.psp-t td{padding:7px 9px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}.psp-t th:first-child,.psp-t td:first-child{text-align:left}.psp-t thead th{font-size:.7rem;color:var(--ink-2);background:var(--s3)}.psp-t tr.dim th{text-align:left;background:var(--s3);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}.psp-t tr.all td{background:var(--s3)}
 .psp-ch em small{font-size:.65em;font-weight:500;opacity:.7}
 .psp-hero h1 .k1000{font-style:normal;margin-left:.04em;background:linear-gradient(90deg,#f6d98f,#f59e0b);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.psp>*{min-width:0}.psp-hero h1{font-size:clamp(1.55rem,6.6vw,4.4rem);white-space:nowrap}.psp-hero h1 .k1000{font-style:normal}
+@media(max-width:480px){.psp-hero{padding:20px 18px}.psp-credit{padding:10px 12px;gap:10px}.psp-credit img{width:36px;height:36px}.psp-t{min-width:560px}}
