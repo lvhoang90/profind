@@ -40,7 +40,7 @@ th{font-size:.75rem;text-transform:uppercase;letter-spacing:.03em;color:var(--in
 .au{margin:.2em 0;font-size:clamp(1.4rem,3.5vw,2rem);overflow-wrap:anywhere;line-height:1.25}
 .badges{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
-.stats div{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}.stats b{display:block;font-size:1.5rem;font-variant-numeric:tabular-nums}.stats span{font-size:.78rem;color:var(--ink-2)}.stats .of{display:block;font-family:var(--font-body);font-size:.72rem;font-weight:400;color:var(--ink-2)}.stats div{padding-right:40px}
+.stats div{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}.stats b{display:block;font-size:1.5rem;font-variant-numeric:tabular-nums}.stats span{font-size:.78rem;color:var(--ink-2)}.stats .of{display:block;font-family:var(--font-body);font-size:.75rem;font-weight:400;color:var(--ink-2)}.stats div{padding-right:40px}
 .stats .ic{position:absolute;right:12px;top:12px;opacity:.9}
 button.ghost{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--field);background:var(--surface);color:var(--ink);border-radius:8px;padding:8px 14px;min-height:44px;cursor:pointer;font:inherit}button.ghost:hover:not(:disabled){border-color:var(--accent)}button.ghost:disabled{opacity:.55;cursor:default}
 button.primary{border:0;background:var(--accent);color:var(--accent-ink);border-radius:8px;padding:10px 20px;min-height:44px;cursor:pointer;font:inherit;font-weight:600}button.primary:disabled{opacity:.6}
@@ -48,7 +48,7 @@ button.primary{border:0;background:var(--accent);color:var(--accent-ink);border-
 .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;background:var(--s3);font-size:.78rem;font-weight:600;font-family:var(--font-body);text-decoration:none;color:var(--ink)}
 .badge.warnb{background:var(--s1);color:var(--ink-2)}
 .tagf{display:inline-block;margin:2px 0 0 8px;padding:1px 8px;border-radius:999px;background:var(--s1);color:var(--ink-2);font-size:.75rem;font-weight:600}
-.top2,.badge.top2b{display:inline-block;margin:2px 0 0 8px;padding:1px 8px;border-radius:999px;background:#fff3c4;color:#5c4400;font-size:.75rem;font-weight:700;text-decoration:none;white-space:nowrap}.badge.top2b{margin:0;padding:3px 10px;font-size:.78rem}
+.top2,.badge.top2b{display:inline-flex;align-items:center;min-height:24px;margin:2px 0 0 8px;padding:2px 10px;border-radius:999px;background:#fff3c4;color:#5c4400;font-size:.75rem;font-weight:700;text-decoration:none;white-space:nowrap}.badge.top2b{margin:0;padding:3px 10px;font-size:.78rem;min-height:28px}
 @media(prefers-color-scheme:dark){.top2,.badge.top2b{background:#4d4222;color:#ffe08a}}
 .ic{flex:none;vertical-align:-3px;color:var(--accent);--ic2:var(--accent)}.ic.ok{margin-left:4px;color:#1f7a45;--ic2:#1f7a45}
 @media(prefers-color-scheme:dark){.ic.ok{color:#5fcf8f;--ic2:#5fcf8f}}
@@ -57,7 +57,7 @@ button.primary{border:0;background:var(--accent);color:var(--accent-ink);border-
 .eco{margin:28px 0 12px}.eco ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .eco a{display:block;padding:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;text-decoration:none;color:var(--ink);transition:transform .3s,box-shadow .3s,border-color .3s}
 .eco a:hover{transform:translateY(-3px);border-color:#38bdf8;box-shadow:0 22px 34px -22px rgba(11,42,64,.55)}.eco .self a{border-color:var(--accent);background:var(--s3)}.eco small{display:block;color:var(--ink-2)}
-.foot{padding-bottom:32px}.foot .meta{display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap}.foot .meta a{white-space:nowrap}
+.foot{padding-bottom:32px}.foot .meta{display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap}
 /* ---- Điểm gãy responsive (đặt SAU các luật gốc để không bị ghi đè) ---- */
 @media(max-width:1100px){.filters{grid-template-columns:repeat(3,minmax(0,1fr))}.sbox{grid-column:1/-1}}
 @media(max-width:700px){
@@ -67,14 +67,15 @@ button.primary{border:0;background:var(--accent);color:var(--accent-ink);border-
   table.cards,table.cards tbody{display:block}
   table.cards tr{display:grid;grid-template-columns:1fr 1fr;gap:2px 12px;padding:12px;border-bottom:1px solid var(--line)}table.cards tbody tr:last-child{border-bottom:0}
   table.cards td{display:block;padding:2px 0;border:0;text-align:left;min-width:0}
-  table.cards td[data-l]::before{content:attr(data-l);display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-2)}
+  table.cards td[data-l]::before{content:attr(data-l);display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-2)}
   table.cards td.num{text-align:left;white-space:normal}
   table.cards td.who,table.cards td.wt,table.cards td.wj{grid-column:1/-1}table.cards td.rankc{grid-column:1/-1;padding-bottom:4px}table.cards td.rankc::before{display:none}
   table.cards .wt,table.cards .wj{min-width:0}
   .score{text-align:left}
 }
-@media(max-width:480px){.filters{grid-template-columns:repeat(2,minmax(0,1fr))}.filters .wide{grid-column:1/-1}.sel span{font-size:.72rem}.stats{grid-template-columns:1fr 1fr}.stats div:nth-child(5){grid-column:1/-1}.ht{font-size:1.45rem}}
-@media(pointer:coarse){.who a:first-child,.wj a{display:inline-block;padding:8px 0}.banner .more{padding:8px 0}}
+@media(max-width:360px){.wrap{padding:0 10px}.brand b{font-size:1.25rem}.logo{width:34px;height:34px}.lang button{padding:8px 10px}}
+@media(max-width:480px){.filters{grid-template-columns:repeat(2,minmax(0,1fr))}.filters .wide{grid-column:1/-1}.sel span{font-size:.75rem}.stats{grid-template-columns:1fr 1fr}.stats div:nth-child(5){grid-column:1/-1}.ht{font-size:1.45rem}}
+@media(pointer:coarse){.who a:first-child,.wj a{display:inline-flex;align-items:center;min-height:44px}.banner .more{display:inline-block;padding:10px 0}}
 @media(prefers-reduced-motion:reduce){.top::after{animation:none}.eco a{transition:none}}
 /* Chế độ tương phản cao của hệ điều hành: giữ phân biệt nút chọn, huy chương, nhãn */
 @media(forced-colors:active){.lang button[aria-pressed=true]{outline:2px solid Highlight;background:Highlight;color:HighlightText;forced-color-adjust:none}.rk,.score,.tagf,.badge,.top2{border:1px solid CanvasText}.eco a{border:1px solid CanvasText}:focus-visible{outline-color:Highlight}}
