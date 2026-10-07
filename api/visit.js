@@ -73,6 +73,8 @@ export default async function handler(request) {
     const days = Array.from({ length: 7 }, (_, i) => dayKey(6 - i));
     const [total, perDay] = await store.run([["GET", `${p}:total`], ["MGET", ...days.map((x) => `${p}:d:${x}`)]]);
     const series = (perDay || []).map(Number);
-    return json({ enabled: true, total: Number(total || 0), today: series[6] || 0, week: series.reduce((a, b) => a + b, 0) });
+    const cc = {}; for (const flat of await store.run(days.map((x) => ["HGETALL", `${p}:cc:${x}`]))) { const a = flat || []; for (let i = 0; i + 1 < a.length; i += 2) cc[a[i]] = (cc[a[i]] || 0) + Number(a[i + 1]); }
+    const countries = Object.entries(cc).sort((x, y) => y[1] - x[1]).slice(0, 5).map(([c, n]) => ({ c, n }));
+    return json({ enabled: true, total: Number(total || 0), today: series[6] || 0, week: series.reduce((a, b) => a + b, 0), days: days.map((d, i) => ({ d, n: series[i] || 0 })), countries });
   } catch { return json({ enabled: false }); }
 }
