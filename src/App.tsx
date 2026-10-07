@@ -47,6 +47,9 @@ export function App() { return <AccountProvider><AppInner /></AccountProvider>; 
 function AppInner() {
   const { user } = useAccount();
   const [theme, setThemeState] = useState<Theme>(getTheme);
+  const [sysDark, setSysDark] = useState(() => matchMedia("(prefers-color-scheme: dark)").matches);
+  useEffect(() => { const m = matchMedia("(prefers-color-scheme: dark)"), f = () => setSysDark(m.matches); m.addEventListener("change", f); return () => m.removeEventListener("change", f); }, []);
+  const dark = theme === "dark" || (theme === "auto" && sysDark); // chỉ hai trạng thái trên nút: sáng hoặc tối (mặc định theo hệ thống cho tới khi người dùng chọn)
   const [lang, setLang] = useState<Lang>(initialLang);
   const [data, setData] = useState<Data | null>(null);
   const [err, setErr] = useState(false);
@@ -90,7 +93,7 @@ function AppInner() {
         <div className="wrap hd">
           <a className="brand" href="#/" aria-label="ProFind"><img className="logo" src="./logo-disc.svg" alt="" width="40" height="40" /><b>Pro<i>Find</i></b><span className="beta" title={t("betaTip")}>Beta</span></a>
           <div className="hd-tools">
-            <button className="icon-btn" onClick={() => { const n: Theme = theme === "auto" ? "light" : theme === "light" ? "dark" : "auto"; setTheme(n); setThemeState(n); evt("theme"); }} aria-label={`${t("themeLabel")}: ${t(theme === "auto" ? "themeAuto" : theme === "light" ? "themeLight" : "themeDark")}`} title={`${t("themeLabel")}: ${t(theme === "auto" ? "themeAuto" : theme === "light" ? "themeLight" : "themeDark")}`}><Icon n={theme === "auto" ? "auto" : theme === "light" ? "sun" : "moon"} size={20} /></button>
+            <button className="icon-btn" onClick={() => { const n: Theme = dark ? "light" : "dark"; setTheme(n); setThemeState(n); evt("theme"); }} aria-label={dark ? t("themeToLight") : t("themeToDark")} title={dark ? t("themeToLight") : t("themeToDark")}><Icon n={dark ? "moon" : "sun"} size={20} /></button>
           <div className="lang" role="group" aria-label={t("langLabel")}>
             {(["vi", "en"] as const).map((l) => <button key={l} lang={l} className={`lang-${l}`} aria-pressed={lang === l} aria-label={l === "vi" ? "Tiếng Việt" : "English"} onClick={() => { setLang(l); evt("lang"); }}>{l.toUpperCase()}</button>)}
           </div>
