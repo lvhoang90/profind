@@ -30,6 +30,8 @@ const byOrcid = new Map();
 for (const a of authors) if (a.orcid) { const k = byOrcid.get(a.orcid); if (!k) byOrcid.set(a.orcid, a); else { alias.set(a.id, k.id); k.institutions = [...new Set([...k.institutions, ...a.institutions])]; log.push(`gộp ${a.id} -> ${k.id} (ORCID)`); } }
 authors = authors.filter((a) => !alias.has(a.id));
 // Hồ sơ bị gộp vào hồ sơ khác: cộng số trích dẫn toàn thời gian của hồ sơ gốc vào hồ sơ đích.
+const SCH = existsSync("data/scholar.json") ? rd("data/scholar.json") : {};
+const S2 = existsSync("data/raw/_s2.json") ? rd("data/raw/_s2.json") : {};
 const metaAll = existsSync("data/author-meta.json") ? rd("data/author-meta.json") : {}, extraCited = new Map();
 for (const [f, into] of alias) extraCited.set(into, (extraCited.get(into) ?? 0) + (metaAll[f]?.cited ?? 0));
 const live = new Map(authors.map((a) => [a.id, a]));
@@ -81,8 +83,10 @@ const works = prepared.map(({ w, js, sj, disc }) => {
     pick = inMine.length ? inMine.reduce((x, y) => (y.s > x.s ? y : x)) : cands.reduce((x, y) => (y.s < x.s ? y : x));
   }
   const { issns: _i, corr, ...rest } = w;
+  // Trích dẫn công trình = max(OpenAlex, Semantic Scholar) theo DOI; cOA giữ số OpenAlex để tính phần bổ sung ở cấp tác giả.
+  const cOA = w.citations ?? 0, cS2 = w.doi ? (S2[w.doi] ?? 0) : 0; rest.citations = Math.max(cOA, cS2);
   const score = pick ? pick.s : null;
-  return { ...rest, title: w.title && w.title.trim() ? w.title : "(không có tiêu đề)", score, scoreDiscipline: pick?.d ?? null, scoreKind: pick?.k ?? null, quartile: pick?.q ?? null, matched: js.length > 0 || sj.length > 0, counted: w.role === "lead" && score !== null && score > 0,
+  return { ...rest, cOA, title: w.title && w.title.trim() ? w.title : "(không có tiêu đề)", score, scoreDiscipline: pick?.d ?? null, scoreKind: pick?.k ?? null, quartile: pick?.q ?? null, matched: js.length > 0 || sj.length > 0, counted: w.role === "lead" && score !== null && score > 0,
     // ru: tác giả không phải đứng đầu và OpenAlex không ghi tác giả liên hệ nào (corr = 0) => vai trò chưa xác định, không phải "chắc chắn không phải tác giả chính".
     ...(w.role === "co" && (corr ?? 0) === 0 ? { ru: 1 } : {}), disc };
 });
@@ -100,6 +104,7 @@ const outAuthors = authors.map((a) => {
   const span = years.length ? Math.max(1, Math.max(...years) - Math.min(...years) + 1) : 1;
   const meta = META[a.id];
   return { id: a.id, name: cleanName(a.name), orcid: a.orcid, institutions: a.institutions, disciplines, demo: !!a.demo, claimed: a.claimed,
+    scholar: SCH[a.id]?.id ?? null, scholarCit: SCH[a.id]?.citations ?? null,
     top2: TOP2[a.id] ? { rank: TOP2[a.id].rank, field: TOP2[a.id].field } : null,
     // foreign: true = có đơn vị ngoài VN; false = chỉ đơn vị VN; null = chưa biết (chưa chạy enrich-authors.mjs, hoặc OpenAlex không ghi quốc gia nào).
     // Người có tên trong danh sách Top 2% mục "Việt Nam" (đơn vị công tác tại VN theo Elsevier) luôn được coi là đơn vị trong nước.
@@ -108,7 +113,7 @@ const outAuthors = authors.map((a) => {
     suspect: ws.length >= 500 || ws.length / span > 150 || a.institutions.length >= 5,
     worksCount: ws.length, countedWorks: ws.filter((w) => w.counted).length, totalScore: Math.round(ws.reduce((s, w) => s + (w.score ?? 0), 0) * 100) / 100,
     // citations: số trích dẫn TOÀN THỜI GIAN của hồ sơ OpenAlex (khớp với cách các hệ thống khác tính); citations2016: riêng các công trình trong ProFind (từ 2016).
-    citations: (meta?.cited ?? ws.reduce((s, w) => s + (w.citations ?? 0), 0)) + (extraCited.get(a.id) ?? 0), citations2016: ws.reduce((s, w) => s + (w.citations ?? 0), 0), hIndex: meta?.h ?? null, matchedRate: ws.length ? Math.round((matched / ws.length) * 100) / 100 : 0,
+    citations: (meta?.cited ?? ws.reduce((s, w) => s + (w.cOA ?? 0), 0)) + (extraCited.get(a.id) ?? 0) + ws.reduce((s, w) => s + Math.max(0, (w.citations ?? 0) - (w.cOA ?? 0)), 0), citations2016: ws.reduce((s, w) => s + (w.citations ?? 0), 0), hIndex: meta?.h ?? null, matchedRate: ws.length ? Math.round((matched / ws.length) * 100) / 100 : 0,
     firstYear: years.length ? Math.min(...years) : null, lastYear: years.length ? Math.max(...years) : null };
 });
 // Thứ hạng chỉ tính trong tập đủ điều kiện (đơn vị tại Việt Nam, không nghi gộp nhầm) = đúng tập danh sách mặc định; đồng hạng cùng số (hạng thi đấu: 1,2,2,4).
@@ -120,7 +125,7 @@ rank("totalScore", "rankScore"); rank("worksCount", "rankWorks"); rank("citation
 
 // ---- 5. Ghi tệp ----
 rmSync("public/data/works", { recursive: true, force: true }); mkdirSync("public/data/works", { recursive: true });
-for (const [id, ws] of per) writeFileSync(`public/data/works/${id}.json`, JSON.stringify(ws.map(({ authorId, demo, disc, counted, matched, ...w }) => w)));
+for (const [id, ws] of per) writeFileSync(`public/data/works/${id}.json`, JSON.stringify(ws.map(({ authorId, demo, disc, counted, matched, cOA, ...w }) => w)));
 // Chuỗi tìm theo tên tạp chí/ISSN tách riêng (tải khi người dùng bắt đầu gõ), để tệp danh sách nhẹ hơn ~45%.
 const jn = {};
 for (const a of outAuthors) { const ws = per.get(a.id) ?? [], jc = new Map(); for (const w of ws) { if (!w.issn) continue; jc.set(`${w.journal}|${w.issn}`, (jc.get(`${w.journal}|${w.issn}`) ?? 0) + 1); } jn[a.id] = [...jc.entries()].sort((x, y) => y[1] - x[1]).slice(0, 15).map(([k]) => foldS(k)).join(" ; "); }
