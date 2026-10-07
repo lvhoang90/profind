@@ -6,6 +6,7 @@ import type { Author, Data, Institution, Work } from "./types";
 import { AccountProvider, useAccount } from "./accountStore";
 // Trang tài khoản và quản trị tách thành các tệp nạp riêng: người chỉ tra cứu không tải mã của chúng.
 const AccountPage = lazy(() => import("./Account").then((m) => ({ default: m.AccountPage })));
+const AboutPage = lazy(() => import("./About").then((m) => ({ default: m.AboutPage })));
 const AdminPage = lazy(() => import("./Admin").then((m) => ({ default: m.AdminPage })));
 import { Footer, EcoLink } from "./Footer";
 import { evt, startSession } from "./analytics";
@@ -68,18 +69,18 @@ function AppInner() {
     }).catch(() => setErr(true));
   };
   // Bộ dữ liệu tác giả (~5 MB) chỉ tải khi cần: trang tài khoản và quản trị không dùng nên mở nhanh hơn.
-  const needData = !/^(tai-khoan|quan-tri)/.test(location.hash.replace(/^#\/?/, ""));
+  const needData = !/^(tai-khoan|quan-tri|gioi-thieu)/.test(location.hash.replace(/^#\/?/, ""));
   useEffect(() => { if (needData && !data) load(); }, [needData, route.kind]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { startSession(); }, []);
   useEffect(() => { document.documentElement.lang = lang; try { localStorage.setItem(KEY, lang); } catch { /* bỏ qua */ } }, [lang]);
   useEffect(() => { const f = () => setRoute(parseRoute()); addEventListener("hashchange", f); return () => removeEventListener("hashchange", f); }, []);
   const { kind, id } = route;
   const author = data && id ? data.authors.find((a) => a.id === id) ?? null : null;
-  const view: "list" | "author" | "corr" | "nf" | "acc" | "adm" = kind === "tai-khoan" ? "acc" : kind === "quan-tri" ? "adm" : kind === "dinh-chinh" ? "corr" : kind === "tac-gia" ? (data && !author ? "nf" : "author") : "list";
+  const view: "list" | "author" | "corr" | "nf" | "acc" | "adm" | "about" = kind === "gioi-thieu" ? "about" : kind === "tai-khoan" ? "acc" : kind === "quan-tri" ? "adm" : kind === "dinh-chinh" ? "corr" : kind === "tac-gia" ? (data && !author ? "nf" : "author") : "list";
 
   // Tiêu đề tab, mô tả và đưa tiêu điểm về nội dung chính khi đổi trang (trình đọc màn hình biết đã chuyển trang).
   useEffect(() => {
-    document.title = view === "acc" ? `${t("accTitle")} | ProFind` : view === "adm" ? "Quản trị | ProFind" : view === "author" && author ? `${author.name} | ProFind` : view === "corr" ? `${t("corrTitle")} | ProFind` : view === "nf" ? `${t("notFound").split(".")[0]} | ProFind` : t("docTitle");
+    document.title = view === "about" ? `${t("fAbout2")} | ProFind` : view === "acc" ? `${t("accTitle")} | ProFind` : view === "adm" ? "Quản trị | ProFind" : view === "author" && author ? `${author.name} | ProFind` : view === "corr" ? `${t("corrTitle")} | ProFind` : view === "nf" ? `${t("notFound").split(".")[0]} | ProFind` : t("docTitle");
     document.querySelector('meta[name="description"]')?.setAttribute("content", t("metaDesc"));
     if (first.current) { first.current = false; return; }
     scrollTo(0, 0); mainRef.current?.focus({ preventScroll: true });
@@ -106,7 +107,8 @@ function AppInner() {
       <main className="wrap" id="main" tabIndex={-1} ref={mainRef}>
         {data?.meta.demo && <p className="banner demo" role="note"><Icon n="info" />{t("demo")}</p>}
         <Boundary key={`${view}/${author?.id ?? ""}`}>
-          {view === "acc" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><AccountPage tab={id} /></Suspense>
+          {view === "about" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><AboutPage section={new URLSearchParams(route.query).get("m") ?? ""} /></Suspense>
+            : view === "acc" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><AccountPage tab={id} /></Suspense>
             : view === "adm" ? <Suspense fallback={<p className="empty" role="status">Đang tải…</p>}><AdminPage tab={id} /></Suspense>
             : err ? <div className="empty" role="alert"><p>{t("err")}</p><button className="ghost" onClick={load}>{t("retry")}</button></div>
             : !data ? <p className="empty" role="status">{t("loading")}</p>

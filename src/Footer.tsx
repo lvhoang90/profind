@@ -4,8 +4,6 @@ import { useAccount, api } from "./accountStore";
 import { ecoUrl, evt, type App } from "./analytics";
 import type { Data } from "./types";
 
-const TOP2_DOI = "https://doi.org/10.17632/btchxktzyw.8", TOP2_LIC = "https://creativecommons.org/licenses/by-nc/3.0/";
-const CONTACT = "luongviethoang.hcm@gmail.com";
 
 /** Liên kết sang hệ sinh thái ISA: ghi sự kiện ẩn danh go_<đích>_<vị trí> và, nếu đã đăng nhập, lượt của người dùng. */
 export function EcoLink({ app, place, to, className, children }: { app: App; place: string; to?: string; className?: string; children: React.ReactNode }) {
@@ -13,9 +11,10 @@ export function EcoLink({ app, place, to, className, children }: { app: App; pla
   return <a className={className} href={ecoUrl(app, place, to)} target="_blank" rel="noopener" onClick={() => { evt(`go_${app}_${place}`); if (user) api("hop", { to: app, place }).catch(() => {}); }}>{children}</a>;
 }
 
-export function Footer({ data }: { data: Data | null }) {
+export function Footer({ data: _data }: { data: Data | null }) {
   const { t } = useT();
   const apps: [App, string, string][] = [["edufind", "EduFind", t("eEduDesc")], ["ami", "Ami", t("eAmiDesc")], ["may", "Mây", t("eMayDesc")]];
+  const info: [string, string][] = [["gioi-thieu", "fAbout2"], ["nguon", "fSrc"], ["diem", "fScore"], ["giay-phep", "fLic"], ["rieng-tu", "fPriv"], ["lien-he", "fContact"]];
   return (
     <footer className="sf">
       <div className="wrap">
@@ -34,28 +33,18 @@ export function Footer({ data }: { data: Data | null }) {
               <li><a href="#/dinh-chinh">{t("fCorrect")}</a></li>
             </ul>
           </nav>
+          <nav aria-labelledby="sf-h3">
+            <h2 id="sf-h3">{t("fInfo")}</h2>
+            <ul>{info.map(([s, k]) => <li key={s}><a href={s === "gioi-thieu" ? "#/gioi-thieu" : `#/gioi-thieu?m=${s}`}>{t(k as "fAbout2")}</a></li>)}</ul>
+          </nav>
           <nav aria-labelledby="sf-h2">
             <h2 id="sf-h2">{t("fEco")}</h2>
             <ul className="sf-eco">
               {apps.map(([a, n, d]) => <li key={a}><EcoLink app={a} place="footer"><b>{n}</b><span>{d}</span><Icon n="external" size={14} /><span className="sr"> {t("newTab")}</span></EcoLink></li>)}
             </ul>
           </nav>
-          <div>
-            <h2>{t("fLegal")}</h2>
-            <ul>
-              <li><a href="https://github.com/lvhoang90/profind/blob/main/LICENSE" target="_blank" rel="noopener">{t("fCodeLic")}</a></li>
-              <li><a href="https://github.com/lvhoang90/profind/blob/main/LICENSE-CONTENT.md" target="_blank" rel="noopener">{t("fDataLic")}</a></li>
-              <li><a href={`mailto:${CONTACT}`}>{t("fContact")}: {CONTACT}</a></li>
-            </ul>
-          </div>
         </div>
-        <aside className="banner note sf-note" aria-label={t("notRankShort")}><Icon n="shield" /><p><b>{t("notRankShort")}</b> {t("notRank")}</p></aside>
-        <p className="sf-src">{t("fSources")}{data && !data.meta.demo && data.meta.fetched && <> {t("srcLine", { d: data.meta.fetched })}</>}</p>
-        {data?.authors.some((a) => a.top2) && (
-          <details className="sf-credit"><summary>{t("fCredits")}</summary>
-            <p>{t("top2Credit")} <a href={TOP2_DOI} target="_blank" rel="noopener">DOI 10.17632/btchxktzyw.8</a> · <a href={TOP2_LIC} target="_blank" rel="noopener">{t("top2Lic")}</a> · <a href="./LICENSE-NC.md" target="_blank" rel="noopener">LICENSE-NC</a></p>
-          </details>)}
-        <div className="sf-bottom"><p>{t("fCopy")}</p><a href="#main" className="sf-top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>{t("fTop")} ↑</a></div>
+        <div className="sf-bottom"><p>© 2026 Lương Việt Hoàng, ISA Vietnam. {t("notRankShort")}</p><a href="#main" className="sf-top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>{t("fTop")} ↑</a></div>
       </div>
     </footer>
   );
