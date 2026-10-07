@@ -12,7 +12,7 @@ import { evt, startSession } from "./analytics";
 import { getTheme, setTheme, type Theme } from "./theme";
 
 type SortKey = "totalScore" | "worksCount" | "citations" | "name" | "unit" | "lastYear" | "rank";
-const TEXT_KEYS: SortKey[] = ["name", "unit"], RANK_ASC: SortKey[] = ["rank"];
+const TEXT_KEYS: SortKey[] = ["name", "unit"], RANK_ASC: SortKey[] = [], RANKED: SortKey[] = ["totalScore", "worksCount", "citations"]; // huy chương chỉ khi xếp giảm dần theo một chỉ số
 const RANK_KEY = { totalScore: "rankScore", worksCount: "rankWorks", citations: "rankCit", name: "rankScore", unit: "rankScore", lastYear: "rankScore", rank: "rankScore" } as const;
 const EDUFIND = "https://edufind.isavn.edu.vn";
 const CONTACT = "luongviethoang.hcm@gmail.com";
@@ -160,7 +160,7 @@ function List({ d, query }: { d: Data; query: string }) {
   const { user, cfg, saveSearch } = useAccount();
   const qp = useMemo(() => new URLSearchParams(query), []); // eslint-disable-line react-hooks/exhaustive-deps
   const [q, setQ] = useState(qp.get("q") ?? ""), [disc, setDisc] = useState(qp.get("d") ?? ""), [type, setType] = useState(qp.get("ty") ?? ""), [sort, setSort] = useState<SortKey>("totalScore"), [dir, setDir] = useState<1 | -1>(-1);
-  const pick2 = (k: SortKey) => { setSort(k); setDir(-1); };
+  const pick2 = (k: SortKey) => { setSort(k); setDir(TEXT_KEYS.includes(k) ? 1 : -1); };
   const pick = (k: SortKey) => { if (k === sort) setDir((dir * -1) as 1 | -1); else { setSort(k); setDir(TEXT_KEYS.includes(k) || RANK_ASC.includes(k) ? 1 : -1); } };
   const [scope, setScope] = useState(qp.get("sc") === "all" ? "all" : "vn"), [instSel, setInstSel] = useState(qp.get("i") ?? ""), [page, setPage] = useState(0), [ssMsg, setSsMsg] = useState("");
   const [jn, setJn] = useState<Record<string, { t: string; p: string }> | null>(null);
@@ -179,7 +179,8 @@ function List({ d, query }: { d: Data; query: string }) {
       const o: Record<string, { t: string; p: string }> = {}; for (const k in m) o[k] = { t: m[k], p: m[k].replace(/-/g, "") }; setJn(o);
     }).catch(() => setJn({}));
   }, [q, jn]);
-  const rankKey = RANK_KEY[sort];
+  // Từ để tìm kiếm của mỗi tác giả: từ trong tên cộng từ trong tên đơn vị (tiếng Việt, tiếng Anh, tên viết tắt), đã bỏ dấu.
+  const hay = useMemo(() => new Map(d.authors.map((a) => [a.id, { n: norm(a.name).split(" "), i: [...new Set(a.institutions.flatMap((i) => { const x = instById.get(i); return x ? norm(`${x.name} ${x.en ?? ""} ${x.abbr ?? ""}`).split(" ") : []; }))] }])), [d, instById]);
   // Bộ lọc nằm trong đường dẫn (#/?q=…&d=…) để chia sẻ, mở lại và dùng nút Quay lại của trình duyệt.
   useEffect(() => {
     const u = new URLSearchParams(Object.entries({ q: q.trim(), d: disc, ty: type, i: instSel, sc: scope === "all" ? "all" : "" }).filter(([, v]) => v));
@@ -203,9 +204,13 @@ function List({ d, query }: { d: Data; query: string }) {
       if (type && !a.institutions.some((i) => instById.get(i)?.type === type)) return false;
       if (!toks.length) return true;
       if (isId) return idPlain(a.orcid ?? "").includes(rawId) || (jn?.[a.id]?.p.includes(rawId) ?? false);
-      // Tên: mỗi từ khóa phải trùng trọn một từ trong tên (từ cuối gõ dở được khớp theo tiền tố), không khớp chuỗi con ("dat" không ra "Datta", "Sinh Cong Lam" không ra "trần văn đạt").
-      const words = norm(a.name).split(" ");
-      if (toks.every((x, i) => words.some((w) => (i === toks.length - 1 ? w.startsWith(x) : w === x)))) return true;
+      // Tên và đơn vị: mỗi từ khóa phải trùng trọn một từ trong tên hoặc tên đơn vị (từ cuối gõ dở được khớp theo tiền tố), không khớp chuỗi con ("dat" không ra "Datta", "Sinh Cong Lam" không ra "trần văn đạt").
+      // Tên: mọi từ khóa trùng trọn một từ trong tên (từ cuối gõ dở khớp theo tiền tố). Đơn vị: mọi từ khóa nằm trong tên đơn vị, hoặc tên + cụm từ đơn vị từ 2 từ trở lên
+      // (ví dụ "le thanh ha kinh te"). Một từ lẻ không đủ để khớp đơn vị, tránh "tran van dat" ra người tên Tran ở "Viện … Trái đất".
+      const h = hay.get(a.id) ?? { n: norm(a.name).split(" "), i: [] as string[] };
+      const hit = (ws: string[], x: string, i: number) => ws.some((w) => (i === toks.length - 1 ? w.startsWith(x) : w === x));
+      const rest = toks.map((x, i) => [x, i] as const).filter(([x, i]) => !hit(h.n, x, i));
+      if (rest.length === 0 || (rest.every(([x, i]) => hit(h.i, x, i)) && (rest.length === toks.length || rest.length >= 2))) return true;
       // Tạp chí/ISSN: khớp cả cụm từ, không khớp từng từ rời (tránh "tran van dat" khớp "Transactions ... data").
       const j = jn?.[a.id]?.t; return !!j && j.includes(toks.join(" "));
     }).sort((a, b) => {
@@ -216,7 +221,7 @@ function List({ d, query }: { d: Data; query: string }) {
       else c = ((a[sort] ?? 0) as number) - ((b[sort] ?? 0) as number);
       return c * dir || b.totalScore - a.totalScore || b.worksCount - a.worksCount || a.name.localeCompare(b.name, "vi");
     });
-  }, [d, dq, disc, type, instSel, sort, dir, scope, instById, jn, lang]);
+  }, [d, dq, disc, type, instSel, sort, dir, scope, instById, jn, lang, hay]);
   useEffect(() => setPage(0), [dq, disc, type, instSel, sort, dir, scope]);
   return (
     <>
@@ -226,7 +231,12 @@ function List({ d, query }: { d: Data; query: string }) {
         <Sel icon="building" label={t("instType")} v={type} set={setType} all={t("all")} opts={Object.entries(d.types).filter(([k]) => d.institutions.some((i) => i.type === k)).map(([k, v]) => [k, v[lang]])} />
         <Sel icon="building" label={t("inst")} v={instSel} set={setInstSel} all={t("all")} opts={instOpts} />
         <Sel icon="shield" label={t("scope")} v={scope} set={(v) => { setScope(v); setInstSel(""); }} opts={[["vn", t("scopeVn")], ["all", t("scopeAll")]]} />
-        <Sel icon="sort" label={t("sort")} v={["totalScore", "worksCount", "citations"].includes(sort) ? sort : ""} set={(s) => { if (s) pick2(s as SortKey); }} all={t("byColumn")} opts={[["totalScore", t("byScore")], ["worksCount", t("byWorks")], ["citations", t("byCit")]]} />
+        <div className="sel sortg"><span><Icon n="sort" size={14} />{t("sort")}</span>
+          <div className="sortrow">
+            <select aria-label={t("sort")} value={sort} onChange={(e) => pick2(e.target.value as SortKey)}>{([["totalScore", "byScore"], ["worksCount", "byWorks"], ["citations", "byCit"], ["name", "byName"], ["unit", "byUnit"], ["lastYear", "byYear"]] as const).map(([k, l]) => <option key={k} value={k}>{t(l)}</option>)}</select>
+            <button type="button" className="dirbtn" onClick={() => setDir((dir * -1) as 1 | -1)} aria-label={dir === 1 ? t("dirAsc") : t("dirDesc")} title={dir === 1 ? t("dirAsc") : t("dirDesc")}><span aria-hidden="true">{dir === 1 ? "↑" : "↓"}</span></button>
+          </div>
+        </div>
       </section>
       <div className="statusrow">
         <p className="meta" role="status" aria-live="polite">{t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</p>
@@ -236,7 +246,7 @@ function List({ d, query }: { d: Data; query: string }) {
         <div className="table-wrap"><table className="cards tlist">
           <caption className="sr">{t("title")}: {t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</caption>
           <thead><tr>
-            <Th k="rank" cls="num" title={t("rankTip")} label={t("rank")} sort={sort} dir={dir} pick={pick} />
+            <th scope="col" className="num" title={t("sttTip")}>{t("stt")}</th>
             <Th k="name" label={t("author")} sort={sort} dir={dir} pick={pick} />
             <Th k="unit" label={t("unit")} sort={sort} dir={dir} pick={pick} />
             <Th k="worksCount" cls="num" label={t("works")} sort={sort} dir={dir} pick={pick} />
@@ -244,9 +254,9 @@ function List({ d, query }: { d: Data; query: string }) {
             <Th k="citations" cls="num" title={t("citTip")} label={t("cit")} sort={sort} dir={dir} pick={pick} />
             <Th k="lastYear" label={t("years")} sort={sort} dir={dir} pick={pick} />
           </tr></thead>
-          <tbody>{rows.slice(page * PAGE, (page + 1) * PAGE).map((a) => { const rv = a[rankKey]; return (
+          <tbody>{rows.slice(page * PAGE, (page + 1) * PAGE).map((a, idx) => { const pos = page * PAGE + idx + 1, medal = RANKED.includes(sort) && dir === -1; return (
             <tr key={a.id}>
-              <td className="num rankc" data-l={t("rank")}>{rv ? <span className={`rk r${Math.min(rv, 4)}`}>{num(rv)}</span> : <span className="meta" title={t("rankNoneTip")}>–<span className="sr"> {t("rankNone")}</span></span>}</td>
+              <td className="num rankc" data-l={t("stt")}><span className={`rk r${medal ? Math.min(pos, 4) : 4}`}>{num(pos)}</span></td>
               <td className="who"><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a>{a.claimed && <><Icon n="check" size={14} className="ok" /><span className="sr"> {t("claimedSr")}</span></>}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}<Top2Tag a={a} cls="top2" /><div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
               <td data-l={t("unit")}>{a.institutions.map((i) => instLabel(instById.get(i), lang, i)).join(", ")}</td>
               <td className="num" data-l={t("works")}>{num(a.worksCount)}</td><td className="num" data-l={t("score")}><span className="score">{num(a.totalScore, 2)}</span></td><td className="num" data-l={t("cit")}>{num(a.citations)}</td>
