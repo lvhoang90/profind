@@ -70,7 +70,7 @@ function List({ d }: { d: Data }) {
         <label className="sel sbox"><span><Icon n="search" size={14} />{t("search")}</span><input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("search")} aria-label={t("search")} /></label>
         <Sel icon="discipline" label={t("discipline")} v={disc} set={setDisc} all={t("all")} opts={d.disciplines.map((s) => [s, dName(s, lang)])} />
         <Sel icon="building" label={t("instType")} v={type} set={setType} all={t("all")} opts={Object.entries(d.types).map(([k, v]) => [k, v[lang]])} />
-        <Sel icon="building" label={t("inst")} v={inst} set={setInst} all={t("all")} opts={d.institutions.map((i) => [i.id, lang === "vi" ? i.name : i.en])} />
+        <Sel icon="building" label={t("inst")} v={inst} set={setInst} all={t("all")} opts={[...d.institutions].sort((a, b) => a.name.localeCompare(b.name, "vi")).map((i) => [i.id, lang === "vi" ? i.name : i.en])} />
         <Sel icon="sort" label={t("sort")} v={sort} set={(s) => setSort(s as SortKey)} opts={[["totalScore", t("byScore")], ["worksCount", t("byWorks")], ["citations", t("byCit")]]} />
       </section>
       <p className="meta">{t("shown", { n: rows.length, t: d.authors.length })}</p>

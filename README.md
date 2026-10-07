@@ -15,7 +15,7 @@ npm run dev                             # http://localhost:5173
 ```
 
 Dữ liệu thật: điền mã ROR vào `data/institutions.json`, rồi `node scripts/ingest-openalex.mjs --mailto <email>` (cần Internet) và `npm run d:index`.
-Trạng thái: **bản khung 0.1**, `data/institutions.json` mới là bản gieo mầm 15 đơn vị, chưa phải danh sách chính thức. Xem [`docs/DESIGN.md`](docs/DESIGN.md).
+Trạng thái: **bản khung 0.2**. `data/institutions.json` gồm 504 đơn vị (Wikipedia vi + ROR, 341 có mã ROR), chờ đối chiếu danh sách chính thức của Bộ GD&ĐT (moet.gov.vn chặn truy cập từ máy chủ nước ngoài). Dữ liệu tác giả hiện là dữ liệu mẫu; để nạp thật cần khóa OpenAlex miễn phí (`OPENALEX_API_KEY`). Xem [`docs/DESIGN.md`](docs/DESIGN.md).
 
 ## Giấy phép
 

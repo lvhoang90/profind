@@ -5,13 +5,16 @@
 // ISSN lấy từ primary_location.source.issn_l / issn. Hồ sơ OpenAlex có thể gộp/tách nhầm: ORCID là khóa xác nhận (xem docs/DESIGN.md).
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
-const mailto = arg("mailto"); if (!mailto) throw new Error("Cần --mailto <email> (OpenAlex polite pool).");
+const mailto = arg("mailto"); if (!mailto) throw new Error("Cần --mailto <email>.");
+// OpenAlex yêu cầu API key miễn phí (https://openalex.org/settings/api): đặt biến môi trường OPENALEX_API_KEY. Không ghi khóa vào mã nguồn.
+const KEY = process.env.OPENALEX_API_KEY; if (!KEY) throw new Error("Thiếu OPENALEX_API_KEY (khóa miễn phí tại openalex.org/settings/api).");
 const from = +arg("from", 2016), maxAuthors = +arg("max-authors", 500);
-const I = JSON.parse(readFileSync("data/institutions.json", "utf8")).institutions.filter((i) => i.ror);
+const only = arg("only"); // ví dụ --only ctu,hust (id trong institutions.json); mặc định: mọi đơn vị có ROR
+const I = JSON.parse(readFileSync("data/institutions.json", "utf8")).institutions.filter((i) => i.ror && (!only || only.split(",").includes(i.id)));
 if (!I.length) throw new Error("Chưa có đơn vị nào có mã ROR trong data/institutions.json.");
 mkdirSync("data/raw", { recursive: true });
 const get = async (url) => {
-  const u = url + (url.includes("?") ? "&" : "?") + `mailto=${encodeURIComponent(mailto)}`;
+  const u = url + (url.includes("?") ? "&" : "?") + `mailto=${encodeURIComponent(mailto)}&api_key=${KEY}`;
   for (let t = 0; t < 4; t++) { const r = await fetch(u); if (r.ok) return r.json(); if (r.status === 429 || r.status >= 500) await new Promise((s) => setTimeout(s, 2000 * 2 ** t)); else throw new Error(`${r.status} ${u}`); }
   throw new Error(`Hết lượt thử: ${u}`);
 };
