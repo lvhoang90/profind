@@ -17,8 +17,8 @@ a{color:var(--accent)}.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
 .brand{display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-size:1.3rem}.brand b{font-size:1.45rem;font-weight:700}.brand i{font-style:normal;color:#7dd3fc}.logo{width:40px;height:40px;filter:drop-shadow(0 6px 12px rgba(20,60,200,.45))}
 .ht{margin:0;font-size:clamp(1.5rem,4vw,2.3rem);font-weight:700;line-height:1.2;padding-bottom:.08em;background:linear-gradient(100deg,#fff 15%,#aee6ff 55%,#d9ccff 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .tag{margin:6px 0 0;color:#bfe3f5;font-size:.9rem}
-.lang{display:flex;gap:4px;background:rgba(255,255,255,.15);padding:3px;border-radius:10px}.lang button{border:0;background:transparent;color:#fff;padding:8px 14px;min-height:40px;border-radius:8px;font:inherit;font-weight:700;cursor:pointer}
-.lang .lang-vi[aria-pressed=true]{background:#b91c16}.lang .lang-en[aria-pressed=true]{background:#012169;box-shadow:inset 0 0 0 2px #c8102e}
+.lang{display:flex;gap:2px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);padding:3px;border-radius:12px;height:44px;align-items:stretch}.lang button{border:0;background:transparent;color:#e6f6ff;padding:0 14px;min-height:0;border-radius:9px;font:inherit;font-weight:700;cursor:pointer}
+.lang button[aria-pressed=true]{background:linear-gradient(135deg,#bae6fd,#7dd3fc);color:#08202f;box-shadow:0 4px 12px -6px rgba(125,211,252,.9)}
 .lang button:focus-visible{outline-color:#fff}
 /* Banner: gọn (một dòng) và mở rộng khi cần, để bảng luôn nằm trong màn hình đầu tiên trên điện thoại */
 .banner{display:flex;gap:10px;align-items:flex-start;margin:16px 0 0;padding:10px 14px;border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--surface);border-radius:10px;font-size:.85rem;color:var(--ink-2)}
