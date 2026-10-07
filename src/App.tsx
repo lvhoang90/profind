@@ -8,6 +8,7 @@ type SortKey = "totalScore" | "worksCount" | "citations";
 const EDUFIND = "https://edufind.isavn.edu.vn";
 const CONTACT = "luongviethoang.hcm@gmail.com";
 const PAGE = 100;
+const TOP2_URL = "https://elsevier.digitalcommonsdata.com/datasets/btchxktzyw/8";
 const hash = () => decodeURIComponent(location.hash.replace(/^#\/?/, ""));
 const fold = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase();
 
@@ -49,6 +50,7 @@ export function App() {
           </ol>
         </section>
         {data && !data.meta.demo && data.meta.fetched && <p className="meta">{t("source")}: {t("srcLine", { d: data.meta.fetched })}</p>}
+        {data?.authors.some((a) => a.top2) && <p className="meta">{t("top2Credit")} <a href={TOP2_URL} target="_blank" rel="noopener">DOI 10.17632/btchxktzyw.8</a></p>}
         <p className="meta"><Icon n="shield" size={14} /> {t("lic")} <a href="#/dinh-chinh">{t("fix")}</a></p>
       </footer>
     </Ctx.Provider>
@@ -93,7 +95,7 @@ function List({ d }: { d: Data }) {
           <tbody>{rows.slice(0, limit).map((a, i) => (
             <tr key={a.id}>
               <td className="num"><span className={`rk r${Math.min(i + 1, 4)}`}>{i + 1}</span></td>
-              <td><a href={`#/tac-gia/${a.id}`}>{a.name}</a>{a.claimed && <Icon n="check" size={14} className="ok" />}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}<div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
+              <td><a href={`#/tac-gia/${a.id}`}>{a.name}</a>{a.claimed && <Icon n="check" size={14} className="ok" />}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}{a.top2 && <a className="top2" href={TOP2_URL} target="_blank" rel="noopener" title={t("top2Tip", { r: a.top2.rank.toLocaleString(lang === "vi" ? "vi-VN" : "en-US"), f: a.top2.field })}>★ {t("top2Tag")}</a>}<div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
               <td>{a.institutions.map((i) => { const x = instById.get(i); return x ? instName(x) : i; }).join(", ")}</td>
               <td className="num">{a.worksCount}</td><td className="num"><span className="score">{a.totalScore}</span></td><td className="num">{a.citations}</td>
               <td className="meta">{a.firstYear ?? "-"}–{a.lastYear ?? "-"}</td>
@@ -119,7 +121,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   return (
     <article>
       <p><a href="#/">{t("back")}</a></p>
-      <h2 className="au">{a.name}{a.foreign && <span className="badge warnb">{t("foreignTag")}</span>}{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}{a.claimed && <span className="badge" title={t("claimedBadge")}><Icon n="check" size={16} />{t("claimedBadge")}</span>}</h2>
+      <h2 className="au">{a.name}{a.foreign && <span className="badge warnb">{t("foreignTag")}</span>}{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}{a.top2 && <a className="badge top2b" href={TOP2_URL} target="_blank" rel="noopener" title={t("top2Tip", { r: a.top2.rank.toLocaleString(lang === "vi" ? "vi-VN" : "en-US"), f: a.top2.field })}>★ {t("top2Tag")}</a>}{a.claimed && <span className="badge" title={t("claimedBadge")}><Icon n="check" size={16} />{t("claimedBadge")}</span>}</h2>
       <p className="meta">{inst.map((i) => (lang === "vi" ? i.name : i.en)).join(", ")}{a.orcid && <> · <a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}</a></>}</p>
       <div className="stats">
         <div><Icon n="trophy" size={22} /><b>#{a.rankScore}</b><span>{t("rank")} · {t("score")}</span></div><div><Icon n="chart" size={22} /><b>#{a.rankWorks}</b><span>{t("rank")} · {t("works")}</span></div>

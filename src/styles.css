@@ -51,3 +51,6 @@ button.primary{border:0;background:var(--accent);color:var(--accent-ink);border-
 .tagf{margin-left:8px;padding:1px 7px;border-radius:999px;background:var(--s1);color:var(--ink-2);font-size:.68rem;font-weight:600;white-space:nowrap}
 .badge.warnb{background:var(--s1);color:var(--ink-2)}
 .meta.yrs,td.meta:last-child{white-space:nowrap}
+.top2{margin-left:8px;padding:1px 8px;border-radius:999px;background:#fff3c4;color:#5c4400;font-size:.68rem;font-weight:700;white-space:nowrap;text-decoration:none}
+.badge.top2b{background:#fff3c4;color:#5c4400;text-decoration:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .top2,:root:not([data-theme="light"]) .badge.top2b{background:#4d4222;color:#ffe08a}}

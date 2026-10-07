@@ -6,6 +6,8 @@ import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from "node
 const rd = (f) => JSON.parse(readFileSync(f, "utf8"));
 const J = rd("data/journals.json"), S = rd("data/sjr-rules.json"), I = rd("data/institutions.json"), R = rd("data/raw-authors.json"), C = rd("data/corrections.json");
 const META = existsSync("data/author-meta.json") ? rd("data/author-meta.json") : {};
+// Nhãn Top 2% thế giới (Ioannidis et al., CC BY-NC 3.0; xem data/top2/LICENSE-NC.md): khớp bằng scripts/match-top2.mjs
+const TOP2 = existsSync("data/top2/matches.json") ? rd("data/top2/matches.json") : {};
 const byId = new Map(J.journals.map((j) => [j.id, j]));
 const tierScore = (tiers, y) => {
   let best = null;
@@ -63,6 +65,7 @@ const outAuthors = authors.map((a) => {
   const matched = ws.filter((w) => w.matched).length;
   const span = years.length ? Math.max(1, Math.max(...years) - Math.min(...years) + 1) : 1;
   return { id: a.id, name: a.name, orcid: a.orcid, institutions: a.institutions, disciplines, demo: !!a.demo, claimed: a.claimed, // foreign: true = có đơn vị ngoài VN; false = chỉ đơn vị VN; null = chưa biết (chưa chạy enrich-authors.mjs cho tác giả này).
+    top2: TOP2[a.id] ? { rank: TOP2[a.id].rank, field: TOP2[a.id].field } : null,
     foreign: META[a.id] ? META[a.id].countries.some((c) => c !== "VN") : null,
     // suspect: hồ sơ OpenAlex nhiều khả năng gộp nhầm nhiều người (>= 500 công trình hoặc > 150 công trình/năm); ẩn khỏi bảng mặc định.
     suspect: ws.length >= 500 || ws.length / span > 150,

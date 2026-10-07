@@ -1,0 +1,688 @@
+[
+ {
+  "name": "Porikli, Fatih Murat",
+  "inst": "Qualcomm AI Research",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Thwaites, G. Edward",
+  "inst": "Oxford University Clinical Research Unit",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "El-Ghaoui, Laurent E.I.",
+  "inst": "VinUniversity",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Pham, Binh Thai",
+  "inst": "Đại học Công nghệ Giao thông vận tải",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Tran, Hai Nguyen",
+  "inst": "Duy Tan University",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Vũ, Van Huong",
+  "inst": "GeneStory JSC",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Arrindell, Willem Alexander",
+  "inst": "University of Social Sciences and Humanities, Ho Chi Minh City",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Nguyen, Thanh Binh",
+  "inst": "Can Tho University of Medicine and Pharmacy",
+  "why": "cùng tên nhưng khác đơn vị",
+  "candidates": [
+   {
+    "id": "A5051882105",
+    "name": "Binh Thanh Nguyen",
+    "inst": [
+     "Vietnam National University Ho Chi Minh City"
+    ],
+    "works": 118
+   },
+   {
+    "id": "A5100387323",
+    "name": "Thanh Binh Nguyen",
+    "inst": [
+     "University of Da Nang"
+    ],
+    "works": 45
+   },
+   {
+    "id": "A5100635560",
+    "name": "Nguyễn Thanh Bình",
+    "inst": [
+     "Vietnam Academy of Science and Technology",
+     "Hanoi National University of Education",
+     "Ho Chi Minh City University of Technology",
+     "Ho Chi Minh City University of Foreign Language and Information Technology"
+    ],
+    "works": 156
+   },
+   {
+    "id": "A5002536039",
+    "name": "Thanh Bình Nguyễn",
+    "inst": [
+     "Vietnam Academy of Science and Technology",
+     "Viện Hóa học"
+    ],
+    "works": 44
+   },
+   {
+    "id": "A5100613698",
+    "name": "Thanh-Binh Nguyen",
+    "inst": [
+     "Ho Chi Minh University of Technology and Engineering"
+    ],
+    "works": 114
+   },
+   {
+    "id": "A5101790883",
+    "name": "Thanh Binh Nguyen",
+    "inst": [
+     "Ho Chi Minh University of Education",
+     "Nguyen Tat Thanh University"
+    ],
+    "works": 54
+   },
+   {
+    "id": "A5073338061",
+    "name": "Binh Thanh Nguyen",
+    "inst": [
+     "Hanoi Medical University"
+    ],
+    "works": 61
+   },
+   {
+    "id": "A5107945675",
+    "name": "Nguyen Thanh Binh",
+    "inst": [
+     "Van Hien University"
+    ],
+    "works": 4
+   },
+   {
+    "id": "A5140497991",
+    "name": "Nguyễn Thanh Bình",
+    "inst": [
+     "Long An University of Economics and Industry"
+    ],
+    "works": 1
+   },
+   {
+    "id": "A5100635553",
+    "name": "Nguyễn Thanh Bình",
+    "inst": [
+     "Dalat Nuclear Research Institute"
+    ],
+    "works": 17
+   }
+  ]
+ },
+ {
+  "name": "Vasant, Pandian M.",
+  "inst": "Ton-Duc-Thang University",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Van Hung, Pham",
+  "inst": "Industrial University of Ho Chi Minh City",
+  "why": "cùng tên nhưng khác đơn vị",
+  "candidates": [
+   {
+    "id": "A5030284025",
+    "name": "Phạm Văn Hưng",
+    "inst": [
+     "Vietnam National University of Agriculture"
+    ],
+    "works": 4
+   },
+   {
+    "id": "A5092167390",
+    "name": "Van Pham-Hung",
+    "inst": [
+     "Phan Chau Trinh University"
+    ],
+    "works": 4
+   },
+   {
+    "id": "A5062352039",
+    "name": "Hung Van Pham",
+    "inst": [
+     "National Institute for Control of Vaccines and Biologicals"
+    ],
+    "works": 5
+   },
+   {
+    "id": "A5047403902",
+    "name": "Van Hung Pham",
+    "inst": [
+     "Vietnam Research and Development Institute of Clinical Microbiology"
+    ],
+    "works": 36
+   },
+   {
+    "id": "A5069785443",
+    "name": "Phạm Hùng Vân",
+    "inst": [
+     "Vietnam Research and Development Institute of Clinical Microbiology"
+    ],
+    "works": 8
+   },
+   {
+    "id": "A5046821472",
+    "name": "Van Hung Pham",
+    "inst": [
+     "Viện Khoa học Công nghệ Xây dựng"
+    ],
+    "works": 2
+   }
+  ]
+ },
+ {
+  "name": "Moayedi, Hossien",
+  "inst": "Duy Tan University",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Buntine, Wray L.",
+  "inst": "VinUniversity",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Dell, B.",
+  "inst": "Vietnamese Academy of Forest Sciences",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Khoa, Dao Tien",
+  "inst": "Vietnam Atomic Energy Institute",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Nguyen, Van Hieu",
+  "inst": "Phenikaa University",
+  "why": "cùng tên nhưng khác đơn vị",
+  "candidates": [
+   {
+    "id": "A5075978730",
+    "name": "Văn Hiếu Nguyễn",
+    "inst": [
+     "Hanoi Medical University",
+     "Viện Dược liệu"
+    ],
+    "works": 43
+   },
+   {
+    "id": "A5058941719",
+    "name": "Nguyễn Văn Hiếu",
+    "inst": [
+     "Viện Dược liệu"
+    ],
+    "works": 31
+   },
+   {
+    "id": "A5103515995",
+    "name": "Nguyễn Văn Hiếu",
+    "inst": [
+     "Viện Dược liệu"
+    ],
+    "works": 6
+   }
+  ]
+ },
+ {
+  "name": "van Hieu, Dang",
+  "inst": "College of Air Force",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Asadi, Amin",
+  "inst": "Ton-Duc-Thang University",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Dang Nam, Nguyen",
+  "inst": "Duy Tan University",
+  "why": "cùng tên nhưng khác đơn vị",
+  "candidates": [
+   {
+    "id": "A5111583046",
+    "name": "Nguyễn Đăng Nam",
+    "inst": [
+     "Phenikaa University"
+    ],
+    "works": 4
+   }
+  ]
+ },
+ {
+  "name": "Nam, Nguyenhai",
+  "inst": "Hanoi College of Pharmacy",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Phat, Vu Ngoc",
+  "inst": "Hanoi Institute of Mathematics",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Ghalambaz, Mohammad G.",
+  "inst": "Ton-Duc-Thang University",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "An, Nguyenba",
+  "inst": "Vietnamese Academy of Science and Technology Institute of Physics and Electronics",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Bui, Hung Hai",
+  "inst": "VinAI Research",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Nguyen, Liem Thanh",
+  "inst": "VinUniversity",
+  "why": "cùng tên nhưng khác đơn vị",
+  "candidates": [
+   {
+    "id": "A5107501208",
+    "name": "Nguyễn Thanh Liêm",
+    "inst": [
+     "Can Tho University"
+    ],
+    "works": 40
+   },
+   {
+    "id": "A5025693541",
+    "name": "Liem Nguyen Thanh",
+    "inst": [
+     "Tay Do University"
+    ],
+    "works": 14
+   },
+   {
+    "id": "A5010264989",
+    "name": "Nguyễn Thanh Liêm",
+    "inst": [
+     "Lac Hong University"
+    ],
+    "works": 57
+   },
+   {
+    "id": "A5101467255",
+    "name": "Nguyễn Thanh Liêm",
+    "inst": [
+     "Institute of Population, Health and Development"
+    ],
+    "works": 5
+   }
+  ]
+ },
+ {
+  "name": "Nogami, Massayuki",
+  "inst": "Hanoi University of Science and Technology",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Bach, Quang-Vu",
+  "inst": "Duy Tan University",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Long, Hoang Ngoc",
+  "inst": "Van Lang University",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Dúc, Nguyenhuu",
+  "inst": "Vietnam National University, Hanoi",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Tuan, Nguyenhuy",
+  "inst": "Banking University - Ho Chi Minh City",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Nayak, Rajkishore K.",
+  "inst": "RMIT University Vietnam",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Hien, L. V.",
+  "inst": "Trường Đại học Sư phạm Hà Nội",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Nguyen, Xuan Phuong",
+  "inst": "Ho Chi Minh City University of Transport",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Pham, Van Viet",
+  "inst": "Vietnam Maritime University",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Le, Minh Quy",
+  "inst": "Hanoi University of Science and Technology",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Tuan, Le Anh",
+  "inst": "Vietnam Maritime University",
+  "why": "cùng tên nhưng khác đơn vị",
+  "candidates": [
+   {
+    "id": "A5088189409",
+    "name": "Lê Tuấn Anh",
+    "inst": [
+     "Vietnam National University, Hanoi",
+     "Ho Chi Minh City University of Industry and Trade",
+     "Viện Dược liệu"
+    ],
+    "works": 40
+   },
+   {
+    "id": "A5100753114",
+    "name": "Anh‐Tuan Le",
+    "inst": [
+     "Phenikaa University"
+    ],
+    "works": 115
+   },
+   {
+    "id": "A5054486481",
+    "name": "Lê Anh Tuấn",
+    "inst": [
+     "HUST School of Information and Communication Technology",
+     "Nguyen Tat Thanh University"
+    ],
+    "works": 78
+   },
+   {
+    "id": "A5100753115",
+    "name": "Anh Tuấn Lê",
+    "inst": [
+     "HUST School of Information and Communication Technology"
+    ],
+    "works": 90
+   },
+   {
+    "id": "A5061680998",
+    "name": "Lê Anh Tuấn",
+    "inst": [
+     "HUST School of Information and Communication Technology",
+     "Ho Chi Minh City University of Technology"
+    ],
+    "works": 33
+   },
+   {
+    "id": "A5054482402",
+    "name": "Tuan Anh Le",
+    "inst": [
+     "East-Asian University of Technology"
+    ],
+    "works": 23
+   },
+   {
+    "id": "A5100458403",
+    "name": "Tuan Le Anh",
+    "inst": [
+     "Thai Binh Duong University"
+    ],
+    "works": 12
+   },
+   {
+    "id": "A5100458413",
+    "name": "Tuan Anh Lê",
+    "inst": [
+     "Institute for Nuclear Science and Technology",
+     "Vietnam Atomic Energy Instiute"
+    ],
+    "works": 29
+   }
+  ]
+ },
+ {
+  "name": "Bretagnol, Fréd́eric",
+  "inst": "Saint Paul University Hospital",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Hasanipanah, Mahdi",
+  "inst": "Duy Tan University",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Nguyen, Hoang",
+  "inst": "Hanoi University of Mining and Geology",
+  "why": "cùng tên nhưng khác đơn vị",
+  "candidates": [
+   {
+    "id": "A5080411341",
+    "name": "Hoang Nguyen",
+    "inst": [
+     "Duy Tan University"
+    ],
+    "works": 84
+   },
+   {
+    "id": "A5006380421",
+    "name": "Hoang Nguyen",
+    "inst": [
+     "Ho Chi Minh University of Law"
+    ],
+    "works": 24
+   },
+   {
+    "id": "A5000914178",
+    "name": "Hoang Nguyen",
+    "inst": [
+     "Nam Can Tho University"
+    ],
+    "works": 16
+   },
+   {
+    "id": "A5110837157",
+    "name": "Nguyen Hoang",
+    "inst": [
+     "Tay Do University"
+    ],
+    "works": 15
+   }
+  ]
+ },
+ {
+  "name": "Phung-Van, P.",
+  "inst": "Ho Chi Minh City University of Technology - HUTECH",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Pham, Van Vinh",
+  "inst": "Le Quy Don Technical University",
+  "why": "cùng tên nhưng khác đơn vị",
+  "candidates": [
+   {
+    "id": "A5143987779",
+    "name": "VINH PHẠM VĂN",
+    "inst": [
+     "Học viện Quốc phòng"
+    ],
+    "works": 1
+   }
+  ]
+ },
+ {
+  "name": "Tran, Van Quan",
+  "inst": "Đại học Công nghệ Giao thông vận tải",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Pham, Duc Chinh",
+  "inst": "Ton-Duc-Thang University",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Long, H. V.",
+  "inst": "Hanoi University of Science and Technology",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Tran, Trong Nhan",
+  "inst": "Industrial University of Ho Chi Minh City",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Waché, Yves",
+  "inst": "Hanoi University of Science and Technology",
+  "why": "cùng tên nhưng khác đơn vị",
+  "candidates": [
+   {
+    "id": "A5027840151",
+    "name": "Yves Waché",
+    "inst": [
+     "HUST School of Information and Communication Technology"
+    ],
+    "works": 22
+   }
+  ]
+ },
+ {
+  "name": "Monchiet, Vincent",
+  "inst": "Đại học Công nghệ Giao thông vận tải",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "van Tung, Hoang Van",
+  "inst": "Hanoi Architectural University",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Vinh, Pham Chi",
+  "inst": "Vietnam National University, Hanoi",
+  "why": "cùng tên nhưng khác đơn vị",
+  "candidates": [
+   {
+    "id": "A5005576230",
+    "name": "Pham Chi Vinh",
+    "inst": [
+     "Phenikaa University"
+    ],
+    "works": 28
+   }
+  ]
+ },
+ {
+  "name": "Dac-Nhuong, Le",
+  "inst": "Haiphong University",
+  "why": "cùng tên nhưng khác đơn vị",
+  "candidates": [
+   {
+    "id": "A5023041667",
+    "name": "Dac‐Nhuong Le",
+    "inst": [
+     "Duy Tan University",
+     "Ho Chi Minh City University of Industry and Trade",
+     "Hai Phong University of Management and Technology"
+    ],
+    "works": 80
+   }
+  ]
+ },
+ {
+  "name": "Nguyen, Minh T.",
+  "inst": "Thai Nguyen University of Technology",
+  "why": "không có hồ sơ cùng tên trong ProFind"
+ },
+ {
+  "name": "Xuan Nam, Bui",
+  "inst": "Hanoi University of Mining and Geology",
+  "why": "cùng tên nhưng khác đơn vị",
+  "candidates": [
+   {
+    "id": "A5064619766",
+    "name": "Xuan-Nam Bui",
+    "inst": [
+     "Ton Duc Thang University"
+    ],
+    "works": 52
+   }
+  ]
+ },
+ {
+  "name": "Nguyen, Thi Hong",
+  "inst": "Can Tho University",
+  "why": "cùng tên nhưng khác đơn vị",
+  "candidates": [
+   {
+    "id": "A5088091814",
+    "name": "Nguyễn Thị Hồng",
+    "inst": [
+     "Thai Nguyen University",
+     "Vinh University"
+    ],
+    "works": 36
+   },
+   {
+    "id": "A5046263262",
+    "name": "Nguyễn Thị Hồng",
+    "inst": [
+     "Danang University of Technology and Education",
+     "Thang Long University"
+    ],
+    "works": 10
+   },
+   {
+    "id": "A5104100674",
+    "name": "Nguyễn Thị Hồng",
+    "inst": [
+     "University of Transport and Communications",
+     "Ho Chi Minh University of Law"
+    ],
+    "works": 24
+   },
+   {
+    "id": "A5050134458",
+    "name": "Nguyễn Thị Hồng",
+    "inst": [
+     "Thuy Loi University"
+    ],
+    "works": 17
+   },
+   {
+    "id": "A5009338431",
+    "name": "Thị Hồng Nguyễn",
+    "inst": [
+     "Thanh Do University"
+    ],
+    "works": 38
+   },
+   {
+    "id": "A5101740968",
+    "name": "Nguyễn Thị Hồng",
+    "inst": [
+     "Trường Đại học Công nghệ Đồng Nai"
+    ],
+    "works": 14
+   },
+   {
+    "id": "A5102426312",
+    "name": "Thi Hong Nguyen",
+    "inst": [
+     "Academy of Cryptography Techniques"
+    ],
+    "works": 4
+   }
+  ]
+ }
+]

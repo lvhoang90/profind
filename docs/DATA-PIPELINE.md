@@ -17,3 +17,9 @@ npm run d:check                              # kiểm tra nhất quán
 - Đừng chạy lại `d:inst` khi đã nạp tác giả: ROR trả kết quả khác nhau giữa các lần nên mã đơn vị có thể đổi và làm đứt liên kết tác giả - đơn vị.
 - Giới hạn đã biết: OpenAlex thường không đánh dấu tác giả liên hệ (nên điểm có thể thấp hơn thực tế); chưa phân biệt được SCIE/SSCI và kỷ yếu hội nghị; tên tác giả có thể viết tắt; ngành suy từ tạp chí là gần đúng; mỗi đơn vị chỉ lấy 50 tác giả nhiều công trình nhất nên thứ hạng chỉ so sánh trong tập đã nạp.
 - Kiểm chứng: 6/6 công trình ngẫu nhiên khớp quy tắc "tác giả chính" khi đối chiếu bản ghi gốc OpenAlex.
+
+## Nhãn "Top 2% thế giới" (Ioannidis et al., Elsevier; CC BY-NC 3.0)
+- Nguồn: DOI 10.17632/btchxktzyw.8 (phiên bản 8, tháng 8/2025). Chỉ trích 94 dòng quốc gia Việt Nam từ bảng "career" vào `data/top2/top2-vn-career-2024.json` (bỏ cột số bài bị rút). Giấy phép riêng: `data/top2/LICENSE-NC.md`. ISA Vietnam xác nhận vận hành ProFind phi thương mại.
+- `node scripts/match-top2.mjs`: khớp theo tập từ của tên + đơn vị -> `data/top2/matches.json`; ca chưa chắc ở `data/top2/review.json`; quyết định tay ở `data/top2/overrides.json`. Hiện gắn 42/94 người (nhiều người là nhà khoa học nước ngoài có đơn vị phụ tại Việt Nam, hoặc chưa nằm trong tập tác giả đã nạp). Sau đó `npm run d:index`.
+- Khi có phiên bản mới của bộ dữ liệu (thường tháng 9-10 hằng năm): tải bảng career mới, quét `cntry = vnm`, thay tệp JSON, chạy lại match.
+- Việc không có tên trong danh sách không có nghĩa tác giả ít được trích dẫn; giao diện chỉ hiện nhãn cho người có tên, và không dùng danh sách để chấm điểm.
