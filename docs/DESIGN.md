@@ -27,6 +27,13 @@
 5. **Danh sách đơn vị**: lấy từ Bộ GD&ĐT (`moet.gov.vn/co-so-giao-duc/danh-sach-cac-co-so-giao-duc`), đối chiếu Wikipedia vi; script `import-institutions.mjs` ghi ra `data/institutions.candidates.json` để duyệt. **Cần mở mạng** cho `moet.gov.vn`, `vi.wikipedia.org`, `api.openalex.org`, `api.ror.org`.
 6. **Tên miền**: `profind.isavn.edu.vn`. **Logo**: bông hoa nguyên tử 5 cánh theo dải quang phổ quanh cặp kính của nhà nghiên cứu, nền chàm (thiết kế gốc, tham khảo tinh thần "nguyên tử" nhưng không sao chép), nguồn `scripts/lib/brand.mjs`, xuất bằng `npm run d:icons`.
 
+### Kết quả chạy thử dữ liệu thật (Đại học Cần Thơ, 30 tác giả có nhiều công trình nhất, từ 2016)
+- Nạp 2.997 công trình trong ~13 giây. Chỉ 14% khớp danh mục tạp chí **trong nước** của HĐGSNN; thêm tra Scopus theo quy tắc từng ngành (SJR + `internationalRules` của EduFind, `data/sjr-rules.json`) thì khớp 70%, 673 công trình tác giả chính có điểm.
+- Phần chưa tính điểm: kỷ yếu hội nghị (LNCS, CCIS, LNNS...), SSRN, tạp chí chưa có ISSN khớp. Web of Science (SCIE/SSCI) không có trong dữ liệu công khai nên điểm quốc tế là mức dưới theo Scopus.
+- Điểm công trình = max(điểm tạp chí trong nước theo năm, điểm Scopus theo quy tắc ngành); tạp chí thuộc nhiều ngành thì lấy ngành cho điểm cao nhất (mức tối đa).
+- Tên tác giả từ OpenAlex có thể ở dạng viết tắt ("T D K Nguyen"); cần ORCID/đính chính để chuẩn hóa.
+- **Chưa đưa dữ liệu thật vào kho** cho đến khi có cơ chế đính chính / gỡ hồ sơ (mục 2); kho giữ dữ liệu mẫu.
+
 ## 5. Ý tưởng mới
 - **Đối chiếu ISSN ngược**: từ một tạp chí ở EduFind, xem ai đang đăng ở đó (giúp chọn nơi gửi bài).
 - **Hồ sơ xuất chuẩn**: xuất danh mục công trình theo mẫu lý lịch khoa học (CV), có điểm theo năm, dùng nộp hồ sơ xét chức danh GS/PGS.

@@ -5,6 +5,10 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 const J = JSON.parse(readFileSync("data/journals.json", "utf8"));
 const I = JSON.parse(readFileSync("data/institutions.json", "utf8"));
 const R = JSON.parse(readFileSync("data/raw-authors.json", "utf8"));
+const S = JSON.parse(readFileSync("data/sjr-rules.json", "utf8"));
+// Điểm quốc tế theo quy tắc ngành (cùng logic internationalScore của EduFind): hạng Q riêng nếu ngành có, Q1 có H-index > 50 dùng mức scopus_q1_hi, còn lại scopus_esci.
+// Web of Science (SCIE/SSCI) không có trong dữ liệu công khai nên KHÔNG suy ra: điểm quốc tế là mức dưới theo Scopus.
+const intlScore = (d, q, h) => { const r = S.rules[d] ?? {}; if (r.quartile_if_listed !== undefined || r.listed !== undefined) return r.scopus_esci ?? 0; const hi = q === "Q1" && (h ?? 0) > 50 ? r.scopus_q1_hi : undefined; return hi ?? (q ? r["scopus_" + q.toLowerCase()] : undefined) ?? r.scopus_esci ?? 0; };
 const byId = new Map(J.journals.map((j) => [j.id, j]));
 const tierScore = (tiers, y) => {
   let best = null;
@@ -14,13 +18,19 @@ const tierScore = (tiers, y) => {
   return best ? best.maxScore : null;
 };
 const works = R.works.map((w) => {
-  const ids = J.byIssn[w.issn] ?? [], js = ids.map((i) => byId.get(i));
-  // Một ISSN có thể thuộc nhiều ngành: lấy mức cao nhất, ghi lại ngành để người dùng thấy nguồn.
-  // Chỉ tính điểm khi là tác giả chính theo HĐGSNN (role = "lead", xem ingest-openalex.mjs); còn lại có "counted": false.
-  let score = null, jd = null;
-  for (const j of w.role === "lead" ? js : []) { const s = tierScore(j.scoreTiers, w.year); if (s !== null && (score === null || s > score)) { score = s; jd = j.discipline; } }
-  const disc = [...new Set(js.map((j) => j.discipline))];
-  return { ...w, score, scoreDiscipline: jd, matched: js.length > 0, counted: w.role === "lead" && js.length > 0, disc };
+  const all = [...new Set([w.issn, ...(w.issns ?? [])].filter(Boolean))];
+  const ids = [...new Set(all.flatMap((i) => J.byIssn[i] ?? []))], js = ids.map((i) => byId.get(i));
+  const sj = all.flatMap((i) => S.sjrByIssn[i] ?? []);
+  // Chỉ tính điểm khi là tác giả chính theo HĐGSNN (role = "lead", xem ingest-openalex.mjs); còn lại counted = false.
+  // Điểm = max(điểm tạp chí trong nước theo năm, điểm Scopus theo quy tắc ngành); ghi lại nguồn điểm để truy vết.
+  let score = null, jd = null, kind = null, q = null;
+  if (w.role === "lead") {
+    for (const j of js) { const s2 = tierScore(j.scoreTiers, w.year); if (s2 !== null && (score === null || s2 > score)) { score = s2; jd = j.discipline; kind = "domestic"; } }
+    for (const [d, qq, h] of sj) { const s2 = intlScore(d, qq, h); if (score === null || s2 > score) { score = s2; jd = d; kind = "scopus"; q = qq; } }
+  }
+  const disc = [...new Set([...js.map((j) => j.discipline), ...sj.map((x) => x[0])])];
+  const matched = js.length > 0 || sj.length > 0;
+  return { ...w, score, scoreDiscipline: jd, scoreKind: kind, quartile: q, matched, counted: w.role === "lead" && score !== null, disc };
 });
 const stats = new Map();
 for (const w of works) { const s = stats.get(w.authorId) ?? { n: 0, pts: 0, cit: 0, counted: 0, matched: 0, first: 9999, last: 0 }; s.n++; s.pts += w.score ?? 0; s.counted += w.counted ? 1 : 0; s.cit += w.citations ?? 0; s.matched += w.matched ? 1 : 0; s.first = Math.min(s.first, w.year); s.last = Math.max(s.last, w.year); stats.set(w.authorId, s); }

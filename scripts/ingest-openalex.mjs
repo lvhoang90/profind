@@ -15,10 +15,10 @@ if (!I.length) throw new Error("Chưa có đơn vị nào có mã ROR trong data
 mkdirSync("data/raw", { recursive: true });
 const get = async (url) => {
   const u = url + (url.includes("?") ? "&" : "?") + `mailto=${encodeURIComponent(mailto)}&api_key=${KEY}`;
-  for (let t = 0; t < 4; t++) { const r = await fetch(u); if (r.ok) return r.json(); if (r.status === 429 || r.status >= 500) await new Promise((s) => setTimeout(s, 2000 * 2 ** t)); else throw new Error(`${r.status} ${u}`); }
-  throw new Error(`Hết lượt thử: ${u}`);
+  for (let t = 0; t < 4; t++) { const r = await fetch(u); if (r.ok) return r.json(); if (r.status === 429 || r.status >= 500) await new Promise((s) => setTimeout(s, 2000 * 2 ** t)); else throw new Error(`${r.status} ${u.replace(/api_key=[^&]+/, "api_key=***")}`); }
+  throw new Error(`Hết lượt thử: ${u.replace(/api_key=[^&]+/, "api_key=***")}`);
 };
-const short = (id) => id.replace("https://openalex.org/", "");
+const short = (id) => (id ?? "").replace("https://openalex.org/", "");
 const authors = [], works = [];
 for (const inst of I) {
   const oa = await get(`https://api.openalex.org/institutions/ror:${inst.ror.replace(/^https:\/\/ror.org\//, "")}`);
@@ -39,7 +39,7 @@ for (const inst of I) {
           const as = x.authorships ?? [], pos = as.find((z) => short(z.author.id) === id);
           const nCorr = as.filter((z) => z.is_corresponding).length;
           const lead = !!pos && (pos.author_position === "first" || (pos.is_corresponding && nCorr === 1));
-          works.push({ id: `${id}-${short(x.id)}`, authorId: id, title: x.title, year: x.publication_year, journal: s.display_name, issn, citations: x.cited_by_count, role: lead ? "lead" : "co", corr: nCorr, demo: false });
+          works.push({ id: `${id}-${short(x.id)}`, authorId: id, title: x.title, year: x.publication_year, journal: s.display_name, issn, issns: s.issn ?? [issn], citations: x.cited_by_count, role: lead ? "lead" : "co", corr: nCorr, demo: false });
         }
         cur = w.meta.next_cursor;
       }
