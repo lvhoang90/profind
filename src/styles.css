@@ -329,15 +329,18 @@ button.primary{border:0;background:var(--accent);color:var(--accent-ink);border-
 .heroart{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:.5;transition:opacity .4s}
 .top:has(.hero-home.big) .heroart{opacity:1}.top:has(.hero-home.big){padding-bottom:clamp(36px,6vw,72px)}
 .heroart canvas{position:absolute;inset:0;width:100%;height:100%}
-.emblem{--es:clamp(300px,40vw,540px);position:absolute;right:calc(var(--es)*-.12);top:50%;width:var(--es);height:var(--es);margin-top:calc(var(--es)*-.5 + 18px);animation:floaty 9s ease-in-out infinite}
-.em-glow{position:absolute;inset:-14%;border-radius:50%;background:radial-gradient(closest-side,rgba(56,189,248,.42),rgba(124,58,237,.22) 55%,transparent 75%);filter:blur(10px)}
+.emblem{--es:clamp(280px,34vw,460px);position:absolute;right:calc(var(--es)*-.12);top:50%;width:var(--es);height:var(--es);margin-top:calc(var(--es)*-.5 + 18px);animation:floaty 9s ease-in-out infinite}
+.em-glow{position:absolute;inset:-14%;border-radius:50%;background:radial-gradient(closest-side,rgba(56,189,248,.3),rgba(124,58,237,.14) 55%,transparent 75%);filter:blur(10px)}
 .em-rings{position:absolute;inset:-6%;width:112%;height:112%;animation:spin 90s linear infinite}
 .em-orbit{transform-origin:200px 200px;animation:spin 24s linear infinite}.em-orbit.rev{animation-duration:38s;animation-direction:reverse}
 .em-logo{position:absolute;inset:10%;width:80%;height:80%;border-radius:50%;filter:drop-shadow(0 20px 40px rgba(0,0,0,.5)) drop-shadow(0 0 30px rgba(56,189,248,.35))}
 @keyframes spin{to{transform:rotate(360deg)}}@keyframes floaty{50%{transform:translateY(-12px)}}
 .top:not(:has(.hero-home.big)) .emblem{--es:200px;right:-30px;opacity:.5}
-@media(max-width:700px){.emblem{--es:min(78vw,300px);right:calc(var(--es)*-.28);top:34px;margin-top:0;opacity:.55}.top:has(.hero-home.big){padding-bottom:30px}.heroart canvas{opacity:.8}}
-.hero-kicker{display:inline-flex;align-items:center;gap:8px;margin:0 0 12px;padding:5px 14px;border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#f6d98f;background:rgba(245,200,110,.1);border:1px solid rgba(245,200,110,.35)}
+@media(min-width:701px){.emblem{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 22%);mask-image:linear-gradient(90deg,transparent 0,#000 22%)}}
+@media(max-width:700px){.emblem{--es:min(64vw,250px);right:calc(var(--es)*-.38);top:auto;bottom:-6px;margin-top:0;opacity:.32}.top:has(.hero-home.big){padding-bottom:30px}.heroart canvas{opacity:.45}
+.hero-home.big .ht{font-size:clamp(2rem,8.6vw,2.4rem);letter-spacing:-.02em;line-height:1.1}.bigsearch input{font-size:.95rem}
+.trys{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px}.trys::-webkit-scrollbar{display:none}.trys button,.trys>span{flex:none}}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;margin:0 0 12px;padding:4px 12px;border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#f6d98f;background:rgba(245,200,110,.1);border:1px solid rgba(245,200,110,.35)}
 .hero-kicker .ic{color:#f6d98f;--ic2:#f6d98f}
 
 /* ===== Làm mới giao diện trang chủ: tinh hoa tri thức ===== */
@@ -352,3 +355,5 @@ button.primary{border:0;background:var(--accent);color:var(--accent-ink);border-
 .sf-who{margin:0}.sf-who>b{display:block;color:#fff;font-size:.95rem}.sf-who>span{display:block;font-size:.8rem;color:#8fb8d4;margin-bottom:6px}
 .sf-disc{margin-top:6px!important;color:#7fa6c1;font-size:.74rem;line-height:1.55;max-width:96ch}
 @media(prefers-reduced-motion:reduce){.emblem,.em-rings,.em-orbit{animation:none}}
+.hero-home.big{position:relative;z-index:1}
+.hero-home .tag{text-shadow:0 1px 10px rgba(5,15,30,.5)}.hero-home .tag{color:#e2f2fb;max-width:36ch}.hero-home.big .bigsearch{margin-top:26px}

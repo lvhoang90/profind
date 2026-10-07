@@ -15,7 +15,7 @@ export function HeroArt() {
     let W = 0, H = 0, dpr = 1, raf = 0, vis = true, last = 0, acc = 0;
     const ps: P[] = [];
     const size = () => { const r = c.getBoundingClientRect(); dpr = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height; c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
-    const max = () => (W < 600 ? 26 : 46);
+    const max = () => (W < 600 ? 12 : 40);
     const spawn = (initial = false) => {
       const r = em.current?.getBoundingClientRect(), cr = c.getBoundingClientRect();
       const cx = r ? r.left - cr.left + r.width / 2 : W * 0.75, cy = r ? r.top - cr.top + r.height / 2 : H / 2, rad = r ? r.width * 0.42 : 120;
@@ -31,7 +31,7 @@ export function HeroArt() {
       for (const p of ps) {
         const t = p.life / p.max, digital = t > 0.55, k = digital ? Math.min(1, (t - 0.55) / 0.15) : 0;
         const col = GOLD.map((g, n) => Math.round(g + (CYAN[n] - g) * k)), a = Math.sin(Math.PI * Math.min(1, t * 1.05)) * 0.85;
-        ctx.globalAlpha = Math.max(0, a); ctx.fillStyle = `rgb(${col})`; ctx.shadowColor = `rgb(${col})`; ctx.shadowBlur = 14;
+        ctx.globalAlpha = Math.max(0, a); ctx.fillStyle = `rgb(${col})`; ctx.shadowColor = `rgb(${col})`; ctx.shadowBlur = W < 600 ? 0 : 12;
         if (digital) { ctx.font = `600 ${p.s * 0.9}px ui-monospace,Menlo,Consolas,monospace`; ctx.fillText(p.bit, p.x, p.y); ctx.beginPath(); ctx.arc(p.x + 2, p.y - p.s, 1.6, 0, 6.28); ctx.fill(); }
         else { ctx.font = `500 ${p.s}px "Space Grotesk",Georgia,"Times New Roman",serif`; ctx.fillText(p.g, p.x, p.y); }
       }
@@ -39,9 +39,9 @@ export function HeroArt() {
     };
     const frame = (ts: number) => {
       raf = requestAnimationFrame(frame);
-      if (!vis) { last = ts; return; }
+      if (!vis || document.hidden) { last = ts; return; }
       const dt = Math.min(0.05, (ts - last) / 1000 || 0.016); last = ts;
-      acc += dt; const every = W < 600 ? 0.3 : 0.17;
+      acc += dt; const every = W < 600 ? 0.45 : 0.17;
       while (acc > every) { acc -= every; if (ps.length < max()) spawn(); }
       draw(dt);
     };
@@ -59,8 +59,7 @@ export function HeroArt() {
         <i className="em-glow" />
         <svg className="em-rings" viewBox="0 0 400 400" fill="none">
           <circle cx="200" cy="200" r="196" stroke="rgba(125,211,252,.22)" strokeDasharray="2 9" />
-          <circle cx="200" cy="200" r="160" stroke="rgba(245,200,110,.28)" />
-          <circle cx="200" cy="200" r="126" stroke="rgba(167,139,250,.28)" strokeDasharray="1 6" />
+          <circle cx="200" cy="200" r="160" stroke="rgba(245,200,110,.18)" />
           <g className="em-orbit"><circle cx="200" cy="4" r="4.5" fill="#7dd3fc" /><circle cx="361" cy="200" r="3.5" fill="#f6d98f" /></g>
           <g className="em-orbit rev"><circle cx="74" cy="200" r="4" fill="#c4b5fd" /><circle cx="200" cy="326" r="3" fill="#7dd3fc" /></g>
         </svg>
