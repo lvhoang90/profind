@@ -1,0 +1,590 @@
+[
+ {
+  "stt": 2,
+  "name": "Viện Nghiên cứu hải sản",
+  "code": "V62",
+  "ror": null
+ },
+ {
+  "stt": 3,
+  "name": "Viện Nghiên cứu Nuôi trồng thuỷ sản I",
+  "code": "VTS",
+  "ror": "https://ror.org/04n7s1j93"
+ },
+ {
+  "stt": 4,
+  "name": "Viện Nghiên cứu quản lý kinh tế Trung ương",
+  "code": "V18",
+  "ror": null
+ },
+ {
+  "stt": 5,
+  "name": "Viện Pasteur Thành phố Hồ Chí Minh",
+  "code": "V26",
+  "ror": "https://ror.org/00waaqh38"
+ },
+ {
+  "stt": 6,
+  "name": "Viện Sốt rét - Ký sinh trùng - Côn trùng Trung ương",
+  "code": "V25",
+  "ror": null
+ },
+ {
+  "stt": 7,
+  "name": "Viện Sức khoẻ nghề nghiệp và môi trường",
+  "code": "VYL",
+  "ror": "https://ror.org/0308qmn77"
+ },
+ {
+  "stt": 8,
+  "name": "Viện Toán học",
+  "code": "V59",
+  "ror": "https://ror.org/04jr71r83"
+ },
+ {
+  "stt": 9,
+  "name": "Viện Thú y",
+  "code": "VTY",
+  "ror": null
+ },
+ {
+  "stt": 10,
+  "name": "Viện Ứng dụng Công nghệ",
+  "code": "VUD",
+  "ror": "https://ror.org/05c53qb74"
+ },
+ {
+  "stt": 11,
+  "name": "Viện Văn hoá Nghệ thuật quốc gia Việt Nam",
+  "code": "V45",
+  "ror": "https://ror.org/01yth3h09"
+ },
+ {
+  "stt": 12,
+  "name": "Viện Vệ sinh Dịch tễ Trung ương",
+  "code": "V27",
+  "ror": "https://ror.org/01teg2k73"
+ },
+ {
+  "stt": 13,
+  "name": "Viện Khoa học Thể dục thể thao",
+  "code": "VKT",
+  "ror": null
+ },
+ {
+  "stt": 15,
+  "name": "Viện Khoa học và Công nghệ Giao thông vận tải",
+  "code": "V13",
+  "ror": "https://ror.org/051yz4204"
+ },
+ {
+  "stt": 16,
+  "name": "Viện Máy và Dụng cụ công nghiệp",
+  "code": "V48",
+  "ror": null
+ },
+ {
+  "stt": 17,
+  "name": "Viện Năng lượng nguyên tử Việt Nam",
+  "code": "V04",
+  "ror": "https://ror.org/04jfns044"
+ },
+ {
+  "stt": 18,
+  "name": "Viện Nghiên cứu Cơ khí",
+  "code": "V49",
+  "ror": null
+ },
+ {
+  "stt": 19,
+  "name": "Viện Nghiên cứu Chiến lược, Chính sách Công Thương",
+  "code": "V17",
+  "ror": null
+ },
+ {
+  "stt": 20,
+  "name": "Viện Kiến trúc Quốc gia",
+  "code": "V12",
+  "ror": null
+ },
+ {
+  "stt": 22,
+  "name": "Viện Khoa học Địa chất và Khoáng sản",
+  "code": "V47",
+  "ror": null
+ },
+ {
+  "stt": 23,
+  "name": "Viện Khoa học Đo đạc và Bản đồ",
+  "code": "KBD",
+  "ror": null
+ },
+ {
+  "stt": 25,
+  "name": "Viện Khoa học Khí tượng Thủy văn và Biến đổi khí hậu",
+  "code": "V50",
+  "ror": null
+ },
+ {
+  "stt": 26,
+  "name": "Viện Khoa học Lâm nghiệp Việt Nam",
+  "code": "VLN",
+  "ror": "https://ror.org/01mywhy53"
+ },
+ {
+  "stt": 27,
+  "name": "Viện Khoa học Nông nghiệp Việt Nam",
+  "code": "VKN",
+  "ror": "https://ror.org/04q8wkj31"
+ },
+ {
+  "stt": 29,
+  "name": "Viện Dinh dưỡng",
+  "code": "V66",
+  "ror": "https://ror.org/04t18m760"
+ },
+ {
+  "stt": 31,
+  "name": "Viện Hoá học công nghiệp",
+  "code": "V11",
+  "ror": null
+ },
+ {
+  "stt": 34,
+  "name": "Viện Công nghiệp thực phẩm",
+  "code": "V08",
+  "ror": null
+ },
+ {
+  "stt": 35,
+  "name": "Viện Cơ điện Nông nghiệp và Công nghệ sau thu hoạch",
+  "code": "VCD",
+  "ror": null
+ },
+ {
+  "stt": 36,
+  "name": "Viện Chăn nuôi",
+  "code": "VCN",
+  "ror": "https://ror.org/00cyam193"
+ },
+ {
+  "stt": 37,
+  "name": "Viện Chiến lược phát triển",
+  "code": "V19",
+  "ror": "https://ror.org/001fn1a78"
+ },
+ {
+  "stt": 38,
+  "name": "TRƯỜNG ĐẠI HỌC Y DƯỢC - ĐẠI HỌC QUỐC GIA HÀ NỘI",
+  "code": "QHY",
+  "ror": null
+ },
+ {
+  "stt": 41,
+  "name": "TRƯỜNG ĐẠI HỌC VIỆT NHẬT - ĐẠI HỌC QUỐC GIA HÀ NỘI",
+  "code": "VJU",
+  "ror": null
+ },
+ {
+  "stt": 47,
+  "name": "TRƯỜNG ĐẠI HỌC TƯ THỤC QUỐC TẾ SÀI GÒN",
+  "code": "TTQ",
+  "ror": null
+ },
+ {
+  "stt": 48,
+  "name": "TRƯỜNG ĐẠI HỌC TÀI CHÍNH - KẾ TOÁN",
+  "code": "DKQ",
+  "ror": null
+ },
+ {
+  "stt": 64,
+  "name": "TRƯỜNG ĐẠI HỌC LUẬT - ĐẠI HỌC QUỐC GIA HÀ NỘI",
+  "code": "QHL",
+  "ror": "https://ror.org/04z6cm680"
+ },
+ {
+  "stt": 69,
+  "name": "TRƯỜNG ĐẠI HỌC KIỂM SÁT HÀ NỘI",
+  "code": "DKS",
+  "ror": null
+ },
+ {
+  "stt": 75,
+  "name": "TRƯỜNG ĐẠI HỌC CHU VĂN AN",
+  "code": "DCA",
+  "ror": null
+ },
+ {
+  "stt": 76,
+  "name": "TRƯỜNG ĐẠI HỌC DÂN LẬP PHƯƠNG ĐÔNG",
+  "code": "DPD",
+  "ror": null
+ },
+ {
+  "stt": 77,
+  "name": "TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN VÀ TRUYỀN THÔNG VIỆT HÀN, ĐẠI HỌC ĐÀ NẴNG",
+  "code": "VKU",
+  "ror": "https://ror.org/0561fmp23"
+ },
+ {
+  "stt": 81,
+  "name": "Trường Cao đẳng Vĩnh Phúc",
+  "code": "C16",
+  "ror": null
+ },
+ {
+  "stt": 82,
+  "name": "TRƯỜNG ĐẠI HỌC ANH QUỐC - VIỆT NAM",
+  "code": "BUV",
+  "ror": "https://ror.org/01vtndz62"
+ },
+ {
+  "stt": 84,
+  "name": "TRƯỜNG ĐẠI HỌC BÁCH KHOA - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+  "code": "QSB",
+  "ror": null
+ },
+ {
+  "stt": 89,
+  "name": "TRƯỜNG CAO ĐẲNG SƯ PHẠM TRUNG ƯƠNG TP.HỒ CHÍ MINH",
+  "code": "CM3",
+  "ror": null
+ },
+ {
+  "stt": 90,
+  "name": "TRƯỜNG CAO ĐẲNG SƯ PHẠM YÊN BÁI",
+  "code": "C13",
+  "ror": null
+ },
+ {
+  "stt": 91,
+  "name": "Trường Cao đẳng Vĩnh Long",
+  "code": "C57",
+  "ror": null
+ },
+ {
+  "stt": 93,
+  "name": "TRƯỜNG CAO ĐẲNG SƯ PHẠM LONG AN",
+  "code": "C49",
+  "ror": null
+ },
+ {
+  "stt": 94,
+  "name": "Trường Cao đẳng Đại Việt Sài Gòn",
+  "code": "0219",
+  "ror": null
+ },
+ {
+  "stt": 95,
+  "name": "Trường Cao đẳng Hải Dương",
+  "code": "C21",
+  "ror": null
+ },
+ {
+  "stt": 96,
+  "name": "Trường Cao đẳng Ngô Gia Tự Bắc Giang",
+  "code": "C18",
+  "ror": null
+ },
+ {
+  "stt": 98,
+  "name": "TRƯỜNG CAO ĐẲNG SƯ PHẠM CAO BẰNG",
+  "code": "C06",
+  "ror": null
+ },
+ {
+  "stt": 100,
+  "name": "TRƯỜNG CAO ĐẲNG SƯ PHẠM GIA LAI",
+  "code": "C38",
+  "ror": null
+ },
+ {
+  "stt": 101,
+  "name": "TRƯỜNG CAO ĐẲNG SƯ PHẠM HÀ GIANG",
+  "code": "C05",
+  "ror": null
+ },
+ {
+  "stt": 102,
+  "name": "TRƯỜNG CAO ĐẲNG SƯ PHẠM HÀ TÂY",
+  "code": "C20",
+  "ror": null
+ },
+ {
+  "stt": 103,
+  "name": "Trường Cao đẳng Cộng đồng Kon Tum",
+  "code": "C36",
+  "ror": null
+ },
+ {
+  "stt": 104,
+  "name": "Trường Cao đẳng Cộng đồng Lai Châu",
+  "code": "CLC",
+  "ror": null
+ },
+ {
+  "stt": 105,
+  "name": "Trường Cao đẳng Cộng đồng Sóc Trăng",
+  "code": "CST",
+  "ror": null
+ },
+ {
+  "stt": 106,
+  "name": "Trường Cao đẳng Cộng đồng Vĩnh Long",
+  "code": "D57",
+  "ror": null
+ },
+ {
+  "stt": 108,
+  "name": "NHẠC VIỆN TP. HỒ CHÍ MINH",
+  "code": "NVS",
+  "ror": "https://ror.org/00waaqh38"
+ },
+ {
+  "stt": 109,
+  "name": "Trường Cao đẳng Bắc Kạn",
+  "code": "C11",
+  "ror": null
+ },
+ {
+  "stt": 111,
+  "name": "Trường Cao đẳng Bình Định",
+  "code": "C37",
+  "ror": null
+ },
+ {
+  "stt": 114,
+  "name": "Trường Cao đẳng Cộng đồng Bình Thuận",
+  "code": "C47",
+  "ror": null
+ },
+ {
+  "stt": 116,
+  "name": "Trường Cao đẳng Cộng đồng Hà Nội",
+  "code": "CHN",
+  "ror": null
+ },
+ {
+  "stt": 117,
+  "name": "Trường Cao đẳng Cộng đồng Hậu Giang",
+  "code": "D64",
+  "ror": "https://ror.org/01nmz1w66"
+ },
+ {
+  "stt": 118,
+  "name": "Trường Cao đẳng Cộng đồng Hưng Yên",
+  "code": "C22",
+  "ror": null
+ },
+ {
+  "stt": 121,
+  "name": "HỌC VIỆN CHÍNH TRỊ KHU VỰC I",
+  "code": "HCC",
+  "ror": null
+ },
+ {
+  "stt": 124,
+  "name": "HỌC VIỆN HÀNH CHÍNH QUỐC GIA",
+  "code": "HCH",
+  "ror": "https://ror.org/02dg2kf02"
+ },
+ {
+  "stt": 127,
+  "name": "HỌC VIỆN KHOA HỌC, CÔNG NGHỆ VÀ ĐỔI MỚI SÁNG TẠO",
+  "code": "V24",
+  "ror": null
+ },
+ {
+  "stt": 144,
+  "name": "TRƯỜNG ĐẠI HỌC CÔNG NGHIỆP DỆT MAY HÀ NỘI",
+  "code": "CCM",
+  "ror": null
+ },
+ {
+  "stt": 153,
+  "name": "TRƯỜNG ĐẠI HỌC CÔNG NGHỆ - ĐẠI HỌC QUỐC GIA HÀ NỘI",
+  "code": "QHI",
+  "ror": null
+ },
+ {
+  "stt": 171,
+  "name": "TRƯỜNG ĐẠI HỌC NỘI VỤ HÀ NỘI",
+  "code": "DNV",
+  "ror": null
+ },
+ {
+  "stt": 188,
+  "name": "TRƯỜNG CAO ĐẲNG SƯ PHẠM THỪA THIÊN HUẾ",
+  "code": "C33",
+  "ror": null
+ },
+ {
+  "stt": 194,
+  "name": "TRƯỜNG ĐẠI HỌC TRÀ VINH",
+  "code": "DVT",
+  "ror": "https://ror.org/05ghhgs79"
+ },
+ {
+  "stt": 200,
+  "name": "TRƯỜNG CAO ĐẲNG SƯ PHẠM NGHỆ AN",
+  "code": "C29",
+  "ror": null
+ },
+ {
+  "stt": 206,
+  "name": "TRƯỜNG ĐẠI HỌC QUỐC TẾ - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+  "code": "QSQ",
+  "ror": null
+ },
+ {
+  "stt": 221,
+  "name": "TRƯỜNG ĐẠI HỌC LUẬT, ĐẠI HỌC HUẾ",
+  "code": "DHA",
+  "ror": "https://ror.org/04z6cm680"
+ },
+ {
+  "stt": 250,
+  "name": "TRƯỜNG ĐẠI HỌC KINH TẾ, ĐẠI HỌC HUẾ",
+  "code": "DHK",
+  "ror": null
+ },
+ {
+  "stt": 255,
+  "name": "TRƯỜNG ĐẠI HỌC NGOẠI NGỮ, ĐẠI HỌC HUẾ",
+  "code": "DHF",
+  "ror": null
+ },
+ {
+  "stt": 258,
+  "name": "TRƯỜNG ĐẠI HỌC SƯ PHẠM, ĐẠI HỌC HUẾ",
+  "code": "DHS",
+  "ror": null
+ },
+ {
+  "stt": 263,
+  "name": "TRƯỜNG ĐẠI HỌC AN GIANG - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+  "code": "TAG",
+  "ror": "https://ror.org/023pm6532"
+ },
+ {
+  "stt": 269,
+  "name": "TRƯỜNG ĐẠI HỌC Y DƯỢC, ĐẠI HỌC THÁI NGUYÊN",
+  "code": "DTY",
+  "ror": null
+ },
+ {
+  "stt": 274,
+  "name": "TRƯỜNG ĐẠI HỌC BÁCH KHOA, ĐẠI HỌC ĐÀ NẴNG",
+  "code": "DDK",
+  "ror": null
+ },
+ {
+  "stt": 276,
+  "name": "TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+  "code": "QSC",
+  "ror": "https://ror.org/05kdc4973"
+ },
+ {
+  "stt": 285,
+  "name": "TRƯỜNG ĐẠI HỌC KINH TẾ - LUẬT - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+  "code": "QSK",
+  "ror": "https://ror.org/0138jhg57"
+ },
+ {
+  "stt": 289,
+  "name": "TRƯỜNG ĐẠI HỌC NÔNG LÂM, ĐẠI HỌC THÁI NGUYÊN",
+  "code": "DTN",
+  "ror": null
+ },
+ {
+  "stt": 296,
+  "name": "TRƯỜNG ĐẠI HỌC KHOA HỌC, ĐẠI HỌC HUẾ",
+  "code": "DHT",
+  "ror": "https://ror.org/01fj37d94"
+ },
+ {
+  "stt": 301,
+  "name": "TRƯỜNG ĐẠI HỌC SƯ PHẠM, ĐẠI HỌC THÁI NGUYÊN",
+  "code": "DTS",
+  "ror": null
+ },
+ {
+  "stt": 303,
+  "name": "TRƯỜNG ĐẠI HỌC KHOA HỌC XÃ HỘI VÀ NHÂN VĂN - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+  "code": "QSX",
+  "ror": "https://ror.org/011109p83"
+ },
+ {
+  "stt": 304,
+  "name": "TRƯỜNG ĐẠI HỌC Y DƯỢC, ĐẠI HỌC HUẾ",
+  "code": "DHY",
+  "ror": null
+ },
+ {
+  "stt": 305,
+  "name": "TRƯỜNG ĐẠI HỌC NÔNG LÂM, ĐẠI HỌC HUẾ",
+  "code": "DHL",
+  "ror": null
+ },
+ {
+  "stt": 311,
+  "name": "TRƯỜNG ĐẠI HỌC SƯ PHẠM KỸ THUẬT TP. HỒ CHÍ MINH",
+  "code": "SPK",
+  "ror": "https://ror.org/05hzn5427"
+ },
+ {
+  "stt": 316,
+  "name": "TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN VÀ TRUYỀN THÔNG, ĐẠI HỌC THÁI NGUYÊN",
+  "code": "DTC",
+  "ror": "https://ror.org/0561fmp23"
+ },
+ {
+  "stt": 318,
+  "name": "TRƯỜNG ĐẠI HỌC KHOA HỌC, ĐẠI HỌC THÁI NGUYÊN",
+  "code": "DTZ",
+  "ror": "https://ror.org/01fj37d94"
+ },
+ {
+  "stt": 320,
+  "name": "TRƯỜNG ĐẠI HỌC GIÁO DỤC - ĐẠI HỌC QUỐC GIA HÀ NỘI",
+  "code": "QHS",
+  "ror": null
+ },
+ {
+  "stt": 321,
+  "name": "TRƯỜNG ĐẠI HỌC KINH TẾ, ĐẠI HỌC ĐÀ NẴNG",
+  "code": "DDQ",
+  "ror": null
+ },
+ {
+  "stt": 322,
+  "name": "TRƯỜNG ĐẠI HỌC NGOẠI NGỮ, ĐẠI HỌC ĐÀ NẴNG",
+  "code": "DDF",
+  "ror": null
+ },
+ {
+  "stt": 323,
+  "name": "TRƯỜNG ĐẠI HỌC KINH TẾ - ĐẠI HỌC QUỐC GIA HÀ NỘI",
+  "code": "QHE",
+  "ror": null
+ },
+ {
+  "stt": 324,
+  "name": "TRƯỜNG ĐẠI HỌC KHOA HỌC XÃ HỘI VÀ NHÂN VĂN - ĐẠI HỌC QUỐC GIA HÀ NỘI",
+  "code": "QHX",
+  "ror": "https://ror.org/011109p83"
+ },
+ {
+  "stt": 325,
+  "name": "TRƯỜNG ĐẠI HỌC NGOẠI NGỮ - ĐẠI HỌC QUỐC GIA HÀ NỘI",
+  "code": "QHF",
+  "ror": null
+ },
+ {
+  "stt": 327,
+  "name": "TRƯỜNG ĐẠI HỌC SƯ PHẠM, ĐẠI HỌC ĐÀ NẴNG",
+  "code": "DDS",
+  "ror": null
+ }
+]

@@ -19,13 +19,29 @@
 - Hiển thị tỷ lệ công trình khớp danh mục trên hồ sơ để người đọc biết độ phủ.
 - Dữ liệu mẫu có cờ `demo` và băng rôn cảnh báo; không trộn với dữ liệu thật.
 
-## 4. Câu hỏi cần anh quyết định
-1. **Phạm vi tác giả**: chỉ những người có đơn vị tại Việt Nam (đề xuất, nhẹ hơn nhiều), hay cả tác giả thế giới? Nếu cả thế giới nên theo từng đợt (theo ngành/đơn vị) vì hàng chục triệu hồ sơ.
-2. **Quyền riêng tư (quan trọng)**: hồ sơ công khai theo tên người thật cần cơ chế đính chính/gỡ. Đề xuất: chỉ dùng dữ liệu công khai (OpenAlex/ORCID), có nút "Đây là tôi / báo sai / gỡ hồ sơ", ghi nhật ký thay đổi. Anh đồng ý hướng này, và có muốn tác giả "nhận hồ sơ" bằng đăng nhập ORCID không?
-3. **Cách tính điểm**: hiện là tổng mức tối đa của tạp chí, chưa chia theo vai trò tác giả (quy tắc "tác giả chính" của HĐGSNN nằm trong `authorRule` của EduFind) và chưa chia cho số tác giả. Anh muốn: (a) tổng tối đa như hiện tại, (b) chỉ tính khi là tác giả chính, (c) chia đều theo số tác giả?
-4. **Ngành của tác giả**: suy ra từ ngành của các tạp chí họ đã đăng (đề xuất, minh bạch), hay từ chủ đề OpenAlex? Một ISSN có thể thuộc nhiều ngành.
-5. **Danh sách đơn vị chính thức**: anh có sẵn file danh sách (Bộ GD&ĐT, các viện, bộ, sở) không? Nếu có, gửi tôi để nạp thay bản gieo. Nếu chưa, tôi sẽ lấy từ trang Bộ và ROR.
-6. **Tên miền và thương hiệu**: `profind.isavn.edu.vn`? Logo hiện là tạm, cần thống nhất với bộ nhận diện ISA.
+## 4. Quyết định đã chốt (07/10/2026)
+1. **Phạm vi**: Việt Nam trước (tác giả có đơn vị tại Việt Nam); thế giới làm sau, theo đợt.
+2. **Quyền riêng tư**: chỉ dùng dữ liệu công khai (OpenAlex, ORCID); có cơ chế đính chính / gỡ hồ sơ; tác giả nhận hồ sơ bằng ORCID (chưa làm, xem mục 6).
+3. **Cách tính điểm**: chỉ tính khi là **tác giả chính theo HĐGSNN** = tác giả đứng đầu hoặc tác giả liên hệ; có từ 2 tác giả liên hệ trở lên thì chỉ tính tác giả đứng đầu. Cài ở `ingest-openalex.mjs` (trường `role`, `corr`) và `build-index.mjs` (chỉ `role = lead` mới có điểm). Công trình đồng tác giả vẫn hiện, ghi "Không tính".
+4. **Ngành của tác giả**: suy ra từ ngành của các tạp chí họ đã đăng (mọi công trình khớp danh mục), giữ ngành chiếm ≥ 25% (tối đa 3).
+5. **Danh sách đơn vị**: lấy từ Bộ GD&ĐT (`moet.gov.vn/co-so-giao-duc/danh-sach-cac-co-so-giao-duc`), đối chiếu Wikipedia vi; script `import-institutions.mjs` ghi ra `data/institutions.candidates.json` để duyệt. **Cần mở mạng** cho `moet.gov.vn`, `vi.wikipedia.org`, `api.openalex.org`, `api.ror.org`.
+6. **Tên miền**: `profind.isavn.edu.vn`. **Logo**: bông hoa nguyên tử 5 cánh theo dải quang phổ quanh cặp kính của nhà nghiên cứu, nền chàm (thiết kế gốc, tham khảo tinh thần "nguyên tử" nhưng không sao chép), nguồn `scripts/lib/brand.mjs`, xuất bằng `npm run d:icons`.
+
+### Kết quả chạy thử dữ liệu thật (Đại học Cần Thơ, 30 tác giả có nhiều công trình nhất, từ 2016)
+- Nạp 2.997 công trình trong ~13 giây. Chỉ 14% khớp danh mục tạp chí **trong nước** của HĐGSNN; thêm tra Scopus theo quy tắc từng ngành (SJR + `internationalRules` của EduFind, `data/sjr-rules.json`) thì khớp 70%, 673 công trình tác giả chính có điểm.
+- Phần chưa tính điểm: kỷ yếu hội nghị (LNCS, CCIS, LNNS...), SSRN, tạp chí chưa có ISSN khớp. Web of Science (SCIE/SSCI) không có trong dữ liệu công khai nên điểm quốc tế là mức dưới theo Scopus.
+- Điểm công trình = max(điểm tạp chí trong nước theo năm, điểm Scopus theo quy tắc ngành); tạp chí thuộc nhiều ngành thì lấy ngành cho điểm cao nhất (mức tối đa).
+- Tên tác giả từ OpenAlex có thể ở dạng viết tắt ("T D K Nguyen"); cần ORCID/đính chính để chuẩn hóa.
+- **Chưa đưa dữ liệu thật vào kho** cho đến khi có cơ chế đính chính / gỡ hồ sơ (mục 2); kho giữ dữ liệu mẫu.
+
+### Quyền riêng tư và đính chính (đã cài)
+- Trang `#/dinh-chinh/<mã hồ sơ>` (nút "Đây là tôi / đính chính / gỡ hồ sơ" trên mọi hồ sơ và ở chân trang): ba loại yêu cầu (xác nhận, đính chính, gỡ). Gửi tới `api/correction.js` (Resend; cùng biến `RESEND_API_KEY` với EduFind; tùy chọn `CORRECTION_TO`, `CORRECTION_FROM`, Redis giới hạn 5 yêu cầu/giờ). Không cấu hình được email thì giao diện hiện địa chỉ liên hệ để gửi trực tiếp.
+- Yêu cầu **không tự sửa dữ liệu**: người quản trị xác minh (ORCID, email cơ quan) rồi ghi vào `data/corrections.json` (`remove`, `rename`, `excludeWorks`, `merge`, `claimed`), và `npm run d:index` áp dụng. Gỡ hồ sơ luôn được thực hiện. Hồ sơ đã xác nhận có dấu "Đã được tác giả xác nhận".
+- Hồ sơ trùng ORCID được tự gộp. Nạp lại dữ liệu không làm mất đính chính vì đính chính nằm ở tệp riêng.
+- Xác minh ORCID tự động bằng đăng nhập ORCID (OAuth) cần ORCID client id/secret của ISA; làm khi có.
+
+### Sự cố dữ liệu đã sửa: mã ROR gắn nhầm (07/10/2026)
+Bản dựng trước có 26 mã ROR dùng chung cho nhiều đơn vị khác nhau (ví dụ Ngoại ngữ, Mở, Dược, Luật Hà Nội cùng một mã), nên một số tác giả bị gán sai đơn vị. Đã thêm `scripts/audit-ror.mjs`: đối chiếu chặt tên đơn vị với mọi tên trong bản ghi ROR (>= 0.9), mỗi mã chỉ giữ cho một đơn vị khớp nhất, đơn vị nghi ngờ bị bỏ mã (ghi `rorSuspect`), xóa dữ liệu tác giả đã nạp nhầm, thử tìm lại mã đúng; kết quả `data/ror-audit.json`. 37/376 đơn vị bị xử lý, 12 tìm lại được mã đúng. Chạy lại audit mỗi khi thêm đơn vị mới.
 
 ## 5. Ý tưởng mới
 - **Đối chiếu ISSN ngược**: từ một tạp chí ở EduFind, xem ai đang đăng ở đó (giúp chọn nơi gửi bài).
