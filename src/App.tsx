@@ -93,7 +93,7 @@ function AppInner() {
       <a className="skip" href="#main" onClick={(e) => { e.preventDefault(); mainRef.current?.focus(); }}>{t("skip")}</a>
       <header className="top">
         <div className="wrap hd">
-          <a className="brand" href="#/" aria-label="ProFind"><img className="logo" src="./logo-disc.svg" alt="" width="40" height="40" /><b>Pro<i>Find</i></b><span className="beta" title={t("betaTip")}>Beta</span></a>
+          <a className="brand" href="#/" aria-label="ProFind"><img className="logo" src="./logo-disc.svg" alt="" width="40" height="40" /><b>Pro<i>Find</i></b></a>
           <div className="hd-tools">
             <button className="icon-btn" onClick={() => { const n: Theme = dark ? "light" : "dark"; setTheme(n); setThemeState(n); evt("theme"); }} aria-label={dark ? t("themeToLight") : t("themeToDark")} title={dark ? t("themeToLight") : t("themeToDark")}><Icon n={dark ? "moon" : "sun"} size={20} /></button>
           <div className="lang" role="group" aria-label={t("langLabel")}>
