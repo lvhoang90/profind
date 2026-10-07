@@ -462,3 +462,9 @@ html,body{max-width:100%;overflow-x:clip}
 .psp-hero h1 .k1000{font-style:normal;margin-left:.04em;background:linear-gradient(90deg,#f6d98f,#f59e0b);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 .psp>*{min-width:0}.psp-hero h1{font-size:clamp(1.55rem,6.6vw,4.4rem);white-space:nowrap}.psp-hero h1 .k1000{font-style:normal}
 @media(max-width:480px){.psp-hero{padding:20px 18px}.psp-credit{padding:10px 12px;gap:10px}.psp-credit img{width:36px;height:36px}.psp-t{min-width:560px}}
+.bigflag{display:flex;gap:10px;align-items:flex-start;margin:10px 0 0;padding:10px 14px;border-radius:12px;background:rgba(245,158,11,.16);border:1px solid rgba(246,201,110,.55);color:#fff3c4;font-size:.86rem;line-height:1.5;max-width:70ch}.bigflag .ic{flex:none;margin-top:2px;color:#f6d98f;--ic2:#f6d98f}.bigflag b{color:#fff}
+.bigtag{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin-left:6px;border-radius:50%;background:#fff3c4;color:#8a5a00;vertical-align:middle}.bigtag .ic{--ic2:#f59e0b}
+.chip.big{display:inline-flex;align-items:center;gap:5px;background:#fff3c4;color:#6b4300;border-color:#f6d86a}.chip.big .ic{--ic2:#f59e0b}
+/* Nhãn thẻ trên điện thoại không xuống dòng (PRO-SCORE1000™ dài) */
+table.cards td[data-l]::before{white-space:nowrap}
+@media(max-width:480px){table.cards td[data-l]::before{font-size:.68rem;letter-spacing:0}}

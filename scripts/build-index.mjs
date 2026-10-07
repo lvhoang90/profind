@@ -33,6 +33,7 @@ authors = authors.filter((a) => !alias.has(a.id));
 // Hồ sơ bị gộp vào hồ sơ khác: cộng số trích dẫn toàn thời gian của hồ sơ gốc vào hồ sơ đích.
 const SCH = existsSync("data/scholar.json") ? rd("data/scholar.json") : {};
 const S2 = existsSync("data/raw/_s2.json") ? rd("data/raw/_s2.json") : {};
+const NA = existsSync("data/raw/_nauth.json") ? rd("data/raw/_nauth.json") : {}; // số tác giả mỗi công trình (101 = hơn 100); dùng gắn cờ nhóm nghiên cứu lớn
 const CR = existsSync("data/raw/_crossref.json") ? rd("data/raw/_crossref.json") : {}; // Crossref (đối chiếu), -1 = không có DOI
 const OC = existsSync("data/raw/_opencitations.json") ? rd("data/raw/_opencitations.json") : {}; // OpenCitations: chỉ một mẫu DOI, dùng kiểm toán, không vào điểm
 const xs = { n: 0, crHigher: 0, s2Higher: 0, oaHighest: 0 }, oc = { n: 0, oa: 0, cr: 0, s2: 0, oc: 0, ocLeOA: 0 };
@@ -89,6 +90,7 @@ const works = prepared.map(({ w, js, sj, disc }) => {
   const { issns: _i, corr, ...rest } = w;
   // Trích dẫn công trình = max(OpenAlex, Semantic Scholar) theo DOI; cOA giữ số OpenAlex để tính phần bổ sung ở cấp tác giả.
   const cOA = w.citations ?? 0, cS2 = w.doi ? (S2[w.doi] ?? 0) : 0, cCR = w.doi ? Math.max(0, CR[w.doi] ?? 0) : 0; rest.citations = Math.max(cOA, cS2, cCR);
+  { const nA = NA[String(w.id).split("-").pop()] ?? 0; if (nA >= 25) rest.na = nA; }
   if (w.doi && OC[w.doi] !== undefined && OC[w.doi] >= 0) { oc.n++; oc.oa += cOA; oc.cr += cCR; oc.s2 += cS2; oc.oc += OC[w.doi]; if (OC[w.doi] <= cOA) oc.ocLeOA++; }
   if (w.doi && CR[w.doi] !== undefined) { xs.n++; if (cCR > cOA) xs.crHigher++; if (cS2 > cOA) xs.s2Higher++; if (cOA >= cS2 && cOA >= cCR) xs.oaHighest++; }
   const score = pick ? pick.s : null;
@@ -101,6 +103,8 @@ const works = prepared.map(({ w, js, sj, disc }) => {
 const per = new Map();
 for (const w of works) { const l = per.get(w.authorId); if (l) l.push(w); else per.set(w.authorId, [w]); }
 const cleanName = (n) => { let x = String(n ?? "").normalize("NFC").replace(/[\u2010-\u2015\u2212]/g, "-").replace(/[\u00a0\u2000-\u200b\u202f]/g, " ").replace(/\s+/g, " ").trim(); if (x === x.toUpperCase() && /[A-ZÀ-Ỹ]{3}/.test(x)) x = x.toLowerCase().replace(/(^|[\s-])(\p{L})/gu, (_, p, c) => p + c.toUpperCase()); return x; };
+// Nhóm nghiên cứu lớn: công trình có từ 50 tác giả trở lên (consortium). Cờ khi có >= 3 công trình như vậy và chúng chiếm >= 30% trích dẫn của các công trình đã nạp.
+const bigStats = (ws) => { const big = ws.filter((w) => (w.na ?? 0) >= 50), all = ws.reduce((t, w) => t + (w.citations ?? 0), 0), bc = big.reduce((t, w) => t + (w.citations ?? 0), 0); const share = all ? Math.round((100 * bc) / all) : 0; return { bigWorks: big.length, bigShare: big.length ? share : 0, bigFlag: big.length >= 3 && share >= 30 }; };
 const outAuthors = authors.map((a) => {
   const ws = per.get(a.id) ?? [], jc = new Map();
   for (const w of ws) jc.set(`${w.journal}|${w.issn}`, (jc.get(`${w.journal}|${w.issn}`) ?? 0) + 1);
@@ -117,7 +121,7 @@ const outAuthors = authors.map((a) => {
     foreign: TOP2[a.id] ? false : meta && meta.countries.length ? meta.countries.some((c) => c !== "VN") : null,
     // suspect: hồ sơ OpenAlex nhiều khả năng gộp nhầm nhiều người (>= 500 công trình, > 150 công trình/năm, hoặc >= 5 đơn vị); ẩn khỏi bảng mặc định và không tính thứ hạng.
     suspect: ws.length >= 500 || ws.length / span > 150 || a.institutions.length >= 5,
-    oaWorks: meta?.worksTotal ?? null, worksCount: ws.length, countedWorks: ws.filter((w) => w.counted).length, totalScore: Math.round(ws.reduce((s, w) => s + (w.score ?? 0), 0) * 100) / 100,
+    oaWorks: meta?.worksTotal ?? null, ...bigStats(ws), worksCount: ws.length, countedWorks: ws.filter((w) => w.counted).length, totalScore: Math.round(ws.reduce((s, w) => s + (w.score ?? 0), 0) * 100) / 100,
     // citations: số trích dẫn TOÀN THỜI GIAN của hồ sơ OpenAlex (khớp với cách các hệ thống khác tính); citations2016: riêng các công trình trong ProFind (từ 2016).
     citations: (meta?.cited ?? ws.reduce((s, w) => s + (w.cOA ?? 0), 0)) + (extraCited.get(a.id) ?? 0) + ws.reduce((s, w) => s + Math.max(0, (w.citations ?? 0) - (w.cOA ?? 0)), 0), citations2016: ws.reduce((s, w) => s + (w.citations ?? 0), 0), hIndex: meta?.h ?? null, matchedRate: ws.length ? Math.round((matched / ws.length) * 100) / 100 : 0,
     firstYear: years.length ? Math.min(...years) : null, lastYear: years.length ? Math.max(...years) : null };
