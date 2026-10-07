@@ -3,7 +3,7 @@
   "private": true,
   "license": "MIT",
   "author": "Luong Viet Hoang (ISA Vietnam)",
-  "version": "0.1.0",
+  "version": "0.1.0-beta.1",
   "type": "module",
   "scripts": {
     "dev": "vite",

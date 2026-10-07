@@ -74,7 +74,7 @@ export function App() {
       <a className="skip" href="#main" onClick={(e) => { e.preventDefault(); mainRef.current?.focus(); }}>{t("skip")}</a>
       <header className="top">
         <div className="wrap hd">
-          <a className="brand" href="#/" aria-label="ProFind"><img className="logo" src="./logo-disc.svg" alt="" width="40" height="40" /><b>Pro<i>Find</i></b></a>
+          <a className="brand" href="#/" aria-label="ProFind"><img className="logo" src="./logo-disc.svg" alt="" width="40" height="40" /><b>Pro<i>Find</i></b><span className="beta" title={t("betaTip")}>Beta</span></a>
           <div className="lang" role="group" aria-label={t("langLabel")}>
             {(["vi", "en"] as const).map((l) => <button key={l} lang={l} className={`lang-${l}`} aria-pressed={lang === l} aria-label={l === "vi" ? "Tiếng Việt" : "English"} onClick={() => setLang(l)}>{l.toUpperCase()}</button>)}
           </div>

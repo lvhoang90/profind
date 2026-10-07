@@ -1,5 +1,7 @@
 # ProFind
 
+> **Bản Beta (v0.1.0-beta.1)**: dữ liệu và điểm còn đang hoàn thiện, chỉ để tham khảo. Xem [CHANGELOG](CHANGELOG.md) và mục [Giới hạn đã biết](CHANGELOG.md#giới-hạn-đã-biết-của-bản-beta).
+
 Ứng dụng tra cứu **tác giả, nhà nghiên cứu** Việt Nam và thế giới, thuộc hệ sinh thái ISA (cùng họ với EduFind, Ami, Mây). Dữ liệu đồng bộ, minh bạch, có nguồn.
 Tác giả xếp theo **ngành** (28 ngành của EduFind), **đơn vị** (trường đại học công/tư, viện, bộ, sở), **công trình** (năm, tạp chí, ISSN, số trích dẫn, điểm tham khảo theo danh mục HĐGSNN).
 Có thứ hạng theo số bài và tổng điểm, **chỉ để tham khảo, không có ý nghĩa xếp hạng chính thức**.

@@ -91,3 +91,5 @@ button.primary{border:0;background:var(--accent);color:var(--accent-ink);border-
   .tworks{table-layout:fixed;min-width:860px}.tworks th:nth-child(1){width:64px}.tworks th:nth-child(2){width:38%}.tworks th:nth-child(3){width:20%}.tworks th:nth-child(4){width:96px}.tworks th:nth-child(5){width:auto}.tworks th:nth-child(6){width:84px}.tworks th:nth-child(7){width:80px}
   .tworks .wt,.tworks .wj{min-width:0}
 }
+
+.beta{margin-left:6px;align-self:center;font:700 .62rem/1 var(--font-display);letter-spacing:.08em;text-transform:uppercase;color:#1c1917;background:#fde047;padding:4px 7px;border-radius:999px}
