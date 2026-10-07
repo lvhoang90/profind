@@ -453,3 +453,4 @@ html,body{max-width:100%;overflow-x:clip}
 :root[data-theme=dark] .psp-tiers li.t10{background:linear-gradient(180deg,#4d4222,var(--surface))}@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .psp-tiers li.t10{background:linear-gradient(180deg,#4d4222,var(--surface))}}
 @media(max-width:800px){.psp-pr{grid-template-columns:1fr 1fr}.psp-cards{grid-template-columns:1fr}.psp-tiers{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:480px){.psp-pr{grid-template-columns:1fr}.psp-tiers{grid-template-columns:repeat(2,minmax(0,1fr))}.psp-credit{align-items:flex-start}}
+.psp-hero h1 .tm{font:600 .26em/1 var(--font-body,inherit);vertical-align:top;margin-left:.15em;position:relative;top:.35em;-webkit-text-fill-color:#f6d98f;color:#f6d98f}
