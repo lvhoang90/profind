@@ -1,0 +1,913 @@
+{
+ "meta": {
+  "source": "https://moet.gov.vn/co-so-giao-duc/danh-sach-cac-co-so-giao-duc",
+  "imported": "2026-10-07",
+  "count": 100,
+  "sttRange": [
+   201,
+   300
+  ]
+ },
+ "items": [
+  {
+   "stt": 201,
+   "name": "TRƯỜNG ĐẠI HỌC FPT",
+   "code": "FPT",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=942",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 202,
+   "name": "TRƯỜNG ĐẠI HỌC ĐÀ LẠT",
+   "code": "TDL",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=980",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 203,
+   "name": "TRƯỜNG ĐẠI HỌC THUỶ LỢI",
+   "code": "TLA",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=909",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 204,
+   "name": "TRƯỜNG ĐẠI HỌC QUỐC TẾ HỒNG BÀNG",
+   "code": "HIU",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=932",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 205,
+   "name": "TRƯỜNG ĐẠI HỌC KINH TẾ - TÀI CHÍNH TP. HỒ CHÍ MINH",
+   "code": "UEF",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=945",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 206,
+   "name": "TRƯỜNG ĐẠI HỌC QUỐC TẾ - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+   "code": "QSQ",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=738",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 207,
+   "name": "TRƯỜNG ĐẠI HỌC CÔNG NGHỆ TP. HỒ CHÍ MINH",
+   "code": "DKC",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=937",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 208,
+   "name": "TRƯỜNG ĐẠI HỌC NÔNG LÂM TP. HỒ CHÍ MINH",
+   "code": "NLS",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=785",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 209,
+   "name": "HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG",
+   "code": "BVH",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=787",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 210,
+   "name": "TRƯỜNG ĐẠI HỌC ĐÔNG Á",
+   "code": "DAD",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=941",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 211,
+   "name": "TRƯỜNG ĐẠI HỌC KỸ THUẬT Y TẾ HẢI DƯƠNG",
+   "code": "DKY",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=872",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 212,
+   "name": "TRƯỜNG ĐẠI HỌC NÔNG LÂM BẮC GIANG",
+   "code": "DBG",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=856",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 213,
+   "name": "TRƯỜNG ĐẠI HỌC TÔN ĐỨC THẮNG",
+   "code": "DTT",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=721",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 214,
+   "name": "HỌC VIỆN QUẢN LÝ GIÁO DỤC",
+   "code": "HVQ",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=964",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 215,
+   "name": "TRƯỜNG CAO ĐẲNG SƯ PHẠM NAM ĐỊNH",
+   "code": "C25",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=829",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 216,
+   "name": "TRƯỜNG ĐẠI HỌC CÔNG ĐOÀN",
+   "code": "LDA",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=804",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 217,
+   "name": "TRƯỜNG ĐẠI HỌC CÔNG NGHỆ ĐỒNG NAI",
+   "code": "DCD",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=935",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 218,
+   "name": "TRƯỜNG ĐẠI HỌC ĐIỆN LỰC",
+   "code": "DDL",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=779",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 219,
+   "name": "TRƯỜNG ĐẠI HỌC HÀ TĨNH",
+   "code": "HHT",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=891",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 220,
+   "name": "TRƯỜNG ĐẠI HỌC LAO ĐỘNG - XÃ HỘI",
+   "code": "DLX",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=953",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 221,
+   "name": "TRƯỜNG ĐẠI HỌC LUẬT, ĐẠI HỌC HUẾ",
+   "code": "DHA",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=702",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 222,
+   "name": "TRƯỜNG ĐẠI HỌC THĂNG LONG",
+   "code": "DTL",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=824",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 223,
+   "name": "TRƯỜNG ĐẠI HỌC Y DƯỢC HẢI PHÒNG",
+   "code": "YPB",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=874",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 224,
+   "name": "HỌC VIỆN BÁO CHÍ VÀ TUYÊN TRUYỀN",
+   "code": "HBT",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=832",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 225,
+   "name": "HỌC VIỆN CHÍNH SÁCH VÀ PHÁT TRIỂN",
+   "code": "HCP",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=948",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 226,
+   "name": "TRƯỜNG ĐẠI HỌC CÔNG NGHỆ VÀ QUẢN LÝ HỮU NGHỊ",
+   "code": "DCQ",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=938",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 227,
+   "name": "TRƯỜNG ĐẠI HỌC CÔNG NGHIỆP VIỆT TRÌ",
+   "code": "VUI",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=894",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 228,
+   "name": "TRƯỜNG ĐẠI HỌC HẢI PHÒNG",
+   "code": "THP",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=806",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 229,
+   "name": "TRƯỜNG ĐẠI HỌC KINH TẾ KỸ THUẬT CÔNG NGHIỆP",
+   "code": "DKK",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=782",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 230,
+   "name": "TRƯỜNG ĐẠI HỌC NAM CẦN THƠ",
+   "code": "DNC",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=845",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 231,
+   "name": "TRƯỜNG ĐẠI HỌC SƯ PHẠM NGHỆ THUẬT TRUNG ƯƠNG",
+   "code": "GNT",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=744",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 232,
+   "name": "TRƯỜNG ĐẠI HỌC Y DƯỢC THÁI BÌNH",
+   "code": "YTB",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=717",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 233,
+   "name": "TRƯỜNG ĐẠI HỌC KINH TẾ - CÔNG NGHỆ THÁI NGUYÊN",
+   "code": "DVB",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=860",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 234,
+   "name": "TRƯỜNG ĐẠI HỌC BÌNH DƯƠNG",
+   "code": "DBD",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=930",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 235,
+   "name": "TRƯỜNG ĐẠI HỌC NGOẠI NGỮ - TIN HỌC TP. HỒ CHÍ MINH",
+   "code": "DNT",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=901",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 236,
+   "name": "TRƯỜNG CAO ĐẲNG SƯ PHẠM TRUNG ƯƠNG NHA TRANG",
+   "code": "CM2",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=850",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 237,
+   "name": "TRƯỜNG ĐẠI HỌC CỬU LONG",
+   "code": "DCL",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=815",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 238,
+   "name": "TRƯỜNG ĐẠI HỌC QUẢNG BÌNH",
+   "code": "DQB",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=904",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 239,
+   "name": "TRƯỜNG ĐẠI HỌC XÂY DỰNG MIỀN TÂY",
+   "code": "MTU",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=698",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 240,
+   "name": "HỌC VIỆN HÀNG KHÔNG VIỆT NAM",
+   "code": "HHK",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=975",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 241,
+   "name": "HỌC VIỆN Y DƯỢC HỌC CỔ TRUYỀN VIỆT NAM",
+   "code": "HYD",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=866",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 242,
+   "name": "TRƯỜNG ĐẠI HỌC HÙNG VƯƠNG",
+   "code": "THV",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=899",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 243,
+   "name": "TRƯỜNG ĐẠI HỌC KIẾN TRÚC ĐÀ NẴNG",
+   "code": "KTD",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=883",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 244,
+   "name": "TRƯỜNG ĐẠI HỌC SƯ PHẠM TP. HỒ CHÍ MINH",
+   "code": "SPS",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=745",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 245,
+   "name": "TRƯỜNG ĐẠI HỌC CẦN THƠ",
+   "code": "TCT",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=867",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 246,
+   "name": "TRƯỜNG ĐẠI HỌC CÔNG NGHỆ SÀI GÒN",
+   "code": "DSG",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=936",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 247,
+   "name": "TRƯỜNG ĐẠI HỌC DƯỢC HÀ NỘI",
+   "code": "DKH",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=869",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 248,
+   "name": "TRƯỜNG ĐẠI HỌC HÀNG HẢI VIỆT NAM",
+   "code": "HHA",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=986",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 249,
+   "name": "TRƯỜNG ĐẠI HỌC HOÀ BÌNH",
+   "code": "ETU",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=817",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 250,
+   "name": "TRƯỜNG ĐẠI HỌC KINH TẾ, ĐẠI HỌC HUẾ",
+   "code": "DHK",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=701",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 251,
+   "name": "TRƯỜNG ĐẠI HỌC LÂM NGHIỆP",
+   "code": "LNH",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=855",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 252,
+   "name": "TRƯỜNG ĐẠI HỌC LUẬT HÀ NỘI",
+   "code": "LPH",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=792",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 253,
+   "name": "TRƯỜNG ĐẠI HỌC MỎ - ĐỊA CHẤT",
+   "code": "MDA",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=808",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 254,
+   "name": "TRƯỜNG ĐẠI HỌC MỞ HÀ NỘI",
+   "code": "MHN",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=965",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 255,
+   "name": "TRƯỜNG ĐẠI HỌC NGOẠI NGỮ, ĐẠI HỌC HUẾ",
+   "code": "DHF",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=704",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 256,
+   "name": "TRƯỜNG ĐẠI HỌC SƯ PHẠM HÀ NỘI 2",
+   "code": "SP2",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=743",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 257,
+   "name": "TRƯỜNG ĐẠI HỌC SƯ PHẠM KỸ THUẬT HƯNG YÊN",
+   "code": "SKH",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=712",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 258,
+   "name": "TRƯỜNG ĐẠI HỌC SƯ PHẠM, ĐẠI HỌC HUẾ",
+   "code": "DHS",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=706",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 259,
+   "name": "TRƯỜNG ĐẠI HỌC TÀI NGUYÊN VÀ MÔI TRƯỜNG HÀ NỘI",
+   "code": "DMT",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=746",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 260,
+   "name": "TRƯỜNG ĐẠI HỌC TÂY ĐÔ",
+   "code": "DTD",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=946",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 261,
+   "name": "TRƯỜNG ĐẠI HỌC THỂ DỤC THỂ THAO BẮC NINH",
+   "code": "TDB",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=694",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 262,
+   "name": "TRƯỜNG ĐẠI HỌC THƯƠNG MẠI",
+   "code": "TMA",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=825",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 263,
+   "name": "TRƯỜNG ĐẠI HỌC AN GIANG - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+   "code": "TAG",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=732",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 264,
+   "name": "TRƯỜNG ĐẠI HỌC LẠC HỒNG",
+   "code": "DLH",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=889",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 265,
+   "name": "TRƯỜNG ĐẠI HỌC NHA TRANG",
+   "code": "TSN",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=691",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 266,
+   "name": "TRƯỜNG ĐẠI HỌC KIẾN TRÚC HÀ NỘI",
+   "code": "KTA",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=884",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 267,
+   "name": "TRƯỜNG ĐẠI HỌC MỸ THUẬT VIỆT NAM",
+   "code": "MTH",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=969",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 268,
+   "name": "TRƯỜNG ĐẠI HỌC Y DƯỢC CẦN THƠ",
+   "code": "YCT",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=873",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 269,
+   "name": "TRƯỜNG ĐẠI HỌC Y DƯỢC, ĐẠI HỌC THÁI NGUYÊN",
+   "code": "DTY",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=918",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 270,
+   "name": "TRƯỜNG ĐẠI HỌC HÀ NỘI",
+   "code": "NHF",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=870",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 271,
+   "name": "TRƯỜNG ĐẠI HỌC NGÂN HÀNG TP. HỒ CHÍ MINH",
+   "code": "NHS",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=963",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 272,
+   "name": "TRƯỜNG ĐẠI HỌC KINH TẾ VÀ QUẢN TRỊ KINH DOANH, ĐẠI HỌC THÁI NGUYÊN",
+   "code": "DTE",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=914",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 273,
+   "name": "ĐẠI HỌC BÁCH KHOA HÀ NỘI",
+   "code": "BKA",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=812",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 274,
+   "name": "TRƯỜNG ĐẠI HỌC BÁCH KHOA, ĐẠI HỌC ĐÀ NẴNG",
+   "code": "DDK",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=796",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 275,
+   "name": "TRƯỜNG ĐẠI HỌC XÂY DỰNG HÀ NỘI",
+   "code": "XDA",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=827",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 276,
+   "name": "TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+   "code": "QSC",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=734",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 277,
+   "name": "TRƯỜNG ĐẠI HỌC SAO ĐỎ",
+   "code": "SDU",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=822",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 278,
+   "name": "TRƯỜNG ĐẠI HỌC Y TẾ CÔNG CỘNG",
+   "code": "YTC",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=878",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 279,
+   "name": "ĐẠI HỌC Y DƯỢC TP. HỒ CHÍ MINH",
+   "code": "YDS",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=875",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 280,
+   "name": "TRƯỜNG ĐẠI HỌC TÀI CHÍNH - MARKETING",
+   "code": "DMS",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=955",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 281,
+   "name": "TRƯỜNG ĐẠI HỌC THỦ DẦU MỘT",
+   "code": "TDM",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=858",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 282,
+   "name": "TRƯỜNG ĐẠI HỌC KỸ THUẬT CÔNG NGHIỆP, ĐẠI HỌC THÁI NGUYÊN",
+   "code": "DTK",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=915",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 283,
+   "name": "TRƯỜNG ĐẠI HỌC PHẠM VĂN ĐỒNG",
+   "code": "DPQ",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=902",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 284,
+   "name": "TRƯỜNG ĐẠI HỌC QUY NHƠN",
+   "code": "DQN",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=905",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 285,
+   "name": "TRƯỜNG ĐẠI HỌC KINH TẾ - LUẬT - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+   "code": "QSK",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=737",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 286,
+   "name": "TRƯỜNG ĐẠI HỌC MỞ TP. HỒ CHÍ MINH",
+   "code": "MBS",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=966",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 287,
+   "name": "TRƯỜNG ĐẠI HỌC TIỀN GIANG",
+   "code": "TTG",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=859",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 288,
+   "name": "TRƯỜNG ĐẠI HỌC Y HÀ NỘI",
+   "code": "YHB",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=876",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 289,
+   "name": "TRƯỜNG ĐẠI HỌC NÔNG LÂM, ĐẠI HỌC THÁI NGUYÊN",
+   "code": "DTN",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=916",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 290,
+   "name": "TRƯỜNG ĐẠI HỌC ĐỒNG THÁP",
+   "code": "SPD",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=689",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 291,
+   "name": "TRƯỜNG CAO ĐẲNG SƯ PHẠM TRUNG ƯƠNG",
+   "code": "CM1",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=849",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 292,
+   "name": "TRƯỜNG ĐẠI HỌC CÔNG NGHIỆP HÀ NỘI",
+   "code": "DCN",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=813",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 293,
+   "name": "TRƯỜNG ĐẠI HỌC NGOẠI THƯƠNG",
+   "code": "NTH",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=821",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 294,
+   "name": "HỌC VIỆN NÔNG NGHIỆP VIỆT NAM",
+   "code": "HVN",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=879",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 295,
+   "name": "TRƯỜNG ĐẠI HỌC HỒNG ĐỨC",
+   "code": "HDT",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=740",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 296,
+   "name": "TRƯỜNG ĐẠI HỌC KHOA HỌC, ĐẠI HỌC HUẾ",
+   "code": "DHT",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=700",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 297,
+   "name": "TRƯỜNG ĐẠI HỌC VINH",
+   "code": "TDV",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=749",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 298,
+   "name": "HỌC VIỆN NGÂN HÀNG",
+   "code": "NHH",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=811",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 299,
+   "name": "TRƯỜNG ĐẠI HỌC SÂN KHẤU ĐIỆN ẢNH HÀ NỘI",
+   "code": "SKD",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=756",
+   "province": null,
+   "kind": null,
+   "level": null
+  },
+  {
+   "stt": 300,
+   "name": "TRƯỜNG ĐẠI HỌC SƯ PHẠM HÀ NỘI",
+   "code": "SPH",
+   "url": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=742",
+   "province": null,
+   "kind": null,
+   "level": null
+  }
+ ]
+}

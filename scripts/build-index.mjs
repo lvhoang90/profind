@@ -75,7 +75,7 @@ rank("worksCount", "rankWorks"); rank("totalScore", "rankScore");
 rmSync("public/data/works", { recursive: true, force: true }); mkdirSync("public/data/works", { recursive: true });
 for (const [id, ws] of per) writeFileSync(`public/data/works/${id}.json`, JSON.stringify(ws.map(({ authorId, demo, disc, counted, matched, ...w }) => w)));
 const usedInst = new Set(outAuthors.flatMap((a) => a.institutions));
-const insts = I.institutions.filter((i) => usedInst.has(i.id)).map(({ id, name, en, abbr, type, city }) => ({ id, name, en, abbr, type, city }));
+const insts = I.institutions.filter((i) => usedInst.has(i.id)).map(({ id, name, en, abbr, type, city, official, moetCode }) => ({ id, name, en, abbr, type, city, ...(official ? { official, moetCode } : {}) }));
 const disciplines = [...new Set(outAuthors.flatMap((a) => a.disciplines))].sort();
 writeFileSync("public/data/profind.json", JSON.stringify({ meta: { demo: !!R.meta?.demo, built: new Date().toISOString().slice(0, 10), authors: outAuthors.length, works: works.length, source: R.meta?.source ?? null, fetched: R.meta?.fetched ?? null }, institutions: insts, types: I.types, disciplines, authors: outAuthors }));
 console.log(`profind.json: ${outAuthors.length} tác giả (${log.length} thay đổi đính chính/gộp), ${works.length} công trình, ${works.filter((w) => w.counted).length} có điểm, ${works.filter((w) => w.matched).length} khớp tạp chí`);

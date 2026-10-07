@@ -7,7 +7,11 @@
   "sources": [
    "https://vi.wikipedia.org/wiki/Danh_s%C3%A1ch_tr%C6%B0%E1%BB%9Dng_%C4%91%E1%BA%A1i_h%E1%BB%8Dc,_h%E1%BB%8Dc_vi%E1%BB%87n_v%C3%A0_cao_%C4%91%E1%BA%B3ng_t%E1%BA%A1i_Vi%E1%BB%87t_Nam",
    "https://ror.org (CC0)"
-  ]
+  ],
+  "moet": {
+   "matched": 86,
+   "of": 100
+  }
  },
  "institutions": [
   {
@@ -52,7 +56,10 @@
    "managedBy": null,
    "city": "Cần Thơ",
    "ror": "https://ror.org/0071qz696",
-   "source": "seed+ror.org"
+   "source": "seed+ror.org",
+   "moetCode": "TCT",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=867",
+   "official": true
   },
   {
    "id": "hue",
@@ -800,7 +807,10 @@
    "managedBy": "Đại học",
    "city": "Hanoi",
    "ror": "https://ror.org/04nyv3z04",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "BKA",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=812",
+   "official": true
   },
   {
    "id": "neu",
@@ -833,7 +843,10 @@
    "managedBy": "Đại học",
    "city": "Bộ Công thương",
    "ror": "https://ror.org/05hhz4s12",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DCN",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=813",
+   "official": true
   },
   {
    "id": "naem",
@@ -844,7 +857,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Hà Nội",
    "ror": null,
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "HVQ",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=964",
+   "official": true
   },
   {
    "id": "hanu",
@@ -855,7 +871,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Hà Nội",
    "ror": "https://ror.org/01mxx0e62",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "NHF",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=870",
+   "official": true
   },
   {
    "id": "utc",
@@ -877,7 +896,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Hà Nội",
    "ror": "https://ror.org/01rw3qm79",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "MDA",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=808",
+   "official": true
   },
   {
    "id": "hou",
@@ -888,7 +910,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Hà Nội",
    "ror": "https://ror.org/01mxx0e62",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "MHN",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=965",
+   "official": true
   },
   {
    "id": "uad",
@@ -910,7 +935,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Hà Nội",
    "ror": "https://ror.org/03a8q7p75",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "NTH",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=821",
+   "official": true
   },
   {
    "id": "hnue",
@@ -921,7 +949,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Hà Nội",
    "ror": "https://ror.org/0360g3z42",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "SPH",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=742",
+   "official": true
   },
   {
    "id": "nuae",
@@ -932,7 +963,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Hà Nội",
    "ror": "https://ror.org/050m8c894",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "GNT",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=744",
+   "official": true
   },
   {
    "id": "hupes",
@@ -954,7 +988,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Hà Nội",
    "ror": "https://ror.org/021s58p89",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "TMA",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=825",
+   "official": true
   },
   {
    "id": "huce",
@@ -965,7 +1002,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Hà Nội",
    "ror": "https://ror.org/01351mb48",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "XDA",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=827",
+   "official": true
   },
   {
    "id": "hpu2",
@@ -976,7 +1016,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Phú Thọ",
    "ror": "https://ror.org/00st18g74",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "SP2",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=743",
+   "official": true
   },
   {
    "id": "ho-chi-minh-university-law",
@@ -998,7 +1041,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Phú Thọ",
    "ror": "https://ror.org/00tean533",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "MBS",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=966",
+   "official": true
   },
   {
    "id": "nlu",
@@ -1009,7 +1055,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Phú Thọ",
    "ror": "https://ror.org/03030f487",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "NLS",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=785",
+   "official": true
   },
   {
    "id": "hcmute",
@@ -1031,7 +1080,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Phú Thọ",
    "ror": "https://ror.org/01cs0jg44",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "SPS",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=745",
+   "official": true
   },
   {
    "id": "hcmupes",
@@ -1064,7 +1116,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Lâm Đồng",
    "ror": "https://ror.org/014cke235",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "TDL",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=980",
+   "official": true
   },
   {
    "id": "dtu-2",
@@ -1075,7 +1130,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Đồng Tháp",
    "ror": "https://ror.org/05h7nhz20",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "SPD",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=689",
+   "official": true
   },
   {
    "id": "kgu",
@@ -1097,7 +1155,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Khánh Hòa",
    "ror": "https://ror.org/047van922",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "TSN",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=691",
+   "official": true
   },
   {
    "id": "qnu",
@@ -1108,7 +1169,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Gia Lai",
    "ror": "https://ror.org/00j4fc191",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DQN",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=905",
+   "official": true
   },
   {
    "id": "hyute",
@@ -1119,7 +1183,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Hưng Yên",
    "ror": "https://ror.org/052yjgk16",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "SKH",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=712",
+   "official": true
   },
   {
    "id": "utb",
@@ -1152,7 +1219,10 @@
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Nghệ An",
    "ror": "https://ror.org/0244cgm12",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "TDV",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=749",
+   "official": true
   },
   {
    "id": "vute",
@@ -1196,7 +1266,10 @@
    "managedBy": "Bộ Y tế",
    "city": "Hà Nội",
    "ror": "https://ror.org/01n2t3x97",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "YHB",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=876",
+   "official": true
   },
   {
    "id": "hup",
@@ -1207,7 +1280,10 @@
    "managedBy": "Bộ Y tế",
    "city": "Hà Nội",
    "ror": "https://ror.org/01mxx0e62",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DKH",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=869",
+   "official": true
   },
   {
    "id": "huph",
@@ -1218,7 +1294,10 @@
    "managedBy": "Bộ Y tế",
    "city": "Hà Nội",
    "ror": "https://ror.org/044r51149",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "YTC",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=878",
+   "official": true
   },
   {
    "id": "vutm",
@@ -1229,7 +1308,10 @@
    "managedBy": "Bộ Y tế",
    "city": "Hà Nội",
    "ror": "https://ror.org/02r1dkx80",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "HYD",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=866",
+   "official": true
   },
   {
    "id": "yds",
@@ -1240,7 +1322,10 @@
    "managedBy": "Bộ Y tế",
    "city": "Hà Nội",
    "ror": "https://ror.org/025kb2624",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "YDS",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=875",
+   "official": true
   },
   {
    "id": "hpmu",
@@ -1251,7 +1336,10 @@
    "managedBy": "Bộ Y tế",
    "city": "Hải Phòng",
    "ror": "https://ror.org/034y0z725",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "YPB",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=874",
+   "official": true
   },
   {
    "id": "hmtu",
@@ -1262,7 +1350,10 @@
    "managedBy": "Bộ Y tế",
    "city": "Hải Phòng",
    "ror": "https://ror.org/00gg7ff92",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DKY",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=872",
+   "official": true
   },
   {
    "id": "tbump",
@@ -1273,7 +1364,10 @@
    "managedBy": "Bộ Y tế",
    "city": "Hưng Yên",
    "ror": "https://ror.org/04wtn5j93",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "YTB",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=717",
+   "official": true
   },
   {
    "id": "ctump",
@@ -1284,7 +1378,10 @@
    "managedBy": "Bộ Y tế",
    "city": "Cần Thơ",
    "ror": "https://ror.org/04rq4jq39",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "YCT",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=873",
+   "official": true
   },
   {
    "id": "ndun",
@@ -1350,7 +1447,10 @@
    "managedBy": "Bộ Văn hóa, Thể thao và Du lịch",
    "city": "Hà Nội",
    "ror": null,
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "MTH",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=969",
+   "official": true
   },
   {
    "id": "skda",
@@ -1361,7 +1461,10 @@
    "managedBy": "Bộ Văn hóa, Thể thao và Du lịch",
    "city": "Hà Nội",
    "ror": "https://ror.org/02gswea15",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "SKD",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=756",
+   "official": true
   },
   {
    "id": "skdahcm",
@@ -1427,7 +1530,10 @@
    "managedBy": "Bộ Văn hóa, Thể thao và Du lịch",
    "city": "Bắc Ninh",
    "ror": "https://ror.org/04h98gb56",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "TDB",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=694",
+   "official": true
   },
   {
    "id": "dsu",
@@ -1460,7 +1566,10 @@
    "managedBy": "Bộ Công Thương",
    "city": "Hà Nội",
    "ror": "https://ror.org/035d00922",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DKK",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=782",
+   "official": true
   },
   {
    "id": "epu",
@@ -1471,7 +1580,10 @@
    "managedBy": "Bộ Công Thương",
    "city": "Hà Nội",
    "ror": "https://ror.org/01p4b7n26",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DDL",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=779",
+   "official": true
   },
   {
    "id": "iuh",
@@ -1515,7 +1627,10 @@
    "managedBy": "Bộ Công Thương",
    "city": "Phú Thọ",
    "ror": "https://ror.org/059sj0146",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "VUI",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=894",
+   "official": true
   },
   {
    "id": "sdu",
@@ -1526,7 +1641,10 @@
    "managedBy": "Bộ Công Thương",
    "city": "Hải Phòng",
    "ror": null,
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "SDU",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=822",
+   "official": true
   },
   {
    "id": "utt",
@@ -1548,7 +1666,10 @@
    "managedBy": "Bộ Xây dựng",
    "city": "Hà Nội",
    "ror": "https://ror.org/03c8sfz84",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "KTA",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=884",
+   "official": true
   },
   {
    "id": "uah",
@@ -1581,7 +1702,10 @@
    "managedBy": "Bộ Xây dựng",
    "city": "Hà Nội",
    "ror": "https://ror.org/05da5vm76",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "HHK",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=975",
+   "official": true
   },
   {
    "id": "vmu",
@@ -1592,7 +1716,10 @@
    "managedBy": "Bộ Xây dựng",
    "city": "Hải Phòng",
    "ror": "https://ror.org/03z9fzp04",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "HHA",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=986",
+   "official": true
   },
   {
    "id": "muce",
@@ -1614,7 +1741,10 @@
    "managedBy": "Bộ Xây dựng",
    "city": "Vĩnh Long",
    "ror": "https://ror.org/023g4km37",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "MTU",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=698",
+   "official": true
   },
   {
    "id": "aof",
@@ -1636,7 +1766,10 @@
    "managedBy": "Bộ Tài chính",
    "city": "Hà Nội",
    "ror": "https://ror.org/029a61c63",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "HCP",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=948",
+   "official": true
   },
   {
    "id": "ufm",
@@ -1647,7 +1780,10 @@
    "managedBy": "Bộ Tài chính",
    "city": "Hà Nội",
    "ror": "https://ror.org/00ycry713",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DMS",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=955",
+   "official": true
   },
   {
    "id": "dms",
@@ -1713,7 +1849,10 @@
    "managedBy": "Bộ Nông nghiệp và Môi trường",
    "city": "Hà Nội",
    "ror": "https://ror.org/04q8wkj31",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "HVN",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=879",
+   "official": true
   },
   {
    "id": "vnuf",
@@ -1724,7 +1863,10 @@
    "managedBy": "Bộ Nông nghiệp và Môi trường",
    "city": "Hà Nội",
    "ror": "https://ror.org/02jfkxh18",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "LNH",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=855",
+   "official": true
   },
   {
    "id": "tlu",
@@ -1735,7 +1877,10 @@
    "managedBy": "Bộ Nông nghiệp và Môi trường",
    "city": "Hà Nội",
    "ror": "https://ror.org/04afshy24",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "TLA",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=909",
+   "official": true
   },
   {
    "id": "hunre",
@@ -1746,7 +1891,10 @@
    "managedBy": "Bộ Nông nghiệp và Môi trường",
    "city": "Hà Nội",
    "ror": "https://ror.org/00gxs8147",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DMT",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=746",
+   "official": true
   },
   {
    "id": "hcmunre",
@@ -1768,7 +1916,10 @@
    "managedBy": "Bộ Nông nghiệp và Môi trường",
    "city": "Bắc Ninh",
    "ror": null,
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DBG",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=856",
+   "official": true
   },
   {
    "id": "bav",
@@ -1779,7 +1930,10 @@
    "managedBy": "Ngân hàng Nhà nước Việt Nam",
    "city": "Hà Nội",
    "ror": "https://ror.org/00p5kn310",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "NHH",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=811",
+   "official": true
   },
   {
    "id": "hub",
@@ -1790,7 +1944,10 @@
    "managedBy": "Ngân hàng Nhà nước Việt Nam",
    "city": "Hà Nội",
    "ror": "https://ror.org/03fsckq75",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "NHS",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=963",
+   "official": true
   },
   {
    "id": "tuu",
@@ -1801,7 +1958,10 @@
    "managedBy": "Tổng Liên đoàn Lao động Việt Nam",
    "city": "Hà Nội",
    "ror": "https://ror.org/05g81h903",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "LDA",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=804",
+   "official": true
   },
   {
    "id": "tdtu",
@@ -1812,7 +1972,10 @@
    "managedBy": "Tổng Liên đoàn Lao động Việt Nam",
    "city": "Hà Nội",
    "ror": "https://ror.org/01drq0835",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DTT",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=721",
+   "official": true
   },
   {
    "id": "gust",
@@ -1856,7 +2019,10 @@
    "managedBy": "Các cơ quan, tổ chức khác",
    "city": "Hà Nội",
    "ror": "https://ror.org/03zwxvq16",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "HBT",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=832",
+   "official": true
   },
   {
    "id": "apag",
@@ -1889,7 +2055,10 @@
    "managedBy": "Các cơ quan, tổ chức khác",
    "city": "Hà Nội",
    "ror": "https://ror.org/0363rtq22",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "BVH",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=787",
+   "official": true
   },
   {
    "id": "vists",
@@ -1922,7 +2091,10 @@
    "managedBy": "Các cơ quan, tổ chức khác",
    "city": "Hà Nội",
    "ror": "https://ror.org/01mxx0e62",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "LPH",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=792",
+   "official": true
   },
   {
    "id": "ulsa",
@@ -1933,7 +2105,10 @@
    "managedBy": "Các cơ quan, tổ chức khác",
    "city": "Hà Nội",
    "ror": "https://ror.org/04erjjt33",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DLX",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=953",
+   "official": true
   },
   {
    "id": "hict",
@@ -2208,7 +2383,10 @@
    "managedBy": "Trường đại học trực thuộc tỉnh, thành phố trực thuộc trung ương",
    "city": "Hà Nội",
    "ror": "https://ror.org/010y5b925",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "TDM",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=858",
+   "official": true
   },
   {
    "id": "dhhp",
@@ -2219,7 +2397,10 @@
    "managedBy": "Trường đại học trực thuộc tỉnh, thành phố trực thuộc trung ương",
    "city": "Hải Phòng",
    "ror": "https://ror.org/0227kwk61",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "THP",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=806",
+   "official": true
   },
   {
    "id": "uhd",
@@ -2285,7 +2466,10 @@
    "managedBy": "Trường đại học trực thuộc tỉnh, thành phố trực thuộc trung ương",
    "city": "Hà Tĩnh",
    "ror": "https://ror.org/02p826t41",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "HHT",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=891",
+   "official": true
   },
   {
    "id": "ukh",
@@ -2340,7 +2524,10 @@
    "managedBy": "Trường đại học trực thuộc tỉnh, thành phố trực thuộc trung ương",
    "city": "Phú Thọ",
    "ror": "https://ror.org/036xsg644",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "THV",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=899",
+   "official": true
   },
   {
    "id": "pyu",
@@ -2362,7 +2549,10 @@
    "managedBy": "Trường đại học trực thuộc tỉnh, thành phố trực thuộc trung ương",
    "city": "Quảng Trị",
    "ror": "https://ror.org/045jvzr81",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DQB",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=904",
+   "official": true
   },
   {
    "id": "pdu",
@@ -2373,7 +2563,10 @@
    "managedBy": "Trường đại học trực thuộc tỉnh, thành phố trực thuộc trung ương",
    "city": "Quảng Ngãi",
    "ror": "https://ror.org/02np7f480",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DPQ",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=902",
+   "official": true
   },
   {
    "id": "uhl",
@@ -2406,7 +2599,10 @@
    "managedBy": "Trường đại học trực thuộc tỉnh, thành phố trực thuộc trung ương",
    "city": "Thanh Hóa",
    "ror": "https://ror.org/05dp8mg49",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "HDT",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=740",
+   "official": true
   },
   {
    "id": "tucst",
@@ -2428,7 +2624,10 @@
    "managedBy": "Trường đại học trực thuộc tỉnh, thành phố trực thuộc trung ương",
    "city": "Đồng Tháp",
    "ror": "https://ror.org/01gff7046",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "TTG",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=859",
+   "official": true
   },
   {
    "id": "tan-trao-university",
@@ -2461,7 +2660,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Hà Nội",
    "ror": null,
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DCQ",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=938",
+   "official": true
   },
   {
    "id": "dnu-2",
@@ -2494,7 +2696,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Hà Nội",
    "ror": "https://ror.org/03esj4g97",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "FPT",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=942",
+   "official": true
   },
   {
    "id": "hbu",
@@ -2505,7 +2710,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Hà Nội",
    "ror": "https://ror.org/01ce8nm85",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "ETU",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=817",
+   "official": true
   },
   {
    "id": "hubt",
@@ -2560,7 +2768,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Hà Nội",
    "ror": "https://ror.org/04afshy24",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DTL",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=824",
+   "official": true
   },
   {
    "id": "dai-hoc-vinuni",
@@ -2582,7 +2793,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Hà Nội",
    "ror": "https://ror.org/044r99091",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DSG",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=936",
+   "official": true
   },
   {
    "id": "hutech",
@@ -2593,7 +2807,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Hà Nội",
    "ror": "https://ror.org/04qva2324",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DKC",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=937",
+   "official": true
   },
   {
    "id": "gdu",
@@ -2637,7 +2854,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Hà Nội",
    "ror": "https://ror.org/00rpn1945",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "UEF",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=945",
+   "official": true
   },
   {
    "id": "huflit",
@@ -2648,7 +2868,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Hà Nội",
    "ror": "https://ror.org/02th1pb96",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DNT",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=901",
+   "official": true
   },
   {
    "id": "nttu",
@@ -2681,7 +2904,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Hà Nội",
    "ror": "https://ror.org/02v5ef260",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "HIU",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=932",
+   "official": true
   },
   {
    "id": "siu",
@@ -2736,7 +2962,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Hà Nội",
    "ror": "https://ror.org/02b9zqw68",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DBD",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=930",
+   "official": true
   },
   {
    "id": "betu",
@@ -2824,7 +3053,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Cần Thơ",
    "ror": "https://ror.org/02vwfma54",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DNC",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=845",
+   "official": true
   },
   {
    "id": "dai-hoc-tay-do",
@@ -2835,7 +3067,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Cần Thơ",
    "ror": "https://ror.org/04gwjz789",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DTD",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=946",
+   "official": true
   },
   {
    "id": "dai-hoc-vo-toan",
@@ -2857,7 +3092,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Đà Nẵng",
    "ror": "https://ror.org/0164qgj37",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DAD",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=941",
+   "official": true
   },
   {
    "id": "dai-hoc-kien-truc-da-nang",
@@ -2868,7 +3106,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Đà Nẵng",
    "ror": "https://ror.org/03aebk093",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "KTD",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=883",
+   "official": true
   },
   {
    "id": "dai-hoc-phan-chau-trinh",
@@ -2901,7 +3142,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Đồng Nai",
    "ror": "https://ror.org/01j85cs18",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DCD",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=935",
+   "official": true
   },
   {
    "id": "dai-hoc-cong-nghe-mien-dong",
@@ -2923,7 +3167,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Đồng Nai",
    "ror": "https://ror.org/03nypmk85",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DLH",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=889",
+   "official": true
   },
   {
    "id": "dai-hoc-ha-hoa-tien",
@@ -3044,7 +3291,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Thái Nguyên",
    "ror": "https://ror.org/018qevc89",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DVB",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=860",
+   "official": true
   },
   {
    "id": "dai-hoc-phu-xuan",
@@ -3066,7 +3316,10 @@
    "managedBy": "Trường đại học tư thục",
    "city": "Vĩnh Long",
    "ror": "https://ror.org/02zjr9h86",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "DCL",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=815",
+   "official": true
   },
   {
    "id": "dai-hoc-trung-vuong",
@@ -3319,7 +3572,10 @@
    "managedBy": "Trường cao đẳng sư phạm, Trường cao đẳng có đào tạo ngành Giáo dục mầm non",
    "city": null,
    "ror": null,
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "CM1",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=849",
+   "official": true
   },
   {
    "id": "tp-hcm-2",
@@ -3451,7 +3707,10 @@
    "managedBy": "Trường cao đẳng sư phạm, Trường cao đẳng có đào tạo ngành Giáo dục mầm non",
    "city": "Nha Trang",
    "ror": "https://ror.org/008zkwe88",
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "CM2",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=850",
+   "official": true
   },
   {
    "id": "cao-dang-lai-chau",
@@ -3495,7 +3754,10 @@
    "managedBy": "Trường cao đẳng sư phạm, Trường cao đẳng có đào tạo ngành Giáo dục mầm non",
    "city": null,
    "ror": null,
-   "source": "vi.wikipedia.org"
+   "source": "vi.wikipedia.org",
+   "moetCode": "C25",
+   "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=829",
+   "official": true
   },
   {
    "id": "cao-dang-su-pham-hoa-binh",

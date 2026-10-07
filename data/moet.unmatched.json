@@ -1,0 +1,72 @@
+[
+ {
+  "stt": 206,
+  "name": "TRƯỜNG ĐẠI HỌC QUỐC TẾ - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+  "code": "QSQ"
+ },
+ {
+  "stt": 221,
+  "name": "TRƯỜNG ĐẠI HỌC LUẬT, ĐẠI HỌC HUẾ",
+  "code": "DHA"
+ },
+ {
+  "stt": 250,
+  "name": "TRƯỜNG ĐẠI HỌC KINH TẾ, ĐẠI HỌC HUẾ",
+  "code": "DHK"
+ },
+ {
+  "stt": 255,
+  "name": "TRƯỜNG ĐẠI HỌC NGOẠI NGỮ, ĐẠI HỌC HUẾ",
+  "code": "DHF"
+ },
+ {
+  "stt": 258,
+  "name": "TRƯỜNG ĐẠI HỌC SƯ PHẠM, ĐẠI HỌC HUẾ",
+  "code": "DHS"
+ },
+ {
+  "stt": 263,
+  "name": "TRƯỜNG ĐẠI HỌC AN GIANG - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+  "code": "TAG"
+ },
+ {
+  "stt": 269,
+  "name": "TRƯỜNG ĐẠI HỌC Y DƯỢC, ĐẠI HỌC THÁI NGUYÊN",
+  "code": "DTY"
+ },
+ {
+  "stt": 272,
+  "name": "TRƯỜNG ĐẠI HỌC KINH TẾ VÀ QUẢN TRỊ KINH DOANH, ĐẠI HỌC THÁI NGUYÊN",
+  "code": "DTE"
+ },
+ {
+  "stt": 274,
+  "name": "TRƯỜNG ĐẠI HỌC BÁCH KHOA, ĐẠI HỌC ĐÀ NẴNG",
+  "code": "DDK"
+ },
+ {
+  "stt": 276,
+  "name": "TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+  "code": "QSC"
+ },
+ {
+  "stt": 282,
+  "name": "TRƯỜNG ĐẠI HỌC KỸ THUẬT CÔNG NGHIỆP, ĐẠI HỌC THÁI NGUYÊN",
+  "code": "DTK"
+ },
+ {
+  "stt": 285,
+  "name": "TRƯỜNG ĐẠI HỌC KINH TẾ - LUẬT - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+  "code": "QSK"
+ },
+ {
+  "stt": 289,
+  "name": "TRƯỜNG ĐẠI HỌC NÔNG LÂM, ĐẠI HỌC THÁI NGUYÊN",
+  "code": "DTN"
+ },
+ {
+  "stt": 296,
+  "name": "TRƯỜNG ĐẠI HỌC KHOA HỌC, ĐẠI HỌC HUẾ",
+  "code": "DHT"
+ }
+]

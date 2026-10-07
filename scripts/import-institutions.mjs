@@ -106,8 +106,16 @@ for (const o of ror) {
   if (!RINST.test(name) || NOT.test(name) || types.includes("healthcare") || types.includes("company")) continue;
   inst.push({ id: uid(name), name, en: name, abbr: o.names.find((n) => n.types.includes("acronym"))?.value ?? null, type: "institute", managedBy: null, city: rcity(o), ror: o.id, source: "ror.org", rorTypes: types });
 }
+// ---- 4. Đối chiếu danh sách chính thức của Bộ GD&ĐT (data/moet.json, tạo bằng scripts/import-moet.mjs từ các trang đã lưu) ----
+let moetMatched = 0; const moetUnmatched = [];
+if (existsSync("data/moet.json")) {
+  const M = JSON.parse(readFileSync("data/moet.json", "utf8")).items;
+  const byKey = new Map(); for (const i of inst) for (const n of [i.name, i.en]) { const k = norm((n ?? "").replace(/\s*\([^)]*\)\s*$/, "")); if (k && !byKey.has(k)) byKey.set(k, i); }
+  for (const m of M) { const i = byKey.get(norm(m.name)); if (i && !i.moetCode) { i.moetCode = m.code; i.moetUrl = m.url; i.official = true; moetMatched++; } else if (!i) moetUnmatched.push({ stt: m.stt, name: m.name, code: m.code }); }
+  console.log(`MOET: ${M.length} trường, khớp ${moetMatched}, chưa khớp ${moetUnmatched.length} (xem moetUnmatched trong institutions.review.json)`);
+}
 const types = { "public-univ": { vi: "Đại học, học viện công lập", en: "Public university / academy" }, "private-univ": { vi: "Đại học tư thục", en: "Private university" }, "foreign-univ": { vi: "Đại học nước ngoài tại Việt Nam", en: "Foreign university in Vietnam" }, college: { vi: "Cao đẳng, dự bị đại học", en: "College" }, institute: { vi: "Viện nghiên cứu, cơ sở khác", en: "Research institute / other" }, other: { vi: "Cơ sở tôn giáo", en: "Religious institution" } };
 writeFileSync("data/institutions.json", JSON.stringify({ meta: { status: "wikipedia+ror, chờ đối chiếu danh sách chính thức Bộ GD&ĐT", built: new Date().toISOString().slice(0, 10), count: inst.length, withRor: inst.filter((i) => i.ror).length, sources: [WIKI, "https://ror.org (CC0)"] }, institutions: inst, types }, null, 1));
-writeFileSync("data/institutions.review.json", JSON.stringify(review, null, 1));
+writeFileSync("data/institutions.review.json", JSON.stringify({ rorUnmatched: review, moetUnmatched }, null, 1));
 const by = {}; for (const i of inst) by[i.type] = (by[i.type] ?? 0) + 1;
 console.log("institutions.json:", inst.length, by, "có ROR:", inst.filter((i) => i.ror).length, "· cần duyệt:", review.length);

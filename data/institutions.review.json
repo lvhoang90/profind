@@ -1,932 +1,1066 @@
-[
- {
-  "name": "Trường Đại học Luật (ĐHQGHN)",
-  "en": "VNU-University of Laws",
-  "abbr": null
- },
- {
-  "name": "Trường Quản trị và Kinh doanh (ĐHQGHN)",
-  "en": "VNU-Hanoi School of Business",
-  "abbr": null
- },
- {
-  "name": "Trường Đại học An Giang (ĐHQG-HCM)",
-  "en": "VNUHCM-An Giang University",
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Bách khoa (ĐHQG-HCM)",
-  "en": "VNUHCM-University of Technology",
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Công nghệ Thông tin (ĐHQG-HCM)",
-  "en": "VNUHCM-University of Information and Technology",
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Khoa học Tự nhiên (ĐHQG-HCM)",
-  "en": "VNUHCM-University of Science",
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Quốc tế (ĐHQG-HCM)",
-  "en": "VNUHCM-International University",
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Khoa học Sức khoẻ (ĐHQG-HCM)",
-  "en": "VNUHCM-University of Health Science",
-  "abbr": null
- },
- {
-  "name": "Phân hiệu Đại học Quốc gia TP.HCM tại Bến Tre",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Kinh tế - Kỹ thuật",
-  "en": "Thai Nguyen Technology and Economics College",
-  "abbr": null
- },
- {
-  "name": "Trường Ngoại ngữ",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Phân hiệu Đại học Thái Nguyên tại Lào Cai",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Phân hiệu Đại học Thái Nguyên tại Hà Giang",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Phân hiệu Đại học Thái Nguyên tại Điện Biên",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Luật",
-  "en": "Hue University of Laws",
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Nghệ thuật",
-  "en": "Hue University of Arts",
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Ngoại ngữ",
-  "en": "Hue University College of Foreign Languages",
-  "abbr": null
- },
- {
-  "name": "Trường Du lịch",
-  "en": "Hue University School of Tourism",
-  "abbr": null
- },
- {
-  "name": "Trường Kỹ thuật và Công nghệ",
-  "en": "Hue University School of Engineering and Technology",
-  "abbr": null
- },
- {
-  "name": "Phân hiệu Đại học Huế tại Quảng Trị",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Bách khoa",
-  "en": "Danang University of Technology",
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Ngoại ngữ",
-  "en": "Danang University of Foreign Language",
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Công nghệ thông tin và Truyền thông Việt – Hàn",
-  "en": "Vietnam - Korea University of Information Technology and Communication",
-  "abbr": null
- },
- {
-  "name": "Phân hiệu Đại học Đà Nẵng tại Kon Tum",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Bách khoa",
-  "en": "Can Tho University - College of Engineering",
-  "abbr": null
- },
- {
-  "name": "Trường Công nghệ Thông tin và Truyền thông",
-  "en": "Can Tho University - College of Information and Communication Technology",
-  "abbr": null
- },
- {
-  "name": "Trường Khoa học Tự nhiên",
-  "en": "Can Tho University - College of Natural Science",
-  "abbr": null
- },
- {
-  "name": "Trường Kinh tế",
-  "en": "Can Tho University - School of Economics",
-  "abbr": null
- },
- {
-  "name": "Trường Nông nghiệp",
-  "en": "Can Tho University - College of Agriculture",
-  "abbr": null
- },
- {
-  "name": "Trường Sư phạm",
-  "en": "Can Tho University - School of Education",
-  "abbr": null
- },
- {
-  "name": "Trường Thủy sản",
-  "en": "Can Tho University - College of Aquaculture and Fisheries",
-  "abbr": null
- },
- {
-  "name": "Học viện Quản lý giáo dục",
-  "en": "National Academy of Education Management",
-  "abbr": "NAEM"
- },
- {
-  "name": "Trường Đại học Sư phạm Kỹ thuật Nam Định",
-  "en": "Nam Dinh University of Technology Education",
-  "abbr": "NUTE"
- },
- {
-  "name": "Học viện Múa Việt Nam",
-  "en": "Vietnam National Academy of Dance",
-  "abbr": "VNAD"
- },
- {
-  "name": "Trường Đại học Mỹ thuật Việt Nam",
-  "en": "Vietnam National University of Fine Arts",
-  "abbr": "VNUFA"
- },
- {
-  "name": "Trường Đại học Sân khấu – Điện ảnh Thành phố Hồ Chí Minh",
-  "en": "The Stage-Movie University of Ho Chi Minh City",
-  "abbr": "SKDAHCM"
- },
- {
-  "name": "Trường Đại học Thể dục Thể thao Thành phố Hồ Chí Minh",
-  "en": "University of Sports Ho Chi Minh City",
-  "abbr": "USH"
- },
- {
-  "name": "Học viện Âm nhạc Huế",
-  "en": "Hue Academy of Music",
-  "abbr": "HAM"
- },
- {
-  "name": "Trường Đại học Thể dục Thể thao Đà Nẵng",
-  "en": "Danang Sport University",
-  "abbr": "DSU"
- },
- {
-  "name": "Trường Đại học Công nghiệp Quảng Ninh",
-  "en": "Quang Ninh University of Industry",
-  "abbr": "QUI"
- },
- {
-  "name": "Trường Đại học Sao Đỏ",
-  "en": "Sao Do University",
-  "abbr": "SDU"
- },
- {
-  "name": "Trường Đại học Giao thông vận tải Thành phố Hồ Chí Minh",
-  "en": "University of Transports Ho Chi Minh City",
-  "abbr": "UTH"
- },
- {
-  "name": "Phân hiệu Trường đại học tài chính - makerting tại Quảng Ngãi",
-  "en": null,
-  "abbr": "DMS"
- },
- {
-  "name": "Trường Đại học Tài chính – Quản trị kinh doanh",
-  "en": "University of Finance and Business Administration",
-  "abbr": "UFBA"
- },
- {
-  "name": "Phân hiệu Trường đại học tài chính- makerting tại Huế",
-  "en": null,
-  "abbr": "HFA"
- },
- {
-  "name": "Phân hiệu Học viện chính sách và phát triển tại Bắc Ninh",
-  "en": null,
-  "abbr": "HCK"
- },
- {
-  "name": "Phân hiệu Học viện chính sách và phát triển tại Đà Nẵng",
-  "en": null,
-  "abbr": "HCD"
- },
- {
-  "name": "Trường Đại học Nông - Lâm Bắc Giang",
-  "en": "Bac Giang University of Agriculture and Forestry",
-  "abbr": "BGUAF"
- },
- {
-  "name": "Trường Đại học Công nghiệp và Thương mại Hà Nội",
-  "en": "Hanoi Industrial and Trade University",
-  "abbr": "HICT"
- },
- {
-  "name": "Học viện Khoa học Xã hội",
-  "en": "Graduate Academy of Social Science",
-  "abbr": "GASS"
- },
- {
-  "name": "Trường đại học lao động - xã hội cơ sở II tại TP.HCM",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Phân hiệu Học viện thanh thiếu niên Việt Nam tại TP.HCM",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Phân hiệu Học viện phụ nữ Việt Nam tại TP.HCM",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Học viện Phật giáo Việt Nam tại Hà Nội",
-  "en": "Vietnam Buddhism Academy",
-  "abbr": "VBA"
- },
- {
-  "name": "Học viện Phật giáo Việt Nam tại Thành phố Hồ Chí Minh",
-  "en": "Vietnam Buddhism University",
-  "abbr": "VBU"
- },
- {
-  "name": "Học viện Phật giáo Việt Nam tại Huế",
-  "en": "Vietnam Buddism Academy at Hue",
-  "abbr": "VBAH"
- },
- {
-  "name": "Học viện Phật giáo Nam tông Khmer",
-  "en": "Vietnam Theravada Buddism University",
-  "abbr": null
- },
- {
-  "name": "Trường Thánh kinh Thần học Hà Nội",
-  "en": null,
-  "abbr": "HBC"
- },
- {
-  "name": "Học viện Công giáo Việt Nam",
-  "en": null,
-  "abbr": "CIV"
- },
- {
-  "name": "Viện Thánh kinh Thần học",
-  "en": null,
-  "abbr": "IBT"
- },
- {
-  "name": "Trường Kinh thánh Cơ Đốc",
-  "en": null,
-  "abbr": "CBC"
- },
- {
-  "name": "Học viện cao đài Tiên Thiên",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường trung cấp phật giáo Hòa Hảo",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Thủ đô Hà Nội",
-  "en": "Hanoi Metropolitan University",
-  "abbr": "HNMU"
- },
- {
-  "name": "Trường Đại học Kinh tế Nghệ An",
-  "en": "Nghe An University of Economics",
-  "abbr": "NAUE"
- },
- {
-  "name": "Trường Đại học Hạ Long",
-  "en": "University of Ha Long",
-  "abbr": "UHL"
- },
- {
-  "name": "Trường Đại học Công nghệ và Quản lý hữu nghị",
-  "en": "University of Technology and Management",
-  "abbr": "UTM"
- },
- {
-  "name": "Trường Đại học Hùng Vương Thành phố Hồ Chí Minh",
-  "en": null,
-  "abbr": "DHV"
- },
- {
-  "name": "Trường Đại học Kinh tế – Kỹ thuật Bình Dương",
-  "en": "Binh Duong Economics and Technology University",
-  "abbr": "BETU"
- },
- {
-  "name": "Trường Đại học Kinh Bắc",
-  "en": "University of Kinh Bac",
-  "abbr": "UKB"
- },
- {
-  "name": "Trường Đại học Quang Trung",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Võ Trường Toản",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Hà Hoa Tiên",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Lương Thế Vinh",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Intracom",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Công nghiệp Vinh",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Phú Xuân",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Học viện Biên phòng",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Sĩ quan Tăng – Thiết giáp",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Nguyễn Huệ / Trường Đại học Sĩ quan Lục quân 2",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Ngô Quyền / Trường Đại học Sĩ quan Công Binh",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Học viện Kỹ thuật và Công nghệ An ninh",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Quốc tế RMIT Việt Nam",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Greenwich - FPT Việt Nam",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Đại học Công nghệ Swinburne - FPT Việt Nam",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Dự bị Đại học Thành phố Hồ Chí Minh",
-  "en": null,
-  "abbr": "TP.HCM"
- },
- {
-  "name": "Trường Dự bị Đại học Dân tộc Trung ương Nha Trang",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Dự bị Đại học Dân tộc Sầm Sơn",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Dự bị Đại học Dân tộc Trung ương",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Sư phạm Trung ương",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Sư phạm Bà Rịa – Vũng Tàu",
-  "en": null,
-  "abbr": "TP.HCM"
- },
- {
-  "name": "Trường Cao đẳng Cần Thơ",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Huế",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Bình Phước",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Sư phạm Bắc Ninh",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Cao Bằng",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Cộng đồng Cà Mau",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Sư phạm Điện Biên",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Sư phạm Đắk Lắk",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Sư phạm Thái Bình",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Lai Châu",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Sư phạm Lạng Sơn",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Sư phạm Nam Định",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Sư phạm Hòa Bình",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Kon Tum",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Sơn La",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Sư phạm Tây Ninh",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Thái Nguyên",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Bến Tre",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Bạch Mai",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Bình Dương",
-  "en": null,
-  "abbr": "TP.HCM"
- },
- {
-  "name": "Trường Cao đẳng Y tế Hải Phòng",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Quảng Nam",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Cần Thơ",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Huế",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Điện Biên",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Lạng Sơn",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Phú Thọ",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Quảng Ninh",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Sơn La",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Thái Nguyên",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Bắc Ninh",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Đắk Lắk",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Hưng Yên",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Lâm Đồng",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y – Dược Hợp Lực",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Hà Tĩnh",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Quảng Trị",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Bình Định",
-  "en": "Gia Lai",
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Đặng Thùy Trâm",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Khánh Hòa",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Đồng Nai",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Bạc Liêu",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Tiền Giang",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Y tế Trà Vinh",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Cộng đồng Hà Tây",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Bách khoa Nam Sài Gòn",
-  "en": null,
-  "abbr": "TP.HCM"
- },
- {
-  "name": "Trường Cao đẳng Cộng đồng Hải Phòng",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Công nghệ, Kinh tế và Thủy lợi miền Trung",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Cơ điện và Nông nghiệp Nam Bộ",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Công nghiệp Huế",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Cơ khí – Luyện kim",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Công nghiệp Thực phẩm",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Công nghiệp và Xây dựng",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Kinh tế Kỹ thuật Điện Biên",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Kỹ thuật Công nghiệp",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Công nghiệp Hưng Yên",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Công nghiệp Nam Định",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Giao thông vận tải Trung ương IV",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Luật miền Trung",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Kinh tế Kỹ thuật Công thương",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Nguyễn Du",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Bình Thuận",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Công thương Miền Trung",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Kỹ thuật Công nghệ Quy Nhơn",
-  "en": "Gia Lai",
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Kon Tum",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Bình Phước",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Cộng đồng Đồng Tháp",
-  "en": null,
-  "abbr": null
- },
- {
-  "name": "Trường Cao đẳng Kinh tế – Kỹ thuật Bạc Liêu",
-  "en": null,
-  "abbr": null
- },
- {
-  "ror": "https://ror.org/003szmg30",
-  "name": "Ho Chi Minh City International University",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/02c6yhw44",
-  "name": "Ho Chi Minh City University of Social Sciences and Humanities",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/05kdc4973",
-  "name": "University of Information Technology",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/01atvfx83",
-  "name": "Hung Vuong University of Ho Chi Minh City",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/05ghhgs79",
-  "name": "Tra Vinh University",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/02h28kk33",
-  "name": "Vietnam Military Medical University",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/0018abm07",
-  "name": "PSB College Vietnam",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/04pzh0a71",
-  "name": "Ba Ria - Vung Tau College of Engineering and Technology",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/01drx8a35",
-  "name": "VNUHCM – High School for the Gifted",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/056sktz68",
-  "name": "Da Nang University of Economics",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/05qq5b157",
-  "name": "Trường Đại học Trần Đại Nghĩa",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/001ydh096",
-  "name": "University of Science and Technology - The University of Da Nang",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/05xpj2n48",
-  "name": "HUTECH University",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/0161zbh32",
-  "name": "The Asian International School",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/05jvjx121",
-  "name": "Trường THPT chuyên Nguyễn Quang Diêu",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/04wgyjv21",
-  "name": "Le Quy Don Technical University",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/038en7m86",
-  "name": "American Polytechnic College",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/05jfbgm49",
-  "name": "Ho Chi Minh City University of Science",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/00a3esw81",
-  "name": "Trường Đại học Thông tin Liên lạc",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/00jywn468",
-  "name": "Trường Đại học Cảnh sát nhân dân",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/01nmz1w66",
-  "name": "Trường Cao đẳng Cộng đồng Hậu Giang",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/04x0cts32",
-  "name": "Trung tâm Đào tạo và Nghiên cứu Quản lý công",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/028wrn133",
-  "name": "Trường Đại học Khoa học Sức khỏe",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/05csrpd73",
-  "name": "Trường Đại học Ngoại ngữ - Đại học Đà Nẵng",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/037481v91",
-  "name": "Cao Thang Technical College",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/04v5ws439",
-  "name": "Trường Đại học Nghệ An",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/04fazh043",
-  "name": "Centre Franco-Vietnamien de Formation à la Gestion",
-  "note": "education, chưa có trong Wikipedia"
- }
-]
+{
+ "rorUnmatched": [
+  {
+   "name": "Trường Đại học Khoa học Xã hội và Nhân văn (ĐHQGHN)",
+   "en": "VNU-Hanoi University of Social Sciences and Humanities",
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Luật (ĐHQGHN)",
+   "en": "VNU-University of Laws",
+   "abbr": null
+  },
+  {
+   "name": "Trường Quản trị và Kinh doanh (ĐHQGHN)",
+   "en": "VNU-Hanoi School of Business",
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học An Giang (ĐHQG-HCM)",
+   "en": "VNUHCM-An Giang University",
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Bách khoa (ĐHQG-HCM)",
+   "en": "VNUHCM-University of Technology",
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Công nghệ Thông tin (ĐHQG-HCM)",
+   "en": "VNUHCM-University of Information and Technology",
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Khoa học Tự nhiên (ĐHQG-HCM)",
+   "en": "VNUHCM-University of Science",
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Khoa học Xã hội và Nhân văn (ĐHQG-HCM)",
+   "en": "VNUHCM-University of Social Sciences and Humanities",
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Quốc tế (ĐHQG-HCM)",
+   "en": "VNUHCM-International University",
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Khoa học Sức khoẻ (ĐHQG-HCM)",
+   "en": "VNUHCM-University of Health Science",
+   "abbr": null
+  },
+  {
+   "name": "Phân hiệu Đại học Quốc gia TP.HCM tại Bến Tre",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Khoa học",
+   "en": "Thai Nguyen University of Science",
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Kinh tế - Kỹ thuật",
+   "en": "Thai Nguyen Technology and Economics College",
+   "abbr": null
+  },
+  {
+   "name": "Trường Ngoại ngữ",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Phân hiệu Đại học Thái Nguyên tại Lào Cai",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Phân hiệu Đại học Thái Nguyên tại Hà Giang",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Phân hiệu Đại học Thái Nguyên tại Điện Biên",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Khoa học",
+   "en": "Hue University Science College",
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Nghệ thuật",
+   "en": "Hue University of Arts",
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Ngoại ngữ",
+   "en": "Hue University College of Foreign Languages",
+   "abbr": null
+  },
+  {
+   "name": "Trường Du lịch",
+   "en": "Hue University School of Tourism",
+   "abbr": null
+  },
+  {
+   "name": "Trường Kỹ thuật và Công nghệ",
+   "en": "Hue University School of Engineering and Technology",
+   "abbr": null
+  },
+  {
+   "name": "Phân hiệu Đại học Huế tại Quảng Trị",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Bách khoa",
+   "en": "Danang University of Technology",
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Kinh tế",
+   "en": "Danang University of Economics",
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Ngoại ngữ",
+   "en": "Danang University of Foreign Language",
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Công nghệ thông tin và Truyền thông Việt – Hàn",
+   "en": "Vietnam - Korea University of Information Technology and Communication",
+   "abbr": null
+  },
+  {
+   "name": "Phân hiệu Đại học Đà Nẵng tại Kon Tum",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Bách khoa",
+   "en": "Can Tho University - College of Engineering",
+   "abbr": null
+  },
+  {
+   "name": "Trường Công nghệ Thông tin và Truyền thông",
+   "en": "Can Tho University - College of Information and Communication Technology",
+   "abbr": null
+  },
+  {
+   "name": "Trường Khoa học Tự nhiên",
+   "en": "Can Tho University - College of Natural Science",
+   "abbr": null
+  },
+  {
+   "name": "Trường Kinh tế",
+   "en": "Can Tho University - School of Economics",
+   "abbr": null
+  },
+  {
+   "name": "Trường Nông nghiệp",
+   "en": "Can Tho University - College of Agriculture",
+   "abbr": null
+  },
+  {
+   "name": "Trường Sư phạm",
+   "en": "Can Tho University - School of Education",
+   "abbr": null
+  },
+  {
+   "name": "Trường Thủy sản",
+   "en": "Can Tho University - College of Aquaculture and Fisheries",
+   "abbr": null
+  },
+  {
+   "name": "Viện Công nghệ Sinh học và Thực phẩm",
+   "en": "Can Tho University - Institute of Food and Biotechnology",
+   "abbr": null
+  },
+  {
+   "name": "Đại học Công nghiệp Hà Nội",
+   "en": "HaUI School of Information and Communication Technology",
+   "abbr": "SICT"
+  },
+  {
+   "name": "Học viện Quản lý giáo dục",
+   "en": "National Academy of Education Management",
+   "abbr": "NAEM"
+  },
+  {
+   "name": "Trường Đại học Sư phạm Thể dục Thể thao Thành phố Hồ Chí Minh",
+   "en": "Ho Chi Minh University of Physical Education and Sports",
+   "abbr": "HCMUPES"
+  },
+  {
+   "name": "Trường Đại học Sư phạm Kỹ thuật Nam Định",
+   "en": "Nam Dinh University of Technology Education",
+   "abbr": "NUTE"
+  },
+  {
+   "name": "Học viện Múa Việt Nam",
+   "en": "Vietnam National Academy of Dance",
+   "abbr": "VNAD"
+  },
+  {
+   "name": "Trường Đại học Mỹ thuật Việt Nam",
+   "en": "Vietnam National University of Fine Arts",
+   "abbr": "VNUFA"
+  },
+  {
+   "name": "Trường Đại học Sân khấu – Điện ảnh Thành phố Hồ Chí Minh",
+   "en": "The Stage-Movie University of Ho Chi Minh City",
+   "abbr": "SKDAHCM"
+  },
+  {
+   "name": "Học viện Âm nhạc Huế",
+   "en": "Hue Academy of Music",
+   "abbr": "HAM"
+  },
+  {
+   "name": "Trường Đại học Thể dục Thể thao Đà Nẵng",
+   "en": "Danang Sport University",
+   "abbr": "DSU"
+  },
+  {
+   "name": "Trường Đại học Công nghiệp Quảng Ninh",
+   "en": "Quang Ninh University of Industry",
+   "abbr": "QUI"
+  },
+  {
+   "name": "Trường Đại học Sao Đỏ",
+   "en": "Sao Do University",
+   "abbr": "SDU"
+  },
+  {
+   "name": "Trường Đại học Giao thông vận tải Thành phố Hồ Chí Minh",
+   "en": "University of Transports Ho Chi Minh City",
+   "abbr": "UTH"
+  },
+  {
+   "name": "Phân hiệu Trường đại học tài chính - makerting tại Quảng Ngãi",
+   "en": null,
+   "abbr": "DMS"
+  },
+  {
+   "name": "Trường Đại học Tài chính – Quản trị kinh doanh",
+   "en": "University of Finance and Business Administration",
+   "abbr": "UFBA"
+  },
+  {
+   "name": "Phân hiệu Trường đại học tài chính- makerting tại Huế",
+   "en": null,
+   "abbr": "HFA"
+  },
+  {
+   "name": "Phân hiệu Học viện chính sách và phát triển tại Bắc Ninh",
+   "en": null,
+   "abbr": "HCK"
+  },
+  {
+   "name": "Phân hiệu Học viện chính sách và phát triển tại Đà Nẵng",
+   "en": null,
+   "abbr": "HCD"
+  },
+  {
+   "name": "Trường Đại học Nông - Lâm Bắc Giang",
+   "en": "Bac Giang University of Agriculture and Forestry",
+   "abbr": "BGUAF"
+  },
+  {
+   "name": "Trường Đại học Công nghiệp và Thương mại Hà Nội",
+   "en": "Hanoi Industrial and Trade University",
+   "abbr": "HICT"
+  },
+  {
+   "name": "Trường đại học lao động - xã hội cơ sở II tại TP.HCM",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Phân hiệu Học viện thanh thiếu niên Việt Nam tại TP.HCM",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Phân hiệu Học viện phụ nữ Việt Nam tại TP.HCM",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Học viện Phật giáo Việt Nam tại Hà Nội",
+   "en": "Vietnam Buddhism Academy",
+   "abbr": "VBA"
+  },
+  {
+   "name": "Học viện Phật giáo Việt Nam tại Thành phố Hồ Chí Minh",
+   "en": "Vietnam Buddhism University",
+   "abbr": "VBU"
+  },
+  {
+   "name": "Học viện Phật giáo Việt Nam tại Huế",
+   "en": "Vietnam Buddism Academy at Hue",
+   "abbr": "VBAH"
+  },
+  {
+   "name": "Học viện Phật giáo Nam tông Khmer",
+   "en": "Vietnam Theravada Buddism University",
+   "abbr": null
+  },
+  {
+   "name": "Trường Thánh kinh Thần học Hà Nội",
+   "en": null,
+   "abbr": "HBC"
+  },
+  {
+   "name": "Học viện Công giáo Việt Nam",
+   "en": null,
+   "abbr": "CIV"
+  },
+  {
+   "name": "Viện Thánh kinh Thần học",
+   "en": null,
+   "abbr": "IBT"
+  },
+  {
+   "name": "Trường Kinh thánh Cơ Đốc",
+   "en": null,
+   "abbr": "CBC"
+  },
+  {
+   "name": "Học viện cao đài Tiên Thiên",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường trung cấp phật giáo Hòa Hảo",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Thủ đô Hà Nội",
+   "en": "Hanoi Metropolitan University",
+   "abbr": "HNMU"
+  },
+  {
+   "name": "Trường Đại học Kinh tế Nghệ An",
+   "en": "Nghe An University of Economics",
+   "abbr": "NAUE"
+  },
+  {
+   "name": "Trường Đại học Hạ Long",
+   "en": "University of Ha Long",
+   "abbr": "UHL"
+  },
+  {
+   "name": "Trường Đại học Công nghệ và Quản lý hữu nghị",
+   "en": "University of Technology and Management",
+   "abbr": "UTM"
+  },
+  {
+   "name": "Trường Đại học Nguyễn Trãi",
+   "en": "Nguyen Trai University",
+   "abbr": "NTU"
+  },
+  {
+   "name": "Trường Đại học Hùng Vương Thành phố Hồ Chí Minh",
+   "en": null,
+   "abbr": "DHV"
+  },
+  {
+   "name": "Trường Đại học Kinh tế – Kỹ thuật Bình Dương",
+   "en": "Binh Duong Economics and Technology University",
+   "abbr": "BETU"
+  },
+  {
+   "name": "Trường Đại học Kinh Bắc",
+   "en": "University of Kinh Bac",
+   "abbr": "UKB"
+  },
+  {
+   "name": "Trường Đại học Quang Trung",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Võ Trường Toản",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Hà Hoa Tiên",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Lương Thế Vinh",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Intracom",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Công nghiệp Vinh",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Phú Xuân",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Học viện Biên phòng",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Sĩ quan Tăng – Thiết giáp",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Nguyễn Huệ / Trường Đại học Sĩ quan Lục quân 2",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Ngô Quyền / Trường Đại học Sĩ quan Công Binh",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Học viện Kỹ thuật và Công nghệ An ninh",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Quốc tế RMIT Việt Nam",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Greenwich - FPT Việt Nam",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Đại học Công nghệ Swinburne - FPT Việt Nam",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Dự bị Đại học Thành phố Hồ Chí Minh",
+   "en": null,
+   "abbr": "TP.HCM"
+  },
+  {
+   "name": "Trường Dự bị Đại học Dân tộc Trung ương Nha Trang",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Dự bị Đại học Dân tộc Sầm Sơn",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Dự bị Đại học Dân tộc Trung ương",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Sư phạm Trung ương",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Sư phạm Bà Rịa – Vũng Tàu",
+   "en": null,
+   "abbr": "TP.HCM"
+  },
+  {
+   "name": "Trường Cao đẳng Cần Thơ",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Huế",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Bình Phước",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Sư phạm Bắc Ninh",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Cao Bằng",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Cộng đồng Cà Mau",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Sư phạm Điện Biên",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Sư phạm Đắk Lắk",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Sư phạm Thái Bình",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Lai Châu",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Sư phạm Lạng Sơn",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Sư phạm Nam Định",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Sư phạm Hòa Bình",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Kon Tum",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Sơn La",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Sư phạm Tây Ninh",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Thái Nguyên",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Bến Tre",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Bạch Mai",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Bình Dương",
+   "en": null,
+   "abbr": "TP.HCM"
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Hải Phòng",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Quảng Nam",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Cần Thơ",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Huế",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Điện Biên",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Lạng Sơn",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Phú Thọ",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Quảng Ninh",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Sơn La",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Thái Nguyên",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Bắc Ninh",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Đắk Lắk",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Hưng Yên",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Lâm Đồng",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y – Dược Hợp Lực",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Hà Tĩnh",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Quảng Trị",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Bình Định",
+   "en": "Gia Lai",
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Đặng Thùy Trâm",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Khánh Hòa",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Đồng Nai",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Bạc Liêu",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Tiền Giang",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Y tế Trà Vinh",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Cộng đồng Hà Tây",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Bách khoa Nam Sài Gòn",
+   "en": null,
+   "abbr": "TP.HCM"
+  },
+  {
+   "name": "Trường Cao đẳng Cộng đồng Hải Phòng",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Công nghệ, Kinh tế và Thủy lợi miền Trung",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Cơ điện và Nông nghiệp Nam Bộ",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Công nghiệp Huế",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Cơ khí – Luyện kim",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Công nghiệp Thực phẩm",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Công nghiệp và Xây dựng",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Kinh tế Kỹ thuật Điện Biên",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Kỹ thuật Công nghiệp",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Công nghiệp Hưng Yên",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Công nghiệp Nam Định",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Giao thông vận tải Trung ương IV",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Luật miền Trung",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Kinh tế Kỹ thuật Công thương",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Nguyễn Du",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Bình Thuận",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Công thương Miền Trung",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Kỹ thuật Công nghệ Quy Nhơn",
+   "en": "Gia Lai",
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Kon Tum",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Bình Phước",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Cộng đồng Đồng Tháp",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "name": "Trường Cao đẳng Kinh tế – Kỹ thuật Bạc Liêu",
+   "en": null,
+   "abbr": null
+  },
+  {
+   "ror": "https://ror.org/05ghhgs79",
+   "name": "Tra Vinh University",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/003szmg30",
+   "name": "Ho Chi Minh City International University",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/02c6yhw44",
+   "name": "Ho Chi Minh City University of Social Sciences and Humanities",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/05kdc4973",
+   "name": "University of Information Technology",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/01atvfx83",
+   "name": "Hung Vuong University of Ho Chi Minh City",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/0018abm07",
+   "name": "PSB College Vietnam",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/05jvjx121",
+   "name": "Trường THPT chuyên Nguyễn Quang Diêu",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/038en7m86",
+   "name": "American Polytechnic College",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/037481v91",
+   "name": "Cao Thang Technical College",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/014028r32",
+   "name": "Le Hong Phong High School for the Gifted",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/04pzh0a71",
+   "name": "Ba Ria - Vung Tau College of Engineering and Technology",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/01drx8a35",
+   "name": "VNUHCM – High School for the Gifted",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/056sktz68",
+   "name": "Da Nang University of Economics",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/05qq5b157",
+   "name": "Trường Đại học Trần Đại Nghĩa",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/00cnrny66",
+   "name": "Trường Đại học Phương Đông",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/05xpj2n48",
+   "name": "HUTECH University",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/00qaa6j11",
+   "name": "Hue University",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/05jfbgm49",
+   "name": "Ho Chi Minh City University of Science",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/00a3esw81",
+   "name": "Trường Đại học Thông tin Liên lạc",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/01nmz1w66",
+   "name": "Trường Cao đẳng Cộng đồng Hậu Giang",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/04x0cts32",
+   "name": "Trung tâm Đào tạo và Nghiên cứu Quản lý công",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/05csrpd73",
+   "name": "Trường Đại học Ngoại ngữ - Đại học Đà Nẵng",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/04v5ws439",
+   "name": "Trường Đại học Nghệ An",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/04wgyjv21",
+   "name": "Le Quy Don Technical University",
+   "note": "education, chưa có trong Wikipedia"
+  },
+  {
+   "ror": "https://ror.org/04fazh043",
+   "name": "Centre Franco-Vietnamien de Formation à la Gestion",
+   "note": "education, chưa có trong Wikipedia"
+  }
+ ],
+ "moetUnmatched": [
+  {
+   "stt": 205,
+   "name": "TRƯỜNG ĐẠI HỌC KINH TẾ - TÀI CHÍNH TP. HỒ CHÍ MINH",
+   "code": "UEF"
+  },
+  {
+   "stt": 206,
+   "name": "TRƯỜNG ĐẠI HỌC QUỐC TẾ - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+   "code": "QSQ"
+  },
+  {
+   "stt": 207,
+   "name": "TRƯỜNG ĐẠI HỌC CÔNG NGHỆ TP. HỒ CHÍ MINH",
+   "code": "DKC"
+  },
+  {
+   "stt": 208,
+   "name": "TRƯỜNG ĐẠI HỌC NÔNG LÂM TP. HỒ CHÍ MINH",
+   "code": "NLS"
+  },
+  {
+   "stt": 221,
+   "name": "TRƯỜNG ĐẠI HỌC LUẬT, ĐẠI HỌC HUẾ",
+   "code": "DHA"
+  },
+  {
+   "stt": 235,
+   "name": "TRƯỜNG ĐẠI HỌC NGOẠI NGỮ - TIN HỌC TP. HỒ CHÍ MINH",
+   "code": "DNT"
+  },
+  {
+   "stt": 244,
+   "name": "TRƯỜNG ĐẠI HỌC SƯ PHẠM TP. HỒ CHÍ MINH",
+   "code": "SPS"
+  },
+  {
+   "stt": 250,
+   "name": "TRƯỜNG ĐẠI HỌC KINH TẾ, ĐẠI HỌC HUẾ",
+   "code": "DHK"
+  },
+  {
+   "stt": 255,
+   "name": "TRƯỜNG ĐẠI HỌC NGOẠI NGỮ, ĐẠI HỌC HUẾ",
+   "code": "DHF"
+  },
+  {
+   "stt": 258,
+   "name": "TRƯỜNG ĐẠI HỌC SƯ PHẠM, ĐẠI HỌC HUẾ",
+   "code": "DHS"
+  },
+  {
+   "stt": 263,
+   "name": "TRƯỜNG ĐẠI HỌC AN GIANG - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+   "code": "TAG"
+  },
+  {
+   "stt": 269,
+   "name": "TRƯỜNG ĐẠI HỌC Y DƯỢC, ĐẠI HỌC THÁI NGUYÊN",
+   "code": "DTY"
+  },
+  {
+   "stt": 271,
+   "name": "TRƯỜNG ĐẠI HỌC NGÂN HÀNG TP. HỒ CHÍ MINH",
+   "code": "NHS"
+  },
+  {
+   "stt": 272,
+   "name": "TRƯỜNG ĐẠI HỌC KINH TẾ VÀ QUẢN TRỊ KINH DOANH, ĐẠI HỌC THÁI NGUYÊN",
+   "code": "DTE"
+  },
+  {
+   "stt": 274,
+   "name": "TRƯỜNG ĐẠI HỌC BÁCH KHOA, ĐẠI HỌC ĐÀ NẴNG",
+   "code": "DDK"
+  },
+  {
+   "stt": 276,
+   "name": "TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+   "code": "QSC"
+  },
+  {
+   "stt": 279,
+   "name": "ĐẠI HỌC Y DƯỢC TP. HỒ CHÍ MINH",
+   "code": "YDS"
+  },
+  {
+   "stt": 282,
+   "name": "TRƯỜNG ĐẠI HỌC KỸ THUẬT CÔNG NGHIỆP, ĐẠI HỌC THÁI NGUYÊN",
+   "code": "DTK"
+  },
+  {
+   "stt": 285,
+   "name": "TRƯỜNG ĐẠI HỌC KINH TẾ - LUẬT - ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH",
+   "code": "QSK"
+  },
+  {
+   "stt": 286,
+   "name": "TRƯỜNG ĐẠI HỌC MỞ TP. HỒ CHÍ MINH",
+   "code": "MBS"
+  },
+  {
+   "stt": 289,
+   "name": "TRƯỜNG ĐẠI HỌC NÔNG LÂM, ĐẠI HỌC THÁI NGUYÊN",
+   "code": "DTN"
+  },
+  {
+   "stt": 296,
+   "name": "TRƯỜNG ĐẠI HỌC KHOA HỌC, ĐẠI HỌC HUẾ",
+   "code": "DHT"
+  }
+ ]
+}
