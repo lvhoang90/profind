@@ -269,3 +269,12 @@ button.primary{border:0;background:var(--accent);color:var(--accent-ink);border-
 .chips li.scholar{background:rgba(66,133,244,.2);border-color:rgba(138,180,248,.6)}
 
 .auth-tabs{display:flex;margin-bottom:12px;width:100%}.auth-tabs button{flex:1;justify-content:center}.auth-sw{margin:0;text-align:center}.auth-box{min-width:0}
+
+/* Nút Quản trị nổi bật */
+.btn-admin,.admin-chip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:12px;font-weight:800;font-size:.95rem;text-decoration:none;color:#3b2f00;background:linear-gradient(135deg,#fde047,#f59e0b);box-shadow:0 8px 20px -8px rgba(245,158,11,.8),inset 0 0 0 1px rgba(255,255,255,.5);transition:transform .2s,box-shadow .2s}
+.btn-admin:hover,.admin-chip:hover{transform:translateY(-2px);box-shadow:0 12px 24px -8px rgba(245,158,11,.95),inset 0 0 0 1px rgba(255,255,255,.6)}
+.btn-admin .ic,.admin-chip .ic{color:#3b2f00;--ic2:#3b2f00}
+.admin-chip{min-height:44px;padding:0 14px;font-size:.88rem}
+@media(max-width:560px){.admin-chip span{display:none}.admin-chip{padding:0;width:44px;justify-content:center}}
+@media(forced-colors:active){.btn-admin,.admin-chip{border:2px solid CanvasText}}
+@media(max-width:700px){.admin-chip{display:none}}

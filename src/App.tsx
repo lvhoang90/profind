@@ -91,6 +91,7 @@ function AppInner() {
           <div className="lang" role="group" aria-label={t("langLabel")}>
             {(["vi", "en"] as const).map((l) => <button key={l} lang={l} className={`lang-${l}`} aria-pressed={lang === l} aria-label={l === "vi" ? "Tiếng Việt" : "English"} onClick={() => { setLang(l); evt("lang"); }}>{l.toUpperCase()}</button>)}
           </div>
+            {user?.isAdmin && <a className="admin-chip" href="#/quan-tri" aria-label="Quản trị"><Icon n="grid" size={18} /><span>Quản trị</span></a>}
             <a className={`acct-btn${user ? " in" : ""}`} href="#/tai-khoan" aria-label={user ? t("mySpace") : t("login")} title={user ? user.email : t("login")}><Icon n="user" size={18} /><span>{user ? (user.name || user.email).split(/[\s@]/)[0] : t("login")}</span></a>
           </div>
         </div>

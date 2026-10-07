@@ -95,7 +95,7 @@ function Dashboard({ user, tab }: { user: User; tab: string }) {
         <div className="av" aria-hidden="true">{initials(user.name || user.email)}</div>
         <div className="dh-main"><h1>{hello}</h1><p className="meta">{user.email} · {t("memberSince", { d: ago(user.createdAt, lang) })}</p>
           <div className="pct" role="img" aria-label={t("pDone", { n: user.profilePct })}><i><u style={{ width: `${user.profilePct}%` }} /></i><span>{t("pDone", { n: user.profilePct })}</span></div></div>
-        <div className="dh-act">{user.isAdmin && <a className="ghost-link light" href="#/quan-tri"><Icon n="grid" size={16} />Quản trị</a>}<button className="ghost light" onClick={() => void logout().then(() => { location.hash = "#/"; })}><Icon n="logout" size={16} />{t("logout")}</button></div>
+        <div className="dh-act">{user.isAdmin && <a className="btn-admin" href="#/quan-tri"><Icon n="grid" size={18} />Quản trị</a>}<button className="ghost light" onClick={() => void logout().then(() => { location.hash = "#/"; })}><Icon n="logout" size={16} />{t("logout")}</button></div>
       </header>
       <nav className="tabs" aria-label={t("accTitle")}>{TABS.map(([k, l, ic]) => <a key={k} href={`#/tai-khoan${k ? "/" + k : ""}`} aria-current={cur === k ? "page" : undefined}><Icon n={ic} size={16} />{t(l as "tabSaved")}{k === "da-luu" && favs.size > 0 && <em>{favs.size}</em>}</a>)}</nav>
       {cur === "" && <Overview user={user} />}
