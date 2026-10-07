@@ -36,6 +36,29 @@ Hiện mọi thứ ở nhánh `claude/determined-wozniak-igffaa` của `lvhoang9
 - EduFind, Ami, Mây: thêm ProFind vào khối "Hệ sinh thái ISA" ở chân trang của từng ứng dụng (ProFind đã có khối này, trỏ sang EduFind và Ami).
 - Cổng `isavn.edu.vn/go/<app>?from=...` đo hành trình giữa các công cụ: thêm `profind` vào bảng định tuyến của cổng đó (kho chứa `isavn.edu.vn`).
 
+## 4b. Bật tài khoản người dùng và trang quản trị (tùy chọn, làm một lần)
+
+ProFind có đăng ký bằng email + số điện thoại (mã xác thực 6 số gửi qua email), lưu tác giả, lưu tìm kiếm, lịch sử xem, thống kê truy cập và trang quản trị `#/quan-tri`. Tính năng tự tắt nếu thiếu cấu hình; phần còn lại của ProFind vẫn chạy bình thường.
+
+Vercel → dự án `profind` → Settings → Environment Variables, thêm (Production), rồi **Redeploy**:
+
+| Biến | Giá trị |
+|---|---|
+| `MAIL_PROVIDER` | `resend` |
+| `RESEND_API_KEY` | dùng lại khóa của EduFind (biến chia sẻ của Team) |
+| `MAIL_FROM` | `ProFind <no-reply@isavn.edu.vn>` (địa chỉ thuộc tên miền đã xác minh trên Resend; `onboarding@resend.dev` chỉ gửi được cho chủ tài khoản Resend) |
+| `SESSION_SECRET` | chuỗi ngẫu nhiên dài (ít nhất 32 ký tự), ví dụ chạy `openssl rand -hex 32` |
+| `ADMIN_EMAILS` | email quản trị, ngăn cách bằng dấu phẩy (ví dụ `luongviethoang.safi@gmail.com`) |
+| `KV_REST_API_URL`, `KV_REST_API_TOKEN` | Storage → kết nối cơ sở Upstash Redis (có thể dùng chung với EduFind; khóa của ProFind bắt đầu bằng `profind:`) |
+| `PUBLIC_ORIGIN` (tùy chọn) | `https://profind.isavn.edu.vn` (dùng trong thư chào mừng) |
+| `WELCOME_MAIL=0` (tùy chọn) | tắt thư chào mừng |
+
+Kiểm tra: mở `https://profind.isavn.edu.vn/#/tai-khoan` → đăng ký bằng email trong `ADMIN_EMAILS` → vào `#/quan-tri`. Chạy thử cục bộ không cần dịch vụ ngoài: `npm run build && ADMIN_EMAILS=you@example.com node scripts/dev-server.mjs` (mã xác thực in ra bảng điều khiển, kho tạm trong bộ nhớ).
+
+Ghi chú: đăng ký hiện xác thực bằng **email** (giống EduFind); số điện thoại được thu và kiểm tra định dạng (di động Việt Nam) làm thông tin liên hệ, chưa gửi mã qua SMS. Muốn xác thực bằng SMS cần nhà cung cấp SMS/Zalo ZNS (đăng ký brandname).
+
+Đo lường: `api/visit.js` đếm ẩn danh (không cookie, không IP) lượt truy cập, nguồn, thiết bị, thời lượng và sự kiện (tìm kiếm, mở hồ sơ, lưu, điểm chạm sang EduFind/Ami/Mây `go_<đích>_<vị trí>`), hiển thị ở tab Truy cập và Hệ sinh thái ISA của trang quản trị.
+
 ## 5. Cập nhật dữ liệu về sau
 Chạy trên máy (có Internet và `OPENALEX_API_KEY`): xem `docs/DATA-PIPELINE.md`; cuối cùng `npm run d:index`, `npm run d:check`, commit `public/data/` và đẩy lên `main`.
 Giới hạn cần để ý: Vercel giới hạn số tệp mỗi lần triển khai (khoảng 15.000 tệp tĩnh); hiện ~6.700 tệp công trình theo tác giả. Khi dữ liệu vượt ~10.000 tác giả, gộp tệp theo đơn vị hoặc chuyển sang Vercel Blob.

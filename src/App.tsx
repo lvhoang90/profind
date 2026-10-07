@@ -3,6 +3,12 @@ import { Ctx, DICT, KEY, initialLang, useT, type Key, type Lang } from "./i18n";
 import { dName, fieldName } from "./disciplines";
 import { Icon, type IconName } from "./icons";
 import type { Author, Data, Institution, Work } from "./types";
+import { AccountProvider, useAccount } from "./accountStore";
+import { AccountPage } from "./Account";
+import { AdminPage } from "./Admin";
+import { Footer, EcoLink } from "./Footer";
+import { evt, startSession } from "./analytics";
+import { getTheme, setTheme, type Theme } from "./theme";
 
 type SortKey = "totalScore" | "worksCount" | "citations" | "name" | "unit" | "lastYear" | "rank";
 const TEXT_KEYS: SortKey[] = ["name", "unit"], RANK_ASC: SortKey[] = ["rank"];
@@ -14,12 +20,12 @@ const TOP2_DOI = "https://doi.org/10.17632/btchxktzyw.8";
 const TOP2_LIC = "https://creativecommons.org/licenses/by-nc/3.0/";
 
 /** Giải mã đường dẫn băm an toàn: chuỗi % sai (vd. %E0%A4%A) không được làm sập trang. */
-function parseRoute(): { kind: string; id: string } {
-  const raw = location.hash.replace(/^#\/?/, "");
+function parseRoute(): { kind: string; id: string; query: string } {
+  const full = location.hash.replace(/^#\/?/, ""), qi = full.indexOf("?"), raw = qi < 0 ? full : full.slice(0, qi);
   let dec = raw;
   try { dec = decodeURIComponent(raw); } catch { /* giữ nguyên chuỗi gốc */ }
   const [kind = "", ...rest] = dec.split("/");
-  return { kind, id: rest.join("/") };
+  return { kind, id: rest.join("/"), query: qi < 0 ? "" : full.slice(qi + 1) };
 }
 /** Chuẩn hóa để so khớp: bỏ dấu, thường hóa, gộp mọi loại gạch nối/dấu cách (kể cả U+2010, U+2013, NBSP) về một dấu cách. */
 const norm = (s: string) => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase().replace(/[‐-―−_.,;:()/\\-]+/g, " ").replace(/[  -​ ]/g, " ").replace(/\s+/g, " ").trim();
@@ -35,7 +41,11 @@ class Boundary extends Component<{ children: ReactNode }, { err: boolean }> {
   }
 }
 
-export function App() {
+export function App() { return <AccountProvider><AppInner /></AccountProvider>; }
+
+function AppInner() {
+  const { user } = useAccount();
+  const [theme, setThemeState] = useState<Theme>(getTheme);
   const [lang, setLang] = useState<Lang>(initialLang);
   const [data, setData] = useState<Data | null>(null);
   const [err, setErr] = useState(false);
@@ -54,15 +64,16 @@ export function App() {
     }).catch(() => setErr(true));
   };
   useEffect(load, []);
+  useEffect(() => { startSession(); }, []);
   useEffect(() => { document.documentElement.lang = lang; try { localStorage.setItem(KEY, lang); } catch { /* bỏ qua */ } }, [lang]);
   useEffect(() => { const f = () => setRoute(parseRoute()); addEventListener("hashchange", f); return () => removeEventListener("hashchange", f); }, []);
   const { kind, id } = route;
   const author = data && id ? data.authors.find((a) => a.id === id) ?? null : null;
-  const view: "list" | "author" | "corr" | "nf" = kind === "dinh-chinh" ? "corr" : kind === "tac-gia" ? (data && !author ? "nf" : "author") : "list";
+  const view: "list" | "author" | "corr" | "nf" | "acc" | "adm" = kind === "tai-khoan" ? "acc" : kind === "quan-tri" ? "adm" : kind === "dinh-chinh" ? "corr" : kind === "tac-gia" ? (data && !author ? "nf" : "author") : "list";
 
   // Tiêu đề tab, mô tả và đưa tiêu điểm về nội dung chính khi đổi trang (trình đọc màn hình biết đã chuyển trang).
   useEffect(() => {
-    document.title = view === "author" && author ? `${author.name} | ProFind` : view === "corr" ? `${t("corrTitle")} | ProFind` : view === "nf" ? `${t("notFound").split(".")[0]} | ProFind` : t("docTitle");
+    document.title = view === "acc" ? `${t("accTitle")} | ProFind` : view === "adm" ? "Quản trị | ProFind" : view === "author" && author ? `${author.name} | ProFind` : view === "corr" ? `${t("corrTitle")} | ProFind` : view === "nf" ? `${t("notFound").split(".")[0]} | ProFind` : t("docTitle");
     document.querySelector('meta[name="description"]')?.setAttribute("content", t("metaDesc"));
     if (first.current) { first.current = false; return; }
     scrollTo(0, 0); mainRef.current?.focus({ preventScroll: true });
@@ -75,8 +86,12 @@ export function App() {
       <header className="top">
         <div className="wrap hd">
           <a className="brand" href="#/" aria-label="ProFind"><img className="logo" src="./logo-disc.svg" alt="" width="40" height="40" /><b>Pro<i>Find</i></b><span className="beta" title={t("betaTip")}>Beta</span></a>
+          <div className="hd-tools">
+            <button className="icon-btn" onClick={() => { const n: Theme = theme === "auto" ? "light" : theme === "light" ? "dark" : "auto"; setTheme(n); setThemeState(n); evt("theme"); }} aria-label={`${t("themeLabel")}: ${t(theme === "auto" ? "themeAuto" : theme === "light" ? "themeLight" : "themeDark")}`} title={`${t("themeLabel")}: ${t(theme === "auto" ? "themeAuto" : theme === "light" ? "themeLight" : "themeDark")}`}><Icon n={theme === "auto" ? "auto" : theme === "light" ? "sun" : "moon"} size={20} /></button>
           <div className="lang" role="group" aria-label={t("langLabel")}>
-            {(["vi", "en"] as const).map((l) => <button key={l} lang={l} className={`lang-${l}`} aria-pressed={lang === l} aria-label={l === "vi" ? "Tiếng Việt" : "English"} onClick={() => setLang(l)}>{l.toUpperCase()}</button>)}
+            {(["vi", "en"] as const).map((l) => <button key={l} lang={l} className={`lang-${l}`} aria-pressed={lang === l} aria-label={l === "vi" ? "Tiếng Việt" : "English"} onClick={() => { setLang(l); evt("lang"); }}>{l.toUpperCase()}</button>)}
+          </div>
+            <a className={`acct-btn${user ? " in" : ""}`} href="#/tai-khoan" aria-label={user ? t("mySpace") : t("login")} title={user ? user.email : t("login")}><Icon n="user" size={18} /><span>{user ? (user.name || user.email).split(/[\s@]/)[0] : t("login")}</span></a>
           </div>
         </div>
         <div className="wrap"><HTitle className="ht">{t("sub")}</HTitle><p className="tag">{t("tagline")}</p></div>
@@ -84,28 +99,17 @@ export function App() {
       <main className="wrap" id="main" tabIndex={-1} ref={mainRef}>
         {data?.meta.demo && <p className="banner demo" role="note"><Icon n="info" />{t("demo")}</p>}
         <Boundary key={`${view}/${author?.id ?? ""}`}>
-          {err ? <div className="empty" role="alert"><p>{t("err")}</p><button className="ghost" onClick={load}>{t("retry")}</button></div>
+          {view === "acc" ? <AccountPage tab={id} />
+            : view === "adm" ? <AdminPage tab={id} />
+            : err ? <div className="empty" role="alert"><p>{t("err")}</p><button className="ghost" onClick={load}>{t("retry")}</button></div>
             : !data ? <p className="empty" role="status">{t("loading")}</p>
             : view === "corr" ? <Correction key={author?.id ?? "none"} a={author} />
             : view === "nf" ? <div className="empty" role="alert"><p>{t("notFound")}</p><p><a href="#/">{t("back")}</a></p></div>
             : view === "author" && author ? <AuthorPage a={author} d={data} />
-            : <List d={data} />}
+            : <List d={data} query={route.query} />}
         </Boundary>
       </main>
-      <footer className="foot wrap">
-        <aside className="banner note" aria-label={t("notRankShort")}><Icon n="shield" /><p><b>{t("notRankShort")}</b> {t("notRank")}</p></aside>
-        <section className="eco" aria-label={t("eco")}>
-          <h2>{t("eco")}</h2>
-          <ol>
-            <li className="self"><a href="#/" aria-current="page"><small>1 · {t("here")}</small><b>{t("e1")}</b></a></li>
-            <li><a href={`${EDUFIND}/`} target="_blank" rel="noopener"><small>2</small><b>{t("e2")}</b><span className="sr"> {t("newTab")}</span></a></li>
-            <li><a href="https://isavn.edu.vn/go/ami?from=profind" target="_blank" rel="noopener"><small>3</small><b>{t("e3")}</b><span className="sr"> {t("newTab")}</span></a></li>
-          </ol>
-        </section>
-        {data && !data.meta.demo && data.meta.fetched && <p className="meta">{t("source")}: {t("srcLine", { d: data.meta.fetched })}</p>}
-        {data?.authors.some((a) => a.top2) && <p className="meta">{t("top2Credit")} <a href={TOP2_DOI} target="_blank" rel="noopener">DOI 10.17632/btchxktzyw.8</a> · <a href={TOP2_LIC} target="_blank" rel="noopener">{t("top2Lic")}</a> · <a href="./LICENSE-NC.md" target="_blank" rel="noopener">LICENSE-NC</a></p>}
-        <p className="meta"><Icon n="shield" size={14} /> <span>{t("lic")} <a href="#/dinh-chinh">{t("fix")}</a></span></p>
-      </footer>
+      <Footer data={data} />
     </Ctx.Provider>
   );
 }
@@ -144,12 +148,14 @@ function Top2Tag({ a, cls }: { a: Author; cls: string }) {
   return <a className={cls} href={TOP2_DOI} target="_blank" rel="noopener" title={tip} aria-label={`${t("top2Tag")}. ${tip} ${t("newTab")}`}>★ {t("top2Tag")}</a>;
 }
 
-function List({ d }: { d: Data }) {
+function List({ d, query }: { d: Data; query: string }) {
   const { lang, t, num } = useT();
-  const [q, setQ] = useState(""), [disc, setDisc] = useState(""), [type, setType] = useState(""), [sort, setSort] = useState<SortKey>("totalScore"), [dir, setDir] = useState<1 | -1>(-1);
+  const { user, cfg, saveSearch } = useAccount();
+  const qp = useMemo(() => new URLSearchParams(query), []); // eslint-disable-line react-hooks/exhaustive-deps
+  const [q, setQ] = useState(qp.get("q") ?? ""), [disc, setDisc] = useState(qp.get("d") ?? ""), [type, setType] = useState(qp.get("ty") ?? ""), [sort, setSort] = useState<SortKey>("totalScore"), [dir, setDir] = useState<1 | -1>(-1);
   const pick2 = (k: SortKey) => { setSort(k); setDir(-1); };
   const pick = (k: SortKey) => { if (k === sort) setDir((dir * -1) as 1 | -1); else { setSort(k); setDir(TEXT_KEYS.includes(k) || RANK_ASC.includes(k) ? 1 : -1); } };
-  const [scope, setScope] = useState("vn"), [instSel, setInstSel] = useState(""), [page, setPage] = useState(0);
+  const [scope, setScope] = useState(qp.get("sc") === "all" ? "all" : "vn"), [instSel, setInstSel] = useState(qp.get("i") ?? ""), [page, setPage] = useState(0), [ssMsg, setSsMsg] = useState("");
   const [jn, setJn] = useState<Record<string, { t: string; p: string }> | null>(null);
   const dq = useDeferredValue(q);
   const instById = useMemo(() => new Map(d.institutions.map((i) => [i.id, i])), [d]);
@@ -167,6 +173,19 @@ function List({ d }: { d: Data }) {
     }).catch(() => setJn({}));
   }, [q, jn]);
   const rankKey = RANK_KEY[sort];
+  // Bộ lọc nằm trong đường dẫn (#/?q=…&d=…) để chia sẻ, mở lại và dùng nút Quay lại của trình duyệt.
+  useEffect(() => {
+    const u = new URLSearchParams(Object.entries({ q: q.trim(), d: disc, ty: type, i: instSel, sc: scope === "all" ? "all" : "" }).filter(([, v]) => v));
+    const h = `#/${u.toString() ? "?" + u : ""}`; if (h !== (location.hash || "#/")) history.replaceState(null, "", h);
+  }, [q, disc, type, instSel, scope]);
+  useEffect(() => { const id = window.setTimeout(() => { if (q.trim().length >= 3) evt("search", undefined, q.trim()); }, 1200); return () => window.clearTimeout(id); }, [q]);
+  const hasFilter = !!(q.trim() || disc || type || instSel);
+  const doSave = async () => {
+    if (!user) { try { sessionStorage.setItem("profind.ret", location.hash || "#/"); sessionStorage.setItem("profind.reason", "ss"); } catch { /* bỏ qua */ } evt("save_gate"); location.hash = "#/tai-khoan"; return; }
+    const label = [q.trim(), disc && dName(disc, lang), instSel && instLabel(instById.get(instSel), lang)].filter(Boolean).join(" · ");
+    try { await saveSearch({ q: q.trim(), d: disc, ty: type, i: instSel, sc: scope === "all" ? "all" : "vn", label }); setSsMsg(t("searchSaved")); } catch (e: any) { setSsMsg(e?.message || t("saveFail")); }
+    window.setTimeout(() => setSsMsg(""), 4000);
+  };
   const rows = useMemo(() => {
     const toks = norm(dq).split(" ").filter(Boolean);
     const rawId = dq.replace(/[\s-]/g, "").toLowerCase(), isId = /^[0-9x]{6,}$/.test(rawId);
@@ -202,8 +221,11 @@ function List({ d }: { d: Data }) {
         <Sel icon="shield" label={t("scope")} v={scope} set={(v) => { setScope(v); setInstSel(""); }} opts={[["vn", t("scopeVn")], ["all", t("scopeAll")]]} />
         <Sel icon="sort" label={t("sort")} v={["totalScore", "worksCount", "citations"].includes(sort) ? sort : ""} set={(s) => { if (s) pick2(s as SortKey); }} all={t("byColumn")} opts={[["totalScore", t("byScore")], ["worksCount", t("byWorks")], ["citations", t("byCit")]]} />
       </section>
-      <p className="meta" role="status" aria-live="polite">{t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</p>
-      {rows.length === 0 ? <p className="empty">{t("none")} <a href="#/dinh-chinh">{t("suggestAdd")}</a></p> : (
+      <div className="statusrow">
+        <p className="meta" role="status" aria-live="polite">{t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</p>
+        {cfg?.enabled !== false && hasFilter && <button type="button" className="ghost sm" onClick={() => void doSave()}><Icon n="star" size={16} />{user ? t("saveSearchBtn") : t("saveGate")}</button>}<span className="meta" role="status">{ssMsg}</span>
+      </div>
+      {rows.length === 0 ? <p className="empty">{t("none")} <a href="#/dinh-chinh">{t("suggestAdd")}</a><br /><span className="meta">{t("ecoEmpty")} <EcoLink app="edufind" place="empty">{t("ecoEmptyB")}<span className="sr"> {t("newTab")}</span></EcoLink></span></p> : (
         <div className="table-wrap"><table className="cards tlist">
           <caption className="sr">{t("title")}: {t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</caption>
           <thead><tr>
@@ -212,7 +234,7 @@ function List({ d }: { d: Data }) {
             <Th k="unit" label={t("unit")} sort={sort} dir={dir} pick={pick} />
             <Th k="worksCount" cls="num" label={t("works")} sort={sort} dir={dir} pick={pick} />
             <Th k="totalScore" cls="num" label={t("score")} sort={sort} dir={dir} pick={pick} />
-            <Th k="citations" cls="num" label={t("cit")} sort={sort} dir={dir} pick={pick} />
+            <Th k="citations" cls="num" title={t("citTip")} label={t("cit")} sort={sort} dir={dir} pick={pick} />
             <Th k="lastYear" label={t("years")} sort={sort} dir={dir} pick={pick} />
           </tr></thead>
           <tbody>{rows.slice(page * PAGE, (page + 1) * PAGE).map((a) => { const rv = a[rankKey]; return (
@@ -235,6 +257,7 @@ const hueOf = (s: string) => { let h = 0; for (const c of s) h = (h * 31 + c.cha
 
 function AuthorPage({ a, d }: { a: Author; d: Data }) {
   const { lang, t, num } = useT();
+  const { user, cfg, favs, toggleFav, recordView } = useAccount();
   const [works, setWorks] = useState<Work[] | null>(null);
   const [werr, setWerr] = useState(false), [tick, setTick] = useState(0), [wpage, setWpage] = useState(0);
   const [wsort, setWsort] = useState<WSort>("year"), [onlyLead, setOnlyLead] = useState(false), [allInst, setAllInst] = useState(false);
@@ -250,15 +273,23 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
     return () => ac.abort();
   }, [a.id, a.worksCount, tick]);
   useEffect(() => setWpage(0), [wsort, onlyLead]);
+  useEffect(() => { recordView({ k: `a|${a.id}`, t: a.name, s: a.institutions.map((i) => instByIdRef.get(i)?.name).filter(Boolean).slice(0, 2).join(", ") }); evt("author_view", a.id, a.name); }, [a.id]); // eslint-disable-line react-hooks/exhaustive-deps
   const instById = useMemo(() => new Map(d.institutions.map((i) => [i.id, i])), [d]);
+  const instByIdRef = instById;
   const inst = a.institutions.map((i) => instById.get(i)).filter((x): x is Institution => !!x);
   const csv = () => {
+    evt("csv");
     // Chống chèn công thức (CSV injection): ô văn bản bắt đầu bằng = + - @ hoặc tab/xuống dòng được thêm dấu nháy đơn.
     const cell = (v: unknown) => { let s = String(v ?? ""); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return `"${s.replace(/"/g, '""')}"`; };
     const body = [["year", "title", "doi", "journal", "issn", "score", "citations", "role"], ...(works ?? []).map((w) => [w.year, w.title, w.doi ?? "", w.journal, w.issn, w.score ?? "", w.citations, w.role])].map((r) => r.map(cell).join(",")).join("\r\n");
     const url = URL.createObjectURL(new Blob(["\ufeff" + body], { type: "text/csv;charset=utf-8" }));
     Object.assign(document.createElement("a"), { href: url, download: `${slug(a.name)}-${a.id}.csv` }).click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
+  const saveAuthor = async () => {
+    if (!user) { try { sessionStorage.setItem("profind.ret", location.hash); sessionStorage.setItem("profind.reason", "fav"); } catch { /* bỏ qua */ } evt("save_gate"); location.hash = "#/tai-khoan"; return; }
+    try { await toggleFav(`a|${a.id}`, { t: a.name, s: inst.slice(0, 2).map((i) => instLabel(i, lang)).join(", "), sc: a.totalScore, rk: a.rankScore ?? undefined }); } catch (e: any) { alert(e?.message || t("saveFail")); }
+  };
+  const openWork = (w: Work) => { recordView({ k: `w|${w.id}`, t: w.title, s: [w.journal, w.year].filter(Boolean).join(" · "), u: w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${w.id.split("-").pop()}` }); evt("work_open", w.id, w.title); };
   const pool = d.meta.rankPool ?? 0;
   const rk = (v: number | null) => (v ? <>#{num(v)}</> : <span title={t("rankNoneTip")}>–</span>);
   const roleCell = (w: Work) => (w.role === "lead" ? t("lead") : t("co"));
@@ -294,14 +325,14 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
           <p className="badges">{a.foreign && <span className="badge warnb">{t("foreignTag")}</span>}{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}<Top2Tag a={a} cls="badge top2b" />{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</p>
           <ul className="chips">{(allInst ? inst : inst.slice(0, 4)).map((i) => <li key={i.id}><Icon n="building" size={14} />{instLabel(i, lang)}</li>)}{inst.length > 4 && <li className="more"><button type="button" onClick={() => setAllInst(!allInst)} aria-expanded={allInst}>{allInst ? t("instLess") : t("instMore", { n: num(inst.length - 4) })}</button></li>}{a.orcid && <li className="orcid"><a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}<span className="sr"> {t("newTab")}</span></a></li>}</ul>
           {a.disciplines.length > 0 && <p className="hdisc">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</p>}
-          <p className="actions-row"><button className="ghost light" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button><a className="ghost-link light" href={`#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{t("corrLink")}</a></p>
+          <p className="actions-row">{cfg?.enabled !== false && <button className={`ghost light${favs.has(`a|${a.id}`) ? " on" : ""}`} aria-pressed={favs.has(`a|${a.id}`)} onClick={() => void saveAuthor()}><Icon n="star" size={16} />{!user ? t("saveGate") : favs.has(`a|${a.id}`) ? t("savedA") : t("saveA")}</button>}<button className="ghost light" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button><a className="ghost-link light" href={`#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{t("corrLink")}</a></p>
         </div>
       </header>
       <div className="kpis">
         <div className="kpi k-rank"><span className="kic"><Icon n="trophy" size={20} /></span><b>{rk(a.rankScore)}</b><span>{t("rank")} · {t("score")}</span><small>{a.rankScore ? t("rankOf", { n: num(pool) }) : t("rankNone")}</small></div>
         <div className="kpi k-score"><span className="kic"><Icon n="check" size={20} /></span><b>{num(a.totalScore, 2)}</b><span>{t("cite")}</span></div>
         <div className="kpi"><span className="kic"><Icon n="book" size={20} /></span><b>{num(a.countedWorks)}<em>/{num(a.worksCount)}</em></b><span>{t("counted")}</span><i className="bar" role="presentation"><u style={{ width: `${pct}%` }} /></i></div>
-        <div className="kpi"><span className="kic"><Icon n="chart" size={20} /></span><b>{num(a.citations)}</b><span>{t("cit")}</span><small>{t("rank")} {rk(a.rankCit)}</small></div>
+        <div className="kpi"><span className="kic"><Icon n="chart" size={20} /></span><b>{num(a.citations)}</b><span title={t("citTip")}>{t("cit")}</span><small title={t("citTip")}>{t("citNote")}{a.hIndex ? ` · ${t("hIdx")} ${a.hIndex}` : ""} · {t("rank")} {rk(a.rankCit)}</small></div>
         <div className="kpi"><span className="kic"><Icon n="link" size={20} /></span><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span><i className="bar" role="presentation"><u style={{ width: `${Math.round(a.matchedRate * 100)}%` }} /></i></div>
       </div>
       {a.suspect && <p className="banner demo" role="note"><Icon n="info" />{t("suspectNote")}</p>}
@@ -335,9 +366,9 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
             <li key={w.id} className="wk">
               <span className="wy">{w.year}</span>
               <div className="wm">
-                <a className="wt2" href={w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${w.id.split("-").pop()}`} target="_blank" rel="noopener">{w.title}<span className="sr"> {t("newTab")}</span></a>
+                <a className="wt2" onClick={() => openWork(w)} href={w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${w.id.split("-").pop()}`} target="_blank" rel="noopener">{w.title}<span className="sr"> {t("newTab")}</span></a>
                 <div className="wsrc">{w.journal && <span>{w.journal}</span>}{w.issn ? <span className="issn">ISSN {w.issn}</span> : <span className="issn noissn">{t("noIssn")}</span>}</div>
-                <div className="wlinks">{w.doi ? <a className="chip" href={`https://doi.org/${w.doi}`} target="_blank" rel="noopener">DOI ↗<span className="sr"> {t("newTab")}</span></a> : <span className="chip mute">{t("noDoi")}</span>}{w.scoreDiscipline && <a className="chip" target="_blank" rel="noopener" href={`${EDUFIND}/${w.scoreDiscipline}/?${w.scoreKind === "scopus" ? "tab=international&" : ""}q=${encodeURIComponent(w.issn)}`}>{t("lookup")} ↗<span className="sr"> {t("newTab")}</span></a>}</div>
+                <div className="wlinks">{w.doi ? <a className="chip" onClick={() => openWork(w)} href={`https://doi.org/${w.doi}`} target="_blank" rel="noopener">DOI ↗<span className="sr"> {t("newTab")}</span></a> : <span className="chip mute">{t("noDoi")}</span>}{w.scoreDiscipline && <a className="chip" target="_blank" rel="noopener" href={`${EDUFIND}/${w.scoreDiscipline}/?${w.scoreKind === "scopus" ? "tab=international&" : ""}q=${encodeURIComponent(w.issn)}`}>{t("lookup")} ↗<span className="sr"> {t("newTab")}</span></a>}</div>
               </div>
               <div className="wr">
                 {w.score === null ? <span className="pill none" title={w.role === "lead" ? t("unmatched") : w.ru ? t("roleUnknown") : t("notLead")}>{w.role === "lead" ? t("unmatched") : w.ru ? t("roleUnknownShort") : t("notLeadShort")}</span>
@@ -347,6 +378,11 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
               </div>
             </li>))}</ol>)}
         {works && <Pager page={wpage} total={shown.length} set={(p) => setWpage(p)} />}
+      </section>
+      <section className="next compact" aria-labelledby="ecoa"><h2 id="ecoa">{t("ecoHeadAuthor")}</h2>
+        <div className="next-grid">
+          {([["edufind", "ecoAuthorEdu", "book"], ["ami", "ecoAuthorAmi", "link"], ["may", "ecoAuthorMay", "spark"]] as const).map(([app, k, ic]) => <EcoLink key={app} app={app} place="author" className="ncard link"><span className="kic"><Icon n={ic} size={20} /></span><span>{t(k)}</span><Icon n="external" size={14} /><span className="sr"> {t("newTab")}</span></EcoLink>)}
+        </div>
       </section>
     </article>
   );
