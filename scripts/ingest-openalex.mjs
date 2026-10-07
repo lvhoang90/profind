@@ -3,7 +3,7 @@
 // Ghi data/raw-authors.json (cùng định dạng với make-demo.mjs). Chạy trên máy có Internet; có thể chạy lại, dùng cache ở data/raw/.
 // Quy ước: tác giả = hồ sơ OpenAlex gắn với đơn vị (last_known_institutions); công trình lấy từ works?filter=author.id:... ;
 // ISSN lấy từ primary_location.source.issn_l / issn. Hồ sơ OpenAlex có thể gộp/tách nhầm: ORCID là khóa xác nhận (xem docs/DESIGN.md).
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from "node:fs";
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
 const mailto = arg("mailto"); if (!mailto) throw new Error("Cần --mailto <email>.");
 // OpenAlex yêu cầu API key miễn phí (https://openalex.org/settings/api): đặt biến môi trường OPENALEX_API_KEY. Không ghi khóa vào mã nguồn.
@@ -84,6 +84,9 @@ if (existsSync("data/pinned-orcids.json")) {
     } catch (e) { authors.length = pa0; works.length = pw0; console.warn(`Ghim ${pin.name}: LỖI, bỏ qua (${String(e.message).slice(0, 80)})`); }
   }
 }
+
+// Tác giả nổi bật theo trích dẫn (scripts/ingest-notable.mjs): gộp mọi data/raw/_notable-*.json
+for (const f of readdirSync("data/raw").filter((f) => f.startsWith("_notable-"))) { const c = JSON.parse(readFileSync(`data/raw/${f}`, "utf8")); authors.push(...c.authors); works.push(...c.works); }
 
 writeFileSync("data/raw-authors.json", JSON.stringify({ meta: { demo: false, source: "OpenAlex", fetched: new Date().toISOString().slice(0, 10) }, authors, works }));
 console.log(`Xong: ${authors.length} tác giả, ${works.length} công trình`);

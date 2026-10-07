@@ -203,7 +203,7 @@ function List({ d }: { d: Data }) {
         <Sel icon="sort" label={t("sort")} v={["totalScore", "worksCount", "citations"].includes(sort) ? sort : ""} set={(s) => { if (s) pick2(s as SortKey); }} all={t("byColumn")} opts={[["totalScore", t("byScore")], ["worksCount", t("byWorks")], ["citations", t("byCit")]]} />
       </section>
       <p className="meta" role="status" aria-live="polite">{t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</p>
-      {rows.length === 0 ? <p className="empty">{t("none")}</p> : (
+      {rows.length === 0 ? <p className="empty">{t("none")} <a href="#/dinh-chinh">{t("suggestAdd")}</a></p> : (
         <div className="table-wrap"><table className="cards tlist">
           <caption className="sr">{t("title")}: {t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</caption>
           <thead><tr>
@@ -291,7 +291,7 @@ function Correction({ a }: { a: Author | null }) {
   const { t } = useT();
   const [state, setState] = useState<"idle" | "sending" | "ok" | "err">("idle");
   const [code, setCode] = useState("send");
-  const [kind, setKind] = useState("claim");
+  const [kind, setKind] = useState(a ? "claim" : "add");
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); setState("sending");
     const f = new FormData(e.currentTarget);
@@ -315,7 +315,7 @@ function Correction({ a }: { a: Author | null }) {
       {state !== "ok" && (
         <form onSubmit={submit} className="form">
           <fieldset><legend className="sr">{t("corrTitle")}</legend>
-            {([["claim", "kClaim"], ["correct", "kCorrect"], ["remove", "kRemove"]] as const).map(([k, l]) => <label key={k} className="radio"><input type="radio" name="kind" value={k} checked={kind === k} onChange={() => setKind(k)} />{t(l)}</label>)}
+            {([...(a ? [] : [["add", "kAdd"]]), ["claim", "kClaim"], ["correct", "kCorrect"], ["remove", "kRemove"]] as [string, string][]).map(([k, l]) => <label key={k} className="radio"><input type="radio" name="kind" value={k} checked={kind === k} onChange={() => setKind(k)} />{t(l as "kClaim")}</label>)}
           </fieldset>
           {!a && <label className="sel"><span>{t("fRef")}</span><input name="ref" required maxLength={160} /></label>}
           <label className="sel"><span>{t("fName")}</span><input name="name" required maxLength={120} autoComplete="name" /></label>
