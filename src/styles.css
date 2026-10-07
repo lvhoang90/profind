@@ -363,3 +363,9 @@ button.primary{border:0;background:var(--accent);color:var(--accent-ink);border-
 .tw a{border-left:3px solid #7c3aed}.tw li:first-child a{border-left-color:#f59e0b}
 .sf-who{margin:0}.sf-who>b{display:block;color:#fff;font-size:.95rem}.sf-who>span{display:block;font-size:.8rem;color:#8fb8d4;margin-bottom:6px}
 .sf-disc{margin-top:6px!important;color:#7fa6c1;font-size:.74rem;line-height:1.55;max-width:96ch}
+/* Điều chỉnh trên điện thoại: sách nhỏ hơn, trang đang lật mờ đi để không che nút gợi ý; trang kết quả chỉ giữ hạt chữ mờ */
+.top:not(:has(.hero-home.big)) .book{display:none}.top:not(:has(.hero-home.big)) .heroart{opacity:.3}
+@keyframes flipfade{0%,3%{opacity:1}7%{opacity:.25}12%,72%{opacity:1}}
+.leaf{animation:flip 6.5s var(--d) ease-in-out infinite both,flipfade 6.5s var(--d) linear infinite both}
+@media(max-width:600px){.book{--bw:min(86vw,300px);bottom:calc(var(--bw)*-.1)}.top:has(.hero-home.big){padding-bottom:170px}.heroart canvas{opacity:.8}}
+@media(prefers-reduced-motion:reduce){.leaf{animation:none}}
