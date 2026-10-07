@@ -29,6 +29,9 @@ for (const m of C.merge) for (const f of m.from) alias.set(f, m.into);
 const byOrcid = new Map();
 for (const a of authors) if (a.orcid) { const k = byOrcid.get(a.orcid); if (!k) byOrcid.set(a.orcid, a); else { alias.set(a.id, k.id); k.institutions = [...new Set([...k.institutions, ...a.institutions])]; log.push(`gộp ${a.id} -> ${k.id} (ORCID)`); } }
 authors = authors.filter((a) => !alias.has(a.id));
+// Hồ sơ bị gộp vào hồ sơ khác: cộng số trích dẫn toàn thời gian của hồ sơ gốc vào hồ sơ đích.
+const metaAll = existsSync("data/author-meta.json") ? rd("data/author-meta.json") : {}, extraCited = new Map();
+for (const [f, into] of alias) extraCited.set(into, (extraCited.get(into) ?? 0) + (metaAll[f]?.cited ?? 0));
 const live = new Map(authors.map((a) => [a.id, a]));
 for (const a of authors) { if (C.rename[a.id]) a.name = C.rename[a.id]; a.claimed = C.claimed[a.id]?.date ?? null; }
 const excl = new Set(C.excludeWorks), seen = new Set();
@@ -105,7 +108,7 @@ const outAuthors = authors.map((a) => {
     suspect: ws.length >= 500 || ws.length / span > 150 || a.institutions.length >= 5,
     worksCount: ws.length, countedWorks: ws.filter((w) => w.counted).length, totalScore: Math.round(ws.reduce((s, w) => s + (w.score ?? 0), 0) * 100) / 100,
     // citations: số trích dẫn TOÀN THỜI GIAN của hồ sơ OpenAlex (khớp với cách các hệ thống khác tính); citations2016: riêng các công trình trong ProFind (từ 2016).
-    citations: meta?.cited ?? ws.reduce((s, w) => s + (w.citations ?? 0), 0), citations2016: ws.reduce((s, w) => s + (w.citations ?? 0), 0), hIndex: meta?.h ?? null, matchedRate: ws.length ? Math.round((matched / ws.length) * 100) / 100 : 0,
+    citations: (meta?.cited ?? ws.reduce((s, w) => s + (w.citations ?? 0), 0)) + (extraCited.get(a.id) ?? 0), citations2016: ws.reduce((s, w) => s + (w.citations ?? 0), 0), hIndex: meta?.h ?? null, matchedRate: ws.length ? Math.round((matched / ws.length) * 100) / 100 : 0,
     firstYear: years.length ? Math.min(...years) : null, lastYear: years.length ? Math.max(...years) : null };
 });
 // Thứ hạng chỉ tính trong tập đủ điều kiện (đơn vị tại Việt Nam, không nghi gộp nhầm) = đúng tập danh sách mặc định; đồng hạng cùng số (hạng thi đấu: 1,2,2,4).
