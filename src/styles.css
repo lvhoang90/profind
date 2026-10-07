@@ -286,3 +286,24 @@ button.primary{border:0;background:var(--accent);color:var(--accent-ink);border-
 .about-sec{margin-top:14px;scroll-margin-top:12px}.about-sec h2{display:flex;align-items:center;gap:10px;margin:0 0 10px;font-size:1.2rem}.about-sec h3{margin:16px 0 4px;font-size:1rem}.about-sec p{margin:6px 0}.about-sec ul{margin:6px 0;padding-left:1.2em;display:grid;gap:6px}
 .about-sec .lic{margin-top:12px}.about-sec .lic summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600;color:var(--accent)}.about-sec pre{white-space:pre-wrap;overflow-wrap:anywhere;font:.8rem/1.55 var(--font-body);background:var(--s1);padding:14px;border-radius:12px;margin:8px 0 0}
 @media(max-width:1000px){.sf-grid{grid-template-columns:1fr 1fr}}
+
+/* ===== Trang chủ kiểu tìm kiếm: gọn, quốc tế ===== */
+.hero-home{padding:6px 0 4px}.hero-home .ht{font-size:clamp(1.35rem,3.4vw,1.9rem)}.hero-home.big{padding:clamp(14px,4vw,40px) 0 clamp(6px,2vw,18px);text-align:center;max-width:760px;margin:0 auto}
+.hero-home.big .ht{font-size:clamp(1.8rem,5.2vw,3rem);line-height:1.15}.hero-home .tag{font-size:clamp(.95rem,2vw,1.1rem);margin:10px 0 0;color:#cfe8f7}
+.bigsearch{display:flex;align-items:center;gap:12px;margin:14px 0 0;padding:0 18px;height:54px;border-radius:16px;background:#fff;color:#0f2a3d;box-shadow:0 18px 40px -20px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.2)}.hero-home.big .bigsearch{height:60px;margin-top:22px}
+.bigsearch .ic{color:#17688f;--ic2:#7dd3fc}.bigsearch input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:1.05rem;color:#0f2a3d;height:100%;text-align:left}.bigsearch input::placeholder{color:#64748b;opacity:1}.bigsearch:focus-within{box-shadow:0 18px 40px -20px rgba(0,0,0,.65),0 0 0 3px #7dd3fc}
+.trys{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin:14px 0 0;font-size:.85rem;color:#a9cde3}
+.trys button{border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.12);color:#fff;border-radius:999px;padding:0 14px;min-height:36px;font:inherit;font-size:.85rem;cursor:pointer}.trys button:hover{background:rgba(255,255,255,.24)}
+.home{display:grid;gap:22px;margin-top:22px}
+.hstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.hstats div{padding:16px 12px;text-align:center;border-radius:16px;background:var(--surface);border:1px solid var(--line)}
+.hstats b{display:block;font:700 clamp(1.4rem,4vw,2.1rem)/1.1 var(--font-display);background:linear-gradient(90deg,#0ea5e9,#7c3aed);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}.hstats span{font-size:.82rem;color:var(--ink-2)}
+.hgroup h2{margin:0 0 10px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.hchips{display:flex;flex-wrap:wrap;gap:8px;margin:0}.hchips button{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:.92rem;font-weight:600;cursor:pointer;transition:border-color .2s,transform .2s}
+.hchips button:hover{border-color:var(--accent);transform:translateY(-1px)}.hchips em{font-style:normal;font-size:.75rem;font-weight:700;background:var(--s3);color:var(--ink);padding:1px 8px;border-radius:999px}
+.hchips button.gold{background:#fff3c4;color:#5c4400;border-color:#f6d86a}.hchips button.gold em{background:rgba(92,68,0,.15);color:#5c4400}.hchips button.all{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+:root[data-theme=dark] .hchips button.gold{background:#4d4222;color:#ffe08a;border-color:#7a6a2c}@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .hchips button.gold{background:#4d4222;color:#ffe08a;border-color:#7a6a2c}}
+.fbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px}.fbar .cnt{font-style:normal;font-size:.72rem;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:0 7px;margin-left:4px}.top2f{align-self:end}
+@media(max-width:600px){.hstats{gap:8px}.hero-home.big .bigsearch{height:56px}}
+
+.hchips button{text-align:left;line-height:1.25;padding-top:6px;padding-bottom:6px}.hchips button em{flex:none}
+@media(max-width:600px){.hstats b{font-size:clamp(1.05rem,5.2vw,1.5rem);white-space:nowrap}.hstats div{padding:12px 6px}.hchips.inst button:nth-child(n+7){display:none}.hchips button{font-size:.88rem;padding-left:14px;padding-right:12px}}

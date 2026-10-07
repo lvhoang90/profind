@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import { Component, Suspense, lazy, useDeferredValue, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { Ctx, DICT, KEY, initialLang, useT, type Key, type Lang } from "./i18n";
 import { dName, fieldName } from "./disciplines";
@@ -102,7 +103,7 @@ function AppInner() {
             <a className={`acct-btn${user ? " in" : ""}`} href="#/tai-khoan" aria-label={user ? t("mySpace") : t("login")} title={user ? user.email : t("login")}><Icon n="user" size={18} /><span>{user ? (user.name || user.email).split(/[\s@]/)[0] : t("login")}</span></a>
           </div>
         </div>
-        <div className="wrap"><HTitle className="ht">{t("sub")}</HTitle><p className="tag">{t("tagline")}</p></div>
+        {view === "list" && data ? <div className="wrap" id="hero-slot" /> : <div className="wrap"><HTitle className="ht">{t("sub")}</HTitle>{view === "list" && <p className="tag">{t("tagline")}</p>}</div>}
       </header>
       <main className="wrap" id="main" tabIndex={-1} ref={mainRef}>
         {data?.meta.demo && <p className="banner demo" role="note"><Icon n="info" />{t("demo")}</p>}
@@ -164,7 +165,8 @@ function List({ d, query }: { d: Data; query: string }) {
   const [q, setQ] = useState(qp.get("q") ?? ""), [disc, setDisc] = useState(qp.get("d") ?? ""), [type, setType] = useState(qp.get("ty") ?? ""), [sort, setSort] = useState<SortKey>("totalScore"), [dir, setDir] = useState<1 | -1>(-1);
   const pick2 = (k: SortKey) => { setSort(k); setDir(TEXT_KEYS.includes(k) ? 1 : -1); };
   const pick = (k: SortKey) => { if (k === sort) setDir((dir * -1) as 1 | -1); else { setSort(k); setDir(TEXT_KEYS.includes(k) || RANK_ASC.includes(k) ? 1 : -1); } };
-  const [scope, setScope] = useState(qp.get("sc") === "all" ? "all" : "vn"), [instSel, setInstSel] = useState(qp.get("i") ?? ""), [page, setPage] = useState(0), [ssMsg, setSsMsg] = useState("");
+  const [scope, setScope] = useState(qp.get("sc") === "all" ? "all" : "vn"), [instSel, setInstSel] = useState(qp.get("i") ?? ""), [page, setPage] = useState(0), [ssMsg, setSsMsg] = useState(""), [browse, setBrowse] = useState(qp.get("b") === "1"), [top2only, setTop2only] = useState(qp.get("t2") === "1"), [slot, setSlot] = useState<HTMLElement | null>(null), [showF, setShowF] = useState(() => matchMedia("(min-width: 900px)").matches);
+  useEffect(() => { setSlot(document.getElementById("hero-slot")); }, []);
   const [jn, setJn] = useState<Record<string, { t: string; p: string }> | null>(null);
   const dq = useDeferredValue(q);
   const instById = useMemo(() => new Map(d.institutions.map((i) => [i.id, i])), [d]);
@@ -185,11 +187,12 @@ function List({ d, query }: { d: Data; query: string }) {
   const hay = useMemo(() => new Map(d.authors.map((a) => [a.id, { n: norm(a.name).split(" "), i: [...new Set(a.institutions.flatMap((i) => { const x = instById.get(i); return x ? norm(`${x.name} ${x.en ?? ""} ${x.abbr ?? ""}`).split(" ") : []; }))] }])), [d, instById]);
   // Bộ lọc nằm trong đường dẫn (#/?q=…&d=…) để chia sẻ, mở lại và dùng nút Quay lại của trình duyệt.
   useEffect(() => {
-    const u = new URLSearchParams(Object.entries({ q: q.trim(), d: disc, ty: type, i: instSel, sc: scope === "all" ? "all" : "" }).filter(([, v]) => v));
+    const u = new URLSearchParams(Object.entries({ q: q.trim(), d: disc, ty: type, i: instSel, sc: scope === "all" ? "all" : "", t2: top2only ? "1" : "", b: browse ? "1" : "" }).filter(([, v]) => v));
     const h = `#/${u.toString() ? "?" + u : ""}`; if (h !== (location.hash || "#/")) history.replaceState(null, "", h);
-  }, [q, disc, type, instSel, scope]);
+  }, [q, disc, type, instSel, scope, top2only, browse]);
   useEffect(() => { const id = window.setTimeout(() => { if (q.trim().length >= 3) evt("search", undefined, q.trim()); }, 1200); return () => window.clearTimeout(id); }, [q]);
-  const hasFilter = !!(q.trim() || disc || type || instSel);
+  const hasFilter = !!(q.trim() || disc || type || instSel || top2only), home = !hasFilter && !browse;
+  const clearAll = () => { setQ(""); setDisc(""); setType(""); setInstSel(""); setTop2only(false); setBrowse(false); };
   const doSave = async () => {
     if (!user) { try { sessionStorage.setItem("profind.ret", location.hash || "#/"); sessionStorage.setItem("profind.reason", "ss"); } catch { /* bỏ qua */ } evt("save_gate"); location.hash = "#/tai-khoan"; return; }
     const label = [q.trim(), disc && dName(disc, lang), instSel && instLabel(instById.get(instSel), lang)].filter(Boolean).join(" · ");
@@ -204,6 +207,7 @@ function List({ d, query }: { d: Data; query: string }) {
       if (disc && !a.disciplines.includes(disc)) return false;
       if (instSel && !a.institutions.includes(instSel)) return false;
       if (type && !a.institutions.some((i) => instById.get(i)?.type === type)) return false;
+      if (top2only && !a.top2) return false;
       if (!toks.length) return true;
       if (isId) return idPlain(a.orcid ?? "").includes(rawId) || (jn?.[a.id]?.p.includes(rawId) ?? false);
       // Tên và đơn vị: mỗi từ khóa phải trùng trọn một từ trong tên hoặc tên đơn vị (từ cuối gõ dở được khớp theo tiền tố), không khớp chuỗi con ("dat" không ra "Datta", "Sinh Cong Lam" không ra "trần văn đạt").
@@ -223,12 +227,47 @@ function List({ d, query }: { d: Data; query: string }) {
       else c = ((a[sort] ?? 0) as number) - ((b[sort] ?? 0) as number);
       return c * dir || b.totalScore - a.totalScore || b.worksCount - a.worksCount || a.name.localeCompare(b.name, "vi");
     });
-  }, [d, dq, disc, type, instSel, sort, dir, scope, instById, jn, lang, hay]);
-  useEffect(() => setPage(0), [dq, disc, type, instSel, sort, dir, scope]);
+  }, [d, dq, disc, type, instSel, sort, dir, scope, instById, jn, lang, hay, top2only]);
+  useEffect(() => setPage(0), [dq, disc, type, instSel, sort, dir, scope, top2only]);
+  // Số liệu cho trang chủ (phạm vi Việt Nam): ngành và đơn vị nổi bật.
+  const home$ = useMemo(() => {
+    const vn = d.authors.filter((a) => a.foreign === false && !a.suspect), dc = new Map<string, number>(), ic = new Map<string, number>();
+    for (const a of vn) { for (const x of a.disciplines) dc.set(x, (dc.get(x) ?? 0) + 1); for (const x of a.institutions) ic.set(x, (ic.get(x) ?? 0) + 1); }
+    return { n: vn.length, top2: vn.filter((a) => a.top2).length, fields: [...dc].sort((a, b) => b[1] - a[1]).slice(0, 10), insts: [...ic].sort((a, b) => b[1] - a[1]).slice(0, 10), nInst: ic.size };
+  }, [d]);
+  const quick = (fn: () => void) => () => { fn(); setBrowse(false); };
+  const hero = (
+    <div className={`hero-home${home ? " big" : ""}`}>
+      <h1 className="ht">{t("sub")}</h1>
+      {home && <p className="tag">{t("heroLead")}</p>}
+      <label className="bigsearch"><Icon n="search" size={22} /><span className="sr">{t("search")}</span><input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("searchPh")} autoComplete="off" enterKeyHint="search" /></label>
+      {home && <p className="trys"><span>{t("tryLabel")}</span>{[["Cần Thơ", "Cần Thơ"], ["Kinh tế", "Kinh tế"], ["Bách khoa", "Bách khoa"], ["1859-1531", "ISSN 1859-1531"]].map(([v, l]) => <button key={v} type="button" onClick={() => setQ(v)}>{l}</button>)}</p>}
+    </div>
+  );
   return (
     <>
-      <section className="filters" aria-label={t("search")}>
-        <label className="sel sbox"><span><Icon n="search" size={14} />{t("search")}</span><input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("search")} autoComplete="off" /></label>
+      {slot && createPortal(hero, slot)}
+      {home ? (
+        <section className="home" aria-label={t("title")}>
+          <div className="hstats">
+            <div><b>{num(home$.n)}</b><span>{t("stResearchers")}</span></div>
+            <div><b>{num(d.meta.works)}</b><span>{t("stWorks")}</span></div>
+            <div><b>{num(home$.nInst)}</b><span>{t("stInst")}</span></div>
+          </div>
+          <div className="hgroup"><h2>{t("topFields")}</h2>
+            <p className="hchips">{home$.fields.map(([f, n]) => <button key={f} type="button" onClick={quick(() => setDisc(f))}>{dName(f, lang)}<em>{num(n)}</em></button>)}</p></div>
+          <div className="hgroup"><h2>{t("topInst")}</h2>
+            <p className="hchips inst">{home$.insts.map(([i, n]) => <button key={i} type="button" onClick={quick(() => setInstSel(i))}>{instLabel(instById.get(i), lang, i)}<em>{num(n)}</em></button>)}</p></div>
+          <div className="hgroup"><h2>{t("featured")}</h2>
+            <p className="hchips">{home$.top2 > 0 && <button type="button" className="gold" onClick={quick(() => setTop2only(true))}>★ {t("top2Tag")}<em>{num(home$.top2)}</em></button>}<button type="button" className="all" onClick={() => setBrowse(true)}>{t("browseAll")} →</button></p></div>
+        </section>
+      ) : (
+      <>
+      <div className="fbar">
+        <button type="button" className="ghost sm" aria-expanded={showF} onClick={() => setShowF(!showF)}><Icon n="filter" size={16} />{t("filters")}{(disc ? 1 : 0) + (type ? 1 : 0) + (instSel ? 1 : 0) + (top2only ? 1 : 0) + (scope === "all" ? 1 : 0) > 0 && <em className="cnt">{(disc ? 1 : 0) + (type ? 1 : 0) + (instSel ? 1 : 0) + (top2only ? 1 : 0) + (scope === "all" ? 1 : 0)}</em>}</button>
+        <button type="button" className="ghost sm" onClick={clearAll}>{t("backHome")}</button>
+      </div>
+      {showF && <section className="filters" aria-label={t("filters")}>
         <Sel icon="discipline" label={t("discipline")} v={disc} set={setDisc} all={t("all")} opts={d.disciplines.map((s) => [s, dName(s, lang)])} />
         <Sel icon="building" label={t("instType")} v={type} set={setType} all={t("all")} opts={Object.entries(d.types).filter(([k]) => d.institutions.some((i) => i.type === k)).map(([k, v]) => [k, v[lang]])} />
         <Sel icon="building" label={t("inst")} v={instSel} set={setInstSel} all={t("all")} opts={instOpts} />
@@ -239,7 +278,8 @@ function List({ d, query }: { d: Data; query: string }) {
             <button type="button" className="dirbtn" onClick={() => setDir((dir * -1) as 1 | -1)} aria-label={dir === 1 ? t("dirAsc") : t("dirDesc")} title={dir === 1 ? t("dirAsc") : t("dirDesc")}><span aria-hidden="true">{dir === 1 ? "↑" : "↓"}</span></button>
           </div>
         </div>
-      </section>
+        <label className="chk top2f"><input type="checkbox" checked={top2only} onChange={(e) => setTop2only(e.target.checked)} />★ {t("top2Only")}</label>
+      </section>}
       <div className="statusrow">
         <p className="meta" role="status" aria-live="polite">{t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</p>
         {cfg?.enabled !== false && hasFilter && <button type="button" className="ghost sm" onClick={() => void doSave()}><Icon n="star" size={16} />{user ? t("saveSearchBtn") : t("saveGate")}</button>}<span className="meta" role="status">{ssMsg}</span>
@@ -266,6 +306,8 @@ function List({ d, query }: { d: Data; query: string }) {
             </tr>); })}</tbody>
         </table></div>)}
       <Pager page={page} total={rows.length} set={(p) => { setPage(p); window.scrollTo({ top: 0 }); }} />
+      </>
+      )}
     </>
   );
 }
