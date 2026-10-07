@@ -336,7 +336,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
               <span className="wy">{w.year}</span>
               <div className="wm">
                 <a className="wt2" href={w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${w.id.split("-").pop()}`} target="_blank" rel="noopener">{w.title}<span className="sr"> {t("newTab")}</span></a>
-                <div className="wsrc"><span>{w.journal}</span><span className="issn">ISSN {w.issn}</span></div>
+                <div className="wsrc">{w.journal && <span>{w.journal}</span>}{w.issn ? <span className="issn">ISSN {w.issn}</span> : <span className="issn noissn">{t("noIssn")}</span>}</div>
                 <div className="wlinks">{w.doi ? <a className="chip" href={`https://doi.org/${w.doi}`} target="_blank" rel="noopener">DOI ↗<span className="sr"> {t("newTab")}</span></a> : <span className="chip mute">{t("noDoi")}</span>}{w.scoreDiscipline && <a className="chip" target="_blank" rel="noopener" href={`${EDUFIND}/${w.scoreDiscipline}/?${w.scoreKind === "scopus" ? "tab=international&" : ""}q=${encodeURIComponent(w.issn)}`}>{t("lookup")} ↗<span className="sr"> {t("newTab")}</span></a>}</div>
               </div>
               <div className="wr">
