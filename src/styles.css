@@ -57,7 +57,7 @@ button.primary{border:0;background:var(--accent);color:var(--accent-ink);border-
 .eco{margin:28px 0 12px}.eco ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .eco a{display:block;padding:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;text-decoration:none;color:var(--ink);transition:transform .3s,box-shadow .3s,border-color .3s}
 .eco a:hover{transform:translateY(-3px);border-color:#38bdf8;box-shadow:0 22px 34px -22px rgba(11,42,64,.55)}.eco .self a{border-color:var(--accent);background:var(--s3)}.eco small{display:block;color:var(--ink-2)}
-.foot{padding-bottom:32px}.foot .meta{display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap}
+.foot{padding-bottom:32px}.foot .banner{margin:28px 0 0}.foot .banner p{margin:0}.foot .eco{margin-top:20px}.foot .meta{display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap}
 /* ---- Điểm gãy responsive (đặt SAU các luật gốc để không bị ghi đè) ---- */
 @media(max-width:1100px){.filters{grid-template-columns:repeat(3,minmax(0,1fr))}.sbox{grid-column:1/-1}}
 @media(max-width:700px){
@@ -80,3 +80,5 @@ button.primary{border:0;background:var(--accent);color:var(--accent-ink);border-
 /* Chế độ tương phản cao của hệ điều hành: giữ phân biệt nút chọn, huy chương, nhãn */
 @media(forced-colors:active){.lang button[aria-pressed=true]{outline:2px solid Highlight;background:Highlight;color:HighlightText;forced-color-adjust:none}.rk,.score,.tagf,.badge,.top2{border:1px solid CanvasText}.eco a{border:1px solid CanvasText}:focus-visible{outline-color:Highlight}}
 @media print{.top::after,.filters,.skip,.lang,.actions-row,.eco,button{display:none!important}.top{background:#fff;color:#000;padding:0}.ht{color:#000;background:none;-webkit-text-fill-color:#000}.tag{color:#333}.table-wrap{border:0;overflow:visible}a{color:#000}body{background:#fff;color:#000}}
+
+.pager{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;margin:18px 0}.pager>span{display:inline-flex;gap:6px;align-items:center}.pager button{min-width:44px;min-height:44px}.pager .cur{background:var(--accent);color:#fff;border-color:var(--accent)}.pager .gap{color:var(--ink-2)}.pager button:disabled{opacity:.45;cursor:not-allowed}

@@ -18,6 +18,7 @@ const get = async (url) => {
   for (let t = 0; t < 8; t++) { let r; try { r = await fetch(u); } catch { await new Promise((s) => setTimeout(s, 2000 * 2 ** Math.min(t, 5))); continue; } if (r.ok) return r.json(); if (r.status === 429 || r.status >= 500) await new Promise((s) => setTimeout(s, 2000 * 2 ** Math.min(t, 5))); else throw new Error(`${r.status} ${u.replace(/api_key=[^&]+/, "api_key=***")}`); }
   throw new Error(`Hết lượt thử: ${u.replace(/api_key=[^&]+/, "api_key=***")}`);
 };
+const cleanDoi = (d) => (d ? String(d).replace(/^https?:\/\/(dx\.)?doi\.org\//i, "").trim().toLowerCase() || null : null);
 const short = (id) => (id ?? "").replace("https://openalex.org/", "");
 const authors = [], works = [];
 const refresh = process.argv.includes("--refresh");
@@ -37,14 +38,14 @@ for (const inst of I) {
       authors.push({ id, name: r.display_name, orcid: r.orcid ? r.orcid.replace("https://orcid.org/", "") : null, institutions: [inst.id], disciplines: [], demo: false });
       let cur = "*";
       while (cur) {
-        const w = await get(`https://api.openalex.org/works?filter=author.id:${id},from_publication_date:${from}-01-01&per-page=100&cursor=${cur}&select=id,title,publication_year,cited_by_count,primary_location,authorships`);
+        const w = await get(`https://api.openalex.org/works?filter=author.id:${id},from_publication_date:${from}-01-01&per-page=100&cursor=${cur}&select=id,doi,title,publication_year,cited_by_count,primary_location,authorships`);
         for (const x of w.results) {
           const s = x.primary_location?.source; const issn = s?.issn_l ?? s?.issn?.[0]; if (!issn) continue;
           // Quy tắc HĐGSNN: tác giả chính = tác giả đứng đầu hoặc tác giả liên hệ; nếu có từ 2 tác giả liên hệ trở lên thì chỉ tính tác giả đứng đầu.
           const as = x.authorships ?? [], pos = as.find((z) => short(z.author.id) === id);
           const nCorr = as.filter((z) => z.is_corresponding).length;
           const lead = !!pos && (pos.author_position === "first" || (pos.is_corresponding && nCorr === 1));
-          works.push({ id: `${id}-${short(x.id)}`, authorId: id, title: x.title, year: x.publication_year, journal: s.display_name, issn, issns: s.issn ?? [issn], citations: x.cited_by_count, role: lead ? "lead" : "co", corr: nCorr, demo: false });
+          works.push({ id: `${id}-${short(x.id)}`, authorId: id, doi: cleanDoi(x.doi), title: x.title, year: x.publication_year, journal: s.display_name, issn, issns: s.issn ?? [issn], citations: x.cited_by_count, role: lead ? "lead" : "co", corr: nCorr, demo: false });
         }
         cur = w.meta.next_cursor;
       }
@@ -69,12 +70,12 @@ if (existsSync("data/pinned-orcids.json")) {
       authors.push({ id, name: r.display_name, orcid: pin.orcid, institutions: [...new Set([pin.institution, ...mapped].filter(Boolean))], disciplines: [], demo: false, pinned: true });
       let cur = "*";
       while (cur) {
-        const w = await get(`https://api.openalex.org/works?filter=author.id:${id},from_publication_date:${from}-01-01&per-page=100&cursor=${cur}&select=id,title,publication_year,cited_by_count,primary_location,authorships`);
+        const w = await get(`https://api.openalex.org/works?filter=author.id:${id},from_publication_date:${from}-01-01&per-page=100&cursor=${cur}&select=id,doi,title,publication_year,cited_by_count,primary_location,authorships`);
         for (const x of w.results) {
           const s = x.primary_location?.source; const issn = s?.issn_l ?? s?.issn?.[0]; if (!issn) continue;
           const as = x.authorships ?? [], pos = as.find((z) => short(z.author.id) === id), nCorr = as.filter((z) => z.is_corresponding).length;
           const lead = !!pos && (pos.author_position === "first" || (pos.is_corresponding && nCorr === 1));
-          works.push({ id: `${id}-${short(x.id)}`, authorId: id, title: x.title, year: x.publication_year, journal: s.display_name, issn, issns: s.issn ?? [issn], citations: x.cited_by_count, role: lead ? "lead" : "co", corr: nCorr, demo: false });
+          works.push({ id: `${id}-${short(x.id)}`, authorId: id, doi: cleanDoi(x.doi), title: x.title, year: x.publication_year, journal: s.display_name, issn, issns: s.issn ?? [issn], citations: x.cited_by_count, role: lead ? "lead" : "co", corr: nCorr, demo: false });
         }
         cur = w.meta.next_cursor;
       }
