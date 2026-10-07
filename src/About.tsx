@@ -24,8 +24,10 @@ export function AboutPage({ section }: { section: string }) {
   const secs: Sec[] = [
     { id: "gioi-thieu", icon: "spark", h: vi ? "Về ProFind" : "About ProFind", body: vi ? <>
       <p>ProFind là <b>dữ liệu số về nhà khoa học và công trình nghiên cứu</b>: tìm theo tên, đơn vị, ngành, công trình, tạp chí, ISSN và DOI; xem chỉ số PRO-SCORE1000 và huy hiệu tôn vinh.</p>
+      <p><b>Phạm vi:</b> các nhà nghiên cứu có hồ sơ OpenAlex gắn với ít nhất một trường đại học, học viện hoặc viện nghiên cứu trong danh sách đơn vị của Việt Nam, không phân biệt quốc tịch. Hồ sơ nghi gộp nhầm nhiều người bị loại khỏi danh sách mặc định và khỏi xếp hạng.</p>
       <p>ProFind <b>miễn phí, mã nguồn mở</b>, thuộc hệ sinh thái ISA cùng EduFind (chọn tạp chí), Ami (đọc và trích dẫn) và Mây (chuẩn hóa văn bản). Bản quyền thuộc về tác giả Lương Việt Hoàng (ISA Vietnam). ProFind độc lập, không trực thuộc Elsevier, Scopus, Clarivate hay ORCID.</p></> : <>
       <p>ProFind is <b>digital data on scientists and their research works</b>: search by name, institution, field, work, journal, ISSN and DOI, and see the PRO-SCORE1000 index.</p>
+      <p><b>Scope:</b> researchers whose OpenAlex profile is linked to at least one university, academy or research institute on the Vietnamese institution list, regardless of nationality. Profiles suspected of merging several people are excluded from the default list and from ranking.</p>
       <p>ProFind is <b>free and open source</b>, part of the ISA ecosystem with EduFind (pick a journal), Ami (read and cite) and Mây (format documents). Copyright belongs to the author Luong Viet Hoang (ISA Vietnam). ProFind is independent and not affiliated with Elsevier, Scopus, Clarivate or ORCID.</p></> },
     { id: "nguon", icon: "link", h: vi ? "Nguồn dữ liệu" : "Data sources", body: vi ? <ul>
       <li><b>OpenAlex</b> (CC0): hồ sơ tác giả, công trình, DOI, trích dẫn, đơn vị.</li>
