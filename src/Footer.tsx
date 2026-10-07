@@ -22,7 +22,7 @@ export function Footer({ data: _data }: { data: Data | null }) {
           <div className="sf-brand">
             <a className="brand" href="#/" aria-label="ProFind"><img className="logo" src="./logo-disc.svg" alt="" width="40" height="40" /><b>Pro<i>Find</i></b></a>
             <p>{t("fAbout")}</p>
-            <p className="sf-tag"><span className="beta">Beta 1.0</span></p>
+            <p className="sf-tag"><span className="beta">v1.0</span></p>
           </div>
           <nav aria-labelledby="sf-h1">
             <h2 id="sf-h1">{t("fExplore")}</h2>
