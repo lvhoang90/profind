@@ -66,7 +66,7 @@ export function ProScorePage() {
       <header className="psp-hero">
         <p className="psp-kick"><Icon n="spark" size={16} />{vi ? "Chỉ số khoa học của ProFind" : "ProFind’s scientific index"}</p>
         <h1>PRO<span>-</span>SCORE<em className="k1000">1000</em><sup className="tm">™</sup></h1>
-        <p className="psp-lead">{vi ? "Thước đo tham khảo, minh bạch và đa chiều về tác động và đóng góp của nhà khoa học Việt Nam, tính tự động từ dữ liệu công khai." : "A transparent, multi-dimensional reference measure of the impact and contribution of Vietnamese scientists, computed automatically from open data."}</p>
+        <p className="psp-lead">{vi ? "Thước đo tham khảo, minh bạch và đa chiều về tác động và đóng góp của nhà khoa học gắn với các trường, viện Việt Nam, tính tự động từ dữ liệu công khai." : "A transparent, multi-dimensional reference measure of the impact and contribution of scientists affiliated with Vietnamese institutions, computed automatically from open data."}</p>
         <div className="psp-credit">
           <img src="./logo-disc.svg" alt="" width="44" height="44" />
           <p><b>{vi ? "Ý tưởng do Viện ISA và tác giả Lương Việt Hoàng đề xuất" : "Idea proposed by ISA Institute and author Luong Viet Hoang"}</b><span>{vi ? "Viện Khoa học Giáo dục và Kinh tế Đông Nam Á (ISA Việt Nam) · Phiên bản 2.0 · 10/2026" : "Institute of Education Sciences and Economics of Southeast Asia (ISA Vietnam) · Version 2.0 · 10/2026"}</span></p>
