@@ -11,6 +11,7 @@ const AboutPage = lazy(() => import("./About").then((m) => ({ default: m.AboutPa
 const AdminPage = lazy(() => import("./Admin").then((m) => ({ default: m.AdminPage })));
 import { HeroArt } from "./HeroArt";
 import { useWorks } from "./wsearch";
+import { StarBtn } from "./StarBtn";
 import { Footer, EcoLink } from "./Footer";
 import { evt, startSession } from "./analytics";
 import { getTheme, setTheme, type Theme } from "./theme";
@@ -305,6 +306,7 @@ function List({ d, query }: { d: Data; query: string }) {
               <b className="wc">{num(w.cit)}<small>{t("cites")}</small></b>
               <div><a className="wt" href={w.doi ? `https://doi.org/${w.doi}` : `#/tac-gia/${encodeURIComponent(w.authorId)}`} {...(w.doi ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{w.title}</a>
                 <p className="meta"><a href={`#/tac-gia/${encodeURIComponent(w.authorId)}`}>{w.author}</a>{w.journal ? ` · ${w.journal}` : ""} · {w.year}</p></div>
+              <StarBtn k={`w|${w.id}`} meta={{ t: w.title, s: [w.author, w.journal, w.year].filter(Boolean).join(" · "), u: w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${String(w.id).split("-").pop()}` }} />
             </li>)}</ol>
             {works.items.length < works.total && <button type="button" className="ghost" onClick={() => void works.more()}>{t("moreWorks", { n: num(works.total - works.items.length) })}</button>}
           </>}
@@ -330,7 +332,7 @@ function List({ d, query }: { d: Data; query: string }) {
           <tbody>{rows.slice(page * PAGE, (page + 1) * PAGE).map((a, idx) => { const pos = page * PAGE + idx + 1, medal = RANKED.includes(sort) && dir === -1; return (
             <tr key={a.id}>
               <td className="num rankc" data-l={t("stt")}><span className={`rk r${medal ? Math.min(pos, 4) : 4}`}>{num(pos)}</span></td>
-              <td className="who"><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a>{a.claimed && <><Icon n="check" size={14} className="ok" /><span className="sr"> {t("claimedSr")}</span></>}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}<Top2Tag a={a} cls="top2" /><div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
+              <td className="who"><StarBtn className="inrow" k={`a|${a.id}`} meta={{ t: a.name, s: a.institutions.slice(0, 2).map((i) => instLabel(instById.get(i), lang, i)).join(", "), sc: a.totalScore, rk: a.rankScore ?? undefined }} /><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a>{a.claimed && <><Icon n="check" size={14} className="ok" /><span className="sr"> {t("claimedSr")}</span></>}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}<Top2Tag a={a} cls="top2" /><div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
               <td data-l={t("unit")}>{a.institutions.map((i) => instLabel(instById.get(i), lang, i)).join(", ")}</td>
               <td className="num" data-l={t("works")}>{num(a.worksCount)}</td><td className="num" data-l={t("score")}><span className="score">{num(a.totalScore, 2)}</span></td><td className="num" data-l={t("cit")}>{num(a.citations)}</td>
               <td className="meta yrs" data-l={t("years")}>{a.firstYear ?? "-"}–{a.lastYear ?? "-"}</td>
@@ -465,6 +467,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
                 <div className="wlinks">{w.doi ? <a className="chip" onClick={() => openWork(w)} href={`https://doi.org/${w.doi}`} target="_blank" rel="noopener">DOI ↗<span className="sr"> {t("newTab")}</span></a> : <span className="chip mute">{t("noDoi")}</span>}{w.scoreDiscipline && <a className="chip" target="_blank" rel="noopener" href={`${EDUFIND}/${w.scoreDiscipline}/?${w.scoreKind === "scopus" ? "tab=international&" : ""}q=${encodeURIComponent(w.issn)}`}>{t("lookup")} ↗<span className="sr"> {t("newTab")}</span></a>}</div>
               </div>
               <div className="wr">
+                <StarBtn k={`w|${w.id}`} meta={{ t: w.title, s: [a.name, w.journal, w.year].filter(Boolean).join(" · "), u: w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${w.id.split("-").pop()}` }} />
                 {w.score === null ? <span className="pill none" title={w.role === "lead" ? t("unmatched") : w.ru ? t("roleUnknown") : t("notLead")}>{w.role === "lead" ? t("unmatched") : w.ru ? t("roleUnknownShort") : t("notLeadShort")}</span>
                   : <span className={`pill sc ${w.scoreKind === "scopus" ? (w.quartile ?? "").toLowerCase() : "dom"}`} title={w.scoreKind === "scopus" ? `Scopus ${w.quartile ?? ""}` : t("kDom")}>{num(w.score, 2)}<small>{w.scoreKind === "scopus" ? `Scopus ${w.quartile ?? ""}` : t("kDomShort")}</small></span>}
                 <span className="wc"><Icon n="chart" size={14} />{num(w.citations)}<span className="sr"> {t("cit")}</span></span>
