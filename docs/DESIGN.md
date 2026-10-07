@@ -43,6 +43,12 @@
 ### Sự cố dữ liệu đã sửa: mã ROR gắn nhầm (07/10/2026)
 Bản dựng trước có 26 mã ROR dùng chung cho nhiều đơn vị khác nhau (ví dụ Ngoại ngữ, Mở, Dược, Luật Hà Nội cùng một mã), nên một số tác giả bị gán sai đơn vị. Đã thêm `scripts/audit-ror.mjs`: đối chiếu chặt tên đơn vị với mọi tên trong bản ghi ROR (>= 0.9), mỗi mã chỉ giữ cho một đơn vị khớp nhất, đơn vị nghi ngờ bị bỏ mã (ghi `rorSuspect`), xóa dữ liệu tác giả đã nạp nhầm, thử tìm lại mã đúng; kết quả `data/ror-audit.json`. 37/376 đơn vị bị xử lý, 12 tìm lại được mã đúng. Chạy lại audit mỗi khi thêm đơn vị mới.
 
+### Quyết định sau kiểm thử 07/10/2026 (xem docs/QA-2026-10-07.md)
+- **Thứ hạng** chỉ tính trong nhóm tác giả đủ điều kiện: `foreign = false`, không `suspect`, có công trình (≈4.300 người); xếp hạng thi đấu (1,2,2,4). Người ngoài nhóm không có hạng ("-"). Danh sách mặc định và hạng trên hồ sơ dùng cùng nhóm này nên nhất quán.
+- **Điểm** khi một tạp chí thuộc nhiều ngành: dùng các ngành thuộc ngành chính của tác giả (lấy cao nhất trong đó); nếu không trùng thì lấy mức thấp nhất. Ngành chính suy từ tạp chí đã đăng, phiếu có trọng số idf theo độ hiếm của ngành.
+- **Yêu cầu gỡ hồ sơ**: được ưu tiên xử lý nhưng phải xác minh người yêu cầu (trả lời email, ORCID, email cơ quan) trước khi áp dụng, để tránh bị lợi dụng gỡ hồ sơ người khác.
+- **Hồ sơ nghi gộp nhầm** (≥500 công trình, >150 công trình/năm, hoặc ≥5 đơn vị): ẩn khỏi mặc định, không xếp hạng.
+
 ## 5. Ý tưởng mới
 - **Đối chiếu ISSN ngược**: từ một tạp chí ở EduFind, xem ai đang đăng ở đó (giúp chọn nơi gửi bài).
 - **Hồ sơ xuất chuẩn**: xuất danh mục công trình theo mẫu lý lịch khoa học (CV), có điểm theo năm, dùng nộp hồ sơ xét chức danh GS/PGS.

@@ -1,146 +1,286 @@
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { Component, useDeferredValue, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { Ctx, DICT, KEY, initialLang, useT, type Key, type Lang } from "./i18n";
-import { dName } from "./disciplines";
+import { dName, fieldName } from "./disciplines";
 import { Icon, type IconName } from "./icons";
-import type { Author, Data, Work } from "./types";
+import type { Author, Data, Institution, Work } from "./types";
 
-type SortKey = "totalScore" | "worksCount" | "citations";
+type SortKey = "totalScore" | "worksCount" | "citations" | "name" | "unit" | "lastYear" | "rank";
+const TEXT_KEYS: SortKey[] = ["name", "unit"], RANK_ASC: SortKey[] = ["rank"];
+const RANK_KEY = { totalScore: "rankScore", worksCount: "rankWorks", citations: "rankCit", name: "rankScore", unit: "rankScore", lastYear: "rankScore", rank: "rankScore" } as const;
 const EDUFIND = "https://edufind.isavn.edu.vn";
 const CONTACT = "luongviethoang.hcm@gmail.com";
-const PAGE = 100;
-const TOP2_URL = "https://elsevier.digitalcommonsdata.com/datasets/btchxktzyw/8";
-const hash = () => decodeURIComponent(location.hash.replace(/^#\/?/, ""));
-const fold = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase();
+const PAGE = 25; // mỗi trang tối đa 25 kết quả
+const TOP2_DOI = "https://doi.org/10.17632/btchxktzyw.8";
+const TOP2_LIC = "https://creativecommons.org/licenses/by-nc/3.0/";
+
+/** Giải mã đường dẫn băm an toàn: chuỗi % sai (vd. %E0%A4%A) không được làm sập trang. */
+function parseRoute(): { kind: string; id: string } {
+  const raw = location.hash.replace(/^#\/?/, "");
+  let dec = raw;
+  try { dec = decodeURIComponent(raw); } catch { /* giữ nguyên chuỗi gốc */ }
+  const [kind = "", ...rest] = dec.split("/");
+  return { kind, id: rest.join("/") };
+}
+/** Chuẩn hóa để so khớp: bỏ dấu, thường hóa, gộp mọi loại gạch nối/dấu cách (kể cả U+2010, U+2013, NBSP) về một dấu cách. */
+const norm = (s: string) => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase().replace(/[‐-―−_.,;:()/\\-]+/g, " ").replace(/[  -​ ]/g, " ").replace(/\s+/g, " ").trim();
+const idPlain = (s: string) => s.toLowerCase().replace(/[^0-9x]/g, "");
+const slug = (s: string) => norm(s).replace(/ /g, "-").slice(0, 40) || "tac-gia";
+
+class Boundary extends Component<{ children: ReactNode }, { err: boolean }> {
+  state = { err: false };
+  static getDerivedStateFromError() { return { err: true }; }
+  render() {
+    if (!this.state.err) return this.props.children;
+    return <div className="banner demo" role="alert"><p>Đã xảy ra lỗi hiển thị. / Something went wrong. <button className="ghost" onClick={() => { location.hash = "#/"; location.reload(); }}>Tải lại / Reload</button></p></div>;
+  }
+}
 
 export function App() {
   const [lang, setLang] = useState<Lang>(initialLang);
   const [data, setData] = useState<Data | null>(null);
   const [err, setErr] = useState(false);
-  const [route, setRoute] = useState(hash());
+  const [route, setRoute] = useState(parseRoute);
+  const mainRef = useRef<HTMLElement>(null);
+  const first = useRef(true);
+  const locale = lang === "vi" ? "vi-VN" : "en-US";
+  const num = (n: number, d = 0) => n.toLocaleString(locale, { minimumFractionDigits: d, maximumFractionDigits: d });
   const t = (k: Key, v?: Record<string, string | number>) => { let s: string = DICT[lang][k]; for (const [a, b] of Object.entries(v ?? {})) s = s.replace(`{${a}}`, String(b)); return s; };
+
+  const load = () => {
+    setErr(false);
+    fetch("./data/profind.json").then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }).then((d: Data) => {
+      if (!d || !Array.isArray(d.authors) || !Array.isArray(d.institutions)) throw new Error("shape");
+      setData({ ...d, types: d.types ?? {}, disciplines: d.disciplines ?? [], meta: d.meta ?? ({} as Data["meta"]), authors: d.authors.map((a) => ({ ...a, institutions: a.institutions ?? [], disciplines: a.disciplines ?? [] })) });
+    }).catch(() => setErr(true));
+  };
+  useEffect(load, []);
   useEffect(() => { document.documentElement.lang = lang; try { localStorage.setItem(KEY, lang); } catch { /* bỏ qua */ } }, [lang]);
-  useEffect(() => { const f = () => { setRoute(hash()); scrollTo(0, 0); }; addEventListener("hashchange", f); return () => removeEventListener("hashchange", f); }, []);
-  useEffect(() => { fetch("./data/profind.json").then((r) => r.json()).then(setData, () => setErr(true)); }, []);
-  const [kind, id] = route.split("/");
-  const author = data && id ? data.authors.find((a) => a.id === id) : null;
+  useEffect(() => { const f = () => setRoute(parseRoute()); addEventListener("hashchange", f); return () => removeEventListener("hashchange", f); }, []);
+  const { kind, id } = route;
+  const author = data && id ? data.authors.find((a) => a.id === id) ?? null : null;
+  const view: "list" | "author" | "corr" | "nf" = kind === "dinh-chinh" ? "corr" : kind === "tac-gia" ? (data && !author ? "nf" : "author") : "list";
+
+  // Tiêu đề tab, mô tả và đưa tiêu điểm về nội dung chính khi đổi trang (trình đọc màn hình biết đã chuyển trang).
+  useEffect(() => {
+    document.title = view === "author" && author ? `${author.name} | ProFind` : view === "corr" ? `${t("corrTitle")} | ProFind` : view === "nf" ? `${t("notFound").split(".")[0]} | ProFind` : t("docTitle");
+    document.querySelector('meta[name="description"]')?.setAttribute("content", t("metaDesc"));
+    if (first.current) { first.current = false; return; }
+    scrollTo(0, 0); mainRef.current?.focus({ preventScroll: true });
+  }, [view, author?.id, lang]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const HTitle = (view === "list" ? "h1" : "p") as "h1" | "p";
   return (
-    <Ctx.Provider value={{ lang, t }}>
+    <Ctx.Provider value={{ lang, t, num }}>
+      <a className="skip" href="#main" onClick={(e) => { e.preventDefault(); mainRef.current?.focus(); }}>{t("skip")}</a>
       <header className="top">
         <div className="wrap hd">
           <a className="brand" href="#/" aria-label="ProFind"><img className="logo" src="./logo-disc.svg" alt="" width="40" height="40" /><b>Pro<i>Find</i></b></a>
-          <div className="lang" role="group" aria-label="Language">
-            {(["vi", "en"] as const).map((l) => <button key={l} className={`lang-${l}`} aria-pressed={lang === l} onClick={() => setLang(l)}>{l.toUpperCase()}</button>)}
+          <div className="lang" role="group" aria-label={t("langLabel")}>
+            {(["vi", "en"] as const).map((l) => <button key={l} lang={l} className={`lang-${l}`} aria-pressed={lang === l} aria-label={l === "vi" ? "Tiếng Việt" : "English"} onClick={() => setLang(l)}>{l.toUpperCase()}</button>)}
           </div>
         </div>
-        <div className="wrap"><h1>{t("sub")}</h1><p className="tag">{t("tagline")}</p></div>
+        <div className="wrap"><HTitle className="ht">{t("sub")}</HTitle><p className="tag">{t("tagline")}</p></div>
       </header>
-      <main className="wrap">
+      <main className="wrap" id="main" tabIndex={-1} ref={mainRef}>
         {data?.meta.demo && <p className="banner demo" role="note"><Icon n="info" />{t("demo")}</p>}
-        <p className="banner" role="note"><Icon n="shield" />{t("notRank")}</p>
-        {err ? <p className="empty">{t("err")}</p> : !data ? <p className="empty">{t("loading")}</p>
-          : kind === "dinh-chinh" ? <Correction a={author ?? null} /> : kind === "tac-gia" && author ? <AuthorPage a={author} d={data} /> : <List d={data} />}
+        <Boundary key={`${view}/${author?.id ?? ""}`}>
+          {err ? <div className="empty" role="alert"><p>{t("err")}</p><button className="ghost" onClick={load}>{t("retry")}</button></div>
+            : !data ? <p className="empty" role="status">{t("loading")}</p>
+            : view === "corr" ? <Correction key={author?.id ?? "none"} a={author} />
+            : view === "nf" ? <div className="empty" role="alert"><p>{t("notFound")}</p><p><a href="#/">{t("back")}</a></p></div>
+            : view === "author" && author ? <AuthorPage a={author} d={data} />
+            : <List d={data} />}
+        </Boundary>
       </main>
       <footer className="foot wrap">
+        <aside className="banner note" aria-label={t("notRankShort")}><Icon n="shield" /><p><b>{t("notRankShort")}</b> {t("notRank")}</p></aside>
         <section className="eco" aria-label={t("eco")}>
           <h2>{t("eco")}</h2>
           <ol>
             <li className="self"><a href="#/" aria-current="page"><small>1 · {t("here")}</small><b>{t("e1")}</b></a></li>
-            <li><a href={`${EDUFIND}/`} target="_blank" rel="noopener"><small>2</small><b>{t("e2")}</b></a></li>
-            <li><a href="https://isavn.edu.vn/go/ami?from=profind" target="_blank" rel="noopener"><small>3</small><b>{t("e3")}</b></a></li>
+            <li><a href={`${EDUFIND}/`} target="_blank" rel="noopener"><small>2</small><b>{t("e2")}</b><span className="sr"> {t("newTab")}</span></a></li>
+            <li><a href="https://isavn.edu.vn/go/ami?from=profind" target="_blank" rel="noopener"><small>3</small><b>{t("e3")}</b><span className="sr"> {t("newTab")}</span></a></li>
           </ol>
         </section>
         {data && !data.meta.demo && data.meta.fetched && <p className="meta">{t("source")}: {t("srcLine", { d: data.meta.fetched })}</p>}
-        {data?.authors.some((a) => a.top2) && <p className="meta">{t("top2Credit")} <a href={TOP2_URL} target="_blank" rel="noopener">DOI 10.17632/btchxktzyw.8</a></p>}
-        <p className="meta"><Icon n="shield" size={14} /> {t("lic")} <a href="#/dinh-chinh">{t("fix")}</a></p>
+        {data?.authors.some((a) => a.top2) && <p className="meta">{t("top2Credit")} <a href={TOP2_DOI} target="_blank" rel="noopener">DOI 10.17632/btchxktzyw.8</a> · <a href={TOP2_LIC} target="_blank" rel="noopener">{t("top2Lic")}</a> · <a href="./LICENSE-NC.md" target="_blank" rel="noopener">LICENSE-NC</a></p>}
+        <p className="meta"><Icon n="shield" size={14} /> <span>{t("lic")} <a href="#/dinh-chinh">{t("fix")}</a></span></p>
       </footer>
     </Ctx.Provider>
   );
 }
 
+const workLink = (w: Work, t: (k: any) => string) => {
+  const doi = w.doi, href = doi ? `https://doi.org/${doi}` : `https://openalex.org/${w.id.split("-").pop()}`;
+  return <><a href={href} target="_blank" rel="noopener">{w.title}<span className="sr"> {t("newTab")}</span></a><div className="meta">{doi ? <>DOI: {doi}</> : t("noDoi")}</div></>;
+};
+
+const range = (page: number, total: number, num: (n: number) => string) => `${num(Math.min(page * PAGE + 1, total))}–${num(Math.min((page + 1) * PAGE, total))}`;
+
+function Th({ k, label, cls, title, sort, dir, pick }: { k: SortKey; label: string; cls?: string; title?: string; sort: SortKey; dir: 1 | -1; pick: (k: SortKey) => void }) {
+  const on = sort === k;
+  return <th scope="col" className={cls} title={title} aria-sort={on ? (dir === 1 ? "ascending" : "descending") : "none"}><button type="button" className={`thb${on ? " on" : ""}`} onClick={() => pick(k)}>{label}<span aria-hidden="true" className="ar">{on ? (dir === 1 ? "▲" : "▼") : "↕"}</span></button></th>;
+}
+
+function Pager({ page, total, set }: { page: number; total: number; set: (p: number) => void }) {
+  const { t, num } = useT();
+  const pages = Math.ceil(total / PAGE); if (pages <= 1) return null;
+  const nums = [...new Set([0, 1, page - 1, page, page + 1, pages - 2, pages - 1])].filter((p) => p >= 0 && p < pages).sort((a, b) => a - b);
+  return (
+    <nav className="pager" aria-label={t("pages")}>
+      <button className="ghost" disabled={page === 0} onClick={() => set(page - 1)}>‹ {t("prev")}</button>
+      {nums.map((p, i) => <span key={p}>{i > 0 && p - nums[i - 1] > 1 && <span className="gap" aria-hidden="true">…</span>}<button className={p === page ? "ghost cur" : "ghost"} aria-current={p === page ? "page" : undefined} aria-label={`${t("page")} ${p + 1}`} onClick={() => set(p)}>{num(p + 1)}</button></span>)}
+      <button className="ghost" disabled={page >= pages - 1} onClick={() => set(page + 1)}>{t("next")} ›</button>
+    </nav>
+  );
+}
+
+const instLabel = (i: Institution | undefined, lang: Lang, fallback = "") => (i ? (lang === "vi" ? i.name : i.en || i.name) : fallback);
+
+function Top2Tag({ a, cls }: { a: Author; cls: string }) {
+  const { lang, t, num } = useT();
+  if (!a.top2) return null;
+  const tip = t("top2Tip", { r: num(a.top2.rank), f: fieldName(a.top2.field, lang) });
+  return <a className={cls} href={TOP2_DOI} target="_blank" rel="noopener" title={tip} aria-label={`${t("top2Tag")}. ${tip} ${t("newTab")}`}>★ {t("top2Tag")}</a>;
+}
+
 function List({ d }: { d: Data }) {
-  const { lang, t } = useT();
-  const [q, setQ] = useState(""), [disc, setDisc] = useState(""), [type, setType] = useState(""), [sort, setSort] = useState<SortKey>("totalScore");
-  const [scope, setScope] = useState("vn"), [instText, setInstText] = useState(""), [limit, setLimit] = useState(PAGE);
+  const { lang, t, num } = useT();
+  const [q, setQ] = useState(""), [disc, setDisc] = useState(""), [type, setType] = useState(""), [sort, setSort] = useState<SortKey>("totalScore"), [dir, setDir] = useState<1 | -1>(-1);
+  const pick2 = (k: SortKey) => { setSort(k); setDir(-1); };
+  const pick = (k: SortKey) => { if (k === sort) setDir((dir * -1) as 1 | -1); else { setSort(k); setDir(TEXT_KEYS.includes(k) || RANK_ASC.includes(k) ? 1 : -1); } };
+  const [scope, setScope] = useState("vn"), [instSel, setInstSel] = useState(""), [page, setPage] = useState(0);
+  const [jn, setJn] = useState<Record<string, { t: string; p: string }> | null>(null);
+  const dq = useDeferredValue(q);
   const instById = useMemo(() => new Map(d.institutions.map((i) => [i.id, i])), [d]);
-  const instName = (i: Data["institutions"][number]) => (lang === "vi" ? i.name : i.en);
-  const inst = d.institutions.find((i) => instName(i) === instText)?.id ?? "";
+  // Chỉ liệt kê đơn vị đang có tác giả (trong phạm vi đã chọn), kèm số tác giả; chọn từ danh sách, không gõ tự do.
+  const instOpts = useMemo(() => {
+    const c = new Map<string, number>();
+    for (const a of d.authors) { if (scope === "vn" && (a.foreign !== false || a.suspect)) continue; for (const i of a.institutions) c.set(i, (c.get(i) ?? 0) + 1); }
+    return d.institutions.filter((i) => c.has(i.id)).sort((a, b) => a.name.localeCompare(b.name, "vi")).map((i) => [i.id, `${instLabel(i, lang)} (${num(c.get(i.id)!)})`] as string[]);
+  }, [d, scope, lang, num]);
+  // Chuỗi tìm theo tên tạp chí/ISSN nằm ở tệp riêng, chỉ tải khi người dùng bắt đầu gõ.
+  useEffect(() => {
+    if (jn || q.trim().length < 2) return;
+    fetch("./data/jn.json").then((r) => (r.ok ? r.json() : Promise.reject())).then((m: Record<string, string>) => {
+      const o: Record<string, { t: string; p: string }> = {}; for (const k in m) o[k] = { t: m[k], p: m[k].replace(/-/g, "") }; setJn(o);
+    }).catch(() => setJn({}));
+  }, [q, jn]);
+  const rankKey = RANK_KEY[sort];
   const rows = useMemo(() => {
-    const n = fold(q.trim());
+    const toks = norm(dq).split(" ").filter(Boolean);
+    const rawId = dq.replace(/[\s-]/g, "").toLowerCase(), isId = /^[0-9x]{6,}$/.test(rawId);
     return d.authors.filter((a) => {
       if (scope === "vn" && (a.foreign !== false || a.suspect)) return false;
       if (disc && !a.disciplines.includes(disc)) return false;
-      if (inst && !a.institutions.includes(inst)) return false;
+      if (instSel && !a.institutions.includes(instSel)) return false;
       if (type && !a.institutions.some((i) => instById.get(i)?.type === type)) return false;
-      if (!n) return true;
-      return fold(a.name).includes(n) || !!a.orcid?.includes(n) || a.jn.includes(n);
-    }).sort((a, b) => b[sort] - a[sort] || b.worksCount - a.worksCount);
-  }, [d, q, disc, type, inst, sort, scope, instById]);
-  useEffect(() => setLimit(PAGE), [q, disc, type, inst, sort, scope]);
+      if (!toks.length) return true;
+      if (isId) return idPlain(a.orcid ?? "").includes(rawId) || (jn?.[a.id]?.p.includes(rawId) ?? false);
+      const nm = norm(a.name);
+      if (toks.every((x) => nm.includes(x))) return true;
+      const j = jn?.[a.id]?.t; return !!j && toks.every((x) => j.includes(x));
+    }).sort((a, b) => {
+      let c = 0;
+      if (sort === "name") c = a.name.localeCompare(b.name, "vi");
+      else if (sort === "unit") { const u = (x: Author) => x.institutions.map((i) => instLabel(instById.get(i), lang, i)).join(", "); c = u(a).localeCompare(u(b), "vi"); }
+      else if (sort === "rank") c = (a.rankScore ?? Infinity) === (b.rankScore ?? Infinity) ? 0 : (a.rankScore ?? Infinity) < (b.rankScore ?? Infinity) ? -1 : 1;
+      else c = ((a[sort] ?? 0) as number) - ((b[sort] ?? 0) as number);
+      return c * dir || b.totalScore - a.totalScore || b.worksCount - a.worksCount || a.name.localeCompare(b.name, "vi");
+    });
+  }, [d, dq, disc, type, instSel, sort, dir, scope, instById, jn, lang]);
+  useEffect(() => setPage(0), [dq, disc, type, instSel, sort, dir, scope]);
   return (
     <>
-      <section className="filters">
-        <label className="sel sbox"><span><Icon n="search" size={14} />{t("search")}</span><input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("search")} aria-label={t("search")} /></label>
+      <section className="filters" aria-label={t("search")}>
+        <label className="sel sbox"><span><Icon n="search" size={14} />{t("search")}</span><input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("search")} autoComplete="off" /></label>
         <Sel icon="discipline" label={t("discipline")} v={disc} set={setDisc} all={t("all")} opts={d.disciplines.map((s) => [s, dName(s, lang)])} />
-        <Sel icon="building" label={t("instType")} v={type} set={setType} all={t("all")} opts={Object.entries(d.types).map(([k, v]) => [k, v[lang]])} />
-        <label className="sel"><span><Icon n="building" size={14} />{t("inst")}</span>
-          <input list="inst-list" value={instText} onChange={(e) => setInstText(e.target.value)} placeholder={t("instPh")} />
-          <datalist id="inst-list">{d.institutions.map((i) => <option key={i.id} value={instName(i)} />)}</datalist></label>
-        <Sel icon="shield" label={t("scope")} v={scope} set={setScope} opts={[["vn", t("scopeVn")], ["all", t("scopeAll")]]} />
-        <Sel icon="sort" label={t("sort")} v={sort} set={(s) => setSort(s as SortKey)} opts={[["totalScore", t("byScore")], ["worksCount", t("byWorks")], ["citations", t("byCit")]]} />
+        <Sel icon="building" label={t("instType")} v={type} set={setType} all={t("all")} opts={Object.entries(d.types).filter(([k]) => d.institutions.some((i) => i.type === k)).map(([k, v]) => [k, v[lang]])} />
+        <Sel icon="building" label={t("inst")} v={instSel} set={setInstSel} all={t("all")} opts={instOpts} />
+        <Sel icon="shield" label={t("scope")} v={scope} set={(v) => { setScope(v); setInstSel(""); }} opts={[["vn", t("scopeVn")], ["all", t("scopeAll")]]} />
+        <Sel icon="sort" label={t("sort")} v={["totalScore", "worksCount", "citations"].includes(sort) ? sort : ""} set={(s) => { if (s) pick2(s as SortKey); }} all={t("byColumn")} opts={[["totalScore", t("byScore")], ["worksCount", t("byWorks")], ["citations", t("byCit")]]} />
       </section>
-      <p className="meta">{t("shown", { n: Math.min(limit, rows.length), t: rows.length })}</p>
+      <p className="meta" role="status" aria-live="polite">{t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</p>
       {rows.length === 0 ? <p className="empty">{t("none")}</p> : (
-        <div className="table-wrap"><table>
-          <thead><tr><th className="num">{t("rank")}</th><th>{t("author")}</th><th>{t("unit")}</th><th className="num">{t("works")}</th><th className="num">{t("score")}</th><th className="num">{t("cit")}</th><th>{t("years")}</th></tr></thead>
-          <tbody>{rows.slice(0, limit).map((a, i) => (
+        <div className="table-wrap"><table className="cards">
+          <caption className="sr">{t("title")}: {t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</caption>
+          <thead><tr>
+            <Th k="rank" cls="num" title={t("rankTip")} label={t("rank")} sort={sort} dir={dir} pick={pick} />
+            <Th k="name" label={t("author")} sort={sort} dir={dir} pick={pick} />
+            <Th k="unit" label={t("unit")} sort={sort} dir={dir} pick={pick} />
+            <Th k="worksCount" cls="num" label={t("works")} sort={sort} dir={dir} pick={pick} />
+            <Th k="totalScore" cls="num" label={t("score")} sort={sort} dir={dir} pick={pick} />
+            <Th k="citations" cls="num" label={t("cit")} sort={sort} dir={dir} pick={pick} />
+            <Th k="lastYear" label={t("years")} sort={sort} dir={dir} pick={pick} />
+          </tr></thead>
+          <tbody>{rows.slice(page * PAGE, (page + 1) * PAGE).map((a) => { const rv = a[rankKey]; return (
             <tr key={a.id}>
-              <td className="num"><span className={`rk r${Math.min(i + 1, 4)}`}>{i + 1}</span></td>
-              <td><a href={`#/tac-gia/${a.id}`}>{a.name}</a>{a.claimed && <Icon n="check" size={14} className="ok" />}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}{a.top2 && <a className="top2" href={TOP2_URL} target="_blank" rel="noopener" title={t("top2Tip", { r: a.top2.rank.toLocaleString(lang === "vi" ? "vi-VN" : "en-US"), f: a.top2.field })}>★ {t("top2Tag")}</a>}<div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
-              <td>{a.institutions.map((i) => { const x = instById.get(i); return x ? instName(x) : i; }).join(", ")}</td>
-              <td className="num">{a.worksCount}</td><td className="num"><span className="score">{a.totalScore}</span></td><td className="num">{a.citations}</td>
-              <td className="meta">{a.firstYear ?? "-"}–{a.lastYear ?? "-"}</td>
-            </tr>))}</tbody>
+              <td className="num rankc" data-l={t("rank")}>{rv ? <span className={`rk r${Math.min(rv, 4)}`}>{num(rv)}</span> : <span className="meta" title={t("rankNoneTip")}>–<span className="sr"> {t("rankNone")}</span></span>}</td>
+              <td className="who"><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a>{a.claimed && <><Icon n="check" size={14} className="ok" /><span className="sr"> {t("claimedSr")}</span></>}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}<Top2Tag a={a} cls="top2" /><div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
+              <td data-l={t("unit")}>{a.institutions.map((i) => instLabel(instById.get(i), lang, i)).join(", ")}</td>
+              <td className="num" data-l={t("works")}>{num(a.worksCount)}</td><td className="num" data-l={t("score")}><span className="score">{num(a.totalScore, 2)}</span></td><td className="num" data-l={t("cit")}>{num(a.citations)}</td>
+              <td className="meta yrs" data-l={t("years")}>{a.firstYear ?? "-"}–{a.lastYear ?? "-"}</td>
+            </tr>); })}</tbody>
         </table></div>)}
-      {rows.length > limit && <p><button className="ghost" onClick={() => setLimit(limit + PAGE)}>{t("moreRows")}</button></p>}
+      <Pager page={page} total={rows.length} set={(p) => { setPage(p); window.scrollTo({ top: 0 }); }} />
     </>
   );
 }
 
 function AuthorPage({ a, d }: { a: Author; d: Data }) {
-  const { lang, t } = useT();
+  const { lang, t, num } = useT();
   const [works, setWorks] = useState<Work[] | null>(null);
-  const [wlimit, setWlimit] = useState(PAGE);
-  useEffect(() => { setWorks(null); setWlimit(PAGE); fetch(`./data/works/${a.id}.json`).then((r) => r.json()).then((w: Work[]) => setWorks(w.sort((x, y) => y.year - x.year)), () => setWorks([])); }, [a.id]);
-  const inst = a.institutions.map((i) => d.institutions.find((x) => x.id === i)).filter((x): x is NonNullable<typeof x> => !!x);
+  const [werr, setWerr] = useState(false), [tick, setTick] = useState(0), [wpage, setWpage] = useState(0);
+  // Hủy yêu cầu cũ khi đổi hồ sơ: không để công trình của hồ sơ trước hiện (và xuất CSV) ở hồ sơ sau.
+  useEffect(() => {
+    setWorks(null); setWerr(false); setWpage(0);
+    if (a.worksCount === 0) { setWorks([]); return; }
+    const ac = new AbortController();
+    fetch(`./data/works/${encodeURIComponent(a.id)}.json`, { signal: ac.signal }).then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }).then((w) => {
+      if (!Array.isArray(w)) throw new Error("shape");
+      setWorks([...(w as Work[])].sort((x, y) => y.year - x.year));
+    }).catch(() => { if (ac.signal.aborted) return; setWerr(true); setWorks([]); });
+    return () => ac.abort();
+  }, [a.id, a.worksCount, tick]);
+  const instById = useMemo(() => new Map(d.institutions.map((i) => [i.id, i])), [d]);
+  const inst = a.institutions.map((i) => instById.get(i)).filter((x): x is Institution => !!x);
   const csv = () => {
-    const esc = (s: unknown) => `"${String(s ?? "").replace(/"/g, '""')}"`;
-    const body = [["year", "title", "journal", "issn", "score", "citations", "role"], ...(works ?? []).map((w) => [w.year, w.title, w.journal, w.issn, w.score ?? "", w.citations, w.role])].map((r) => r.map(esc).join(",")).join("\n");
+    // Chống chèn công thức (CSV injection): ô văn bản bắt đầu bằng = + - @ hoặc tab/xuống dòng được thêm dấu nháy đơn.
+    const cell = (v: unknown) => { let s = String(v ?? ""); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return `"${s.replace(/"/g, '""')}"`; };
+    const body = [["year", "title", "journal", "issn", "score", "citations", "role"], ...(works ?? []).map((w) => [w.year, w.title, w.journal, w.issn, w.score ?? "", w.citations, w.role])].map((r) => r.map(cell).join(",")).join("\r\n");
     const url = URL.createObjectURL(new Blob(["﻿" + body], { type: "text/csv;charset=utf-8" }));
-    Object.assign(document.createElement("a"), { href: url, download: `${a.id}.csv` }).click(); URL.revokeObjectURL(url);
+    Object.assign(document.createElement("a"), { href: url, download: `${slug(a.name)}-${a.id}.csv` }).click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
+  const pool = d.meta.rankPool ?? 0;
+  const rk = (v: number | null) => (v ? <>#{num(v)} <small className="of">{t("rankOf", { n: num(pool) })}</small></> : <span title={t("rankNoneTip")}>–</span>);
+  const roleCell = (w: Work) => (w.role === "lead" ? t("lead") : t("co"));
   return (
     <article>
       <p><a href="#/">{t("back")}</a></p>
-      <h2 className="au">{a.name}{a.foreign && <span className="badge warnb">{t("foreignTag")}</span>}{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}{a.top2 && <a className="badge top2b" href={TOP2_URL} target="_blank" rel="noopener" title={t("top2Tip", { r: a.top2.rank.toLocaleString(lang === "vi" ? "vi-VN" : "en-US"), f: a.top2.field })}>★ {t("top2Tag")}</a>}{a.claimed && <span className="badge" title={t("claimedBadge")}><Icon n="check" size={16} />{t("claimedBadge")}</span>}</h2>
-      <p className="meta">{inst.map((i) => (lang === "vi" ? i.name : i.en)).join(", ")}{a.orcid && <> · <a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}</a></>}</p>
+      <h1 className="au">{a.name}</h1>
+      <p className="badges">{a.foreign && <span className="badge warnb">{t("foreignTag")}</span>}{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}<Top2Tag a={a} cls="badge top2b" />{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</p>
+      <p className="meta">{inst.map((i) => instLabel(i, lang)).join(", ")}{a.orcid && <> · <a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}<span className="sr"> {t("newTab")}</span></a></>}</p>
       <div className="stats">
-        <div><Icon n="trophy" size={22} /><b>#{a.rankScore}</b><span>{t("rank")} · {t("score")}</span></div><div><Icon n="chart" size={22} /><b>#{a.rankWorks}</b><span>{t("rank")} · {t("works")}</span></div>
-        <div><Icon n="check" size={22} /><b>{a.totalScore}</b><span>{t("cite")}</span></div><div><Icon n="book" size={22} /><b>{a.countedWorks}/{a.worksCount}</b><span>{t("counted")}</span></div>
+        <div><Icon n="trophy" size={22} /><b>{rk(a.rankScore)}</b><span>{t("rank")} · {t("score")}</span></div><div><Icon n="chart" size={22} /><b>{rk(a.rankWorks)}</b><span>{t("rank")} · {t("works")}</span></div>
+        <div><Icon n="check" size={22} /><b>{num(a.totalScore, 2)}</b><span>{t("cite")}</span></div><div><Icon n="book" size={22} /><b>{num(a.countedWorks)}/{num(a.worksCount)}</b><span>{t("counted")}</span></div>
         <div><Icon n="link" size={22} /><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span></div>
       </div>
       {a.suspect && <p className="banner demo" role="note"><Icon n="info" />{t("suspectNote")}</p>}
-      <p className="actions-row"><button className="ghost" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button> <a className="ghost-link" href={`#/dinh-chinh/${a.id}`}><Icon n="user" size={16} />{t("corrLink")}</a></p>
-      {works === null ? <p className="empty">{t("loading")}</p> : (
-        <div className="table-wrap"><table>
-          <thead><tr><th className="num">{t("year")}</th><th>{t("paper")}</th><th>{t("journal")}</th><th>{t("issn")}</th><th className="num">{t("pts")}</th><th className="num">{t("cit")}</th><th>{t("role")}</th></tr></thead>
-          <tbody>{works.slice(0, wlimit).map((w) => (
-            <tr key={w.id}><td className="num">{w.year}</td><td>{w.title}</td>
-              <td>{w.journal}{w.scoreDiscipline && <div><a className="meta" target="_blank" rel="noopener" href={`${EDUFIND}/${w.scoreDiscipline}/?${w.scoreKind === "scopus" ? "tab=international&" : ""}q=${encodeURIComponent(w.issn)}`}>{t("lookup")} ↗</a></div>}</td>
-              <td className="issn">{w.issn}</td>
-              <td className="num">{w.score === null ? <span className="meta">{w.role === "co" ? t("notLead") : t("unmatched")}</span> : <span className="score" title={w.scoreKind === "scopus" ? `Scopus ${w.quartile ?? ""}` : t("kDom")}>{w.score}</span>}{w.scoreKind === "scopus" && <div className="meta">Scopus {w.quartile ?? ""}</div>}</td>
-              <td className="num">{w.citations}</td><td>{w.role === "lead" ? t("lead") : t("co")}</td></tr>))}</tbody>
+      <p className="actions-row"><button className="ghost" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button> <a className="ghost-link" href={`#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{t("corrLink")}</a></p>
+      {works === null ? <p className="empty" role="status">{t("loading")}</p>
+        : werr ? <div className="empty" role="alert"><p>{t("workErr")}</p><button className="ghost" onClick={() => setTick(tick + 1)}>{t("retry")}</button></div>
+        : works.length === 0 ? <p className="empty">{t("noWorks")}</p> : (
+        <div className="table-wrap"><table className="cards">
+          <caption className="sr">{t("paper")} · {a.name}</caption>
+          <thead><tr><th scope="col" className="num">{t("year")}</th><th scope="col">{t("paper")}</th><th scope="col">{t("journal")}</th><th scope="col">{t("issn")}</th><th scope="col" className="num">{t("pts")}</th><th scope="col" className="num">{t("cit")}</th><th scope="col">{t("role")}</th></tr></thead>
+          <tbody>{works.slice(wpage * PAGE, (wpage + 1) * PAGE).map((w) => (
+            <tr key={w.id}><td className="num" data-l={t("year")}>{w.year}</td><td className="wt">{workLink(w, t)}</td>
+              <td data-l={t("journal")} className="wj">{w.journal}{w.scoreDiscipline && <div><a className="meta" target="_blank" rel="noopener" href={`${EDUFIND}/${w.scoreDiscipline}/?${w.scoreKind === "scopus" ? "tab=international&" : ""}q=${encodeURIComponent(w.issn)}`}>{t("lookup")} ↗<span className="sr"> {t("newTab")}</span></a></div>}</td>
+              <td className="issn" data-l={t("issn")}>{w.issn}</td>
+              <td className="num" data-l={t("pts")}>{w.score === null ? <span className="meta">{w.role === "lead" ? t("unmatched") : w.ru ? t("roleUnknown") : t("notLead")}</span> : <span className="score" title={w.scoreKind === "scopus" ? `Scopus ${w.quartile ?? ""}` : t("kDom")}>{num(w.score, 2)}</span>}{w.scoreKind === "scopus" && <div className="meta">Scopus {w.quartile ?? ""}</div>}</td>
+              <td className="num" data-l={t("cit")}>{num(w.citations)}</td><td data-l={t("role")}>{roleCell(w)}</td></tr>))}</tbody>
         </table></div>)}
-      {works && works.length > wlimit && <p><button className="ghost" onClick={() => setWlimit(wlimit + PAGE)}>{t("moreRows")} ({wlimit}/{works.length})</button></p>}
+      {works && <Pager page={wpage} total={works.length} set={setWpage} />}
     </article>
   );
 }
@@ -148,29 +288,41 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
 function Correction({ a }: { a: Author | null }) {
   const { t } = useT();
   const [state, setState] = useState<"idle" | "sending" | "ok" | "err">("idle");
+  const [code, setCode] = useState("send");
   const [kind, setKind] = useState("claim");
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); setState("sending");
-    const f = new FormData(e.currentTarget); f.set("author", a?.id ?? ""); f.set("authorName", a?.name ?? "");
-    try { const r = await fetch("/api/correction", { method: "POST", body: f }); setState(r.ok ? "ok" : "err"); } catch { setState("err"); }
+    const f = new FormData(e.currentTarget);
+    f.set("author", a?.id ?? ""); f.set("authorName", a?.name ?? String(f.get("ref") ?? ""));
+    const ac = new AbortController(), to = setTimeout(() => ac.abort(), 15000);
+    try {
+      const r = await fetch("/api/correction", { method: "POST", body: f, signal: ac.signal });
+      const j = await r.json().catch(() => null) as { ok?: boolean; error?: string } | null;
+      // Chỉ coi là thành công khi máy chủ trả {ok:true}; mọi phản hồi 2xx khác (HTML, {ok:false}) là lỗi.
+      if (r.ok && j && j.ok === true) setState("ok"); else { setCode(j?.error ?? (r.status === 429 ? "rate" : "send")); setState("err"); }
+    } catch { setCode("net"); setState("err"); } finally { clearTimeout(to); }
   };
+  const msg = { rate: t("eRate"), "not-configured": t("eConf"), net: t("eNet"), kind: t("eBad"), email: t("eBad"), empty: t("eBad") }[code as "rate"] ?? t("sendErr");
   return (
     <article className="corr">
-      <p><a href={a ? `#/tac-gia/${a.id}` : "#/"}>{t("back")}</a></p>
-      <h2>{t("corrTitle")}{a && <>: {a.name}</>}</h2>
+      <p><a href={a ? `#/tac-gia/${encodeURIComponent(a.id)}` : "#/"}>{t("back")}</a></p>
+      <h1>{t("corrTitle")}{a && <>: {a.name}</>}</h1>
       <p className="meta">{t("corrLead")}</p>
-      {state === "ok" ? <p className="banner"><Icon n="check" />{t("sent")}</p> : (
+      <p className="meta">{t("corrPrivacy")}</p>
+      <div role="status" aria-live="polite">{state === "ok" && <p className="banner"><Icon n="check" />{t("sent")}</p>}</div>
+      {state !== "ok" && (
         <form onSubmit={submit} className="form">
           <fieldset><legend className="sr">{t("corrTitle")}</legend>
             {([["claim", "kClaim"], ["correct", "kCorrect"], ["remove", "kRemove"]] as const).map(([k, l]) => <label key={k} className="radio"><input type="radio" name="kind" value={k} checked={kind === k} onChange={() => setKind(k)} />{t(l)}</label>)}
           </fieldset>
+          {!a && <label className="sel"><span>{t("fRef")}</span><input name="ref" required maxLength={160} /></label>}
           <label className="sel"><span>{t("fName")}</span><input name="name" required maxLength={120} autoComplete="name" /></label>
           <label className="sel"><span>{t("fEmail")}</span><input name="email" type="email" required maxLength={160} autoComplete="email" /></label>
-          <label className="sel"><span>{t("fOrcid")}</span><input name="orcid" maxLength={40} defaultValue={a?.orcid ?? ""} placeholder="0000-0000-0000-0000" /></label>
+          <label className="sel"><span>{t("fOrcid")}</span><input name="orcid" maxLength={40} defaultValue={a?.orcid ?? ""} placeholder="0000-0000-0000-0000" pattern="\d{4}-?\d{4}-?\d{4}-?\d{3}[\dXx]|" title="0000-0000-0000-0000" /></label>
           <label className="sel"><span>{t("fMsg")}</span><textarea name="msg" rows={5} maxLength={4000} required={kind === "correct"} /></label>
           <input name="_honey" className="honey" tabIndex={-1} autoComplete="off" aria-hidden="true" />
           <p><button className="primary" disabled={state === "sending"}>{state === "sending" ? t("sending") : t("send")}</button></p>
-          {state === "err" && <p className="banner demo">{t("sendErr")} <a href={`mailto:${CONTACT}?subject=${encodeURIComponent("[ProFind] " + (a?.name ?? ""))}`}>{CONTACT}</a></p>}
+          <div role="alert">{state === "err" && <p className="banner demo">{msg} <a href={`mailto:${CONTACT}?subject=${encodeURIComponent("[ProFind] " + (a?.name ?? ""))}`}>{CONTACT}</a></p>}</div>
         </form>)}
     </article>
   );
