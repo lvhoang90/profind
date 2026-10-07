@@ -7,7 +7,7 @@ fs.writeFileSync(`${OUT}/favicon.svg`, APP_ICON() + "\n");
 fs.writeFileSync(`${OUT}/icon-maskable.svg`, APP_ICON({ maskable: true }) + "\n");
 fs.writeFileSync(`${OUT}/logo-disc.svg`, DISC() + "\n");
 fs.writeFileSync(`${OUT}/manifest.webmanifest`, JSON.stringify({
-  name: "ProFind - Tra cứu tác giả và công trình nghiên cứu", short_name: "ProFind", description: "Tra cứu tác giả, nhà nghiên cứu Việt Nam theo ngành, đơn vị, công trình và điểm tham khảo theo danh mục HĐGSNN.", lang: "vi", start_url: "./", scope: "./", display: "standalone", background_color: "#0b2a40", theme_color: "#0b2a40",
+  name: "ProFind - Dữ liệu số về Nhà khoa học & công trình nghiên cứu", short_name: "ProFind", description: "Tra cứu tác giả, nhà nghiên cứu Việt Nam theo ngành, đơn vị, công trình và điểm tham khảo theo danh mục HĐGSNN.", lang: "vi", start_url: "./", scope: "./", display: "standalone", background_color: "#0b2a40", theme_color: "#0b2a40",
   icons: [{ src: "favicon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" }, { src: "icon-192.png", sizes: "192x192", type: "image/png" }, { src: "icon-512.png", sizes: "512x512", type: "image/png" }, { src: "icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" }],
 }, null, 2) + "\n");
 if (process.argv.includes("--png")) {
