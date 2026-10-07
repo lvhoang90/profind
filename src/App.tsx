@@ -115,7 +115,7 @@ const workLink = (w: Work, t: (k: any) => string) => {
   return <><a href={href} target="_blank" rel="noopener">{w.title}<span className="sr"> {t("newTab")}</span></a><div className="meta">{doi ? <>DOI: {doi}</> : t("noDoi")}</div></>;
 };
 
-const range = (page: number, total: number, num: (n: number) => string) => `${num(Math.min(page * PAGE + 1, total))}–${num(Math.min((page + 1) * PAGE, total))}`;
+const range = (page: number, total: number, num: (n: number) => string) => total === 0 ? "0" : `${num(Math.min(page * PAGE + 1, total))}–${num(Math.min((page + 1) * PAGE, total))}`;
 
 function Th({ k, label, cls, title, sort, dir, pick }: { k: SortKey; label: string; cls?: string; title?: string; sort: SortKey; dir: 1 | -1; pick: (k: SortKey) => void }) {
   const on = sort === k;
@@ -177,9 +177,11 @@ function List({ d }: { d: Data }) {
       if (type && !a.institutions.some((i) => instById.get(i)?.type === type)) return false;
       if (!toks.length) return true;
       if (isId) return idPlain(a.orcid ?? "").includes(rawId) || (jn?.[a.id]?.p.includes(rawId) ?? false);
-      const nm = norm(a.name);
-      if (toks.every((x) => nm.includes(x))) return true;
-      const j = jn?.[a.id]?.t; return !!j && toks.every((x) => j.includes(x));
+      // Tên: mỗi từ khóa phải trùng trọn một từ trong tên (từ cuối gõ dở được khớp theo tiền tố), không khớp chuỗi con ("dat" không ra "Datta", "Sinh Cong Lam" không ra "trần văn đạt").
+      const words = norm(a.name).split(" ");
+      if (toks.every((x, i) => words.some((w) => (i === toks.length - 1 ? w.startsWith(x) : w === x)))) return true;
+      // Tạp chí/ISSN: khớp cả cụm từ, không khớp từng từ rời (tránh "tran van dat" khớp "Transactions ... data").
+      const j = jn?.[a.id]?.t; return !!j && j.includes(toks.join(" "));
     }).sort((a, b) => {
       let c = 0;
       if (sort === "name") c = a.name.localeCompare(b.name, "vi");
