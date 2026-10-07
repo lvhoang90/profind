@@ -12,6 +12,7 @@ const AdminPage = lazy(() => import("./Admin").then((m) => ({ default: m.AdminPa
 import { HeroArt } from "./HeroArt";
 import { useWorks } from "./wsearch";
 import { StarBtn } from "./StarBtn";
+import { VisitChip } from "./VisitChip";
 import { Footer, EcoLink } from "./Footer";
 import { evt, startSession } from "./analytics";
 import { getTheme, setTheme, type Theme } from "./theme";
@@ -124,6 +125,7 @@ function AppInner() {
         </Boundary>
       </main>
       <Footer data={data} />
+      <VisitChip />
     </Ctx.Provider>
   );
 }
