@@ -229,13 +229,18 @@ function List({ d }: { d: Data }) {
   );
 }
 
+type WSort = "year" | "cit" | "score";
+const initials = (n: string) => { const w = n.replace(/[^\p{L}\s-]/gu, " ").split(/[\s-]+/).filter(Boolean); return ((w[0]?.[0] ?? "") + (w.length > 1 ? w[w.length - 1][0] : "")).toUpperCase(); };
+const hueOf = (s: string) => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) % 360; return h; };
+
 function AuthorPage({ a, d }: { a: Author; d: Data }) {
   const { lang, t, num } = useT();
   const [works, setWorks] = useState<Work[] | null>(null);
   const [werr, setWerr] = useState(false), [tick, setTick] = useState(0), [wpage, setWpage] = useState(0);
+  const [wsort, setWsort] = useState<WSort>("year"), [onlyLead, setOnlyLead] = useState(false);
   // Hủy yêu cầu cũ khi đổi hồ sơ: không để công trình của hồ sơ trước hiện (và xuất CSV) ở hồ sơ sau.
   useEffect(() => {
-    setWorks(null); setWerr(false); setWpage(0);
+    setWorks(null); setWerr(false); setWpage(0); setWsort("year"); setOnlyLead(false);
     if (a.worksCount === 0) { setWorks([]); return; }
     const ac = new AbortController();
     fetch(`./data/works/${encodeURIComponent(a.id)}.json`, { signal: ac.signal }).then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }).then((w) => {
@@ -244,45 +249,105 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
     }).catch(() => { if (ac.signal.aborted) return; setWerr(true); setWorks([]); });
     return () => ac.abort();
   }, [a.id, a.worksCount, tick]);
+  useEffect(() => setWpage(0), [wsort, onlyLead]);
   const instById = useMemo(() => new Map(d.institutions.map((i) => [i.id, i])), [d]);
   const inst = a.institutions.map((i) => instById.get(i)).filter((x): x is Institution => !!x);
   const csv = () => {
     // Chống chèn công thức (CSV injection): ô văn bản bắt đầu bằng = + - @ hoặc tab/xuống dòng được thêm dấu nháy đơn.
     const cell = (v: unknown) => { let s = String(v ?? ""); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return `"${s.replace(/"/g, '""')}"`; };
-    const body = [["year", "title", "journal", "issn", "score", "citations", "role"], ...(works ?? []).map((w) => [w.year, w.title, w.journal, w.issn, w.score ?? "", w.citations, w.role])].map((r) => r.map(cell).join(",")).join("\r\n");
-    const url = URL.createObjectURL(new Blob(["﻿" + body], { type: "text/csv;charset=utf-8" }));
+    const body = [["year", "title", "doi", "journal", "issn", "score", "citations", "role"], ...(works ?? []).map((w) => [w.year, w.title, w.doi ?? "", w.journal, w.issn, w.score ?? "", w.citations, w.role])].map((r) => r.map(cell).join(",")).join("\r\n");
+    const url = URL.createObjectURL(new Blob(["\ufeff" + body], { type: "text/csv;charset=utf-8" }));
     Object.assign(document.createElement("a"), { href: url, download: `${slug(a.name)}-${a.id}.csv` }).click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
   const pool = d.meta.rankPool ?? 0;
-  const rk = (v: number | null) => (v ? <>#{num(v)} <small className="of">{t("rankOf", { n: num(pool) })}</small></> : <span title={t("rankNoneTip")}>–</span>);
+  const rk = (v: number | null) => (v ? <>#{num(v)}</> : <span title={t("rankNoneTip")}>–</span>);
   const roleCell = (w: Work) => (w.role === "lead" ? t("lead") : t("co"));
+  // Thống kê cho hai biểu đồ, tính từ danh sách công trình đã tải.
+  const stat = useMemo(() => {
+    const ws = works ?? [], byYear = new Map<number, { lead: number; co: number }>();
+    const cat = { q1: 0, q2: 0, q3: 0, q4: 0, dom: 0, unm: 0, not: 0 };
+    for (const w of ws) {
+      const y = byYear.get(w.year) ?? { lead: 0, co: 0 }; y[w.role === "lead" ? "lead" : "co"]++; byYear.set(w.year, y);
+      if (w.role !== "lead") cat.not++;
+      else if (w.score === null) cat.unm++;
+      else if (w.scoreKind === "domestic") cat.dom++;
+      else { const q = (w.quartile ?? "").toUpperCase(); if (q === "Q1") cat.q1++; else if (q === "Q2") cat.q2++; else if (q === "Q3") cat.q3++; else cat.q4++; }
+    }
+    const ys = [...byYear.keys()]; const y0 = ys.length ? Math.max(Math.min(...ys), new Date().getFullYear() - 10) : 0, y1 = ys.length ? Math.max(...ys) : -1;
+    const bars: { y: number; lead: number; co: number }[] = []; for (let y = y0; y <= y1; y++) bars.push({ y, ...(byYear.get(y) ?? { lead: 0, co: 0 }) });
+    return { bars, max: Math.max(1, ...bars.map((b) => b.lead + b.co)), cat };
+  }, [works]);
+  const shown = useMemo(() => {
+    const l = (works ?? []).filter((w) => !onlyLead || w.role === "lead");
+    return wsort === "year" ? l : [...l].sort((x, y) => (wsort === "cit" ? y.citations - x.citations : (y.score ?? -1) - (x.score ?? -1)) || y.year - x.year);
+  }, [works, wsort, onlyLead]);
+  const pct = a.worksCount ? Math.round((a.countedWorks / a.worksCount) * 100) : 0, hue = hueOf(a.id);
+  const cats: [string, number, string][] = [["Scopus Q1", stat.cat.q1, "c1"], ["Scopus Q2", stat.cat.q2, "c2"], ["Scopus Q3", stat.cat.q3, "c3"], ["Scopus Q4", stat.cat.q4, "c4"], [t("kDomShort"), stat.cat.dom, "cd"], [t("unmatched"), stat.cat.unm, "cu"], [t("notLeadShort"), stat.cat.not, "cn"]];
+  const cmax = Math.max(1, ...cats.map((c) => c[1]));
   return (
-    <article>
+    <article className="ap">
       <p><a href="#/">{t("back")}</a></p>
-      <h1 className="au">{a.name}</h1>
-      <p className="badges">{a.foreign && <span className="badge warnb">{t("foreignTag")}</span>}{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}<Top2Tag a={a} cls="badge top2b" />{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</p>
-      <p className="meta">{inst.map((i) => instLabel(i, lang)).join(", ")}{a.orcid && <> · <a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}<span className="sr"> {t("newTab")}</span></a></>}</p>
-      <div className="stats">
-        <div><Icon n="trophy" size={22} /><b>{rk(a.rankScore)}</b><span>{t("rank")} · {t("score")}</span></div><div><Icon n="chart" size={22} /><b>{rk(a.rankWorks)}</b><span>{t("rank")} · {t("works")}</span></div>
-        <div><Icon n="check" size={22} /><b>{num(a.totalScore, 2)}</b><span>{t("cite")}</span></div><div><Icon n="book" size={22} /><b>{num(a.countedWorks)}/{num(a.worksCount)}</b><span>{t("counted")}</span></div>
-        <div><Icon n="link" size={22} /><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span></div>
+      <header className="hero">
+        <div className="av" style={{ background: `linear-gradient(135deg,hsl(${hue} 75% 52%),hsl(${(hue + 55) % 360} 80% 42%))` }} aria-hidden="true">{initials(a.name)}</div>
+        <div className="hero-main">
+          <h1 className="au">{a.name}</h1>
+          <p className="badges">{a.foreign && <span className="badge warnb">{t("foreignTag")}</span>}{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}<Top2Tag a={a} cls="badge top2b" />{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</p>
+          <ul className="chips">{inst.map((i) => <li key={i.id}><Icon n="building" size={14} />{instLabel(i, lang)}</li>)}{a.orcid && <li className="orcid"><a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}<span className="sr"> {t("newTab")}</span></a></li>}</ul>
+          {a.disciplines.length > 0 && <p className="hdisc">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</p>}
+          <p className="actions-row"><button className="ghost light" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button><a className="ghost-link light" href={`#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{t("corrLink")}</a></p>
+        </div>
+      </header>
+      <div className="kpis">
+        <div className="kpi k-rank"><span className="kic"><Icon n="trophy" size={20} /></span><b>{rk(a.rankScore)}</b><span>{t("rank")} · {t("score")}</span><small>{a.rankScore ? t("rankOf", { n: num(pool) }) : t("rankNone")}</small></div>
+        <div className="kpi k-score"><span className="kic"><Icon n="check" size={20} /></span><b>{num(a.totalScore, 2)}</b><span>{t("cite")}</span></div>
+        <div className="kpi"><span className="kic"><Icon n="book" size={20} /></span><b>{num(a.countedWorks)}<em>/{num(a.worksCount)}</em></b><span>{t("counted")}</span><i className="bar" role="presentation"><u style={{ width: `${pct}%` }} /></i></div>
+        <div className="kpi"><span className="kic"><Icon n="chart" size={20} /></span><b>{num(a.citations)}</b><span>{t("cit")}</span><small>{t("rank")} {rk(a.rankCit)}</small></div>
+        <div className="kpi"><span className="kic"><Icon n="link" size={20} /></span><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span><i className="bar" role="presentation"><u style={{ width: `${Math.round(a.matchedRate * 100)}%` }} /></i></div>
       </div>
       {a.suspect && <p className="banner demo" role="note"><Icon n="info" />{t("suspectNote")}</p>}
-      <p className="actions-row"><button className="ghost" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button> <a className="ghost-link" href={`#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{t("corrLink")}</a></p>
-      {works === null ? <p className="empty" role="status">{t("loading")}</p>
-        : werr ? <div className="empty" role="alert"><p>{t("workErr")}</p><button className="ghost" onClick={() => setTick(tick + 1)}>{t("retry")}</button></div>
-        : works.length === 0 ? <p className="empty">{t("noWorks")}</p> : (
-        <div className="table-wrap"><table className="cards tworks">
-          <caption className="sr">{t("paper")} · {a.name}</caption>
-          <thead><tr><th scope="col" className="num">{t("year")}</th><th scope="col">{t("paper")}</th><th scope="col">{t("journal")}</th><th scope="col">{t("issn")}</th><th scope="col" className="num">{t("pts")}</th><th scope="col" className="num">{t("cit")}</th><th scope="col">{t("role")}</th></tr></thead>
-          <tbody>{works.slice(wpage * PAGE, (wpage + 1) * PAGE).map((w) => (
-            <tr key={w.id}><td className="num" data-l={t("year")}>{w.year}</td><td className="wt">{workLink(w, t)}</td>
-              <td data-l={t("journal")} className="wj">{w.journal}{w.scoreDiscipline && <div><a className="meta" target="_blank" rel="noopener" href={`${EDUFIND}/${w.scoreDiscipline}/?${w.scoreKind === "scopus" ? "tab=international&" : ""}q=${encodeURIComponent(w.issn)}`}>{t("lookup")} ↗<span className="sr"> {t("newTab")}</span></a></div>}</td>
-              <td className="issn" data-l={t("issn")}>{w.issn}</td>
-              <td className="num" data-l={t("pts")}>{w.score === null ? <span className="meta">{w.role === "lead" ? t("unmatched") : w.ru ? t("roleUnknown") : t("notLead")}</span> : <span className="score" title={w.scoreKind === "scopus" ? `Scopus ${w.quartile ?? ""}` : t("kDom")}>{num(w.score, 2)}</span>}{w.scoreKind === "scopus" && <div className="meta">Scopus {w.quartile ?? ""}</div>}</td>
-              <td className="num" data-l={t("cit")}>{num(w.citations)}</td><td data-l={t("role")}>{roleCell(w)}</td></tr>))}</tbody>
-        </table></div>)}
-      {works && <Pager page={wpage} total={works.length} set={setWpage} />}
+      {works && works.length > 0 && (
+        <div className="insights">
+          <section className="card" aria-label={t("chartYear")}>
+            <h2>{t("chartYear")}</h2>
+            <div className="ybars" role="img" aria-label={stat.bars.map((b) => `${b.y}: ${b.lead + b.co}`).join(", ")}>
+              {stat.bars.map((b) => <div key={b.y} className="yb" title={`${b.y}: ${b.lead + b.co} (${t("lead")}: ${b.lead})`}><span className="yn">{b.lead + b.co || ""}</span><div className="yc" style={{ height: `${((b.lead + b.co) / stat.max) * 100}%` }}><i className="yco" style={{ flex: b.co }} /><i className="yle" style={{ flex: b.lead }} /></div><span className="yl">{String(b.y).slice(2)}</span></div>)}
+            </div>
+            <p className="legend"><span><i className="sw yle" />{t("lead")}</span><span><i className="sw yco" />{t("co")}</span></p>
+          </section>
+          <section className="card" aria-label={t("chartScore")}>
+            <h2>{t("chartScore")}</h2>
+            <ul className="hbars">{cats.filter((c) => c[1] > 0).map(([l, n, k]) => <li key={l}><span>{l}</span><i className="hb"><u className={k} style={{ width: `${(n / cmax) * 100}%` }} /></i><b>{num(n)}</b></li>)}</ul>
+          </section>
+        </div>)}
+      <section className="wlist" aria-label={t("paper")}>
+        <div className="wbar">
+          <h2>{t("paper")} <small>{num(shown.length)}</small></h2>
+          <div className="wtools">
+            <label className="sel inl"><span>{t("sortWorks")}</span><select value={wsort} onChange={(e) => setWsort(e.target.value as WSort)}><option value="year">{t("sNewest")}</option><option value="cit">{t("sCited")}</option><option value="score">{t("sScore")}</option></select></label>
+            <label className="chk"><input type="checkbox" checked={onlyLead} onChange={(e) => setOnlyLead(e.target.checked)} />{t("onlyLead")}</label>
+          </div>
+        </div>
+        {works === null ? <p className="empty" role="status">{t("loading")}</p>
+          : werr ? <div className="empty" role="alert"><p>{t("workErr")}</p><button className="ghost" onClick={() => setTick(tick + 1)}>{t("retry")}</button></div>
+          : works.length === 0 ? <p className="empty">{t("noWorks")}</p>
+          : shown.length === 0 ? <p className="empty">{t("none")}</p> : (
+          <ol className="wk-list">{shown.slice(wpage * PAGE, (wpage + 1) * PAGE).map((w) => (
+            <li key={w.id} className="wk">
+              <span className="wy">{w.year}</span>
+              <div className="wm">
+                <a className="wt2" href={w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${w.id.split("-").pop()}`} target="_blank" rel="noopener">{w.title}<span className="sr"> {t("newTab")}</span></a>
+                <div className="wsrc"><span>{w.journal}</span><span className="issn">ISSN {w.issn}</span></div>
+                <div className="wlinks">{w.doi ? <a className="chip" href={`https://doi.org/${w.doi}`} target="_blank" rel="noopener">DOI ↗<span className="sr"> {t("newTab")}</span></a> : <span className="chip mute">{t("noDoi")}</span>}{w.scoreDiscipline && <a className="chip" target="_blank" rel="noopener" href={`${EDUFIND}/${w.scoreDiscipline}/?${w.scoreKind === "scopus" ? "tab=international&" : ""}q=${encodeURIComponent(w.issn)}`}>{t("lookup")} ↗<span className="sr"> {t("newTab")}</span></a>}</div>
+              </div>
+              <div className="wr">
+                {w.score === null ? <span className="pill none" title={w.role === "lead" ? t("unmatched") : w.ru ? t("roleUnknown") : t("notLead")}>{w.role === "lead" ? t("unmatched") : w.ru ? t("roleUnknownShort") : t("notLeadShort")}</span>
+                  : <span className={`pill sc ${w.scoreKind === "scopus" ? (w.quartile ?? "").toLowerCase() : "dom"}`} title={w.scoreKind === "scopus" ? `Scopus ${w.quartile ?? ""}` : t("kDom")}>{num(w.score, 2)}<small>{w.scoreKind === "scopus" ? `Scopus ${w.quartile ?? ""}` : t("kDomShort")}</small></span>}
+                <span className="wc"><Icon n="chart" size={14} />{num(w.citations)}<span className="sr"> {t("cit")}</span></span>
+                <span className={`role ${w.role}`}>{roleCell(w)}</span>
+              </div>
+            </li>))}</ol>)}
+        {works && <Pager page={wpage} total={shown.length} set={(p) => setWpage(p)} />}
+      </section>
     </article>
   );
 }
