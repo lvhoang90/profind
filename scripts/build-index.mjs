@@ -16,13 +16,19 @@ const tierScore = (tiers, y) => {
 const works = R.works.map((w) => {
   const ids = J.byIssn[w.issn] ?? [], js = ids.map((i) => byId.get(i));
   // Một ISSN có thể thuộc nhiều ngành: lấy mức cao nhất, ghi lại ngành để người dùng thấy nguồn.
+  // Chỉ tính điểm khi là tác giả chính theo HĐGSNN (role = "lead", xem ingest-openalex.mjs); còn lại có "counted": false.
   let score = null, jd = null;
-  for (const j of js) { const s = tierScore(j.scoreTiers, w.year); if (s !== null && (score === null || s > score)) { score = s; jd = j.discipline; } }
-  return { ...w, score, scoreDiscipline: jd, matched: js.length > 0 };
+  for (const j of w.role === "lead" ? js : []) { const s = tierScore(j.scoreTiers, w.year); if (s !== null && (score === null || s > score)) { score = s; jd = j.discipline; } }
+  const disc = [...new Set(js.map((j) => j.discipline))];
+  return { ...w, score, scoreDiscipline: jd, matched: js.length > 0, counted: w.role === "lead" && js.length > 0, disc };
 });
 const stats = new Map();
-for (const w of works) { const s = stats.get(w.authorId) ?? { n: 0, pts: 0, cit: 0, matched: 0, first: 9999, last: 0 }; s.n++; s.pts += w.score ?? 0; s.cit += w.citations ?? 0; s.matched += w.matched ? 1 : 0; s.first = Math.min(s.first, w.year); s.last = Math.max(s.last, w.year); stats.set(w.authorId, s); }
-const authors = R.authors.map((a) => { const s = stats.get(a.id) ?? { n: 0, pts: 0, cit: 0, matched: 0, first: 0, last: 0 }; return { ...a, worksCount: s.n, totalScore: Math.round(s.pts * 100) / 100, citations: s.cit, matchedRate: s.n ? Math.round((s.matched / s.n) * 100) / 100 : 0, firstYear: s.first || null, lastYear: s.last || null }; });
+for (const w of works) { const s = stats.get(w.authorId) ?? { n: 0, pts: 0, cit: 0, counted: 0, matched: 0, first: 9999, last: 0 }; s.n++; s.pts += w.score ?? 0; s.counted += w.counted ? 1 : 0; s.cit += w.citations ?? 0; s.matched += w.matched ? 1 : 0; s.first = Math.min(s.first, w.year); s.last = Math.max(s.last, w.year); stats.set(w.authorId, s); }
+// Ngành của tác giả suy ra từ ngành của tạp chí họ đã đăng (mọi công trình khớp, không chỉ công trình tính điểm): giữ ngành chiếm ≥ 25% và tối đa 3 ngành.
+const discOf = new Map();
+for (const w of works) { if (!w.matched) continue; const m = discOf.get(w.authorId) ?? new Map(); for (const d of w.disc) m.set(d, (m.get(d) ?? 0) + 1); discOf.set(w.authorId, m); }
+const inferDisc = (id) => { const m = discOf.get(id); if (!m) return []; const tot = Math.max(...m.values()), n = [...discOf.get(id)].length; void n; const all = [...m.entries()].sort((a, b) => b[1] - a[1]); const sum = [...m.values()].reduce((x, y) => x + y, 0); return all.filter(([, c]) => c / sum >= 0.25 || c === tot).slice(0, 3).map(([d]) => d); };
+const authors = R.authors.map((a) => { const s = stats.get(a.id) ?? { n: 0, pts: 0, cit: 0, counted: 0, matched: 0, first: 0, last: 0 }; return { ...a, disciplines: inferDisc(a.id), worksCount: s.n, totalScore: Math.round(s.pts * 100) / 100, citations: s.cit, countedWorks: s.counted, matchedRate: s.n ? Math.round((s.matched / s.n) * 100) / 100 : 0, firstYear: s.first || null, lastYear: s.last || null }; });
 const rank = (key) => { const o = [...authors].sort((a, b) => b[key] - a[key]); o.forEach((a, i, arr) => { a[key === "worksCount" ? "rankWorks" : "rankScore"] = i > 0 && arr[i - 1][key] === a[key] ? arr[i - 1][key === "worksCount" ? "rankWorks" : "rankScore"] : i + 1; }); };
 rank("worksCount"); rank("totalScore");
 const usedJ = new Set(works.filter((w) => w.matched).flatMap((w) => J.byIssn[w.issn]));

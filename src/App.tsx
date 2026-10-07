@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Ctx, DICT, KEY, initialLang, useT, type Key, type Lang } from "./i18n";
 import { dName } from "./disciplines";
+import { Icon, type IconName } from "./icons";
 import type { Author, Data, Work } from "./types";
 
 type SortKey = "totalScore" | "worksCount" | "citations";
@@ -21,7 +22,7 @@ export function App() {
     <Ctx.Provider value={{ lang, t }}>
       <header className="top">
         <div className="wrap hd">
-          <a className="brand" href="#/"><svg className="logo" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="#38bdf8" opacity=".25" /><circle cx="16" cy="12" r="5" fill="#fff" /><path d="M6 27c1-6 5-9 10-9s9 3 10 9" fill="#fff" /></svg><b>ProFind</b></a>
+          <a className="brand" href="#/" aria-label="ProFind"><img className="logo" src="./logo-disc.svg" alt="" width="40" height="40" /><b>Pro<i>Find</i></b></a>
           <div className="lang" role="group" aria-label="Language">
             {(["vi", "en"] as const).map((l) => <button key={l} className={`lang-${l}`} aria-pressed={lang === l} onClick={() => setLang(l)}>{l.toUpperCase()}</button>)}
           </div>
@@ -29,8 +30,8 @@ export function App() {
         <div className="wrap"><h1>{t("sub")}</h1><p className="tag">{t("tagline")}</p></div>
       </header>
       <main className="wrap">
-        {data?.meta.demo && <p className="banner demo" role="note">{t("demo")}</p>}
-        <p className="banner" role="note">{t("notRank")}</p>
+        {data?.meta.demo && <p className="banner demo" role="note"><Icon n="info" />{t("demo")}</p>}
+        <p className="banner" role="note"><Icon n="shield" />{t("notRank")}</p>
         {err ? <p className="empty">{t("err")}</p> : !data ? <p className="empty">{t("loading")}</p> : author ? <AuthorPage a={author} d={data} /> : <List d={data} />}
       </main>
       <footer className="foot wrap">
@@ -42,7 +43,7 @@ export function App() {
             <li><a href="https://isavn.edu.vn/go/ami?from=profind" target="_blank" rel="noopener"><small>3</small><b>{t("e3")}</b></a></li>
           </ol>
         </section>
-        <p className="meta">{t("lic")} <a href="https://github.com/lvhoang90/profind/issues" target="_blank" rel="noopener">{t("fix")}</a></p>
+        <p className="meta"><Icon n="shield" size={14} /> {t("lic")} <a href="https://github.com/lvhoang90/profind/issues" target="_blank" rel="noopener">{t("fix")}</a></p>
       </footer>
     </Ctx.Provider>
   );
@@ -66,11 +67,11 @@ function List({ d }: { d: Data }) {
   return (
     <>
       <section className="filters">
-        <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("search")} aria-label={t("search")} />
-        <Sel label={t("discipline")} v={disc} set={setDisc} all={t("all")} opts={d.disciplines.map((s) => [s, dName(s, lang)])} />
-        <Sel label={t("instType")} v={type} set={setType} all={t("all")} opts={Object.entries(d.types).map(([k, v]) => [k, v[lang]])} />
-        <Sel label={t("inst")} v={inst} set={setInst} all={t("all")} opts={d.institutions.map((i) => [i.id, lang === "vi" ? i.name : i.en])} />
-        <Sel label={t("sort")} v={sort} set={(s) => setSort(s as SortKey)} opts={[["totalScore", t("byScore")], ["worksCount", t("byWorks")], ["citations", t("byCit")]]} />
+        <label className="sel sbox"><span><Icon n="search" size={14} />{t("search")}</span><input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("search")} aria-label={t("search")} /></label>
+        <Sel icon="discipline" label={t("discipline")} v={disc} set={setDisc} all={t("all")} opts={d.disciplines.map((s) => [s, dName(s, lang)])} />
+        <Sel icon="building" label={t("instType")} v={type} set={setType} all={t("all")} opts={Object.entries(d.types).map(([k, v]) => [k, v[lang]])} />
+        <Sel icon="building" label={t("inst")} v={inst} set={setInst} all={t("all")} opts={d.institutions.map((i) => [i.id, lang === "vi" ? i.name : i.en])} />
+        <Sel icon="sort" label={t("sort")} v={sort} set={(s) => setSort(s as SortKey)} opts={[["totalScore", t("byScore")], ["worksCount", t("byWorks")], ["citations", t("byCit")]]} />
       </section>
       <p className="meta">{t("shown", { n: rows.length, t: d.authors.length })}</p>
       {rows.length === 0 ? <p className="empty">{t("none")}</p> : (
@@ -105,24 +106,24 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
       <h2 className="au">{a.name}</h2>
       <p className="meta">{inst.map((i) => (lang === "vi" ? i.name : i.en)).join(", ")}{a.orcid && <> · <a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}</a></>}</p>
       <div className="stats">
-        <div><b>#{a.rankScore}</b><span>{t("rank")} · {t("score")}</span></div><div><b>#{a.rankWorks}</b><span>{t("rank")} · {t("works")}</span></div>
-        <div><b>{a.totalScore}</b><span>{t("cite")}</span></div><div><b>{a.worksCount}</b><span>{t("works")}</span></div>
-        <div><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span></div>
+        <div><Icon n="trophy" size={22} /><b>#{a.rankScore}</b><span>{t("rank")} · {t("score")}</span></div><div><Icon n="chart" size={22} /><b>#{a.rankWorks}</b><span>{t("rank")} · {t("works")}</span></div>
+        <div><Icon n="check" size={22} /><b>{a.totalScore}</b><span>{t("cite")}</span></div><div><Icon n="book" size={22} /><b>{a.countedWorks}/{a.worksCount}</b><span>{t("counted")}</span></div>
+        <div><Icon n="link" size={22} /><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span></div>
       </div>
-      <p><button className="ghost" onClick={csv}>{t("csv")}</button></p>
+      <p><button className="ghost" onClick={csv}><Icon n="download" size={16} />{t("csv")}</button></p>
       <div className="table-wrap"><table>
         <thead><tr><th className="num">{t("year")}</th><th>{t("paper")}</th><th>{t("journal")}</th><th>{t("issn")}</th><th className="num">{t("pts")}</th><th className="num">{t("cit")}</th><th>{t("role")}</th></tr></thead>
         <tbody>{works.map((w) => (
           <tr key={w.id}><td className="num">{w.year}</td><td>{w.title}</td>
             <td>{w.journal}{w.scoreDiscipline && <div><a className="meta" target="_blank" rel="noopener" href={`${EDUFIND}/${w.scoreDiscipline}/?q=${encodeURIComponent(w.issn)}`}>{t("lookup")} ↗</a></div>}</td>
             <td className="issn">{w.issn}</td>
-            <td className="num">{w.score === null ? <span className="meta">{t("unmatched")}</span> : <span className="score">{w.score}</span>}</td>
+            <td className="num">{w.score === null ? <span className="meta">{!w.matched ? t("unmatched") : w.role === "co" ? t("notLead") : t("unmatched")}</span> : <span className="score">{w.score}</span>}</td>
             <td className="num">{w.citations}</td><td>{w.role === "lead" ? t("lead") : t("co")}</td></tr>))}</tbody>
       </table></div>
     </article>
   );
 }
 
-function Sel({ label, v, set, opts, all }: { label: string; v: string; set: (s: string) => void; opts: string[][]; all?: string }) {
-  return <label className="sel"><span>{label}</span><select value={v} onChange={(e) => set(e.target.value)}>{all !== undefined && <option value="">{all}</option>}{opts.map(([k, n]) => <option key={k} value={k}>{n}</option>)}</select></label>;
+function Sel({ icon, label, v, set, opts, all }: { icon: IconName; label: string; v: string; set: (s: string) => void; opts: string[][]; all?: string }) {
+  return <label className="sel"><span><Icon n={icon} size={14} />{label}</span><select value={v} onChange={(e) => set(e.target.value)}>{all !== undefined && <option value="">{all}</option>}{opts.map(([k, n]) => <option key={k} value={k}>{n}</option>)}</select></label>;
 }

@@ -32,8 +32,11 @@ for (const inst of I) {
         const w = await get(`https://api.openalex.org/works?filter=author.id:${id},from_publication_date:${from}-01-01&per-page=100&cursor=${cur}&select=id,title,publication_year,cited_by_count,primary_location,authorships`);
         for (const x of w.results) {
           const s = x.primary_location?.source; const issn = s?.issn_l ?? s?.issn?.[0]; if (!issn) continue;
-          const pos = x.authorships?.find((z) => short(z.author.id) === id);
-          works.push({ id: `${id}-${short(x.id)}`, authorId: id, title: x.title, year: x.publication_year, journal: s.display_name, issn, citations: x.cited_by_count, role: pos?.author_position === "first" || pos?.is_corresponding ? "lead" : "co", demo: false });
+          // Quy tắc HĐGSNN: tác giả chính = tác giả đứng đầu hoặc tác giả liên hệ; nếu có từ 2 tác giả liên hệ trở lên thì chỉ tính tác giả đứng đầu.
+          const as = x.authorships ?? [], pos = as.find((z) => short(z.author.id) === id);
+          const nCorr = as.filter((z) => z.is_corresponding).length;
+          const lead = !!pos && (pos.author_position === "first" || (pos.is_corresponding && nCorr === 1));
+          works.push({ id: `${id}-${short(x.id)}`, authorId: id, title: x.title, year: x.publication_year, journal: s.display_name, issn, citations: x.cited_by_count, role: lead ? "lead" : "co", corr: nCorr, demo: false });
         }
         cur = w.meta.next_cursor;
       }

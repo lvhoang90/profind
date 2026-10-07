@@ -19,13 +19,13 @@
 - Hiển thị tỷ lệ công trình khớp danh mục trên hồ sơ để người đọc biết độ phủ.
 - Dữ liệu mẫu có cờ `demo` và băng rôn cảnh báo; không trộn với dữ liệu thật.
 
-## 4. Câu hỏi cần anh quyết định
-1. **Phạm vi tác giả**: chỉ những người có đơn vị tại Việt Nam (đề xuất, nhẹ hơn nhiều), hay cả tác giả thế giới? Nếu cả thế giới nên theo từng đợt (theo ngành/đơn vị) vì hàng chục triệu hồ sơ.
-2. **Quyền riêng tư (quan trọng)**: hồ sơ công khai theo tên người thật cần cơ chế đính chính/gỡ. Đề xuất: chỉ dùng dữ liệu công khai (OpenAlex/ORCID), có nút "Đây là tôi / báo sai / gỡ hồ sơ", ghi nhật ký thay đổi. Anh đồng ý hướng này, và có muốn tác giả "nhận hồ sơ" bằng đăng nhập ORCID không?
-3. **Cách tính điểm**: hiện là tổng mức tối đa của tạp chí, chưa chia theo vai trò tác giả (quy tắc "tác giả chính" của HĐGSNN nằm trong `authorRule` của EduFind) và chưa chia cho số tác giả. Anh muốn: (a) tổng tối đa như hiện tại, (b) chỉ tính khi là tác giả chính, (c) chia đều theo số tác giả?
-4. **Ngành của tác giả**: suy ra từ ngành của các tạp chí họ đã đăng (đề xuất, minh bạch), hay từ chủ đề OpenAlex? Một ISSN có thể thuộc nhiều ngành.
-5. **Danh sách đơn vị chính thức**: anh có sẵn file danh sách (Bộ GD&ĐT, các viện, bộ, sở) không? Nếu có, gửi tôi để nạp thay bản gieo. Nếu chưa, tôi sẽ lấy từ trang Bộ và ROR.
-6. **Tên miền và thương hiệu**: `profind.isavn.edu.vn`? Logo hiện là tạm, cần thống nhất với bộ nhận diện ISA.
+## 4. Quyết định đã chốt (07/10/2026)
+1. **Phạm vi**: Việt Nam trước (tác giả có đơn vị tại Việt Nam); thế giới làm sau, theo đợt.
+2. **Quyền riêng tư**: chỉ dùng dữ liệu công khai (OpenAlex, ORCID); có cơ chế đính chính / gỡ hồ sơ; tác giả nhận hồ sơ bằng ORCID (chưa làm, xem mục 6).
+3. **Cách tính điểm**: chỉ tính khi là **tác giả chính theo HĐGSNN** = tác giả đứng đầu hoặc tác giả liên hệ; có từ 2 tác giả liên hệ trở lên thì chỉ tính tác giả đứng đầu. Cài ở `ingest-openalex.mjs` (trường `role`, `corr`) và `build-index.mjs` (chỉ `role = lead` mới có điểm). Công trình đồng tác giả vẫn hiện, ghi "Không tính".
+4. **Ngành của tác giả**: suy ra từ ngành của các tạp chí họ đã đăng (mọi công trình khớp danh mục), giữ ngành chiếm ≥ 25% (tối đa 3).
+5. **Danh sách đơn vị**: lấy từ Bộ GD&ĐT (`moet.gov.vn/co-so-giao-duc/danh-sach-cac-co-so-giao-duc`), đối chiếu Wikipedia vi; script `import-institutions.mjs` ghi ra `data/institutions.candidates.json` để duyệt. **Cần mở mạng** cho `moet.gov.vn`, `vi.wikipedia.org`, `api.openalex.org`, `api.ror.org`.
+6. **Tên miền**: `profind.isavn.edu.vn`. **Logo**: nhà khoa học đeo kính trong quả cầu tri thức (cùng họ EduFind), nguồn `scripts/lib/brand.mjs`, xuất bằng `npm run d:icons`.
 
 ## 5. Ý tưởng mới
 - **Đối chiếu ISSN ngược**: từ một tạp chí ở EduFind, xem ai đang đăng ở đó (giúp chọn nơi gửi bài).
