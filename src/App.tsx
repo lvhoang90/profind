@@ -237,10 +237,10 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   const { lang, t, num } = useT();
   const [works, setWorks] = useState<Work[] | null>(null);
   const [werr, setWerr] = useState(false), [tick, setTick] = useState(0), [wpage, setWpage] = useState(0);
-  const [wsort, setWsort] = useState<WSort>("year"), [onlyLead, setOnlyLead] = useState(false);
+  const [wsort, setWsort] = useState<WSort>("year"), [onlyLead, setOnlyLead] = useState(false), [allInst, setAllInst] = useState(false);
   // Hủy yêu cầu cũ khi đổi hồ sơ: không để công trình của hồ sơ trước hiện (và xuất CSV) ở hồ sơ sau.
   useEffect(() => {
-    setWorks(null); setWerr(false); setWpage(0); setWsort("year"); setOnlyLead(false);
+    setWorks(null); setWerr(false); setWpage(0); setWsort("year"); setOnlyLead(false); setAllInst(false);
     if (a.worksCount === 0) { setWorks([]); return; }
     const ac = new AbortController();
     fetch(`./data/works/${encodeURIComponent(a.id)}.json`, { signal: ac.signal }).then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }).then((w) => {
@@ -286,13 +286,13 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   const cmax = Math.max(1, ...cats.map((c) => c[1]));
   return (
     <article className="ap">
-      <p><a href="#/">{t("back")}</a></p>
+      <p><a className="backl" href="#/">{t("back")}</a></p>
       <header className="hero">
         <div className="av" style={{ background: `linear-gradient(135deg,hsl(${hue} 75% 52%),hsl(${(hue + 55) % 360} 80% 42%))` }} aria-hidden="true">{initials(a.name)}</div>
         <div className="hero-main">
           <h1 className="au">{a.name}</h1>
           <p className="badges">{a.foreign && <span className="badge warnb">{t("foreignTag")}</span>}{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}<Top2Tag a={a} cls="badge top2b" />{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</p>
-          <ul className="chips">{inst.map((i) => <li key={i.id}><Icon n="building" size={14} />{instLabel(i, lang)}</li>)}{a.orcid && <li className="orcid"><a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}<span className="sr"> {t("newTab")}</span></a></li>}</ul>
+          <ul className="chips">{(allInst ? inst : inst.slice(0, 4)).map((i) => <li key={i.id}><Icon n="building" size={14} />{instLabel(i, lang)}</li>)}{inst.length > 4 && <li className="more"><button type="button" onClick={() => setAllInst(!allInst)} aria-expanded={allInst}>{allInst ? t("instLess") : t("instMore", { n: num(inst.length - 4) })}</button></li>}{a.orcid && <li className="orcid"><a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}<span className="sr"> {t("newTab")}</span></a></li>}</ul>
           {a.disciplines.length > 0 && <p className="hdisc">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</p>}
           <p className="actions-row"><button className="ghost light" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button><a className="ghost-link light" href={`#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{t("corrLink")}</a></p>
         </div>

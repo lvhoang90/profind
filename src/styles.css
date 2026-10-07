@@ -179,3 +179,7 @@ button.primary{border:0;background:var(--accent);color:var(--accent-ink);border-
 }
 @media(max-width:700px){table.tlist td:nth-child(n+4){align-self:stretch}}
 @media(max-width:480px){table.tlist td:nth-child(7){background:none;padding:0;font-size:.8rem;color:var(--ink-2);font-weight:500}table.tlist td:nth-child(7)::before{font-size:.8rem;text-transform:none;letter-spacing:0}table.tlist td:nth-child(7)::after{content:""}}
+
+.backl{display:inline-flex;align-items:center;min-height:44px}
+.chips li.more{padding:0;background:none;border:0}.chips li.more button{min-height:44px;padding:5px 14px;border-radius:999px;background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.45);font:inherit;font-size:.85rem;font-weight:600;cursor:pointer}
+@media(pointer:coarse){.chips a{display:inline-flex;align-items:center;min-height:32px}.chips li.orcid{padding:2px 12px}}
