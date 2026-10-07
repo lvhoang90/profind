@@ -1,11 +1,12 @@
-import { Component, useDeferredValue, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { Component, Suspense, lazy, useDeferredValue, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { Ctx, DICT, KEY, initialLang, useT, type Key, type Lang } from "./i18n";
 import { dName, fieldName } from "./disciplines";
 import { Icon, type IconName } from "./icons";
 import type { Author, Data, Institution, Work } from "./types";
 import { AccountProvider, useAccount } from "./accountStore";
-import { AccountPage } from "./Account";
-import { AdminPage } from "./Admin";
+// Trang tài khoản và quản trị tách thành các tệp nạp riêng: người chỉ tra cứu không tải mã của chúng.
+const AccountPage = lazy(() => import("./Account").then((m) => ({ default: m.AccountPage })));
+const AdminPage = lazy(() => import("./Admin").then((m) => ({ default: m.AdminPage })));
 import { Footer, EcoLink } from "./Footer";
 import { evt, startSession } from "./analytics";
 import { getTheme, setTheme, type Theme } from "./theme";
@@ -63,7 +64,9 @@ function AppInner() {
       setData({ ...d, types: d.types ?? {}, disciplines: d.disciplines ?? [], meta: d.meta ?? ({} as Data["meta"]), authors: d.authors.map((a) => ({ ...a, institutions: a.institutions ?? [], disciplines: a.disciplines ?? [] })) });
     }).catch(() => setErr(true));
   };
-  useEffect(load, []);
+  // Bộ dữ liệu tác giả (~5 MB) chỉ tải khi cần: trang tài khoản và quản trị không dùng nên mở nhanh hơn.
+  const needData = !/^(tai-khoan|quan-tri)/.test(location.hash.replace(/^#\/?/, ""));
+  useEffect(() => { if (needData && !data) load(); }, [needData, route.kind]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { startSession(); }, []);
   useEffect(() => { document.documentElement.lang = lang; try { localStorage.setItem(KEY, lang); } catch { /* bỏ qua */ } }, [lang]);
   useEffect(() => { const f = () => setRoute(parseRoute()); addEventListener("hashchange", f); return () => removeEventListener("hashchange", f); }, []);
@@ -100,8 +103,8 @@ function AppInner() {
       <main className="wrap" id="main" tabIndex={-1} ref={mainRef}>
         {data?.meta.demo && <p className="banner demo" role="note"><Icon n="info" />{t("demo")}</p>}
         <Boundary key={`${view}/${author?.id ?? ""}`}>
-          {view === "acc" ? <AccountPage tab={id} />
-            : view === "adm" ? <AdminPage tab={id} />
+          {view === "acc" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><AccountPage tab={id} /></Suspense>
+            : view === "adm" ? <Suspense fallback={<p className="empty" role="status">Đang tải…</p>}><AdminPage tab={id} /></Suspense>
             : err ? <div className="empty" role="alert"><p>{t("err")}</p><button className="ghost" onClick={load}>{t("retry")}</button></div>
             : !data ? <p className="empty" role="status">{t("loading")}</p>
             : view === "corr" ? <Correction key={author?.id ?? "none"} a={author} />
