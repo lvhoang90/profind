@@ -1,8 +1,15 @@
 name: Release
-# Đẩy tag dạng v* (ví dụ v0.1.0-beta.1) thì tự tạo GitHub Release từ RELEASE_NOTES.md; tag có dấu "-" được đánh dấu là bản tiền phát hành (pre-release).
+# Tạo GitHub Release từ RELEASE_NOTES.md. Hai cách chạy:
+#  1) Đẩy tag dạng v* (ví dụ v0.1.0-beta.1);
+#  2) Actions > Release > Run workflow, nhập tên tag (tag được tạo trên nhánh đang chạy). Tag có dấu "-" là pre-release.
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tên tag, ví dụ v0.1.0-beta.1"
+        required: true
 permissions:
   contents: write
 jobs:
@@ -13,8 +20,8 @@ jobs:
       - name: Tạo release
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.ref_name }}
+          TAG: ${{ github.event.inputs.tag || github.ref_name }}
         run: |
           flag=""
           case "$TAG" in *-*) flag="--prerelease";; esac
-          gh release create "$TAG" $flag --title "ProFind ${TAG#v}" --notes-file RELEASE_NOTES.md
+          gh release create "$TAG" $flag --target "${{ github.sha }}" --title "ProFind ${TAG#v}" --notes-file RELEASE_NOTES.md
