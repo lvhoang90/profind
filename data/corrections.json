@@ -1,0 +1,8 @@
+{
+  "_note": "Đính chính do tác giả hoặc người quản trị yêu cầu; build-index.mjs áp dụng khi dựng. Mỗi mục có date và reason để truy vết. Yêu cầu gỡ hồ sơ luôn được thực hiện (không cần lý do).",
+  "remove": [],
+  "rename": {},
+  "excludeWorks": [],
+  "merge": [],
+  "claimed": {}
+}

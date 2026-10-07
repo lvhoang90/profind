@@ -2,3 +2,4 @@ node_modules
 dist
 *.tsbuildinfo
 data/raw
+data/raw-authors.json

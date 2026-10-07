@@ -3,7 +3,7 @@
   "status": "wikipedia+ror, chờ đối chiếu danh sách chính thức Bộ GD&ĐT",
   "built": "2026-10-07",
   "count": 504,
-  "withRor": 342,
+  "withRor": 345,
   "sources": [
    "https://vi.wikipedia.org/wiki/Danh_s%C3%A1ch_tr%C6%B0%E1%BB%9Dng_%C4%91%E1%BA%A1i_h%E1%BB%8Dc,_h%E1%BB%8Dc_vi%E1%BB%87n_v%C3%A0_cao_%C4%91%E1%BA%B3ng_t%E1%BA%A1i_Vi%E1%BB%87t_Nam",
    "https://ror.org (CC0)"
@@ -68,12 +68,34 @@
   {
    "id": "ud",
    "name": "Đại học Đà Nẵng",
-   "en": "The University of Danang",
+   "en": "University of Da Nang",
    "abbr": "UD",
    "type": "public-univ",
    "managedBy": null,
    "city": "Đà Nẵng",
-   "ror": null,
+   "ror": "https://ror.org/03ecpp171",
+   "source": "seed+ror.org"
+  },
+  {
+   "id": "dtu",
+   "name": "Trường Đại học Duy Tân",
+   "en": "Duy Tan University",
+   "abbr": "DTU",
+   "type": "private-univ",
+   "managedBy": null,
+   "city": "Đà Nẵng",
+   "ror": "https://ror.org/05ezss144",
+   "source": "seed+ror.org"
+  },
+  {
+   "id": "pu",
+   "name": "Trường Đại học Phenikaa",
+   "en": "Phenikaa University",
+   "abbr": "PU",
+   "type": "private-univ",
+   "managedBy": null,
+   "city": "Hà Nội",
+   "ror": "https://ror.org/03anxx281",
    "source": "seed+ror.org"
   },
   {
@@ -358,8 +380,8 @@
    "abbr": null,
    "type": "public-univ",
    "managedBy": "Đại học vùng",
-   "city": "Da Nang",
-   "ror": "https://ror.org/0561fmp23",
+   "city": "Thái Nguyên",
+   "ror": "https://ror.org/04gv3mr75",
    "source": "vi.wikipedia.org"
   },
   {
@@ -655,8 +677,8 @@
    "abbr": null,
    "type": "public-univ",
    "managedBy": "Đại học vùng",
-   "city": "Da Nang",
-   "ror": "https://ror.org/009mr2428",
+   "city": "Vinh",
+   "ror": "https://ror.org/01nwr1552",
    "source": "vi.wikipedia.org"
   },
   {
@@ -666,8 +688,8 @@
    "abbr": null,
    "type": "public-univ",
    "managedBy": "Đại học vùng",
-   "city": "Da Nang",
-   "ror": "https://ror.org/0561fmp23",
+   "city": null,
+   "ror": null,
    "source": "vi.wikipedia.org"
   },
   {
@@ -765,8 +787,8 @@
    "abbr": null,
    "type": "public-univ",
    "managedBy": "Đại học vùng",
-   "city": null,
-   "ror": null,
+   "city": "Ho Chi Minh City",
+   "ror": "https://ror.org/04aq3p332",
    "source": "vi.wikipedia.org"
   },
   {
@@ -799,7 +821,7 @@
    "type": "public-univ",
    "managedBy": "Đại học",
    "city": "Ho Chi Minh City",
-   "ror": "https://ror.org/00rpn1945",
+   "ror": "https://ror.org/010yce376",
    "source": "vi.wikipedia.org"
   },
   {
@@ -810,7 +832,7 @@
    "type": "public-univ",
    "managedBy": "Đại học",
    "city": "Bộ Công thương",
-   "ror": null,
+   "ror": "https://ror.org/05hhz4s12",
    "source": "vi.wikipedia.org"
   },
   {
@@ -1045,7 +1067,7 @@
    "source": "vi.wikipedia.org"
   },
   {
-   "id": "dtu",
+   "id": "dtu-2",
    "name": "Trường Đại học Đồng Tháp",
    "en": "Dong Thap University",
    "abbr": "DTU",
@@ -1151,7 +1173,7 @@
    "type": "public-univ",
    "managedBy": "Bộ Giáo dục và Đào tạo",
    "city": "Ninh Bình",
-   "ror": "https://ror.org/009mr2428",
+   "ror": null,
    "source": "vi.wikipedia.org"
   },
   {
@@ -1470,7 +1492,7 @@
    "type": "public-univ",
    "managedBy": "Bộ Công Thương",
    "city": "Hà Nội",
-   "ror": "https://ror.org/02b2dfs85",
+   "ror": "https://ror.org/03mj71j26",
    "source": "vi.wikipedia.org"
   },
   {
@@ -1800,7 +1822,7 @@
    "type": "public-univ",
    "managedBy": "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
    "city": "Hà Nội",
-   "ror": "https://ror.org/05mbapg74",
+   "ror": "https://ror.org/03t0zs859",
    "source": "vi.wikipedia.org"
   },
   {
@@ -1899,7 +1921,7 @@
    "type": "public-univ",
    "managedBy": "Các cơ quan, tổ chức khác",
    "city": "Hà Nội",
-   "ror": "https://ror.org/03s2mhd04",
+   "ror": "https://ror.org/01mxx0e62",
    "source": "vi.wikipedia.org"
   },
   {
@@ -1987,7 +2009,7 @@
    "type": "public-univ",
    "managedBy": "Các cơ quan, tổ chức khác",
    "city": "Hà Nội",
-   "ror": null,
+   "ror": "https://ror.org/03vwaan51",
    "source": "vi.wikipedia.org"
   },
   {
@@ -2174,7 +2196,7 @@
    "type": "public-univ",
    "managedBy": "Trường đại học trực thuộc tỉnh, thành phố trực thuộc trung ương",
    "city": "Hà Nội",
-   "ror": null,
+   "ror": "https://ror.org/003g49r03",
    "source": "vi.wikipedia.org"
   },
   {
@@ -2537,7 +2559,7 @@
    "type": "private-univ",
    "managedBy": "Trường đại học tư thục",
    "city": "Hà Nội",
-   "ror": "https://ror.org/00dd6af44",
+   "ror": "https://ror.org/04afshy24",
    "source": "vi.wikipedia.org"
   },
   {
@@ -2570,7 +2592,7 @@
    "type": "private-univ",
    "managedBy": "Trường đại học tư thục",
    "city": "Hà Nội",
-   "ror": "https://ror.org/05hzn5427",
+   "ror": "https://ror.org/04qva2324",
    "source": "vi.wikipedia.org"
   },
   {
@@ -2708,12 +2730,12 @@
   {
    "id": "dai-hoc-binh-duong",
    "name": "Trường Đại học Bình Dương",
-   "en": "Thai Binh Duong University",
+   "en": "Bình Dương University",
    "abbr": null,
    "type": "private-univ",
    "managedBy": "Trường đại học tư thục",
    "city": "Hà Nội",
-   "ror": "https://ror.org/017qs1m21",
+   "ror": "https://ror.org/02b9zqw68",
    "source": "vi.wikipedia.org"
   },
   {
@@ -2961,12 +2983,12 @@
   {
    "id": "dai-hoc-yersin-da-lat",
    "name": "Trường Đại học Yersin Đà Lạt",
-   "en": "Trường Đại học Yersin Đà Lạt",
+   "en": "Dalat University",
    "abbr": null,
    "type": "private-univ",
    "managedBy": "Trường đại học tư thục",
    "city": "Lâm Đồng",
-   "ror": "https://ror.org/05vscfw46",
+   "ror": "https://ror.org/014cke235",
    "source": "vi.wikipedia.org"
   },
   {
@@ -4178,6 +4200,62 @@
    ]
   },
   {
+   "id": "centre-for-social-research-and-development",
+   "name": "Centre for Social Research and Development",
+   "en": "Centre for Social Research and Development",
+   "abbr": "CSRD",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Huế",
+   "ror": "https://ror.org/033z00p21",
+   "source": "ror.org",
+   "rorTypes": [
+    "nonprofit"
+   ]
+  },
+  {
+   "id": "da-nang-institute-for-socio-economic-development",
+   "name": "Da Nang Institute For Socio - Economic Development",
+   "en": "Da Nang Institute For Socio - Economic Development",
+   "abbr": "DISED",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Da Nang",
+   "ror": "https://ror.org/00pvy5f43",
+   "source": "ror.org",
+   "rorTypes": [
+    "government"
+   ]
+  },
+  {
+   "id": "institute-for-social-development-studies",
+   "name": "Institute for Social Development Studies",
+   "en": "Institute for Social Development Studies",
+   "abbr": "ISDS",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Hanoi",
+   "ror": "https://ror.org/00p957h13",
+   "source": "ror.org",
+   "rorTypes": [
+    "nonprofit"
+   ]
+  },
+  {
+   "id": "hoc-vien-tu-phap",
+   "name": "Học viện Tư pháp",
+   "en": "Học viện Tư pháp",
+   "abbr": null,
+   "type": "institute",
+   "managedBy": null,
+   "city": "Hanoi",
+   "ror": "https://ror.org/04m3c6y30",
+   "source": "ror.org",
+   "rorTypes": [
+    "education"
+   ]
+  },
+  {
    "id": "national-institute-nutrition",
    "name": "National Institute of Nutrition",
    "en": "National Institute of Nutrition",
@@ -4206,28 +4284,42 @@
    ]
   },
   {
-   "id": "institute-transport-science-and-technology",
-   "name": "Institute of Transport Science and Technology",
-   "en": "Institute of Transport Science and Technology",
-   "abbr": "ITST",
+   "id": "field-crops-research-institute",
+   "name": "Field Crops Research Institute",
+   "en": "Field Crops Research Institute",
+   "abbr": "FCRI",
    "type": "institute",
    "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/051yz4204",
+   "city": "Gia Lộc",
+   "ror": "https://ror.org/04dn01t72",
    "source": "ror.org",
    "rorTypes": [
-    "government"
+    "facility"
    ]
   },
   {
-   "id": "institute-oceanography",
-   "name": "Institute of Oceanography",
-   "en": "Institute of Oceanography",
-   "abbr": "VNIO",
+   "id": "forest-industry-research-institute",
+   "name": "Forest Industry Research Institute",
+   "en": "Forest Industry Research Institute",
+   "abbr": "FIRI",
    "type": "institute",
    "managedBy": null,
-   "city": "Nha Trang",
-   "ror": "https://ror.org/03zzgjc77",
+   "city": "Hanoi",
+   "ror": "https://ror.org/01c5ysq07",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
+   ]
+  },
+  {
+   "id": "national-institute-animal-sciences",
+   "name": "National Institute of Animal Sciences",
+   "en": "National Institute of Animal Sciences",
+   "abbr": "NIAS",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Hanoi",
+   "ror": "https://ror.org/00cyam193",
    "source": "ror.org",
    "rorTypes": [
     "facility"
@@ -4362,101 +4454,31 @@
    ]
   },
   {
-   "id": "institute-for-studies-society-economy-and-environment",
-   "name": "Institute for Studies of Society, Economy and Environment",
-   "en": "Institute for Studies of Society, Economy and Environment",
-   "abbr": "ISEE",
+   "id": "institute-transport-science-and-technology",
+   "name": "Institute of Transport Science and Technology",
+   "en": "Institute of Transport Science and Technology",
+   "abbr": "ITST",
    "type": "institute",
    "managedBy": null,
    "city": "Hanoi",
-   "ror": "https://ror.org/05ks9jt06",
-   "source": "ror.org",
-   "rorTypes": [
-    "other"
-   ]
-  },
-  {
-   "id": "vietnam-national-institute-culture-and-arts-studies",
-   "name": "Vietnam National Institute of Culture and Arts Studies",
-   "en": "Vietnam National Institute of Culture and Arts Studies",
-   "abbr": "VICAS",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/01yth3h09",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "vnu-central-institute-for-natural-resources-and-environmental-studies",
-   "name": "VNU Central Institute for Natural Resources and Environmental Studies",
-   "en": "VNU Central Institute for Natural Resources and Environmental Studies",
-   "abbr": "VNU-CRES",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/02k550c65",
-   "source": "ror.org",
-   "rorTypes": [
-    "education"
-   ]
-  },
-  {
-   "id": "institute-biomedical-physics",
-   "name": "Institute of Biomedical Physics",
-   "en": "Institute of Biomedical Physics",
-   "abbr": null,
-   "type": "institute",
-   "managedBy": null,
-   "city": "Ho Chi Minh City",
-   "ror": "https://ror.org/05gvknb51",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "agricultural-genetics-institute",
-   "name": "Agricultural Genetics Institute",
-   "en": "Agricultural Genetics Institute",
-   "abbr": "AGI",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/05sswkg52",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "academy-cryptography-techniques",
-   "name": "Academy of Cryptography Techniques",
-   "en": "Academy of Cryptography Techniques",
-   "abbr": null,
-   "type": "institute",
-   "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/05nfbnp91",
-   "source": "ror.org",
-   "rorTypes": [
-    "education"
-   ]
-  },
-  {
-   "id": "vietnamese-academy-forest-sciences",
-   "name": "Vietnamese Academy of Forest Sciences",
-   "en": "Vietnamese Academy of Forest Sciences",
-   "abbr": "VAFS",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/01mywhy53",
+   "ror": "https://ror.org/051yz4204",
    "source": "ror.org",
    "rorTypes": [
     "government"
+   ]
+  },
+  {
+   "id": "vietnamese-german-center-excellence-in-medical-research",
+   "name": "Vietnamese - German Center of Excellence in Medical Research",
+   "en": "Vietnamese - German Center of Excellence in Medical Research",
+   "abbr": null,
+   "type": "institute",
+   "managedBy": null,
+   "city": "Hanoi",
+   "ror": "https://ror.org/04aczrd15",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
    ]
   },
   {
@@ -4489,34 +4511,6 @@
    ]
   },
   {
-   "id": "dalat-nuclear-research-institute",
-   "name": "Dalat Nuclear Research Institute",
-   "en": "Dalat Nuclear Research Institute",
-   "abbr": "DNRI",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Da Lat",
-   "ror": "https://ror.org/01zfehm82",
-   "source": "ror.org",
-   "rorTypes": [
-    "government"
-   ]
-  },
-  {
-   "id": "vien-tran-nhan-tong",
-   "name": "Viện Trần Nhân Tông",
-   "en": "Viện Trần Nhân Tông",
-   "abbr": "VNU-TNTI",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/00k099538",
-   "source": "ror.org",
-   "rorTypes": [
-    "education"
-   ]
-  },
-  {
    "id": "research-institute-for-aquaculture-no1",
    "name": "Research Institute for Aquaculture No1",
    "en": "Research Institute for Aquaculture No1",
@@ -4531,59 +4525,45 @@
    ]
   },
   {
-   "id": "vien-khoa-hoc-cong-nghe-mo-vinacomin",
-   "name": "Viện Khoa học Công nghệ Mỏ - Vinacomin",
-   "en": "Viện Khoa học Công nghệ Mỏ - Vinacomin",
-   "abbr": "IMSAT",
+   "id": "institute-oceanography",
+   "name": "Institute of Oceanography",
+   "en": "Institute of Oceanography",
+   "abbr": "VNIO",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Nha Trang",
+   "ror": "https://ror.org/03zzgjc77",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
+   ]
+  },
+  {
+   "id": "academy-cryptography-techniques",
+   "name": "Academy of Cryptography Techniques",
+   "en": "Academy of Cryptography Techniques",
+   "abbr": null,
    "type": "institute",
    "managedBy": null,
    "city": "Hanoi",
-   "ror": "https://ror.org/02va04a41",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "applied-biotechnology-institute",
-   "name": "Applied Biotechnology Institute",
-   "en": "Applied Biotechnology Institute",
-   "abbr": "ABI",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Ho Chi Minh City",
-   "ror": "https://ror.org/05jt8x620",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "tam-anh-research-institute",
-   "name": "Tam Anh Research Institute",
-   "en": "Tam Anh Research Institute",
-   "abbr": "TAMRI",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Ho Chi Minh City",
-   "ror": "https://ror.org/03p379n52",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "stem-cell-institute",
-   "name": "Stem Cell Institute",
-   "en": "Stem Cell Institute",
-   "abbr": "VNUHCM-US SCI",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Ho Chi Minh City",
-   "ror": "https://ror.org/02d292n17",
+   "ror": "https://ror.org/05nfbnp91",
    "source": "ror.org",
    "rorTypes": [
     "education"
+   ]
+  },
+  {
+   "id": "institute-for-circular-economy-development",
+   "name": "Institute for Circular Economy Development",
+   "en": "Institute for Circular Economy Development",
+   "abbr": "ICED",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Ho Chi Minh City",
+   "ror": "https://ror.org/05h7vck49",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
    ]
   },
   {
@@ -4615,70 +4595,42 @@
    ]
   },
   {
-   "id": "southern-institute-ecology",
-   "name": "Southern Institute of Ecology",
-   "en": "Southern Institute of Ecology",
-   "abbr": "SIE",
+   "id": "dalat-nuclear-research-institute",
+   "name": "Dalat Nuclear Research Institute",
+   "en": "Dalat Nuclear Research Institute",
+   "abbr": "DNRI",
    "type": "institute",
    "managedBy": null,
-   "city": "Ho Chi Minh City",
-   "ror": "https://ror.org/04vtp9n41",
+   "city": "Da Lat",
+   "ror": "https://ror.org/01zfehm82",
    "source": "ror.org",
    "rorTypes": [
     "government"
    ]
   },
   {
-   "id": "institute-malariology-parasitology-and-entomology-quy-nhon",
-   "name": "Institute of Malariology, Parasitology, and Entomology Quy Nhon",
-   "en": "Institute of Malariology, Parasitology, and Entomology Quy Nhon",
-   "abbr": "IMPE-QN",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Qui Nhon",
-   "ror": "https://ror.org/036h5fs56",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "hoc-vien-canh-sat-nhan-dan",
-   "name": "Học viện Cảnh sát nhân dân",
-   "en": "Học viện Cảnh sát nhân dân",
-   "abbr": "PPA",
+   "id": "vien-tran-nhan-tong",
+   "name": "Viện Trần Nhân Tông",
+   "en": "Viện Trần Nhân Tông",
+   "abbr": "VNU-TNTI",
    "type": "institute",
    "managedBy": null,
    "city": "Hanoi",
-   "ror": "https://ror.org/04fsj1906",
+   "ror": "https://ror.org/00k099538",
    "source": "ror.org",
    "rorTypes": [
     "education"
    ]
   },
   {
-   "id": "vien-nghien-cuu-dien-tu-tin-hoc-tu-dong-hoa",
-   "name": "Viện Nghiên cứu Điện tử, Tin học, Tự động hóa",
-   "en": "Viện Nghiên cứu Điện tử, Tin học, Tự động hóa",
-   "abbr": "VIELINA",
+   "id": "institute-mathematics",
+   "name": "Institute of Mathematics",
+   "en": "Institute of Mathematics",
+   "abbr": null,
    "type": "institute",
    "managedBy": null,
    "city": "Hanoi",
-   "ror": "https://ror.org/00w2ggr61",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "vien-cong-nghe-quoc-te-da-nang",
-   "name": "Viện Công nghệ Quốc tế Đà Nẵng",
-   "en": "Viện Công nghệ Quốc tế Đà Nẵng",
-   "abbr": "DNIIT",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Da Nang",
-   "ror": "https://ror.org/025stbf34",
+   "ror": "https://ror.org/04jr71r83",
    "source": "ror.org",
    "rorTypes": [
     "facility"
@@ -4797,6 +4749,202 @@
    ]
   },
   {
+   "id": "hoc-vien-canh-sat-nhan-dan",
+   "name": "Học viện Cảnh sát nhân dân",
+   "en": "Học viện Cảnh sát nhân dân",
+   "abbr": "PPA",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Hanoi",
+   "ror": "https://ror.org/04fsj1906",
+   "source": "ror.org",
+   "rorTypes": [
+    "education"
+   ]
+  },
+  {
+   "id": "vien-nghien-cuu-dien-tu-tin-hoc-tu-dong-hoa",
+   "name": "Viện Nghiên cứu Điện tử, Tin học, Tự động hóa",
+   "en": "Viện Nghiên cứu Điện tử, Tin học, Tự động hóa",
+   "abbr": "VIELINA",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Hanoi",
+   "ror": "https://ror.org/00w2ggr61",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
+   ]
+  },
+  {
+   "id": "vien-cong-nghe-quoc-te-da-nang",
+   "name": "Viện Công nghệ Quốc tế Đà Nẵng",
+   "en": "Viện Công nghệ Quốc tế Đà Nẵng",
+   "abbr": "DNIIT",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Da Nang",
+   "ror": "https://ror.org/025stbf34",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
+   ]
+  },
+  {
+   "id": "vien-nang-suat-viet-nam",
+   "name": "Viện Năng suất Việt Nam",
+   "en": "Viện Năng suất Việt Nam",
+   "abbr": "VNPI",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Hanoi",
+   "ror": "https://ror.org/01wzfbv35",
+   "source": "ror.org",
+   "rorTypes": [
+    "government"
+   ]
+  },
+  {
+   "id": "hoc-vien-quoc-phong",
+   "name": "Học viện Quốc phòng",
+   "en": "Học viện Quốc phòng",
+   "abbr": "NDA",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Hanoi",
+   "ror": "https://ror.org/04d3qjd86",
+   "source": "ror.org",
+   "rorTypes": [
+    "education"
+   ]
+  },
+  {
+   "id": "vien-khoa-hoc-cong-nghe-nang-luong-va-moi",
+   "name": "Viện Khoa học công nghệ Năng lượng và Môi trường",
+   "en": "Viện Khoa học công nghệ Năng lượng và Môi trường",
+   "abbr": "ISTEE",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Hanoi",
+   "ror": "https://ror.org/04zxba716",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
+   ]
+  },
+  {
+   "id": "vien-khoa-hoc-su-song",
+   "name": "Viện Khoa học sự sống",
+   "en": "Viện Khoa học sự sống",
+   "abbr": null,
+   "type": "institute",
+   "managedBy": null,
+   "city": "Ho Chi Minh City",
+   "ror": "https://ror.org/054s6pa38",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
+   ]
+  },
+  {
+   "id": "vien-cong-nghe-hang-khong-vu-tru",
+   "name": "Viện Công nghệ Hàng không Vũ trụ",
+   "en": "Viện Công nghệ Hàng không Vũ trụ",
+   "abbr": "SAE",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Hanoi",
+   "ror": "https://ror.org/03z2jj939",
+   "source": "ror.org",
+   "rorTypes": [
+    "education"
+   ]
+  },
+  {
+   "id": "vien-cong-nghe-thong-tin",
+   "name": "Viện Công nghệ Thông tin",
+   "en": "Viện Công nghệ Thông tin",
+   "abbr": "ITI",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Hanoi",
+   "ror": "https://ror.org/03g6wh580",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
+   ]
+  },
+  {
+   "id": "vien-khoa-hoc-va-cong-nghe-bach-khoa-da-nang",
+   "name": "Viện Khoa học và Công nghệ Bách khoa Đà Nẵng",
+   "en": "Viện Khoa học và Công nghệ Bách khoa Đà Nẵng",
+   "abbr": "DPIST",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Da Nang",
+   "ror": "https://ror.org/04661z983",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
+   ]
+  },
+  {
+   "id": "vien-nghien-cuu-nuoi-trong-thuy-san-iii",
+   "name": "Viện Nghiên cứu Nuôi trồng Thủy sản III",
+   "en": "Viện Nghiên cứu Nuôi trồng Thủy sản III",
+   "abbr": "RIA3",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Nha Trang",
+   "ror": "https://ror.org/02nb7cj23",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
+   ]
+  },
+  {
+   "id": "vien-ky-thuat-cong-trinh-xay-dung",
+   "name": "Viện Kỹ thuật Công trình xây dựng",
+   "en": "Viện Kỹ thuật Công trình xây dựng",
+   "abbr": "ICE",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Hanoi",
+   "ror": "https://ror.org/053g9tf43",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
+   ]
+  },
+  {
+   "id": "vien-nghien-cuu-sang-che-va-khai-thac-cong-nghe",
+   "name": "Viện Nghiên cứu sáng chế và Khai thác công nghệ",
+   "en": "Viện Nghiên cứu sáng chế và Khai thác công nghệ",
+   "abbr": "NIPTEX",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Hanoi",
+   "ror": "https://ror.org/03vtyw858",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
+   ]
+  },
+  {
+   "id": "vien-nghien-cuu-va-phat-trien-ben-vung",
+   "name": "Viện nghiên cứu và phát triển bền vững",
+   "en": "Viện nghiên cứu và phát triển bền vững",
+   "abbr": "RISD",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Ho Chi Minh City",
+   "ror": "https://ror.org/05pj7ps02",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
+   ]
+  },
+  {
    "id": "vien-van-hoc",
    "name": "Viện Văn học",
    "en": "Viện Văn học",
@@ -4811,140 +4959,126 @@
    ]
   },
   {
-   "id": "vien-dia-ly-nhan-van-va-phat-trien-ben-vung",
-   "name": "Viện Địa lý nhân văn và Phát triển bền vững",
-   "en": "Viện Địa lý nhân văn và Phát triển bền vững",
-   "abbr": "IHS",
+   "id": "vien-khoa-hoc-an-toan-va-ve-sinh-lao-dong",
+   "name": "Viện Khoa học An toàn và Vệ sinh lao động",
+   "en": "Viện Khoa học An toàn và Vệ sinh lao động",
+   "abbr": "VNNIOSH",
    "type": "institute",
    "managedBy": null,
    "city": "Hanoi",
-   "ror": "https://ror.org/01f43ef18",
+   "ror": "https://ror.org/05ehbnk43",
    "source": "ror.org",
    "rorTypes": [
     "facility"
    ]
   },
   {
-   "id": "hoc-vien-phong-chay-chua-chay-va-cuu-nan-cuu-ho",
-   "name": "Học viện Phòng cháy chữa cháy và Cứu nạn cứu hộ",
-   "en": "Học viện Phòng cháy chữa cháy và Cứu nạn cứu hộ",
-   "abbr": "PCCC&CNCH",
+   "id": "vien-nghien-cuu-phat-trien-kinh-te-xa-hoi-ha-noi",
+   "name": "Viện nghiên cứu phát triển kinh tế - xã hội Hà Nội",
+   "en": "Viện nghiên cứu phát triển kinh tế - xã hội Hà Nội",
+   "abbr": "HISEDS",
    "type": "institute",
    "managedBy": null,
    "city": "Hanoi",
-   "ror": "https://ror.org/01s8j9e47",
+   "ror": "https://ror.org/04pd1yw18",
    "source": "ror.org",
    "rorTypes": [
-    "education"
+    "government"
    ]
   },
   {
-   "id": "vien-nghien-cuu-va-dao-tao-viet-anh",
-   "name": "Viện Nghiên cứu và Đào tạo Việt – Anh",
-   "en": "Viện Nghiên cứu và Đào tạo Việt – Anh",
-   "abbr": "VNUK",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Da Nang",
-   "ror": "https://ror.org/01zf6m568",
-   "source": "ror.org",
-   "rorTypes": [
-    "education"
-   ]
-  },
-  {
-   "id": "vien-suc-khoe-nghe-nghiep-va-moi",
-   "name": "Viện Sức khỏe nghề nghiệp và Môi trường",
-   "en": "Viện Sức khỏe nghề nghiệp và Môi trường",
-   "abbr": "NIOEH",
+   "id": "vien-quy-hoach-thuy-loi",
+   "name": "Viện Quy hoạch Thủy lợi",
+   "en": "Viện Quy hoạch Thủy lợi",
+   "abbr": "IWRP",
    "type": "institute",
    "managedBy": null,
    "city": "Hanoi",
-   "ror": "https://ror.org/0308qmn77",
+   "ror": "https://ror.org/00bgbyd40",
+   "source": "ror.org",
+   "rorTypes": [
+    "government"
+   ]
+  },
+  {
+   "id": "vien-cong-nghe-dieu-khien-va-tu-dong-hoa",
+   "name": "Viện Công nghệ Điều khiển và Tự động hóa",
+   "en": "Viện Công nghệ Điều khiển và Tự động hóa",
+   "abbr": "ACT",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Hanoi",
+   "ror": "https://ror.org/01vq8pp05",
    "source": "ror.org",
    "rorTypes": [
     "facility"
    ]
   },
   {
-   "id": "vien-nghien-cuu-khoa-hoc-va-cong-nghe",
-   "name": "Viện Nghiên cứu khoa học và công nghệ",
-   "en": "Viện Nghiên cứu khoa học và công nghệ",
+   "id": "vien-nuoc-tuoi-tieu-va-moi",
+   "name": "Viện Nước, Tưới tiêu và Môi trường",
+   "en": "Viện Nước, Tưới tiêu và Môi trường",
+   "abbr": "IWE",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Hanoi",
+   "ror": "https://ror.org/04249wm73",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
+   ]
+  },
+  {
+   "id": "vien-quy-hoach-thuy-loi-mien-nam",
+   "name": "Viện Quy hoạch Thủy lợi miền Nam",
+   "en": "Viện Quy hoạch Thủy lợi miền Nam",
+   "abbr": "SIWRP",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Ho Chi Minh City",
+   "ror": "https://ror.org/007ded553",
+   "source": "ror.org",
+   "rorTypes": [
+    "government"
+   ]
+  },
+  {
+   "id": "vien-khoa-hoc-thuy-loi-viet-nam",
+   "name": "Viện Khoa học Thủy lợi Việt Nam",
+   "en": "Viện Khoa học Thủy lợi Việt Nam",
+   "abbr": "VAWR",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Hanoi",
+   "ror": "https://ror.org/027qjwq15",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
+   ]
+  },
+  {
+   "id": "vien-hoa-hoc",
+   "name": "Viện Hóa học",
+   "en": "Viện Hóa học",
    "abbr": null,
    "type": "institute",
    "managedBy": null,
-   "city": "Ho Chi Minh City",
-   "ror": "https://ror.org/03ve7e430",
+   "city": "Hanoi",
+   "ror": "https://ror.org/04x07t723",
    "source": "ror.org",
    "rorTypes": [
     "facility"
    ]
   },
   {
-   "id": "vien-vat-lieu-xay-dung",
-   "name": "Viện Vật liệu Xây dựng",
-   "en": "Viện Vật liệu Xây dựng",
-   "abbr": "VIBM",
+   "id": "vien-cong-nghe-thong-tin-2",
+   "name": "Viện Công nghệ thông tin",
+   "en": "Viện Công nghệ thông tin",
+   "abbr": "IOIT",
    "type": "institute",
    "managedBy": null,
    "city": "Hanoi",
-   "ror": "https://ror.org/01reeb693",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "vien-kinh-te-moi-dong-nam-a",
-   "name": "Viện Kinh tế môi trường Đông Nam Á",
-   "en": "Viện Kinh tế môi trường Đông Nam Á",
-   "abbr": "EEPSEA",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Ho Chi Minh City",
-   "ror": "https://ror.org/023hha558",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "vinmec-research-institute-stem-cell-and-gene-technology",
-   "name": "Vinmec Research Institute of Stem Cell and Gene Technology",
-   "en": "Vinmec Research Institute of Stem Cell and Gene Technology",
-   "abbr": "VRISG",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/00nn14q45",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "vien-cong-nghe-thong-minh-va-tuong-tac",
-   "name": "Viện Công nghệ Thông minh và Tương tác",
-   "en": "Viện Công nghệ Thông minh và Tương tác",
-   "abbr": "3ITech",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Ho Chi Minh City",
-   "ror": "https://ror.org/00rv9a161",
-   "source": "ror.org",
-   "rorTypes": [
-    "education"
-   ]
-  },
-  {
-   "id": "vien-khoa-hoc-ky-thuat-nong-lam-nghiep-tay-nguyen",
-   "name": "Viện Khoa học Kỹ thuật Nông Lâm nghiệp Tây Nguyên",
-   "en": "Viện Khoa học Kỹ thuật Nông Lâm nghiệp Tây Nguyên",
-   "abbr": "WASI",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Buon Ma Thuot",
-   "ror": "https://ror.org/032rw1236",
+   "ror": "https://ror.org/04yzbtf37",
    "source": "ror.org",
    "rorTypes": [
     "facility"
@@ -5105,160 +5239,6 @@
    ]
   },
   {
-   "id": "vien-khoa-hoc-an-toan-va-ve-sinh-lao-dong",
-   "name": "Viện Khoa học An toàn và Vệ sinh lao động",
-   "en": "Viện Khoa học An toàn và Vệ sinh lao động",
-   "abbr": "VNNIOSH",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/05ehbnk43",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "vien-nghien-cuu-phat-trien-kinh-te-xa-hoi-ha-noi",
-   "name": "Viện nghiên cứu phát triển kinh tế - xã hội Hà Nội",
-   "en": "Viện nghiên cứu phát triển kinh tế - xã hội Hà Nội",
-   "abbr": "HISEDS",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/04pd1yw18",
-   "source": "ror.org",
-   "rorTypes": [
-    "government"
-   ]
-  },
-  {
-   "id": "vien-quy-hoach-thuy-loi",
-   "name": "Viện Quy hoạch Thủy lợi",
-   "en": "Viện Quy hoạch Thủy lợi",
-   "abbr": "IWRP",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/00bgbyd40",
-   "source": "ror.org",
-   "rorTypes": [
-    "government"
-   ]
-  },
-  {
-   "id": "vien-cong-nghe-dieu-khien-va-tu-dong-hoa",
-   "name": "Viện Công nghệ Điều khiển và Tự động hóa",
-   "en": "Viện Công nghệ Điều khiển và Tự động hóa",
-   "abbr": "ACT",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/01vq8pp05",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "vien-nuoc-tuoi-tieu-va-moi",
-   "name": "Viện Nước, Tưới tiêu và Môi trường",
-   "en": "Viện Nước, Tưới tiêu và Môi trường",
-   "abbr": "IWE",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/04249wm73",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "vien-quy-hoach-thuy-loi-mien-nam",
-   "name": "Viện Quy hoạch Thủy lợi miền Nam",
-   "en": "Viện Quy hoạch Thủy lợi miền Nam",
-   "abbr": "SIWRP",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Ho Chi Minh City",
-   "ror": "https://ror.org/007ded553",
-   "source": "ror.org",
-   "rorTypes": [
-    "government"
-   ]
-  },
-  {
-   "id": "vien-khoa-hoc-thuy-loi-viet-nam",
-   "name": "Viện Khoa học Thủy lợi Việt Nam",
-   "en": "Viện Khoa học Thủy lợi Việt Nam",
-   "abbr": "VAWR",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/027qjwq15",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "vien-hoa-hoc",
-   "name": "Viện Hóa học",
-   "en": "Viện Hóa học",
-   "abbr": null,
-   "type": "institute",
-   "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/04x07t723",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "vien-cong-nghe-thong-tin",
-   "name": "Viện Công nghệ thông tin",
-   "en": "Viện Công nghệ thông tin",
-   "abbr": "IOIT",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/04yzbtf37",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "vien-khoa-hoc-xa-hoi-vung-nam-bo",
-   "name": "Viện Khoa học xã hội vùng Nam Bộ",
-   "en": "Viện Khoa học xã hội vùng Nam Bộ",
-   "abbr": "SISS",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Ho Chi Minh City",
-   "ror": "https://ror.org/000966297",
-   "source": "ror.org",
-   "rorTypes": [
-    "facility"
-   ]
-  },
-  {
-   "id": "vien-chien-luoc-phat-trien",
-   "name": "Viện Chiến lược phát triển",
-   "en": "Viện Chiến lược phát triển",
-   "abbr": "VIDS",
-   "type": "institute",
-   "managedBy": null,
-   "city": "Hanoi",
-   "ror": "https://ror.org/001fn1a78",
-   "source": "ror.org",
-   "rorTypes": [
-    "government"
-   ]
-  },
-  {
    "id": "vien-cong-nghe-nang-luong",
    "name": "Viện Công nghệ Năng lượng",
    "en": "Viện Công nghệ Năng lượng",
@@ -5351,6 +5331,20 @@
    "managedBy": null,
    "city": "Ho Chi Minh City",
    "ror": "https://ror.org/043gm9514",
+   "source": "ror.org",
+   "rorTypes": [
+    "facility"
+   ]
+  },
+  {
+   "id": "vien-khoa-hoc-va-cong-nghe-so",
+   "name": "Viện Khoa học và Công nghệ số",
+   "en": "Viện Khoa học và Công nghệ số",
+   "abbr": "eSTI",
+   "type": "institute",
+   "managedBy": null,
+   "city": "Da Nang",
+   "ror": "https://ror.org/05mbapg74",
    "source": "ror.org",
    "rorTypes": [
     "facility"

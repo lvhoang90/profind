@@ -20,8 +20,12 @@ const get = async (url) => {
 };
 const short = (id) => (id ?? "").replace("https://openalex.org/", "");
 const authors = [], works = [];
+const refresh = process.argv.includes("--refresh");
 for (const inst of I) {
-  const oa = await get(`https://api.openalex.org/institutions/ror:${inst.ror.replace(/^https:\/\/ror.org\//, "")}`);
+  const cache = `data/raw/${inst.id}.json`;
+  if (!refresh && existsSync(cache)) { const c = JSON.parse(readFileSync(cache, "utf8")); authors.push(...c.authors); works.push(...c.works); console.log(`${inst.name}: dùng cache (${c.authors.length} tác giả)`); continue; }
+  const a0 = authors.length, w0 = works.length;
+  let oa; try { oa = await get(`https://api.openalex.org/institutions/ror:${inst.ror.replace(/^https:\/\/ror.org\//, "")}`); } catch (e) { console.warn(`${inst.name}: bỏ qua (${e.message.slice(0, 60)})`); continue; }
   const oid = short(oa.id); let page = 1, got = 0;
   while (got < maxAuthors) {
     const a = await get(`https://api.openalex.org/authors?filter=last_known_institutions.id:${oid}&sort=works_count:desc&per-page=100&page=${page++}`);
@@ -46,6 +50,7 @@ for (const inst of I) {
     }
     console.log(`${inst.name}: ${got} tác giả`);
   }
+  writeFileSync(cache, JSON.stringify({ authors: authors.slice(a0), works: works.slice(w0) }));
 }
 writeFileSync("data/raw-authors.json", JSON.stringify({ meta: { demo: false, source: "OpenAlex", fetched: new Date().toISOString().slice(0, 10) }, authors, works }));
 console.log(`Xong: ${authors.length} tác giả, ${works.length} công trình`);

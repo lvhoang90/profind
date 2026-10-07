@@ -34,6 +34,12 @@
 - Tên tác giả từ OpenAlex có thể ở dạng viết tắt ("T D K Nguyen"); cần ORCID/đính chính để chuẩn hóa.
 - **Chưa đưa dữ liệu thật vào kho** cho đến khi có cơ chế đính chính / gỡ hồ sơ (mục 2); kho giữ dữ liệu mẫu.
 
+### Quyền riêng tư và đính chính (đã cài)
+- Trang `#/dinh-chinh/<mã hồ sơ>` (nút "Đây là tôi / đính chính / gỡ hồ sơ" trên mọi hồ sơ và ở chân trang): ba loại yêu cầu (xác nhận, đính chính, gỡ). Gửi tới `api/correction.js` (Resend; cùng biến `RESEND_API_KEY` với EduFind; tùy chọn `CORRECTION_TO`, `CORRECTION_FROM`, Redis giới hạn 5 yêu cầu/giờ). Không cấu hình được email thì giao diện hiện địa chỉ liên hệ để gửi trực tiếp.
+- Yêu cầu **không tự sửa dữ liệu**: người quản trị xác minh (ORCID, email cơ quan) rồi ghi vào `data/corrections.json` (`remove`, `rename`, `excludeWorks`, `merge`, `claimed`), và `npm run d:index` áp dụng. Gỡ hồ sơ luôn được thực hiện. Hồ sơ đã xác nhận có dấu "Đã được tác giả xác nhận".
+- Hồ sơ trùng ORCID được tự gộp. Nạp lại dữ liệu không làm mất đính chính vì đính chính nằm ở tệp riêng.
+- Xác minh ORCID tự động bằng đăng nhập ORCID (OAuth) cần ORCID client id/secret của ISA; làm khi có.
+
 ## 5. Ý tưởng mới
 - **Đối chiếu ISSN ngược**: từ một tạp chí ở EduFind, xem ai đang đăng ở đó (giúp chọn nơi gửi bài).
 - **Hồ sơ xuất chuẩn**: xuất danh mục công trình theo mẫu lý lịch khoa học (CV), có điểm theo năm, dùng nộp hồ sơ xét chức danh GS/PGS.

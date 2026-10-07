@@ -12,6 +12,9 @@ const vi = {
   eco: "Hệ sinh thái ISA cho người làm khoa học", e1: "Tìm tác giả (ProFind)", e2: "Chọn tạp chí (EduFind)", e3: "Đọc và trích dẫn (Ami)", here: "Bạn đang ở đây",
   lic: "Mã nguồn MIT · Dữ liệu do dự án biên soạn CC BY 4.0 · Bản quyền © 2026 Lương Việt Hoàng (ISA Vietnam). Dữ liệu bên thứ ba theo điều khoản của nguồn (OpenAlex, ORCID, HĐGSNN).",
   fix: "Báo sai sót hoặc yêu cầu đính chính / gỡ hồ sơ", theme: "Giao diện",
+  scope: "Phạm vi", scopeVn: "Đơn vị tại Việt Nam", scopeAll: "Kể cả có đơn vị nước ngoài", foreignTag: "Có đơn vị ngoài Việt Nam",
+  claimedBadge: "Đã được tác giả xác nhận", corrLink: "Đây là tôi / đính chính / gỡ hồ sơ", corrTitle: "Xác nhận, đính chính hoặc gỡ hồ sơ", corrLead: "ProFind chỉ dùng dữ liệu công khai (OpenAlex, ORCID, danh mục HĐGSNN). Người được nêu tên có quyền yêu cầu xác nhận, đính chính hoặc gỡ hồ sơ. Yêu cầu gỡ hồ sơ luôn được thực hiện; các yêu cầu khác được kiểm tra (ORCID, email cơ quan) trước khi áp dụng.",
+  kClaim: "Đây là hồ sơ của tôi (xác nhận)", kCorrect: "Đính chính thông tin hoặc công trình", kRemove: "Gỡ hồ sơ khỏi ProFind", fName: "Họ và tên người gửi", fEmail: "Email (bắt buộc, để phản hồi)", fOrcid: "ORCID của bạn (nếu có)", fMsg: "Nội dung (vd. công trình nào sai, tên đúng là gì)", send: "Gửi yêu cầu", sending: "Đang gửi…", sent: "Đã gửi. Chúng tôi sẽ phản hồi qua email.", sendErr: "Không gửi được. Vui lòng gửi email trực tiếp:", moreRows: "Hiển thị thêm", instPh: "Gõ tên đơn vị (vd. Đại học Cần Thơ)", source: "Nguồn dữ liệu", srcLine: "OpenAlex (CC0), cập nhật {d}. Danh mục tạp chí và quy tắc điểm: HĐGSNN qua EduFind.",
 };
 const en: typeof vi = {
   title: "ProFind", sub: "Find researchers and their publications", tagline: "Field · Institution · Works · Journal · ISSN · Reference score (State Professorship Council)",
@@ -24,6 +27,9 @@ const en: typeof vi = {
   eco: "The ISA ecosystem for researchers", e1: "Find researchers (ProFind)", e2: "Choose a journal (EduFind)", e3: "Read and cite (Ami)", here: "You are here",
   lic: "Code MIT · Project-compiled data CC BY 4.0 · © 2026 Luong Viet Hoang (ISA Vietnam). Third-party data under each source's terms (OpenAlex, ORCID, State Professorship Council).",
   fix: "Report an error or request correction / removal", theme: "Theme",
+  scope: "Scope", scopeVn: "Vietnam-based only", scopeAll: "Include foreign-affiliated", foreignTag: "Also affiliated outside Vietnam",
+  claimedBadge: "Verified by the author", corrLink: "This is me / correct / remove profile", corrTitle: "Claim, correct or remove a profile", corrLead: "ProFind uses public data only (OpenAlex, ORCID, Council catalogue). Named persons may ask to claim, correct or remove their profile. Removal requests are always honoured; other requests are verified (ORCID, institutional email) before being applied.",
+  kClaim: "This is my profile (claim)", kCorrect: "Correct information or works", kRemove: "Remove my profile from ProFind", fName: "Your full name", fEmail: "Email (required, for our reply)", fOrcid: "Your ORCID (if any)", fMsg: "Details (e.g. which work is wrong, the correct name)", send: "Send request", sending: "Sending…", sent: "Sent. We will reply by email.", sendErr: "Could not send. Please email directly:", moreRows: "Show more", instPh: "Type an institution name (e.g. Can Tho University)", source: "Data source", srcLine: "OpenAlex (CC0), updated {d}. Journal catalogue and scoring rules: State Professorship Council via EduFind.",
 };
 export const DICT = { vi, en };
 export type Key = keyof typeof vi;

@@ -110,6 +110,11 @@
   "abbr": null
  },
  {
+  "name": "Trường Đại học Công nghệ thông tin và Truyền thông Việt – Hàn",
+  "en": "Vietnam - Korea University of Information Technology and Communication",
+  "abbr": null
+ },
+ {
   "name": "Phân hiệu Đại học Đà Nẵng tại Kon Tum",
   "en": null,
   "abbr": null
@@ -150,19 +155,14 @@
   "abbr": null
  },
  {
-  "name": "Viện Công nghệ Sinh học và Thực phẩm",
-  "en": "Can Tho University - Institute of Food and Biotechnology",
-  "abbr": null
- },
- {
-  "name": "Đại học Công nghiệp Hà Nội",
-  "en": "HaUI School of Information and Communication Technology",
-  "abbr": "SICT"
- },
- {
   "name": "Học viện Quản lý giáo dục",
   "en": "National Academy of Education Management",
   "abbr": "NAEM"
+ },
+ {
+  "name": "Trường Đại học Sư phạm Kỹ thuật Nam Định",
+  "en": "Nam Dinh University of Technology Education",
+  "abbr": "NUTE"
  },
  {
   "name": "Học viện Múa Việt Nam",
@@ -250,11 +250,6 @@
   "abbr": "GASS"
  },
  {
-  "name": "Trường Đại học Dầu khí Việt Nam",
-  "en": "Petro Vietnam University",
-  "abbr": "PVU"
- },
- {
   "name": "Trường đại học lao động - xã hội cơ sở II tại TP.HCM",
   "en": null,
   "abbr": null
@@ -323,11 +318,6 @@
   "name": "Trường Đại học Thủ đô Hà Nội",
   "en": "Hanoi Metropolitan University",
   "abbr": "HNMU"
- },
- {
-  "name": "Trường Đại học Y khoa Phạm Ngọc Thạch",
-  "en": "Pham Ngoc Thach Medical University",
-  "abbr": "PNTU"
  },
  {
   "name": "Trường Đại học Kinh tế Nghệ An",
@@ -805,16 +795,6 @@
   "abbr": null
  },
  {
-  "ror": "https://ror.org/04pzh0a71",
-  "name": "Ba Ria - Vung Tau College of Engineering and Technology",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/01drx8a35",
-  "name": "VNUHCM – High School for the Gifted",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
   "ror": "https://ror.org/003szmg30",
   "name": "Ho Chi Minh City International University",
   "note": "education, chưa có trong Wikipedia"
@@ -845,18 +825,23 @@
   "note": "education, chưa có trong Wikipedia"
  },
  {
-  "ror": "https://ror.org/032dvkh62",
-  "name": "Thanhtay University",
+  "ror": "https://ror.org/0018abm07",
+  "name": "PSB College Vietnam",
   "note": "education, chưa có trong Wikipedia"
  },
  {
-  "ror": "https://ror.org/00cnrny66",
-  "name": "Trường Đại học Phương Đông",
+  "ror": "https://ror.org/04pzh0a71",
+  "name": "Ba Ria - Vung Tau College of Engineering and Technology",
   "note": "education, chưa có trong Wikipedia"
  },
  {
-  "ror": "https://ror.org/004axh929",
-  "name": "RMIT Vietnam",
+  "ror": "https://ror.org/01drx8a35",
+  "name": "VNUHCM – High School for the Gifted",
+  "note": "education, chưa có trong Wikipedia"
+ },
+ {
+  "ror": "https://ror.org/056sktz68",
+  "name": "Da Nang University of Economics",
   "note": "education, chưa có trong Wikipedia"
  },
  {
@@ -870,33 +855,23 @@
   "note": "education, chưa có trong Wikipedia"
  },
  {
-  "ror": "https://ror.org/056sktz68",
-  "name": "Da Nang University of Economics",
+  "ror": "https://ror.org/05xpj2n48",
+  "name": "HUTECH University",
   "note": "education, chưa có trong Wikipedia"
  },
  {
-  "ror": "https://ror.org/02vfh9890",
-  "name": "Phu Yen Vocational College",
+  "ror": "https://ror.org/0161zbh32",
+  "name": "The Asian International School",
   "note": "education, chưa có trong Wikipedia"
  },
  {
-  "ror": "https://ror.org/014028r32",
-  "name": "Le Hong Phong High School for the Gifted",
+  "ror": "https://ror.org/05jvjx121",
+  "name": "Trường THPT chuyên Nguyễn Quang Diêu",
   "note": "education, chưa có trong Wikipedia"
  },
  {
-  "ror": "https://ror.org/03ecpp171",
-  "name": "University of Da Nang",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/05jfbgm49",
-  "name": "Ho Chi Minh City University of Science",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/00qaa6j11",
-  "name": "Hue University",
+  "ror": "https://ror.org/04wgyjv21",
+  "name": "Le Quy Don Technical University",
   "note": "education, chưa có trong Wikipedia"
  },
  {
@@ -905,18 +880,18 @@
   "note": "education, chưa có trong Wikipedia"
  },
  {
+  "ror": "https://ror.org/05jfbgm49",
+  "name": "Ho Chi Minh City University of Science",
+  "note": "education, chưa có trong Wikipedia"
+ },
+ {
+  "ror": "https://ror.org/00a3esw81",
+  "name": "Trường Đại học Thông tin Liên lạc",
+  "note": "education, chưa có trong Wikipedia"
+ },
+ {
   "ror": "https://ror.org/00jywn468",
   "name": "Trường Đại học Cảnh sát nhân dân",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/02afea422",
-  "name": "Trường Đại học Trần Quốc Tuấn",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/00qpm2f14",
-  "name": "Trường Đại học Khoa học, Đại học Huế",
   "note": "education, chưa có trong Wikipedia"
  },
  {
@@ -947,11 +922,6 @@
  {
   "ror": "https://ror.org/04v5ws439",
   "name": "Trường Đại học Nghệ An",
-  "note": "education, chưa có trong Wikipedia"
- },
- {
-  "ror": "https://ror.org/03anxx281",
-  "name": "Phenikaa University",
   "note": "education, chưa có trong Wikipedia"
  },
  {
