@@ -58,7 +58,7 @@ export function ProScorePage() {
       <p><a className="backl" href="#/">{t("back")}</a></p>
       <header className="psp-hero">
         <p className="psp-kick"><Icon n="spark" size={16} />{vi ? "Chỉ số khoa học của ProFind" : "ProFind’s scientific index"}</p>
-        <h1>PRO<span>-</span>SCORE</h1>
+        <h1>PRO<span>-</span>SCORE<sup className="tm">™</sup></h1>
         <p className="psp-lead">{vi ? "Thước đo tham khảo, minh bạch và đa chiều về tác động và đóng góp của nhà khoa học Việt Nam, tính tự động từ dữ liệu công khai." : "A transparent, multi-dimensional reference measure of the impact and contribution of Vietnamese scientists, computed automatically from open data."}</p>
         <div className="psp-credit">
           <img src="./logo-disc.svg" alt="" width="44" height="44" />

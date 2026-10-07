@@ -436,8 +436,8 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
         </div>
       </header>
       <div className="kpis">
-        <div className="kpi k-rank"><span className="kic"><Icon n="trophy" size={20} /></span><b>{rk(a.proRank)}</b><span>{t("rank")} · PRO-SCORE</span><small>{a.proRank ? t("rankOf", { n: num(pool) }) : t("rankNone")}</small></div>
-        <div className="kpi k-score"><span className="kic"><Icon n="check" size={20} /></span><b>{a.pro == null ? "-" : num(a.pro, 1)}<em>/100</em></b><span>PRO-SCORE</span></div>
+        <div className="kpi k-rank"><span className="kic"><Icon n="trophy" size={20} /></span><b>{rk(a.proRank)}</b><span>{t("rank")} · PRO-SCORE™</span><small>{a.proRank ? t("rankOf", { n: num(pool) }) : t("rankNone")}</small></div>
+        <div className="kpi k-score"><span className="kic"><Icon n="check" size={20} /></span><b>{a.pro == null ? "-" : num(a.pro, 1)}<em>/100</em></b><span>PRO-SCORE™</span></div>
         <div className="kpi"><span className="kic"><Icon n="book" size={20} /></span><b>{num(a.countedWorks)}<em>/{num(a.worksCount)}</em></b><span>{t("counted")}</span><i className="bar" role="presentation"><u style={{ width: `${pct}%` }} /></i></div>
         <div className="kpi"><span className="kic"><Icon n="chart" size={20} /></span><b>{num(a.citations)}</b><span title={t("citTip")}>{t("cit")}</span><small title={t("citTip")}>{a.scholarCit ? `Google Scholar ${num(a.scholarCit)} (${t("selfDecl")}) · ` : ""}{t("citNote")}{a.hIndex ? ` · ${t("hIdx")} ${a.hIndex}` : ""} · {t("rank")} {rk(a.rankCit)}</small></div>
         <div className="kpi"><span className="kic"><Icon n="link" size={20} /></span><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span><i className="bar" role="presentation"><u style={{ width: `${Math.round(a.matchedRate * 100)}%` }} /></i></div>
@@ -453,7 +453,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
             <p className="legend"><span><i className="sw yle" />{t("lead")}</span><span><i className="sw yco" />{t("co")}</span></p>
           </section>
           {a.proParts && <section className="card" aria-label="PRO-SCORE">
-            <h2>PRO-SCORE <small className="meta">{t("proConf" + a.proConf as "proConf0")}</small></h2>
+            <h2>PRO-SCORE™ <small className="meta">{t("proConf" + a.proConf as "proConf0")}</small></h2>
             <ul className="hbars">{(["impact", "output", "lead", "quality", "momentum", "steady", "recog"] as const).map((k) => <li key={k}><span>{t(("pp_" + k) as "pp_impact")}</span><i className="hb"><u className="c1" style={{ width: `${a.proParts![k]}%` }} /></i><b>{a.proParts![k]}</b></li>)}</ul>
             <p className="meta">{t("proNote")} <a href="#/pro-score">{t("proMore")}</a></p>
           </section>}
