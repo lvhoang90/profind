@@ -202,7 +202,7 @@ function List({ d }: { d: Data }) {
       </section>
       <p className="meta" role="status" aria-live="polite">{t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</p>
       {rows.length === 0 ? <p className="empty">{t("none")}</p> : (
-        <div className="table-wrap"><table className="cards">
+        <div className="table-wrap"><table className="cards tlist">
           <caption className="sr">{t("title")}: {t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</caption>
           <thead><tr>
             <Th k="rank" cls="num" title={t("rankTip")} label={t("rank")} sort={sort} dir={dir} pick={pick} />
@@ -270,7 +270,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
       {works === null ? <p className="empty" role="status">{t("loading")}</p>
         : werr ? <div className="empty" role="alert"><p>{t("workErr")}</p><button className="ghost" onClick={() => setTick(tick + 1)}>{t("retry")}</button></div>
         : works.length === 0 ? <p className="empty">{t("noWorks")}</p> : (
-        <div className="table-wrap"><table className="cards">
+        <div className="table-wrap"><table className="cards tworks">
           <caption className="sr">{t("paper")} · {a.name}</caption>
           <thead><tr><th scope="col" className="num">{t("year")}</th><th scope="col">{t("paper")}</th><th scope="col">{t("journal")}</th><th scope="col">{t("issn")}</th><th scope="col" className="num">{t("pts")}</th><th scope="col" className="num">{t("cit")}</th><th scope="col">{t("role")}</th></tr></thead>
           <tbody>{works.slice(wpage * PAGE, (wpage + 1) * PAGE).map((w) => (
