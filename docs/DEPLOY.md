@@ -44,3 +44,12 @@ Giới hạn cần để ý: Vercel giới hạn số tệp mỗi lần triển 
 - Xác nhận email nhận yêu cầu đính chính hoạt động (bước 2.4) và có người trực xử lý (gỡ hồ sơ phải được thực hiện).
 - Đọc lại băng rôn và điều khoản: "thứ hạng chỉ để tham khảo", nguồn dữ liệu, giấy phép (đã có ở chân trang).
 - Gửi trước cho một vài tác giả để họ xem hồ sơ và thử luồng xác nhận / đính chính.
+
+## 7. Xử lý sự cố thường gặp
+| Hiện tượng | Nguyên nhân và cách xử lý |
+|---|---|
+| Trang trắng hoặc "Không tải được dữ liệu" | Thiếu `public/data/` trong kho (chưa merge), hoặc build lỗi. Xem tab Deployments → Build Logs. |
+| Biểu mẫu đính chính báo "Không gửi được" | Chưa có `RESEND_API_KEY` trong dự án này, hoặc đặt biến xong chưa Redeploy. Vào Settings → Environment Variables, thêm, rồi Deployments → ⋯ → Redeploy. |
+| Email đính chính không tới | `CORRECTION_FROM` dùng tên miền chưa xác minh ở Resend; bỏ trống biến này (gửi từ onboarding@resend.dev về email chủ tài khoản) hoặc xác minh isavn.edu.vn ở resend.com/domains. |
+| Domains báo "Invalid Configuration" | Bản ghi CNAME `profind` chưa đúng/chưa lan truyền; kiểm tra bằng `nslookup profind.isavn.edu.vn`. |
+| Triển khai báo quá nhiều tệp | Vượt giới hạn tệp tĩnh; gộp tệp công trình theo đơn vị hoặc dùng Vercel Blob. |
