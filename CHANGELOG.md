@@ -1,5 +1,11 @@
 # Changelog
 
+## Chưa phát hành
+- Tài khoản người dùng (email + số điện thoại, mã xác thực), Không gian của tôi (tác giả đã lưu, tìm kiếm đã lưu, đã xem, hồ sơ), trang quản trị với đo lường truy cập, hệ sinh thái ISA, nội dung và người dùng; điểm chạm sang EduFind, Ami, Mây.
+- Nút giao diện sáng/tối/theo hệ thống; chân trang mới; bộ lọc lưu trong đường dẫn.
+- Số trích dẫn là số của hồ sơ OpenAlex toàn thời gian (trước đây chỉ cộng các công trình từ 2016); thêm chỉ số h.
+- Nạp thêm công trình không có ISSN (sách, chương sách, kỷ yếu).
+
 ## v0.1.0-beta.1 (07/10/2026)
 
 Bản thử nghiệm đầu tiên của **ProFind**: danh bạ nhà nghiên cứu Việt Nam, thuộc hệ sinh thái ISA (EduFind, Ami, Mây). Web: https://profind.isavn.edu.vn
