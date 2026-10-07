@@ -4,8 +4,9 @@ import { dName, fieldName } from "./disciplines";
 import { Icon, type IconName } from "./icons";
 import type { Author, Data, Institution, Work } from "./types";
 
-type SortKey = "totalScore" | "worksCount" | "citations";
-const RANK_KEY = { totalScore: "rankScore", worksCount: "rankWorks", citations: "rankCit" } as const;
+type SortKey = "totalScore" | "worksCount" | "citations" | "name" | "unit" | "lastYear" | "rank";
+const TEXT_KEYS: SortKey[] = ["name", "unit"], RANK_ASC: SortKey[] = ["rank"];
+const RANK_KEY = { totalScore: "rankScore", worksCount: "rankWorks", citations: "rankCit", name: "rankScore", unit: "rankScore", lastYear: "rankScore", rank: "rankScore" } as const;
 const EDUFIND = "https://edufind.isavn.edu.vn";
 const CONTACT = "luongviethoang.hcm@gmail.com";
 const PAGE = 25; // mỗi trang tối đa 25 kết quả
@@ -116,6 +117,11 @@ const workLink = (w: Work, t: (k: any) => string) => {
 
 const range = (page: number, total: number, num: (n: number) => string) => `${num(Math.min(page * PAGE + 1, total))}–${num(Math.min((page + 1) * PAGE, total))}`;
 
+function Th({ k, label, cls, title, sort, dir, pick }: { k: SortKey; label: string; cls?: string; title?: string; sort: SortKey; dir: 1 | -1; pick: (k: SortKey) => void }) {
+  const on = sort === k;
+  return <th scope="col" className={cls} title={title} aria-sort={on ? (dir === 1 ? "ascending" : "descending") : "none"}><button type="button" className={`thb${on ? " on" : ""}`} onClick={() => pick(k)}>{label}<span aria-hidden="true" className="ar">{on ? (dir === 1 ? "▲" : "▼") : "↕"}</span></button></th>;
+}
+
 function Pager({ page, total, set }: { page: number; total: number; set: (p: number) => void }) {
   const { t, num } = useT();
   const pages = Math.ceil(total / PAGE); if (pages <= 1) return null;
@@ -140,7 +146,9 @@ function Top2Tag({ a, cls }: { a: Author; cls: string }) {
 
 function List({ d }: { d: Data }) {
   const { lang, t, num } = useT();
-  const [q, setQ] = useState(""), [disc, setDisc] = useState(""), [type, setType] = useState(""), [sort, setSort] = useState<SortKey>("totalScore");
+  const [q, setQ] = useState(""), [disc, setDisc] = useState(""), [type, setType] = useState(""), [sort, setSort] = useState<SortKey>("totalScore"), [dir, setDir] = useState<1 | -1>(-1);
+  const pick2 = (k: SortKey) => { setSort(k); setDir(-1); };
+  const pick = (k: SortKey) => { if (k === sort) setDir((dir * -1) as 1 | -1); else { setSort(k); setDir(TEXT_KEYS.includes(k) || RANK_ASC.includes(k) ? 1 : -1); } };
   const [scope, setScope] = useState("vn"), [instSel, setInstSel] = useState(""), [page, setPage] = useState(0);
   const [jn, setJn] = useState<Record<string, { t: string; p: string }> | null>(null);
   const dq = useDeferredValue(q);
@@ -172,9 +180,16 @@ function List({ d }: { d: Data }) {
       const nm = norm(a.name);
       if (toks.every((x) => nm.includes(x))) return true;
       const j = jn?.[a.id]?.t; return !!j && toks.every((x) => j.includes(x));
-    }).sort((a, b) => b[sort] - a[sort] || b.worksCount - a.worksCount || a.name.localeCompare(b.name));
-  }, [d, dq, disc, type, instSel, sort, scope, instById, jn]);
-  useEffect(() => setPage(0), [dq, disc, type, instSel, sort, scope]);
+    }).sort((a, b) => {
+      let c = 0;
+      if (sort === "name") c = a.name.localeCompare(b.name, "vi");
+      else if (sort === "unit") { const u = (x: Author) => x.institutions.map((i) => instLabel(instById.get(i), lang, i)).join(", "); c = u(a).localeCompare(u(b), "vi"); }
+      else if (sort === "rank") c = (a.rankScore ?? Infinity) === (b.rankScore ?? Infinity) ? 0 : (a.rankScore ?? Infinity) < (b.rankScore ?? Infinity) ? -1 : 1;
+      else c = ((a[sort] ?? 0) as number) - ((b[sort] ?? 0) as number);
+      return c * dir || b.totalScore - a.totalScore || b.worksCount - a.worksCount || a.name.localeCompare(b.name, "vi");
+    });
+  }, [d, dq, disc, type, instSel, sort, dir, scope, instById, jn, lang]);
+  useEffect(() => setPage(0), [dq, disc, type, instSel, sort, dir, scope]);
   return (
     <>
       <section className="filters" aria-label={t("search")}>
@@ -183,13 +198,21 @@ function List({ d }: { d: Data }) {
         <Sel icon="building" label={t("instType")} v={type} set={setType} all={t("all")} opts={Object.entries(d.types).filter(([k]) => d.institutions.some((i) => i.type === k)).map(([k, v]) => [k, v[lang]])} />
         <Sel icon="building" label={t("inst")} v={instSel} set={setInstSel} all={t("all")} opts={instOpts} />
         <Sel icon="shield" label={t("scope")} v={scope} set={(v) => { setScope(v); setInstSel(""); }} opts={[["vn", t("scopeVn")], ["all", t("scopeAll")]]} />
-        <Sel icon="sort" label={t("sort")} v={sort} set={(s) => setSort(s as SortKey)} opts={[["totalScore", t("byScore")], ["worksCount", t("byWorks")], ["citations", t("byCit")]]} />
+        <Sel icon="sort" label={t("sort")} v={["totalScore", "worksCount", "citations"].includes(sort) ? sort : ""} set={(s) => { if (s) pick2(s as SortKey); }} all={t("byColumn")} opts={[["totalScore", t("byScore")], ["worksCount", t("byWorks")], ["citations", t("byCit")]]} />
       </section>
       <p className="meta" role="status" aria-live="polite">{t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</p>
       {rows.length === 0 ? <p className="empty">{t("none")}</p> : (
         <div className="table-wrap"><table className="cards">
           <caption className="sr">{t("title")}: {t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</caption>
-          <thead><tr><th scope="col" className="num" title={t("rankTip")}>{t("rank")}</th><th scope="col">{t("author")}</th><th scope="col">{t("unit")}</th><th scope="col" className="num">{t("works")}</th><th scope="col" className="num">{t("score")}</th><th scope="col" className="num">{t("cit")}</th><th scope="col">{t("years")}</th></tr></thead>
+          <thead><tr>
+            <Th k="rank" cls="num" title={t("rankTip")} label={t("rank")} sort={sort} dir={dir} pick={pick} />
+            <Th k="name" label={t("author")} sort={sort} dir={dir} pick={pick} />
+            <Th k="unit" label={t("unit")} sort={sort} dir={dir} pick={pick} />
+            <Th k="worksCount" cls="num" label={t("works")} sort={sort} dir={dir} pick={pick} />
+            <Th k="totalScore" cls="num" label={t("score")} sort={sort} dir={dir} pick={pick} />
+            <Th k="citations" cls="num" label={t("cit")} sort={sort} dir={dir} pick={pick} />
+            <Th k="lastYear" label={t("years")} sort={sort} dir={dir} pick={pick} />
+          </tr></thead>
           <tbody>{rows.slice(page * PAGE, (page + 1) * PAGE).map((a) => { const rv = a[rankKey]; return (
             <tr key={a.id}>
               <td className="num rankc" data-l={t("rank")}>{rv ? <span className={`rk r${Math.min(rv, 4)}`}>{num(rv)}</span> : <span className="meta" title={t("rankNoneTip")}>–<span className="sr"> {t("rankNone")}</span></span>}</td>
