@@ -117,7 +117,7 @@ const outAuthors = authors.map((a) => {
     foreign: TOP2[a.id] ? false : meta && meta.countries.length ? meta.countries.some((c) => c !== "VN") : null,
     // suspect: hồ sơ OpenAlex nhiều khả năng gộp nhầm nhiều người (>= 500 công trình, > 150 công trình/năm, hoặc >= 5 đơn vị); ẩn khỏi bảng mặc định và không tính thứ hạng.
     suspect: ws.length >= 500 || ws.length / span > 150 || a.institutions.length >= 5,
-    worksCount: ws.length, countedWorks: ws.filter((w) => w.counted).length, totalScore: Math.round(ws.reduce((s, w) => s + (w.score ?? 0), 0) * 100) / 100,
+    oaWorks: meta?.worksTotal ?? null, worksCount: ws.length, countedWorks: ws.filter((w) => w.counted).length, totalScore: Math.round(ws.reduce((s, w) => s + (w.score ?? 0), 0) * 100) / 100,
     // citations: số trích dẫn TOÀN THỜI GIAN của hồ sơ OpenAlex (khớp với cách các hệ thống khác tính); citations2016: riêng các công trình trong ProFind (từ 2016).
     citations: (meta?.cited ?? ws.reduce((s, w) => s + (w.cOA ?? 0), 0)) + (extraCited.get(a.id) ?? 0) + ws.reduce((s, w) => s + Math.max(0, (w.citations ?? 0) - (w.cOA ?? 0)), 0), citations2016: ws.reduce((s, w) => s + (w.citations ?? 0), 0), hIndex: meta?.h ?? null, matchedRate: ws.length ? Math.round((matched / ws.length) * 100) / 100 : 0,
     firstYear: years.length ? Math.min(...years) : null, lastYear: years.length ? Math.max(...years) : null };
