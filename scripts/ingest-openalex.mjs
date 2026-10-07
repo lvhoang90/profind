@@ -55,19 +55,19 @@ for (const inst of I) {
   writeFileSync(cache, JSON.stringify({ authors: authors.slice(a0), works: works.slice(w0) }));
   } catch (e) { authors.length = a0; works.length = w0; console.warn(`${inst.name}: LỖI, bỏ qua, không ghi cache (${String(e.message).slice(0, 80)})`); }
 }
-// ---- Tác giả ghim theo ORCID (data/pinned-orcids.json): luôn nạp, không phụ thuộc vào 50 tác giả đầu của đơn vị ----
+// ---- Tác giả ghim theo ORCID hoặc mã OpenAlex "oaId" (data/pinned-orcids.json): luôn nạp, không phụ thuộc vào 50 tác giả đầu của đơn vị ----
 if (existsSync("data/pinned-orcids.json")) {
   const allInst = JSON.parse(readFileSync("data/institutions.json", "utf8")).institutions;
   const byRor = new Map(allInst.filter((i) => i.ror).map((i) => [i.ror.replace("https://ror.org/", ""), i.id]));
   for (const pin of JSON.parse(readFileSync("data/pinned-orcids.json", "utf8")).authors) {
-    const cache = `data/raw/_pinned-${pin.orcid}.json`;
+    const cache = `data/raw/_pinned-${pin.orcid ?? pin.oaId}.json`;
     const pa0 = authors.length, pw0 = works.length;
     try {
       if (!refresh && existsSync(cache)) { const c = JSON.parse(readFileSync(cache, "utf8")); authors.push(...c.authors); works.push(...c.works); console.log(`Ghim ${pin.name}: dùng cache`); continue; }
-      const r = await get(`https://api.openalex.org/authors/orcid:${pin.orcid}`);
+      const r = await get(pin.orcid ? `https://api.openalex.org/authors/orcid:${pin.orcid}` : `https://api.openalex.org/authors/${pin.oaId}`);
       const id = short(r.id), a0 = authors.length, w0 = works.length;
       const mapped = (r.last_known_institutions ?? []).map((i) => byRor.get((i.ror ?? "").replace("https://ror.org/", ""))).filter(Boolean);
-      authors.push({ id, name: r.display_name, orcid: pin.orcid, institutions: [...new Set([pin.institution, ...mapped].filter(Boolean))], disciplines: [], demo: false, pinned: true });
+      authors.push({ id, name: r.display_name, orcid: pin.orcid ?? (r.orcid ? r.orcid.replace("https://orcid.org/", "") : null), institutions: [...new Set([pin.institution, ...mapped].filter(Boolean))], disciplines: [], demo: false, pinned: true });
       let cur = "*";
       while (cur) {
         const w = await get(`https://api.openalex.org/works?filter=author.id:${id},from_publication_date:${from}-01-01&per-page=100&cursor=${cur}&select=id,doi,title,publication_year,cited_by_count,primary_location,authorships`);
