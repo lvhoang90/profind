@@ -146,3 +146,12 @@ button.primary{border:0;background:var(--accent);color:var(--accent-ink);border-
 @media(forced-colors:active){.kpi,.card,.wk,.hero{border:1px solid CanvasText}.pill,.role,.chip{border:1px solid CanvasText}.hb u,.bar u,.yc i{forced-color-adjust:none}}
 @media print{.hero{background:#fff;color:#000;box-shadow:none;border:1px solid #999}.hero .au,.chips li,.chips a,.hdisc{color:#000}.kpi,.card,.wk{break-inside:avoid}}
 @media(prefers-reduced-motion:reduce){.wk{transition:none}}
+
+/* Tablet / máy gập (≈480–900px): tận dụng chiều ngang thay vì xếp một cột như điện thoại */
+@media(min-width:481px) and (max-width:900px){
+  .kpis{grid-template-columns:repeat(6,minmax(0,1fr))}.kpi,.kpi:last-child{grid-column:span 2}.kpi:nth-child(n+4){grid-column:span 3}
+  .insights{grid-template-columns:1.25fr 1fr}.ybars{height:150px}.hbars li{grid-template-columns:minmax(0,7.5em) 1fr 2.2em}
+  .wk{grid-template-columns:64px minmax(0,1fr);gap:8px 14px}.wy{justify-self:stretch;padding:0;height:44px}.wr{grid-column:2;flex-direction:row;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:10px}
+  .wbar{flex-direction:column;align-items:stretch;gap:10px}.wtools{justify-content:flex-start;width:100%}.sel.inl{flex:1;max-width:260px}
+}
+@media(min-width:481px) and (max-width:700px){.hero .av{width:84px;height:84px;font-size:1.8rem}.hero{padding:22px}}
