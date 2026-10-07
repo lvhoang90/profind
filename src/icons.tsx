@@ -1,15 +1,15 @@
 // Bộ biểu tượng hai tông (duotone) cùng ngôn ngữ với EduFind: nền màu nhạt (--ic2) + nét currentColor, lưới 32, bo tròn.
-const G = { fill: "none", stroke: "currentColor", strokeWidth: 1.9, strokeLinecap: "round", strokeLinejoin: "round" } as const;
+const G = { fill: "none", stroke: "currentColor", strokeWidth: 1.75, strokeLinecap: "round", strokeLinejoin: "round" } as const;
 const I: Record<string, [string, string]> = {
-  search: ['<circle cx="14" cy="14" r="9"/>', '<circle cx="14" cy="14" r="9"/><path d="M21 21l7 7"/>'],
-  discipline: ['<path d="M5 9l11-5 11 5-11 5z"/>', '<path d="M5 9l11-5 11 5-11 5z"/><path d="M9 12v7c3 3 11 3 14 0v-7"/><path d="M27 9v8"/>'],
-  building: ['<rect x="6" y="9" width="20" height="18" rx="2"/>', '<rect x="6" y="9" width="20" height="18" rx="2"/><path d="M16 4v5M11 14h2M19 14h2M11 19h2M19 19h2M14 27v-4h4v4"/>'],
+  search: ['<circle cx="14" cy="14" r="9"/>', '<circle cx="14" cy="14" r="9"/><path d="M21 21l7 7M10 12a5 5 0 0 1 4-3"/>'],
+  discipline: ['<circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="12" ry="5"/>', '<circle cx="16" cy="16" r="2.4"/><ellipse cx="16" cy="16" rx="12" ry="5"/><ellipse cx="16" cy="16" rx="12" ry="5" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="12" ry="5" transform="rotate(120 16 16)"/>'],
+  building: ['<path d="M4 12L16 5l12 7z"/>', '<path d="M4 12L16 5l12 7zM7 14v9M12.5 14v9M19.5 14v9M25 14v9M4 26h24M6 23h20"/>'],
   filter: ['<path d="M4 7h24l-9 11v8l-6-3v-5z"/>', '<path d="M4 7h24l-9 11v8l-6-3v-5z"/>'],
   sort: ['<rect x="5" y="5" width="22" height="22" rx="5"/>', '<path d="M11 8v16M11 24l-4-4M11 24l4-4M21 24V8M21 8l-4 4M21 8l4 4"/>'],
   trophy: ['<path d="M9 5h14v8a7 7 0 0 1-14 0z"/>', '<path d="M9 5h14v8a7 7 0 0 1-14 0z"/><path d="M9 8H5v2a4 4 0 0 0 4 4M23 8h4v2a4 4 0 0 1-4 4M16 20v5M11 27h10"/>'],
-  book: ['<path d="M5 7c4-2 8-2 11 1v18c-3-3-7-3-11-1z"/>', '<path d="M5 7c4-2 8-2 11 1v18c-3-3-7-3-11-1zM27 7c-4-2-8-2-11 1v18c3-3 7-3 11-1z"/>'],
+  book: ['<path d="M5 8c4-2 8-2 11 1v17c-3-3-7-3-11-1z"/>', '<path d="M5 8c4-2 8-2 11 1v17c-3-3-7-3-11-1zM27 8c-4-2-8-2-11 1v17c3-3 7-3 11-1z"/><path d="M22 3v4M20 5h4"/>'],
   user: ['<circle cx="16" cy="11" r="6"/>', '<circle cx="16" cy="11" r="6"/><path d="M5 28c1-6 5-9 11-9s10 3 11 9"/>'],
-  chart: ['<rect x="5" y="5" width="22" height="22" rx="4"/>', '<path d="M6 26h20M10 22v-6M16 22V9M22 22v-9"/>'],
+  chart: ['<rect x="4" y="5" width="24" height="22" rx="4"/>', '<path d="M6 26h20M6 6v20"/><path d="M9 21l5-6 4 3 7-9"/><circle cx="9" cy="21" r="1.3"/><circle cx="14" cy="15" r="1.3"/><circle cx="18" cy="18" r="1.3"/><circle cx="25" cy="9" r="1.3"/>'],
   link: ['<rect x="6" y="6" width="20" height="20" rx="5"/>', '<path d="M13 19l6-6M14 9l2-2a5 5 0 0 1 7 7l-2 2M18 23l-2 2a5 5 0 0 1-7-7l2-2"/>'],
   download: ['<rect x="5" y="19" width="22" height="8" rx="3"/>', '<path d="M16 5v14M10 14l6 6 6-6M6 24v3h20v-3"/>'],
   info: ['<circle cx="16" cy="16" r="12"/>', '<circle cx="16" cy="16" r="12"/><path d="M16 15v7M16 10.5v.5"/>'],
@@ -29,6 +29,9 @@ const I: Record<string, [string, string]> = {
   external: ['<rect x="5" y="9" width="18" height="18" rx="3"/>', '<path d="M14 18L27 5M19 5h8v8M23 18v6a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V12a3 3 0 0 1 3-3h6"/>'],
   trash: ['<path d="M8 10h16l-1 17H9z"/>', '<path d="M5 10h22M12 10V6h8v4M9 10l1 17h12l1-17M14 14v9M18 14v9"/>'],
   search2: ['<circle cx="14" cy="14" r="9"/>', '<circle cx="14" cy="14" r="9"/><path d="M21 21l7 7M10 14h8"/>'],
+  scholar: ['<circle cx="16" cy="13" r="5"/>', '<path d="M3 11l13-6 13 6-13 6z"/><path d="M8 14v6c2 3 6 4 8 4s6-1 8-4v-6M29 11v8"/>'],
+  dna: ['<path d="M9 4c0 8 14 8 14 16s-14 8-14 8"/>', '<path d="M9 4c0 8 14 8 14 16s-14 8-14 8M23 4c0 8-14 8-14 16s14 8 14 8M11 9h10M11 23h10M10 16h12"/>'],
+  scroll: ['<path d="M8 5h16v20a3 3 0 0 1-3 3H8z"/>', '<path d="M24 5H11a3 3 0 0 0-3 3v17a3 3 0 0 0 3 3h13M12 11h8M12 16h8M12 21h5"/>'],
   spark: ['<path d="M16 3l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/>', '<path d="M16 3l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/>'],
 };
 export type IconName = keyof typeof I;

@@ -9,6 +9,7 @@ import { AccountProvider, useAccount } from "./accountStore";
 const AccountPage = lazy(() => import("./Account").then((m) => ({ default: m.AccountPage })));
 const AboutPage = lazy(() => import("./About").then((m) => ({ default: m.AboutPage })));
 const AdminPage = lazy(() => import("./Admin").then((m) => ({ default: m.AdminPage })));
+import { HeroArt } from "./HeroArt";
 import { Footer, EcoLink } from "./Footer";
 import { evt, startSession } from "./analytics";
 import { getTheme, setTheme, type Theme } from "./theme";
@@ -92,6 +93,7 @@ function AppInner() {
     <Ctx.Provider value={{ lang, t, num }}>
       <a className="skip" href="#main" onClick={(e) => { e.preventDefault(); mainRef.current?.focus(); }}>{t("skip")}</a>
       <header className="top">
+        <HeroArt />
         <div className="wrap hd">
           <a className="brand" href="#/" aria-label="ProFind"><img className="logo" src="./logo-disc.svg" alt="" width="40" height="40" /><b>Pro<i>Find</i></b></a>
           <div className="hd-tools">
@@ -240,6 +242,7 @@ function List({ d, query }: { d: Data; query: string }) {
   const quick = (fn: () => void) => () => { fn(); setBrowse(false); };
   const hero = (
     <div className={`hero-home${home ? " big" : ""}`}>
+      {home && <p className="hero-kicker"><Icon n="spark" size={16} />{t("heroKicker")}</p>}
       <h1 className="ht">{t("sub")}</h1>
       {home && <p className="tag">{t("heroLead")}</p>}
       <label className="bigsearch"><Icon n="search" size={22} /><span className="sr">{t("search")}</span><input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("searchPh")} autoComplete="off" enterKeyHint="search" /></label>
@@ -252,19 +255,19 @@ function List({ d, query }: { d: Data; query: string }) {
       {home ? (
         <section className="home" aria-label={t("title")}>
           <div className="hstats">
-            <div><b>{num(home$.n)}</b><span>{t("stResearchers")}</span></div>
-            <div><b>{num(d.meta.works)}</b><span>{t("stWorks")}</span></div>
-            <div><b>{num(home$.nInst)}</b><span>{t("stInst")}</span></div>
+            <div><Icon n="scholar" size={26} /><b>{num(home$.n)}</b><span>{t("stResearchers")}</span></div>
+            <div><Icon n="scroll" size={26} /><b>{num(d.meta.works)}</b><span>{t("stWorks")}</span></div>
+            <div><Icon n="building" size={26} /><b>{num(home$.nInst)}</b><span>{t("stInst")}</span></div>
           </div>
           <div className="hcols">
-            <div className="hgroup"><h2>{t("topFields")}<small>{t("byAuthors")}</small></h2>
+            <div className="hgroup"><h2><Icon n="discipline" size={18} />{t("topFields")}<small>{t("byAuthors")}</small></h2>
               <ol className="rank">{home$.fields.slice(0, 8).map(([f, n]) => <li key={f}><button type="button" onClick={quick(() => setDisc(f))} style={{ "--w": `${Math.round((n / home$.fields[0][1]) * 100)}%` } as React.CSSProperties}><span>{dName(f, lang)}</span><em>{num(n)}</em></button></li>)}</ol></div>
-            <div className="hgroup"><h2>{t("topInst")}<small>{t("byAuthors")}</small></h2>
+            <div className="hgroup"><h2><Icon n="building" size={18} />{t("topInst")}<small>{t("byAuthors")}</small></h2>
               <ol className="rank">{home$.insts.slice(0, 8).map(([i, n]) => <li key={i}><button type="button" onClick={quick(() => setInstSel(i))} style={{ "--w": `${Math.round((n / home$.insts[0][1]) * 100)}%` } as React.CSSProperties}><span>{instLabel(instById.get(i), lang, i)}</span><em>{num(n)}</em></button></li>)}</ol></div>
           </div>
-          {topWorks.length > 0 && <div className="hgroup"><h2>{t("topWorks")}</h2>
+          {topWorks.length > 0 && <div className="hgroup"><h2><Icon n="book" size={18} />{t("topWorks")}</h2>
             <ol className="tw">{topWorks.slice(0, 6).map((w) => <li key={w.a + w.w}><a href={`#/tac-gia/${w.a}`}><b>{num(w.c)}<small>{t("cites")}</small></b><span className="tt">{w.t}</span><span className="tm">{w.n} · {w.j ? `${w.j} · ` : ""}{w.y}</span></a></li>)}</ol></div>}
-          <div className="hgroup"><h2>{t("featured")}</h2>
+          <div className="hgroup"><h2><Icon n="star" size={18} />{t("featured")}</h2>
             <p className="hchips">{home$.top2 > 0 && <button type="button" className="gold" onClick={quick(() => setTop2only(true))}>★ {t("top2Tag")}<em>{num(home$.top2)}</em></button>}<button type="button" className="all" onClick={() => setBrowse(true)}>{t("browseAll")} →</button></p></div>
         </section>
       ) : (
