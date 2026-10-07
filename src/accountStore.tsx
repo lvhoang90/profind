@@ -15,7 +15,7 @@ const writeViews = (v: Viewed[]) => { try { localStorage.setItem(LV, JSON.string
 export async function api<T = any>(op: string, body?: unknown, qs = ""): Promise<T> {
   const r = await fetch(`/api/account?op=${op}${qs}`, body === undefined ? { credentials: "same-origin" } : { method: "POST", credentials: "same-origin", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
   const j = await r.json().catch(() => ({}));
-  if (!r.ok) throw Object.assign(new Error(j.error || `HTTP ${r.status}`), { status: r.status, retry: j.retry as number | undefined });
+  if (!r.ok) throw Object.assign(new Error((j.error || `HTTP ${r.status}`) + (j.detail ? ` [${j.detail}]` : "")), { status: r.status, retry: j.retry as number | undefined });
   return j as T;
 }
 

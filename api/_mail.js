@@ -14,13 +14,13 @@ export async function sendMail(to, mail) {
   if (prov === "console") { console.log(`[mail] tới ${to}: ${mail.subject}\n${mail.text}`); return; }
   if (prov === "resend") {
     const r = await fetch("https://api.resend.com/emails", { method: "POST", headers: { authorization: `Bearer ${e.RESEND_API_KEY}`, "content-type": "application/json" }, body: JSON.stringify({ from: from(), to: [to], subject: mail.subject, html: mail.html, text: mail.text }) });
-    if (!r.ok) throw new Error(`Resend ${r.status}`);
+    if (!r.ok) { let m = ""; try { m = String((await r.json()).message || "").slice(0, 200); } catch { /* bỏ qua */ } throw new Error(`Resend ${r.status}${m ? ": " + m : ""}`); }
     return;
   }
   if (prov === "brevo") {
     const f = parseFrom(from());
     const r = await fetch("https://api.brevo.com/v3/smtp/email", { method: "POST", headers: { "api-key": e.BREVO_API_KEY, "content-type": "application/json", accept: "application/json" }, body: JSON.stringify({ sender: { name: f.name || "ProFind", email: f.email }, to: [{ email: to }], subject: mail.subject, htmlContent: mail.html, textContent: mail.text }) });
-    if (!r.ok) throw new Error(`Brevo ${r.status}`);
+    if (!r.ok) { let m = ""; try { m = String((await r.json()).message || "").slice(0, 200); } catch { /* bỏ qua */ } throw new Error(`Brevo ${r.status}${m ? ": " + m : ""}`); }
     return;
   }
   throw new Error("Chưa cấu hình gửi email.");

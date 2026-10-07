@@ -323,7 +323,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
         <div className="hero-main">
           <h1 className="au">{a.name}</h1>
           <p className="badges">{a.foreign && <span className="badge warnb">{t("foreignTag")}</span>}{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}<Top2Tag a={a} cls="badge top2b" />{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</p>
-          <ul className="chips">{(allInst ? inst : inst.slice(0, 4)).map((i) => <li key={i.id}><Icon n="building" size={14} />{instLabel(i, lang)}</li>)}{inst.length > 4 && <li className="more"><button type="button" onClick={() => setAllInst(!allInst)} aria-expanded={allInst}>{allInst ? t("instLess") : t("instMore", { n: num(inst.length - 4) })}</button></li>}{a.orcid && <li className="orcid"><a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}<span className="sr"> {t("newTab")}</span></a></li>}</ul>
+          <ul className="chips">{(allInst ? inst : inst.slice(0, 4)).map((i) => <li key={i.id}><Icon n="building" size={14} />{instLabel(i, lang)}</li>)}{inst.length > 4 && <li className="more"><button type="button" onClick={() => setAllInst(!allInst)} aria-expanded={allInst}>{allInst ? t("instLess") : t("instMore", { n: num(inst.length - 4) })}</button></li>}{a.scholar && <li className="scholar"><a href={`https://scholar.google.com/citations?user=${a.scholar}&hl=${lang === "vi" ? "vi" : "en"}`} target="_blank" rel="noopener">Google Scholar<span className="sr"> {t("newTab")}</span></a></li>}{a.orcid && <li className="orcid"><a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}<span className="sr"> {t("newTab")}</span></a></li>}</ul>
           {a.disciplines.length > 0 && <p className="hdisc">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</p>}
           <p className="actions-row">{cfg?.enabled !== false && <button className={`ghost light${favs.has(`a|${a.id}`) ? " on" : ""}`} aria-pressed={favs.has(`a|${a.id}`)} onClick={() => void saveAuthor()}><Icon n="star" size={16} />{!user ? t("saveGate") : favs.has(`a|${a.id}`) ? t("savedA") : t("saveA")}</button>}<button className="ghost light" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button><a className="ghost-link light" href={`#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{t("corrLink")}</a></p>
         </div>
@@ -332,7 +332,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
         <div className="kpi k-rank"><span className="kic"><Icon n="trophy" size={20} /></span><b>{rk(a.rankScore)}</b><span>{t("rank")} · {t("score")}</span><small>{a.rankScore ? t("rankOf", { n: num(pool) }) : t("rankNone")}</small></div>
         <div className="kpi k-score"><span className="kic"><Icon n="check" size={20} /></span><b>{num(a.totalScore, 2)}</b><span>{t("cite")}</span></div>
         <div className="kpi"><span className="kic"><Icon n="book" size={20} /></span><b>{num(a.countedWorks)}<em>/{num(a.worksCount)}</em></b><span>{t("counted")}</span><i className="bar" role="presentation"><u style={{ width: `${pct}%` }} /></i></div>
-        <div className="kpi"><span className="kic"><Icon n="chart" size={20} /></span><b>{num(a.citations)}</b><span title={t("citTip")}>{t("cit")}</span><small title={t("citTip")}>{t("citNote")}{a.hIndex ? ` · ${t("hIdx")} ${a.hIndex}` : ""} · {t("rank")} {rk(a.rankCit)}</small></div>
+        <div className="kpi"><span className="kic"><Icon n="chart" size={20} /></span><b>{num(a.citations)}</b><span title={t("citTip")}>{t("cit")}</span><small title={t("citTip")}>{a.scholarCit ? `Google Scholar ${num(a.scholarCit)} (${t("selfDecl")}) · ` : ""}{t("citNote")}{a.hIndex ? ` · ${t("hIdx")} ${a.hIndex}` : ""} · {t("rank")} {rk(a.rankCit)}</small></div>
         <div className="kpi"><span className="kic"><Icon n="link" size={20} /></span><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span><i className="bar" role="presentation"><u style={{ width: `${Math.round(a.matchedRate * 100)}%` }} /></i></div>
       </div>
       {a.suspect && <p className="banner demo" role="note"><Icon n="info" />{t("suspectNote")}</p>}
@@ -405,7 +405,7 @@ function Correction({ a }: { a: Author | null }) {
       if (r.ok && j && j.ok === true) setState("ok"); else { setCode(j?.error ?? (r.status === 429 ? "rate" : "send")); setState("err"); }
     } catch { setCode("net"); setState("err"); } finally { clearTimeout(to); }
   };
-  const msg = { rate: t("eRate"), "not-configured": t("eConf"), net: t("eNet"), kind: t("eBad"), email: t("eBad"), empty: t("eBad") }[code as "rate"] ?? t("sendErr");
+  const msg = { rate: t("eRate"), "not-configured": t("eConf"), net: t("eNet"), kind: t("eBad"), email: t("eBad"), empty: t("eBad"), scholar: t("eBad") }[code as "rate"] ?? t("sendErr");
   return (
     <article className="corr">
       <p><a href={a ? `#/tac-gia/${encodeURIComponent(a.id)}` : "#/"}>{t("back")}</a></p>
@@ -421,6 +421,7 @@ function Correction({ a }: { a: Author | null }) {
           {!a && <label className="sel"><span>{t("fRef")}</span><input name="ref" required maxLength={160} /></label>}
           <label className="sel"><span>{t("fName")}</span><input name="name" required maxLength={120} autoComplete="name" /></label>
           <label className="sel"><span>{t("fEmail")}</span><input name="email" type="email" required maxLength={160} autoComplete="email" /></label>
+          <label className="sel"><span>{t("fScholar")}</span><input name="scholar" type="url" maxLength={300} placeholder="https://scholar.google.com/citations?user=…" /></label>
           <label className="sel"><span>{t("fOrcid")}</span><input name="orcid" maxLength={40} defaultValue={a?.orcid ?? ""} placeholder="0000-0000-0000-0000" pattern="\d{4}-?\d{4}-?\d{4}-?\d{3}[\dXx]|" title="0000-0000-0000-0000" /></label>
           <label className="sel"><span>{t("fMsg")}</span><textarea name="msg" rows={5} maxLength={4000} required={kind === "correct"} /></label>
           <input name="_honey" className="honey" tabIndex={-1} autoComplete="off" aria-hidden="true" />

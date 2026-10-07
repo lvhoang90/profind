@@ -100,7 +100,7 @@ export default async function handler(request) {
       const ip = (request.headers.get("x-forwarded-for") || "?").split(",")[0].trim();
       if (!(await limit(`e:${id}`, 5, 3600)) || !(await limit(`ip:${await sha(ip, 16)}`, 30, 3600))) return json({ error: "Bạn yêu cầu mã quá nhiều lần. Vui lòng thử lại sau một giờ." }, 429);
       const code = String(crypto.getRandomValues(new Uint32Array(1))[0] % 1000000).padStart(6, "0");
-      try { await sendMail(email, codeMail(code, lang)); } catch (e) { console.error("[mail]", e.message); return json({ error: "Chưa gửi được email xác thực. Vui lòng thử lại sau ít phút." }, 502); }
+      try { await sendMail(email, codeMail(code, lang)); } catch (e) { console.error("[mail]", e.message); return json({ error: "Chưa gửi được email xác thực. Vui lòng thử lại sau ít phút.", detail: String(e.message).slice(0, 220) }, 502); }
       await one(["SET", K.otp(id), JSON.stringify({ h: await hmac(`${email}:${code}`), sent: Date.now(), tries: 0, consentAt: new Date().toISOString(), phone, name: tidy(body.name, 80) }), "EX", String(OTP_TTL)]);
       return json({ ok: true, retry: COOLDOWN });
     }
