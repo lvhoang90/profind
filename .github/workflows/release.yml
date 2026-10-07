@@ -1,6 +1,6 @@
 name: Release
 # Tạo GitHub Release từ RELEASE_NOTES.md. Hai cách chạy:
-#  1) Đẩy tag dạng v* (ví dụ v0.1.0-beta.1);
+#  1) Đẩy tag dạng v* (ví dụ v1.0.0);
 #  2) Actions > Release > Run workflow, nhập tên tag (tag được tạo trên nhánh đang chạy). Tag có dấu "-" là pre-release.
 on:
   push:
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Tên tag, ví dụ v0.1.0-beta.1"
+        description: "Tên tag, ví dụ v1.0.0"
         required: true
 permissions:
   contents: write

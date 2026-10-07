@@ -1,4 +1,4 @@
-## ProFind v0.1.0-beta.1
+## ProFind v1.0.0
 
 Bản thử nghiệm đầu tiên của **ProFind**: danh bạ nhà nghiên cứu Việt Nam, thuộc hệ sinh thái ISA (EduFind, Ami, Mây). Web: https://profind.isavn.edu.vn
 
