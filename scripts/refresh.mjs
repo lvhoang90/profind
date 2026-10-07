@@ -8,7 +8,7 @@ const mailto = arg("mailto"), from = arg("from", "2021"), max = arg("max-authors
 const KEY = process.env.OPENALEX_API_KEY; if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
 const run = (c) => execSync(c, { stdio: "inherit", env: { ...process.env, NODE_USE_ENV_PROXY: "1" } });
 if (!existsSync("data/raw") || !readdirSync("data/raw").length) run("node scripts/cache.mjs restore");
-const budget = async () => (await (await fetch(`https://api.openalex.org/rate-limit?api_key=${KEY}`)).json()).rate_limit;
+const budget = async () => { const r = (await (await fetch(`https://api.openalex.org/rate-limit?api_key=${KEY}`)).json()).rate_limit; return { ...r, daily_remaining_usd: r.daily_remaining_usd + (r.prepaid_remaining_usd ?? 0) }; }; // gồm cả số dư nạp trước
 let b = await budget(); console.log(`Ngân sách OpenAlex còn ${b.daily_remaining_usd} USD (đặt lại sau ${Math.round(b.resets_in_seconds / 3600)} giờ)`);
 if (b.daily_remaining_usd < 0.05) { console.log("Hết ngân sách, dừng."); process.exit(0); }
 const I = JSON.parse(readFileSync("data/institutions.json", "utf8")).institutions.filter((i) => i.ror);
