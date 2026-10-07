@@ -111,13 +111,13 @@ function Dashboard({ user, tab }: { user: User; tab: string }) {
 function Overview({ user }: { user: User }) {
   const { t, lang, num } = useT();
   const { favs, searches, views } = useAccount();
-  const saved = [...favs.values()].filter((f) => f.k.startsWith("a|")).slice(0, 5), seen = views.slice(0, 5);
+  const saved = [...favs.values()].sort((a, b) => String(b.at).localeCompare(String(a.at))).slice(0, 5), seen = views.slice(0, 5);
   const stats: [IconName, string, number][] = [["star", "stSaved", favs.size], ["search", "stSearches", searches.length], ["eye", "stViewed", views.length], ["clock", "stDays", user.counts.days]];
   return (
     <>
       <div className="kpis four">{stats.map(([ic, l, n]) => <div className="kpi" key={l}><span className="kic"><Icon n={ic} size={20} /></span><b>{num(n)}</b><span>{t(l as "stSaved")}</span></div>)}</div>
       <div className="insights">
-        <section className="card"><h2>{t("tabSaved")}</h2>{saved.length ? <ul className="mini">{saved.map((f) => <li key={f.k}><a href={`#/tac-gia/${f.k.slice(2)}`}>{f.t}</a><span className="meta">{f.s}</span></li>)}</ul> : <p className="meta">{t("emptySaved")}</p>}{favs.size > 5 && <a href="#/tai-khoan/da-luu">→ {t("tabSaved")}</a>}</section>
+        <section className="card"><h2>{t("tabSaved")}</h2>{saved.length ? <ul className="mini">{saved.map((f) => <li key={f.k}><a href={f.k.startsWith("w|") ? f.u || "#" : `#/tac-gia/${f.k.slice(2)}`} {...(f.k.startsWith("w|") ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{f.t}</a><span className="meta">{f.s}</span></li>)}</ul> : <p className="meta">{t("emptySaved")}</p>}{favs.size > 5 && <a href="#/tai-khoan/da-luu">→ {t("tabSaved")}</a>}</section>
         <section className="card"><h2>{t("tabViewed")}</h2>{seen.length ? <ul className="mini">{seen.map((v) => <li key={v.k}><ViewLink v={v} /><span className="meta">{ago(v.at, lang)}</span></li>)}</ul> : <p className="meta">{t("emptyViewed")}</p>}{views.length > 5 && <a href="#/tai-khoan/da-xem">→ {t("tabViewed")}</a>}</section>
       </div>
       <section className="next" aria-labelledby="nx"><h2 id="nx">{t("nextTitle")}</h2><p className="meta">{t("nextLead")}</p>
@@ -134,9 +134,10 @@ function Saved() {
   const { favs, toggleFav } = useAccount();
   const items = [...favs.values()].sort((a, b) => String(b.at).localeCompare(String(a.at)));
   if (!items.length) return <p className="empty">{t("emptySaved")}</p>;
+  const isW = (f: { k: string }) => f.k.startsWith("w|");
   return <ul className="rows">{items.map((f) => (
-    <li key={f.k} className="row-card"><span className="kic"><Icon n="user" size={18} /></span>
-      <div className="rc-main"><a className="rc-t" href={`#/tac-gia/${f.k.slice(2)}`}>{f.t}</a><div className="meta">{f.s}</div><div className="meta">{t("savedOn", { d: ago(f.at, lang) })}</div></div>
+    <li key={f.k} className="row-card"><span className="kic"><Icon n={isW(f) ? "scroll" : "user"} size={18} /></span>
+      <div className="rc-main">{isW(f) ? <a className="rc-t" href={f.u || "#"} target="_blank" rel="noopener noreferrer">{f.t}<span className="sr"> {t("newTab")}</span></a> : <a className="rc-t" href={`#/tac-gia/${f.k.slice(2)}`}>{f.t}</a>}<div className="meta">{isW(f) ? `${t("savedWork")} · ` : ""}{f.s}</div><div className="meta">{t("savedOn", { d: ago(f.at, lang) })}</div></div>
       <div className="rc-side">{f.sc != null && <span className="score">{num(f.sc, 2)}</span>}{f.rk ? <span className="meta">#{num(f.rk)}</span> : null}</div>
       <button className="ghost" onClick={() => void toggleFav(f.k, { t: f.t })}><Icon n="trash" size={16} /><span className="sr">{t("remove")}</span><span aria-hidden="true">{t("remove")}</span></button></li>))}</ul>;
 }

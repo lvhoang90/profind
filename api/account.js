@@ -207,7 +207,7 @@ export default async function handler(request) {
       const n = await one(["HLEN", K.fav(me.id)]); let had = null; try { const old = await one(["HGET", K.fav(me.id), k]); had = old ? JSON.parse(old) : null; } catch { /* bỏ qua */ }
       if (!had && n >= FAV_MAX) return json({ error: `Bạn đã lưu tối đa ${FAV_MAX} mục.` }, 400);
       const title = tidy(body.t, 140) || had?.t || "";
-      const rec = { t: title, s: tidy(body.s, 160) || had?.s || "", sc: Number.isFinite(Number(body.sc)) ? Math.round(Number(body.sc) * 100) / 100 : had?.sc, rk: Number.isFinite(Number(body.rk)) && Number(body.rk) > 0 ? Math.floor(Number(body.rk)) : had?.rk, at: had?.at || new Date().toISOString() };
+      const rec = { t: title, s: tidy(body.s, 160) || had?.s || "", sc: Number.isFinite(Number(body.sc)) ? Math.round(Number(body.sc) * 100) / 100 : had?.sc, rk: Number.isFinite(Number(body.rk)) && Number(body.rk) > 0 ? Math.floor(Number(body.rk)) : had?.rk, u: /^https:\/\/[^\s]{4,200}$/.test(String(body.u || "")) ? String(body.u) : had?.u, at: had?.at || new Date().toISOString() };
       const cmds = [["HSET", K.fav(me.id), k, JSON.stringify(rec)]]; if (!had) cmds.push(["HINCRBY", K.favTop, k, "1"], ["HSET", K.favTitle, k, title]);
       await store.run(cmds);
       return json({ ok: true });

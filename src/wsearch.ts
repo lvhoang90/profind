@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 // Tìm theo tên công trình: chỉ mục ngược chia mảnh theo băm từ (public/data/wsearch/p*.json) + bản ghi chia khối theo trích dẫn giảm dần (r*.json).
 // Mỗi lượt tìm chỉ tải vài mảnh nhỏ; mã công trình càng nhỏ thì trích dẫn càng cao nên giao các danh sách đã sắp sẵn theo mức nổi bật.
-export type WorkHit = { title: string; year: number; journal: string; cit: number; doi: string; authorId: string; author: string };
+export type WorkHit = { title: string; year: number; journal: string; cit: number; doi: string; authorId: string; author: string; id: string };
 const norm = (s: string) => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase().replace(/[‐-―−_.,;:()/\\-]+/g, " ").replace(/[  -​  　]/g, " ").replace(/\s+/g, " ").trim();
 const shardOf = (t: string, n: number) => { let h = 5381; for (let i = 0; i < t.length; i++) h = ((h * 33) ^ t.charCodeAt(i)) >>> 0; return h % n; };
 const cache = new Map<string, Promise<any>>();
@@ -26,7 +26,7 @@ async function records(ids: number[]): Promise<WorkHit[]> {
   const meta = await get(`${B}meta.json`);
   return Promise.all(ids.map(async (id) => {
     const ch: any[][] = await get(`${B}r${Math.floor(id / meta.ch)}.json`); const r = ch[id % meta.ch];
-    return { title: r[0], year: r[1], journal: r[2], cit: r[3], doi: r[4], authorId: r[5], author: r[6] };
+    return { title: r[0], year: r[1], journal: r[2], cit: r[3], doi: r[4], authorId: r[5], author: r[6], id: r[7] ?? "" };
   }));
 }
 

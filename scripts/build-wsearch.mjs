@@ -13,7 +13,7 @@ for (const f of readdirSync("public/data/works")) {
     if (!w.title || String(w.title).length < 8) continue;
     const k = w.doi ? `d:${String(w.doi).toLowerCase()}` : `t:${norm(w.title)}`;
     const cur = best.get(k), lead = w.role === "lead" ? 1 : 0;
-    if (!cur || lead > cur.lead || (lead === cur.lead && w.citations > cur.c)) best.set(k, { t: w.title, y: w.year, j: w.journal ?? "", c: w.citations ?? 0, d: w.doi ?? "", a: id, n: ok.get(id), lead });
+    if (!cur || lead > cur.lead || (lead === cur.lead && w.citations > cur.c)) best.set(k, { t: w.title, y: w.year, j: w.journal ?? "", c: w.citations ?? 0, d: w.doi ?? "", a: id, n: ok.get(id), i: String(w.id ?? ""), lead });
   }
 }
 const recs = [...best.values()].sort((x, y) => y.c - x.c || y.y - x.y);
@@ -23,7 +23,7 @@ recs.forEach((r, id) => {
   const seen = new Set(norm(r.t).split(" ").filter((w) => w.length > 1));
   for (const w of seen) { const m = shards[shardOf(w, NS)]; let l = m.get(w); if (!l) m.set(w, (l = [])); l.push(id); }
 });
-for (let i = 0; i * CH < recs.length; i++) writeFileSync(`public/data/wsearch/r${i}.json`, JSON.stringify(recs.slice(i * CH, (i + 1) * CH).map((r) => [r.t, r.y, r.j, r.c, r.d, r.a, r.n])));
+for (let i = 0; i * CH < recs.length; i++) writeFileSync(`public/data/wsearch/r${i}.json`, JSON.stringify(recs.slice(i * CH, (i + 1) * CH).map((r) => [r.t, r.y, r.j, r.c, r.d, r.a, r.n, r.i])));
 shards.forEach((m, i) => { const o = {}; for (const [w, l] of m) { let p = 0; o[w] = l.map((v) => { const d = v - p; p = v; return d; }); } writeFileSync(`public/data/wsearch/p${i}.json`, JSON.stringify(o)); });
 writeFileSync("public/data/wsearch/meta.json", JSON.stringify({ n: recs.length, ch: CH, ns: NS, built: new Date().toISOString().slice(0, 10) }));
 console.log(`wsearch: ${recs.length} công trình, ${Math.ceil(recs.length / CH)} khối, ${NS} mảnh.`);

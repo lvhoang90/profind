@@ -3,7 +3,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import { evt } from "./analytics";
 
 export interface User { email: string; name: string; phone: string; job: string; org: string; address: string; createdAt: string; lastSeen: string; isAdmin: boolean; profilePct: number; noMail: boolean; hops: { edufind: number; ami: number; may: number }; counts: { visits: number; days: number; login: number; views: number; searches: number } }
-export interface Fav { k: string; t: string; s?: string; sc?: number; rk?: number; at: string }
+export interface Fav { k: string; t: string; s?: string; sc?: number; rk?: number; u?: string; at: string }
 export interface SavedSearch { k: string; q: string; d: string; ty: string; i: string; sc: "vn" | "all"; label?: string; at: string }
 export interface Viewed { k: string; t: string; s?: string; at: number; n: number; u?: string }
 type Cfg = { enabled: boolean; pledge?: { vi: string; en: string }; adminConfigured?: boolean; persistent?: boolean };
@@ -22,7 +22,7 @@ export async function api<T = any>(op: string, body?: unknown, qs = ""): Promise
 interface Ctx {
   cfg: Cfg | null; user: User | null | undefined; favs: Map<string, Fav>; searches: SavedSearch[]; views: Viewed[];
   refresh: () => Promise<void>; setUser: (u: User | null) => void;
-  toggleFav: (k: string, meta: { t: string; s?: string; sc?: number; rk?: number }) => Promise<boolean>;
+  toggleFav: (k: string, meta: { t: string; s?: string; sc?: number; rk?: number; u?: string }) => Promise<boolean>;
   saveSearch: (f: Omit<SavedSearch, "k" | "at">) => Promise<void>; removeSearch: (k: string) => Promise<void>;
   recordView: (v: { k: string; t: string; s?: string; u?: string }) => void; clearViews: (k?: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -55,10 +55,10 @@ export function AccountProvider({ children }: { children: ReactNode }) {
   }, [user, flush]);
   const clearViews = useCallback(async (k?: string) => { setViews((cur) => { const next = k ? cur.filter((x) => x.k !== k) : []; writeViews(next); return next; }); if (user) await api("rvdel", k ? { k } : { all: true }).catch(() => {}); }, [user]);
 
-  const toggleFav = useCallback(async (k: string, meta: { t: string; s?: string; sc?: number; rk?: number }) => {
+  const toggleFav = useCallback(async (k: string, meta: { t: string; s?: string; sc?: number; rk?: number; u?: string }) => {
     const on = !favs.has(k);
     setFavs((m) => { const n = new Map(m); if (on) n.set(k, { k, ...meta, at: new Date().toISOString() }); else n.delete(k); return n; });
-    try { await api("fav", { k, on, ...meta }); if (on) evt("save_author"); return on; } catch (e) { setFavs((m) => { const n = new Map(m); if (on) n.delete(k); else n.set(k, { k, ...meta, at: new Date().toISOString() }); return n; }); throw e; }
+    try { await api("fav", { k, on, ...meta }); if (on) evt(k.startsWith("w|") ? "save_work" : "save_author"); return on; } catch (e) { setFavs((m) => { const n = new Map(m); if (on) n.delete(k); else n.set(k, { k, ...meta, at: new Date().toISOString() }); return n; }); throw e; }
   }, [favs]);
   const saveSearch = useCallback(async (f: Omit<SavedSearch, "k" | "at">) => { await api("ssave", f); evt("save_search"); setSearches((await api<{ items: SavedSearch[] }>("ss")).items); }, []);
   const removeSearch = useCallback(async (k: string) => { const s = searches.find((x) => x.k === k); setSearches((c) => c.filter((x) => x.k !== k)); if (s) await api("ssave", { ...s, on: false }).catch(() => {}); }, [searches]);
