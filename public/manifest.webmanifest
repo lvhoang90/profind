@@ -1,6 +1,7 @@
 {
   "name": "ProFind - Tra cứu tác giả và công trình nghiên cứu",
   "short_name": "ProFind",
+  "description": "Tra cứu tác giả, nhà nghiên cứu Việt Nam theo ngành, đơn vị, công trình và điểm tham khảo theo danh mục HĐGSNN.",
   "lang": "vi",
   "start_url": "./",
   "scope": "./",

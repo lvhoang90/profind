@@ -11,7 +11,7 @@
 
 - Danh mục tạp chí và điểm của Hội đồng Giáo sư nhà nước (qua EduFind)
 - OpenAlex (CC0 1.0), ORCID (dữ liệu công khai, CC0), ROR (CC0)
-- **Dữ liệu Top 2% nhà khoa học (Ioannidis et al., Elsevier): CC BY-NC 3.0, chỉ phi thương mại**, nằm riêng ở `data/top2/` (xem `data/top2/LICENSE-NC.md`) và nhãn "Top 2%" trên trang; không thuộc CC BY 4.0 của dự án
+- **Dữ liệu Top 2% nhà khoa học (Ioannidis et al., Elsevier): CC BY-NC 3.0, chỉ phi thương mại.** Gồm tệp `data/top2/*` (xem `data/top2/LICENSE-NC.md`, cũng công bố ở `/LICENSE-NC.md`) VÀ trường `top2` (hạng, lĩnh vực) trong `public/data/profind.json` cùng nhãn "Top 2%" trên giao diện. Trường `top2` không thuộc CC BY 4.0 của dự án: khi sao chép hay dùng lại tệp `profind.json` cho mục đích thương mại, phải bỏ trường này
 - Danh sách cơ sở giáo dục đại học, viện nghiên cứu do cơ quan nhà nước công bố
 - SCImago / Scopus (Elsevier B.V.), Web of Science (Clarivate): nhãn hiệu của chủ sở hữu
 
