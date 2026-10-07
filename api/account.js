@@ -92,8 +92,11 @@ export default async function handler(request) {
     if (op === "request" && request.method === "POST") {
       const email = String(body.email || "").trim().toLowerCase(), lang = body.lang === "en" ? "en" : "vi", phone = normPhone(body.phone);
       if (email.length > 254 || !EMAIL_RE.test(email)) return json({ error: lang === "en" ? "Invalid email." : "Email chưa đúng định dạng." }, 400);
-      if (!PHONE_RE.test(phone)) return json({ error: lang === "en" ? "Enter a Vietnamese mobile number, e.g. 0912345678." : "Nhập số điện thoại di động Việt Nam, ví dụ 0912345678." }, 400);
-      if (body.consent !== true) return json({ error: lang === "en" ? "Please agree to how we handle your information." : "Vui lòng đồng ý với cách chúng tôi xử lý thông tin để tiếp tục." }, 400);
+      // Đăng ký gửi kèm số điện thoại và đồng ý; đăng nhập chỉ cần email (người chưa có tài khoản sẽ được bổ sung thông tin sau khi nhập mã, không để lộ email nào đã đăng ký).
+      if (phone) {
+        if (!PHONE_RE.test(phone)) return json({ error: lang === "en" ? "Enter a Vietnamese mobile number, e.g. 0912345678." : "Nhập số điện thoại di động Việt Nam, ví dụ 0912345678." }, 400);
+        if (body.consent !== true) return json({ error: lang === "en" ? "Please agree to how we handle your information." : "Vui lòng đồng ý với cách chúng tôi xử lý thông tin để tiếp tục." }, 400);
+      }
       const id = await sha(email);
       let rec = null; try { const old = await one(["GET", K.otp(id)]); rec = old ? JSON.parse(old) : null; } catch { /* bỏ qua */ }
       if (rec && Date.now() - rec.sent < COOLDOWN * 1000) { const s = Math.ceil((COOLDOWN * 1000 - (Date.now() - rec.sent)) / 1000); return json({ error: `Vui lòng đợi ${s} giây rồi gửi lại mã.`, retry: s }, 429); }
@@ -101,7 +104,7 @@ export default async function handler(request) {
       if (!(await limit(`e:${id}`, 5, 3600)) || !(await limit(`ip:${await sha(ip, 16)}`, 30, 3600))) return json({ error: "Bạn yêu cầu mã quá nhiều lần. Vui lòng thử lại sau một giờ." }, 429);
       const code = String(crypto.getRandomValues(new Uint32Array(1))[0] % 1000000).padStart(6, "0");
       try { await sendMail(email, codeMail(code, lang)); } catch (e) { console.error("[mail]", e.message); return json({ error: "Chưa gửi được email xác thực. Vui lòng thử lại sau ít phút.", detail: String(e.message).slice(0, 220) }, 502); }
-      await one(["SET", K.otp(id), JSON.stringify({ h: await hmac(`${email}:${code}`), sent: Date.now(), tries: 0, consentAt: new Date().toISOString(), phone, name: tidy(body.name, 80) }), "EX", String(OTP_TTL)]);
+      await one(["SET", K.otp(id), JSON.stringify({ h: await hmac(`${email}:${code}`), sent: Date.now(), tries: 0, consentAt: phone ? new Date().toISOString() : "", phone, name: tidy(body.name, 80) }), "EX", String(OTP_TTL)]);
       return json({ ok: true, retry: COOLDOWN });
     }
 
@@ -114,8 +117,15 @@ export default async function handler(request) {
         rec.tries++; await one(["SET", K.otp(id), JSON.stringify(rec), "EX", String(OTP_TTL)]);
         return json({ error: `Mã chưa đúng. Bạn còn ${MAX_TRIES - rec.tries} lần thử.` }, 400);
       }
-      await one(["DEL", K.otp(id)]);
       let user = await loadUser(id), isNew = false; const now = new Date().toISOString();
+      if (!user && !rec.phone) { // email chưa có tài khoản và chưa khai số điện thoại: yêu cầu bổ sung, giữ nguyên mã để nhập lại một lần
+        const phone2 = normPhone(body.phone);
+        if (!phone2) return json({ need: "profile" });
+        if (!PHONE_RE.test(phone2)) return json({ error: "Nhập số điện thoại di động Việt Nam, ví dụ 0912345678." }, 400);
+        if (body.consent !== true) return json({ error: "Vui lòng đồng ý với cách chúng tôi xử lý thông tin để tiếp tục." }, 400);
+        rec.phone = phone2; rec.name = tidy(body.name, 80); rec.consentAt = now;
+      }
+      await one(["DEL", K.otp(id)]);
       if (!user) {
         isNew = true;
         const us = /^[a-z0-9_-]{1,30}$/.test(String(body.us || "")) ? String(body.us) : "";

@@ -20,25 +20,35 @@ export function AccountPage({ tab }: { tab: string }) {
 function AuthPanel() {
   const { t, lang } = useT();
   const { cfg, setUser, refresh } = useAccount();
-  const [step, setStep] = useState<"form" | "code">("form"), [email, setEmail] = useState(""), [phone, setPhone] = useState(""), [name, setName] = useState(""), [consent, setConsent] = useState(false), [code, setCode] = useState("");
-  const [busy, setBusy] = useState(false), [err, setErr] = useState(""), [wait, setWait] = useState(0);
+  const [mode, setMode] = useState<"login" | "reg">("login"), [step, setStep] = useState<"form" | "code">("form"), [email, setEmail] = useState(""), [phone, setPhone] = useState(""), [name, setName] = useState(""), [consent, setConsent] = useState(false), [code, setCode] = useState("");
+  const [need, setNeed] = useState(false), [busy, setBusy] = useState(false), [err, setErr] = useState(""), [wait, setWait] = useState(0);
   useEffect(() => { evt("reg_open"); }, []);
   useEffect(() => { if (wait <= 0) return; const id = window.setTimeout(() => setWait(wait - 1), 1000); return () => window.clearTimeout(id); }, [wait]);
   const send = async (e?: FormEvent) => {
     e?.preventDefault(); setBusy(true); setErr("");
-    try { const r = await api<{ retry?: number }>("request", { email, phone, name, consent, lang }); setStep("code"); setWait(r.retry ?? 45); evt("reg_start"); }
-    catch (x: any) { setErr(x.message || t("aErr")); if (x.retry) setWait(x.retry); } finally { setBusy(false); }
+    try {
+      // Đăng nhập: chỉ gửi email. Đăng ký: kèm số điện thoại, tên và đồng ý.
+      const r = await api<{ retry?: number }>("request", mode === "reg" ? { email, phone, name, consent, lang } : { email, lang });
+      setStep("code"); setWait(r.retry ?? 45); evt("reg_start");
+    } catch (x: any) { setErr(x.message || t("aErr")); if (x.retry) setWait(x.retry); } finally { setBusy(false); }
   };
   const verify = async (e: FormEvent) => {
     e.preventDefault(); setBusy(true); setErr("");
     try {
       let rv = 0; try { rv = Number(localStorage.getItem("profind.rv")) || 0; } catch { /* bỏ qua */ }
-      const r = await api<{ user: User; isNew: boolean }>("verify", { email, code, lang, rv, reason: sessionStorage.getItem("profind.reason") || "reg" });
-      setUser(r.user); await refresh(); evt(r.isNew ? "reg_done" : "login_done");
+      const r = await api<{ user?: User; isNew?: boolean; need?: string }>("verify", { email, code, lang, rv, reason: sessionStorage.getItem("profind.reason") || "reg", ...(need || mode === "reg" ? { phone, name, consent } : {}) });
+      if (r.need === "profile") { setNeed(true); return; } // email chưa có tài khoản: xin bổ sung số điện thoại
+      setUser(r.user!); await refresh(); evt(r.isNew ? "reg_done" : "login_done");
       const back = sessionStorage.getItem("profind.ret"); sessionStorage.removeItem("profind.ret"); sessionStorage.removeItem("profind.reason");
       location.hash = back && back.startsWith("#/") && !back.startsWith("#/tai-khoan") ? back : "#/tai-khoan";
     } catch (x: any) { setErr(x.message || t("aErr")); } finally { setBusy(false); }
   };
+  const emailField = <label className="sel"><span><Icon n="mail" size={14} />{t("aEmail")}</span><input type="email" required autoComplete="email" inputMode="email" value={email} onChange={(e) => setEmail(e.target.value)} maxLength={254} /></label>;
+  const profileFields = <>
+    <label className="sel"><span><Icon n="phone" size={14} />{t("aPhone")}</span><input type="tel" required autoComplete="tel" inputMode="tel" value={phone} onChange={(e) => setPhone(e.target.value)} maxLength={20} placeholder="09xx xxx xxx" /><small className="meta">{t("aPhoneHint")}</small></label>
+    <label className="sel"><span><Icon n="user" size={14} />{t("aName")}</span><input autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} maxLength={80} /></label>
+    <label className="chk consent"><input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} required /><span>{t("aConsent")}</span></label>
+  </>;
   return (
     <article className="auth">
       <div className="auth-side">
@@ -48,24 +58,28 @@ function AuthPanel() {
         <ul className="perks">{(["perk1", "perk2", "perk3", "perk4"] as const).map((k) => <li key={k}><Icon n="check" size={18} />{t(k)}</li>)}</ul>
         <p className="pledge"><Icon n="shield" size={16} /> {cfg?.pledge?.[lang]}</p>
       </div>
-      {step === "form" ? (
-        <form className="auth-form card" onSubmit={send}>
-          <label className="sel"><span><Icon n="mail" size={14} />{t("aEmail")}</span><input type="email" required autoComplete="email" inputMode="email" value={email} onChange={(e) => setEmail(e.target.value)} maxLength={254} /></label>
-          <label className="sel"><span><Icon n="phone" size={14} />{t("aPhone")}</span><input type="tel" required autoComplete="tel" inputMode="tel" value={phone} onChange={(e) => setPhone(e.target.value)} maxLength={20} placeholder="09xx xxx xxx" /><small className="meta">{t("aPhoneHint")}</small></label>
-          <label className="sel"><span><Icon n="user" size={14} />{t("aName")}</span><input autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} maxLength={80} /></label>
-          <label className="chk consent"><input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} required /><span>{t("aConsent")}</span></label>
-          <div role="alert">{err && <p className="banner demo">{err}</p>}</div>
-          <button className="primary" disabled={busy || wait > 0 && false}>{busy ? t("aSending") : t("aSend")}</button>
-        </form>
-      ) : (
-        <form className="auth-form card" onSubmit={verify}>
-          <p className="banner"><Icon n="mail" />{t("aCodeSent", { e: email })}</p>
-          <label className="sel"><span>{t("aCode")}</span><input className="otp" inputMode="numeric" autoComplete="one-time-code" pattern="\d{6}" maxLength={6} required autoFocus value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} /></label>
-          <div role="alert">{err && <p className="banner demo">{err}</p>}</div>
-          <button className="primary" disabled={busy || code.length !== 6}>{busy ? t("aSending") : t("aVerify")}</button>
-          <p className="auth-links"><button type="button" className="linkb" disabled={wait > 0 || busy} onClick={() => void send()}>{wait > 0 ? t("aResendIn", { s: wait }) : t("aResend")}</button><button type="button" className="linkb" onClick={() => { setStep("form"); setCode(""); setErr(""); }}>{t("aChange")}</button></p>
-        </form>
-      )}
+      <div className="auth-box">
+        {step === "form" && <div className="seg auth-tabs" role="tablist" aria-label={t("accTitle")}>{(["login", "reg"] as const).map((m) => <button key={m} role="tab" aria-selected={mode === m} aria-pressed={mode === m} onClick={() => { setMode(m); setErr(""); }}>{t(m === "login" ? "loginTab" : "regTab")}</button>)}</div>}
+        {step === "form" ? (
+          <form className="auth-form card" onSubmit={send}>
+            {mode === "login" && <p className="meta">{t("loginLead")}</p>}
+            {emailField}
+            {mode === "reg" && profileFields}
+            <div role="alert">{err && <p className="banner demo">{err}</p>}</div>
+            <button className="primary" disabled={busy}>{busy ? t("aSending") : t("aSend")}</button>
+            <p className="meta auth-sw">{mode === "login" ? <>{t("noAcc")} <button type="button" className="linkb" onClick={() => setMode("reg")}>{t("regTab")}</button></> : <>{t("haveAcc")} <button type="button" className="linkb" onClick={() => setMode("login")}>{t("loginTab")}</button></>}</p>
+          </form>
+        ) : (
+          <form className="auth-form card" onSubmit={verify}>
+            <p className="banner"><Icon n="mail" />{t("aCodeSent", { e: email })}</p>
+            <label className="sel"><span>{t("aCode")}</span><input className="otp" inputMode="numeric" autoComplete="one-time-code" pattern="\d{6}" maxLength={6} required autoFocus value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} /></label>
+            {need && mode === "login" && <><p className="banner demo" role="note">{t("needProfile")}</p>{profileFields}</>}
+            <div role="alert">{err && <p className="banner demo">{err}</p>}</div>
+            <button className="primary" disabled={busy || code.length !== 6}>{busy ? t("aSending") : t("aVerify")}</button>
+            <p className="auth-links"><button type="button" className="linkb" disabled={wait > 0 || busy} onClick={() => void send()}>{wait > 0 ? t("aResendIn", { s: wait }) : t("aResend")}</button><button type="button" className="linkb" onClick={() => { setStep("form"); setCode(""); setErr(""); setNeed(false); }}>{t("aChange")}</button></p>
+          </form>
+        )}
+      </div>
     </article>
   );
 }
