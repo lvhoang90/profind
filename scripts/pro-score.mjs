@@ -25,7 +25,7 @@ function pctMap(items, key) {
 }
 
 export function computePro(authors, per, year) {
-  const pool = authors.filter((a) => a.foreign === false && !a.suspect && a.worksCount > 0);
+  const pool = authors.filter((a) => a.rankable && a.worksCount > 0);
   const field = (a) => a.disciplines?.[0] ?? "_";
   // Trần trích dẫn mỗi công trình = P99 của ngành, để một bài nhóm lớn không kéo cả hồ sơ.
   const byF = new Map(); for (const a of pool) { const f = field(a); if (!byF.has(f)) byF.set(f, []); byF.get(f).push(a); }

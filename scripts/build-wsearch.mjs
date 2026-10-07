@@ -5,7 +5,7 @@ export const norm = (s) => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, 
 export const shardOf = (t, n = 128) => { let h = 5381; for (let i = 0; i < t.length; i++) h = ((h * 33) ^ t.charCodeAt(i)) >>> 0; return h % n; };
 const CH = 500, NS = 128;
 const P = JSON.parse(readFileSync("public/data/profind.json", "utf8"));
-const ok = new Map(P.authors.filter((a) => a.foreign === false && !a.suspect).map((a) => [a.id, a.name]));
+const ok = new Map(P.authors.filter((a) => a.foreign === false && !a.suspect && a.rankable).map((a) => [a.id, a.name]));
 const best = new Map();
 for (const f of readdirSync("public/data/works")) {
   const id = f.replace(".json", ""); if (!ok.has(id)) continue;
