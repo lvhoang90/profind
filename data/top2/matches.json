@@ -76,6 +76,20 @@
   "name": "Liamputtong, Pranee",
   "inst": "VinUniversity"
  },
+ "A5029814958": {
+  "rank": 46365,
+  "field": "Engineering",
+  "subfield": "Geological & Geomatics Engineering",
+  "name": "Pham, Binh Thai",
+  "inst": "Đại học Công nghệ Giao thông vận tải"
+ },
+ "A5043437925": {
+  "rank": 49045,
+  "field": "Engineering",
+  "subfield": "Environmental Sciences",
+  "name": "Tran, Hai Nguyen",
+  "inst": "Duy Tan University"
+ },
  "A5031947253": {
   "rank": 51332,
   "field": "Engineering",
@@ -103,6 +117,13 @@
   "subfield": "Energy",
   "name": "Mostafaeipour, Ali",
   "inst": "Duy Tan University"
+ },
+ "A5066785468": {
+  "rank": 63632,
+  "field": "Psychology & Cognitive Sciences",
+  "subfield": "Clinical Psychology",
+  "name": "Arrindell, Willem Alexander",
+  "inst": "University of Social Sciences and Humanities, Ho Chi Minh City"
  },
  "A5103242408": {
   "rank": 63779,
@@ -188,12 +209,12 @@
   "name": "Nguyen, Thang Trung",
   "inst": "Ton-Duc-Thang University"
  },
- "A5100702854": {
-  "rank": 207166,
-  "field": "Engineering",
-  "subfield": "Materials",
-  "name": "Nguyen, Trung Kien",
-  "inst": "Ho Chi Minh City University of Technology - HUTECH"
+ "A5030939796": {
+  "rank": 215936,
+  "field": "Enabling & Strategic Technologies",
+  "subfield": "Energy",
+  "name": "Bach, Quang-Vu",
+  "inst": "Duy Tan University"
  },
  "A5054227606": {
   "rank": 240261,
@@ -209,13 +230,6 @@
   "name": "Thai, Chien H.",
   "inst": "Ton-Duc-Thang University"
  },
- "A5086748255": {
-  "rank": 241993,
-  "field": "Physics & Astronomy",
-  "subfield": "General Physics",
-  "name": "Van Hoang, Vo Van",
-  "inst": "Ho Chi Minh City University of Technology - HCMUT"
- },
  "A5084111028": {
   "rank": 244739,
   "field": "Engineering",
@@ -230,6 +244,13 @@
   "name": "Chu, Dinh Toi",
   "inst": "Vietnam National University, Hanoi"
  },
+ "A5062896363": {
+  "rank": 268264,
+  "field": "Enabling & Strategic Technologies",
+  "subfield": "Energy",
+  "name": "Nguyen, Xuan Phuong",
+  "inst": "Ho Chi Minh City University of Transport"
+ },
  "A5084344101": {
   "rank": 277879,
   "field": "Information & Communication Technologies",
@@ -237,12 +258,40 @@
   "name": "Nguyen, Truong Khang",
   "inst": "Van Lang University"
  },
+ "A5015867577": {
+  "rank": 290566,
+  "field": "Enabling & Strategic Technologies",
+  "subfield": "Energy",
+  "name": "Pham, Van Viet",
+  "inst": "Vietnam Maritime University"
+ },
+ "A5039201565": {
+  "rank": 296857,
+  "field": "Engineering",
+  "subfield": "Mechanical Engineering & Transports",
+  "name": "Le, Minh Quy",
+  "inst": "Hanoi University of Science and Technology"
+ },
  "A5067709216": {
   "rank": 303903,
   "field": "Engineering",
   "subfield": "Mechanical Engineering & Transports",
   "name": "Le, Khanh Chau",
   "inst": "Ton-Duc-Thang University"
+ },
+ "A5113538341": {
+  "rank": 314873,
+  "field": "Clinical Medicine",
+  "subfield": "Surgery",
+  "name": "Bretagnol, Fréd́eric",
+  "inst": "Saint Paul University Hospital"
+ },
+ "A5069521199": {
+  "rank": 329837,
+  "field": "Built Environment & Design",
+  "subfield": "Design Practice & Management",
+  "name": "Hasanipanah, Mahdi",
+  "inst": "Duy Tan University"
  },
  "A5016019414": {
   "rank": 335347,
@@ -258,18 +307,32 @@
   "name": "Le, Hoang Phong",
   "inst": "Ho Chi Minh City University of Law"
  },
- "A5053403067": {
-  "rank": 345295,
-  "field": "Information & Communication Technologies",
-  "subfield": "Artificial Intelligence & Image Processing",
-  "name": "Vo, Bay",
-  "inst": "Ho Chi Minh City University of Technology - HUTECH"
+ "A5089119289": {
+  "rank": 360375,
+  "field": "Engineering",
+  "subfield": "Civil Engineering",
+  "name": "Pham, Van Vinh",
+  "inst": "Le Quy Don Technical University"
  },
  "A5005064460": {
   "rank": 363301,
   "field": "Enabling & Strategic Technologies",
   "subfield": "Energy",
   "name": "Kathirvel, Brindhadevi",
+  "inst": "Ton-Duc-Thang University"
+ },
+ "A5059172603": {
+  "rank": 365785,
+  "field": "Information & Communication Technologies",
+  "subfield": "Artificial Intelligence & Image Processing",
+  "name": "Tran, Van Quan",
+  "inst": "Đại học Công nghệ Giao thông vận tải"
+ },
+ "A5061746663": {
+  "rank": 379868,
+  "field": "Engineering",
+  "subfield": "Mechanical Engineering & Transports",
+  "name": "Pham, Duc Chinh",
   "inst": "Ton-Duc-Thang University"
  },
  "A5084882423": {
@@ -279,12 +342,54 @@
   "name": "Anh, Ho Pham Huy",
   "inst": "Viet Nam National University Ho Chi Minh City"
  },
+ "A5027840151": {
+  "rank": 401615,
+  "field": "Enabling & Strategic Technologies",
+  "subfield": "Biotechnology",
+  "name": "Waché, Yves",
+  "inst": "Hanoi University of Science and Technology"
+ },
  "A5100639765": {
   "rank": 418156,
   "field": "Enabling & Strategic Technologies",
   "subfield": "Optoelectronics & Photonics",
   "name": "Amiri, Iraj Sadegh",
   "inst": "Ton-Duc-Thang University"
+ },
+ "A5000347582": {
+  "rank": 423493,
+  "field": "Engineering",
+  "subfield": "Mechanical Engineering & Transports",
+  "name": "Monchiet, Vincent",
+  "inst": "Đại học Công nghệ Giao thông vận tải"
+ },
+ "A5036649859": {
+  "rank": 431568,
+  "field": "Enabling & Strategic Technologies",
+  "subfield": "Materials",
+  "name": "van Tung, Hoang Van",
+  "inst": "Hanoi Architectural University"
+ },
+ "A5005576230": {
+  "rank": 468703,
+  "field": "Engineering",
+  "subfield": "Mechanical Engineering & Transports",
+  "name": "Vinh, Pham Chi",
+  "inst": "Vietnam National University, Hanoi"
+ },
+ "A5023041667": {
+  "rank": 513783,
+  "field": "Information & Communication Technologies",
+  "subfield": "Artificial Intelligence & Image Processing",
+  "name": "Dac-Nhuong, Le",
+  "inst": "Haiphong University"
+ },
+ "A5064619766": {
+  "rank": 562161,
+  "field": "Earth & Environmental Sciences",
+  "subfield": "Mining & Metallurgy",
+  "name": "Xuan Nam, Bui",
+  "inst": "Hanoi University of Mining and Geology"
  },
  "A5089071153": {
   "rank": 741671,

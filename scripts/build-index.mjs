@@ -99,7 +99,8 @@ const outAuthors = authors.map((a) => {
   return { id: a.id, name: cleanName(a.name), orcid: a.orcid, institutions: a.institutions, disciplines, demo: !!a.demo, claimed: a.claimed,
     top2: TOP2[a.id] ? { rank: TOP2[a.id].rank, field: TOP2[a.id].field } : null,
     // foreign: true = có đơn vị ngoài VN; false = chỉ đơn vị VN; null = chưa biết (chưa chạy enrich-authors.mjs, hoặc OpenAlex không ghi quốc gia nào).
-    foreign: meta && meta.countries.length ? meta.countries.some((c) => c !== "VN") : null,
+    // Người có tên trong danh sách Top 2% mục "Việt Nam" (đơn vị công tác tại VN theo Elsevier) luôn được coi là đơn vị trong nước.
+    foreign: TOP2[a.id] ? false : meta && meta.countries.length ? meta.countries.some((c) => c !== "VN") : null,
     // suspect: hồ sơ OpenAlex nhiều khả năng gộp nhầm nhiều người (>= 500 công trình, > 150 công trình/năm, hoặc >= 5 đơn vị); ẩn khỏi bảng mặc định và không tính thứ hạng.
     suspect: ws.length >= 500 || ws.length / span > 150 || a.institutions.length >= 5,
     worksCount: ws.length, countedWorks: ws.filter((w) => w.counted).length, totalScore: Math.round(ws.reduce((s, w) => s + (w.score ?? 0), 0) * 100) / 100,

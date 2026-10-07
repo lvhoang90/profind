@@ -1,6 +1,113 @@
 {
   "_note": "Tác giả được ghim: luôn nạp theo ORCID dù không nằm trong số tác giả nhiều công trình nhất của đơn vị. Chỉ ghim khi chính người đó hoặc người quản lý dự án yêu cầu; dữ liệu công khai (OpenAlex/ORCID). 'institution' = mã đơn vị trong institutions.json dùng khi OpenAlex không cho biết đơn vị.",
   "authors": [
-    { "orcid": "0000-0002-3032-0713", "name": "Trần Văn Đạt", "institution": "tag", "requestedBy": "người quản lý dự án, 07/10/2026" }
+    {
+      "orcid": "0000-0002-3032-0713",
+      "name": "Trần Văn Đạt",
+      "institution": "tag",
+      "requestedBy": "người quản lý dự án, 07/10/2026"
+    },
+    {
+      "oaId": "A5029814958",
+      "name": "Binh Thai Pham",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5043437925",
+      "name": "Hai Nguyen Tran",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5066785468",
+      "name": "Willem Alexander Arrindell",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5030939796",
+      "name": "Quang‐Vu Bach",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5062896363",
+      "name": "Xuân Phương Nguyễn",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5015867577",
+      "name": "Van Viet Pham",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5039201565",
+      "name": "Minh-Quy Le",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5113538341",
+      "name": "Frederic Bretagnol",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5069521199",
+      "name": "Mahdi Hasanipanah",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5089119289",
+      "name": "Phạm Văn Vĩnh",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5059172603",
+      "name": "Van Quan Tran",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5061746663",
+      "name": "Pham Duc Chinh",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5027840151",
+      "name": "Yves Waché",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5000347582",
+      "name": "Vincent Monchiet",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5036649859",
+      "name": "Hoang Van Tung",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5005576230",
+      "name": "Pham Chi Vinh",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5023041667",
+      "name": "Dac‐Nhuong Le",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5064619766",
+      "name": "Xuan-Nam Bui",
+      "requestedBy": "danh sách Top 2% (Việt Nam), tự động dò"
+    },
+    {
+      "oaId": "A5084463306",
+      "name": "Võ Tòng Xuân",
+      "institution": "tag",
+      "requestedBy": "người quản lý dự án, 07/10/2026 (GS. Võ Tòng Xuân)"
+    },
+    {
+      "oaId": "A5066728998",
+      "name": "Võ Tòng Xuân (hồ sơ An Giang)",
+      "institution": "tag",
+      "requestedBy": "người quản lý dự án, 07/10/2026 (GS. Võ Tòng Xuân)"
+    }
   ]
 }
