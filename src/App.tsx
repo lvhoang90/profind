@@ -186,7 +186,7 @@ function List({ d, query }: { d: Data; query: string }) {
   // Chỉ liệt kê đơn vị đang có tác giả (trong phạm vi đã chọn), kèm số tác giả; chọn từ danh sách, không gõ tự do.
   const instOpts = useMemo(() => {
     const c = new Map<string, number>();
-    for (const a of d.authors) { if (scope === "vn" && (a.foreign !== false || a.suspect)) continue; for (const i of a.institutions) c.set(i, (c.get(i) ?? 0) + 1); }
+    for (const a of d.authors) { if (scope === "vn" && a.suspect) continue; for (const i of a.institutions) c.set(i, (c.get(i) ?? 0) + 1); }
     return d.institutions.filter((i) => c.has(i.id)).sort((a, b) => a.name.localeCompare(b.name, "vi")).map((i) => [i.id, `${instLabel(i, lang)} (${num(c.get(i.id)!)})`] as string[]);
   }, [d, scope, lang, num]);
   // Chuỗi tìm theo tên tạp chí/ISSN nằm ở tệp riêng, chỉ tải khi người dùng bắt đầu gõ.
@@ -217,7 +217,7 @@ function List({ d, query }: { d: Data; query: string }) {
     const toks = norm(dq).split(" ").filter(Boolean);
     const rawId = dq.replace(/[\s-]/g, "").toLowerCase(), isId = /^[0-9x]{6,}$/.test(rawId);
     return d.authors.filter((a) => {
-      if (scope === "vn" && (a.foreign !== false || a.suspect)) return false;
+      if (scope === "vn" && a.suspect) return false;
       if (disc && !a.disciplines.includes(disc)) return false;
       if (instSel && !a.institutions.includes(instSel)) return false;
       if (type && !a.institutions.some((i) => instById.get(i)?.type === type)) return false;
@@ -245,7 +245,7 @@ function List({ d, query }: { d: Data; query: string }) {
   useEffect(() => setPage(0), [dq, disc, type, instSel, sort, dir, scope, top2only]);
   // Số liệu cho trang chủ (phạm vi Việt Nam): ngành và đơn vị nổi bật.
   const home$ = useMemo(() => {
-    const vn = d.authors.filter((a) => a.foreign === false && !a.suspect), dc = new Map<string, number>(), ic = new Map<string, number>();
+    const vn = d.authors.filter((a) => !a.suspect), dc = new Map<string, number>(), ic = new Map<string, number>();
     for (const a of vn) { for (const x of a.disciplines) dc.set(x, (dc.get(x) ?? 0) + 1); for (const x of a.institutions) ic.set(x, (ic.get(x) ?? 0) + 1); }
     return { honor: vn.filter((a) => a.proRank != null && a.proRank <= 10).sort((x, y) => (x.proRank ?? 99) - (y.proRank ?? 99)), n: vn.length, top2: vn.filter((a) => a.top2).length, fields: [...dc].sort((a, b) => b[1] - a[1]).slice(0, 10), insts: [...ic].sort((a, b) => b[1] - a[1]).slice(0, 10), nInst: ic.size };
   }, [d]);
@@ -342,7 +342,7 @@ function List({ d, query }: { d: Data; query: string }) {
           <tbody>{rows.slice(page * PAGE, (page + 1) * PAGE).map((a, idx) => { const pos = page * PAGE + idx + 1, medal = RANKED.includes(sort) && dir === -1; return (
             <tr key={a.id}>
               <td className="num rankc" data-l={t("stt")}><span className={`rk r${medal ? Math.min(pos, 4) : 4}`}>{num(pos)}</span></td>
-              <td className="who"><StarBtn className="inrow" k={`a|${a.id}`} meta={{ t: a.name, s: a.institutions.slice(0, 2).map((i) => instLabel(instById.get(i), lang, i)).join(", "), sc: a.pro ?? undefined, rk: a.proRank ?? undefined }} /><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a><ProBadge rank={a.proRank} size={24} className="inrow" />{a.dual && <span className="bigtag dual" title={t("dualTag")}><Icon n="link" size={12} /></span>}{a.bigFlag && <span className="bigtag" title={t("bigTitle") + ": " + t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}><Icon n="users" size={12} /></span>}{a.claimed && <><Icon n="check" size={14} className="ok" /><span className="sr"> {t("claimedSr")}</span></>}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}<Top2Tag a={a} cls="top2" /><div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
+              <td className="who"><StarBtn className="inrow" k={`a|${a.id}`} meta={{ t: a.name, s: a.institutions.slice(0, 2).map((i) => instLabel(instById.get(i), lang, i)).join(", "), sc: a.pro ?? undefined, rk: a.proRank ?? undefined }} /><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a><ProBadge rank={a.proRank} size={24} className="inrow" />{a.bigFlag && <span className="bigtag" title={t("bigTitle") + ": " + t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}><Icon n="users" size={12} /></span>}{a.claimed && <><Icon n="check" size={14} className="ok" /><span className="sr"> {t("claimedSr")}</span></>}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}<Top2Tag a={a} cls="top2" /><div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
               <td data-l={t("unit")}>{a.institutions.map((i) => instLabel(instById.get(i), lang, i)).join(", ")}</td>
               <td className={`num${a.worksCount >= 1000 ? " lg" : ""}`} data-l={t("works")}>{num(a.worksCount)}</td><td className="num" data-l={t("scoreShort")}><span className="score">{a.pro == null ? "-" : num(a.pro, 1)}</span></td><td className={`num${a.citations >= 100000 ? " lg" : ""}`} data-l={t("cit")}>{num(a.citations)}</td>
               <td className="meta yrs" data-l={t("years")}>{a.firstYear ?? "-"}–{a.lastYear ?? "-"}</td>
@@ -428,7 +428,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
         <div className="av" style={{ background: `linear-gradient(135deg,hsl(${hue} 75% 52%),hsl(${(hue + 55) % 360} 80% 42%))` }} aria-hidden="true">{initials(a.name)}</div>
         <div className="hero-main">
           <h1 className="au">{a.name}</h1>
-          <p className="badges">{a.foreign && <span className="badge warnb">{t("foreignTag")}</span>}{a.dual && <span className="badge warnb" title={a.rankable === false ? t("dualNoRank") : undefined}>{t("dualTag")}{a.rankable === false ? ` · ${t("dualNoRankShort")}` : ""}</span>}{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}<Top2Tag a={a} cls="badge top2b" />{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</p>
+          <p className="badges">{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}<Top2Tag a={a} cls="badge top2b" />{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</p>
           <ul className="chips">{(allInst ? inst : inst.slice(0, 4)).map((i) => <li key={i.id}><Icon n="building" size={14} />{instLabel(i, lang)}</li>)}{inst.length > 4 && <li className="more"><button type="button" onClick={() => setAllInst(!allInst)} aria-expanded={allInst}>{allInst ? t("instLess") : t("instMore", { n: num(inst.length - 4) })}</button></li>}{a.scholar && <li className="scholar"><a href={`https://scholar.google.com/citations?user=${a.scholar}&hl=${lang === "vi" ? "vi" : "en"}`} target="_blank" rel="noopener">Google Scholar<span className="sr"> {t("newTab")}</span></a></li>}{a.orcid && <li className="orcid"><a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}<span className="sr"> {t("newTab")}</span></a></li>}</ul>
           <ProBadgeTag rank={a.proRank} />
           {a.bigFlag && <p className="bigflag" role="note"><Icon n="users" size={18} /><span><b>{t("bigTitle")}</b> {t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}</span></p>}

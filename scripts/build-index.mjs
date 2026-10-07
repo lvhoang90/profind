@@ -131,7 +131,8 @@ const outAuthors = authors.map((a) => {
 // Thứ hạng chỉ tính trong tập đủ điều kiện (đơn vị tại Việt Nam, không nghi gộp nhầm) = đúng tập danh sách mặc định; đồng hạng cùng số (hạng thi đấu: 1,2,2,4).
 // Người ngoài tập (nước ngoài, nghi gộp nhầm, chưa biết) có hạng null, giao diện hiện "-".
 const CONFIRMED = new Set(existsSync("data/vn-confirmed.json") ? rd("data/vn-confirmed.json").ids ?? [] : []), EXCLUDED = new Set(existsSync("data/vn-excluded.json") ? rd("data/vn-excluded.json").ids ?? [] : []);
-for (const a of outAuthors) { a.rankable = a.foreign === false && !a.suspect && !EXCLUDED.has(a.id) && (CONFIRMED.has(a.id) || !a.dual || (a.nCountries ?? 0) <= 2); if (CONFIRMED.has(a.id) && a.foreign !== true) a.dual = false; }
+// Quy ước hiện hành: mọi hồ sơ gắn với ít nhất một trường/viện trong danh sách đơn vị của Việt Nam đều được hiển thị và xếp hạng, không phân biệt quốc tịch; chỉ loại hồ sơ nghi gộp nhầm (suspect) và hồ sơ trong data/vn-excluded.json.
+for (const a of outAuthors) a.rankable = !a.suspect && !EXCLUDED.has(a.id);
 const pool = outAuthors.filter((a) => a.rankable && a.worksCount > 0);
 const rank = (key, out) => { const o = [...pool].sort((a, b) => b[key] - a[key]); o.forEach((a, i, arr) => { a[out] = i > 0 && arr[i - 1][key] === a[key] ? arr[i - 1][out] : i + 1; }); };
 for (const a of outAuthors) { a.rankScore = a.rankWorks = a.rankCit = null; }
