@@ -43,6 +43,7 @@ export function AboutPage({ section }: { section: string }) {
       <li><b>Top 2% scientists list</b> (Elsevier), see the Licences section.</li>
       <li><b>Google Scholar links</b> provided by the authors. ProFind does not scrape Google Scholar.</li></ul> },
     { id: "diem", icon: "chart", h: vi ? "PRO-SCORE: cách tính và giới hạn" : "PRO-SCORE: method and limits", body: vi ? <>
+      <p><a className="chip" href="#/pro-score">Xem trang đầy đủ về PRO-SCORE →</a></p>
       <p><b>PRO-SCORE là chỉ số tham khảo riêng của ProFind (thang 0 đến 100), không phải xếp hạng chính thức.</b> Chỉ số do hội đồng giả lập 10 chuyên gia (thư mục học, thống kê, y sinh, kỹ thuật, khoa học tự nhiên, khoa học xã hội, quản lý nghiên cứu, nhà khoa học trẻ, liêm chính học thuật, chất lượng dữ liệu) phản biện nhiều vòng, theo tinh thần DORA và Leiden Manifesto: nhiều chỉ báo, minh bạch, chuẩn hóa theo ngành, không dùng hệ số tạp chí làm thước đo chính.</p>
       <pre className="formula">PRO-SCORE = 100 × [ 0,42 Tác động + 0,10 Sản lượng + 0,10 Chủ đạo + 0,10 Chất lượng + 0,17 Đà phát triển + 0,08 Đều đặn + 0,03 Ghi nhận ]</pre>
       <ul>
@@ -55,6 +56,7 @@ export function AboutPage({ section }: { section: string }) {
         <li><b>Ghi nhận (3%)</b>: thuộc danh sách Top 2% thế giới của Elsevier.</li></ul>
       <p>Mọi chỉ báo được quy về <b>bách phân vị trong cùng ngành chính</b> (ngành dưới 50 người trộn với toàn hệ thống). Hạng chỉ xếp cho hồ sơ có từ <b>10 công trình và hoạt động từ 3 năm</b>, tự tính lại mỗi lần dữ liệu cập nhật. Huy hiệu: <b>Tinh hoa</b> (Top 10), <b>Xuất sắc</b> (Top 50), <b>Ưu tú</b> (Top 100), <b>Nổi bật</b> (Top 500), <b>Tiêu biểu</b> (Top 1000).</p>
       <p><b>Giới hạn:</b> OpenAlex chưa cho số tác giả mỗi công trình nên chưa chia trích dẫn theo đóng góp; chưa có năm bắt đầu sự nghiệp để chuẩn hóa theo thế hệ; hạng Q và vai trò chỉ có ở một phần công trình; sách, kỷ yếu và bằng sáng chế chưa được tính; hồ sơ có thể gộp nhầm hoặc tách đôi một người (hồ sơ nghi gộp nhầm bị loại khỏi xếp hạng). Công thức sẽ được cải tiến và công bố phiên bản mới khi có thêm dữ liệu; góp ý qua mục Liên hệ.</p></> : <>
+      <p><a className="chip" href="#/pro-score">Open the full PRO-SCORE page →</a></p>
       <p><b>PRO-SCORE is ProFind’s own reference index (scale 0 to 100), not an official ranking.</b> It was stress-tested by a simulated panel of 10 experts (bibliometrics, statistics, life sciences, engineering, natural sciences, social sciences, research management, early-career researchers, research integrity, data quality) in the spirit of DORA and the Leiden Manifesto: several indicators, transparency, field normalisation, no journal-level metric as the main yardstick.</p>
       <pre className="formula">PRO-SCORE = 100 × [ 0.42 Impact + 0.10 Output + 0.10 Leadership + 0.10 Quality + 0.17 Momentum + 0.08 Consistency + 0.03 Recognition ]</pre>
       <ul>
