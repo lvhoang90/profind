@@ -275,15 +275,24 @@ export default async function handler(request) {
     // ---------------- Quản trị ----------------
     if (op.startsWith("admin-") && request.method === "GET") {
       const bad = needAdmin(); if (bad) return bad;
-      const ids = (await one(["SMEMBERS", K.users])) || [];
-      const raw = await store.run(ids.flatMap((id) => [["GET", K.user(id)], ["HGETALL", K.cnt(id)], ["HLEN", K.fav(id)], ["HLEN", K.ss(id)]]));
-      const list = [];
-      ids.forEach((id, i) => {
-        let u = null; try { u = raw[i * 4] ? JSON.parse(raw[i * 4]) : null; } catch { /* bỏ qua */ }
-        if (!u) return;
-        const p = pub(u, pairs(raw[i * 4 + 1])); const favs = Number(raw[i * 4 + 2] || 0);
-        list.push({ ...p, favs, searches: Number(raw[i * 4 + 3] || 0), score: activityScore(p.counts, favs), eco: p.hops.edufind + p.hops.ami + p.hops.may });
-      });
+      // Bộ nhớ đệm ngắn (20 giây) trong từng phiên bản Edge: chuyển tab hay tải lại liên tục không phải đọc lại toàn bộ kho. Không đặt trong CDN vì dữ liệu riêng tư.
+      const cache = (globalThis.__pfAdmin ??= new Map()), ck = `${op}?${url.searchParams.toString()}`, hit = cache.get(ck);
+      if (hit && Date.now() - hit.t < 20000 && op !== "admin-csv") return json(hit.v, 200, { "x-cache": "hit" });
+      const reply = (v) => { cache.set(ck, { t: Date.now(), v }); if (cache.size > 60) cache.delete(cache.keys().next().value); return json(v); };
+      // Danh sách người dùng chỉ đọc khi tab cần (tổng quan, người dùng, CSV); các tab truy cập và nội dung không đụng tới.
+      let listP = null;
+      const loadList = () => (listP ??= (async () => {
+        const ids = (await one(["SMEMBERS", K.users])) || [];
+        const raw = await store.run(ids.flatMap((id) => [["GET", K.user(id)], ["HGETALL", K.cnt(id)], ["HLEN", K.fav(id)], ["HLEN", K.ss(id)]]));
+        const list = [];
+        ids.forEach((id, i) => {
+          let u = null; try { u = raw[i * 4] ? JSON.parse(raw[i * 4]) : null; } catch { /* bỏ qua */ }
+          if (!u) return;
+          const p = pub(u, pairs(raw[i * 4 + 1])); const favs = Number(raw[i * 4 + 2] || 0);
+          list.push({ ...p, favs, searches: Number(raw[i * 4 + 3] || 0), score: activityScore(p.counts, favs), eco: p.hops.edufind + p.hops.ami + p.hops.may });
+        });
+        return list;
+      })());
       const SORT_KEYS = { score: (u) => u.score, days: (u) => u.counts.days, visits: (u) => u.counts.visits, favs: (u) => u.favs, eco: (u) => u.eco, profile: (u) => u.profilePct, lastSeen: (u) => String(u.lastSeen || ""), createdAt: (u) => String(u.createdAt || ""), name: (u) => String(u.name || "").toLowerCase(), email: (u) => String(u.email || "").toLowerCase(), org: (u) => String(u.org || "").toLowerCase() };
       const TEXT_KEYS = new Set(["name", "email", "org"]);
       const sortKey = SORT_KEYS[url.searchParams.get("sort")] ? url.searchParams.get("sort") : "score";
@@ -295,24 +304,24 @@ export default async function handler(request) {
         return c ? (sortAsc ? c : -c) : (b.score - a.score) || String(a.email).localeCompare(String(b.email));
       };
       const SEGS = { all: () => true, noprofile: (u) => u.profilePct <= 40, full: (u) => u.profilePct === 100, edufind: (u) => u.hops.edufind > 0, ami: (u) => u.hops.ami > 0, may: (u) => u.hops.may > 0, noeco: (u) => u.eco === 0, saver: (u) => u.favs > 0, oneday: (u) => u.counts.days <= 1 };
-      const segCounts = Object.fromEntries(Object.entries(SEGS).map(([k, f]) => [k, list.filter(f).length]));
-      const filtered = () => { const q = String(url.searchParams.get("q") || "").toLowerCase().trim(), f = SEGS[url.searchParams.get("f")] || SEGS.all; return list.filter((u) => f(u) && (!q || [u.email, u.name, u.job, u.org, u.address, u.phone].join(" ").toLowerCase().includes(q))).sort(sort); };
+      const segCounts = (list) => Object.fromEntries(Object.entries(SEGS).map(([k, f]) => [k, list.filter(f).length]));
+      const filtered = (list) => { const q = String(url.searchParams.get("q") || "").toLowerCase().trim(), f = SEGS[url.searchParams.get("f")] || SEGS.all; return list.filter((u) => f(u) && (!q || [u.email, u.name, u.job, u.org, u.address, u.phone].join(" ").toLowerCase().includes(q))).sort(sort); };
       const sum = (a) => a.reduce((x, y) => x + Number(y || 0), 0);
 
       if (op === "admin-users") {
-        const out = filtered(), per = Math.max(5, Math.min(100, Number(url.searchParams.get("per")) || 25)), pages = Math.max(1, Math.ceil(out.length / per));
+        const list = await loadList(), out = filtered(list), per = Math.max(5, Math.min(100, Number(url.searchParams.get("per")) || 25)), pages = Math.max(1, Math.ceil(out.length / per));
         const page = Math.max(1, Math.min(pages, Number(url.searchParams.get("page")) || 1));
-        return json({ total: out.length, page, pages, per, seg: segCounts, users: out.slice((page - 1) * per, page * per) });
+        return reply({ total: out.length, page, pages, per, seg: segCounts(list), users: out.slice((page - 1) * per, page * per) });
       }
       if (op === "admin-summary") {
         const now = Date.now(), week = 7 * 864e5, dayList = (n) => Array.from({ length: n }, (_, i) => dayKey(new Date(now - (n - 1 - i) * 864e5)));
         const days = dayList(14), signAt = (u) => dayKey(new Date(u.createdAt)), dayN = (ds) => ds.map((d) => ({ d, n: list.filter((u) => signAt(u) === d).length }));
-        const au = await store.run(days.map((d) => ["SCARD", K.au(d)]));
+        const [list, au] = await Promise.all([loadList(), store.run(days.map((d) => ["SCARD", K.au(d)]))]);
         const cnt = (key) => { const m = {}; for (const u of list) { const v = (u[key] || "").trim() || "(chưa khai)"; m[v] = (m[v] || 0) + 1; } return Object.entries(m).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([name, n]) => ({ name, n })); };
         const old = (d) => list.filter((u) => now - new Date(u.createdAt) >= d * 864e5), back = (arr) => arr.filter((u) => u.counts.days >= 2).length;
         const byReason = {}; for (const u of list) if (u.regReason) byReason[u.regReason] = (byReason[u.regReason] || 0) + 1;
         const sign14 = dayN(days);
-        return json({
+        return reply({
           users: list.length, returning: list.filter((u) => u.counts.days >= 2).length, savers: list.filter((u) => u.favs > 0).length, withSearch: list.filter((u) => u.searches > 0).length,
           profile: { low: list.filter((u) => u.profilePct <= 40).length, mid: list.filter((u) => u.profilePct > 40 && u.profilePct < 100).length, full: list.filter((u) => u.profilePct === 100).length, avg: list.length ? Math.round(sum(list.map((u) => u.profilePct)) / list.length) : 0 },
           eco: { edufind: list.filter((u) => u.hops.edufind > 0).length, ami: list.filter((u) => u.hops.ami > 0).length, may: list.filter((u) => u.hops.may > 0).length, any: list.filter((u) => u.eco > 0).length, hops: { edufind: sum(list.map((u) => u.hops.edufind)), ami: sum(list.map((u) => u.hops.ami)), may: sum(list.map((u) => u.hops.may)) } },
@@ -328,7 +337,7 @@ export default async function handler(request) {
           const [ta, tw, tq, tt, ft, ftt] = await store.run([["HGETALL", "profind:top:a"], ["HGETALL", "profind:top:w"], ["HGETALL", "profind:top:q"], ["HGETALL", "profind:top:t"], ["HGETALL", K.favTop], ["HGETALL", K.favTitle]]);
           const top = (flat, titles) => Object.entries(pairs(flat)).map(([k, n]) => ({ k, name: titles?.[k] || k, n: Number(n) })).filter((x) => x.n > 0).sort((a, b) => b.n - a.n).slice(0, 10);
           const T = pairs(tt), FT = pairs(ftt);
-          return json({ authors: top(ta, T), works: top(tw, T), queries: top(tq), saved: top(ft, FT) });
+          return reply({ authors: top(ta, T), works: top(tw, T), queries: top(tq), saved: top(ft, FT) });
         }
         const dims = ["ref", "dev", "br", "cc", "utm", "suts"];
         const res = await store.run([["MGET", ...days.map((d) => `profind:all:d:${d}`)], ...dims.flatMap((m) => last7.map((d) => ["HGETALL", `profind:all:${m}:${d}`])), ...days.map((d) => ["HGETALL", `profind:all:dur:${d}`]), ...days.map((d) => ["HGETALL", `profind:all:rv:${d}`]), ...days.map((d) => ["HGETALL", `profind:all:evt:${d}`])]);
@@ -338,10 +347,10 @@ export default async function handler(request) {
         const rvDay = days.map((d, i) => { const h = pairs(res[base + 14 + i]); return { d, "1": Number(h["1"] || 0), "2": Number(h["2"] || 0), "3": Number(h["3"] || 0), "4+": Number(h["4+"] || 0) }; });
         const evt = {}, evtPrev = {}, evtDays = [];
         for (let i = 0; i < 14; i++) { const h = Object.fromEntries(Object.entries(pairs(res[base + 28 + i])).map(([k, v]) => [k, Number(v)])); evtDays.push({ d: days[i], ...h }); const t = i < 7 ? evtPrev : evt; for (const [k, v] of Object.entries(h)) t[k] = (t[k] || 0) + v; }
-        return json({ days: perDay, referrers: agg(0), devices: agg(1), browsers: agg(2), countries: agg(3), utm: agg(4), utmSignups: agg(5), dur, rv: rvDay, evt, evtPrev, evtDays });
+        return reply({ days: perDay, referrers: agg(0), devices: agg(1), browsers: agg(2), countries: agg(3), utm: agg(4), utmSignups: agg(5), dur, rv: rvDay, evt, evtPrev, evtDays });
       }
       if (op === "admin-csv") {
-        const rows = filtered(), cell = (v) => { let s = String(v ?? ""); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return `"${s.replace(/"/g, '""')}"`; };
+        const rows = filtered(await loadList()), cell = (v) => { let s = String(v ?? ""); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return `"${s.replace(/"/g, '""')}"`; };
         const head = ["Email", "Họ tên", "Số điện thoại", "Nghề nghiệp", "Đơn vị", "Địa chỉ", "Hồ sơ (%)", "Ngày đăng ký", "Đăng ký qua", "Số lần ghé trước khi đăng ký", "Nguồn", "Đồng ý lúc", "Lần cuối", "Số ngày dùng", "Số lượt", "Tác giả đã lưu", "Tìm kiếm đã lưu", "Sang EduFind", "Sang Ami", "Sang Mây"];
         const data = rows.map((u) => [u.email, u.name, u.phone, u.job, u.org, u.address, u.profilePct, u.createdAt, u.regReason, u.regVisits, u.utm, u.consentAt, u.lastSeen, u.counts.days, u.counts.visits, u.favs, u.searches, u.hops.edufind, u.hops.ami, u.hops.may]);
         return new Response("﻿" + [head, ...data].map((r) => r.map(cell).join(",")).join("\r\n"), { headers: { "content-type": "text/csv; charset=utf-8", "content-disposition": `attachment; filename="nguoi-dung-profind-${dayKey()}.csv"`, "cache-control": "no-store" } });

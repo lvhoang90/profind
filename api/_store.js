@@ -36,13 +36,14 @@ export function makeStore() {
   const { url, token } = redisEnv();
   if (url && token) {
     const run = async (cmds) => {
-      const out = [];
-      for (let i = 0; i < cmds.length; i += 200) {
-        const r = await fetch(`${url.replace(/\/$/, "")}/pipeline`, { method: "POST", headers: { authorization: `Bearer ${token}`, "content-type": "application/json" }, body: JSON.stringify(cmds.slice(i, i + 200)) });
+      // Chia lô 500 lệnh và gửi SONG SONG (trước đây gửi tuần tự từng lô 200): danh sách người dùng lớn không còn chờ nối đuôi nhau.
+      const chunks = []; for (let i = 0; i < cmds.length; i += 500) chunks.push(cmds.slice(i, i + 500));
+      const parts = await Promise.all(chunks.map(async (c) => {
+        const r = await fetch(`${url.replace(/\/$/, "")}/pipeline`, { method: "POST", headers: { authorization: `Bearer ${token}`, "content-type": "application/json" }, body: JSON.stringify(c) });
         if (!r.ok) throw new Error(`redis ${r.status}`);
-        out.push(...(await r.json()).map((x) => { if (x.error) throw new Error(x.error); return x.result; }));
-      }
-      return out;
+        return (await r.json()).map((x) => { if (x.error) throw new Error(x.error); return x.result; });
+      }));
+      return parts.flat();
     };
     return { kind: "redis", run };
   }

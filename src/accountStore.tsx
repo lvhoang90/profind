@@ -43,7 +43,8 @@ export function AccountProvider({ children }: { children: ReactNode }) {
     } catch { /* bỏ qua */ }
   }, []);
   const refresh = useCallback(async () => {
-    try { const c = await api<Cfg>("config"); setCfg(c); if (!c.enabled) { setUser(null); return; } const { user: u } = await api<{ user: User | null }>("me"); setUser(u); if (u) { await load(); if (!sessionStorage.getItem("profind.tracked")) { sessionStorage.setItem("profind.tracked", "1"); api("track", {}).catch(() => {}); } } else { setFavs(new Map()); setSearches([]); } }
+    try { // cấu hình và thông tin người dùng gọi song song (trước đây nối tiếp: thêm một vòng chờ mạng)
+      const [c, me] = await Promise.all([api<Cfg>("config"), api<{ user: User | null }>("me").catch(() => ({ user: null }))]); setCfg(c); if (!c.enabled) { setUser(null); return; } const u = me.user; setUser(u); if (u) { await load(); if (!sessionStorage.getItem("profind.tracked")) { sessionStorage.setItem("profind.tracked", "1"); api("track", {}).catch(() => {}); } } else { setFavs(new Map()); setSearches([]); } }
     catch { setCfg({ enabled: false }); setUser(null); }
   }, [load]);
   useEffect(() => { void refresh(); }, [refresh]);
