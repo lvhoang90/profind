@@ -54,5 +54,35 @@ for (const inst of I) {
   writeFileSync(cache, JSON.stringify({ authors: authors.slice(a0), works: works.slice(w0) }));
   } catch (e) { authors.length = a0; works.length = w0; console.warn(`${inst.name}: LỖI, bỏ qua, không ghi cache (${String(e.message).slice(0, 80)})`); }
 }
+// ---- Tác giả ghim theo ORCID (data/pinned-orcids.json): luôn nạp, không phụ thuộc vào 50 tác giả đầu của đơn vị ----
+if (existsSync("data/pinned-orcids.json")) {
+  const allInst = JSON.parse(readFileSync("data/institutions.json", "utf8")).institutions;
+  const byRor = new Map(allInst.filter((i) => i.ror).map((i) => [i.ror.replace("https://ror.org/", ""), i.id]));
+  for (const pin of JSON.parse(readFileSync("data/pinned-orcids.json", "utf8")).authors) {
+    const cache = `data/raw/_pinned-${pin.orcid}.json`;
+    const pa0 = authors.length, pw0 = works.length;
+    try {
+      if (!refresh && existsSync(cache)) { const c = JSON.parse(readFileSync(cache, "utf8")); authors.push(...c.authors); works.push(...c.works); console.log(`Ghim ${pin.name}: dùng cache`); continue; }
+      const r = await get(`https://api.openalex.org/authors/orcid:${pin.orcid}`);
+      const id = short(r.id), a0 = authors.length, w0 = works.length;
+      const mapped = (r.last_known_institutions ?? []).map((i) => byRor.get((i.ror ?? "").replace("https://ror.org/", ""))).filter(Boolean);
+      authors.push({ id, name: r.display_name, orcid: pin.orcid, institutions: [...new Set([pin.institution, ...mapped].filter(Boolean))], disciplines: [], demo: false, pinned: true });
+      let cur = "*";
+      while (cur) {
+        const w = await get(`https://api.openalex.org/works?filter=author.id:${id},from_publication_date:${from}-01-01&per-page=100&cursor=${cur}&select=id,title,publication_year,cited_by_count,primary_location,authorships`);
+        for (const x of w.results) {
+          const s = x.primary_location?.source; const issn = s?.issn_l ?? s?.issn?.[0]; if (!issn) continue;
+          const as = x.authorships ?? [], pos = as.find((z) => short(z.author.id) === id), nCorr = as.filter((z) => z.is_corresponding).length;
+          const lead = !!pos && (pos.author_position === "first" || (pos.is_corresponding && nCorr === 1));
+          works.push({ id: `${id}-${short(x.id)}`, authorId: id, title: x.title, year: x.publication_year, journal: s.display_name, issn, issns: s.issn ?? [issn], citations: x.cited_by_count, role: lead ? "lead" : "co", corr: nCorr, demo: false });
+        }
+        cur = w.meta.next_cursor;
+      }
+      writeFileSync(cache, JSON.stringify({ authors: authors.slice(a0), works: works.slice(w0) }));
+      console.log(`Ghim ${pin.name}: ${works.length - w0} công trình`);
+    } catch (e) { authors.length = pa0; works.length = pw0; console.warn(`Ghim ${pin.name}: LỖI, bỏ qua (${String(e.message).slice(0, 80)})`); }
+  }
+}
+
 writeFileSync("data/raw-authors.json", JSON.stringify({ meta: { demo: false, source: "OpenAlex", fetched: new Date().toISOString().slice(0, 10) }, authors, works }));
 console.log(`Xong: ${authors.length} tác giả, ${works.length} công trình`);

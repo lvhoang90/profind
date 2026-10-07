@@ -327,7 +327,7 @@
    "type": "public-univ",
    "managedBy": "Đại học quốc gia",
    "city": null,
-   "ror": null,
+   "ror": "https://ror.org/04qva2324",
    "source": "vi.wikipedia.org"
   },
   {
@@ -3078,11 +3078,12 @@
    "type": "private-univ",
    "managedBy": "Trường đại học tư thục",
    "city": "Hà Nội",
-   "ror": "https://ror.org/04qva2324",
+   "ror": "https://ror.org/05xpj2n48",
    "source": "vi.wikipedia.org",
    "moetCode": "DKC",
    "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=937",
-   "official": true
+   "official": true,
+   "rorSuspect": "https://ror.org/04qva2324"
   },
   {
    "id": "gdu",
@@ -4017,11 +4018,12 @@
    "type": "college",
    "managedBy": "Trường cao đẳng sư phạm, Trường cao đẳng có đào tạo ngành Giáo dục mầm non",
    "city": "Long Xuyen",
-   "ror": "https://ror.org/023pm6532",
+   "ror": null,
    "source": "vi.wikipedia.org",
    "moetCode": "C54",
    "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=961",
-   "official": true
+   "official": true,
+   "rorSuspect": "https://ror.org/023pm6532"
   },
   {
    "id": "cao-dang-su-pham-bac-ninh",
@@ -4425,8 +4427,9 @@
    "type": "college",
    "managedBy": "Trường cao đẳng y tế",
    "city": "Hanoi",
-   "ror": "https://ror.org/03dqjp752",
-   "source": "vi.wikipedia.org"
+   "ror": null,
+   "source": "vi.wikipedia.org",
+   "rorSuspect": "https://ror.org/03dqjp752"
   },
   {
    "id": "cao-dang-y-te-hung-yen",
@@ -7740,10 +7743,10 @@
    "name": "Trường Đại Học An Giang - Đại Học Quốc Gia TP. Hồ Chí Minh",
    "en": "An Giang University",
    "abbr": "TAG",
-   "type": "university-unclassified",
+   "type": "public-univ",
    "managedBy": null,
    "city": null,
-   "ror": null,
+   "ror": "https://ror.org/023pm6532",
    "source": "moet.gov.vn",
    "moetCode": "TAG",
    "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=732",

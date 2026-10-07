@@ -1,5 +1,15 @@
 [
  {
+  "id": "tag",
+  "name": "Trường Đại Học An Giang - Đại Học Quốc Gia TP. Hồ Chí Minh",
+  "ror": "https://ror.org/023pm6532"
+ },
+ {
+  "id": "hutech",
+  "name": "Trường Đại học Công nghệ Thành phố Hồ Chí Minh",
+  "ror": "https://ror.org/05xpj2n48"
+ },
+ {
   "id": "fbu",
   "name": "Trường Đại học Tài chính – Ngân hàng Hà Nội",
   "ror": "https://ror.org/004eznq77"
@@ -645,11 +655,6 @@
   "ror": "https://ror.org/01vtndz62"
  },
  {
-  "id": "an-giang",
-  "name": "Trường Cao đẳng Sư phạm Kiên Giang",
-  "ror": "https://ror.org/023pm6532"
- },
- {
   "id": "cao-dang-su-pham-quang-tri",
   "name": "Trường Cao đẳng Sư phạm Quảng Trị",
   "ror": "https://ror.org/007gkb485"
@@ -663,10 +668,5 @@
   "id": "cao-dang-da-lat",
   "name": "Trường Cao đẳng Đà Lạt",
   "ror": "https://ror.org/030qhzw06"
- },
- {
-  "id": "cao-dang-y-te-ha-nam",
-  "name": "Trường Cao đẳng Y tế Hà Nam",
-  "ror": "https://ror.org/03dqjp752"
  }
 ]

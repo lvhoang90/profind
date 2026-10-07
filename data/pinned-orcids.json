@@ -1,0 +1,6 @@
+{
+  "_note": "Tác giả được ghim: luôn nạp theo ORCID dù không nằm trong số tác giả nhiều công trình nhất của đơn vị. Chỉ ghim khi chính người đó hoặc người quản lý dự án yêu cầu; dữ liệu công khai (OpenAlex/ORCID). 'institution' = mã đơn vị trong institutions.json dùng khi OpenAlex không cho biết đơn vị.",
+  "authors": [
+    { "orcid": "0000-0002-3032-0713", "name": "Trần Văn Đạt", "institution": "tag", "requestedBy": "người quản lý dự án, 07/10/2026" }
+  ]
+}

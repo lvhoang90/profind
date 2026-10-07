@@ -1,338 +1,122 @@
 {
- "checked": 376,
- "ok": 339,
+ "checked": 351,
+ "ok": 338,
  "suspect": [
   {
-   "id": "hue",
-   "name": "Đại học Huế",
-   "ror": "https://ror.org/04bm3wy68",
-   "rorName": "Hue University of Education",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "vnuhcm-university-social-sciences-and-humanities",
-   "name": "Trường Đại học Khoa học Xã hội và Nhân văn (ĐHQG-HCM)",
-   "ror": "https://ror.org/011109p83",
-   "rorName": "VNU University of Social Sciences and Humanities",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "hue-university-science-college",
-   "name": "Trường Đại học Khoa học",
-   "ror": "https://ror.org/01fj37d94",
-   "rorName": "Trường Đại học Khoa học",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "hue-university-college-economics",
-   "name": "Trường Đại học Kinh tế",
-   "ror": "https://ror.org/0138jhg57",
-   "rorName": "University of Economics and Law",
-   "score": 0.67,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "danang-university-economics",
-   "name": "Trường Đại học Kinh tế",
-   "ror": "https://ror.org/0138jhg57",
-   "rorName": "University of Economics and Law",
-   "score": 0.67,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "danang-university-technology-and-education",
-   "name": "Trường Đại học Sư phạm Kỹ thuật",
-   "ror": "https://ror.org/01nwr1552",
-   "rorName": "Vinh University of Technology Education",
-   "score": 0.8,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "hou",
-   "name": "Trường Đại học Mở Hà Nội",
-   "ror": "https://ror.org/01mxx0e62",
-   "rorName": "Hanoi University",
-   "score": 0.67,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "hcmupes",
-   "name": "Trường Đại học Sư phạm Thể dục Thể thao Thành phố Hồ Chí Minh",
-   "ror": "https://ror.org/01cs0jg44",
-   "rorName": "Ho Chi Minh City University of Education",
-   "score": 0.78,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "qnu",
-   "name": "Trường Đại học Quy Nhơn",
-   "ror": "https://ror.org/00j4fc191",
-   "rorName": "Quang Nam University",
-   "score": 0,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "hup",
-   "name": "Trường Đại học Dược Hà Nội",
-   "ror": "https://ror.org/01mxx0e62",
-   "rorName": "Hanoi University",
-   "score": 0.67,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "huit",
-   "name": "Trường Đại học Công Thương Thành phố Hồ Chí Minh",
-   "ror": "https://ror.org/03mj71j26",
-   "rorName": "Industrial University of Ho Chi Minh City",
+   "id": "thai-nguyen-university-information-and-communication-technology",
+   "name": "Trường Đại học Công nghệ Thông tin và Truyền thông",
+   "ror": "https://ror.org/04gv3mr75",
+   "rorName": "Thai Nguyen University of Information and Communication Technology",
    "score": 0.75,
-   "shared": true,
+   "shared": false,
    "ok": false
   },
   {
-   "id": "vnua",
-   "name": "Học viện Nông nghiệp Việt Nam",
-   "ror": "https://ror.org/04q8wkj31",
-   "rorName": "Vietnam Academy of Agricultural Sciences",
-   "score": 0.86,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "hlu",
-   "name": "Trường Đại học Luật Hà Nội",
-   "ror": "https://ror.org/01mxx0e62",
-   "rorName": "Hanoi University",
+   "id": "thai-nguyen-university-technology",
+   "name": "Trường Đại học Kỹ thuật Công nghiệp",
+   "ror": "https://ror.org/04k1add31",
+   "rorName": "Thai Nguyen University of Technology",
    "score": 0.67,
-   "shared": true,
+   "shared": false,
    "ok": false
   },
   {
-   "id": "ntu-2",
-   "name": "Trường Đại học Nguyễn Trãi",
-   "ror": "https://ror.org/047van922",
-   "rorName": "Nha Trang University",
+   "id": "thai-nguyen-university-agriculture-and-forestry",
+   "name": "Trường Đại học Nông Lâm",
+   "ror": "https://ror.org/028zxrr95",
+   "rorName": "Thai Nguyen University of Agriculture and Forestry",
+   "score": 0.5,
+   "shared": false,
+   "ok": false
+  },
+  {
+   "id": "thai-nguyen-university-medicine-and-pharmacy",
+   "name": "Trường Đại học Y Dược",
+   "ror": "https://ror.org/053jkh992",
+   "rorName": "Thai Nguyen University of Medicine and Pharmacy",
+   "score": 0.5,
+   "shared": false,
+   "ok": false
+  },
+  {
+   "id": "hue-university-agriculture-and-forestry",
+   "name": "Trường Đại học Nông Lâm",
+   "ror": "https://ror.org/025a27r74",
+   "rorName": "Hue University of Agriculture and Forestry",
+   "score": 0.67,
+   "shared": false,
+   "ok": false
+  },
+  {
+   "id": "apd",
+   "name": "Học viện Chính sách và Phát triển",
+   "ror": "https://ror.org/029a61c63",
+   "rorName": "Academy of Policy and Development",
    "score": 0,
-   "shared": true,
+   "shared": false,
    "ok": false
   },
   {
-   "id": "tlu-2",
-   "name": "Trường Đại học Thăng Long",
-   "ror": "https://ror.org/04afshy24",
-   "rorName": "Thuyloi University",
+   "id": "vnuf",
+   "name": "Trường Đại học Lâm nghiệp",
+   "ror": "https://ror.org/02jfkxh18",
+   "rorName": "Vietnam National University of Forestry",
    "score": 0,
-   "shared": true,
+   "shared": false,
    "ok": false
   },
   {
-   "id": "umt",
-   "name": "Trường Đại học Quản lý và Công nghệ Thành phố Hồ Chí Minh",
+   "id": "dav",
+   "name": "Học viện Ngoại giao",
+   "ror": "https://ror.org/02n7f7n49",
+   "rorName": "Diplomatic Academy of Vietnam",
+   "score": 0.67,
+   "shared": false,
+   "ok": false
+  },
+  {
+   "id": "hutech",
+   "name": "Trường Đại học Công nghệ Thành phố Hồ Chí Minh",
    "ror": "https://ror.org/04qva2324",
    "rorName": "Ho Chi Minh City University of Technology",
-   "score": 0.75,
-   "shared": true,
+   "score": 0.63,
+   "shared": false,
    "ok": false
   },
   {
-   "id": "dai-hoc-yersin-da-lat",
-   "name": "Trường Đại học Yersin Đà Lạt",
-   "ror": "https://ror.org/014cke235",
-   "rorName": "Dalat University",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "an-giang-2",
-   "name": "Trường Cao đẳng Y tế Kiên Giang",
-   "ror": "https://ror.org/023pm6532",
-   "rorName": "An Giang University",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "an-giang-3",
-   "name": "Trường Cao đẳng Kiên Giang",
-   "ror": "https://ror.org/023pm6532",
-   "rorName": "An Giang University",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "vts",
-   "name": "Viện Nghiên cứu Nuôi trồng thuỷ sản I",
-   "ror": "https://ror.org/04n7s1j93",
-   "rorName": "Research Institute for Aquaculture No1",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "v26",
-   "name": "Viện Pasteur Thành phố Hồ Chí Minh",
-   "ror": "https://ror.org/00waaqh38",
-   "rorName": "Vietnam National University Ho Chi Minh City",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "v59",
-   "name": "Viện Toán học",
-   "ror": "https://ror.org/04jr71r83",
-   "rorName": "Institute of Mathematics",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "v13",
-   "name": "Viện Khoa học và Công nghệ Giao thông vận tải",
-   "ror": "https://ror.org/051yz4204",
-   "rorName": "Institute of Transport Science and Technology",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "v66",
-   "name": "Viện Dinh dưỡng",
-   "ror": "https://ror.org/04t18m760",
-   "rorName": "National Institute of Nutrition",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "vcn",
-   "name": "Viện Chăn nuôi",
-   "ror": "https://ror.org/00cyam193",
-   "rorName": "National Institute of Animal Sciences",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "buv",
-   "name": "Trường Đại Học Anh Quốc - Việt Nam",
+   "id": "dai-hoc-anh-quoc-tai-viet-nam",
+   "name": "Trường Đại học Anh Quốc tại Việt Nam",
    "ror": "https://ror.org/01vtndz62",
    "rorName": "British University Vietnam",
-   "score": 1,
-   "shared": true,
+   "score": 0.8,
+   "shared": false,
    "ok": false
   },
   {
-   "id": "nvs",
-   "name": "Nhạc Viện TP. Hồ Chí Minh",
-   "ror": "https://ror.org/00waaqh38",
-   "rorName": "Vietnam National University Ho Chi Minh City",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "hch",
-   "name": "Học Viện Hành Chính Quốc Gia",
-   "ror": "https://ror.org/02dg2kf02",
-   "rorName": "Academy of Public Administration and Governance",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "dha",
-   "name": "Trường Đại Học Luật, Đại Học Huế",
-   "ror": "https://ror.org/04z6cm680",
-   "rorName": "VNU University of Law",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "tag",
-   "name": "Trường Đại Học An Giang - Đại Học Quốc Gia TP. Hồ Chí Minh",
+   "id": "an-giang",
+   "name": "Trường Cao đẳng Sư phạm Kiên Giang",
    "ror": "https://ror.org/023pm6532",
    "rorName": "An Giang University",
-   "score": 1,
-   "shared": true,
+   "score": 0.14,
+   "shared": false,
    "ok": false
   },
   {
-   "id": "qsk",
-   "name": "Trường Đại Học Kinh Tế - Luật - Đại Học Quốc Gia TP. Hồ Chí Minh",
-   "ror": "https://ror.org/0138jhg57",
-   "rorName": "University of Economics and Law",
-   "score": 1,
-   "shared": true,
+   "id": "cao-dang-y-te-ha-nam",
+   "name": "Trường Cao đẳng Y tế Hà Nam",
+   "ror": "https://ror.org/03dqjp752",
+   "rorName": "Hanoi Medical College",
+   "score": 0.71,
+   "shared": false,
    "ok": false
   },
   {
-   "id": "dht",
-   "name": "Trường Đại Học Khoa Học, Đại Học Huế",
-   "ror": "https://ror.org/01fj37d94",
-   "rorName": "Trường Đại học Khoa học",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "qsx",
-   "name": "Trường Đại Học Khoa Học Xã Hội Và Nhân Văn - Đại Học Quốc Gia TP. Hồ Chí Minh",
-   "ror": "https://ror.org/011109p83",
-   "rorName": "VNU University of Social Sciences and Humanities",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "spk",
-   "name": "Trường Đại Học Sư Phạm Kỹ Thuật TP. Hồ Chí Minh",
-   "ror": "https://ror.org/05hzn5427",
-   "rorName": "Ho Chi Minh City University of Technology and Engineering",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "dtc",
-   "name": "Trường Đại Học Công Nghệ Thông Tin Và Truyền Thông, Đại Học Thái Nguyên",
+   "id": "vku",
+   "name": "Trường Đại Học Công Nghệ Thông Tin Và Truyền Thông Việt Hàn, Đại Học Đà Nẵng",
    "ror": "https://ror.org/0561fmp23",
    "rorName": "Trường Đại học Công nghệ Thông tin và Truyền thông Việt Hàn",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "dtz",
-   "name": "Trường Đại Học Khoa Học, Đại Học Thái Nguyên",
-   "ror": "https://ror.org/01fj37d94",
-   "rorName": "Trường Đại học Khoa học",
-   "score": 1,
-   "shared": true,
-   "ok": false
-  },
-  {
-   "id": "qhx",
-   "name": "Trường Đại Học Khoa Học Xã Hội Và Nhân Văn - Đại Học Quốc Gia Hà Nội",
-   "ror": "https://ror.org/011109p83",
-   "rorName": "VNU University of Social Sciences and Humanities",
-   "score": 1,
-   "shared": true,
+   "score": 0.8,
+   "shared": false,
    "ok": false
   }
  ]

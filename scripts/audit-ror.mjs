@@ -17,7 +17,11 @@ const report = []; const fix = process.argv.includes("--fix");
 for (const i of I.institutions) {
   if (!i.ror) continue;
   const o = await rec(i.ror); await new Promise((r) => setTimeout(r, 120));
-  const rn = (o?.names ?? []).map((n) => set(n.value)), mine = [i.name, i.en].filter(Boolean).map(set);
+  const rdisp = o?.names?.find((n) => n.types.includes("ror_display"))?.value;
+  // Tên tiếng Anh chép từ chính ROR (so sánh vòng tròn) không dùng để kiểm chứng: chỉ dùng tên tiếng Việt của đơn vị.
+  // Tên tiếng Anh chỉ có địa danh (vd. cột tỉnh "An Giang" bị nhận nhầm) cũng không dùng: phải có từ chỉ loại hình.
+  const circular = !!i.en && (i.en === rdisp || !/univers|institut|academ|college|school|centre|center|hospital/i.test(i.en));
+  const rn = (o?.names ?? []).map((n) => set(n.value)), mine = [i.name, circular ? null : i.en].filter(Boolean).map(set);
   let best = 0; for (const a of mine) for (const b of rn) best = Math.max(best, jac(a, b));
   const shared = uses.get(i.ror).length > 1;
   // Chấp nhận: giống chặt (≥ 0.9). Mã dùng chung vẫn phải đạt ngưỡng, và chỉ MỘT đơn vị trong nhóm được giữ (đơn vị khớp nhất).
