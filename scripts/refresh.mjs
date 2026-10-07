@@ -22,5 +22,5 @@ else run(`node scripts/enrich-authors.mjs --mailto ${mailto}`);
 const left = readdirSync("data/raw").map((f) => f.replace(".json", ""));
 const still = pending.filter((id) => !left.includes(id)).map((id) => ({ id, name: I.find((i) => i.id === id)?.name, ror: I.find((i) => i.id === id)?.ror }));
 writeFileSync("data/ingest-pending.json", JSON.stringify(still, null, 1));
-run("node scripts/build-index.mjs"); run("node scripts/build-top-works.mjs"); run("node scripts/check-data.mjs"); run("node scripts/cache.mjs save");
+run("node scripts/build-index.mjs"); run("node scripts/build-top-works.mjs"); run("node scripts/build-wsearch.mjs"); run("node scripts/check-data.mjs"); run("node scripts/cache.mjs save");
 console.log(`Xong. Còn ${still.length} đơn vị chưa nạp được${still.length ? " (chạy lại ngày mai)" : ""}.`);

@@ -10,6 +10,7 @@ const AccountPage = lazy(() => import("./Account").then((m) => ({ default: m.Acc
 const AboutPage = lazy(() => import("./About").then((m) => ({ default: m.AboutPage })));
 const AdminPage = lazy(() => import("./Admin").then((m) => ({ default: m.AdminPage })));
 import { HeroArt } from "./HeroArt";
+import { useWorks } from "./wsearch";
 import { Footer, EcoLink } from "./Footer";
 import { evt, startSession } from "./analytics";
 import { getTheme, setTheme, type Theme } from "./theme";
@@ -171,6 +172,8 @@ function List({ d, query }: { d: Data; query: string }) {
   useEffect(() => { setSlot(document.getElementById("hero-slot")); }, []);
   const [jn, setJn] = useState<Record<string, { t: string; p: string }> | null>(null);
   const dq = useDeferredValue(q);
+  const works = useWorks(dq);
+  const [tab, setTab] = useState<"a" | "w">("a");
   const instById = useMemo(() => new Map(d.institutions.map((i) => [i.id, i])), [d]);
   // Chỉ liệt kê đơn vị đang có tác giả (trong phạm vi đã chọn), kèm số tác giả; chọn từ danh sách, không gõ tự do.
   const instOpts = useMemo(() => {
@@ -239,6 +242,7 @@ function List({ d, query }: { d: Data; query: string }) {
   }, [d]);
   const [topWorks, setTopWorks] = useState<{ t: string; y: number; j: string; c: number; a: string; n: string; w: string }[]>([]);
   useEffect(() => { if (!home || topWorks.length) return; fetch("data/top-works.json").then((r) => r.json()).then((j) => setTopWorks(j.works ?? [])).catch(() => {}); }, [home]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { if (!q.trim()) setTab("a"); else if (dq === q && works.forQ === q.trim() && rows.length === 0 && works.total > 0) setTab("w"); }, [q, dq, rows.length, works.total, works.forQ]);
   const quick = (fn: () => void) => () => { fn(); setBrowse(false); };
   const hero = (
     <div className={`hero-home${home ? " big" : ""}`}>
@@ -289,6 +293,24 @@ function List({ d, query }: { d: Data; query: string }) {
         </div>
         <label className="chk top2f"><input type="checkbox" checked={top2only} onChange={(e) => setTop2only(e.target.checked)} />★ {t("top2Only")}</label>
       </section>}
+      {q.trim() && <div className="rtabs" role="tablist" aria-label={t("title")}>
+        <button type="button" role="tab" aria-selected={tab === "a"} onClick={() => setTab("a")}><Icon n="scholar" size={16} />{t("tabAuthors")}<em>{num(rows.length)}</em></button>
+        <button type="button" role="tab" aria-selected={tab === "w"} onClick={() => setTab("w")}><Icon n="scroll" size={16} />{t("tabWorks")}<em>{works.busy ? "…" : num(works.total)}</em></button>
+      </div>}
+      {q.trim() && tab === "w" ? (
+        <section className="wlist" aria-live="polite">
+          {works.err ? <p className="empty">{t("wErr")}</p> : works.items.length === 0 ? <p className="empty">{works.busy ? t("loading") : t("wNone")}</p> : <>
+            <p className="meta">{t("wHint")}</p>
+            <ol>{works.items.map((w, i) => <li key={`${w.authorId}${i}${w.title}`}>
+              <b className="wc">{num(w.cit)}<small>{t("cites")}</small></b>
+              <div><a className="wt" href={w.doi ? `https://doi.org/${w.doi}` : `#/tac-gia/${encodeURIComponent(w.authorId)}`} {...(w.doi ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{w.title}</a>
+                <p className="meta"><a href={`#/tac-gia/${encodeURIComponent(w.authorId)}`}>{w.author}</a>{w.journal ? ` · ${w.journal}` : ""} · {w.year}</p></div>
+            </li>)}</ol>
+            {works.items.length < works.total && <button type="button" className="ghost" onClick={() => void works.more()}>{t("moreWorks", { n: num(works.total - works.items.length) })}</button>}
+          </>}
+        </section>
+      ) : (
+      <>
       <div className="statusrow">
         <p className="meta" role="status" aria-live="polite">{t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</p>
         {cfg?.enabled !== false && hasFilter && <button type="button" className="ghost sm" onClick={() => void doSave()}><Icon n="star" size={16} />{user ? t("saveSearchBtn") : t("saveGate")}</button>}<span className="meta" role="status">{ssMsg}</span>
@@ -315,6 +337,8 @@ function List({ d, query }: { d: Data; query: string }) {
             </tr>); })}</tbody>
         </table></div>)}
       <Pager page={page} total={rows.length} set={(p) => { setPage(p); window.scrollTo({ top: 0 }); }} />
+      </>
+      )}
       </>
       )}
     </>
