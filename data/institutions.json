@@ -1,0 +1,21 @@
+{
+  "meta": { "status": "seed", "note": "Bản gieo mầm để chạy thử. PHẢI thay bằng danh sách chính thức (Bộ GD&ĐT: cơ sở giáo dục đại học công lập, tư thục; Bộ KH&CN: tổ chức KH&CN; bộ, sở, ban ngành) qua scripts/import-institutions.mjs, đối chiếu mã ROR.", "sources": ["https://ror.org (CC0)", "Danh sách cơ sở GDĐH do Bộ GD&ĐT công bố"] },
+  "institutions": [
+    { "id": "vnu-hn", "name": "Đại học Quốc gia Hà Nội", "en": "Vietnam National University, Hanoi", "type": "public-univ", "city": "Hà Nội", "ror": null },
+    { "id": "vnu-hcm", "name": "Đại học Quốc gia TP. Hồ Chí Minh", "en": "Vietnam National University, Ho Chi Minh City", "type": "public-univ", "city": "TP. Hồ Chí Minh", "ror": null },
+    { "id": "hust", "name": "Đại học Bách khoa Hà Nội", "en": "Hanoi University of Science and Technology", "type": "public-univ", "city": "Hà Nội", "ror": null },
+    { "id": "neu", "name": "Đại học Kinh tế Quốc dân", "en": "National Economics University", "type": "public-univ", "city": "Hà Nội", "ror": null },
+    { "id": "hnue", "name": "Đại học Sư phạm Hà Nội", "en": "Hanoi National University of Education", "type": "public-univ", "city": "Hà Nội", "ror": null },
+    { "id": "hcmue", "name": "Đại học Sư phạm TP. Hồ Chí Minh", "en": "Ho Chi Minh City University of Education", "type": "public-univ", "city": "TP. Hồ Chí Minh", "ror": null },
+    { "id": "ctu", "name": "Đại học Cần Thơ", "en": "Can Tho University", "type": "public-univ", "city": "Cần Thơ", "ror": null },
+    { "id": "hue", "name": "Đại học Huế", "en": "Hue University", "type": "public-univ", "city": "Huế", "ror": null },
+    { "id": "dnu", "name": "Đại học Đà Nẵng", "en": "The University of Danang", "type": "public-univ", "city": "Đà Nẵng", "ror": null },
+    { "id": "tdtu", "name": "Đại học Tôn Đức Thắng", "en": "Ton Duc Thang University", "type": "public-univ", "city": "TP. Hồ Chí Minh", "ror": null },
+    { "id": "ftu", "name": "Đại học Ngoại thương", "en": "Foreign Trade University", "type": "public-univ", "city": "Hà Nội", "ror": null },
+    { "id": "vju", "name": "Trường Đại học Văn Lang", "en": "Van Lang University", "type": "private-univ", "city": "TP. Hồ Chí Minh", "ror": null },
+    { "id": "ptit", "name": "Học viện Công nghệ Bưu chính Viễn thông", "en": "Posts and Telecommunications Institute of Technology", "type": "public-univ", "city": "Hà Nội", "ror": null },
+    { "id": "vast", "name": "Viện Hàn lâm Khoa học và Công nghệ Việt Nam", "en": "Vietnam Academy of Science and Technology", "type": "institute", "city": "Hà Nội", "ror": null },
+    { "id": "vnies", "name": "Viện Khoa học Giáo dục Việt Nam", "en": "Vietnam National Institute of Educational Sciences", "type": "institute", "city": "Hà Nội", "ror": null }
+  ],
+  "types": { "public-univ": { "vi": "Đại học công lập", "en": "Public university" }, "private-univ": { "vi": "Đại học tư thục", "en": "Private university" }, "institute": { "vi": "Viện nghiên cứu", "en": "Research institute" }, "ministry": { "vi": "Bộ, ngành", "en": "Ministry / agency" }, "department": { "vi": "Sở, ban ngành địa phương", "en": "Provincial department" } }
+}
