@@ -129,7 +129,8 @@ const rank = (key, out) => { const o = [...pool].sort((a, b) => b[key] - a[key])
 for (const a of outAuthors) { a.rankScore = a.rankWorks = a.rankCit = null; }
 rank("totalScore", "rankScore"); rank("worksCount", "rankWorks"); rank("citations", "rankCit");
 const PRO = computePro(outAuthors, per, new Date().getFullYear());
-for (const a of outAuthors) { if (a.pro === undefined) { a.pro = null; a.proParts = null; a.proConf = null; a.proRank = null; a.proTier = null; } }
+for (const a of outAuthors) { if (a.pro === undefined) { a.pro = a.proLo = a.proHi = null; a.proParts = null; a.proConf = null; a.proRank = a.proR10 = a.proR90 = a.proStab = null; a.proTier = null; } }
+writeFileSync("public/data/pro-panel.json", JSON.stringify(PRO.panel));
 
 // ---- 5. Ghi tệp ----
 rmSync("public/data/works", { recursive: true, force: true }); mkdirSync("public/data/works", { recursive: true });

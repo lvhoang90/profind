@@ -1,4 +1,4 @@
-// PRO-SCORE v1: chỉ số khoa học riêng của ProFind, thang 0-100, được thiết kế sau khi hội đồng giả lập 10 chuyên gia (thư mục học, thống kê,
+// PRO-SCORE1000 (phiên bản 2.0): chỉ số khoa học riêng của ProFind, thang 0-100, được thiết kế sau khi hội đồng giả lập 10 chuyên gia (thư mục học, thống kê,
 // y sinh, kỹ thuật, khoa học tự nhiên, khoa học xã hội, quản lý nghiên cứu, nhà khoa học trẻ, liêm chính học thuật, chất lượng dữ liệu) phản biện bản nháp.
 // Nguyên tắc: tuân thủ DORA và Leiden Manifesto (nhiều chỉ báo, không dùng hệ số tạp chí làm thước đo chính, minh bạch, chuẩn hóa theo ngành);
 // không trùng đếm; không phạt thiếu dữ liệu (dữ liệu ít thì co về trung bình ngành); chống bài nhóm lớn (trần trích dẫn mỗi công trình).
@@ -12,8 +12,10 @@
 //   Đều đặn   = (số năm có công bố + 2·0,6) / (số năm hoạt động + 2)
 //   Ghi nhận  = 1 nếu thuộc Top 2% thế giới (Elsevier), ngược lại 0
 // pct = bách phân vị trong ngành chính; ngành ít hơn 50 người được trộn với bách phân vị toàn hệ thống.
+// Trọng số cơ sở của v1 (nay là tâm của hội đồng mô phỏng, xem pro-panel.mjs); điểm cuối là trung bình qua 1000 chuyên gia ảo.
 const W = { impact: 0.42, output: 0.1, lead: 0.1, quality: 0.1, momentum: 0.17, steady: 0.08, recog: 0.03 };
-export const PRO_VERSION = "1.0";
+export const PRO_VERSION = "2.0";
+import { makePanel, summarize, KEYS as PKEYS } from "./pro-panel.mjs";
 const QV = { Q1: 1, Q2: 0.75, Q3: 0.5, Q4: 0.25 };
 const quant = (arr, p) => { if (!arr.length) return Infinity; const s = [...arr].sort((a, b) => a - b); return s[Math.min(s.length - 1, Math.floor(p * s.length))]; };
 /** Bách phân vị trung điểm (0..1) của từng giá trị trong mảng cùng nhóm. */
@@ -66,17 +68,35 @@ export function computePro(authors, per, year) {
     const lead = pc("leadS");
     const quality = x.qS, momentum = 0.5 * pc("rc") + 0.5 * pc("rn"), steady = x.steady, recog = a.top2 ? 1 : 0;
     const parts = { impact, output, lead, quality, momentum, steady, recog };
-    a.pro = Math.round(100 * (W.impact * impact + W.output * output + W.lead * lead + W.quality * quality + W.momentum * momentum + W.steady * steady + W.recog * recog) * 10) / 10;
+    a._s = PKEYS.map((k) => parts[k]);
     a.proParts = Object.fromEntries(Object.entries(parts).map(([k, v]) => [k, Math.round(v * 100)]));
     a.proConf = (x.known >= 5 ? 1 : 0) + (x.qn >= 5 ? 1 : 0) + (x.n >= 10 ? 1 : 0); // 0..3: mức đủ dữ liệu của điểm
   }
+  // ---- Hội đồng mô phỏng 1000 chuyên gia ảo: mỗi chuyên gia chấm mọi hồ sơ theo trọng số riêng; điểm cuối là trung bình, kèm khoảng P10-P90 và độ vững của hạng.
+  const SEED = 20261007, panel = makePanel(1000, SEED), E = panel.length;
+  for (const a of pool) {
+    const sc = new Float32Array(E);
+    for (let e = 0; e < E; e++) { const w = panel[e].w; let t = 0; for (let i = 0; i < 7; i++) t += w[i] * a._s[i]; sc[e] = 100 * t; }
+    a._sc = sc; let m = 0; for (let e = 0; e < E; e++) m += sc[e]; a._m = m / E; a.pro = Math.round(a._m * 10) / 10;
+    const so = Float32Array.from(sc).sort(); a.proLo = Math.round(so[Math.floor(0.1 * E)] * 10) / 10; a.proHi = Math.round(so[Math.floor(0.9 * E)] * 10) / 10;
+  }
   // Xếp hạng toàn hệ thống (đồng hạng cùng số) chỉ trong tập đủ điều kiện: ≥ 10 công trình và hoạt động ≥ 3 năm (hồ sơ quá mỏng không được xếp hạng, tránh điểm ảo). Tự tính lại mỗi lần dữ liệu cập nhật.
-  const elig = pool.filter((a) => a.worksCount >= 10 && (a.lastYear ?? 0) - (a.firstYear ?? 0) >= 2).sort((p, q) => q.pro - p.pro || q.citations - p.citations);
-  elig.forEach((a, i, arr) => { a.proRank = i > 0 && arr[i - 1].pro === a.pro ? arr[i - 1].proRank : i + 1; });
+  const elig = pool.filter((a) => a.worksCount >= 10 && (a.lastYear ?? 0) - (a.firstYear ?? 0) >= 2).sort((p, q) => q._m - p._m || q.citations - p.citations);
+  elig.forEach((a, i, arr) => { a.proRank = i > 0 && arr[i - 1]._m === a._m ? arr[i - 1].proRank : i + 1; });
+  // Hạng của từng hồ sơ dưới góc nhìn của từng chuyên gia ảo, để đo độ vững (khoảng hạng P10-P90 và tỉ lệ chuyên gia đồng ý huy hiệu).
+  const N = elig.length, rk = new Uint16Array(N * E), order = Array.from({ length: N }, (_, i) => i);
+  for (let e = 0; e < E; e++) { order.sort((i, j) => elig[j]._sc[e] - elig[i]._sc[e]); for (let r = 0; r < N; r++) rk[e * N + order[r]] = r + 1; }
+  const tierOf = (r) => (r <= 10 ? 10 : r <= 50 ? 50 : r <= 100 ? 100 : r <= 500 ? 500 : r <= 1000 ? 1000 : 0);
+  elig.forEach((a, i) => {
+    const v = new Uint16Array(E); for (let e = 0; e < E; e++) v[e] = rk[e * N + i]; v.sort();
+    a.proR10 = v[Math.floor(0.1 * E)]; a.proR90 = v[Math.floor(0.9 * E)];
+    const t = tierOf(a.proRank); let ok = 0; if (t) for (let e = 0; e < E; e++) if (v[e] <= t) ok++; a.proStab = t ? Math.round((100 * ok) / E) : null;
+  });
   // Huy hiệu theo hạng: Top 10, 50, 100, 500, 1000 (tự cập nhật mỗi lần dữ liệu đổi).
   for (const a of authors) {
-    if (a.proRank == null) { a.proRank = null; a.proTier = null; if (a.pro == null) { a.pro = null; a.proParts = null; a.proConf = null; } continue; }
+    if (a.proRank == null) { a.proRank = null; a.proTier = null; a.proR10 = a.proR90 = a.proStab = null; if (a.pro == null) { a.pro = null; a.proLo = a.proHi = null; a.proParts = null; a.proConf = null; } continue; }
     const r = a.proRank; a.proTier = r <= 10 ? "t10" : r <= 50 ? "t50" : r <= 100 ? "t100" : r <= 500 ? "t500" : r <= 1000 ? "t1000" : null;
   }
-  return { eligible: elig.length };
+  for (const a of authors) { delete a._s; delete a._sc; delete a._m; }
+  return { eligible: elig.length, panel: summarize(panel, SEED) };
 }

@@ -1,5 +1,5 @@
-// Trang riêng về PRO-SCORE: phương pháp, công thức, huy hiệu, giới hạn, trích dẫn. Nằm trong web, không dẫn ra ngoài.
-import { useState } from "react";
+// Trang riêng về PRO-SCORE1000: phương pháp, công thức, huy hiệu, giới hạn, trích dẫn. Nằm trong web, không dẫn ra ngoài.
+import { useEffect, useState } from "react";
 import { useT } from "./i18n";
 import { Icon, type IconName } from "./icons";
 import { ProBadge, TIERS, type Tier } from "./Badge";
@@ -11,13 +11,19 @@ const PILLARS: { k: string; w: number; icon: IconName; color: string }[] = [
 ];
 const RANKS: Record<Tier, number> = { t10: 10, t50: 50, t100: 100, t500: 500, t1000: 1000 };
 
+type Panel = { n: number; seed: number; mean: number[]; sd: number[]; by: Record<string, Record<string, { n: number; label: string; w: number[] }>> };
+const DIM_LABEL: Record<string, [string, string]> = { field: ["Lĩnh vực", "Field"], stage: ["Giai đoạn sự nghiệp", "Career stage"], region: ["Khu vực", "Region"], stance: ["Lập trường đánh giá", "Evaluation stance"] };
+const COLS = ["impact", "output", "lead", "quality", "momentum", "steady", "recog"] as const;
+
 export function ProScorePage() {
   const { lang, t } = useT();
   const vi = lang === "vi";
+  const [panel, setPanel] = useState<Panel | null>(null);
+  useEffect(() => { fetch("./data/pro-panel.json").then((r) => r.json()).then(setPanel).catch(() => {}); }, []);
   const [copied, setCopied] = useState(false);
   const cite = vi
-    ? "Lương Việt Hoàng và Viện Khoa học Giáo dục và Kinh tế Đông Nam Á (ISA Việt Nam) (2026). PRO-SCORE phiên bản 1.0: chỉ số tham khảo đa chiều về tác động và đóng góp của nhà khoa học. ProFind, profind.isavn.edu.vn."
-    : "Luong Viet Hoang and Institute of Education Sciences and Economics of Southeast Asia (ISA Vietnam) (2026). PRO-SCORE version 1.0: a multi-dimensional reference index of scientists’ impact and contribution. ProFind, profind.isavn.edu.vn.";
+    ? "Lương Việt Hoàng và Viện Khoa học Giáo dục và Kinh tế Đông Nam Á (ISA Việt Nam) (2026). PRO-SCORE1000 phiên bản 2.0 (hội đồng mô phỏng 1000 chuyên gia ảo): chỉ số tham khảo đa chiều về tác động và đóng góp của nhà khoa học. ProFind, profind.isavn.edu.vn."
+    : "Luong Viet Hoang and Institute of Education Sciences and Economics of Southeast Asia (ISA Vietnam) (2026). PRO-SCORE1000 version 2.0 (simulated panel of 1000 virtual experts): a multi-dimensional reference index of scientists’ impact and contribution. ProFind, profind.isavn.edu.vn.";
   const copy = () => { try { void navigator.clipboard.writeText(cite); setCopied(true); setTimeout(() => setCopied(false), 1800); } catch { /* bỏ qua */ } };
   const P: Record<string, [string, string, string]> = vi ? {
     impact: ["Tác động", "Công trình của bạn được giới khoa học dùng đến mức nào.", "40% tổng trích dẫn (mỗi công trình bị cắt trần ở P99 của ngành để một bài nhóm lớn không kéo cả hồ sơ) + 30% chỉ số h + 30% tỉ lệ công trình có từ 10 trích dẫn trở lên (làm trơn về trung bình ngành)."],
@@ -49,37 +55,54 @@ export function ProScorePage() {
   ];
   const names: Record<Tier, string> = { t10: t("tier_t10"), t50: t("tier_t50"), t100: t("tier_t100"), t500: t("tier_t500"), t1000: t("tier_t1000") };
   const ex = { impact: 90, output: 80, lead: 70, quality: 60, momentum: 85, steady: 90, recog: 0 };
-  const exScore = Math.round(PILLARS.reduce((s, p) => s + p.w * (ex[p.k as keyof typeof ex] ?? 0), 0)) / 100;
+  const pl = PILLARS.map((q, i) => ({ ...q, w: panel ? panel.mean[i] : q.w }));
+  const exScore = Math.round(pl.reduce((s, p) => s + p.w * (ex[p.k as keyof typeof ex] ?? 0), 0)) / 100;
   const roadmap = vi
-    ? ["Chia trích dẫn theo số tác giả mỗi công trình (khi có dữ liệu).", "Chuẩn hóa theo thế hệ (năm bắt đầu sự nghiệp) để so công bằng giữa người trẻ và người lâu năm.", "Tính sách, chương sách, kỷ yếu hội nghị hạng cao và bằng sáng chế.", "Khoảng tin cậy cho điểm và hạng; huy hiệu theo ngành và theo thế hệ.", "Công bố bộ dữ liệu và mã tính điểm để cộng đồng kiểm chứng."]
-    : ["Split citations by the number of authors per work (once data is available).", "Cohort normalisation (career-start year) for fair comparison between early-career and senior researchers.", "Count books, chapters, high-ranked proceedings and patents.", "Confidence intervals for scores and ranks; badges by field and by cohort.", "Publish the dataset and scoring code for community verification."];
+    ? ["Chia trích dẫn theo số tác giả mỗi công trình (khi có dữ liệu).", "Chuẩn hóa theo thế hệ (năm bắt đầu sự nghiệp) để so công bằng giữa người trẻ và người lâu năm.", "Tính sách, chương sách, kỷ yếu hội nghị hạng cao và bằng sáng chế.", "Khoảng tin cậy cho điểm và hạng; huy hiệu theo ngành và theo thế hệ.", "Thay dần chuyên gia ảo bằng ý kiến thật của chuyên gia (khảo sát kiểu Delphi, ẩn danh, có mã thành viên) và công bố tỉ lệ ý kiến thật trong hội đồng.", "Công bố bộ dữ liệu và mã tính điểm để cộng đồng kiểm chứng."]
+    : ["Split citations by the number of authors per work (once data is available).", "Cohort normalisation (career-start year) for fair comparison between early-career and senior researchers.", "Count books, chapters, high-ranked proceedings and patents.", "Confidence intervals for scores and ranks; badges by field and by cohort.", "Gradually replace virtual experts with real expert input (anonymous Delphi-style survey) and publish the share of real opinions on the panel.", "Publish the dataset and scoring code for community verification."];
   return (
     <article className="psp">
       <p><a className="backl" href="#/">{t("back")}</a></p>
       <header className="psp-hero">
         <p className="psp-kick"><Icon n="spark" size={16} />{vi ? "Chỉ số khoa học của ProFind" : "ProFind’s scientific index"}</p>
-        <h1>PRO<span>-</span>SCORE<sup className="tm">™</sup></h1>
+        <h1>PRO<span>-</span>SCORE<em className="k1000">1000</em><sup className="tm">™</sup></h1>
         <p className="psp-lead">{vi ? "Thước đo tham khảo, minh bạch và đa chiều về tác động và đóng góp của nhà khoa học Việt Nam, tính tự động từ dữ liệu công khai." : "A transparent, multi-dimensional reference measure of the impact and contribution of Vietnamese scientists, computed automatically from open data."}</p>
         <div className="psp-credit">
           <img src="./logo-disc.svg" alt="" width="44" height="44" />
-          <p><b>{vi ? "Ý tưởng do Viện ISA và tác giả Lương Việt Hoàng đề xuất" : "Idea proposed by ISA Institute and author Luong Viet Hoang"}</b><span>{vi ? "Viện Khoa học Giáo dục và Kinh tế Đông Nam Á (ISA Việt Nam) · Phiên bản 1.0 · 10/2026" : "Institute of Education Sciences and Economics of Southeast Asia (ISA Vietnam) · Version 1.0 · 10/2026"}</span></p>
+          <p><b>{vi ? "Ý tưởng do Viện ISA và tác giả Lương Việt Hoàng đề xuất" : "Idea proposed by ISA Institute and author Luong Viet Hoang"}</b><span>{vi ? "Viện Khoa học Giáo dục và Kinh tế Đông Nam Á (ISA Việt Nam) · Phiên bản 2.0 · 10/2026" : "Institute of Education Sciences and Economics of Southeast Asia (ISA Vietnam) · Version 2.0 · 10/2026"}</span></p>
         </div>
-        <p className="psp-note">{vi ? "PRO-SCORE là chỉ số tham khảo của ProFind, không phải xếp hạng chính thức và không thay thế đánh giá của bất kỳ hội đồng nào." : "PRO-SCORE is ProFind’s reference index; it is not an official ranking and does not replace any committee’s evaluation."}</p>
+        <p className="psp-note">{vi ? "PRO-SCORE1000 là chỉ số tham khảo của ProFind, không phải xếp hạng chính thức và không thay thế đánh giá của bất kỳ hội đồng nào." : "PRO-SCORE1000 is ProFind’s reference index; it is not an official ranking and does not replace any committee’s evaluation."}</p>
       </header>
+
+      <aside className="psp-disc" role="note"><Icon n="info" size={22} /><div>
+        <b>{vi ? "Hội đồng 1000 chuyên gia này là MÔ PHỎNG" : "This panel of 1000 experts is a SIMULATION"}</b>
+        <p>{vi ? "PRO-SCORE1000 do một hội đồng mô phỏng gồm 1000 chuyên gia ảo tạo ra bằng mô hình tính toán, mỗi chuyên gia ảo có hồ sơ riêng (lĩnh vực, giai đoạn sự nghiệp, khu vực, lập trường đánh giá) và bộ trọng số riêng. Đây không phải kết quả khảo sát 1000 nhà nghiên cứu thật, và các chuyên gia ảo không phải là người có thật. Các giả định của mô hình được công khai bên dưới để cộng đồng kiểm chứng và phản biện." : "PRO-SCORE1000 is produced by a simulated panel of 1000 virtual experts generated by a computational model; each virtual expert has its own profile (field, career stage, region, evaluation stance) and its own weights. It is not the result of surveying 1000 real researchers, and the virtual experts are not real people. The model’s assumptions are published below for verification and challenge."}</p></div></aside>
 
       <section className="psp-sec"><h2>{vi ? "Nguyên tắc thiết kế" : "Design principles"}</h2>
         <ul className="psp-pr">{principles.map(([ic, h, d]) => <li key={h}><span className="kic"><Icon n={ic} size={20} /></span><b>{h}</b><p>{d}</p></li>)}</ul>
         <p className="meta">{vi ? "Bản nháp công thức được hội đồng giả lập 10 chuyên gia (thư mục học, thống kê, y sinh, kỹ thuật, khoa học tự nhiên, khoa học xã hội, quản lý nghiên cứu, nhà khoa học trẻ, liêm chính học thuật, chất lượng dữ liệu) phản biện nhiều vòng; phần lớn thay đổi nhằm bỏ trùng đếm, chống thổi phồng và công bằng với dữ liệu thiếu." : "The draft formula was stress-tested by a simulated panel of 10 experts (bibliometrics, statistics, life sciences, engineering, natural sciences, social sciences, research management, early-career researchers, research integrity, data quality); most changes aimed to remove double counting, curb inflation and treat missing data fairly."}</p></section>
 
       <section className="psp-sec"><h2>{vi ? "Công thức" : "The formula"}</h2>
-        <pre className="formula big">{vi ? "PRO-SCORE = 100 × [ 0,42 Tác động + 0,10 Sản lượng + 0,10 Chủ đạo + 0,10 Chất lượng + 0,17 Đà phát triển + 0,08 Đều đặn + 0,03 Ghi nhận ]" : "PRO-SCORE = 100 × [ 0.42 Impact + 0.10 Output + 0.10 Leadership + 0.10 Quality + 0.17 Momentum + 0.08 Consistency + 0.03 Recognition ]"}</pre>
-        <div className="psp-stack" role="img" aria-label={PILLARS.map((p) => `${P[p.k][0]} ${p.w}%`).join(", ")}>{PILLARS.map((p) => <i key={p.k} style={{ width: `${p.w}%`, background: p.color }} title={`${P[p.k][0]} ${p.w}%`}><span>{p.w >= 8 ? p.w : ""}</span></i>)}</div>
-        <p className="psp-legend">{PILLARS.map((p) => <span key={p.k}><i style={{ background: p.color }} />{P[p.k][0]} {p.w}%</span>)}</p>
-        <p className="meta">{vi ? "Mỗi chỉ báo nằm trong khoảng 0 đến 1 (bách phân vị trong ngành, hoặc tỉ lệ đã làm trơn); điểm cuối nhân 100." : "Each indicator lies between 0 and 1 (field percentile, or a smoothed ratio); the final score is multiplied by 100."}</p></section>
+        <pre className="formula big">{vi ? "PRO-SCORE1000 = trung bình của 1000 điểm, mỗi điểm do một chuyên gia ảo chấm:\nĐiểm(chuyên gia k) = 100 × Σ  wₖᵢ × chỉ báoᵢ   (7 chỉ báo, Σ wₖᵢ = 1)" : "PRO-SCORE1000 = mean of 1000 scores, each given by one virtual expert:\nScore(expert k) = 100 × Σ  wₖᵢ × indicatorᵢ   (7 indicators, Σ wₖᵢ = 1)"}</pre>
+        <div className="psp-stack" role="img" aria-label={pl.map((p) => `${P[p.k][0]} ${p.w}%`).join(", ")}>{pl.map((p) => <i key={p.k} style={{ width: `${p.w}%`, background: p.color }} title={`${P[p.k][0]} ${p.w.toFixed(1)}%`}><span>{p.w >= 8 ? Math.round(p.w) : ""}</span></i>)}</div>
+        <p className="psp-legend">{pl.map((p) => <span key={p.k}><i style={{ background: p.color }} />{P[p.k][0]} {p.w.toFixed(1).replace(".", ",")}%</span>)}</p>
+        <p className="meta">{vi ? "Thanh màu và các thẻ bên dưới là trọng số trung bình của hội đồng (kèm độ lệch chuẩn). Mỗi chỉ báo nằm trong khoảng 0 đến 1 (bách phân vị trong ngành, hoặc tỉ lệ đã làm trơn); điểm cuối nhân 100." : "The bar and cards below show the panel’s mean weights (with standard deviation). Each indicator lies between 0 and 1 (field percentile, or a smoothed ratio); the final score is multiplied by 100."}</p></section>
+
+      <section className="psp-sec"><h2>{vi ? "Cách vận hành hội đồng 1000 chuyên gia ảo" : "How the 1000-expert simulated panel works"}</h2>
+        <ol className="psp-ul">
+          <li>{vi ? <><b>Sinh hồ sơ.</b> Mỗi chuyên gia ảo được gán ngẫu nhiên (hạt giống cố định, kết quả tái lập được) một lĩnh vực (6 nhóm), giai đoạn sự nghiệp (3), khu vực (4) và lập trường đánh giá (3: thư mục học, đánh giá có trách nhiệm theo DORA, quản lý nghiên cứu).</> : <><b>Generate profiles.</b> Each virtual expert is randomly assigned (fixed seed, reproducible) a field (6 groups), career stage (3), region (4) and evaluation stance (3: bibliometrics, responsible assessment per DORA, research management).</>}</li>
+          <li>{vi ? <><b>Sinh trọng số.</b> Xuất phát từ trọng số của bản v1 (đã được hội đồng 10 chuyên gia phản biện), điều chỉnh theo khuynh hướng đã ghi nhận trong tài liệu: người mới vào nghề coi trọng đà phát triển hơn, ngành xã hội và nhân văn ít coi trọng hạng tạp chí, quan điểm DORA hạ trọng số tạp chí và sản lượng, ngành vật lý với danh sách tác giả theo vần ABC ít coi trọng vai trò chủ đạo... rồi lấy mẫu Dirichlet để mỗi chuyên gia khác nhau.</> : <><b>Generate weights.</b> Starting from the v1 weights (stress-tested by a 10-expert panel), adjusted by tendencies documented in the literature: early-career experts favour momentum, social-science and humanities experts weigh journal quartile less, DORA-minded experts lower journal and output weights, fields with alphabetical authorship weigh leadership less... then Dirichlet sampling makes each expert different.</>}</li>
+          <li>{vi ? <><b>Chấm điểm.</b> Mỗi chuyên gia ảo chấm mọi hồ sơ theo trọng số của mình; PRO-SCORE1000 là <b>trung bình</b> của 1000 điểm.</> : <><b>Score.</b> Each virtual expert scores every profile with their own weights; PRO-SCORE1000 is the <b>mean</b> of the 1000 scores.</>}</li>
+          <li>{vi ? <><b>Đo độ vững.</b> Từ 1000 cách xếp hạng, ProFind báo <b>khoảng điểm</b> (P10 đến P90), <b>khoảng hạng</b> và <b>độ vững của huy hiệu</b>: tỉ lệ chuyên gia ảo xếp hồ sơ vào đúng nhóm Top đó.</> : <><b>Measure robustness.</b> From the 1000 rankings, ProFind reports a <b>score range</b> (P10 to P90), a <b>rank range</b> and <b>badge robustness</b>: the share of virtual experts placing the profile in that Top group.</>}</li></ol>
+        {panel && <><h3>{vi ? "Cơ cấu hội đồng và trọng số trung bình (%)" : "Panel composition and mean weights (%)"}</h3>
+          <div className="psp-tw"><table className="psp-t"><thead><tr><th>{vi ? "Nhóm" : "Group"}</th><th>n</th>{COLS.map((c) => <th key={c}>{P[c][0]}</th>)}</tr></thead>
+            <tbody>{Object.entries(panel.by).map(([dim, g]) => [<tr key={dim} className="dim"><th colSpan={9}>{DIM_LABEL[dim][vi ? 0 : 1]}</th></tr>, ...Object.entries(g).map(([k, v]) => <tr key={dim + k}><td>{v.label}</td><td>{v.n}</td>{v.w.map((x, i) => <td key={i}>{x.toFixed(1).replace(".", ",")}</td>)}</tr>)])}
+              <tr className="all"><td><b>{vi ? "Toàn hội đồng" : "Whole panel"}</b></td><td>{panel.n}</td>{panel.mean.map((x, i) => <td key={i}><b>{x.toFixed(1).replace(".", ",")}</b></td>)}</tr></tbody></table></div>
+          <p className="meta">{vi ? `Hạt giống ngẫu nhiên: ${panel.seed}. Các hệ số điều chỉnh nằm trong mã nguồn (scripts/pro-panel.mjs) và là giả định của mô hình.` : `Random seed: ${panel.seed}. The adjustment factors are in the source code (scripts/pro-panel.mjs) and are model assumptions.`}</p></>}</section>
 
       <section className="psp-sec"><h2>{vi ? "Bảy chỉ báo" : "The seven indicators"}</h2>
-        <ol className="psp-cards">{PILLARS.map((p) => <li key={p.k} style={{ "--c": p.color } as React.CSSProperties}>
-          <div className="psp-ch"><span className="kic"><Icon n={p.icon} size={20} /></span><b>{P[p.k][0]}</b><em>{p.w}%</em></div>
+        <ol className="psp-cards">{pl.map((p, i) => <li key={p.k} style={{ "--c": p.color } as React.CSSProperties}>
+          <div className="psp-ch"><span className="kic"><Icon n={p.icon} size={20} /></span><b>{P[p.k][0]}</b><em>{p.w.toFixed(1).replace(".", ",")}%{panel ? <small> ±{panel.sd[i].toFixed(1).replace(".", ",")}</small> : null}</em></div>
           <p className="psp-what">{P[p.k][1]}</p><p className="psp-how">{P[p.k][2]}</p></li>)}</ol></section>
 
       <section className="psp-sec"><h2>{vi ? "Chuẩn hóa và làm trơn" : "Normalisation and smoothing"}</h2>
@@ -89,14 +112,15 @@ export function ProScorePage() {
           <li>{vi ? <><b>Trần chống thổi phồng.</b> Trích dẫn mỗi công trình bị cắt ở P99 của ngành; sản lượng có trần P95; hồ sơ nghi gộp nhầm nhiều người bị loại khỏi xếp hạng.</> : <><b>Anti-inflation caps.</b> Per-work citations are capped at the field’s P99; output is capped at P95; profiles suspected of merging several people are excluded from ranking.</>}</li></ul>
         <div className="psp-ex"><b>{vi ? "Ví dụ minh họa (số giả định)" : "Illustrative example (hypothetical numbers)"}</b>
           <p>{vi ? "Một nhà khoa học có bách phân vị tác động 0,90; sản lượng 0,80; chủ đạo 0,70; chất lượng 0,60; đà phát triển 0,85; đều đặn 0,90; chưa thuộc Top 2%:" : "A scientist with impact percentile 0.90; output 0.80; leadership 0.70; quality 0.60; momentum 0.85; consistency 0.90; not in the Top 2%:"}</p>
-          <code>0,42×0,90 + 0,10×0,80 + 0,10×0,70 + 0,10×0,60 + 0,17×0,85 + 0,08×0,90 + 0,03×0 = <b>{(exScore / 100).toFixed(4).replace(".", ",")}</b> → PRO-SCORE <b>{exScore.toFixed(1).replace(".", ",")}</b></code></div></section>
+          <code>{vi ? "Với trọng số trung bình của hội đồng" : "With the panel’s mean weights"}: {pl.map((p) => `${(p.w / 100).toFixed(3).replace(".", ",")}×${(ex[p.k as keyof typeof ex] / 100).toFixed(2).replace(".", ",")}`).join(" + ")} = <b>{(exScore / 100).toFixed(4).replace(".", ",")}</b> → PRO-SCORE1000 <b>{exScore.toFixed(1).replace(".", ",")}</b></code></div></section>
 
       <section className="psp-sec"><h2>{vi ? "Xếp hạng và huy hiệu" : "Ranking and badges"}</h2>
-        <p>{vi ? "Hồ sơ có từ 10 công trình và hoạt động từ 3 năm được xếp hạng toàn hệ thống theo PRO-SCORE (đồng điểm thì đồng hạng). Hạng và huy hiệu được tính lại tự động mỗi lần dữ liệu cập nhật." : "Profiles with 10+ works and 3+ active years are ranked system-wide by PRO-SCORE (ties share a rank). Ranks and badges are recomputed automatically at every data refresh."}</p>
+        <p>{vi ? "Hồ sơ có từ 10 công trình và hoạt động từ 3 năm được xếp hạng toàn hệ thống theo PRO-SCORE1000 (đồng điểm thì đồng hạng). Hạng và huy hiệu được tính lại tự động mỗi lần dữ liệu cập nhật." : "Profiles with 10+ works and 3+ active years are ranked system-wide by PRO-SCORE1000 (ties share a rank). Ranks and badges are recomputed automatically at every data refresh."}</p>
         <ul className="psp-tiers">{[...TIERS].map((tr) => <li key={tr} className={tr}><ProBadge rank={RANKS[tr]} size={56} /><b>{names[tr]}</b><span>{t("topN", { n: String(RANKS[tr]) })}</span></li>)}</ul></section>
 
       <section className="psp-sec"><h2>{vi ? "Giới hạn hiện tại" : "Current limits"}</h2>
         <ul className="psp-ul">
+          <li>{vi ? "Hội đồng là mô phỏng: các chuyên gia ảo và hệ số điều chỉnh phản ánh giả định của người xây mô hình dựa trên tài liệu, không phải ý kiến thực của 1000 nhà nghiên cứu. Chưa nên trích PRO-SCORE1000 như kết quả khảo sát hay đồng thuận của cộng đồng học thuật." : "The panel is simulated: the virtual experts and adjustment factors reflect the modeller’s assumptions drawn from the literature, not the real opinions of 1000 researchers. Do not cite PRO-SCORE1000 as a survey result or as a consensus of the academic community."}</li>
           <li>{vi ? "OpenAlex chưa cho số tác giả mỗi công trình nên chưa chia trích dẫn theo đóng góp, và chưa có năm bắt đầu sự nghiệp để chuẩn hóa theo thế hệ." : "OpenAlex does not give the author count per work, so citations are not split by contribution, and there is no career-start year for cohort normalisation."}</li>
           <li>{vi ? "Hạng Q và vai trò chỉ có ở một phần công trình; sách, chương sách, kỷ yếu và bằng sáng chế chưa được tính." : "Quartile and role exist for only some works; books, chapters, proceedings and patents are not counted."}</li>
           <li>{vi ? "Hồ sơ OpenAlex có thể gộp nhầm hoặc tách đôi một người; ngành chính suy ra từ tạp chí đã đăng." : "OpenAlex profiles may merge or split people; the primary field is inferred from journals published in."}</li>
@@ -106,8 +130,8 @@ export function ProScorePage() {
 
       <section className="psp-sec"><h2>{vi ? "Cách trích dẫn" : "How to cite"}</h2>
         <blockquote className="psp-cite">{cite}</blockquote>
-        <p className="actions-row"><button type="button" className="ghost" onClick={copy}><Icon n="link" size={16} />{copied ? (vi ? "Đã chép" : "Copied") : (vi ? "Chép trích dẫn" : "Copy citation")}</button><a className="ghost btn" href={`mailto:${CONTACT}?subject=${encodeURIComponent("PRO-SCORE")}`}><Icon n="mail" size={16} />{vi ? "Góp ý về PRO-SCORE" : "Feedback on PRO-SCORE"}</a></p>
-        <p className="meta">{vi ? "Chúng tôi hoan nghênh góp ý của các chuyên gia, hội đồng khoa học và nhà quản lý nghiên cứu để hoàn thiện các phiên bản sau." : "We welcome feedback from experts, scientific committees and research managers to refine future versions."}</p></section>
+        <p className="actions-row"><button type="button" className="ghost" onClick={copy}><Icon n="link" size={16} />{copied ? (vi ? "Đã chép" : "Copied") : (vi ? "Chép trích dẫn" : "Copy citation")}</button><a className="ghost btn" href={`mailto:${CONTACT}?subject=${encodeURIComponent("PRO-SCORE1000")}`}><Icon n="mail" size={16} />{vi ? "Góp ý về PRO-SCORE1000" : "Feedback on PRO-SCORE1000"}</a></p>
+        <p className="meta">{vi ? "Chúng tôi hoan nghênh góp ý của các chuyên gia, hội đồng khoa học và nhà quản lý nghiên cứu, kể cả đăng ký làm thành viên thật của hội đồng ở các phiên bản sau, để hoàn thiện chỉ số." : "We welcome feedback from experts, scientific committees and research managers, including volunteering as a real panel member in later versions, to refine the index."}</p></section>
     </article>
   );
 }
