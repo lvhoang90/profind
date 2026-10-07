@@ -468,3 +468,7 @@ html,body{max-width:100%;overflow-x:clip}
 /* Nhãn thẻ trên điện thoại không xuống dòng (PRO-SCORE1000™ dài) */
 table.cards td[data-l]::before{white-space:nowrap}
 @media(max-width:480px){table.cards td[data-l]::before{font-size:.68rem;letter-spacing:0}}
+.bigtag.dual{background:#e0f2fe;color:#075985}.bigtag.dual .ic{--ic2:#0ea5e9}
+/* Số lớn trong thẻ điện thoại: không rớt chữ số xuống dòng */
+table.cards td.num{white-space:nowrap}
+@media(max-width:480px){table.cards td.num.lg{font-size:.88rem}}

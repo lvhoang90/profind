@@ -4,7 +4,7 @@
 // để các bài của nhóm hàng nghìn tác giả (đồng tác giả) không lấn át; mỗi công trình chỉ xuất hiện một lần.
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 const P = JSON.parse(readFileSync("public/data/profind.json", "utf8"));
-const ok = new Map(P.authors.filter((a) => a.foreign === false && !a.suspect).map((a) => [a.id, a.name]));
+const ok = new Map(P.authors.filter((a) => a.foreign === false && !a.suspect && a.rankable).map((a) => [a.id, a.name]));
 const all = [], seen = new Set();
 for (const f of readdirSync("public/data/works")) {
   const id = f.replace(".json", ""); if (!ok.has(id)) continue;

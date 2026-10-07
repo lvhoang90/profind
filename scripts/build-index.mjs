@@ -118,7 +118,9 @@ const outAuthors = authors.map((a) => {
     top2: TOP2[a.id] ? { rank: TOP2[a.id].rank, field: TOP2[a.id].field } : null,
     // foreign: true = có đơn vị ngoài VN; false = chỉ đơn vị VN; null = chưa biết (chưa chạy enrich-authors.mjs, hoặc OpenAlex không ghi quốc gia nào).
     // Người có tên trong danh sách Top 2% mục "Việt Nam" (đơn vị công tác tại VN theo Elsevier) luôn được coi là đơn vị trong nước.
-    foreign: TOP2[a.id] ? false : meta && meta.countries.length ? meta.countries.some((c) => c !== "VN") : null,
+    foreign: TOP2[a.id] ? false : meta && meta.countries.length ? !meta.countries.includes("VN") : null,
+    // dual: có đơn vị tại VN và đơn vị ở nước khác (nhà khoa học đa liên kết); nhiều quốc gia (>= 3) có thể là liên kết đa quốc gia, chưa xếp hạng trừ khi được xác nhận trong data/vn-confirmed.json.
+    dual: !TOP2[a.id] && !!meta && meta.countries.includes("VN") && meta.countries.some((c) => c !== "VN"), nCountries: meta?.countries?.length ?? null,
     // suspect: hồ sơ OpenAlex nhiều khả năng gộp nhầm nhiều người (>= 500 công trình, > 150 công trình/năm, hoặc >= 5 đơn vị); ẩn khỏi bảng mặc định và không tính thứ hạng.
     suspect: ws.length >= 500 || ws.length / span > 150 || a.institutions.length >= 5,
     oaWorks: meta?.worksTotal ?? null, ...bigStats(ws), worksCount: ws.length, countedWorks: ws.filter((w) => w.counted).length, totalScore: Math.round(ws.reduce((s, w) => s + (w.score ?? 0), 0) * 100) / 100,
@@ -128,7 +130,9 @@ const outAuthors = authors.map((a) => {
 });
 // Thứ hạng chỉ tính trong tập đủ điều kiện (đơn vị tại Việt Nam, không nghi gộp nhầm) = đúng tập danh sách mặc định; đồng hạng cùng số (hạng thi đấu: 1,2,2,4).
 // Người ngoài tập (nước ngoài, nghi gộp nhầm, chưa biết) có hạng null, giao diện hiện "-".
-const pool = outAuthors.filter((a) => a.foreign === false && !a.suspect && a.worksCount > 0);
+const CONFIRMED = new Set(existsSync("data/vn-confirmed.json") ? rd("data/vn-confirmed.json").ids ?? [] : []), EXCLUDED = new Set(existsSync("data/vn-excluded.json") ? rd("data/vn-excluded.json").ids ?? [] : []);
+for (const a of outAuthors) { a.rankable = a.foreign === false && !a.suspect && !EXCLUDED.has(a.id) && (CONFIRMED.has(a.id) || !a.dual || (a.nCountries ?? 0) <= 2); if (CONFIRMED.has(a.id) && a.foreign !== true) a.dual = false; }
+const pool = outAuthors.filter((a) => a.rankable && a.worksCount > 0);
 const rank = (key, out) => { const o = [...pool].sort((a, b) => b[key] - a[key]); o.forEach((a, i, arr) => { a[out] = i > 0 && arr[i - 1][key] === a[key] ? arr[i - 1][out] : i + 1; }); };
 for (const a of outAuthors) { a.rankScore = a.rankWorks = a.rankCit = null; }
 rank("totalScore", "rankScore"); rank("worksCount", "rankWorks"); rank("citations", "rankCit");
