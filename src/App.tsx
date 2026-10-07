@@ -65,7 +65,7 @@ function List({ d }: { d: Data }) {
   const rows = useMemo(() => {
     const n = fold(q.trim());
     return d.authors.filter((a) => {
-      if (scope === "vn" && a.foreign !== false) return false;
+      if (scope === "vn" && (a.foreign !== false || a.suspect)) return false;
       if (disc && !a.disciplines.includes(disc)) return false;
       if (inst && !a.institutions.includes(inst)) return false;
       if (type && !a.institutions.some((i) => instById.get(i)?.type === type)) return false;
@@ -93,7 +93,7 @@ function List({ d }: { d: Data }) {
           <tbody>{rows.slice(0, limit).map((a, i) => (
             <tr key={a.id}>
               <td className="num"><span className={`rk r${Math.min(i + 1, 4)}`}>{i + 1}</span></td>
-              <td><a href={`#/tac-gia/${a.id}`}>{a.name}</a>{a.claimed && <Icon n="check" size={14} className="ok" />}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}<div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
+              <td><a href={`#/tac-gia/${a.id}`}>{a.name}</a>{a.claimed && <Icon n="check" size={14} className="ok" />}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}<div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
               <td>{a.institutions.map((i) => { const x = instById.get(i); return x ? instName(x) : i; }).join(", ")}</td>
               <td className="num">{a.worksCount}</td><td className="num"><span className="score">{a.totalScore}</span></td><td className="num">{a.citations}</td>
               <td className="meta">{a.firstYear ?? "-"}–{a.lastYear ?? "-"}</td>
@@ -107,7 +107,8 @@ function List({ d }: { d: Data }) {
 function AuthorPage({ a, d }: { a: Author; d: Data }) {
   const { lang, t } = useT();
   const [works, setWorks] = useState<Work[] | null>(null);
-  useEffect(() => { setWorks(null); fetch(`./data/works/${a.id}.json`).then((r) => r.json()).then((w: Work[]) => setWorks(w.sort((x, y) => y.year - x.year)), () => setWorks([])); }, [a.id]);
+  const [wlimit, setWlimit] = useState(PAGE);
+  useEffect(() => { setWorks(null); setWlimit(PAGE); fetch(`./data/works/${a.id}.json`).then((r) => r.json()).then((w: Work[]) => setWorks(w.sort((x, y) => y.year - x.year)), () => setWorks([])); }, [a.id]);
   const inst = a.institutions.map((i) => d.institutions.find((x) => x.id === i)).filter((x): x is NonNullable<typeof x> => !!x);
   const csv = () => {
     const esc = (s: unknown) => `"${String(s ?? "").replace(/"/g, '""')}"`;
@@ -118,24 +119,26 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   return (
     <article>
       <p><a href="#/">{t("back")}</a></p>
-      <h2 className="au">{a.name}{a.foreign && <span className="badge warnb">{t("foreignTag")}</span>}{a.claimed && <span className="badge" title={t("claimedBadge")}><Icon n="check" size={16} />{t("claimedBadge")}</span>}</h2>
+      <h2 className="au">{a.name}{a.foreign && <span className="badge warnb">{t("foreignTag")}</span>}{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}{a.claimed && <span className="badge" title={t("claimedBadge")}><Icon n="check" size={16} />{t("claimedBadge")}</span>}</h2>
       <p className="meta">{inst.map((i) => (lang === "vi" ? i.name : i.en)).join(", ")}{a.orcid && <> · <a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}</a></>}</p>
       <div className="stats">
         <div><Icon n="trophy" size={22} /><b>#{a.rankScore}</b><span>{t("rank")} · {t("score")}</span></div><div><Icon n="chart" size={22} /><b>#{a.rankWorks}</b><span>{t("rank")} · {t("works")}</span></div>
         <div><Icon n="check" size={22} /><b>{a.totalScore}</b><span>{t("cite")}</span></div><div><Icon n="book" size={22} /><b>{a.countedWorks}/{a.worksCount}</b><span>{t("counted")}</span></div>
         <div><Icon n="link" size={22} /><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span></div>
       </div>
+      {a.suspect && <p className="banner demo" role="note"><Icon n="info" />{t("suspectNote")}</p>}
       <p className="actions-row"><button className="ghost" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button> <a className="ghost-link" href={`#/dinh-chinh/${a.id}`}><Icon n="user" size={16} />{t("corrLink")}</a></p>
       {works === null ? <p className="empty">{t("loading")}</p> : (
         <div className="table-wrap"><table>
           <thead><tr><th className="num">{t("year")}</th><th>{t("paper")}</th><th>{t("journal")}</th><th>{t("issn")}</th><th className="num">{t("pts")}</th><th className="num">{t("cit")}</th><th>{t("role")}</th></tr></thead>
-          <tbody>{works.map((w) => (
+          <tbody>{works.slice(0, wlimit).map((w) => (
             <tr key={w.id}><td className="num">{w.year}</td><td>{w.title}</td>
               <td>{w.journal}{w.scoreDiscipline && <div><a className="meta" target="_blank" rel="noopener" href={`${EDUFIND}/${w.scoreDiscipline}/?${w.scoreKind === "scopus" ? "tab=international&" : ""}q=${encodeURIComponent(w.issn)}`}>{t("lookup")} ↗</a></div>}</td>
               <td className="issn">{w.issn}</td>
               <td className="num">{w.score === null ? <span className="meta">{w.role === "co" ? t("notLead") : t("unmatched")}</span> : <span className="score" title={w.scoreKind === "scopus" ? `Scopus ${w.quartile ?? ""}` : t("kDom")}>{w.score}</span>}{w.scoreKind === "scopus" && <div className="meta">Scopus {w.quartile ?? ""}</div>}</td>
               <td className="num">{w.citations}</td><td>{w.role === "lead" ? t("lead") : t("co")}</td></tr>))}</tbody>
         </table></div>)}
+      {works && works.length > wlimit && <p><button className="ghost" onClick={() => setWlimit(wlimit + PAGE)}>{t("moreRows")} ({wlimit}/{works.length})</button></p>}
     </article>
   );
 }

@@ -61,8 +61,11 @@ const outAuthors = authors.map((a) => {
   const disciplines = [...dc.entries()].sort((x, y) => y[1] - x[1]).filter(([, c]) => c / tot >= 0.25 || c === top).slice(0, 3).map(([d]) => d);
   const years = ws.map((w) => w.year);
   const matched = ws.filter((w) => w.matched).length;
+  const span = years.length ? Math.max(1, Math.max(...years) - Math.min(...years) + 1) : 1;
   return { id: a.id, name: a.name, orcid: a.orcid, institutions: a.institutions, disciplines, demo: !!a.demo, claimed: a.claimed, // foreign: true = có đơn vị ngoài VN; false = chỉ đơn vị VN; null = chưa biết (chưa chạy enrich-authors.mjs cho tác giả này).
     foreign: META[a.id] ? META[a.id].countries.some((c) => c !== "VN") : null,
+    // suspect: hồ sơ OpenAlex nhiều khả năng gộp nhầm nhiều người (>= 500 công trình hoặc > 150 công trình/năm); ẩn khỏi bảng mặc định.
+    suspect: ws.length >= 500 || ws.length / span > 150,
     worksCount: ws.length, countedWorks: ws.filter((w) => w.counted).length, totalScore: Math.round(ws.reduce((s, w) => s + (w.score ?? 0), 0) * 100) / 100,
     citations: ws.reduce((s, w) => s + (w.citations ?? 0), 0), matchedRate: ws.length ? Math.round((matched / ws.length) * 100) / 100 : 0,
     firstYear: years.length ? Math.min(...years) : null, lastYear: years.length ? Math.max(...years) : null,
