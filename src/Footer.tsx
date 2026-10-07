@@ -22,7 +22,8 @@ export function Footer({ data: _data }: { data: Data | null }) {
           <div className="sf-brand">
             <a className="brand" href="#/" aria-label="ProFind"><img className="logo" src="./logo-disc.svg" alt="" width="40" height="40" /><b>Pro<i>Find</i></b></a>
             <p>{t("fAbout")}</p>
-            <p className="sf-tag"><span className="beta">v1.0</span></p>
+            <div className="sf-who"><b>Lương Việt Hoàng</b><span>ISA Vietnam</span>
+              <ul><li><a href="mailto:luongviethoang.hcm@gmail.com">luongviethoang.hcm@gmail.com</a></li><li><a href="https://zalo.me/0932956067" target="_blank" rel="noopener noreferrer">Zalo +84 932 956 067</a></li></ul></div>
           </div>
           <nav aria-labelledby="sf-h1">
             <h2 id="sf-h1">{t("fExplore")}</h2>
@@ -44,7 +45,8 @@ export function Footer({ data: _data }: { data: Data | null }) {
             {apps.map(([a, n, d]) => <li key={a}><EcoLink app={a} place="footer"><b>{n}</b><span>{d}</span><Icon n="external" size={14} /><span className="sr"> {t("newTab")}</span></EcoLink></li>)}
           </ul>
         </nav>
-        <div className="sf-bottom"><p>© 2026 Lương Việt Hoàng, ISA Vietnam. {t("notRankShort")}</p><a href="#main" className="sf-top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>{t("fTop")} ↑</a></div>
+        <div className="sf-bottom"><p>© 2026 Lương Việt Hoàng (ISA Vietnam). {t("sfCopy")}</p><a href="#main" className="sf-top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>{t("fTop")} ↑</a>
+          <details className="sf-legal"><summary>{t("sfLegal")}</summary><p>{t("sfDisc")} {t("notRankShort")}</p></details></div>
       </div>
     </footer>
   );
