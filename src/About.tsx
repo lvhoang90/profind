@@ -23,9 +23,9 @@ export function AboutPage({ section }: { section: string }) {
   const go = (id: string) => document.getElementById(`s-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
   const secs: Sec[] = [
     { id: "gioi-thieu", icon: "spark", h: vi ? "Về ProFind" : "About ProFind", body: vi ? <>
-      <p>ProFind là <b>dữ liệu số về nhà khoa học và công trình nghiên cứu</b>: tìm theo tên, đơn vị, ngành, công trình, tạp chí, ISSN và DOI; xem điểm tham khảo theo quy tắc của Hội đồng Giáo sư nhà nước (HĐGSNN).</p>
+      <p>ProFind là <b>dữ liệu số về nhà khoa học và công trình nghiên cứu</b>: tìm theo tên, đơn vị, ngành, công trình, tạp chí, ISSN và DOI; xem chỉ số PRO-SCORE và huy hiệu tôn vinh.</p>
       <p>ProFind <b>miễn phí, mã nguồn mở</b>, thuộc hệ sinh thái ISA cùng EduFind (chọn tạp chí), Ami (đọc và trích dẫn) và Mây (chuẩn hóa văn bản). Bản quyền thuộc về tác giả Lương Việt Hoàng (ISA Vietnam). ProFind độc lập, không trực thuộc Elsevier, Scopus, Clarivate hay ORCID.</p></> : <>
-      <p>ProFind is <b>digital data on scientists and their research works</b>: search by name, institution, field, work, journal, ISSN and DOI, and see a reference score based on the State Professorship Council (HĐGSNN) rules.</p>
+      <p>ProFind is <b>digital data on scientists and their research works</b>: search by name, institution, field, work, journal, ISSN and DOI, and see the PRO-SCORE index.</p>
       <p>ProFind is <b>free and open source</b>, part of the ISA ecosystem with EduFind (pick a journal), Ami (read and cite) and Mây (format documents). Copyright belongs to the author Luong Viet Hoang (ISA Vietnam). ProFind is independent and not affiliated with Elsevier, Scopus, Clarivate or ORCID.</p></> },
     { id: "nguon", icon: "link", h: vi ? "Nguồn dữ liệu" : "Data sources", body: vi ? <ul>
       <li><b>OpenAlex</b> (CC0): hồ sơ tác giả, công trình, DOI, trích dẫn, đơn vị.</li>
@@ -42,21 +42,31 @@ export function AboutPage({ section }: { section: string }) {
       <li><b>List of education institutions</b> published by the Ministry of Education and Training.</li>
       <li><b>Top 2% scientists list</b> (Elsevier), see the Licences section.</li>
       <li><b>Google Scholar links</b> provided by the authors. ProFind does not scrape Google Scholar.</li></ul> },
-    { id: "diem", icon: "chart", h: vi ? "Cách tính điểm và giới hạn" : "How scores work and their limits", body: vi ? <>
-      <p><b>Thứ hạng và điểm chỉ để tham khảo, không phải xếp hạng chính thức.</b></p>
-      <ul><li>Điểm theo quy tắc của HĐGSNN, chỉ tính cho <b>tác giả chính</b>: tác giả đứng đầu, hoặc tác giả liên hệ duy nhất; nếu có từ 2 tác giả liên hệ thì chỉ tính tác giả đứng đầu.</li>
-      <li>Tạp chí trong nước tính theo năm đăng; tạp chí Scopus tính theo hạng Q và quy tắc từng ngành. Ngành của tác giả suy ra từ các tạp chí họ đã đăng.</li>
-      <li>Chưa xác định được SCIE/SSCI và kỷ yếu hội nghị; OpenAlex thiếu thông tin tác giả liên hệ ở nhiều công trình. Vì vậy điểm thường <b>thấp hơn thực tế</b>.</li>
-      <li>Chỉ lấy công trình từ năm 2016. Số trích dẫn là của hồ sơ OpenAlex (toàn thời gian) cộng phần bổ sung từ Semantic Scholar; Google Scholar thường cao hơn vì quét cả web mở (luận văn, kỷ yếu, sách, bản thảo).</li>
-      <li>Hồ sơ có thể gộp nhầm hoặc tách đôi một người; hồ sơ nghi gộp nhầm không được xếp hạng. Người được nêu tên có thể yêu cầu đính chính.</li>
-      <li>Số thứ tự (STT) trong danh sách đánh lại theo kết quả hiện tại; hạng theo điểm xem ở trang hồ sơ, so sánh trong nhóm tác giả đã nạp.</li></ul></> : <>
-      <p><b>Ranks and scores are for reference only and are not an official ranking.</b></p>
-      <ul><li>Scores follow the Council (HĐGSNN) rules and count only for the <b>lead author</b>: the first author, or the sole corresponding author; with two or more corresponding authors only the first author counts.</li>
-      <li>Domestic journals are scored by publication year; Scopus journals by quartile and field rule. An author's field is inferred from the journals they publish in.</li>
-      <li>SCIE/SSCI and conference proceedings cannot be determined, and OpenAlex lacks corresponding-author data for many works, so scores are often <b>lower than the true value</b>.</li>
-      <li>Only works since 2016 are loaded. Citations are the OpenAlex profile total (all time) plus a top-up from Semantic Scholar; Google Scholar is usually higher because it crawls the open web (theses, proceedings, books, preprints).</li>
-      <li>A profile may merge or split people; profiles suspected of merging are not ranked. Named people may request corrections.</li>
-      <li>The No. column in the list is renumbered for the current results; the score-based rank is on the profile page and compares only the authors loaded so far.</li></ul></> },
+    { id: "diem", icon: "chart", h: vi ? "PRO-SCORE: cách tính và giới hạn" : "PRO-SCORE: method and limits", body: vi ? <>
+      <p><b>PRO-SCORE là chỉ số tham khảo riêng của ProFind (thang 0 đến 100), không phải xếp hạng chính thức.</b> Chỉ số do hội đồng giả lập 10 chuyên gia (thư mục học, thống kê, y sinh, kỹ thuật, khoa học tự nhiên, khoa học xã hội, quản lý nghiên cứu, nhà khoa học trẻ, liêm chính học thuật, chất lượng dữ liệu) phản biện nhiều vòng, theo tinh thần DORA và Leiden Manifesto: nhiều chỉ báo, minh bạch, chuẩn hóa theo ngành, không dùng hệ số tạp chí làm thước đo chính.</p>
+      <pre className="formula">PRO-SCORE = 100 × [ 0,42 Tác động + 0,10 Sản lượng + 0,10 Chủ đạo + 0,10 Chất lượng + 0,17 Đà phát triển + 0,08 Đều đặn + 0,03 Ghi nhận ]</pre>
+      <ul>
+        <li><b>Tác động (42%)</b>: 40% trích dẫn (mỗi công trình bị cắt trần ở mức P99 của ngành, để bài nhóm lớn không kéo cả hồ sơ), 30% chỉ số h, 30% tỉ lệ công trình có từ 10 trích dẫn.</li>
+        <li><b>Sản lượng (10%)</b>: số công trình (thang log, có trần P95, tránh thưởng việc chia nhỏ bài).</li>
+        <li><b>Chủ đạo (10%)</b>: tỉ lệ công trình đứng đầu hoặc là tác giả liên hệ, trên các công trình xác định được vai trò; làm trơn Bayes và tối đa 0,85.</li>
+        <li><b>Chất lượng (10%)</b>: trung bình hạng Q (Scopus) trên công trình có hạng; vì chỉ một phần công trình có hạng nên được làm trơn về trung bình ngành, hồ sơ thiếu dữ liệu không bị phạt.</li>
+        <li><b>Đà phát triển (17%)</b>: trích dẫn và số công trình của 5 năm gần nhất, giúp nhà khoa học trẻ không bị lấn át bởi thâm niên.</li>
+        <li><b>Đều đặn (8%)</b>: tỉ lệ số năm có công bố trên số năm hoạt động.</li>
+        <li><b>Ghi nhận (3%)</b>: thuộc danh sách Top 2% thế giới của Elsevier.</li></ul>
+      <p>Mọi chỉ báo được quy về <b>bách phân vị trong cùng ngành chính</b> (ngành dưới 50 người trộn với toàn hệ thống). Hạng chỉ xếp cho hồ sơ có từ <b>10 công trình và hoạt động từ 3 năm</b>, tự tính lại mỗi lần dữ liệu cập nhật. Huy hiệu: <b>Tinh hoa</b> (Top 10), <b>Xuất sắc</b> (Top 50), <b>Ưu tú</b> (Top 100), <b>Nổi bật</b> (Top 500), <b>Tiêu biểu</b> (Top 1000).</p>
+      <p><b>Giới hạn:</b> OpenAlex chưa cho số tác giả mỗi công trình nên chưa chia trích dẫn theo đóng góp; chưa có năm bắt đầu sự nghiệp để chuẩn hóa theo thế hệ; hạng Q và vai trò chỉ có ở một phần công trình; sách, kỷ yếu và bằng sáng chế chưa được tính; hồ sơ có thể gộp nhầm hoặc tách đôi một người (hồ sơ nghi gộp nhầm bị loại khỏi xếp hạng). Công thức sẽ được cải tiến và công bố phiên bản mới khi có thêm dữ liệu; góp ý qua mục Liên hệ.</p></> : <>
+      <p><b>PRO-SCORE is ProFind’s own reference index (scale 0 to 100), not an official ranking.</b> It was stress-tested by a simulated panel of 10 experts (bibliometrics, statistics, life sciences, engineering, natural sciences, social sciences, research management, early-career researchers, research integrity, data quality) in the spirit of DORA and the Leiden Manifesto: several indicators, transparency, field normalisation, no journal-level metric as the main yardstick.</p>
+      <pre className="formula">PRO-SCORE = 100 × [ 0.42 Impact + 0.10 Output + 0.10 Leadership + 0.10 Quality + 0.17 Momentum + 0.08 Consistency + 0.03 Recognition ]</pre>
+      <ul>
+        <li><b>Impact (42%)</b>: 40% citations (each work capped at the field’s P99 so a large-consortium paper cannot carry a profile), 30% h-index, 30% share of works with 10 or more citations.</li>
+        <li><b>Output (10%)</b>: number of works (log scale, P95 cap, so splitting papers is not rewarded).</li>
+        <li><b>Leadership (10%)</b>: share of works as first or corresponding author among works with a known role; Bayesian-smoothed, at most 0.85.</li>
+        <li><b>Quality (10%)</b>: mean Scopus quartile over works that have one; since only some works do, it is shrunk toward the field average so missing data is not penalised.</li>
+        <li><b>Momentum (17%)</b>: citations and number of works in the last 5 years, so early-career researchers are not overshadowed by seniority.</li>
+        <li><b>Consistency (8%)</b>: share of active years with output.</li>
+        <li><b>Recognition (3%)</b>: listed in Elsevier’s world Top 2%.</li></ul>
+      <p>Every indicator is converted to a <b>percentile within the primary field</b> (fields under 50 people are blended with the whole system). Ranks are given only to profiles with <b>10 or more works and 3 or more active years</b>, recomputed automatically at each data refresh. Badges: <b>Elite</b> (Top 10), <b>Distinguished</b> (Top 50), <b>Eminent</b> (Top 100), <b>Notable</b> (Top 500), <b>Rising</b> (Top 1000).</p>
+      <p><b>Limits:</b> OpenAlex does not provide the author count per work, so citations are not split by contribution; career-start year is missing, so no cohort normalisation; quartile and role exist for only some works; books, proceedings and patents are not counted; a profile may merge or split people (profiles suspected of merging are excluded from ranking). The formula will be refined and new versions published as data grows; send feedback via Contact.</p></> },
     { id: "giay-phep", icon: "shield", h: vi ? "Giấy phép" : "Licences", body: vi ? <>
       <h3>Mã nguồn: MIT</h3>
       <p>Mã nguồn ProFind là mã nguồn mở theo giấy phép MIT: được dùng, sao chép, chỉnh sửa, phân phối, kể cả thương mại, miễn là giữ lại thông báo bản quyền và giấy phép. Toàn văn ở cuối mục này.</p>

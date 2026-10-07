@@ -1,0 +1,82 @@
+// PRO-SCORE v1: chỉ số khoa học riêng của ProFind, thang 0-100, được thiết kế sau khi hội đồng giả lập 10 chuyên gia (thư mục học, thống kê,
+// y sinh, kỹ thuật, khoa học tự nhiên, khoa học xã hội, quản lý nghiên cứu, nhà khoa học trẻ, liêm chính học thuật, chất lượng dữ liệu) phản biện bản nháp.
+// Nguyên tắc: tuân thủ DORA và Leiden Manifesto (nhiều chỉ báo, không dùng hệ số tạp chí làm thước đo chính, minh bạch, chuẩn hóa theo ngành);
+// không trùng đếm; không phạt thiếu dữ liệu (dữ liệu ít thì co về trung bình ngành); chống bài nhóm lớn (trần trích dẫn mỗi công trình).
+//
+//   PRO-SCORE = 100 × [ 0,42·Tác động + 0,10·Sản lượng + 0,10·Chủ đạo + 0,10·Chất lượng + 0,17·Đà phát triển + 0,08·Đều đặn + 0,03·Ghi nhận ]
+//   Tác động  = 0,40·pct(log(1+trích dẫn đã cắt trần)) + 0,30·pct(chỉ số h) + 0,30·pct(tỉ lệ công trình ≥ 10 trích dẫn, co về trung bình ngành)
+//   Sản lượng = pct(min(log(1+số công trình), P95))
+//   Chủ đạo   = pct(tỉ lệ công trình đứng đầu/liên hệ trên công trình xác định được vai trò, làm trơn Bayes k=8, tối đa 0,85)
+//   Chất lượng= trung bình hạng Q (Q1=1, Q2=0,75, Q3=0,5, Q4=0,25) trên công trình có hạng, làm trơn k=5 về trung bình ngành
+//   Đà phát triển = 0,5·pct(log(1+trích dẫn công trình 5 năm gần nhất)) + 0,5·pct(log(1+số công trình 5 năm gần nhất))
+//   Đều đặn   = (số năm có công bố + 2·0,6) / (số năm hoạt động + 2)
+//   Ghi nhận  = 1 nếu thuộc Top 2% thế giới (Elsevier), ngược lại 0
+// pct = bách phân vị trong ngành chính; ngành ít hơn 50 người được trộn với bách phân vị toàn hệ thống.
+const W = { impact: 0.42, output: 0.1, lead: 0.1, quality: 0.1, momentum: 0.17, steady: 0.08, recog: 0.03 };
+export const PRO_VERSION = "1.0";
+const QV = { Q1: 1, Q2: 0.75, Q3: 0.5, Q4: 0.25 };
+const quant = (arr, p) => { if (!arr.length) return Infinity; const s = [...arr].sort((a, b) => a - b); return s[Math.min(s.length - 1, Math.floor(p * s.length))]; };
+/** Bách phân vị trung điểm (0..1) của từng giá trị trong mảng cùng nhóm. */
+function pctMap(items, key) {
+  const v = items.map((a) => a[key]).sort((x, y) => x - y), n = v.length, lo = (x) => { let l = 0, h = n; while (l < h) { const m = (l + h) >> 1; if (v[m] < x) l = m + 1; else h = m; } return l; }, hi = (x) => { let l = 0, h = n; while (l < h) { const m = (l + h) >> 1; if (v[m] <= x) l = m + 1; else h = m; } return l; };
+  return (x) => (n ? (lo(x) + hi(x)) / 2 / n : 0.5);
+}
+
+export function computePro(authors, per, year) {
+  const pool = authors.filter((a) => a.foreign === false && !a.suspect && a.worksCount > 0);
+  const field = (a) => a.disciplines?.[0] ?? "_";
+  // Trần trích dẫn mỗi công trình = P99 của ngành, để một bài nhóm lớn không kéo cả hồ sơ.
+  const byF = new Map(); for (const a of pool) { const f = field(a); if (!byF.has(f)) byF.set(f, []); byF.get(f).push(a); }
+  const cap = new Map(); for (const [f, as] of byF) cap.set(f, Math.max(20, quant(as.flatMap((a) => (per.get(a.id) ?? []).map((w) => w.citations ?? 0)), 0.99)));
+  const feat = new Map();
+  for (const a of pool) {
+    const ws = per.get(a.id) ?? [], c = cap.get(field(a)) ?? 1e9, yrs = new Set(ws.map((w) => w.year));
+    const excess = ws.reduce((s, w) => s + Math.max(0, (w.citations ?? 0) - c), 0);
+    const known = ws.filter((w) => !w.ru), lead = known.filter((w) => w.role === "lead").length, qs = ws.filter((w) => QV[w.quartile]);
+    const rec = ws.filter((w) => w.year >= year - 4), span = a.firstYear && a.lastYear ? a.lastYear - a.firstYear + 1 : 1;
+    feat.set(a.id, {
+      cites: Math.log1p(Math.max(0, a.citations - excess)), h: a.hIndex ?? 0, hi: ws.filter((w) => (w.citations ?? 0) >= 10).length, n: ws.length,
+      out: Math.log1p(ws.length), known: known.length, lead, qn: qs.length, qsum: qs.reduce((s, w) => s + QV[w.quartile], 0),
+      rc: Math.log1p(rec.reduce((s, w) => s + (w.citations ?? 0), 0)), rn: Math.log1p(rec.length), act: yrs.size, span,
+    });
+  }
+  // Trung bình ngành cho các tỉ lệ cần làm trơn.
+  const mean = (as, f) => { const t = as.reduce((s, a) => s + feat.get(a.id)[f], 0); return t; };
+  const prior = new Map();
+  for (const [f, as] of byF) {
+    const n = as.reduce((s, a) => s + feat.get(a.id).n, 0) || 1, kn = as.reduce((s, a) => s + feat.get(a.id).known, 0) || 1, qn = as.reduce((s, a) => s + feat.get(a.id).qn, 0);
+    prior.set(f, { hi: mean(as, "hi") / n, lead: Math.min(0.85, mean(as, "lead") / kn), q: qn ? mean(as, "qsum") / qn : 0.6 });
+  }
+  for (const a of pool) {
+    const x = feat.get(a.id), p = prior.get(field(a));
+    x.hiS = (x.hi + 5 * p.hi) / (x.n + 5);
+    x.leadS = Math.min(0.85, (x.lead + 8 * p.lead) / (x.known + 8));
+    x.qS = (x.qsum + 5 * p.q) / (x.qn + 5);
+    x.steady = (x.act + 1.2) / (x.span + 2);
+  }
+  const KEYS = ["cites", "h", "hiS", "out", "leadS", "rc", "rn"];
+  const glob = Object.fromEntries(KEYS.map((k) => [k, pctMap(pool.map((a) => feat.get(a.id)), k)]));
+  const loc = new Map(); for (const [f, as] of byF) loc.set(f, Object.fromEntries(KEYS.map((k) => [k, pctMap(as.map((a) => feat.get(a.id)), k)])));
+  const out95 = quant(pool.map((a) => feat.get(a.id).out), 0.95);
+  for (const a of pool) {
+    const x = feat.get(a.id), f = field(a), n = byF.get(f).length, L = loc.get(f), B = 50;
+    const pc = (k, v = x[k]) => (n * L[k](v) + (n < B ? (B - n) : 0) * glob[k](v)) / (n + (n < B ? B - n : 0));
+    const impact = 0.4 * pc("cites") + 0.3 * pc("h") + 0.3 * pc("hiS");
+    const output = pc("out", Math.min(x.out, out95));
+    const lead = pc("leadS");
+    const quality = x.qS, momentum = 0.5 * pc("rc") + 0.5 * pc("rn"), steady = x.steady, recog = a.top2 ? 1 : 0;
+    const parts = { impact, output, lead, quality, momentum, steady, recog };
+    a.pro = Math.round(100 * (W.impact * impact + W.output * output + W.lead * lead + W.quality * quality + W.momentum * momentum + W.steady * steady + W.recog * recog) * 10) / 10;
+    a.proParts = Object.fromEntries(Object.entries(parts).map(([k, v]) => [k, Math.round(v * 100)]));
+    a.proConf = (x.known >= 5 ? 1 : 0) + (x.qn >= 5 ? 1 : 0) + (x.n >= 10 ? 1 : 0); // 0..3: mức đủ dữ liệu của điểm
+  }
+  // Xếp hạng toàn hệ thống (đồng hạng cùng số) chỉ trong tập đủ điều kiện: ≥ 10 công trình và hoạt động ≥ 3 năm (hồ sơ quá mỏng không được xếp hạng, tránh điểm ảo). Tự tính lại mỗi lần dữ liệu cập nhật.
+  const elig = pool.filter((a) => a.worksCount >= 10 && (a.lastYear ?? 0) - (a.firstYear ?? 0) >= 2).sort((p, q) => q.pro - p.pro || q.citations - p.citations);
+  elig.forEach((a, i, arr) => { a.proRank = i > 0 && arr[i - 1].pro === a.pro ? arr[i - 1].proRank : i + 1; });
+  // Huy hiệu theo hạng: Top 10, 50, 100, 500, 1000 (tự cập nhật mỗi lần dữ liệu đổi).
+  for (const a of authors) {
+    if (a.proRank == null) { a.proRank = null; a.proTier = null; if (a.pro == null) { a.pro = null; a.proParts = null; a.proConf = null; } continue; }
+    const r = a.proRank; a.proTier = r <= 10 ? "t10" : r <= 50 ? "t50" : r <= 100 ? "t100" : r <= 500 ? "t500" : r <= 1000 ? "t1000" : null;
+  }
+  return { eligible: elig.length };
+}

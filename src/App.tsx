@@ -12,14 +12,15 @@ const AdminPage = lazy(() => import("./Admin").then((m) => ({ default: m.AdminPa
 import { HeroArt } from "./HeroArt";
 import { useWorks } from "./wsearch";
 import { StarBtn } from "./StarBtn";
+import { ProBadge, ProBadgeTag } from "./Badge";
 import { VisitChip } from "./VisitChip";
 import { Footer, EcoLink } from "./Footer";
 import { evt, startSession } from "./analytics";
 import { getTheme, setTheme, type Theme } from "./theme";
 
-type SortKey = "totalScore" | "worksCount" | "citations" | "name" | "unit" | "lastYear" | "rank";
-const TEXT_KEYS: SortKey[] = ["name", "unit"], RANK_ASC: SortKey[] = [], RANKED: SortKey[] = ["totalScore", "worksCount", "citations"]; // huy chương chỉ khi xếp giảm dần theo một chỉ số
-const RANK_KEY = { totalScore: "rankScore", worksCount: "rankWorks", citations: "rankCit", name: "rankScore", unit: "rankScore", lastYear: "rankScore", rank: "rankScore" } as const;
+type SortKey = "pro" | "worksCount" | "citations" | "name" | "unit" | "lastYear" | "rank";
+const TEXT_KEYS: SortKey[] = ["name", "unit"], RANK_ASC: SortKey[] = [], RANKED: SortKey[] = ["pro", "worksCount", "citations"]; // huy chương chỉ khi xếp giảm dần theo một chỉ số
+const RANK_KEY = { pro: "proRank", worksCount: "rankWorks", citations: "rankCit", name: "proRank", unit: "proRank", lastYear: "proRank", rank: "proRank" } as const;
 const EDUFIND = "https://edufind.isavn.edu.vn";
 const CONTACT = "luongviethoang.hcm@gmail.com";
 const PAGE = 25; // mỗi trang tối đa 25 kết quả
@@ -54,6 +55,8 @@ function AppInner() {
   const { user } = useAccount();
   const [theme, setThemeState] = useState<Theme>(getTheme);
   const [sysDark, setSysDark] = useState(() => matchMedia("(prefers-color-scheme: dark)").matches);
+  // Bấm logo hoặc liên kết "#/" khi đang ở trang chủ/tìm kiếm: hash không đổi nên báo cho danh sách tự về trạng thái ban đầu.
+  useEffect(() => { const h = (e: MouseEvent) => { const a = (e.target as Element | null)?.closest?.("a"); if (a && a.getAttribute("href") === "#/" && /^#?\/?(\?.*)?$/.test(location.hash)) { e.preventDefault(); window.dispatchEvent(new Event("profind:home")); } }; document.addEventListener("click", h); return () => document.removeEventListener("click", h); }, []);
   useEffect(() => { const m = matchMedia("(prefers-color-scheme: dark)"), f = () => setSysDark(m.matches); m.addEventListener("change", f); return () => m.removeEventListener("change", f); }, []);
   const dark = theme === "dark" || (theme === "auto" && sysDark); // chỉ hai trạng thái trên nút: sáng hoặc tối (mặc định theo hệ thống cho tới khi người dùng chọn)
   const [lang, setLang] = useState<Lang>(initialLang);
@@ -168,7 +171,7 @@ function List({ d, query }: { d: Data; query: string }) {
   const { lang, t, num } = useT();
   const { user, cfg, saveSearch } = useAccount();
   const qp = useMemo(() => new URLSearchParams(query), []); // eslint-disable-line react-hooks/exhaustive-deps
-  const [q, setQ] = useState(qp.get("q") ?? ""), [disc, setDisc] = useState(qp.get("d") ?? ""), [type, setType] = useState(qp.get("ty") ?? ""), [sort, setSort] = useState<SortKey>("totalScore"), [dir, setDir] = useState<1 | -1>(-1);
+  const [q, setQ] = useState(qp.get("q") ?? ""), [disc, setDisc] = useState(qp.get("d") ?? ""), [type, setType] = useState(qp.get("ty") ?? ""), [sort, setSort] = useState<SortKey>("pro"), [dir, setDir] = useState<1 | -1>(-1);
   const pick2 = (k: SortKey) => { setSort(k); setDir(TEXT_KEYS.includes(k) ? 1 : -1); };
   const pick = (k: SortKey) => { if (k === sort) setDir((dir * -1) as 1 | -1); else { setSort(k); setDir(TEXT_KEYS.includes(k) || RANK_ASC.includes(k) ? 1 : -1); } };
   const [scope, setScope] = useState(qp.get("sc") === "all" ? "all" : "vn"), [instSel, setInstSel] = useState(qp.get("i") ?? ""), [page, setPage] = useState(0), [ssMsg, setSsMsg] = useState(""), [browse, setBrowse] = useState(qp.get("b") === "1"), [top2only, setTop2only] = useState(qp.get("t2") === "1"), [slot, setSlot] = useState<HTMLElement | null>(null), [showF, setShowF] = useState(() => matchMedia("(min-width: 900px)").matches);
@@ -200,7 +203,8 @@ function List({ d, query }: { d: Data; query: string }) {
   }, [q, disc, type, instSel, scope, top2only, browse]);
   useEffect(() => { const id = window.setTimeout(() => { if (q.trim().length >= 3) evt("search", undefined, q.trim()); }, 1200); return () => window.clearTimeout(id); }, [q]);
   const hasFilter = !!(q.trim() || disc || type || instSel || top2only), home = !hasFilter && !browse;
-  const clearAll = () => { setQ(""); setDisc(""); setType(""); setInstSel(""); setTop2only(false); setBrowse(false); };
+  const clearAll = () => { setQ(""); setDisc(""); setType(""); setInstSel(""); setTop2only(false); setBrowse(false); setPage(0); setTab("a"); };
+  useEffect(() => { const h = () => { clearAll(); window.scrollTo({ top: 0, behavior: "smooth" }); }; window.addEventListener("profind:home", h); return () => window.removeEventListener("profind:home", h); }); // eslint-disable-line react-hooks/exhaustive-deps
   const doSave = async () => {
     if (!user) { try { sessionStorage.setItem("profind.ret", location.hash || "#/"); sessionStorage.setItem("profind.reason", "ss"); } catch { /* bỏ qua */ } evt("save_gate"); location.hash = "#/tai-khoan"; return; }
     const label = [q.trim(), disc && dName(disc, lang), instSel && instLabel(instById.get(instSel), lang)].filter(Boolean).join(" · ");
@@ -231,9 +235,9 @@ function List({ d, query }: { d: Data; query: string }) {
       let c = 0;
       if (sort === "name") c = a.name.localeCompare(b.name, "vi");
       else if (sort === "unit") { const u = (x: Author) => x.institutions.map((i) => instLabel(instById.get(i), lang, i)).join(", "); c = u(a).localeCompare(u(b), "vi"); }
-      else if (sort === "rank") c = (a.rankScore ?? Infinity) === (b.rankScore ?? Infinity) ? 0 : (a.rankScore ?? Infinity) < (b.rankScore ?? Infinity) ? -1 : 1;
+      else if (sort === "rank") c = (a.proRank ?? Infinity) === (b.proRank ?? Infinity) ? 0 : (a.proRank ?? Infinity) < (b.proRank ?? Infinity) ? -1 : 1;
       else c = ((a[sort] ?? 0) as number) - ((b[sort] ?? 0) as number);
-      return c * dir || b.totalScore - a.totalScore || b.worksCount - a.worksCount || a.name.localeCompare(b.name, "vi");
+      return c * dir || (b.pro ?? -1) - (a.pro ?? -1) || b.worksCount - a.worksCount || a.name.localeCompare(b.name, "vi");
     });
   }, [d, dq, disc, type, instSel, sort, dir, scope, instById, jn, lang, hay, top2only]);
   useEffect(() => setPage(0), [dq, disc, type, instSel, sort, dir, scope, top2only]);
@@ -241,7 +245,7 @@ function List({ d, query }: { d: Data; query: string }) {
   const home$ = useMemo(() => {
     const vn = d.authors.filter((a) => a.foreign === false && !a.suspect), dc = new Map<string, number>(), ic = new Map<string, number>();
     for (const a of vn) { for (const x of a.disciplines) dc.set(x, (dc.get(x) ?? 0) + 1); for (const x of a.institutions) ic.set(x, (ic.get(x) ?? 0) + 1); }
-    return { n: vn.length, top2: vn.filter((a) => a.top2).length, fields: [...dc].sort((a, b) => b[1] - a[1]).slice(0, 10), insts: [...ic].sort((a, b) => b[1] - a[1]).slice(0, 10), nInst: ic.size };
+    return { honor: vn.filter((a) => a.proRank != null && a.proRank <= 10).sort((x, y) => (x.proRank ?? 99) - (y.proRank ?? 99)), n: vn.length, top2: vn.filter((a) => a.top2).length, fields: [...dc].sort((a, b) => b[1] - a[1]).slice(0, 10), insts: [...ic].sort((a, b) => b[1] - a[1]).slice(0, 10), nInst: ic.size };
   }, [d]);
   const [topWorks, setTopWorks] = useState<{ t: string; y: number; j: string; c: number; a: string; n: string; w: string }[]>([]);
   useEffect(() => { if (!home || topWorks.length) return; fetch("data/top-works.json").then((r) => r.json()).then((j) => setTopWorks(j.works ?? [])).catch(() => {}); }, [home]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -266,6 +270,8 @@ function List({ d, query }: { d: Data; query: string }) {
             <div><Icon n="scroll" size={26} /><b>{num(d.meta.works)}</b><span>{t("stWorks")}</span></div>
             <div><Icon n="building" size={26} /><b>{num(home$.nInst)}</b><span>{t("stInst")}</span></div>
           </div>
+          {home$.honor.length > 0 && <div className="hgroup honor"><h2><Icon n="trophy" size={18} />{t("honorH")}<small>{t("honorSub")}</small></h2>
+            <ol className="hon">{home$.honor.map((a) => <li key={a.id}><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}><ProBadge rank={a.proRank} size={40} /><span className="hn"><b>{a.name}</b><small>{a.institutions.slice(0, 1).map((i) => instLabel(instById.get(i), lang, i)).join("")}</small></span><span className="hs">{num(a.pro ?? 0, 1)}<small>#{a.proRank}</small></span></a></li>)}</ol></div>}
           <div className="hcols">
             <div className="hgroup"><h2><Icon n="discipline" size={18} />{t("topFields")}<small>{t("byAuthors")}</small></h2>
               <ol className="rank">{home$.fields.slice(0, 8).map(([f, n]) => <li key={f}><button type="button" onClick={quick(() => setDisc(f))} style={{ "--w": `${Math.round((n / home$.fields[0][1]) * 100)}%` } as React.CSSProperties}><span>{dName(f, lang)}</span><em>{num(n)}</em></button></li>)}</ol></div>
@@ -290,7 +296,7 @@ function List({ d, query }: { d: Data; query: string }) {
         <Sel icon="shield" label={t("scope")} v={scope} set={(v) => { setScope(v); setInstSel(""); }} opts={[["vn", t("scopeVn")], ["all", t("scopeAll")]]} />
         <div className="sel sortg"><span><Icon n="sort" size={14} />{t("sort")}</span>
           <div className="sortrow">
-            <select aria-label={t("sort")} value={sort} onChange={(e) => pick2(e.target.value as SortKey)}>{([["totalScore", "byScore"], ["worksCount", "byWorks"], ["citations", "byCit"], ["name", "byName"], ["unit", "byUnit"], ["lastYear", "byYear"]] as const).map(([k, l]) => <option key={k} value={k}>{t(l)}</option>)}</select>
+            <select aria-label={t("sort")} value={sort} onChange={(e) => pick2(e.target.value as SortKey)}>{([["pro", "byScore"], ["worksCount", "byWorks"], ["citations", "byCit"], ["name", "byName"], ["unit", "byUnit"], ["lastYear", "byYear"]] as const).map(([k, l]) => <option key={k} value={k}>{t(l)}</option>)}</select>
             <button type="button" className="dirbtn" onClick={() => setDir((dir * -1) as 1 | -1)} aria-label={dir === 1 ? t("dirAsc") : t("dirDesc")} title={dir === 1 ? t("dirAsc") : t("dirDesc")}><span aria-hidden="true">{dir === 1 ? "↑" : "↓"}</span></button>
           </div>
         </div>
@@ -327,16 +333,16 @@ function List({ d, query }: { d: Data; query: string }) {
             <Th k="name" label={t("author")} sort={sort} dir={dir} pick={pick} />
             <Th k="unit" label={t("unit")} sort={sort} dir={dir} pick={pick} />
             <Th k="worksCount" cls="num" label={t("works")} sort={sort} dir={dir} pick={pick} />
-            <Th k="totalScore" cls="num" label={t("score")} sort={sort} dir={dir} pick={pick} />
+            <Th k="pro" cls="num" label={t("score")} sort={sort} dir={dir} pick={pick} />
             <Th k="citations" cls="num" title={t("citTip")} label={t("cit")} sort={sort} dir={dir} pick={pick} />
             <Th k="lastYear" label={t("years")} sort={sort} dir={dir} pick={pick} />
           </tr></thead>
           <tbody>{rows.slice(page * PAGE, (page + 1) * PAGE).map((a, idx) => { const pos = page * PAGE + idx + 1, medal = RANKED.includes(sort) && dir === -1; return (
             <tr key={a.id}>
               <td className="num rankc" data-l={t("stt")}><span className={`rk r${medal ? Math.min(pos, 4) : 4}`}>{num(pos)}</span></td>
-              <td className="who"><StarBtn className="inrow" k={`a|${a.id}`} meta={{ t: a.name, s: a.institutions.slice(0, 2).map((i) => instLabel(instById.get(i), lang, i)).join(", "), sc: a.totalScore, rk: a.rankScore ?? undefined }} /><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a>{a.claimed && <><Icon n="check" size={14} className="ok" /><span className="sr"> {t("claimedSr")}</span></>}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}<Top2Tag a={a} cls="top2" /><div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
+              <td className="who"><StarBtn className="inrow" k={`a|${a.id}`} meta={{ t: a.name, s: a.institutions.slice(0, 2).map((i) => instLabel(instById.get(i), lang, i)).join(", "), sc: a.pro ?? undefined, rk: a.proRank ?? undefined }} /><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a><ProBadge rank={a.proRank} size={24} className="inrow" />{a.claimed && <><Icon n="check" size={14} className="ok" /><span className="sr"> {t("claimedSr")}</span></>}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}<Top2Tag a={a} cls="top2" /><div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
               <td data-l={t("unit")}>{a.institutions.map((i) => instLabel(instById.get(i), lang, i)).join(", ")}</td>
-              <td className="num" data-l={t("works")}>{num(a.worksCount)}</td><td className="num" data-l={t("score")}><span className="score">{num(a.totalScore, 2)}</span></td><td className="num" data-l={t("cit")}>{num(a.citations)}</td>
+              <td className="num" data-l={t("works")}>{num(a.worksCount)}</td><td className="num" data-l={t("score")}><span className="score">{a.pro == null ? "-" : num(a.pro, 1)}</span></td><td className="num" data-l={t("cit")}>{num(a.citations)}</td>
               <td className="meta yrs" data-l={t("years")}>{a.firstYear ?? "-"}–{a.lastYear ?? "-"}</td>
             </tr>); })}</tbody>
         </table></div>)}
@@ -349,7 +355,7 @@ function List({ d, query }: { d: Data; query: string }) {
   );
 }
 
-type WSort = "year" | "cit" | "score";
+type WSort = "year" | "cit";
 const initials = (n: string) => { const w = n.replace(/[^\p{L}\s-]/gu, " ").split(/[\s-]+/).filter(Boolean); return ((w[0]?.[0] ?? "") + (w.length > 1 ? w[w.length - 1][0] : "")).toUpperCase(); };
 const hueOf = (s: string) => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) % 360; return h; };
 
@@ -379,13 +385,13 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
     evt("csv");
     // Chống chèn công thức (CSV injection): ô văn bản bắt đầu bằng = + - @ hoặc tab/xuống dòng được thêm dấu nháy đơn.
     const cell = (v: unknown) => { let s = String(v ?? ""); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return `"${s.replace(/"/g, '""')}"`; };
-    const body = [["year", "title", "doi", "journal", "issn", "score", "citations", "role"], ...(works ?? []).map((w) => [w.year, w.title, w.doi ?? "", w.journal, w.issn, w.score ?? "", w.citations, w.role])].map((r) => r.map(cell).join(",")).join("\r\n");
+    const body = [["year", "title", "doi", "journal", "issn", "quartile", "citations", "role"], ...(works ?? []).map((w) => [w.year, w.title, w.doi ?? "", w.journal, w.issn, w.quartile ?? "", w.citations, w.role])].map((r) => r.map(cell).join(",")).join("\r\n");
     const url = URL.createObjectURL(new Blob(["\ufeff" + body], { type: "text/csv;charset=utf-8" }));
     Object.assign(document.createElement("a"), { href: url, download: `${slug(a.name)}-${a.id}.csv` }).click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
   const saveAuthor = async () => {
     if (!user) { try { sessionStorage.setItem("profind.ret", location.hash); sessionStorage.setItem("profind.reason", "fav"); } catch { /* bỏ qua */ } evt("save_gate"); location.hash = "#/tai-khoan"; return; }
-    try { await toggleFav(`a|${a.id}`, { t: a.name, s: inst.slice(0, 2).map((i) => instLabel(i, lang)).join(", "), sc: a.totalScore, rk: a.rankScore ?? undefined }); } catch (e: any) { alert(e?.message || t("saveFail")); }
+    try { await toggleFav(`a|${a.id}`, { t: a.name, s: inst.slice(0, 2).map((i) => instLabel(i, lang)).join(", "), sc: a.pro ?? undefined, rk: a.proRank ?? undefined }); } catch (e: any) { alert(e?.message || t("saveFail")); }
   };
   const openWork = (w: Work) => { recordView({ k: `w|${w.id}`, t: w.title, s: [w.journal, w.year].filter(Boolean).join(" · "), u: w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${w.id.split("-").pop()}` }); evt("work_open", w.id, w.title); };
   const pool = d.meta.rankPool ?? 0;
@@ -408,7 +414,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   }, [works]);
   const shown = useMemo(() => {
     const l = (works ?? []).filter((w) => !onlyLead || w.role === "lead");
-    return wsort === "year" ? l : [...l].sort((x, y) => (wsort === "cit" ? y.citations - x.citations : (y.score ?? -1) - (x.score ?? -1)) || y.year - x.year);
+    return wsort === "year" ? l : [...l].sort((x, y) => (wsort === "cit" ? y.citations - x.citations : 0) || y.year - x.year);
   }, [works, wsort, onlyLead]);
   const pct = a.worksCount ? Math.round((a.countedWorks / a.worksCount) * 100) : 0, hue = hueOf(a.id);
   const cats: [string, number, string][] = [["Scopus Q1", stat.cat.q1, "c1"], ["Scopus Q2", stat.cat.q2, "c2"], ["Scopus Q3", stat.cat.q3, "c3"], ["Scopus Q4", stat.cat.q4, "c4"], [t("kDomShort"), stat.cat.dom, "cd"], [t("unmatched"), stat.cat.unm, "cu"], [t("notLeadShort"), stat.cat.not, "cn"]];
@@ -422,13 +428,14 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
           <h1 className="au">{a.name}</h1>
           <p className="badges">{a.foreign && <span className="badge warnb">{t("foreignTag")}</span>}{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}<Top2Tag a={a} cls="badge top2b" />{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</p>
           <ul className="chips">{(allInst ? inst : inst.slice(0, 4)).map((i) => <li key={i.id}><Icon n="building" size={14} />{instLabel(i, lang)}</li>)}{inst.length > 4 && <li className="more"><button type="button" onClick={() => setAllInst(!allInst)} aria-expanded={allInst}>{allInst ? t("instLess") : t("instMore", { n: num(inst.length - 4) })}</button></li>}{a.scholar && <li className="scholar"><a href={`https://scholar.google.com/citations?user=${a.scholar}&hl=${lang === "vi" ? "vi" : "en"}`} target="_blank" rel="noopener">Google Scholar<span className="sr"> {t("newTab")}</span></a></li>}{a.orcid && <li className="orcid"><a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}<span className="sr"> {t("newTab")}</span></a></li>}</ul>
+          <ProBadgeTag rank={a.proRank} />
           {a.disciplines.length > 0 && <p className="hdisc">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</p>}
           <p className="actions-row">{cfg?.enabled !== false && <button className={`ghost light${favs.has(`a|${a.id}`) ? " on" : ""}`} aria-pressed={favs.has(`a|${a.id}`)} onClick={() => void saveAuthor()}><Icon n="star" size={16} />{!user ? t("saveGate") : favs.has(`a|${a.id}`) ? t("savedA") : t("saveA")}</button>}<button className="ghost light" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button><a className="ghost-link light" href={`#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{t("corrLink")}</a></p>
         </div>
       </header>
       <div className="kpis">
-        <div className="kpi k-rank"><span className="kic"><Icon n="trophy" size={20} /></span><b>{rk(a.rankScore)}</b><span>{t("rank")} · {t("score")}</span><small>{a.rankScore ? t("rankOf", { n: num(pool) }) : t("rankNone")}</small></div>
-        <div className="kpi k-score"><span className="kic"><Icon n="check" size={20} /></span><b>{num(a.totalScore, 2)}</b><span>{t("cite")}</span></div>
+        <div className="kpi k-rank"><span className="kic"><Icon n="trophy" size={20} /></span><b>{rk(a.proRank)}</b><span>{t("rank")} · PRO-SCORE</span><small>{a.proRank ? t("rankOf", { n: num(pool) }) : t("rankNone")}</small></div>
+        <div className="kpi k-score"><span className="kic"><Icon n="check" size={20} /></span><b>{a.pro == null ? "-" : num(a.pro, 1)}<em>/100</em></b><span>PRO-SCORE</span></div>
         <div className="kpi"><span className="kic"><Icon n="book" size={20} /></span><b>{num(a.countedWorks)}<em>/{num(a.worksCount)}</em></b><span>{t("counted")}</span><i className="bar" role="presentation"><u style={{ width: `${pct}%` }} /></i></div>
         <div className="kpi"><span className="kic"><Icon n="chart" size={20} /></span><b>{num(a.citations)}</b><span title={t("citTip")}>{t("cit")}</span><small title={t("citTip")}>{a.scholarCit ? `Google Scholar ${num(a.scholarCit)} (${t("selfDecl")}) · ` : ""}{t("citNote")}{a.hIndex ? ` · ${t("hIdx")} ${a.hIndex}` : ""} · {t("rank")} {rk(a.rankCit)}</small></div>
         <div className="kpi"><span className="kic"><Icon n="link" size={20} /></span><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span><i className="bar" role="presentation"><u style={{ width: `${Math.round(a.matchedRate * 100)}%` }} /></i></div>
@@ -443,16 +450,17 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
             </div>
             <p className="legend"><span><i className="sw yle" />{t("lead")}</span><span><i className="sw yco" />{t("co")}</span></p>
           </section>
-          <section className="card" aria-label={t("chartScore")}>
-            <h2>{t("chartScore")}</h2>
-            <ul className="hbars">{cats.filter((c) => c[1] > 0).map(([l, n, k]) => <li key={l}><span>{l}</span><i className="hb"><u className={k} style={{ width: `${(n / cmax) * 100}%` }} /></i><b>{num(n)}</b></li>)}</ul>
-          </section>
+          {a.proParts && <section className="card" aria-label="PRO-SCORE">
+            <h2>PRO-SCORE <small className="meta">{t("proConf" + a.proConf as "proConf0")}</small></h2>
+            <ul className="hbars">{(["impact", "output", "lead", "quality", "momentum", "steady", "recog"] as const).map((k) => <li key={k}><span>{t(("pp_" + k) as "pp_impact")}</span><i className="hb"><u className="c1" style={{ width: `${a.proParts![k]}%` }} /></i><b>{a.proParts![k]}</b></li>)}</ul>
+            <p className="meta">{t("proNote")} <a href="#/gioi-thieu?m=diem">{t("proMore")}</a></p>
+          </section>}
         </div>)}
       <section className="wlist" aria-label={t("paper")}>
         <div className="wbar">
           <h2>{t("paper")} <small>{num(shown.length)}</small></h2>
           <div className="wtools">
-            <label className="sel inl"><span>{t("sortWorks")}</span><select value={wsort} onChange={(e) => setWsort(e.target.value as WSort)}><option value="year">{t("sNewest")}</option><option value="cit">{t("sCited")}</option><option value="score">{t("sScore")}</option></select></label>
+            <label className="sel inl"><span>{t("sortWorks")}</span><select value={wsort} onChange={(e) => setWsort(e.target.value as WSort)}><option value="year">{t("sNewest")}</option><option value="cit">{t("sCited")}</option></select></label>
             <label className="chk"><input type="checkbox" checked={onlyLead} onChange={(e) => setOnlyLead(e.target.checked)} />{t("onlyLead")}</label>
           </div>
         </div>
@@ -470,8 +478,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
               </div>
               <div className="wr">
                 <StarBtn k={`w|${w.id}`} meta={{ t: w.title, s: [a.name, w.journal, w.year].filter(Boolean).join(" · "), u: w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${w.id.split("-").pop()}` }} />
-                {w.score === null ? <span className="pill none" title={w.role === "lead" ? t("unmatched") : w.ru ? t("roleUnknown") : t("notLead")}>{w.role === "lead" ? t("unmatched") : w.ru ? t("roleUnknownShort") : t("notLeadShort")}</span>
-                  : <span className={`pill sc ${w.scoreKind === "scopus" ? (w.quartile ?? "").toLowerCase() : "dom"}`} title={w.scoreKind === "scopus" ? `Scopus ${w.quartile ?? ""}` : t("kDom")}>{num(w.score, 2)}<small>{w.scoreKind === "scopus" ? `Scopus ${w.quartile ?? ""}` : t("kDomShort")}</small></span>}
+                {w.quartile ? <span className={`pill sc ${w.quartile.toLowerCase()}`} title={`Scopus ${w.quartile}`}>{w.quartile}<small>Scopus</small></span> : <span className="pill none">{t("noQ")}</span>}
                 <span className="wc"><Icon n="chart" size={14} />{num(w.citations)}<span className="sr"> {t("cit")}</span></span>
                 <span className={`role ${w.role}`}>{roleCell(w)}</span>
               </div>
