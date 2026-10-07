@@ -408,3 +408,17 @@ html,body{max-width:100%;overflow-x:clip}
 .hcols,.hcols>*,.rank li,.tw li{min-width:0}.hcols{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.tw{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.tw a{grid-template-columns:64px minmax(0,1fr)}.tw .tt,.tw .tm{min-width:0}
 @media(max-width:700px){.hcols,.tw{grid-template-columns:minmax(0,1fr)}}
 @media print{.visits{display:none!important}}
+
+/* ===== Huy hiệu PRO-SCORE, bảng vàng, công thức ===== */
+.pbadge{flex:none;vertical-align:middle;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}.pbadge.t10{filter:drop-shadow(0 0 6px rgba(245,179,1,.65))}.pbadge.inrow{margin-left:6px}
+.pbtag{display:inline-flex;align-items:center;gap:10px;margin:0 0 8px;padding:5px 14px 5px 8px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.pbtag b{display:block;font-size:.9rem;line-height:1.15}.pbtag small{display:block;font-size:.7rem;opacity:.85}
+.pbtag.t10{background:linear-gradient(90deg,rgba(245,179,1,.3),rgba(255,255,255,.1));border-color:#f6d86a}
+.hon{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px 20px}
+.hon a{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none}
+.hon a:hover{border-color:var(--accent)}.hon li:nth-child(-n+3) a{border-color:#f6d86a;background:linear-gradient(90deg,#fff8dc,var(--surface))}
+.hn{min-width:0}.hn b{display:block;font-size:.92rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hn small{display:block;font-size:.72rem;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hs{text-align:right;font:700 1.05rem/1.1 var(--font-display);color:var(--accent);font-variant-numeric:tabular-nums}.hs small{display:block;font:500 .66rem/1.3 var(--font-body,inherit);color:var(--ink-2)}
+@media(max-width:700px){.hon{grid-template-columns:minmax(0,1fr)}.hon li:nth-child(n+6){display:none}}
+:root[data-theme=dark] .hon li:nth-child(-n+3) a{background:linear-gradient(90deg,#4d4222,var(--surface))}@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .hon li:nth-child(-n+3) a{background:linear-gradient(90deg,#4d4222,var(--surface))}}
+.formula{margin:10px 0;padding:12px 14px;border-radius:10px;background:var(--s3);font-size:.82rem;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}

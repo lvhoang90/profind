@@ -3,6 +3,7 @@
 // Điểm công trình = max(điểm tạp chí trong nước theo năm, điểm Scopus theo quy tắc ngành), chỉ khi là tác giả chính theo HĐGSNN (role = "lead").
 // Web of Science (SCIE/SSCI) và kỷ yếu hội nghị không suy ra được từ dữ liệu công khai nên không tính (điểm là mức tham khảo thấp hơn thực tế).
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from "node:fs";
+import { computePro } from "./pro-score.mjs";
 const rd = (f) => JSON.parse(readFileSync(f, "utf8"));
 const J = rd("data/journals.json"), S = rd("data/sjr-rules.json"), I = rd("data/institutions.json"), R = rd("data/raw-authors.json"), C = rd("data/corrections.json");
 const META = existsSync("data/author-meta.json") ? rd("data/author-meta.json") : {};
@@ -122,6 +123,8 @@ const pool = outAuthors.filter((a) => a.foreign === false && !a.suspect && a.wor
 const rank = (key, out) => { const o = [...pool].sort((a, b) => b[key] - a[key]); o.forEach((a, i, arr) => { a[out] = i > 0 && arr[i - 1][key] === a[key] ? arr[i - 1][out] : i + 1; }); };
 for (const a of outAuthors) { a.rankScore = a.rankWorks = a.rankCit = null; }
 rank("totalScore", "rankScore"); rank("worksCount", "rankWorks"); rank("citations", "rankCit");
+const PRO = computePro(outAuthors, per, new Date().getFullYear());
+for (const a of outAuthors) { if (a.pro === undefined) { a.pro = null; a.proParts = null; a.proConf = null; a.proRank = null; a.proTier = null; } }
 
 // ---- 5. Ghi tệp ----
 rmSync("public/data/works", { recursive: true, force: true }); mkdirSync("public/data/works", { recursive: true });
@@ -133,5 +136,5 @@ writeFileSync("public/data/jn.json", JSON.stringify(jn));
 const usedInst = new Set(outAuthors.flatMap((a) => a.institutions));
 const insts = I.institutions.filter((i) => usedInst.has(i.id)).map(({ id, name, en, abbr, type, city, official, moetCode }) => ({ id, name, en, abbr, type, city, ...(official ? { official, moetCode } : {}) }));
 const disciplines = [...new Set(outAuthors.flatMap((a) => a.disciplines))].sort();
-writeFileSync("public/data/profind.json", JSON.stringify({ meta: { demo: !!R.meta?.demo, built: new Date().toISOString().slice(0, 10), authors: outAuthors.length, works: works.length, rankPool: pool.length, source: R.meta?.source ?? null, fetched: R.meta?.fetched ?? null }, institutions: insts, types: I.types, disciplines, authors: outAuthors }));
+writeFileSync("public/data/profind.json", JSON.stringify({ meta: { demo: !!R.meta?.demo, built: new Date().toISOString().slice(0, 10), authors: outAuthors.length, works: works.length, rankPool: PRO.eligible, source: R.meta?.source ?? null, fetched: R.meta?.fetched ?? null }, institutions: insts, types: I.types, disciplines, authors: outAuthors }));
 console.log(`profind.json: ${outAuthors.length} tác giả (${log.length} thay đổi đính chính/gộp), ${works.length} công trình (bỏ ${nDupWorks} trùng), ${works.filter((w) => w.counted).length} có điểm, ${works.filter((w) => w.matched).length} khớp tạp chí, nhóm xếp hạng ${pool.length}`);
