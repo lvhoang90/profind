@@ -40,6 +40,9 @@
 - Hồ sơ trùng ORCID được tự gộp. Nạp lại dữ liệu không làm mất đính chính vì đính chính nằm ở tệp riêng.
 - Xác minh ORCID tự động bằng đăng nhập ORCID (OAuth) cần ORCID client id/secret của ISA; làm khi có.
 
+### Sự cố dữ liệu đã sửa: mã ROR gắn nhầm (07/10/2026)
+Bản dựng trước có 26 mã ROR dùng chung cho nhiều đơn vị khác nhau (ví dụ Ngoại ngữ, Mở, Dược, Luật Hà Nội cùng một mã), nên một số tác giả bị gán sai đơn vị. Đã thêm `scripts/audit-ror.mjs`: đối chiếu chặt tên đơn vị với mọi tên trong bản ghi ROR (>= 0.9), mỗi mã chỉ giữ cho một đơn vị khớp nhất, đơn vị nghi ngờ bị bỏ mã (ghi `rorSuspect`), xóa dữ liệu tác giả đã nạp nhầm, thử tìm lại mã đúng; kết quả `data/ror-audit.json`. 37/376 đơn vị bị xử lý, 12 tìm lại được mã đúng. Chạy lại audit mỗi khi thêm đơn vị mới.
+
 ## 5. Ý tưởng mới
 - **Đối chiếu ISSN ngược**: từ một tạp chí ở EduFind, xem ai đang đăng ở đó (giúp chọn nơi gửi bài).
 - **Hồ sơ xuất chuẩn**: xuất danh mục công trình theo mẫu lý lịch khoa học (CV), có điểm theo năm, dùng nộp hồ sơ xét chức danh GS/PGS.

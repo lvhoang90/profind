@@ -15,16 +15,17 @@ if (!I.length) throw new Error("Chưa có đơn vị nào có mã ROR trong data
 mkdirSync("data/raw", { recursive: true });
 const get = async (url) => {
   const u = url + (url.includes("?") ? "&" : "?") + `mailto=${encodeURIComponent(mailto)}&api_key=${KEY}`;
-  for (let t = 0; t < 4; t++) { const r = await fetch(u); if (r.ok) return r.json(); if (r.status === 429 || r.status >= 500) await new Promise((s) => setTimeout(s, 2000 * 2 ** t)); else throw new Error(`${r.status} ${u.replace(/api_key=[^&]+/, "api_key=***")}`); }
+  for (let t = 0; t < 8; t++) { let r; try { r = await fetch(u); } catch { await new Promise((s) => setTimeout(s, 2000 * 2 ** Math.min(t, 5))); continue; } if (r.ok) return r.json(); if (r.status === 429 || r.status >= 500) await new Promise((s) => setTimeout(s, 2000 * 2 ** Math.min(t, 5))); else throw new Error(`${r.status} ${u.replace(/api_key=[^&]+/, "api_key=***")}`); }
   throw new Error(`Hết lượt thử: ${u.replace(/api_key=[^&]+/, "api_key=***")}`);
 };
 const short = (id) => (id ?? "").replace("https://openalex.org/", "");
 const authors = [], works = [];
 const refresh = process.argv.includes("--refresh");
 for (const inst of I) {
+  const a0 = authors.length, w0 = works.length;
+  try {
   const cache = `data/raw/${inst.id}.json`;
   if (!refresh && existsSync(cache)) { const c = JSON.parse(readFileSync(cache, "utf8")); authors.push(...c.authors); works.push(...c.works); console.log(`${inst.name}: dùng cache (${c.authors.length} tác giả)`); continue; }
-  const a0 = authors.length, w0 = works.length;
   let oa; try { oa = await get(`https://api.openalex.org/institutions/ror:${inst.ror.replace(/^https:\/\/ror.org\//, "")}`); } catch (e) { console.warn(`${inst.name}: bỏ qua (${e.message.slice(0, 60)})`); continue; }
   const oid = short(oa.id); let page = 1, got = 0;
   while (got < maxAuthors) {
@@ -51,6 +52,7 @@ for (const inst of I) {
     console.log(`${inst.name}: ${got} tác giả`);
   }
   writeFileSync(cache, JSON.stringify({ authors: authors.slice(a0), works: works.slice(w0) }));
+  } catch (e) { authors.length = a0; works.length = w0; console.warn(`${inst.name}: LỖI, bỏ qua, không ghi cache (${String(e.message).slice(0, 80)})`); }
 }
 writeFileSync("data/raw-authors.json", JSON.stringify({ meta: { demo: false, source: "OpenAlex", fetched: new Date().toISOString().slice(0, 10) }, authors, works }));
 console.log(`Xong: ${authors.length} tác giả, ${works.length} công trình`);

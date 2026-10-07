@@ -65,7 +65,7 @@ function List({ d }: { d: Data }) {
   const rows = useMemo(() => {
     const n = fold(q.trim());
     return d.authors.filter((a) => {
-      if (scope === "vn" && a.foreign) return false;
+      if (scope === "vn" && a.foreign !== false) return false;
       if (disc && !a.disciplines.includes(disc)) return false;
       if (inst && !a.institutions.includes(inst)) return false;
       if (type && !a.institutions.some((i) => instById.get(i)?.type === type)) return false;
