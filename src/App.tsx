@@ -309,12 +309,12 @@ function List({ d, query }: { d: Data; query: string }) {
         <button type="button" role="tab" aria-selected={tab === "w"} onClick={() => setTab("w")}><Icon n="scroll" size={16} />{t("tabWorks")}<em>{works.busy ? "…" : num(works.total)}</em></button>
       </div>}
       {q.trim() && tab === "w" ? (
-        <section className="wlist" aria-live="polite">
+        <section className="wsrch" aria-live="polite">
           {works.err ? <p className="empty">{t("wErr")}</p> : works.items.length === 0 ? <p className="empty">{works.busy ? t("loading") : t("wNone")}</p> : <>
             <p className="meta">{t("wHint")}</p>
             <ol>{works.items.map((w, i) => <li key={`${w.authorId}${i}${w.title}`}>
-              <b className="wc">{num(w.cit)}<small>{t("cites")}</small></b>
-              <div><a className="wt" href={w.doi ? `https://doi.org/${w.doi}` : `#/tac-gia/${encodeURIComponent(w.authorId)}`} {...(w.doi ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{w.title}</a>
+              <b className="wsc">{num(w.cit)}<small>{t("cites")}</small></b>
+              <div><a className="wst" href={w.doi ? `https://doi.org/${w.doi}` : `#/tac-gia/${encodeURIComponent(w.authorId)}`} {...(w.doi ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{w.title}</a>
                 <p className="meta"><a href={`#/tac-gia/${encodeURIComponent(w.authorId)}`}>{w.author}</a>{w.journal ? ` · ${w.journal}` : ""} · {w.year}</p></div>
               <StarBtn k={`w|${w.id}`} meta={{ t: w.title, s: [w.author, w.journal, w.year].filter(Boolean).join(" · "), u: w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${String(w.id).split("-").pop()}` }} />
             </li>)}</ol>
