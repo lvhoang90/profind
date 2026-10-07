@@ -1,5 +1,5 @@
 // Nhận yêu cầu xác nhận hồ sơ / đính chính / gỡ hồ sơ từ trang ProFind và gửi email cho người quản trị (Resend).
-//   POST /api/correction (multipart/form-data: kind = claim|correct|remove, author, authorName, name, email, orcid, msg, _honey)
+//   POST /api/correction (multipart/form-data: kind = claim|correct|remove|add, author, authorName, name, email, orcid, msg, _honey)
 // Biến môi trường (dùng chung với EduFind): RESEND_API_KEY; tùy chọn CORRECTION_TO (mặc định luongviethoang.hcm@gmail.com), CORRECTION_FROM
 // (mặc định "ProFind <onboarding@resend.dev>"), KV_REST_API_URL/KV_REST_API_TOKEN (giới hạn 5 yêu cầu/giờ/người).
 // Yêu cầu CHƯA tự sửa dữ liệu: người quản trị xác minh người yêu cầu (trả lời email, ORCID, email cơ quan) rồi ghi vào data/corrections.json; yêu cầu gỡ hồ sơ được ưu tiên xử lý nhưng vẫn phải xác minh.
@@ -11,7 +11,7 @@ const clip = (v, n) => String(v ?? "").slice(0, n);
 const MEM = new Map();
 const memLimited = (ip) => { const now = Date.now(), k = ip || "?", a = (MEM.get(k) ?? []).filter((t) => now - t < 3600e3); a.push(now); MEM.set(k, a); if (MEM.size > 5000) MEM.clear(); return a.length > 5; };
 const oneLine = (v, n) => clip(v, n).replace(/[\r\n\u2028\u2029]+/g, " ").trim();
-const KINDS = { claim: "Xác nhận hồ sơ (đây là tôi)", correct: "Đính chính thông tin / công trình", remove: "Gỡ hồ sơ" };
+const KINDS = { claim: "Xác nhận hồ sơ (đây là tôi)", correct: "Đính chính thông tin / công trình", remove: "Gỡ hồ sơ", add: "Đề nghị bổ sung nhà nghiên cứu" };
 
 async function limited(request) {
   const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL, token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
