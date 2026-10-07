@@ -235,6 +235,8 @@ function List({ d, query }: { d: Data; query: string }) {
     for (const a of vn) { for (const x of a.disciplines) dc.set(x, (dc.get(x) ?? 0) + 1); for (const x of a.institutions) ic.set(x, (ic.get(x) ?? 0) + 1); }
     return { n: vn.length, top2: vn.filter((a) => a.top2).length, fields: [...dc].sort((a, b) => b[1] - a[1]).slice(0, 10), insts: [...ic].sort((a, b) => b[1] - a[1]).slice(0, 10), nInst: ic.size };
   }, [d]);
+  const [topWorks, setTopWorks] = useState<{ t: string; y: number; j: string; c: number; a: string; n: string; w: string }[]>([]);
+  useEffect(() => { if (!home || topWorks.length) return; fetch("data/top-works.json").then((r) => r.json()).then((j) => setTopWorks(j.works ?? [])).catch(() => {}); }, [home]); // eslint-disable-line react-hooks/exhaustive-deps
   const quick = (fn: () => void) => () => { fn(); setBrowse(false); };
   const hero = (
     <div className={`hero-home${home ? " big" : ""}`}>
@@ -254,10 +256,14 @@ function List({ d, query }: { d: Data; query: string }) {
             <div><b>{num(d.meta.works)}</b><span>{t("stWorks")}</span></div>
             <div><b>{num(home$.nInst)}</b><span>{t("stInst")}</span></div>
           </div>
-          <div className="hgroup"><h2>{t("topFields")}</h2>
-            <p className="hchips">{home$.fields.map(([f, n]) => <button key={f} type="button" onClick={quick(() => setDisc(f))}>{dName(f, lang)}<em>{num(n)}</em></button>)}</p></div>
-          <div className="hgroup"><h2>{t("topInst")}</h2>
-            <p className="hchips inst">{home$.insts.map(([i, n]) => <button key={i} type="button" onClick={quick(() => setInstSel(i))}>{instLabel(instById.get(i), lang, i)}<em>{num(n)}</em></button>)}</p></div>
+          <div className="hcols">
+            <div className="hgroup"><h2>{t("topFields")}<small>{t("byAuthors")}</small></h2>
+              <ol className="rank">{home$.fields.slice(0, 8).map(([f, n]) => <li key={f}><button type="button" onClick={quick(() => setDisc(f))} style={{ "--w": `${Math.round((n / home$.fields[0][1]) * 100)}%` } as React.CSSProperties}><span>{dName(f, lang)}</span><em>{num(n)}</em></button></li>)}</ol></div>
+            <div className="hgroup"><h2>{t("topInst")}<small>{t("byAuthors")}</small></h2>
+              <ol className="rank">{home$.insts.slice(0, 8).map(([i, n]) => <li key={i}><button type="button" onClick={quick(() => setInstSel(i))} style={{ "--w": `${Math.round((n / home$.insts[0][1]) * 100)}%` } as React.CSSProperties}><span>{instLabel(instById.get(i), lang, i)}</span><em>{num(n)}</em></button></li>)}</ol></div>
+          </div>
+          {topWorks.length > 0 && <div className="hgroup"><h2>{t("topWorks")}</h2>
+            <ol className="tw">{topWorks.slice(0, 6).map((w) => <li key={w.a + w.w}><a href={`#/tac-gia/${w.a}`}><b>{num(w.c)}<small>{t("cites")}</small></b><span className="tt">{w.t}</span><span className="tm">{w.n} · {w.j ? `${w.j} · ` : ""}{w.y}</span></a></li>)}</ol></div>}
           <div className="hgroup"><h2>{t("featured")}</h2>
             <p className="hchips">{home$.top2 > 0 && <button type="button" className="gold" onClick={quick(() => setTop2only(true))}>★ {t("top2Tag")}<em>{num(home$.top2)}</em></button>}<button type="button" className="all" onClick={() => setBrowse(true)}>{t("browseAll")} →</button></p></div>
         </section>
