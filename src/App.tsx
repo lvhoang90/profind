@@ -253,7 +253,7 @@ function List({ d, query }: { d: Data; query: string }) {
       <h1 className="ht">{t("sub")}</h1>
       {home && <p className="tag">{t("heroLead")}</p>}
       <label className="bigsearch"><Icon n="search" size={22} /><span className="sr">{t("search")}</span><input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("searchPh")} autoComplete="off" enterKeyHint="search" /></label>
-      {home && <p className="trys"><span>{t("tryLabel")}</span>{[["Cần Thơ", "Cần Thơ"], ["Kinh tế", "Kinh tế"], ["Bách khoa", "Bách khoa"], ["1859-1531", "ISSN 1859-1531"]].map(([v, l]) => <button key={v} type="button" onClick={() => setQ(v)}>{l}</button>)}</p>}
+      {home && <p className="trys"><span>{t("tryLabel")}</span>{[["Đồng Tháp", () => setQ("Đồng Tháp")], ["Quản lý Giáo dục", () => setDisc("giao-duc")], ["Bách khoa", () => setQ("Bách khoa")], ["ISSN 1859-1531", () => setQ("1859-1531")]].map(([l, fn]) => <button key={l as string} type="button" onClick={fn as () => void}>{l as string}</button>)}</p>}
     </div>
   );
   return (
