@@ -3,7 +3,7 @@ export type Lang = "vi" | "en";
 export const KEY = "edufind.lang"; // dùng chung với EduFind (cùng ngôn ngữ khi chuyển ứng dụng trong hệ sinh thái)
 const vi = {
   title: "ProFind", sub: "Tra cứu tác giả và công trình nghiên cứu", tagline: "Ngành · Đơn vị · Công trình · Tạp chí · ISSN · Điểm tham khảo (HĐGSNN)",
-  docTitle: "ProFind | Tra cứu tác giả và công trình nghiên cứu", metaDesc: "ProFind: tra cứu tác giả, nhà nghiên cứu Việt Nam theo ngành, đơn vị, công trình, tạp chí, ISSN và điểm tham khảo theo danh mục HĐGSNN. Mã nguồn mở, thuộc hệ sinh thái ISA.",
+  docTitle: "ProFind: Tra cứu nhà nghiên cứu, bài báo khoa học Việt Nam", metaDesc: "Tra cứu hơn 11.000 nhà nghiên cứu Việt Nam theo ngành, trường đại học, bài báo, tạp chí, ISSN, DOI và điểm tham khảo HĐGSNN. Miễn phí, mã nguồn mở.",
   skip: "Bỏ qua, tới nội dung chính", langLabel: "Ngôn ngữ", langVi: "Tiếng Việt", langEn: "English",
   demo: "DỮ LIỆU MẪU: tác giả và công trình là hư cấu, chỉ để chạy thử giao diện.",
   notRankShort: "Thứ hạng và điểm chỉ để tham khảo, không phải xếp hạng chính thức.", details: "Chi tiết",
@@ -31,7 +31,7 @@ const vi = {
 };
 const en: typeof vi = {
   title: "ProFind", sub: "Find researchers and their publications", tagline: "Field · Institution · Works · Journal · ISSN · Reference score (State Professorship Council)",
-  docTitle: "ProFind | Find researchers and their publications", metaDesc: "ProFind: find Vietnamese researchers by field, institution, works, journal, ISSN and a reference score based on the State Professorship Council catalogue. Open source, part of the ISA ecosystem.",
+  docTitle: "ProFind: Find Vietnamese researchers and their publications", metaDesc: "ProFind: find Vietnamese researchers by field, institution, works, journal, ISSN and a reference score based on the State Professorship Council catalogue. Open source, part of the ISA ecosystem.",
   skip: "Skip to main content", langLabel: "Language", langVi: "Tiếng Việt", langEn: "English",
   demo: "SAMPLE DATA: authors and works are fictional, for interface testing only.",
   notRankShort: "Rankings and scores are for reference only, not an official ranking.", details: "Details",
