@@ -25,7 +25,7 @@
 3. **Cách tính điểm**: chỉ tính khi là **tác giả chính theo HĐGSNN** = tác giả đứng đầu hoặc tác giả liên hệ; có từ 2 tác giả liên hệ trở lên thì chỉ tính tác giả đứng đầu. Cài ở `ingest-openalex.mjs` (trường `role`, `corr`) và `build-index.mjs` (chỉ `role = lead` mới có điểm). Công trình đồng tác giả vẫn hiện, ghi "Không tính".
 4. **Ngành của tác giả**: suy ra từ ngành của các tạp chí họ đã đăng (mọi công trình khớp danh mục), giữ ngành chiếm ≥ 25% (tối đa 3).
 5. **Danh sách đơn vị**: lấy từ Bộ GD&ĐT (`moet.gov.vn/co-so-giao-duc/danh-sach-cac-co-so-giao-duc`), đối chiếu Wikipedia vi; script `import-institutions.mjs` ghi ra `data/institutions.candidates.json` để duyệt. **Cần mở mạng** cho `moet.gov.vn`, `vi.wikipedia.org`, `api.openalex.org`, `api.ror.org`.
-6. **Tên miền**: `profind.isavn.edu.vn`. **Logo**: nhà khoa học đeo kính trong quả cầu tri thức (cùng họ EduFind), nguồn `scripts/lib/brand.mjs`, xuất bằng `npm run d:icons`.
+6. **Tên miền**: `profind.isavn.edu.vn`. **Logo**: bông hoa nguyên tử 5 cánh theo dải quang phổ quanh cặp kính của nhà nghiên cứu, nền chàm (thiết kế gốc, tham khảo tinh thần "nguyên tử" nhưng không sao chép), nguồn `scripts/lib/brand.mjs`, xuất bằng `npm run d:icons`.
 
 ## 5. Ý tưởng mới
 - **Đối chiếu ISSN ngược**: từ một tạp chí ở EduFind, xem ai đang đăng ở đó (giúp chọn nơi gửi bài).
