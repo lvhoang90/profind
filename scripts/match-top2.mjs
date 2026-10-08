@@ -1,9 +1,12 @@
-// Khớp danh sách Top 2% (data/top2/top2-vn-career-2024.json) với tác giả ProFind -> data/top2/matches.json (+ review.json cho ca chưa chắc).
+// Khớp danh sách Top 2% (data/top2/top2-vn-career-2025.json + top2-vn-singleyr-2025.json; bản 9, 8/2026) với tác giả ProFind -> data/top2/matches.json (+ review.json cho ca chưa chắc).
 //   node scripts/match-top2.mjs
 // Quy tắc: tên giống nhau theo TẬP TỪ (bỏ dấu, tách gạch nối, không phân biệt thứ tự họ-tên). Tự nhận khi duy nhất VÀ đơn vị khớp (từ khóa chung) hoặc tác giả
 // ProFind có công trình cùng lĩnh vực; ca còn lại ghi vào review.json để xem tay. data/top2/overrides.json quyết định cuối ({ "<tên>": "<id ProFind>" | null }).
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-const T = JSON.parse(readFileSync("data/top2/top2-vn-career-2024.json", "utf8")).authors;
+// Hai danh sách: "sự nghiệp" (career) và "năm 2025" (single-year). Người có ở cả hai lấy dòng sự nghiệp (y25 = true); người chỉ có ở danh sách năm 2025 mang scope "y2025".
+const CAREER = JSON.parse(readFileSync("data/top2/top2-vn-career-2025.json", "utf8")).authors, SINGLE = JSON.parse(readFileSync("data/top2/top2-vn-singleyr-2025.json", "utf8")).authors;
+const inSingle = new Set(SINGLE.map((t) => t.name)), inCareer = new Set(CAREER.map((t) => t.name));
+const T = [...CAREER.map((t) => ({ ...t, scope: "career", y25: inSingle.has(t.name) })), ...SINGLE.filter((t) => !inCareer.has(t.name)).map((t) => ({ ...t, scope: "y2025" }))];
 const P = JSON.parse(readFileSync("public/data/profind.json", "utf8"));
 const inst = new Map(P.institutions.map((i) => [i.id, i]));
 const OV = existsSync("data/top2/overrides.json") ? JSON.parse(readFileSync("data/top2/overrides.json", "utf8")) : {};
@@ -26,6 +29,6 @@ for (const t of T) {
   if (ok.length === 1) matches[ok[0].id] = t;
   else review.push({ name: t.name, inst: t.inst, why: ok.length > 1 ? "nhiều hồ sơ khớp" : "cùng tên nhưng khác đơn vị", candidates: c.map((a) => ({ id: a.id, name: a.name, inst: a.institutions.map((i) => inst.get(i)?.en ?? i), works: a.worksCount })) });
 }
-writeFileSync("data/top2/matches.json", JSON.stringify(Object.fromEntries(Object.entries(matches).map(([id, t]) => [id, { rank: t.rank, field: t.field, subfield: t.subfield, name: t.name, inst: t.inst }])), null, 1));
+writeFileSync("data/top2/matches.json", JSON.stringify(Object.fromEntries(Object.entries(matches).map(([id, t]) => [id, { rank: t.rank, rankNs: t.rankNs, field: t.field, subfield: t.subfield, name: t.name, inst: t.inst, selfPct: t.selfPct, inNs: t.inNs, scope: t.scope, ...(t.y25 ? { y25: true } : {}) }])), null, 1));
 writeFileSync("data/top2/review.json", JSON.stringify(review, null, 1));
 console.log(`Top 2% Việt Nam: ${T.length}; khớp tự động ${Object.keys(matches).length}; cần xem ${review.length} (${review.filter((r) => r.candidates).length} có ứng viên cùng tên)`);

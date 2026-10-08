@@ -3641,11 +3641,49 @@
         "dai-hoc-lac-hong",
         "tag"
       ]
+    },
+    "A5008082871": {
+      "now": [
+        "dhqghn"
+      ],
+      "past": [
+        "ud",
+        "huce",
+        "kgu",
+        "utt",
+        "vien-cong-nghe-thong-tin"
+      ]
     }
   },
   "setDisciplines": {
     "A5011212770": [
       "giao-thong"
     ]
-  }
+  },
+  "notSuspect": [
+    {
+      "id": "A5008082871",
+      "name": "Lê Hoàng Sơn",
+      "date": "2026-10-08",
+      "reason": "ORCID 0000-0001-6356-0046 ghi một nơi làm việc hiện tại (ĐHQGHN); Scopus 261 bài, OpenAlex 355, ORCID 239: cùng một người, cờ \"5 đơn vị\" do OpenAlex ghi nhiều cơ quan trên các công trình"
+    },
+    {
+      "id": "A5035632164",
+      "name": "Quan-Hoang Vuong",
+      "date": "2026-10-08",
+      "reason": "ORCID 0000-0003-0790-1576 do chủ hồ sơ tự quản lý (928 mục), Scopus 219 bài, OpenAlex 1.224 (nhiều bài luận, tập dữ liệu, sách ngoài Scopus): một người, cờ \"từ 500 công trình\" không phản ánh gộp nhầm"
+    },
+    {
+      "id": "A5074281591",
+      "name": "Seung-Bok Choi",
+      "date": "2026-10-08",
+      "reason": "ORCID 0000-0001-6262-2815 (Inha University); Scopus 900 bài, OpenAlex 1.061, ORCID 644: nhất quán một người, cờ \"từ 500 công trình\" không phản ánh gộp nhầm"
+    },
+    {
+      "id": "A5003396849",
+      "name": "Minh Tho Nguyen",
+      "date": "2026-10-08",
+      "reason": "ORCID 0000-0002-3803-0569 (KU Leuven); Scopus 796 bài, OpenAlex 892: nhất quán một người (1976–2026), cờ \"từ 500 công trình\" không phản ánh gộp nhầm"
+    }
+  ]
 }

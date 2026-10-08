@@ -11,6 +11,8 @@ const J = rd("data/journals.json"), S = rd("data/sjr-rules.json"), I = rd("data/
 // Đơn vị hiện tại (scripts/build-current-inst.mjs): đơn vị có điểm gần đây < 50% đơn vị cao nhất của tác giả là đơn vị cũ (instPast), xếp sau.
 const CUR = existsSync("data/current-inst.json") ? rd("data/current-inst.json") : {};
 const instSplit = (id, list) => { const sc = CUR[id]; if (!sc || list.length < 2) return { institutions: list, instPast: [] }; const mx = Math.max(...list.map((u) => sc[u] ?? 0)); if (!(mx > 0)) return { institutions: list, instPast: [] }; const now = list.filter((u) => sc[u] === undefined || sc[u] >= 0.5 * mx).sort((x, y) => (sc[y] ?? mx) - (sc[x] ?? mx)), past = list.filter((u) => !now.includes(u)).sort((x, y) => sc[y] - sc[x]); return { institutions: [...now, ...past], instPast: past }; };
+// corrections.notSuspect: hồ sơ đã được kiểm chứng là MỘT người (ORCID, số bài Scopus/ORCID/OpenAlex nhất quán) nên bỏ cờ nghi gộp nhầm do số công trình/đơn vị lớn.
+const NOT_SUSPECT = new Set((C.notSuspect ?? []).map((x) => x.id));
 const META = existsSync("data/author-meta.json") ? rd("data/author-meta.json") : {};
 // Nhãn Top 2% thế giới (Ioannidis et al., CC BY-NC 3.0; xem data/top2/LICENSE-NC.md): khớp bằng scripts/match-top2.mjs
 const TOP2 = existsSync("data/top2/matches.json") ? rd("data/top2/matches.json") : {};
@@ -152,14 +154,13 @@ const outAuthors = authors.map((a) => {
   const meta = META[a.id];
   return { id: a.id, name: cleanName(a.name), orcid: a.orcid, ...(() => { const r = a.fixedPast ? { institutions: a.institutions, instPast: a.fixedPast } : instSplit(a.id, a.institutions); return r.instPast.length ? r : { institutions: r.institutions }; })(), disciplines, demo: !!a.demo, claimed: a.claimed,
     scholar: SCH[a.id]?.id ?? null, scholarCit: SCH[a.id]?.citations ?? null,
-    top2: TOP2[a.id] ? { rank: TOP2[a.id].rank, field: TOP2[a.id].field } : null,
+    top2: TOP2[a.id] ? { rank: TOP2[a.id].rank, field: TOP2[a.id].field, rankNs: TOP2[a.id].rankNs ?? null, selfPct: TOP2[a.id].selfPct ?? null, inNs: TOP2[a.id].inNs ?? null, scope: TOP2[a.id].scope ?? "career" } : null,
     // foreign: true = có đơn vị ngoài VN; false = chỉ đơn vị VN; null = chưa biết (chưa chạy enrich-authors.mjs, hoặc OpenAlex không ghi quốc gia nào).
-    // Người có tên trong danh sách Top 2% mục "Việt Nam" (đơn vị công tác tại VN theo Elsevier) luôn được coi là đơn vị trong nước.
-    foreign: TOP2[a.id] ? false : meta && meta.countries.length ? !meta.countries.includes("VN") : null,
+    foreign: meta && meta.countries.length ? !meta.countries.includes("VN") : null,
     // dual: có đơn vị tại VN và đơn vị ở nước khác (nhà khoa học đa liên kết); nhiều quốc gia (>= 3) có thể là liên kết đa quốc gia, chưa xếp hạng trừ khi được xác nhận trong data/vn-confirmed.json.
-    dual: !TOP2[a.id] && !!meta && meta.countries.includes("VN") && meta.countries.some((c) => c !== "VN"), nCountries: meta?.countries?.length ?? null,
+    dual: !!meta && meta.countries.includes("VN") && meta.countries.some((c) => c !== "VN"), nCountries: meta?.countries?.length ?? null,
     // suspect: hồ sơ OpenAlex nhiều khả năng gộp nhầm nhiều người (>= 500 công trình, > 150 công trình/năm, >= 5 đơn vị, hoặc có trong corrections.suspect: hồ sơ gộp nhiều ORCID, mỗi ORCID vài bài); ẩn khỏi bảng mặc định và không tính thứ hạng.
-    suspect: ws.length >= 500 || ws.length / span > 150 || a.institutions.length >= 5 || (C.suspect ?? []).includes(a.id),
+    suspect: !NOT_SUSPECT.has(a.id) && (ws.length >= 500 || ws.length / span > 150 || a.institutions.length >= 5 || (C.suspect ?? []).includes(a.id)),
     oaWorks: meta?.worksTotal ?? null, ...bigStats(ws), worksCount: ws.length, countedWorks: ws.filter((w) => w.counted).length, totalScore: Math.round(ws.reduce((s, w) => s + (w.score ?? 0), 0) * 100) / 100,
     // citations: số trích dẫn TOÀN THỜI GIAN của hồ sơ OpenAlex (khớp với cách các hệ thống khác tính); citations2016: riêng các công trình trong ProFind (từ 2016).
     citations: (meta?.cited ?? ws.reduce((s, w) => s + (w.cOA ?? 0), 0)) + (extraCited.get(a.id) ?? 0) + ws.reduce((s, w) => s + Math.max(0, (w.citations ?? 0) - (w.cOA ?? 0)), 0), citations2016: ws.reduce((s, w) => s + (w.citations ?? 0), 0), hIndex: meta?.h ?? null, matchedRate: ws.length ? Math.round((matched / ws.length) * 100) / 100 : 0,
@@ -172,7 +173,7 @@ const CONFIRMED = new Set(existsSync("data/vn-confirmed.json") ? rd("data/vn-con
 // "Liên kết chính ở nước ngoài" (bảng chỉ dành cho Việt Nam): xem scripts/lib/abroad.mjs. Yếu tố gần đây (cửa sổ 3 năm gần nhất) quyết định khi đủ bằng chứng, nếu không thì dùng tỉ lệ dài hạn; ngưỡng do hội đồng mô phỏng quyết định.
 // Ngoại lệ do quản trị viên xác nhận: data/vn-confirmed.json. Hồ sơ trong danh sách Top 2% mục "Việt Nam" (Elsevier) được coi là trong nước. Danh sách xem xét: scripts/abroad-review.mjs.
 const ABROAD_RULE = loadRule(), BUILD_YEAR = new Date().getFullYear(), AUS = buildStats(R.works, ABROAD_RULE, BUILD_YEAR);
-for (const a of outAuthors) { const f = features(AUS.get(a.id), ABROAD_RULE, BUILD_YEAR), v = verdict(f, ABROAD_RULE); a.vnShare = f.overall; a.vnRecent = f.recent; a.vnRecentWorks = f.recentWorks; a.abroadBasis = v.abroad ? v.basis : null; a.abroadMain = v.abroad && !CONFIRMED.has(a.id) && !TOP2[a.id]; }
+for (const a of outAuthors) { const f = features(AUS.get(a.id), ABROAD_RULE, BUILD_YEAR), v = verdict(f, ABROAD_RULE); a.vnShare = f.overall; a.vnRecent = f.recent; a.vnRecentWorks = f.recentWorks; a.abroadBasis = v.abroad ? v.basis : null; a.abroadMain = v.abroad && !CONFIRMED.has(a.id); }
 for (const a of outAuthors) a.rankable = !a.suspect && !EXCLUDED.has(a.id) && !a.abroadMain;
 const pool = outAuthors.filter((a) => a.rankable && a.worksCount > 0);
 const rank = (key, out) => { const o = [...pool].sort((a, b) => b[key] - a[key]); o.forEach((a, i, arr) => { a[out] = i > 0 && arr[i - 1][key] === a[key] ? arr[i - 1][out] : i + 1; }); };

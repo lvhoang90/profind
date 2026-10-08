@@ -9,7 +9,7 @@ const KEY = process.env.OPENALEX_API_KEY; if (!KEY) throw new Error("Thiếu OPE
 const fold = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase();
 const toks = (s) => new Set(fold(s).replace(/[^a-z\s]/g, " ").split(/\s+/).filter(Boolean));
 const same = (a, b) => a.size === b.size && [...a].every((x) => b.has(x));
-const T = JSON.parse(readFileSync("data/top2/top2-vn-career-2024.json", "utf8")).authors;
+const T = [...JSON.parse(readFileSync("data/top2/top2-vn-career-2025.json", "utf8")).authors, ...JSON.parse(readFileSync("data/top2/top2-vn-singleyr-2025.json", "utf8")).authors];
 const rev = JSON.parse(readFileSync("data/top2/review.json", "utf8"));
 const OV = existsSync("data/top2/overrides.json") ? JSON.parse(readFileSync("data/top2/overrides.json", "utf8")) : {};
 const get = async (u) => { for (let t = 0; t < 5; t++) { const r = await fetch(u + `&mailto=${encodeURIComponent(mailto)}&api_key=${KEY}`); if (r.ok) return r.json(); if (r.status === 429 || r.status >= 500) await new Promise((s) => setTimeout(s, 2000 * 2 ** t)); else throw new Error(String(r.status)); } throw new Error("retry"); };
