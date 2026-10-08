@@ -358,7 +358,7 @@ export default async function handler(request) {
     if (op === "admin-claims" && request.method === "GET") {
       const bad = needAdmin(); if (bad) return bad;
       const t = Date.now(), vf = await allVf();
-      return json({ xw: Object.entries(pairs(await one(["HGETALL", XWK]))).flatMap(([a, v]) => (jparse(v) ?? []).map((w) => ({ authorId: a, workId: w }))), claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [], recheck: Object.values(pairs(await one(["HGETALL", "profind:rk"]))).map(jparse).filter(Boolean), units: Object.values(pairs(await one(["HGETALL", "profind:un"]))).map(jparse).filter(Boolean), split: Object.values(pairs(await one(["HGETALL", "profind:sp"]))).map(jparse).filter(Boolean), hidden: { score: (await one(["SMEMBERS", HSK])) ?? [], profile: (await one(["SMEMBERS", HPK])) ?? [] }, works: await (async () => { const o = []; for (const [id, raw] of Object.entries(pairs(await one(["HGETALL", "profind:aw"])))) for (const w of jparse(raw) ?? []) if (w.status === "review") o.push({ authorId: id, ...w }); return o; })() });
+      return json({ mx: pairs(await one(["HGETALL", "profind:mx"])), xw: Object.entries(pairs(await one(["HGETALL", XWK]))).flatMap(([a, v]) => (jparse(v) ?? []).map((w) => ({ authorId: a, workId: w }))), claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [], recheck: Object.values(pairs(await one(["HGETALL", "profind:rk"]))).map(jparse).filter(Boolean), units: Object.values(pairs(await one(["HGETALL", "profind:un"]))).map(jparse).filter(Boolean), split: Object.values(pairs(await one(["HGETALL", "profind:sp"]))).map(jparse).filter(Boolean), hidden: { score: (await one(["SMEMBERS", HSK])) ?? [], profile: (await one(["SMEMBERS", HPK])) ?? [] }, works: await (async () => { const o = []; for (const [id, raw] of Object.entries(pairs(await one(["HGETALL", "profind:aw"])))) for (const w of jparse(raw) ?? []) if (w.status === "review") o.push({ authorId: id, ...w }); return o; })() });
     }
     if (op.startsWith("admin-claim-") && request.method === "POST") {
       const bad = needAdmin(); if (bad) return bad;
@@ -388,6 +388,15 @@ export default async function handler(request) {
         // Quản trị viên xác nhận trực tiếp: không cần duyệt lần hai trong hàng chờ.
         if (body.direct !== false && body.direct !== "off" && claim.status !== "approved") { await approveClaim(claim, me.email); }
         return json({ ok: true, claim, status: claim.status });
+      }
+      if (op === "admin-claim-misattr") {
+        const wid = String(body.workId || ""), m = /^(A\d{5,12})-W\d{4,14}$/.exec(wid); if (!m) return json({ error: "Mã công trình không hợp lệ." }, 400);
+        const d = ["exclude", "keep", "clear"].includes(body.decision) ? body.decision : null; if (!d) return json({ error: "Quyết định không hợp lệ." }, 400);
+        if (d === "clear") await one(["HDEL", "profind:mx", wid]); else await one(["HSET", "profind:mx", wid, d]);
+        const cur = await getXw(m[1]); // loại: ẩn ngay trên hồ sơ (cùng cơ chế "không phải bài của tôi"); giữ/bỏ: gỡ khỏi danh sách ẩn
+        const next = d === "exclude" ? [...new Set([...cur, wid])].slice(0, 100) : cur.filter((x) => x !== wid);
+        if (next.length !== cur.length) await one(["HSET", XWK, m[1], JSON.stringify(next)]);
+        return json({ ok: true });
       }
       if (op === "admin-claim-work") {
         const id = String(body.authorId || ""), doi = normDoi(body.doi), ws = jparse(await one(["HGET", "profind:aw", id])) ?? [], w = ws.find((x) => x.doi === doi);

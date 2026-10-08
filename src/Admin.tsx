@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Icon, type IconName } from "./icons";
 import { useAccount, api } from "./accountStore";
 
-const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["ra-soat", "Rà soát gộp", "check"], ["don-vi", "Đơn vị mới", "building"]];
+const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["ra-soat", "Rà soát gộp", "check"], ["gan-nham", "Bài gán nhầm", "check"], ["don-vi", "Đơn vị mới", "building"]];
 const n0 = (n: number) => new Intl.NumberFormat("vi-VN").format(Math.round(n));
 const pct = (a: number, b: number) => (b > 0 ? `${Math.round((a / b) * 100)}%` : "–");
 const delta = (a: number, b: number) => (b > 0 ? `${a >= b ? "▲" : "▼"} ${Math.abs(Math.round(((a - b) / b) * 100))}% so với 7 ngày trước` : a > 0 ? "mới có dữ liệu" : "");
@@ -34,7 +34,7 @@ export function AdminPage({ tab }: { tab: string }) {
     <article className="dash adm-page">
       <header className="dash-head"><div className="av" aria-hidden="true"><Icon n="grid" size={36} /></div><div className="dh-main"><h1>Quản trị ProFind</h1><p className="meta">{user.email} · số liệu theo giờ Việt Nam, khoảng 14 ngày gần nhất</p></div><div className="dh-act"><a className="ghost-link light" href="#/tai-khoan">← Không gian của tôi</a></div></header>
       <nav className="tabs" aria-label="Quản trị">{TABS.map(([k, l, ic]) => <a key={k} href={`#/quan-tri${k ? "/" + k : ""}`} aria-current={cur === k ? "page" : undefined}><Icon n={ic} size={16} />{l}</a>)}</nav>
-      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}{cur === "ra-soat" && <Recheck />}{cur === "don-vi" && <Units />}
+      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}{cur === "ra-soat" && <Recheck />}{cur === "gan-nham" && <Misattr />}{cur === "don-vi" && <Units />}
     </article>
   );
 }
@@ -478,5 +478,30 @@ function Recheck() {
       </div>
       {list.length === 0 && <p className="meta">Không có cặp nào trong mục này.</p>}
     </>
+  );
+}
+
+type MX = { kind: "A" | "B"; author: string; name: string; wid: string; doi: string | null; title: string; journal: string | null; year: number; score: number | null; role: string; why: string; nWorks: number };
+/** Công trình nghi gán nhầm người trùng tên (scripts/find-misattributed.mjs): loại = ẩn ngay + đưa vào excludeWorks khi dựng; giữ = không hỏi lại. */
+function Misattr() {
+  const [items, setItems] = useState<MX[] | null>(null), [err, setErr] = useState(""), [v, setV] = useState(0), [view, setView] = useState<"todo" | "exclude" | "keep">("todo"), [kind, setKind] = useState<"A" | "B">("A"), [page, setPage] = useState(0), [msg, setMsg] = useState("");
+  const { d } = useGet<{ mx: Record<string, string>; xw: { authorId: string; workId: string }[] }>("admin-claims", `&mx=${v}`);
+  useEffect(() => { fetch("/data/_misattributed.json", { cache: "no-store" }).then((r) => r.json()).then((j: { items: MX[] }) => setItems(j.items)).catch(() => setErr("Chưa có danh sách (chạy scripts/find-misattributed.mjs).")); }, []);
+  if (err) return <p className="banner demo" role="alert">{err}</p>;
+  if (!items || !d) return <p className="empty" role="status">Đang tải…</p>;
+  const mx = d.mx ?? {}, byKind = items.filter((i) => i.kind === kind), list = byKind.filter((i) => (view === "todo" ? !mx[i.wid] : mx[i.wid] === view)), PG = 25;
+  const dec = async (wid: string, decision: string) => { try { await api("admin-claim-misattr", { workId: wid, decision }); setV((x) => x + 1); } catch (e) { setMsg((e as Error).message); } };
+  return (
+    <section className="card"><h2>Bài nghi gán nhầm người trùng tên</h2>
+      <p className="meta">A: ORCID trên bài là của người khác (rất chắc). B: cơ quan trên bài không trùng các bài còn lại và chủ đề lệch hẳn (cần xem). "Loại" ẩn bài ngay trên hồ sơ; điểm tính lại khi đưa mã vào <code>excludeWorks</code> (mục "Công trình chủ hồ sơ báo…" ở tab Xác thực có nút chép JSON).</p>
+      <div role="status" aria-live="polite">{msg && <p className="banner">{msg}</p>}</div>
+      <p>{(["A", "B"] as const).map((k) => <button key={k} type="button" className={kind === k ? "primary" : ""} onClick={() => { setKind(k); setPage(0); }}>Loại {k} ({items.filter((i) => i.kind === k).length})</button>)} {(["todo", "exclude", "keep"] as const).map((x) => <button key={x} type="button" className={view === x ? "primary" : ""} onClick={() => { setView(x); setPage(0); }}>{x === "todo" ? "Chưa duyệt" : x === "exclude" ? "Đã loại" : "Đã giữ"} ({byKind.filter((i) => (x === "todo" ? !mx[i.wid] : mx[i.wid] === x)).length})</button>)}</p>
+      <ul className="mxlist">{list.slice(page * PG, (page + 1) * PG).map((i) => <li key={i.wid}>
+        <a href={`#/tac-gia/${i.author}`}>{i.name}</a> · <a href={i.doi ? `https://doi.org/${i.doi}` : `https://openalex.org/${i.wid.split("-").pop()}`} target="_blank" rel="noopener">{i.title}</a><br />
+        <span className="meta">{i.journal ?? "—"} · {i.year}{i.score ? ` · ${i.score} điểm (${i.role})` : ""} · hồ sơ {i.nWorks} bài — {i.why}</span><br />
+        <button type="button" onClick={() => void dec(i.wid, "exclude")} disabled={mx[i.wid] === "exclude"}>Loại bài</button> <button type="button" onClick={() => void dec(i.wid, "keep")} disabled={mx[i.wid] === "keep"}>Giữ</button> {mx[i.wid] && <button type="button" onClick={() => void dec(i.wid, "clear")}>Bỏ quyết định</button>}
+      </li>)}</ul>
+      {list.length > PG && <p><button type="button" disabled={page === 0} onClick={() => setPage(page - 1)}>Trước</button> {page + 1}/{Math.ceil(list.length / PG)} <button type="button" disabled={(page + 1) * PG >= list.length} onClick={() => setPage(page + 1)}>Sau</button></p>}
+    </section>
   );
 }
