@@ -1,6 +1,12 @@
 {
   "_note": "Đính chính do tác giả hoặc người quản trị yêu cầu; build-index.mjs áp dụng khi dựng. Mỗi mục có date và reason để truy vết. Yêu cầu gỡ hồ sơ luôn được thực hiện (không cần lý do).",
-  "remove": [],
+  "remove": [
+    {
+      "author": "A5032223071",
+      "date": "2026-10-08",
+      "reason": "Chủ thể dữ liệu đề nghị gỡ hồ sơ (ORCID và tên khớp; ngoại lệ email Gmail do quản trị viên chấp nhận). Đã ẩn ngay trên website; gỡ hẳn ở lần dựng dữ liệu kế tiếp."
+    }
+  ],
   "rename": {
     "A5066728998": "Võ Tòng Xuân"
   },
