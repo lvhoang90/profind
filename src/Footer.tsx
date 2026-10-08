@@ -14,7 +14,7 @@ export function EcoLink({ app, place, to, className, children }: { app: App; pla
 export function Footer({ data: _data }: { data: Data | null }) {
   const { t } = useT();
   const apps: [App, string, string][] = [["edufind", "EduFind", t("eEduDesc")], ["ami", "Ami", t("eAmiDesc")], ["may", "Mây", t("eMayDesc")]];
-  const info: [string, string][] = [["gioi-thieu", "fAbout2"], ["nguon", "fSrc"], ["bang-xep-hang", "fRank"], ["pro-score", "fProScore"], ["giay-phep", "fLic"], ["rieng-tu", "fPriv"], ["lien-he", "fContact"]];
+  const info: [string, string][] = [["gioi-thieu", "fAbout2"], ["nguon", "fSrc"], ["bang-xep-hang", "fRank"], ["don-vi", "fUnits"], ["nganh", "fFields"], ["pro-score", "fProScore"], ["giay-phep", "fLic"], ["rieng-tu", "fPriv"], ["lien-he", "fContact"]];
   return (
     <footer className="sf">
       <div className="wrap">
@@ -34,7 +34,7 @@ export function Footer({ data: _data }: { data: Data | null }) {
           </nav>
           <nav aria-labelledby="sf-h3">
             <h2 id="sf-h3">{t("fInfo")}</h2>
-            <ul>{info.map(([s, k]) => <li key={s}><a href={s === "gioi-thieu" ? "#/gioi-thieu" : s === "pro-score" ? "#/pro-score" : s === "bang-xep-hang" ? "#/bang-xep-hang" : `#/gioi-thieu?m=${s}`}>{t(k as "fAbout2")}</a></li>)}</ul>
+            <ul>{info.map(([s, k]) => <li key={s}><a href={s === "gioi-thieu" ? "#/gioi-thieu" : s === "pro-score" ? "#/pro-score" : s === "bang-xep-hang" ? "#/bang-xep-hang" : s === "don-vi" ? "/don-vi/" : s === "nganh" ? "/nganh/" : `#/gioi-thieu?m=${s}`}>{t(k as "fAbout2")}</a></li>)}</ul>
           </nav>
           <section className="sf-who" aria-labelledby="sf-h4">
             <h2 id="sf-h4">{t("sfWho")}</h2>

@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/build-seo-pages.mjs",
     "preview": "vite preview",
     "d:journals": "node scripts/import-edufind.mjs",
     "d:demo": "node scripts/make-demo.mjs",
