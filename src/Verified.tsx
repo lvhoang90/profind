@@ -23,6 +23,12 @@ export function VerifiedTick({ id, size = 16 }: { id: string; size?: number }) {
   if (!until) return null;
   return <span className="vtick" title={`${LBL} · hiệu lực đến ${dmy(until)}`} role="img" aria-label={LBL}><Icon n="check" size={size} /></span>;
 }
+/** Người đang đăng nhập có phải chủ hồ sơ đã xác thực này không (so theo email xác thực). */
+export function useIsMine(id: string): boolean {
+  const { user } = useAccount(); const [mine, setMine] = useState(false);
+  useEffect(() => { setMine(false); if (user) api<{ verified: { authorId: string; until: number }[] }>("claim-status").then((j) => setMine(j.verified.some((v) => v.authorId === id && v.until > Date.now()))).catch(() => {}); }, [user, id]);
+  return mine;
+}
 export function VerifiedBadge({ id }: { id: string }) {
   const until = useVerified(id);
   if (!until) return null;
