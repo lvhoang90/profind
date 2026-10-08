@@ -168,7 +168,13 @@ const outAuthors = authors.map((a) => {
 // Người ngoài tập (nước ngoài, nghi gộp nhầm, chưa biết) có hạng null, giao diện hiện "-".
 const CONFIRMED = new Set(existsSync("data/vn-confirmed.json") ? rd("data/vn-confirmed.json").ids ?? [] : []), EXCLUDED = new Set(existsSync("data/vn-excluded.json") ? rd("data/vn-excluded.json").ids ?? [] : []);
 // Quy ước hiện hành: mọi hồ sơ gắn với ít nhất một trường/viện trong danh sách đơn vị của Việt Nam đều được hiển thị và xếp hạng, không phân biệt quốc tịch; chỉ loại hồ sơ nghi gộp nhầm (suspect) và hồ sơ trong data/vn-excluded.json.
-for (const a of outAuthors) a.rankable = !a.suspect && !EXCLUDED.has(a.id);
+// "Liên kết chính ở nước ngoài": DƯỚI ABROAD_MAX công trình (trong số công trình OpenAlex ghi cơ quan, tối thiểu ABROAD_MIN_WORKS công trình) có liên kết tại Việt Nam thì không xếp hạng; hiện nhãn trên hồ sơ.
+// Ngoại lệ do quản trị viên xác nhận: data/vn-confirmed.json. Hồ sơ trong danh sách Top 2% mục "Việt Nam" (Elsevier) được coi là trong nước. Danh sách xem xét: scripts/abroad-review.mjs.
+const ABROAD_RULE = rd("data/abroad-rule.json"), ABROAD_MAX = ABROAD_RULE.maxVnShare, ABROAD_MIN_WORKS = ABROAD_RULE.minWorks;
+const AUS = new Map();
+if (existsSync("data/raw/_authorship.json")) { const AU = rd("data/raw/_authorship.json"); for (const k in AU) { const c = AU[k][1] ?? []; if (!c.length) continue; const id = k.slice(0, k.indexOf("-")), e = AUS.get(id) ?? AUS.set(id, { n: 0, vn: 0 }).get(id); e.n++; if (c.includes("VN")) e.vn++; } }
+for (const a of outAuthors) { const e = AUS.get(a.id); a.vnShare = e && e.n >= ABROAD_MIN_WORKS ? Math.round((1000 * e.vn) / e.n) / 10 : null; a.abroadMain = a.vnShare != null && e.vn / e.n < ABROAD_MAX && !CONFIRMED.has(a.id) && !TOP2[a.id]; }
+for (const a of outAuthors) a.rankable = !a.suspect && !EXCLUDED.has(a.id) && !a.abroadMain;
 const pool = outAuthors.filter((a) => a.rankable && a.worksCount > 0);
 const rank = (key, out) => { const o = [...pool].sort((a, b) => b[key] - a[key]); o.forEach((a, i, arr) => { a[out] = i > 0 && arr[i - 1][key] === a[key] ? arr[i - 1][out] : i + 1; }); };
 for (const a of outAuthors) { a.rankScore = a.rankWorks = a.rankCit = null; }
@@ -187,7 +193,7 @@ writeFileSync("public/data/jn.json", JSON.stringify(jn));
 const usedInst = new Set(outAuthors.flatMap((a) => a.institutions));
 const insts = I.institutions.filter((i) => usedInst.has(i.id)).map(({ id, name, en, abbr, type, city, official, moetCode }) => ({ id, name, en, abbr, type, city: cityOut({ id, city }), ...(official ? { official, moetCode } : {}) }));
 const disciplines = [...new Set(outAuthors.flatMap((a) => a.disciplines))].sort();
-writeFileSync("public/data/profind.json", JSON.stringify({ meta: { demo: !!R.meta?.demo, built: new Date().toISOString().slice(0, 10), authors: outAuthors.length, works: works.length, rankPool: PRO.eligible, source: R.meta?.source ?? null, fetched: R.meta?.fetched ?? null }, institutions: insts, types: I.types, disciplines, authors: outAuthors }));
+writeFileSync("public/data/profind.json", JSON.stringify({ meta: { demo: !!R.meta?.demo, built: new Date().toISOString().slice(0, 10), authors: outAuthors.length, works: works.length, rankPool: PRO.eligible, abroadMax: Math.round(ABROAD_MAX * 100), source: R.meta?.source ?? null, fetched: R.meta?.fetched ?? null }, institutions: insts, types: I.types, disciplines, authors: outAuthors }));
 if (xs.n) console.log(`Đối chiếu trích dẫn trên ${xs.n} công trình có DOI trong Crossref: Crossref cao hơn OpenAlex ở ${xs.crHigher}, Semantic Scholar cao hơn OpenAlex ở ${xs.s2Higher}, OpenAlex cao nhất hoặc bằng ở ${xs.oaHighest}.`);
 if (oc.n) console.log(`Kiểm toán OpenCitations trên mẫu ${oc.n} DOI: tổng trích dẫn OpenAlex ${oc.oa}, Crossref ${oc.cr}, Semantic Scholar ${oc.s2}, OpenCitations ${oc.oc}; OpenCitations <= OpenAlex ở ${Math.round(100 * oc.ocLeOA / oc.n)}% công trình.`);
 console.log(`profind.json: ${outAuthors.length} tác giả (${log.length} thay đổi đính chính/gộp), ${works.length} công trình (bỏ ${nDupWorks} trùng), ${works.filter((w) => w.counted).length} có điểm, ${works.filter((w) => w.matched).length} khớp tạp chí, nhóm xếp hạng ${pool.length}`);

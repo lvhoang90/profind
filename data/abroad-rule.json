@@ -1,0 +1,5 @@
+{
+  "_note": "Quy tắc 'liên kết chính ở nước ngoài' của bảng xếp hạng Việt Nam: hồ sơ có DƯỚI maxVnShare công trình mang liên kết tại Việt Nam (trong số công trình OpenAlex ghi cơ quan, tối thiểu minWorks công trình) thì không xếp hạng. Chỉ áp dụng cho bảng Việt Nam; bảng phạm vi thế giới (nếu mở rộng sau này) không có giới hạn này. Dùng bởi build-index.mjs, abroad-review.mjs, abroad-panel.mjs, build-seo-pages.mjs.",
+  "maxVnShare": 0.2,
+  "minWorks": 15
+}

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useT } from "./i18n";
 import { Icon, type IconName } from "./icons";
 import { ProBadge, TIERS, type Tier } from "./Badge";
+import { AbroadRule } from "./AbroadRule";
 
 const CONTACT = "vienisavietnam@gmail.com";
 const PILLARS: { k: string; w: number; icon: IconName; color: string }[] = [
@@ -16,7 +17,7 @@ const DIM_LABEL: Record<string, [string, string]> = { field: ["Lĩnh vực", "Fi
 const COLS = ["impact", "output", "lead", "quality", "momentum", "steady", "recog"] as const;
 
 export function ProScorePage() {
-  const { lang, t } = useT();
+  const { lang, t, num } = useT();
   const vi = lang === "vi";
   const [panel, setPanel] = useState<Panel | null>(null);
   useEffect(() => { fetch("./data/pro-panel.json").then((r) => r.json()).then(setPanel).catch(() => {}); }, []);
@@ -114,6 +115,8 @@ export function ProScorePage() {
           <p>{vi ? "Một nhà khoa học có bách phân vị tác động 0,90; sản lượng 0,80; chủ đạo 0,70; chất lượng 0,60; đà phát triển 0,85; đều đặn 0,90; chưa thuộc Top 2%:" : "A scientist with impact percentile 0.90; output 0.80; leadership 0.70; quality 0.60; momentum 0.85; consistency 0.90; not in the Top 2%:"}</p>
           <code>{vi ? "Với trọng số trung bình của hội đồng" : "With the panel’s mean weights"}: {pl.map((p) => `${(p.w / 100).toFixed(3).replace(".", ",")}×${(ex[p.k as keyof typeof ex] / 100).toFixed(2).replace(".", ",")}`).join(" + ")} = <b>{(exScore / 100).toFixed(4).replace(".", ",")}</b> → PRO-SCORE1000 <b>{exScore.toFixed(1).replace(".", ",")}</b></code></div></section>
 
+      <AbroadRule lang={lang} num={num} />
+
       <section className="psp-sec"><h2>{vi ? "Xếp hạng và huy hiệu" : "Ranking and badges"}</h2>
         <p>{vi ? "Hồ sơ có từ 10 công trình và hoạt động từ 3 năm được xếp hạng toàn hệ thống theo PRO-SCORE1000 (đồng điểm thì đồng hạng). Hạng và huy hiệu được tính lại tự động mỗi lần dữ liệu cập nhật." : "Profiles with 10+ works and 3+ active years are ranked system-wide by PRO-SCORE1000 (ties share a rank). Ranks and badges are recomputed automatically at every data refresh."}</p>
         <ul className="psp-tiers">{[...TIERS].map((tr) => <li key={tr} className={tr}><ProBadge rank={RANKS[tr]} size={56} /><b>{names[tr]}</b><span>{t("topN", { n: String(RANKS[tr]) })}</span></li>)}</ul></section>
@@ -124,6 +127,7 @@ export function ProScorePage() {
           <li>{vi ? "OpenAlex chưa cho số tác giả mỗi công trình nên chưa chia trích dẫn theo đóng góp, và chưa có năm bắt đầu sự nghiệp để chuẩn hóa theo thế hệ." : "OpenAlex does not give the author count per work, so citations are not split by contribution, and there is no career-start year for cohort normalisation."}</li>
           <li>{vi ? "Hạng Q và vai trò chỉ có ở một phần công trình; sách, chương sách, kỷ yếu và bằng sáng chế chưa được tính." : "Quartile and role exist for only some works; books, chapters, proceedings and patents are not counted."}</li>
           <li>{vi ? "Hồ sơ OpenAlex có thể gộp nhầm hoặc tách đôi một người; ngành chính suy ra từ tạp chí đã đăng." : "OpenAlex profiles may merge or split people; the primary field is inferred from journals published in."}</li>
+          <li>{vi ? "Hồ sơ có tỉ lệ công trình mang liên kết tại Việt Nam dưới ngưỡng quy định (theo OpenAlex, tối thiểu 15 công trình có ghi cơ quan) được gắn nhãn “Liên kết chính ở nước ngoài” và không xếp hạng; ngoại lệ do quản trị viên xác nhận. Xem mục “Phạm vi Việt Nam”." : "Profiles whose share of works with an affiliation in Vietnam is below the stated threshold (per OpenAlex, at least 15 works with a recorded affiliation) are tagged “Primary affiliation abroad” and not ranked; exceptions are confirmed by an administrator. See “Vietnam scope”."}</li>
           <li>{vi ? "Điểm là thước đo tương đối giữa các hồ sơ trong ProFind, không dùng thay cho đánh giá chuyên môn." : "The score is a relative measure between ProFind profiles, not a substitute for expert judgement."}</li></ul>
         <h3>{vi ? "Lộ trình cải tiến" : "Roadmap"}</h3>
         <ol className="psp-ul">{roadmap.map((r) => <li key={r}>{r}</li>)}</ol></section>
