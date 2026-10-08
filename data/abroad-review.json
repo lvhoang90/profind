@@ -1,10 +1,10 @@
 {
- "_note": "Ảnh chụp ngày 2026-10-08: hồ sơ đang xếp hạng nhưng dưới 20% công trình có liên kết VN. Ngoại lệ: thêm mã vào data/vn-confirmed.json.",
+ "_note": "Hồ sơ đang xếp hạng (hoặc từng xếp hạng trước khi áp quy tắc) nhưng dưới ngưỡng % công trình có liên kết VN. prevRank = hạng trước khi áp quy tắc (hồ sơ thêm khi nâng ngưỡng: hạng tại thời điểm thêm). Ngoại lệ: thêm mã vào data/vn-confirmed.json.",
  "rule": {
-  "maxVnShare": 0.2,
+  "maxVnShare": 0.3,
   "minWorksWithAffiliation": 15
  },
- "total": 946,
+ "total": 1143,
  "rows": [
   {
    "id": "A5083482304",
@@ -22,6 +22,24 @@
    ],
    "units": [
     "Đại học Kinh tế Thành phố Hồ Chí Minh",
+    "Trường Đại học Tôn Đức Thắng"
+   ]
+  },
+  {
+   "id": "A5043118228",
+   "name": "Tuan A. Pham",
+   "orcid": "0000-0002-9937-3442",
+   "prevRank": 5,
+   "pro": 94.1,
+   "vnShare": 23.8,
+   "worksWithAffil": 42,
+   "vnWorks": 10,
+   "countries": [
+    "GB:28",
+    "JP:16",
+    "SE:14"
+   ],
+   "units": [
     "Trường Đại học Tôn Đức Thắng"
    ]
   },
@@ -110,6 +128,23 @@
    ],
    "units": [
     "Trường Đại học Thủ Dầu Một"
+   ]
+  },
+  {
+   "id": "A5044668604",
+   "name": "Hiep X. Nguyen",
+   "orcid": "0000-0002-2449-0281",
+   "prevRank": 30,
+   "pro": 91.8,
+   "vnShare": 28.1,
+   "worksWithAffil": 32,
+   "vnWorks": 9,
+   "countries": [
+    "US:26"
+   ],
+   "units": [
+    "Trường Đại học Tân Trào",
+    "Trường Đại học Tân Tạo"
    ]
   },
   {
@@ -253,6 +288,22 @@
    ],
    "units": [
     "Trường Đại học VinUni"
+   ]
+  },
+  {
+   "id": "A5037958365",
+   "name": "Thangavel Mathimani",
+   "orcid": "0000-0002-3586-0006",
+   "prevRank": 50,
+   "pro": 90.7,
+   "vnShare": 25,
+   "worksWithAffil": 120,
+   "vnWorks": 30,
+   "countries": [
+    "IN:90"
+   ],
+   "units": [
+    "Trường Đại học Duy Tân"
    ]
   },
   {
@@ -501,6 +552,24 @@
    ]
   },
   {
+   "id": "A5024496075",
+   "name": "Samuel Adomako",
+   "orcid": "0000-0002-7139-0988",
+   "prevRank": 90,
+   "pro": 89.1,
+   "vnShare": 21.7,
+   "worksWithAffil": 175,
+   "vnWorks": 38,
+   "countries": [
+    "GB:166",
+    "LB:12",
+    "FI:10"
+   ],
+   "units": [
+    "Đại học Kinh tế Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
    "id": "A5088931788",
    "name": "Phan Lê Hà",
    "orcid": "0000-0002-0045-9060",
@@ -534,6 +603,22 @@
    ],
    "units": [
     "Institute of Materials Science"
+   ]
+  },
+  {
+   "id": "A5090087678",
+   "name": "Kieu The Loan Trinh",
+   "orcid": "0000-0002-5318-4742",
+   "prevRank": 98,
+   "pro": 88.7,
+   "vnShare": 22.5,
+   "worksWithAffil": 89,
+   "vnWorks": 20,
+   "countries": [
+    "KR:69"
+   ],
+   "units": [
+    "Đại học Quốc gia TP. Hồ Chí Minh"
    ]
   },
   {
@@ -609,6 +694,24 @@
    ]
   },
   {
+   "id": "A5056951761",
+   "name": "Andrew William Taylor-Robinson",
+   "orcid": "0000-0001-7342-8348",
+   "prevRank": 106,
+   "pro": 88.5,
+   "vnShare": 29.8,
+   "worksWithAffil": 252,
+   "vnWorks": 75,
+   "countries": [
+    "AU:109",
+    "US:68",
+    "GB:62"
+   ],
+   "units": [
+    "Trường Đại học VinUni"
+   ]
+  },
+  {
    "id": "A5082024932",
    "name": "Kuen-Suan Chen",
    "orcid": "0000-0002-1091-6392",
@@ -643,6 +746,24 @@
    ],
    "units": [
     "Trường Đại học Tôn Đức Thắng"
+   ]
+  },
+  {
+   "id": "A5101918597",
+   "name": "Thành Tâm Nguyên",
+   "orcid": "0000-0002-2586-7757",
+   "prevRank": 117,
+   "pro": 88.3,
+   "vnShare": 29.6,
+   "worksWithAffil": 186,
+   "vnWorks": 55,
+   "countries": [
+    "AU:59",
+    "FR:52",
+    "CH:14"
+   ],
+   "units": [
+    "Đại học Bách khoa Hà Nội"
    ]
   },
   {
@@ -731,6 +852,22 @@
    ],
    "units": [
     "Trường Đại học VinUni"
+   ]
+  },
+  {
+   "id": "A5089615125",
+   "name": "Ngoc Kien Bui",
+   "orcid": "0000-0002-6140-6528",
+   "prevRank": 125,
+   "pro": 88.1,
+   "vnShare": 28,
+   "worksWithAffil": 25,
+   "vnWorks": 7,
+   "countries": [
+    "JP:24"
+   ],
+   "units": [
+    "Trường Đại học Thủy lợi"
    ]
   },
   {
@@ -913,6 +1050,27 @@
    ]
   },
   {
+   "id": "A5063856952",
+   "name": "Nguyễn Thị Kim Oanh",
+   "orcid": "0000-0002-0367-0013",
+   "prevRank": 147,
+   "pro": 87.5,
+   "vnShare": 26.8,
+   "worksWithAffil": 168,
+   "vnWorks": 45,
+   "countries": [
+    "TH:126",
+    "JP:1",
+    "US:1"
+   ],
+   "units": [
+    "Trường Đại học Y Dược Thái Bình",
+    "Viện Dược liệu",
+    "Học viện Nông nghiệp Việt Nam",
+    "Trường Đại học Thương mại"
+   ]
+  },
+  {
    "id": "A5081934496",
    "name": "Marwan Krunz",
    "orcid": "0000-0001-7137-2985",
@@ -1040,6 +1198,22 @@
    ]
   },
   {
+   "id": "A5036981397",
+   "name": "Hang-Nga Mai",
+   "orcid": "0000-0002-9832-3312",
+   "prevRank": 169,
+   "pro": 87.2,
+   "vnShare": 27.5,
+   "worksWithAffil": 51,
+   "vnWorks": 14,
+   "countries": [
+    "KR:50"
+   ],
+   "units": [
+    "Trường Đại học Kinh doanh và Công nghệ Hà Nội"
+   ]
+  },
+  {
    "id": "A5082413942",
    "name": "Farshad Khorrami",
    "orcid": "0000-0002-8418-004X",
@@ -1055,6 +1229,25 @@
    ],
    "units": [
     "Trường Đại học Tân Tạo"
+   ]
+  },
+  {
+   "id": "A5006334485",
+   "name": "Trần Thanh Tùng",
+   "orcid": "0000-0002-1535-5109",
+   "prevRank": 174,
+   "pro": 87,
+   "vnShare": 22.9,
+   "worksWithAffil": 157,
+   "vnWorks": 36,
+   "countries": [
+    "AU:95",
+    "FR:14",
+    "KR:10"
+   ],
+   "units": [
+    "Trường Đại học Công nghệ (ĐHQGHN)",
+    "Viện Khoa học Khí tượng Thủy văn và Biến đổi khí hậu"
    ]
   },
   {
@@ -1090,6 +1283,40 @@
    ],
    "units": [
     "Trường Đại học Duy Tân"
+   ]
+  },
+  {
+   "id": "A5071517100",
+   "name": "Meysam Alizamir",
+   "orcid": "0000-0003-1047-1917",
+   "prevRank": 184,
+   "pro": 86.8,
+   "vnShare": 26.4,
+   "worksWithAffil": 72,
+   "vnWorks": 19,
+   "countries": [
+    "IR:53"
+   ],
+   "units": [
+    "Trường Đại học Duy Tân"
+   ]
+  },
+  {
+   "id": "A5061615470",
+   "name": "Eric Lewis Krakauer",
+   "orcid": "0000-0001-8868-0044",
+   "prevRank": 186,
+   "pro": 86.8,
+   "vnShare": 26.5,
+   "worksWithAffil": 102,
+   "vnWorks": 27,
+   "countries": [
+    "US:101",
+    "CH:2",
+    "CA:1"
+   ],
+   "units": [
+    "Đại học Y Dược Thành phố Hồ Chí Minh"
    ]
   },
   {
@@ -1220,6 +1447,59 @@
    ]
   },
   {
+   "id": "A5101592586",
+   "name": "Anh Tuan Vo",
+   "orcid": "0000-0002-9361-3919",
+   "prevRank": 208,
+   "pro": 86.5,
+   "vnShare": 20.4,
+   "worksWithAffil": 54,
+   "vnWorks": 11,
+   "countries": [
+    "KR:47"
+   ],
+   "units": [
+    "Đại học Đà Nẵng",
+    "Trường Đại học Sư phạm Kỹ thuật"
+   ]
+  },
+  {
+   "id": "A5100613698",
+   "name": "Thanh-Binh Nguyen",
+   "orcid": "0000-0001-6268-7408",
+   "prevRank": 209,
+   "pro": 86.5,
+   "vnShare": 20,
+   "worksWithAffil": 140,
+   "vnWorks": 28,
+   "countries": [
+    "TW:104",
+    "KR:5",
+    "FR:5"
+   ],
+   "units": [
+    "Trường Đại học Công nghệ Kỹ thuật Thành phố Hồ Chí Minh",
+    "Học Viện Hành Chính Quốc Gia"
+   ]
+  },
+  {
+   "id": "A5056849225",
+   "name": "Nadia K. Doytch",
+   "orcid": "0000-0002-2944-6810",
+   "prevRank": 210,
+   "pro": 86.4,
+   "vnShare": 29.6,
+   "worksWithAffil": 81,
+   "vnWorks": 24,
+   "countries": [
+    "US:79",
+    "PH:56"
+   ],
+   "units": [
+    "Đại học Kinh tế Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
    "id": "A5070127163",
    "name": "Seung Hyun Hur",
    "orcid": "0000-0002-0590-7045",
@@ -1289,6 +1569,24 @@
    ],
    "units": [
     "Trường Đại học Cửu Long"
+   ]
+  },
+  {
+   "id": "A5101632999",
+   "name": "Ngoc N. Nguyen",
+   "orcid": "0000-0002-0999-1176",
+   "prevRank": 219,
+   "pro": 86.3,
+   "vnShare": 26.2,
+   "worksWithAffil": 65,
+   "vnWorks": 17,
+   "countries": [
+    "AU:47",
+    "DE:8",
+    "US:1"
+   ],
+   "units": [
+    "Trường Đại học Nguyễn Tất Thành"
    ]
   },
   {
@@ -1363,6 +1661,24 @@
    ]
   },
   {
+   "id": "A5039364672",
+   "name": "Nguyễn Văn Toàn",
+   "orcid": "0000-0001-8946-8299",
+   "prevRank": 229,
+   "pro": 86.2,
+   "vnShare": 27.1,
+   "worksWithAffil": 155,
+   "vnWorks": 42,
+   "countries": [
+    "JP:115",
+    "KR:1"
+   ],
+   "units": [
+    "Trường Đại học Công nghiệp Thành phố Hồ Chí Minh",
+    "Đại học Công nghiệp Hà Nội"
+   ]
+  },
+  {
    "id": "A5067604730",
    "name": "Abhijit Majumdar",
    "orcid": "0000-0002-0353-1849",
@@ -1378,6 +1694,25 @@
    ],
    "units": [
     "Trường Đại học Tôn Đức Thắng"
+   ]
+  },
+  {
+   "id": "A5078093234",
+   "name": "Hong Bui",
+   "orcid": "0000-0001-7895-2106",
+   "prevRank": 232,
+   "pro": 86.1,
+   "vnShare": 27,
+   "worksWithAffil": 63,
+   "vnWorks": 17,
+   "countries": [
+    "GB:54",
+    "FR:8",
+    "PK:1"
+   ],
+   "units": [
+    "Trường Đại học VinUni",
+    "Trường Đại học Vinh"
    ]
   },
   {
@@ -1741,6 +2076,23 @@
    ]
   },
   {
+   "id": "A5069162937",
+   "name": "T.T. Yen Le",
+   "orcid": "0000-0002-1465-4406",
+   "prevRank": 273,
+   "pro": 85.5,
+   "vnShare": 28.9,
+   "worksWithAffil": 38,
+   "vnWorks": 11,
+   "countries": [
+    "DE:20",
+    "NL:12"
+   ],
+   "units": [
+    "Viện Công nghệ Năng lượng"
+   ]
+  },
+  {
    "id": "A5070130847",
    "name": "Toru Hiyama",
    "orcid": "0000-0002-5843-232X",
@@ -1988,6 +2340,24 @@
    ]
   },
   {
+   "id": "A5081708104",
+   "name": "Minh Thi Thuy Vu",
+   "orcid": "0000-0002-5858-4438",
+   "prevRank": 327,
+   "pro": 84.9,
+   "vnShare": 22,
+   "worksWithAffil": 41,
+   "vnWorks": 9,
+   "countries": [
+    "AU:24",
+    "DK:6",
+    "NO:3"
+   ],
+   "units": [
+    "Trường Đại học Nha Trang"
+   ]
+  },
+  {
    "id": "A5052305826",
    "name": "Xinhua He",
    "orcid": "0000-0002-5570-3454",
@@ -2056,6 +2426,26 @@
    "units": [
     "Trường Đại học Giáo dục (ĐHQGHN)",
     "Viện nghiên cứu lâm sàng về xã hội, tâm lý và giáo dục"
+   ]
+  },
+  {
+   "id": "A5101827497",
+   "name": "Trang Huyen Nguyen",
+   "orcid": "0000-0003-1973-3207",
+   "prevRank": 338,
+   "pro": 84.7,
+   "vnShare": 24.3,
+   "worksWithAffil": 37,
+   "vnWorks": 9,
+   "countries": [
+    "US:24",
+    "TW:3",
+    "IR:1"
+   ],
+   "units": [
+    "Trường Đại học Giáo dục (ĐHQGHN)",
+    "Trường Đại học Sài Gòn",
+    "Trường Đại học Hùng Vương"
    ]
   },
   {
@@ -2326,6 +2716,45 @@
    ]
   },
   {
+   "id": "A5037862575",
+   "name": "Viêt-Anh Nguyên",
+   "orcid": "0000-0002-3114-8169",
+   "prevRank": 370,
+   "pro": 84.4,
+   "vnShare": 22.9,
+   "worksWithAffil": 70,
+   "vnWorks": 16,
+   "countries": [
+    "FR:19",
+    "SG:17",
+    "DE:11"
+   ],
+   "units": [
+    "Trường Đại học Xây dựng Hà Nội",
+    "Trường Đại học Công nghiệp Thành phố Hồ Chí Minh",
+    "Trường Đại học FPT",
+    "Viện Khoa học và Kỹ thuật môi trường"
+   ]
+  },
+  {
+   "id": "A5039972142",
+   "name": "Takahiro Watari",
+   "orcid": "0000-0003-0024-1747",
+   "prevRank": 377,
+   "pro": 84.4,
+   "vnShare": 24.4,
+   "worksWithAffil": 127,
+   "vnWorks": 31,
+   "countries": [
+    "JP:127",
+    "NL:3"
+   ],
+   "units": [
+    "Đại học Bách khoa Hà Nội",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội"
+   ]
+  },
+  {
    "id": "A5059989941",
    "name": "Kumju Youn",
    "orcid": "0000-0002-3124-2665",
@@ -2339,6 +2768,43 @@
    ],
    "units": [
     "Trường Đại học Đông Á"
+   ]
+  },
+  {
+   "id": "A5008296992",
+   "name": "Tinh Thanh Doan",
+   "orcid": "0000-0002-2297-8187",
+   "prevRank": 379,
+   "pro": 84.3,
+   "vnShare": 21.5,
+   "worksWithAffil": 65,
+   "vnWorks": 14,
+   "countries": [
+    "AU:46",
+    "NZ:12",
+    "US:2"
+   ],
+   "units": [
+    "Trường Đại học Thủ Dầu Một"
+   ]
+  },
+  {
+   "id": "A5059266074",
+   "name": "Alexei V. Abramov",
+   "orcid": "0000-0001-9709-4469",
+   "prevRank": 381,
+   "pro": 84.3,
+   "vnShare": 21.1,
+   "worksWithAffil": 180,
+   "vnWorks": 38,
+   "countries": [
+    "RU:180",
+    "JP:2",
+    "BD:1"
+   ],
+   "units": [
+    "Trường Đại học Thủ đô Hà Nội",
+    "Joint Vietnam-Russia Tropical Science and Technology Research Center"
    ]
   },
   {
@@ -2375,6 +2841,24 @@
    ],
    "units": [
     "Đại học Kinh tế Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
+   "id": "A5059987720",
+   "name": "Justin Beardsley",
+   "orcid": "0000-0003-1978-1559",
+   "prevRank": 383,
+   "pro": 84.3,
+   "vnShare": 22.1,
+   "worksWithAffil": 95,
+   "vnWorks": 21,
+   "countries": [
+    "AU:78",
+    "GB:16",
+    "US:4"
+   ],
+   "units": [
+    "Trường Đại học Y Hà Nội"
    ]
   },
   {
@@ -2486,6 +2970,24 @@
    ]
   },
   {
+   "id": "A5025016936",
+   "name": "Sergei V. Kruskop",
+   "orcid": "0000-0002-9846-0317",
+   "prevRank": 407,
+   "pro": 84.1,
+   "vnShare": 29.5,
+   "worksWithAffil": 61,
+   "vnWorks": 18,
+   "countries": [
+    "RU:61",
+    "CA:2"
+   ],
+   "units": [
+    "Trường Đại học Thủ đô Hà Nội",
+    "Joint Vietnam-Russia Tropical Science and Technology Research Center"
+   ]
+  },
+  {
    "id": "A5054608410",
    "name": "Jean-Philippe Deguine",
    "orcid": "0000-0002-3689-3707",
@@ -2555,6 +3057,24 @@
    ],
    "units": [
     "Viện Hóa học"
+   ]
+  },
+  {
+   "id": "A5081474828",
+   "name": "Linh V. Pham",
+   "orcid": "0000-0001-7107-1496",
+   "prevRank": 415,
+   "pro": 84,
+   "vnShare": 28.6,
+   "worksWithAffil": 84,
+   "vnWorks": 24,
+   "countries": [
+    "US:50",
+    "FR:9",
+    "GB:1"
+   ],
+   "units": [
+    "Trường Đại học Y Dược Hải Phòng"
    ]
   },
   {
@@ -2773,6 +3293,44 @@
    ]
   },
   {
+   "id": "A5034366374",
+   "name": "Khai Trieu Tran",
+   "orcid": "0000-0002-2923-3823",
+   "prevRank": 442,
+   "pro": 83.7,
+   "vnShare": 22,
+   "worksWithAffil": 59,
+   "vnWorks": 13,
+   "countries": [
+    "CA:42",
+    "US:4",
+    "NZ:3"
+   ],
+   "units": [
+    "Đại học Đà Nẵng",
+    "Trường Đại học Kinh tế"
+   ]
+  },
+  {
+   "id": "A5051381005",
+   "name": "Duc Dung Le",
+   "orcid": "0000-0003-1605-8496",
+   "prevRank": 443,
+   "pro": 83.7,
+   "vnShare": 28.3,
+   "worksWithAffil": 53,
+   "vnWorks": 15,
+   "countries": [
+    "JP:23",
+    "DE:14",
+    "TH:1"
+   ],
+   "units": [
+    "Đại học Kinh tế Quốc dân",
+    "Trường Đại học VinUni"
+   ]
+  },
+  {
    "id": "A5027159690",
    "name": "Rafael Felipe de Almeida",
    "orcid": "0000-0002-9562-9287",
@@ -2933,6 +3491,23 @@
    ],
    "units": [
     "Viện Sinh học"
+   ]
+  },
+  {
+   "id": "A5028070229",
+   "name": "Duc-Hiep Bach",
+   "orcid": "0000-0002-9826-3137",
+   "prevRank": 474,
+   "pro": 83.4,
+   "vnShare": 28.2,
+   "worksWithAffil": 39,
+   "vnWorks": 11,
+   "countries": [
+    "KR:24",
+    "US:5"
+   ],
+   "units": [
+    "Trường Đại học VinUni"
    ]
   },
   {
@@ -3238,6 +3813,27 @@
    ]
   },
   {
+   "id": "A5100722160",
+   "name": "Tung Thanh Pham",
+   "orcid": "0000-0002-3961-8268",
+   "prevRank": 535,
+   "pro": 82.9,
+   "vnShare": 25.9,
+   "worksWithAffil": 58,
+   "vnWorks": 15,
+   "countries": [
+    "KR:31",
+    "US:8",
+    "CA:4"
+   ],
+   "units": [
+    "Đại học Kinh tế Thành phố Hồ Chí Minh",
+    "Trường Đại học Sư phạm Kỹ thuật Vĩnh Long",
+    "Trường Đại học VinUni",
+    "Trường Đại học Kinh tế – Tài chính Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
    "id": "A5089967345",
    "name": "Manh-Huong Phan",
    "orcid": "0000-0002-6270-8990",
@@ -3253,6 +3849,23 @@
    ],
    "units": [
     "Trường Đại học VinUni"
+   ]
+  },
+  {
+   "id": "A5053382705",
+   "name": "Hoang-Long Cao",
+   "orcid": "0000-0003-2851-5527",
+   "prevRank": 537,
+   "pro": 82.8,
+   "vnShare": 23.2,
+   "worksWithAffil": 56,
+   "vnWorks": 13,
+   "countries": [
+    "BE:56",
+    "TW:1"
+   ],
+   "units": [
+    "Đại học Cần Thơ"
    ]
   },
   {
@@ -3292,6 +3905,24 @@
    ]
   },
   {
+   "id": "A5043932631",
+   "name": "Keun Ho Ryu",
+   "orcid": "0000-0003-0394-9054",
+   "prevRank": 540,
+   "pro": 82.8,
+   "vnShare": 20.6,
+   "worksWithAffil": 408,
+   "vnWorks": 84,
+   "countries": [
+    "KR:368",
+    "TH:22",
+    "JP:4"
+   ],
+   "units": [
+    "Trường Đại học Tôn Đức Thắng"
+   ]
+  },
+  {
    "id": "A5068827445",
    "name": "Anne-Laure Bañuls",
    "orcid": "0000-0002-2106-8667",
@@ -3309,6 +3940,24 @@
     "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
     "Đại học Bách khoa Hà Nội",
     "Trường Đại học Khoa học và Công nghệ Hà Nội"
+   ]
+  },
+  {
+   "id": "A5091525681",
+   "name": "Yan-Pei Cao",
+   "orcid": "0000-0002-0416-4374",
+   "prevRank": 546,
+   "pro": 82.8,
+   "vnShare": 21.5,
+   "worksWithAffil": 65,
+   "vnWorks": 14,
+   "countries": [
+    "CN:47",
+    "HK:4",
+    "US:2"
+   ],
+   "units": [
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam"
    ]
   },
   {
@@ -3524,6 +4173,25 @@
    ]
   },
   {
+   "id": "A5085740219",
+   "name": "Hien V. Nguyen",
+   "orcid": "0000-0001-7607-4944",
+   "prevRank": 598,
+   "pro": 82.4,
+   "vnShare": 21.8,
+   "worksWithAffil": 55,
+   "vnWorks": 12,
+   "countries": [
+    "US:33",
+    "KR:5",
+    "NZ:4"
+   ],
+   "units": [
+    "Trường Đại học Văn Lang",
+    "Trường Đại học Nông Lâm Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
    "id": "A5048004042",
    "name": "Mohammad Shokouhifar",
    "orcid": "0000-0001-7370-4760",
@@ -3574,6 +4242,24 @@
    ],
    "units": [
     "Trường Đại học Đông Á"
+   ]
+  },
+  {
+   "id": "A5016800044",
+   "name": "Nicolas Gratiot",
+   "orcid": "0000-0002-9053-1694",
+   "prevRank": 612,
+   "pro": 82.2,
+   "vnShare": 28.7,
+   "worksWithAffil": 115,
+   "vnWorks": 33,
+   "countries": [
+    "FR:114",
+    "CG:4",
+    "SN:3"
+   ],
+   "units": [
+    "Trường Đại học Bách khoa (ĐHQG-HCM)"
    ]
   },
   {
@@ -3687,6 +4373,25 @@
    ],
    "units": [
     "Đại học Công nghiệp Hà Nội"
+   ]
+  },
+  {
+   "id": "A5046932726",
+   "name": "Trung Thành Nguyễn",
+   "orcid": "0000-0002-3268-1790",
+   "prevRank": 635,
+   "pro": 82.1,
+   "vnShare": 20.2,
+   "worksWithAffil": 129,
+   "vnWorks": 26,
+   "countries": [
+    "GB:74",
+    "CA:12",
+    "US:9"
+   ],
+   "units": [
+    "Trường Đại học Giao thông vận tải Thành phố Hồ Chí Minh",
+    "Trường Đại học Văn Lang"
    ]
   },
   {
@@ -3814,6 +4519,44 @@
    ]
   },
   {
+   "id": "A5057339014",
+   "name": "Thanh Tuan Nguyen",
+   "orcid": "0000-0002-4014-6923",
+   "prevRank": 651,
+   "pro": 82,
+   "vnShare": 22.6,
+   "worksWithAffil": 106,
+   "vnWorks": 24,
+   "countries": [
+    "KR:69",
+    "RU:4",
+    "US:4"
+   ],
+   "units": [
+    "Đại học Huế",
+    "Trường Đại Học Kinh Tế, Đại Học Huế",
+    "Trường Sư phạm",
+    "Trường Cao đẳng Cộng đồng Sóc Trăng"
+   ]
+  },
+  {
+   "id": "A5058923248",
+   "name": "Alexander Y. Kruger",
+   "orcid": "0000-0002-7861-7380",
+   "prevRank": 653,
+   "pro": 81.9,
+   "vnShare": 25.9,
+   "worksWithAffil": 58,
+   "vnWorks": 15,
+   "countries": [
+    "AU:42",
+    "ES:3"
+   ],
+   "units": [
+    "Trường Đại học Tôn Đức Thắng"
+   ]
+  },
+  {
    "id": "A5042812079",
    "name": "Myriam Adam",
    "orcid": "0000-0002-8873-6762",
@@ -3847,6 +4590,22 @@
    ],
    "units": [
     "Joint Vietnam-Russia Tropical Science and Technology Research Center"
+   ]
+  },
+  {
+   "id": "A5082804219",
+   "name": "Thong Nguyen-Huy",
+   "orcid": "0000-0002-2201-6666",
+   "prevRank": 657,
+   "pro": 81.9,
+   "vnShare": 21.3,
+   "worksWithAffil": 75,
+   "vnWorks": 16,
+   "countries": [
+    "AU:75"
+   ],
+   "units": [
+    "Trường Đại học Thành Đô"
    ]
   },
   {
@@ -3938,6 +4697,24 @@
    ]
   },
   {
+   "id": "A5053404847",
+   "name": "Thu Anh Nguyen",
+   "orcid": "0000-0002-2089-2902",
+   "prevRank": 672,
+   "pro": 81.8,
+   "vnShare": 22.2,
+   "worksWithAffil": 135,
+   "vnWorks": 30,
+   "countries": [
+    "AU:100",
+    "US:10",
+    "FR:3"
+   ],
+   "units": [
+    "Đại học Cần Thơ"
+   ]
+  },
+  {
    "id": "A5017618987",
    "name": "Mai The Vu",
    "orcid": "0000-0003-1645-0957",
@@ -3951,6 +4728,22 @@
    ],
    "units": [
     "Trường Đại học Tôn Đức Thắng"
+   ]
+  },
+  {
+   "id": "A5048107094",
+   "name": "Vy Tuong Nguyen",
+   "orcid": "0000-0002-7130-6379",
+   "prevRank": 674,
+   "pro": 81.8,
+   "vnShare": 25,
+   "worksWithAffil": 56,
+   "vnWorks": 14,
+   "countries": [
+    "US:42"
+   ],
+   "units": [
+    "Đại học Y Dược Thành phố Hồ Chí Minh"
    ]
   },
   {
@@ -4382,6 +5175,24 @@
    ]
   },
   {
+   "id": "A5100781656",
+   "name": "Thanh Nguyen",
+   "orcid": "0000-0001-8378-555X",
+   "prevRank": 756,
+   "pro": 81.2,
+   "vnShare": 25.9,
+   "worksWithAffil": 81,
+   "vnWorks": 21,
+   "countries": [
+    "SG:19",
+    "CA:13",
+    "US:13"
+   ],
+   "units": [
+    "Đại học Quốc gia TP. Hồ Chí Minh"
+   ]
+  },
+  {
    "id": "A5081283446",
    "name": "Kelly Johana Dussan",
    "orcid": "0000-0003-1810-5313",
@@ -4414,6 +5225,24 @@
    ],
    "units": [
     "Joint Vietnam-Russia Tropical Science and Technology Research Center"
+   ]
+  },
+  {
+   "id": "A5014417576",
+   "name": "Sumaiya Zainal Abidin",
+   "orcid": "0000-0002-1386-1761",
+   "prevRank": 758,
+   "pro": 81.1,
+   "vnShare": 28.4,
+   "worksWithAffil": 95,
+   "vnWorks": 27,
+   "countries": [
+    "MY:95",
+    "GB:5",
+    "ID:1"
+   ],
+   "units": [
+    "Trường Đại học Công nghiệp Thành phố Hồ Chí Minh"
    ]
   },
   {
@@ -4489,6 +5318,24 @@
    ]
   },
   {
+   "id": "A5046665214",
+   "name": "Vu Kim Tuan",
+   "orcid": "0000-0002-0376-0238",
+   "prevRank": 779,
+   "pro": 81,
+   "vnShare": 25,
+   "worksWithAffil": 140,
+   "vnWorks": 35,
+   "countries": [
+    "US:67",
+    "KW:34",
+    "BY:5"
+   ],
+   "units": [
+    "Trường Đại học Điện lực"
+   ]
+  },
+  {
    "id": "A5038366927",
    "name": "Hung Cao",
    "orcid": "0000-0003-4197-7208",
@@ -4524,6 +5371,25 @@
    ],
    "units": [
     "Trường Đại học Việt Nhật (ĐHQGHN)"
+   ]
+  },
+  {
+   "id": "A5024649943",
+   "name": "Vanliem Nguyen",
+   "orcid": "0000-0001-8772-1086",
+   "prevRank": 796,
+   "pro": 80.9,
+   "vnShare": 28.7,
+   "worksWithAffil": 101,
+   "vnWorks": 29,
+   "countries": [
+    "CN:83",
+    "CA:2",
+    "RU:1"
+   ],
+   "units": [
+    "Trường Đại học Kỹ thuật Công nghiệp",
+    "Trường Đại học Đại Nam"
    ]
   },
   {
@@ -4670,6 +5536,24 @@
    ]
   },
   {
+   "id": "A5041560102",
+   "name": "Eibun Senaha",
+   "orcid": "0000-0002-4647-4311",
+   "prevRank": 836,
+   "pro": 80.5,
+   "vnShare": 26.8,
+   "worksWithAffil": 56,
+   "vnWorks": 15,
+   "countries": [
+    "KR:17",
+    "TW:17",
+    "JP:13"
+   ],
+   "units": [
+    "Trường Đại học Văn Lang"
+   ]
+  },
+  {
    "id": "A5047517734",
    "name": "Ngoc Thanh Nguyên",
    "orcid": "0000-0002-3247-2948",
@@ -4741,6 +5625,24 @@
    ],
    "units": [
     "Đại học Cần Thơ"
+   ]
+  },
+  {
+   "id": "A5025845765",
+   "name": "Duc Hau Nguyen",
+   "orcid": "0000-0002-5311-1973",
+   "prevRank": 861,
+   "pro": 80.4,
+   "vnShare": 26.3,
+   "worksWithAffil": 19,
+   "vnWorks": 5,
+   "countries": [
+    "NZ:8",
+    "FR:6",
+    "AU:1"
+   ],
+   "units": [
+    "Trường Đại học Thủy lợi"
    ]
   },
   {
@@ -4832,6 +5734,26 @@
    ]
   },
   {
+   "id": "A5089156282",
+   "name": "Diem Thi Nguyen",
+   "orcid": "0000-0002-9680-5772",
+   "prevRank": 888,
+   "pro": 80.2,
+   "vnShare": 20.3,
+   "worksWithAffil": 59,
+   "vnWorks": 12,
+   "countries": [
+    "SE:44",
+    "AU:2",
+    "US:1"
+   ],
+   "units": [
+    "Trường Đại Học Công Nghệ Thông Tin - Đại Học Quốc Gia TP. Hồ Chí Minh",
+    "Đại học Quốc gia TP. Hồ Chí Minh",
+    "Trường Đại học Y Dược Cần Thơ"
+   ]
+  },
+  {
    "id": "A5057673381",
    "name": "Van Thinh Nguyen",
    "orcid": "0000-0002-7408-2585",
@@ -4886,6 +5808,22 @@
    ]
   },
   {
+   "id": "A5067204929",
+   "name": "Julien Némery",
+   "orcid": "0000-0001-9826-7739",
+   "prevRank": 906,
+   "pro": 80.1,
+   "vnShare": 23.5,
+   "worksWithAffil": 85,
+   "vnWorks": 20,
+   "countries": [
+    "FR:83"
+   ],
+   "units": [
+    "Trường Đại học Bách khoa (ĐHQG-HCM)"
+   ]
+  },
+  {
    "id": "A5047941867",
    "name": "Parinya Pawangkhanant",
    "orcid": "0000-0002-0947-5729",
@@ -4922,6 +5860,22 @@
    ]
   },
   {
+   "id": "A5086855675",
+   "name": "Ngoc Hieu Dinh",
+   "orcid": "0000-0002-8444-0761",
+   "prevRank": 910,
+   "pro": 80.1,
+   "vnShare": 28.6,
+   "worksWithAffil": 49,
+   "vnWorks": 14,
+   "countries": [
+    "KR:38"
+   ],
+   "units": [
+    "Đại học Đà Nẵng"
+   ]
+  },
+  {
    "id": "A5047078123",
    "name": "Julian Ming-Sung Cheng",
    "orcid": "0000-0002-2384-1457",
@@ -4936,6 +5890,23 @@
    ],
    "units": [
     "Đại học Kinh tế Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
+   "id": "A5029784726",
+   "name": "Mattias Larsson",
+   "orcid": "0000-0002-0514-7445",
+   "prevRank": 926,
+   "pro": 80,
+   "vnShare": 29.3,
+   "worksWithAffil": 82,
+   "vnWorks": 24,
+   "countries": [
+    "SE:76",
+    "GB:3"
+   ],
+   "units": [
+    "Trường Đại học Y Hà Nội"
    ]
   },
   {
@@ -4975,6 +5946,43 @@
     "Trường Đại học Giao thông vận tải Thành phố Hồ Chí Minh",
     "Trường Đại học Thành Đô",
     "Trường Đại học Nguyễn Tất Thành"
+   ]
+  },
+  {
+   "id": "A5050348381",
+   "name": "N. Vu-Bac",
+   "orcid": "0000-0002-4579-4946",
+   "prevRank": 938,
+   "pro": 79.9,
+   "vnShare": 21.4,
+   "worksWithAffil": 28,
+   "vnWorks": 6,
+   "countries": [
+    "DE:22",
+    "CN:3",
+    "US:1"
+   ],
+   "units": [
+    "Đại học Quốc gia TP. Hồ Chí Minh",
+    "Trường Đại học Bách khoa (ĐHQG-HCM)"
+   ]
+  },
+  {
+   "id": "A5112988468",
+   "name": "Tanja Tran",
+   "orcid": "0009-0004-6818-8537",
+   "prevRank": 941,
+   "pro": 79.9,
+   "vnShare": 20,
+   "worksWithAffil": 15,
+   "vnWorks": 3,
+   "countries": [
+    "BE:7",
+    "CA:5",
+    "CZ:1"
+   ],
+   "units": [
+    "Đại học Y Dược Thành phố Hồ Chí Minh"
    ]
   },
   {
@@ -5032,6 +6040,24 @@
    ]
   },
   {
+   "id": "A5054062927",
+   "name": "Duc Duy Nguyen",
+   "orcid": "0000-0001-6660-5545",
+   "prevRank": 949,
+   "pro": 79.9,
+   "vnShare": 23.5,
+   "worksWithAffil": 51,
+   "vnWorks": 12,
+   "countries": [
+    "GB:38",
+    "AU:3",
+    "IT:1"
+   ],
+   "units": [
+    "Trường Đại học Bách khoa (ĐHQG-HCM)"
+   ]
+  },
+  {
    "id": "A5078594877",
    "name": "Hendryk Czech",
    "orcid": "0000-0001-8377-4252",
@@ -5047,6 +6073,24 @@
    ],
    "units": [
     "Viện Hóa học"
+   ]
+  },
+  {
+   "id": "A5046626888",
+   "name": "A Sarah Walker",
+   "orcid": "0000-0003-0421-9264",
+   "prevRank": 952,
+   "pro": 79.9,
+   "vnShare": 24.5,
+   "worksWithAffil": 253,
+   "vnWorks": 62,
+   "countries": [
+    "GB:235",
+    "US:6",
+    "ZA:2"
+   ],
+   "units": [
+    "Oxford University Clinical Research Unit"
    ]
   },
   {
@@ -5209,6 +6253,24 @@
    ]
   },
   {
+   "id": "A5012147485",
+   "name": "Ha-Thanh Nguyen",
+   "orcid": "0000-0003-2794-7010",
+   "prevRank": 985,
+   "pro": 79.6,
+   "vnShare": 29.7,
+   "worksWithAffil": 101,
+   "vnWorks": 30,
+   "countries": [
+    "JP:75",
+    "FR:13",
+    "KR:3"
+   ],
+   "units": [
+    "Trường Đại học Công nghệ (ĐHQGHN)"
+   ]
+  },
+  {
    "id": "A5019731270",
    "name": "Van-Tu Nguyen",
    "orcid": "0000-0002-2229-8683",
@@ -5244,6 +6306,25 @@
     "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
     "Trường Đại học FPT",
     "Trường Đại học Khoa học và Công nghệ Hà Nội"
+   ]
+  },
+  {
+   "id": "A5024634557",
+   "name": "Duc Thanh Nguyen",
+   "orcid": "0000-0002-2285-2066",
+   "prevRank": 991,
+   "pro": 79.6,
+   "vnShare": 20.9,
+   "worksWithAffil": 91,
+   "vnWorks": 19,
+   "countries": [
+    "AU:62",
+    "US:4",
+    "SG:4"
+   ],
+   "units": [
+    "Học viện Y – Dược học cổ truyền Việt Nam",
+    "Trường Đại học Tài nguyên và Môi trường Thành phố Hồ Chí Minh"
    ]
   },
   {
@@ -5665,6 +6746,24 @@
    ]
   },
   {
+   "id": "A5051545980",
+   "name": "Tuan V. Nguyen",
+   "orcid": "0000-0002-9040-1056",
+   "prevRank": 1109,
+   "pro": 78.6,
+   "vnShare": 25.6,
+   "worksWithAffil": 39,
+   "vnWorks": 10,
+   "countries": [
+    "KR:31",
+    "JP:1"
+   ],
+   "units": [
+    "Trường Đại học Y Dược Cần Thơ",
+    "Trường Đại học Y Hà Nội"
+   ]
+  },
+  {
    "id": "A5011934377",
    "name": "Yuan-Chen Guo",
    "orcid": "0000-0001-6164-8343",
@@ -5983,6 +7082,23 @@
    ]
   },
   {
+   "id": "A5056113489",
+   "name": "Quang Dai La",
+   "orcid": "0009-0002-0459-3192",
+   "prevRank": 1186,
+   "pro": 78.2,
+   "vnShare": 21.1,
+   "worksWithAffil": 38,
+   "vnWorks": 8,
+   "countries": [
+    "US:31",
+    "AU:3"
+   ],
+   "units": [
+    "Trường Đại học Y tế Công cộng"
+   ]
+  },
+  {
    "id": "A5025615508",
    "name": "Airton Germano Bispo Junior",
    "orcid": "0000-0002-1501-8815",
@@ -6001,6 +7117,60 @@
    ]
   },
   {
+   "id": "A5001620515",
+   "name": "Tho Dinh Tran",
+   "orcid": "0000-0002-5720-6275",
+   "prevRank": 1196,
+   "pro": 78.2,
+   "vnShare": 23.8,
+   "worksWithAffil": 21,
+   "vnWorks": 5,
+   "countries": [
+    "US:16"
+   ],
+   "units": [
+    "Trường Đại học FPT"
+   ]
+  },
+  {
+   "id": "A5011086107",
+   "name": "Hong Tang",
+   "orcid": "0000-0003-2410-9177",
+   "prevRank": 1197,
+   "pro": 78.2,
+   "vnShare": 25.3,
+   "worksWithAffil": 241,
+   "vnWorks": 61,
+   "countries": [
+    "CN:173",
+    "US:7",
+    "TW:2"
+   ],
+   "units": [
+    "Trường Đại học Y khoa Phạm Ngọc Thạch"
+   ]
+  },
+  {
+   "id": "A5081826794",
+   "name": "Truong Thao Nguyen",
+   "orcid": "0000-0003-3641-374X",
+   "prevRank": 1199,
+   "pro": 78.2,
+   "vnShare": 23.9,
+   "worksWithAffil": 71,
+   "vnWorks": 17,
+   "countries": [
+    "JP:38",
+    "US:19",
+    "FR:5"
+   ],
+   "units": [
+    "Đại học Bách khoa Hà Nội",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội",
+    "Trường Đại học Bách khoa (ĐHQG-HCM)"
+   ]
+  },
+  {
    "id": "A5009971885",
    "name": "Lottie Brown",
    "orcid": "0000-0001-9896-8682",
@@ -6015,6 +7185,22 @@
    ],
    "units": [
     "Trường Đại học Y khoa Phạm Ngọc Thạch"
+   ]
+  },
+  {
+   "id": "A5021020330",
+   "name": "Nguyen Tran Nam Tien",
+   "orcid": "0000-0002-0638-2172",
+   "prevRank": 1204,
+   "pro": 78.1,
+   "vnShare": 22.9,
+   "worksWithAffil": 35,
+   "vnWorks": 8,
+   "countries": [
+    "KR:27"
+   ],
+   "units": [
+    "Trường Đại học Dược Hà Nội"
    ]
   },
   {
@@ -6073,6 +7259,24 @@
    ]
   },
   {
+   "id": "A5082974488",
+   "name": "Thanh Thien Le",
+   "orcid": "0000-0002-7756-9479",
+   "prevRank": 1212,
+   "pro": 78.1,
+   "vnShare": 29.5,
+   "worksWithAffil": 44,
+   "vnWorks": 13,
+   "countries": [
+    "US:28",
+    "GB:2",
+    "DE:1"
+   ],
+   "units": [
+    "Trường Đại học VinUni"
+   ]
+  },
+  {
    "id": "A5101673912",
    "name": "Trần Minh Đức",
    "orcid": "0000-0002-9188-7553",
@@ -6127,6 +7331,22 @@
    ]
   },
   {
+   "id": "A5067119450",
+   "name": "Tri Nguyen Dang",
+   "orcid": "0000-0003-0188-1535",
+   "prevRank": 1224,
+   "pro": 78,
+   "vnShare": 21.7,
+   "worksWithAffil": 23,
+   "vnWorks": 5,
+   "countries": [
+    "KR:18"
+   ],
+   "units": [
+    "Trường Đại học Gia Định"
+   ]
+  },
+  {
    "id": "A5016153733",
    "name": "Martin Kreuzer",
    "orcid": "0000-0002-4732-2627",
@@ -6143,6 +7363,41 @@
    "units": [
     "Trường Đại học Sư phạm",
     "Đại học Huế"
+   ]
+  },
+  {
+   "id": "A5025137507",
+   "name": "Thanh Trung Huynh",
+   "orcid": "0000-0003-2027-5362",
+   "prevRank": 1233,
+   "pro": 78,
+   "vnShare": 22.4,
+   "worksWithAffil": 49,
+   "vnWorks": 11,
+   "countries": [
+    "CH:27",
+    "AU:11",
+    "FR:1"
+   ],
+   "units": [
+    "Trường Đại học VinUni"
+   ]
+  },
+  {
+   "id": "A5006740627",
+   "name": "Lei Lü",
+   "orcid": "0000-0002-0788-2689",
+   "prevRank": 1236,
+   "pro": 78,
+   "vnShare": 21.3,
+   "worksWithAffil": 94,
+   "vnWorks": 20,
+   "countries": [
+    "CN:73",
+    "SG:1"
+   ],
+   "units": [
+    "Học viện Nông nghiệp Việt Nam"
    ]
   },
   {
@@ -6179,6 +7434,26 @@
    ],
    "units": [
     "Viện Hóa học"
+   ]
+  },
+  {
+   "id": "A5100642176",
+   "name": "Thang Nguyen",
+   "orcid": "0000-0001-7028-3817",
+   "prevRank": 1242,
+   "pro": 78,
+   "vnShare": 28.4,
+   "worksWithAffil": 81,
+   "vnWorks": 23,
+   "countries": [
+    "JP:43",
+    "AU:13",
+    "AT:2"
+   ],
+   "units": [
+    "Đại học Thái Nguyên",
+    "Trường Đại học Y Dược Cần Thơ",
+    "Học viện Công nghệ Bưu chính Viễn thông"
    ]
   },
   {
@@ -6271,6 +7546,22 @@
    ]
   },
   {
+   "id": "A5023710654",
+   "name": "Long Phi Hoang",
+   "orcid": "0000-0003-4503-1305",
+   "prevRank": 1268,
+   "pro": 77.8,
+   "vnShare": 26.7,
+   "worksWithAffil": 30,
+   "vnWorks": 8,
+   "countries": [
+    "NL:29"
+   ],
+   "units": [
+    "Trường Đại học Quốc tế Miền Đông"
+   ]
+  },
+  {
    "id": "A5061368980",
    "name": "Minh Toan Chau",
    "orcid": "0000-0003-2306-3437",
@@ -6336,6 +7627,25 @@
    ],
    "units": [
     "Trường Đại học VinUni"
+   ]
+  },
+  {
+   "id": "A5024946787",
+   "name": "Tuấn Anh Nguyễn",
+   "orcid": "0000-0002-9123-3584",
+   "prevRank": 1291,
+   "pro": 77.7,
+   "vnShare": 24.1,
+   "worksWithAffil": 116,
+   "vnWorks": 28,
+   "countries": [
+    "KR:81",
+    "US:4",
+    "CA:1"
+   ],
+   "units": [
+    "Trường Đại học Công Thương Thành phố Hồ Chí Minh",
+    "Trường Đại học Giao thông vận tải Thành phố Hồ Chí Minh"
    ]
   },
   {
@@ -6518,6 +7828,22 @@
    ]
   },
   {
+   "id": "A5006237142",
+   "name": "Hoang-Long Dang",
+   "orcid": "0000-0002-1957-7307",
+   "prevRank": 1319,
+   "pro": 77.6,
+   "vnShare": 20,
+   "worksWithAffil": 25,
+   "vnWorks": 5,
+   "countries": [
+    "KR:20"
+   ],
+   "units": [
+    "Trường Đại học Công Thương Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
    "id": "A5052504871",
    "name": "Ori Amir",
    "orcid": "0000-0002-1467-0895",
@@ -6658,6 +7984,25 @@
    ]
   },
   {
+   "id": "A5107071130",
+   "name": "Phu Nguyen-Van",
+   "orcid": "0000-0003-1330-9851",
+   "prevRank": 1355,
+   "pro": 77.4,
+   "vnShare": 26.3,
+   "worksWithAffil": 80,
+   "vnWorks": 21,
+   "countries": [
+    "FR:79",
+    "US:2",
+    "JP:1"
+   ],
+   "units": [
+    "Đại học Quốc gia Hà Nội",
+    "Trường Đại học Quản lý và Công nghệ Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
    "id": "A5013413938",
    "name": "Gangui Yan",
    "orcid": "0000-0001-9524-9906",
@@ -6709,6 +8054,23 @@
    ]
   },
   {
+   "id": "A5076650478",
+   "name": "Thai-Hoang Pham",
+   "orcid": "0000-0002-1733-6155",
+   "prevRank": 1384,
+   "pro": 77.2,
+   "vnShare": 20,
+   "worksWithAffil": 35,
+   "vnWorks": 7,
+   "countries": [
+    "US:27",
+    "FR:1"
+   ],
+   "units": [
+    "Trường Đại học FPT"
+   ]
+  },
+  {
    "id": "A5040814961",
    "name": "Kris Vandekerkhove",
    "orcid": "0000-0003-1954-692X",
@@ -6724,6 +8086,25 @@
    ],
    "units": [
     "Forest Industry Research Institute"
+   ]
+  },
+  {
+   "id": "A5007373379",
+   "name": "Nabendu Pal",
+   "orcid": "0000-0001-6243-4988",
+   "prevRank": 1400,
+   "pro": 77,
+   "vnShare": 20.3,
+   "worksWithAffil": 64,
+   "vnWorks": 13,
+   "countries": [
+    "US:56",
+    "TW:3",
+    "IN:1"
+   ],
+   "units": [
+    "Trường Đại học Tôn Đức Thắng",
+    "Viện Nghiên cứu cao cấp về Toán"
    ]
   },
   {
@@ -6809,6 +8190,43 @@
    ],
    "units": [
     "Viện Hàn lâm Khoa học và Công nghệ Việt Nam"
+   ]
+  },
+  {
+   "id": "A5012246127",
+   "name": "Huy-Binh Nguyen",
+   "orcid": "0000-0002-0842-1796",
+   "prevRank": 1432,
+   "pro": 76.8,
+   "vnShare": 23.1,
+   "worksWithAffil": 26,
+   "vnWorks": 6,
+   "countries": [
+    "US:13",
+    "CA:6",
+    "IT:1"
+   ],
+   "units": [
+    "Trường Đại học Nam Cần Thơ",
+    "Trường Đại học Tây Đô"
+   ]
+  },
+  {
+   "id": "A5103371038",
+   "name": "Hung T. Nguyen",
+   "orcid": "0009-0003-4838-7734",
+   "prevRank": 1441,
+   "pro": 76.8,
+   "vnShare": 27.3,
+   "worksWithAffil": 33,
+   "vnWorks": 9,
+   "countries": [
+    "US:23",
+    "CA:1"
+   ],
+   "units": [
+    "Trường Đại học Mỏ – Địa chất",
+    "Trường Đại học Thủ đô Hà Nội"
    ]
   },
   {
@@ -7081,6 +8499,43 @@
    ]
   },
   {
+   "id": "A5100612147",
+   "name": "Thu-Ha Nguyen",
+   "orcid": "0000-0002-5253-6865",
+   "prevRank": 1514,
+   "pro": 76.4,
+   "vnShare": 23.2,
+   "worksWithAffil": 95,
+   "vnWorks": 22,
+   "countries": [
+    "AT:63",
+    "KR:5",
+    "US:5"
+   ],
+   "units": [
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+    "Học viện Khoa học và Công nghệ",
+    "Trường Đại học Văn Lang",
+    "Institute of Advanced Technology"
+   ]
+  },
+  {
+   "id": "A5078787020",
+   "name": "Thanh-Hoang Nguyen-Vo",
+   "orcid": "0000-0003-0006-5245",
+   "prevRank": 1515,
+   "pro": 76.4,
+   "vnShare": 26.5,
+   "worksWithAffil": 34,
+   "vnWorks": 9,
+   "countries": [
+    "NZ:27"
+   ],
+   "units": [
+    "Trường Đại học Mở Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
    "id": "A5074413339",
    "name": "B.T. Phung",
    "orcid": "0000-0002-4079-5835",
@@ -7260,6 +8715,23 @@
    ]
   },
   {
+   "id": "A5101443068",
+   "name": "Dương Nguyễn",
+   "orcid": "0000-0002-8238-783X",
+   "prevRank": 1586,
+   "pro": 75.9,
+   "vnShare": 23.7,
+   "worksWithAffil": 38,
+   "vnWorks": 9,
+   "countries": [
+    "US:20",
+    "CA:9"
+   ],
+   "units": [
+    "Đại học Y Dược Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
    "id": "A5100661342",
    "name": "Nga Nguyen",
    "orcid": "0000-0002-4818-0341",
@@ -7309,6 +8781,24 @@
    ],
    "units": [
     "Đại học Y Dược Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
+   "id": "A5047288191",
+   "name": "Thi Huyen Tram Nguyen",
+   "orcid": "0000-0001-8195-716X",
+   "prevRank": 1610,
+   "pro": 75.8,
+   "vnShare": 20.6,
+   "worksWithAffil": 34,
+   "vnWorks": 7,
+   "countries": [
+    "FR:16",
+    "DE:9",
+    "JP:2"
+   ],
+   "units": [
+    "Trường Đại học Điều dưỡng Nam Định"
    ]
   },
   {
@@ -7381,6 +8871,22 @@
    "units": [
     "Đại học Bách khoa Hà Nội",
     "Trường Đại học Khoa học và Công nghệ Hà Nội"
+   ]
+  },
+  {
+   "id": "A5065962329",
+   "name": "Trong-Nhat Phan",
+   "orcid": "0000-0002-4696-7490",
+   "prevRank": 1643,
+   "pro": 75.6,
+   "vnShare": 23.8,
+   "worksWithAffil": 21,
+   "vnWorks": 5,
+   "countries": [
+    "KR:19"
+   ],
+   "units": [
+    "Trường Đại học Văn Lang"
    ]
   },
   {
@@ -7685,6 +9191,24 @@
    ]
   },
   {
+   "id": "A5107446421",
+   "name": "Nguyen Nguyen",
+   "orcid": "0000-0003-1553-3224",
+   "prevRank": 1723,
+   "pro": 75.1,
+   "vnShare": 22.2,
+   "worksWithAffil": 45,
+   "vnWorks": 10,
+   "countries": [
+    "US:28",
+    "CA:5",
+    "KR:1"
+   ],
+   "units": [
+    "Trường Đại học Tôn Đức Thắng"
+   ]
+  },
+  {
    "id": "A5112434043",
    "name": "Thi Thuy An Nguyen",
    "orcid": "0009-0008-1322-136X",
@@ -7773,6 +9297,24 @@
    ]
   },
   {
+   "id": "A5086915869",
+   "name": "Tùng Nguyen-Dang",
+   "orcid": "0000-0003-0275-6517",
+   "prevRank": 1765,
+   "pro": 74.9,
+   "vnShare": 24.5,
+   "worksWithAffil": 49,
+   "vnWorks": 12,
+   "countries": [
+    "CH:27",
+    "US:10",
+    "CN:1"
+   ],
+   "units": [
+    "Trường Đại học VinUni"
+   ]
+  },
+  {
    "id": "A5065269689",
    "name": "Duy Duan Nguyen",
    "orcid": "0000-0002-4773-1471",
@@ -7789,6 +9331,24 @@
    "units": [
     "Đại học Huế",
     "Trường Đại học Y Dược"
+   ]
+  },
+  {
+   "id": "A5102366992",
+   "name": "Bình Thị Thanh Nguyễn",
+   "orcid": "0009-0007-1516-1674",
+   "prevRank": 1767,
+   "pro": 74.9,
+   "vnShare": 21.9,
+   "worksWithAffil": 32,
+   "vnWorks": 7,
+   "countries": [
+    "SG:18",
+    "JP:5",
+    "GB:1"
+   ],
+   "units": [
+    "Trường Đại học Y Dược Hải Phòng"
    ]
   },
   {
@@ -8000,6 +9560,23 @@
    ],
    "units": [
     "Trường Đại học Duy Tân"
+   ]
+  },
+  {
+   "id": "A5111562885",
+   "name": "Tamikazu Kume",
+   "orcid": null,
+   "prevRank": 1845,
+   "pro": 74.5,
+   "vnShare": 20,
+   "worksWithAffil": 55,
+   "vnWorks": 11,
+   "countries": [
+    "JP:45",
+    "BD:1"
+   ],
+   "units": [
+    "Trường Đại học Đà Lạt"
    ]
   },
   {
@@ -8245,6 +9822,23 @@
    ]
   },
   {
+   "id": "A5009929247",
+   "name": "Son Truong Pham",
+   "orcid": "0000-0002-4206-1747",
+   "prevRank": 1937,
+   "pro": 74,
+   "vnShare": 25.8,
+   "worksWithAffil": 31,
+   "vnWorks": 8,
+   "countries": [
+    "AU:19",
+    "US:7"
+   ],
+   "units": [
+    "Trường Đại học Y Dược Thái Bình"
+   ]
+  },
+  {
    "id": "A5037522070",
    "name": "An Vanden Broeck",
    "orcid": "0000-0001-8773-7280",
@@ -8293,6 +9887,23 @@
    ],
    "units": [
     "Oxford University Clinical Research Unit"
+   ]
+  },
+  {
+   "id": "A5007017513",
+   "name": "Minh Xuan Tran",
+   "orcid": "0000-0003-1007-7805",
+   "prevRank": 1944,
+   "pro": 73.9,
+   "vnShare": 24,
+   "worksWithAffil": 25,
+   "vnWorks": 6,
+   "countries": [
+    "KR:21",
+    "US:1"
+   ],
+   "units": [
+    "Trường Đại học Văn Lang"
    ]
   },
   {
@@ -8397,6 +10008,26 @@
    ],
    "units": [
     "Trường Đại học Duy Tân"
+   ]
+  },
+  {
+   "id": "A5028762623",
+   "name": "Thi Anh Thu Tran",
+   "orcid": "0000-0002-3946-2187",
+   "prevRank": 1983,
+   "pro": 73.7,
+   "vnShare": 20.6,
+   "worksWithAffil": 34,
+   "vnWorks": 7,
+   "countries": [
+    "CN:9",
+    "SE:7",
+    "US:6"
+   ],
+   "units": [
+    "Đại học Huế",
+    "Trường Đại học Nông Lâm",
+    "Trường Đại học Nông Lâm Thành phố Hồ Chí Minh"
    ]
   },
   {
@@ -8568,6 +10199,23 @@
    ]
   },
   {
+   "id": "A5040156329",
+   "name": "Van Luan Nguyen",
+   "orcid": "0000-0002-0995-4092",
+   "prevRank": 2089,
+   "pro": 73.3,
+   "vnShare": 25.8,
+   "worksWithAffil": 31,
+   "vnWorks": 8,
+   "countries": [
+    "KR:23"
+   ],
+   "units": [
+    "Trường Đại học Công nghệ (ĐHQGHN)",
+    "Trường Đại học Kỹ thuật Công nghiệp"
+   ]
+  },
+  {
    "id": "A5032951039",
    "name": "Hung Viet Nguyen",
    "orcid": "0000-0001-6349-1044",
@@ -8657,6 +10305,25 @@
    ]
   },
   {
+   "id": "A5103934844",
+   "name": "Thi Tuyet Hanh Nguyen",
+   "orcid": "0009-0005-8690-6245",
+   "prevRank": 2150,
+   "pro": 72.9,
+   "vnShare": 25,
+   "worksWithAffil": 32,
+   "vnWorks": 8,
+   "countries": [
+    "FR:23",
+    "AU:4",
+    "KR:1"
+   ],
+   "units": [
+    "Trường Đại học Y Dược",
+    "Học viện Quản lý giáo dục"
+   ]
+  },
+  {
    "id": "A5101966175",
    "name": "Thuan Dinh Nguyen",
    "orcid": "0000-0001-5237-6219",
@@ -8707,6 +10374,24 @@
    ],
    "units": [
     "Trường Đại học Việt Đức"
+   ]
+  },
+  {
+   "id": "A5065226956",
+   "name": "Đạt Tiến Huỳnh",
+   "orcid": "0000-0002-6349-2597",
+   "prevRank": 2185,
+   "pro": 72.7,
+   "vnShare": 22.7,
+   "worksWithAffil": 44,
+   "vnWorks": 10,
+   "countries": [
+    "US:25",
+    "AU:8",
+    "FI:1"
+   ],
+   "units": [
+    "Trường Đại học Nông Lâm Thành phố Hồ Chí Minh"
    ]
   },
   {
@@ -8782,6 +10467,24 @@
    ]
   },
   {
+   "id": "A5044152577",
+   "name": "Thai Binh Nguyen",
+   "orcid": "0009-0008-8100-6338",
+   "prevRank": 2213,
+   "pro": 72.5,
+   "vnShare": 25.4,
+   "worksWithAffil": 63,
+   "vnWorks": 16,
+   "countries": [
+    "DE:15",
+    "FR:12",
+    "US:7"
+   ],
+   "units": [
+    "Trường Đại học Tôn Đức Thắng"
+   ]
+  },
+  {
    "id": "A5020755160",
    "name": "Anh Q. Vo",
    "orcid": "0009-0003-9402-2912",
@@ -8795,6 +10498,26 @@
    ],
    "units": [
     "Trường Đại học Dược Hà Nội"
+   ]
+  },
+  {
+   "id": "A5001704414",
+   "name": "Ngoc-Trung Nguyen",
+   "orcid": "0000-0002-3770-7961",
+   "prevRank": 2224,
+   "pro": 72.5,
+   "vnShare": 25.4,
+   "worksWithAffil": 59,
+   "vnWorks": 15,
+   "countries": [
+    "KR:24",
+    "US:16",
+    "IT:2"
+   ],
+   "units": [
+    "Đại học Quốc gia Hà Nội",
+    "Trường Đại học Y Dược Thái Bình",
+    "Trường Đại học Y Dược (ĐHQGHN)"
    ]
   },
   {
@@ -8975,6 +10698,23 @@
    ]
   },
   {
+   "id": "A5084960220",
+   "name": "Nguyen Nguyen",
+   "orcid": "0000-0003-1878-394X",
+   "prevRank": 2319,
+   "pro": 72.1,
+   "vnShare": 23.3,
+   "worksWithAffil": 43,
+   "vnWorks": 10,
+   "countries": [
+    "US:26",
+    "KR:7"
+   ],
+   "units": [
+    "Trường Đại học Y Dược"
+   ]
+  },
+  {
    "id": "A5073763370",
    "name": "Hung Nguyen",
    "orcid": "0000-0003-1982-6825",
@@ -9116,6 +10856,58 @@
    ]
   },
   {
+   "id": "A5076730030",
+   "name": "Hirobumi Mineo",
+   "orcid": "0000-0002-4835-6634",
+   "prevRank": 2362,
+   "pro": 71.9,
+   "vnShare": 25,
+   "worksWithAffil": 72,
+   "vnWorks": 18,
+   "countries": [
+    "TW:45",
+    "JP:9",
+    "CA:1"
+   ],
+   "units": [
+    "Trường Đại học Văn Lang"
+   ]
+  },
+  {
+   "id": "A5006998285",
+   "name": "Hanh T.H. Nguyen",
+   "orcid": "0000-0001-5774-5714",
+   "prevRank": 2373,
+   "pro": 71.8,
+   "vnShare": 20.8,
+   "worksWithAffil": 24,
+   "vnWorks": 5,
+   "countries": [
+    "NZ:11",
+    "AU:9",
+    "TH:2"
+   ],
+   "units": [
+    "Học viện Nông nghiệp Việt Nam"
+   ]
+  },
+  {
+   "id": "A5002099463",
+   "name": "Thao Phuong Ho-Le",
+   "orcid": "0000-0002-8387-1893",
+   "prevRank": 2382,
+   "pro": 71.8,
+   "vnShare": 22.2,
+   "worksWithAffil": 27,
+   "vnWorks": 6,
+   "countries": [
+    "AU:25"
+   ],
+   "units": [
+    "Trường Đại học Hà Tĩnh"
+   ]
+  },
+  {
    "id": "A5047133744",
    "name": "Taichiro Takemura",
    "orcid": null,
@@ -9253,6 +11045,25 @@
    ]
   },
   {
+   "id": "A5086523150",
+   "name": "Duy Nguyen",
+   "orcid": "0000-0002-4534-745X",
+   "prevRank": 2443,
+   "pro": 71.5,
+   "vnShare": 21.7,
+   "worksWithAffil": 60,
+   "vnWorks": 13,
+   "countries": [
+    "DE:15",
+    "US:12",
+    "FR:7"
+   ],
+   "units": [
+    "Đại học Y Dược Thành phố Hồ Chí Minh",
+    "Viện Hóa học"
+   ]
+  },
+  {
    "id": "A5003634046",
    "name": "David P. Fisher",
    "orcid": null,
@@ -9268,6 +11079,23 @@
    ],
    "units": [
     "Trường Đại học Y Dược Hải Phòng"
+   ]
+  },
+  {
+   "id": "A5028803174",
+   "name": "Dong Van Hoang",
+   "orcid": "0000-0001-8274-1520",
+   "prevRank": 2454,
+   "pro": 71.4,
+   "vnShare": 23.5,
+   "worksWithAffil": 34,
+   "vnWorks": 8,
+   "countries": [
+    "JP:24",
+    "AU:3"
+   ],
+   "units": [
+    "Trường Đại học Cửu Long"
    ]
   },
   {
@@ -9323,6 +11151,40 @@
    ]
   },
   {
+   "id": "A5080835942",
+   "name": "Fedor V. Lishchenko",
+   "orcid": "0000-0001-8340-346X",
+   "prevRank": 2462,
+   "pro": 71.4,
+   "vnShare": 28.6,
+   "worksWithAffil": 21,
+   "vnWorks": 6,
+   "countries": [
+    "RU:21"
+   ],
+   "units": [
+    "Joint Vietnam-Russia Tropical Science and Technology Research Center"
+   ]
+  },
+  {
+   "id": "A5071748928",
+   "name": "Hoa Thi My Vo",
+   "orcid": "0000-0001-8694-5272",
+   "prevRank": 2468,
+   "pro": 71.3,
+   "vnShare": 28.6,
+   "worksWithAffil": 21,
+   "vnWorks": 6,
+   "countries": [
+    "KH:16",
+    "FR:14",
+    "SE:1"
+   ],
+   "units": [
+    "Oxford University Clinical Research Unit"
+   ]
+  },
+  {
    "id": "A5101953566",
    "name": "MHD Nour Hindia",
    "orcid": "0000-0002-5157-4595",
@@ -9355,6 +11217,22 @@
    "units": [
     "Trường Đại Học Khoa Học, Đại Học Huế",
     "Đại học Huế"
+   ]
+  },
+  {
+   "id": "A5102992178",
+   "name": "Tolcha Techane Alemu",
+   "orcid": "0000-0003-1236-2992",
+   "prevRank": 2477,
+   "pro": 71.2,
+   "vnShare": 27.8,
+   "worksWithAffil": 18,
+   "vnWorks": 5,
+   "countries": [
+    "ET:18"
+   ],
+   "units": [
+    "Học viện Nông nghiệp Việt Nam"
    ]
   },
   {
@@ -9482,6 +11360,41 @@
    ]
   },
   {
+   "id": "A5003874323",
+   "name": "Kazuya Takahashi",
+   "orcid": "0000-0001-5770-7419",
+   "prevRank": 2496,
+   "pro": 71.2,
+   "vnShare": 22.2,
+   "worksWithAffil": 27,
+   "vnWorks": 6,
+   "countries": [
+    "JP:21"
+   ],
+   "units": [
+    "Trường Đại học Vinh"
+   ]
+  },
+  {
+   "id": "A5102994469",
+   "name": "Kim-Anh Nguyen",
+   "orcid": "0000-0001-5143-507X",
+   "prevRank": 2501,
+   "pro": 71.1,
+   "vnShare": 25,
+   "worksWithAffil": 36,
+   "vnWorks": 9,
+   "countries": [
+    "FR:20",
+    "US:4",
+    "CA:4"
+   ],
+   "units": [
+    "Đại học Đà Nẵng",
+    "Viện Khoa học Nông nghiệp Việt Nam"
+   ]
+  },
+  {
    "id": "A5052630735",
    "name": "Quang Vinh Nguyễn",
    "orcid": "0000-0002-0815-6224",
@@ -9515,6 +11428,40 @@
    ],
    "units": [
     "Oxford University Clinical Research Unit"
+   ]
+  },
+  {
+   "id": "A5069842035",
+   "name": "Duong Nguyen Nguyen",
+   "orcid": "0000-0002-7455-2241",
+   "prevRank": 2524,
+   "pro": 71,
+   "vnShare": 20,
+   "worksWithAffil": 25,
+   "vnWorks": 5,
+   "countries": [
+    "KR:20"
+   ],
+   "units": [
+    "Trường Đại học Văn Lang"
+   ]
+  },
+  {
+   "id": "A5041461727",
+   "name": "Quan V. Le",
+   "orcid": "0000-0001-7904-963X",
+   "prevRank": 2526,
+   "pro": 71,
+   "vnShare": 23.3,
+   "worksWithAffil": 30,
+   "vnWorks": 7,
+   "countries": [
+    "US:22",
+    "HK:3",
+    "IN:1"
+   ],
+   "units": [
+    "Trường Đại học Fulbright Việt Nam"
    ]
   },
   {
@@ -9620,6 +11567,55 @@
    ]
   },
   {
+   "id": "A5003366111",
+   "name": "Ngoc-Son Nguyen",
+   "orcid": "0000-0002-2620-4541",
+   "prevRank": 2560,
+   "pro": 70.8,
+   "vnShare": 22.6,
+   "worksWithAffil": 31,
+   "vnWorks": 7,
+   "countries": [
+    "FR:23",
+    "BE:1"
+   ],
+   "units": [
+    "Trường Đại học Sư phạm Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
+   "id": "A5103864227",
+   "name": "Nhien Thi Nguyen",
+   "orcid": null,
+   "prevRank": 2571,
+   "pro": 70.8,
+   "vnShare": 21.7,
+   "worksWithAffil": 23,
+   "vnWorks": 5,
+   "countries": [
+    "JP:19"
+   ],
+   "units": [
+    "Học viện Nông nghiệp Việt Nam"
+   ]
+  },
+  {
+   "id": "A5077733475",
+   "name": "Xuan Thang Trinh",
+   "orcid": "0000-0001-9051-570X",
+   "prevRank": 2578,
+   "pro": 70.7,
+   "vnShare": 24,
+   "worksWithAffil": 25,
+   "vnWorks": 6,
+   "countries": [
+    "SE:19"
+   ],
+   "units": [
+    "Trường Đại học Công nghệ Sài Gòn"
+   ]
+  },
+  {
    "id": "A5054827012",
    "name": "SubbaRao M. Gavaravarapu",
    "orcid": "0000-0003-4524-9646",
@@ -9633,6 +11629,24 @@
    ],
    "units": [
     "National Institute of Nutrition"
+   ]
+  },
+  {
+   "id": "A5101961269",
+   "name": "Duc Minh Nguyen",
+   "orcid": "0000-0002-0367-564X",
+   "prevRank": 2579,
+   "pro": 70.7,
+   "vnShare": 27.3,
+   "worksWithAffil": 44,
+   "vnWorks": 12,
+   "countries": [
+    "BE:17",
+    "US:8",
+    "FR:5"
+   ],
+   "units": [
+    "Trường Đại học Y Hà Nội"
    ]
   },
   {
@@ -10173,6 +12187,24 @@
    ]
   },
   {
+   "id": "A5028188200",
+   "name": "Hung Dinh Nguyen",
+   "orcid": "0009-0002-2649-2552",
+   "prevRank": 2814,
+   "pro": 69.5,
+   "vnShare": 23.3,
+   "worksWithAffil": 30,
+   "vnWorks": 7,
+   "countries": [
+    "JP:10",
+    "US:8",
+    "SG:4"
+   ],
+   "units": [
+    "Học viện Cảnh sát nhân dân"
+   ]
+  },
+  {
    "id": "A5031146471",
    "name": "Guangqiu Huang",
    "orcid": "0000-0001-8410-8147",
@@ -10310,6 +12342,24 @@
    ]
   },
   {
+   "id": "A5100616161",
+   "name": "Van-Toan Nguyen",
+   "orcid": "0000-0002-1853-2895",
+   "prevRank": 2862,
+   "pro": 69.3,
+   "vnShare": 23.5,
+   "worksWithAffil": 34,
+   "vnWorks": 8,
+   "countries": [
+    "KR:25",
+    "JP:1"
+   ],
+   "units": [
+    "Trường Đại học Công nghiệp Thành phố Hồ Chí Minh",
+    "Joint Vietnam-Russia Tropical Science and Technology Research Center"
+   ]
+  },
+  {
    "id": "A5091693318",
    "name": "Duc-Thinh Pham",
    "orcid": "0000-0001-5156-8171",
@@ -10324,6 +12374,24 @@
    ],
    "units": [
     "Trường Đại học VinUni"
+   ]
+  },
+  {
+   "id": "A5059569662",
+   "name": "Hoa Thi Nguyen",
+   "orcid": "0000-0001-9626-2934",
+   "prevRank": 2883,
+   "pro": 69.2,
+   "vnShare": 25.7,
+   "worksWithAffil": 35,
+   "vnWorks": 9,
+   "countries": [
+    "DE:26",
+    "NL:1",
+    "AU:1"
+   ],
+   "units": [
+    "Oxford University Clinical Research Unit"
    ]
   },
   {
@@ -10363,6 +12431,24 @@
    ]
   },
   {
+   "id": "A5090695192",
+   "name": "Thi Thuy Hien Tran",
+   "orcid": "0009-0000-9920-7025",
+   "prevRank": 2905,
+   "pro": 69,
+   "vnShare": 29.5,
+   "worksWithAffil": 61,
+   "vnWorks": 18,
+   "countries": [
+    "FR:43",
+    "JP:1"
+   ],
+   "units": [
+    "Trường Đại học Nam Cần Thơ",
+    "Trường Đại học Công nghiệp Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
    "id": "A5016484545",
    "name": "Scott A. Fritzen",
    "orcid": null,
@@ -10378,6 +12464,26 @@
    ],
    "units": [
     "Trường Đại học Fulbright Việt Nam"
+   ]
+  },
+  {
+   "id": "A5045611980",
+   "name": "Anh Duong",
+   "orcid": "0000-0002-8289-8074",
+   "prevRank": 2917,
+   "pro": 68.9,
+   "vnShare": 20,
+   "worksWithAffil": 15,
+   "vnWorks": 3,
+   "countries": [
+    "US:9",
+    "CA:2",
+    "AU:1"
+   ],
+   "units": [
+    "Trường Đại học Khoa học Xã hội và Nhân văn (ĐHQGHN)",
+    "Trường Đại học Ngoại ngữ – Tin học Thành phố Hồ Chí Minh",
+    "Trường Đại học Quốc tế Sài Gòn"
    ]
   },
   {
@@ -10503,6 +12609,22 @@
    ]
   },
   {
+   "id": "A5065198109",
+   "name": "Pham Ngoc Khoi",
+   "orcid": "0000-0001-9650-8690",
+   "prevRank": 2972,
+   "pro": 68.7,
+   "vnShare": 22.2,
+   "worksWithAffil": 18,
+   "vnWorks": 4,
+   "countries": [
+    "KR:15"
+   ],
+   "units": [
+    "Trường Đại học Y khoa Phạm Ngọc Thạch"
+   ]
+  },
+  {
    "id": "A5021016658",
    "name": "Phuc-Loi Luu",
    "orcid": "0000-0001-8045-718X",
@@ -10575,6 +12697,22 @@
    ]
   },
   {
+   "id": "A5021358660",
+   "name": "Vuong Dinh Trung",
+   "orcid": "0000-0001-5032-292X",
+   "prevRank": 3010,
+   "pro": 68.5,
+   "vnShare": 22.7,
+   "worksWithAffil": 22,
+   "vnWorks": 5,
+   "countries": [
+    "JP:19"
+   ],
+   "units": [
+    "Trường Đại học Vinh"
+   ]
+  },
+  {
    "id": "A5079260189",
    "name": "Vladislav A. Gorin",
    "orcid": "0000-0002-9017-1502",
@@ -10589,6 +12727,38 @@
    "units": [
     "Trường Đại học Duy Tân",
     "Joint Vietnam-Russia Tropical Science and Technology Research Center"
+   ]
+  },
+  {
+   "id": "A5077732895",
+   "name": "Trung Hoa Dinh",
+   "orcid": "0000-0001-6303-1427",
+   "prevRank": 3019,
+   "pro": 68.5,
+   "vnShare": 21.7,
+   "worksWithAffil": 46,
+   "vnWorks": 10,
+   "countries": [
+    "US:42"
+   ],
+   "units": [
+    "Trường Đại học Văn Lang"
+   ]
+  },
+  {
+   "id": "A5023492471",
+   "name": "Vo Khuong Dien",
+   "orcid": "0000-0002-7974-9852",
+   "prevRank": 3024,
+   "pro": 68.5,
+   "vnShare": 24.4,
+   "worksWithAffil": 86,
+   "vnWorks": 21,
+   "countries": [
+    "TW:67"
+   ],
+   "units": [
+    "Đại học Cần Thơ"
    ]
   },
   {
@@ -10607,6 +12777,22 @@
    ],
    "units": [
     "Học viện Công nghệ Bưu chính Viễn thông"
+   ]
+  },
+  {
+   "id": "A5040244217",
+   "name": "Thai Uy Nguyen",
+   "orcid": "0000-0002-4908-1185",
+   "prevRank": 3037,
+   "pro": 68.4,
+   "vnShare": 20,
+   "worksWithAffil": 15,
+   "vnWorks": 3,
+   "countries": [
+    "KR:12"
+   ],
+   "units": [
+    "Trường Đại học Thành Đô"
    ]
   },
   {
@@ -10684,6 +12870,22 @@
    ]
   },
   {
+   "id": "A5007724319",
+   "name": "Pham Duy Quang Dao",
+   "orcid": "0000-0002-2537-1874",
+   "prevRank": 3053,
+   "pro": 68.3,
+   "vnShare": 23.1,
+   "worksWithAffil": 39,
+   "vnWorks": 9,
+   "countries": [
+    "KR:30"
+   ],
+   "units": [
+    "Institute of Advanced Technology"
+   ]
+  },
+  {
    "id": "A5017822157",
    "name": "Mohamed Ali Abdelsatar",
    "orcid": "0000-0003-0780-1444",
@@ -10697,6 +12899,26 @@
    ],
    "units": [
     "Field Crops Research Institute"
+   ]
+  },
+  {
+   "id": "A5101517250",
+   "name": "Tuan M. Nguyen",
+   "orcid": "0000-0002-8592-1655",
+   "prevRank": 3062,
+   "pro": 68.3,
+   "vnShare": 25.6,
+   "worksWithAffil": 43,
+   "vnWorks": 11,
+   "countries": [
+    "US:27",
+    "KR:1",
+    "CA:1"
+   ],
+   "units": [
+    "Trường Đại học Tài nguyên và Môi trường Hà Nội",
+    "Đại học Công nghiệp Hà Nội",
+    "Trường Đại học Thủy lợi"
    ]
   },
   {
@@ -10715,6 +12937,22 @@
    ],
    "units": [
     "Viện Công nghệ Hàng không Vũ trụ"
+   ]
+  },
+  {
+   "id": "A5053763226",
+   "name": "Doan Nguyen",
+   "orcid": "0000-0003-2219-1074",
+   "prevRank": 3071,
+   "pro": 68.2,
+   "vnShare": 27.3,
+   "worksWithAffil": 22,
+   "vnWorks": 6,
+   "countries": [
+    "AU:16"
+   ],
+   "units": [
+    "Viện Vệ sinh Dịch tễ Trung ương"
    ]
   },
   {
@@ -10769,6 +13007,22 @@
    ]
   },
   {
+   "id": "A5014812662",
+   "name": "Cuong Hung Luu",
+   "orcid": "0000-0002-0919-5911",
+   "prevRank": 3139,
+   "pro": 67.9,
+   "vnShare": 22,
+   "worksWithAffil": 41,
+   "vnWorks": 9,
+   "countries": [
+    "AU:34"
+   ],
+   "units": [
+    "Institute of Advanced Technology"
+   ]
+  },
+  {
    "id": "A5101878990",
    "name": "Nguyen Van Tu",
    "orcid": "0000-0002-7760-1504",
@@ -10798,6 +13052,22 @@
    ],
    "units": [
     "Trường Đại Học Công Nghệ Thông Tin - Đại Học Quốc Gia TP. Hồ Chí Minh"
+   ]
+  },
+  {
+   "id": "A5037421147",
+   "name": "Anh Thi Le",
+   "orcid": "0000-0001-8243-6462",
+   "prevRank": 3160,
+   "pro": 67.8,
+   "vnShare": 28,
+   "worksWithAffil": 25,
+   "vnWorks": 7,
+   "countries": [
+    "MY:20"
+   ],
+   "units": [
+    "Viện Sinh học"
    ]
   },
   {
@@ -10938,6 +13208,26 @@
    ]
   },
   {
+   "id": "A5101695585",
+   "name": "Thao Phuong Ngoc Nguyen",
+   "orcid": "0000-0002-2711-7407",
+   "prevRank": 3219,
+   "pro": 67.4,
+   "vnShare": 26.5,
+   "worksWithAffil": 34,
+   "vnWorks": 9,
+   "countries": [
+    "KR:17",
+    "TW:4",
+    "US:3"
+   ],
+   "units": [
+    "Trường Đại học Y Dược (ĐHQGHN)",
+    "Trường Đại học Văn Lang",
+    "Trường Đại học Nguyễn Tất Thành"
+   ]
+  },
+  {
    "id": "A5068509694",
    "name": "Quang Hieu Vu",
    "orcid": "0009-0008-8404-4153",
@@ -10987,6 +13277,25 @@
    ],
    "units": [
     "Trường Đại học Anh Quốc tại Việt Nam"
+   ]
+  },
+  {
+   "id": "A5009575585",
+   "name": "TrungHieu Le",
+   "orcid": "0000-0003-4671-9224",
+   "prevRank": 3262,
+   "pro": 67.2,
+   "vnShare": 24.1,
+   "worksWithAffil": 29,
+   "vnWorks": 7,
+   "countries": [
+    "CN:22"
+   ],
+   "units": [
+    "Trường Đại Học Khoa Học, Đại Học Huế",
+    "Đại học Huế",
+    "Đại học Đà Nẵng",
+    "Trường Đại học Sư phạm"
    ]
   },
   {
@@ -11212,6 +13521,22 @@
    ]
   },
   {
+   "id": "A5041170709",
+   "name": "Le-Anh Tran",
+   "orcid": "0000-0002-9380-7166",
+   "prevRank": 3380,
+   "pro": 66.6,
+   "vnShare": 26.9,
+   "worksWithAffil": 26,
+   "vnWorks": 7,
+   "countries": [
+    "KR:19"
+   ],
+   "units": [
+    "Trường Đại học Giao thông vận tải Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
    "id": "A5086517987",
    "name": "Trong-Dai Hoang",
    "orcid": "0000-0001-7501-611X",
@@ -11244,6 +13569,23 @@
    ],
    "units": [
     "Trường Đại học Đông Á"
+   ]
+  },
+  {
+   "id": "A5100652034",
+   "name": "Toan Nguyen",
+   "orcid": "0000-0002-0916-1826",
+   "prevRank": 3392,
+   "pro": 66.5,
+   "vnShare": 22.2,
+   "worksWithAffil": 18,
+   "vnWorks": 4,
+   "countries": [
+    "US:9",
+    "AU:5"
+   ],
+   "units": [
+    "Trường Đại học FPT"
    ]
   },
   {
@@ -11387,6 +13729,24 @@
    "units": [
     "National Institute of Malariology, Parasitology and Entomology",
     "Viện Sốt rét - Ký sinh trùng - Côn trùng Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
+   "id": "A5101536309",
+   "name": "Nam Hoang Nguyen",
+   "orcid": "0000-0002-9476-3126",
+   "prevRank": 3464,
+   "pro": 66.2,
+   "vnShare": 23.1,
+   "worksWithAffil": 26,
+   "vnWorks": 6,
+   "countries": [
+    "US:11",
+    "KR:5",
+    "JP:2"
+   ],
+   "units": [
+    "Trường Đại học Công nghệ Đông Á"
    ]
   },
   {
@@ -11669,6 +14029,24 @@
    ]
   },
   {
+   "id": "A5032595509",
+   "name": "Linh T. T. Tran",
+   "orcid": "0000-0001-7805-6264",
+   "prevRank": 3558,
+   "pro": 65.8,
+   "vnShare": 21.4,
+   "worksWithAffil": 28,
+   "vnWorks": 6,
+   "countries": [
+    "AU:19",
+    "DE:1",
+    "SG:1"
+   ],
+   "units": [
+    "Học viện Công nghệ Bưu chính Viễn thông"
+   ]
+  },
+  {
    "id": "A5065293868",
    "name": "Ryley McConkey",
    "orcid": "0000-0003-0674-1849",
@@ -11683,6 +14061,23 @@
    ],
    "units": [
     "Institute for Computational Science and Technology"
+   ]
+  },
+  {
+   "id": "A5101412361",
+   "name": "N.D. Nguyen",
+   "orcid": "0000-0001-7007-1339",
+   "prevRank": 3563,
+   "pro": 65.8,
+   "vnShare": 20.7,
+   "worksWithAffil": 29,
+   "vnWorks": 6,
+   "countries": [
+    "AU:22",
+    "US:1"
+   ],
+   "units": [
+    "Đại học Y Dược Thành phố Hồ Chí Minh"
    ]
   },
   {
@@ -11769,6 +14164,24 @@
    ]
   },
   {
+   "id": "A5111487872",
+   "name": "Lan Thi-Ngoc Tran",
+   "orcid": "0009-0008-3581-190X",
+   "prevRank": 3599,
+   "pro": 65.6,
+   "vnShare": 23.5,
+   "worksWithAffil": 17,
+   "vnWorks": 4,
+   "countries": [
+    "US:10",
+    "CA:3"
+   ],
+   "units": [
+    "Trường Đại học Công Thương Thành phố Hồ Chí Minh",
+    "Trường Đại học Y Hà Nội"
+   ]
+  },
+  {
    "id": "A5059183469",
    "name": "Adam Voak",
    "orcid": "0000-0002-9161-8943",
@@ -11818,6 +14231,23 @@
    ],
    "units": [
     "Đại học Đà Nẵng"
+   ]
+  },
+  {
+   "id": "A5048585011",
+   "name": "Trang T. T. Do",
+   "orcid": "0000-0002-1614-4661",
+   "prevRank": 3626,
+   "pro": 65.5,
+   "vnShare": 23.3,
+   "worksWithAffil": 30,
+   "vnWorks": 7,
+   "countries": [
+    "SG:12",
+    "NZ:11"
+   ],
+   "units": [
+    "Trường Đại học Mở Thành phố Hồ Chí Minh"
    ]
   },
   {
@@ -11871,6 +14301,57 @@
    ]
   },
   {
+   "id": "A5075438258",
+   "name": "T. L. Phan",
+   "orcid": "0009-0005-5384-4391",
+   "prevRank": 3642,
+   "pro": 65.5,
+   "vnShare": 28.9,
+   "worksWithAffil": 38,
+   "vnWorks": 11,
+   "countries": [
+    "KR:26",
+    "GB:1"
+   ],
+   "units": [
+    "Trường Đại học Công nghệ (ĐHQGHN)"
+   ]
+  },
+  {
+   "id": "A5065893759",
+   "name": "Nguyen Thanh Duc",
+   "orcid": "0000-0002-1528-1162",
+   "prevRank": 3643,
+   "pro": 65.5,
+   "vnShare": 25,
+   "worksWithAffil": 20,
+   "vnWorks": 5,
+   "countries": [
+    "KR:12",
+    "CA:6",
+    "SE:3"
+   ],
+   "units": [
+    "Trường Đại học Y Dược Thái Bình"
+   ]
+  },
+  {
+   "id": "A5010942054",
+   "name": "Truc Quynh Thai",
+   "orcid": "0000-0002-1739-497X",
+   "prevRank": 3644,
+   "pro": 65.5,
+   "vnShare": 27.8,
+   "worksWithAffil": 18,
+   "vnWorks": 5,
+   "countries": [
+    "JP:18"
+   ],
+   "units": [
+    "Trường Đại học Y khoa Phạm Ngọc Thạch"
+   ]
+  },
+  {
    "id": "A5103431981",
    "name": "Bao D. Nguyen",
    "orcid": null,
@@ -11901,6 +14382,59 @@
     "FR:17",
     "US:10",
     "GB:1"
+   ],
+   "units": [
+    "Trường Đại học Y Dược"
+   ]
+  },
+  {
+   "id": "A5000497215",
+   "name": "D.L. Hoang",
+   "orcid": "0000-0003-0482-3840",
+   "prevRank": 3664,
+   "pro": 65.3,
+   "vnShare": 21.1,
+   "worksWithAffil": 19,
+   "vnWorks": 4,
+   "countries": [
+    "SG:12",
+    "DE:3"
+   ],
+   "units": [
+    "Trường Đại học Phenikaa"
+   ]
+  },
+  {
+   "id": "A5081549402",
+   "name": "Van Dien Nguyen",
+   "orcid": "0000-0003-1367-7881",
+   "prevRank": 3677,
+   "pro": 65.2,
+   "vnShare": 20.7,
+   "worksWithAffil": 29,
+   "vnWorks": 6,
+   "countries": [
+    "GB:18",
+    "US:3",
+    "DE:2"
+   ],
+   "units": [
+    "Trường Đại học FPT"
+   ]
+  },
+  {
+   "id": "A5059821783",
+   "name": "Trung Quoc Le",
+   "orcid": "0000-0002-4169-9941",
+   "prevRank": 3685,
+   "pro": 65.2,
+   "vnShare": 20,
+   "worksWithAffil": 25,
+   "vnWorks": 5,
+   "countries": [
+    "US:18",
+    "AU:1",
+    "CA:1"
    ],
    "units": [
     "Trường Đại học Y Dược"
@@ -11942,6 +14476,39 @@
    ]
   },
   {
+   "id": "A5072827213",
+   "name": "Hoa Hoang Ngoc Pham",
+   "orcid": "0000-0002-0998-4486",
+   "prevRank": 3736,
+   "pro": 65,
+   "vnShare": 21.1,
+   "worksWithAffil": 19,
+   "vnWorks": 4,
+   "countries": [
+    "JP:16",
+    "GB:1"
+   ],
+   "units": [
+    "Trường Đại học Y Dược (ĐHQGHN)"
+   ]
+  },
+  {
+   "id": "A5000187582",
+   "name": "Duc-Anh Pham",
+   "orcid": "0000-0002-0822-2199",
+   "prevRank": 3737,
+   "pro": 64.9,
+   "vnShare": 23.5,
+   "worksWithAffil": 17,
+   "vnWorks": 4,
+   "countries": [
+    "KR:13"
+   ],
+   "units": [
+    "Trường Đại học Hàng hải Việt Nam"
+   ]
+  },
+  {
    "id": "A5036224701",
    "name": "Hyeon Gyu Yi",
    "orcid": "0000-0002-3710-0959",
@@ -11955,6 +14522,23 @@
    ],
    "units": [
     "Trường Đại học VinUni"
+   ]
+  },
+  {
+   "id": "A5074351368",
+   "name": "Tina Le",
+   "orcid": "0009-0005-6695-8638",
+   "prevRank": 3751,
+   "pro": 64.9,
+   "vnShare": 26.3,
+   "worksWithAffil": 19,
+   "vnWorks": 5,
+   "countries": [
+    "US:10",
+    "CA:4"
+   ],
+   "units": [
+    "Trường Đại học Y Dược Cần Thơ"
    ]
   },
   {
@@ -12031,6 +14615,23 @@
    ]
   },
   {
+   "id": "A5022623911",
+   "name": "Phuoc V. Le",
+   "orcid": "0000-0001-5417-8646",
+   "prevRank": 3772,
+   "pro": 64.8,
+   "vnShare": 24.2,
+   "worksWithAffil": 33,
+   "vnWorks": 8,
+   "countries": [
+    "US:25",
+    "CH:2"
+   ],
+   "units": [
+    "Trường Đại học VinUni"
+   ]
+  },
+  {
    "id": "A5069849570",
    "name": "Amin Khatami",
    "orcid": "0000-0001-9932-933X",
@@ -12046,6 +14647,24 @@
    ],
    "units": [
     "Trường Đại học Công nghệ Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
+   "id": "A5113123602",
+   "name": "Minghao Shao",
+   "orcid": "0009-0002-4467-6224",
+   "prevRank": 3795,
+   "pro": 64.6,
+   "vnShare": 26.9,
+   "worksWithAffil": 26,
+   "vnWorks": 7,
+   "countries": [
+    "US:17",
+    "AE:17",
+    "CN:2"
+   ],
+   "units": [
+    "Trường Đại học Tân Tạo"
    ]
   },
   {
@@ -12152,6 +14771,42 @@
    ]
   },
   {
+   "id": "A5013241108",
+   "name": "Hung Dang",
+   "orcid": "0009-0008-7009-2509",
+   "prevRank": 3848,
+   "pro": 64.4,
+   "vnShare": 20,
+   "worksWithAffil": 20,
+   "vnWorks": 4,
+   "countries": [
+    "SG:16",
+    "NO:1"
+   ],
+   "units": [
+    "Trường Đại học Văn Lang",
+    "Đại học Y Dược Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
+   "id": "A5111959530",
+   "name": "Cong Hoan Nguyen",
+   "orcid": "0009-0006-7171-2963",
+   "prevRank": 3851,
+   "pro": 64.4,
+   "vnShare": 20,
+   "worksWithAffil": 20,
+   "vnWorks": 4,
+   "countries": [
+    "KR:8",
+    "AU:5",
+    "US:3"
+   ],
+   "units": [
+    "Trường Đại học Công nghệ (ĐHQGHN)"
+   ]
+  },
+  {
    "id": "A5000914178",
    "name": "Hoang Nguyen",
    "orcid": "0000-0003-4281-5948",
@@ -12166,6 +14821,25 @@
    ],
    "units": [
     "Trường Đại học Nam Cần Thơ"
+   ]
+  },
+  {
+   "id": "A5033091715",
+   "name": "Nam Anh Tran",
+   "orcid": "0000-0002-8312-9197",
+   "prevRank": 3867,
+   "pro": 64.3,
+   "vnShare": 25.9,
+   "worksWithAffil": 27,
+   "vnWorks": 7,
+   "countries": [
+    "US:15",
+    "KR:3",
+    "AU:2"
+   ],
+   "units": [
+    "Trường Đại học Phenikaa",
+    "Trường Đại học Công nghệ (ĐHQGHN)"
    ]
   },
   {
@@ -12184,6 +14858,24 @@
    "units": [
     "Trường Đại học Kỹ thuật Y tế Hải Dương",
     "Trường Đại học Công nghệ Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
+   "id": "A5101534040",
+   "name": "Thong Nguyen",
+   "orcid": "0000-0002-5182-3854",
+   "prevRank": 3871,
+   "pro": 64.3,
+   "vnShare": 20,
+   "worksWithAffil": 25,
+   "vnWorks": 5,
+   "countries": [
+    "FR:12",
+    "AU:8",
+    "BE:3"
+   ],
+   "units": [
+    "Trường Đại học Đông Á"
    ]
   },
   {
@@ -12294,6 +14986,22 @@
    ]
   },
   {
+   "id": "A5110267406",
+   "name": "Tran Manh Hung",
+   "orcid": "0000-0002-2937-9849",
+   "prevRank": 3906,
+   "pro": 64.1,
+   "vnShare": 20.5,
+   "worksWithAffil": 39,
+   "vnWorks": 8,
+   "countries": [
+    "KR:33"
+   ],
+   "units": [
+    "Đại học Y Dược Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
    "id": "A5046409763",
    "name": "Kwang Sun Ryu",
    "orcid": "0000-0002-1492-6635",
@@ -12365,6 +15073,23 @@
    ]
   },
   {
+   "id": "A5052638874",
+   "name": "Ngoc Hieu Pham",
+   "orcid": "0009-0004-3015-709X",
+   "prevRank": 3944,
+   "pro": 63.9,
+   "vnShare": 24.1,
+   "worksWithAffil": 29,
+   "vnWorks": 7,
+   "countries": [
+    "US:21",
+    "SG:1"
+   ],
+   "units": [
+    "Trường Đại học Công nghệ Kỹ thuật Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
    "id": "A5069275223",
    "name": "Il-Seop Kim",
    "orcid": null,
@@ -12379,6 +15104,24 @@
    "units": [
     "Học viện Nông nghiệp Việt Nam",
     "Trường Đại học Hùng Vương"
+   ]
+  },
+  {
+   "id": "A5065021757",
+   "name": "Hoàng Long Nguyễn",
+   "orcid": "0000-0003-3635-6087",
+   "prevRank": 3966,
+   "pro": 63.8,
+   "vnShare": 20.8,
+   "worksWithAffil": 48,
+   "vnWorks": 10,
+   "countries": [
+    "SG:18",
+    "KR:9",
+    "NL:8"
+   ],
+   "units": [
+    "Trường Đại học Công nghệ Giao thông Vận tải"
    ]
   },
   {
@@ -12653,6 +15396,23 @@
    ]
   },
   {
+   "id": "A5002394475",
+   "name": "Hung Phan",
+   "orcid": "0000-0001-5774-0390",
+   "prevRank": 4100,
+   "pro": 63.1,
+   "vnShare": 27.3,
+   "worksWithAffil": 33,
+   "vnWorks": 9,
+   "countries": [
+    "US:30",
+    "SA:1"
+   ],
+   "units": [
+    "Trường Đại học Fulbright Việt Nam"
+   ]
+  },
+  {
    "id": "A5001037794",
    "name": "Huyen T. M. Pham",
    "orcid": "0000-0001-9689-8596",
@@ -12720,6 +15480,39 @@
    ],
    "units": [
     "Đại học Y Dược Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
+   "id": "A5018741155",
+   "name": "Tram Ngoc Pham",
+   "orcid": null,
+   "prevRank": 4135,
+   "pro": 62.9,
+   "vnShare": 22.2,
+   "worksWithAffil": 18,
+   "vnWorks": 4,
+   "countries": [
+    "US:9",
+    "KR:5"
+   ],
+   "units": [
+    "Oxford University Clinical Research Unit"
+   ]
+  },
+  {
+   "id": "A5059246745",
+   "name": "Thị Kiều Ly Phạm",
+   "orcid": null,
+   "prevRank": 4137,
+   "pro": 62.9,
+   "vnShare": 25,
+   "worksWithAffil": 16,
+   "vnWorks": 4,
+   "countries": [
+    "FR:14"
+   ],
+   "units": [
+    "Trường Khoa học liên ngành và Nghệ thuật (ĐHQGHN)"
    ]
   },
   {
@@ -12967,6 +15760,24 @@
    ]
   },
   {
+   "id": "A5084076478",
+   "name": "Thi Thu Ha Nguyen",
+   "orcid": "0000-0001-6392-4399",
+   "prevRank": 4241,
+   "pro": 62.4,
+   "vnShare": 25,
+   "worksWithAffil": 20,
+   "vnWorks": 5,
+   "countries": [
+    "NZ:13",
+    "US:1",
+    "FR:1"
+   ],
+   "units": [
+    "Trường Đại học Kinh tế"
+   ]
+  },
+  {
    "id": "A5111870991",
    "name": "Ki Hyun Cho",
    "orcid": null,
@@ -13051,6 +15862,24 @@
    ],
    "units": [
     "Đại học Công nghiệp Hà Nội"
+   ]
+  },
+  {
+   "id": "A5114186846",
+   "name": "Thao Nguyen",
+   "orcid": "0000-0003-1714-0117",
+   "prevRank": 4271,
+   "pro": 62.3,
+   "vnShare": 21.4,
+   "worksWithAffil": 28,
+   "vnWorks": 6,
+   "countries": [
+    "US:15",
+    "AU:5",
+    "GB:3"
+   ],
+   "units": [
+    "Trường Đại học Kinh tế (ĐHQGHN)"
    ]
   },
   {
@@ -13205,6 +16034,22 @@
    ],
    "units": [
     "Trường Đại học Mở Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
+   "id": "A5103253581",
+   "name": "Thi Maï Tran",
+   "orcid": "0000-0002-5785-810X",
+   "prevRank": 4372,
+   "pro": 61.7,
+   "vnShare": 27.6,
+   "worksWithAffil": 29,
+   "vnWorks": 8,
+   "countries": [
+    "FR:21"
+   ],
+   "units": [
+    "Trường Đại học Văn Lang"
    ]
   },
   {
@@ -13397,6 +16242,44 @@
    ]
   },
   {
+   "id": "A5014374360",
+   "name": "T. Kim Le",
+   "orcid": "0000-0001-5755-7473",
+   "prevRank": 4445,
+   "pro": 61.4,
+   "vnShare": 22.9,
+   "worksWithAffil": 48,
+   "vnWorks": 11,
+   "countries": [
+    "US:37",
+    "GB:4"
+   ],
+   "units": [
+    "Đại học Bách khoa Hà Nội",
+    "Trường Đại học Y Hà Nội",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội",
+    "Trường Đại học Tôn Đức Thắng"
+   ]
+  },
+  {
+   "id": "A5101991810",
+   "name": "Minh Ngoc Tran",
+   "orcid": "0000-0003-4600-8211",
+   "prevRank": 4461,
+   "pro": 61.3,
+   "vnShare": 23.8,
+   "worksWithAffil": 42,
+   "vnWorks": 10,
+   "countries": [
+    "AU:13",
+    "US:13",
+    "KR:6"
+   ],
+   "units": [
+    "Trường Đại học Phenikaa"
+   ]
+  },
+  {
    "id": "A5052912366",
    "name": "Nguyen Dang Hung",
    "orcid": "0000-0002-1789-9708",
@@ -13530,6 +16413,24 @@
    "units": [
     "Đại học Bách khoa Hà Nội",
     "Trường Đại học Khoa học và Công nghệ Hà Nội"
+   ]
+  },
+  {
+   "id": "A5101710942",
+   "name": "Thuy Thuc Minh Pham",
+   "orcid": "0000-0001-6993-9620",
+   "prevRank": 4581,
+   "pro": 60.6,
+   "vnShare": 23.1,
+   "worksWithAffil": 39,
+   "vnWorks": 9,
+   "countries": [
+    "US:27",
+    "FR:2",
+    "GB:1"
+   ],
+   "units": [
+    "Đại học Y Dược Thành phố Hồ Chí Minh"
    ]
   },
   {
@@ -13668,6 +16569,22 @@
    ],
    "units": [
     "Trường Đại Học Kinh Tế, Đại Học Huế"
+   ]
+  },
+  {
+   "id": "A5059778195",
+   "name": "Світлана Бестужева",
+   "orcid": "0000-0001-9658-3500",
+   "prevRank": 4641,
+   "pro": 60.3,
+   "vnShare": 22.2,
+   "worksWithAffil": 18,
+   "vnWorks": 4,
+   "countries": [
+    "UA:14"
+   ],
+   "units": [
+    "Đại học Kinh tế Quốc dân"
    ]
   },
   {
@@ -13842,6 +16759,38 @@
    ]
   },
   {
+   "id": "A5042013474",
+   "name": "The-Hiep Hoang",
+   "orcid": "0000-0003-4694-7155",
+   "prevRank": 4767,
+   "pro": 59.7,
+   "vnShare": 22.2,
+   "worksWithAffil": 18,
+   "vnWorks": 4,
+   "countries": [
+    "KR:14"
+   ],
+   "units": [
+    "Trường Đại học Y Dược"
+   ]
+  },
+  {
+   "id": "A5020199800",
+   "name": "Binh Thanh Nguyen",
+   "orcid": "0000-0001-9120-9712",
+   "prevRank": 4777,
+   "pro": 59.6,
+   "vnShare": 22.2,
+   "worksWithAffil": 18,
+   "vnWorks": 4,
+   "countries": [
+    "KR:18"
+   ],
+   "units": [
+    "Trường Đại học Nông Lâm"
+   ]
+  },
+  {
    "id": "A5048669475",
    "name": "Ana Clara B. Rodrigues",
    "orcid": "0000-0002-5128-0204",
@@ -13873,6 +16822,40 @@
    ],
    "units": [
     "Đại học Cần Thơ"
+   ]
+  },
+  {
+   "id": "A5030123878",
+   "name": "Truong Giang Luu",
+   "orcid": "0009-0004-6872-8353",
+   "prevRank": 4802,
+   "pro": 59.5,
+   "vnShare": 26.7,
+   "worksWithAffil": 15,
+   "vnWorks": 4,
+   "countries": [
+    "KR:14"
+   ],
+   "units": [
+    "Trường Đại học Thủy lợi"
+   ]
+  },
+  {
+   "id": "A5102968151",
+   "name": "Dat Thanh Ngo",
+   "orcid": "0000-0003-4374-5056",
+   "prevRank": 4816,
+   "pro": 59.5,
+   "vnShare": 25.8,
+   "worksWithAffil": 31,
+   "vnWorks": 8,
+   "countries": [
+    "GB:22",
+    "US:2",
+    "AT:1"
+   ],
+   "units": [
+    "Joint Vietnam-Russia Tropical Science and Technology Research Center"
    ]
   },
   {
@@ -14131,6 +17114,24 @@
    ]
   },
   {
+   "id": "A5007557031",
+   "name": "T. Nguyen",
+   "orcid": "0000-0002-4377-8942",
+   "prevRank": 5028,
+   "pro": 58.4,
+   "vnShare": 28.9,
+   "worksWithAffil": 45,
+   "vnWorks": 13,
+   "countries": [
+    "AU:21",
+    "US:9",
+    "FR:2"
+   ],
+   "units": [
+    "Trường Đại Học Công Nghệ Thông Tin - Đại Học Quốc Gia TP. Hồ Chí Minh"
+   ]
+  },
+  {
    "id": "A5062198399",
    "name": "Duong Trung Le",
    "orcid": "0000-0002-0405-4271",
@@ -14247,6 +17248,24 @@
    ],
    "units": [
     "Trường Đại học VinUni"
+   ]
+  },
+  {
+   "id": "A5102423611",
+   "name": "Thang Chien Nguyen",
+   "orcid": "0000-0001-9766-0221",
+   "prevRank": 5116,
+   "pro": 57.9,
+   "vnShare": 23.1,
+   "worksWithAffil": 39,
+   "vnWorks": 9,
+   "countries": [
+    "AU:30"
+   ],
+   "units": [
+    "Trường Đại học Sài Gòn",
+    "Trường Đại học Giáo dục (ĐHQGHN)",
+    "Trường Đại học Hùng Vương"
    ]
   },
   {
@@ -14457,6 +17476,23 @@
    ]
   },
   {
+   "id": "A5101469546",
+   "name": "Ngoc Nguyen",
+   "orcid": "0000-0002-9476-9245",
+   "prevRank": 5327,
+   "pro": 56.7,
+   "vnShare": 26.1,
+   "worksWithAffil": 23,
+   "vnWorks": 6,
+   "countries": [
+    "FR:14",
+    "US:3"
+   ],
+   "units": [
+    "Đại học Công nghiệp Hà Nội"
+   ]
+  },
+  {
    "id": "A5103860711",
    "name": "Vu Anh Tuan",
    "orcid": null,
@@ -14489,6 +17525,24 @@
    ],
    "units": [
     "Viện Nghiên cứu Nuôi trồng Thủy sản III"
+   ]
+  },
+  {
+   "id": "A5002861503",
+   "name": "Hien Nguyen",
+   "orcid": "0000-0002-1757-5359",
+   "prevRank": 5416,
+   "pro": 56.3,
+   "vnShare": 20,
+   "worksWithAffil": 50,
+   "vnWorks": 10,
+   "countries": [
+    "US:38",
+    "NZ:2",
+    "AU:2"
+   ],
+   "units": [
+    "Trường Đại học Phenikaa"
    ]
   },
   {
@@ -14647,6 +17701,24 @@
    ]
   },
   {
+   "id": "A5112359012",
+   "name": "Quang Nhat Vo",
+   "orcid": null,
+   "prevRank": 5552,
+   "pro": 55.6,
+   "vnShare": 26.3,
+   "worksWithAffil": 19,
+   "vnWorks": 5,
+   "countries": [
+    "KR:10",
+    "CA:6",
+    "FI:1"
+   ],
+   "units": [
+    "Trường Đại học Ngân hàng Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
    "id": "A5111565995",
    "name": "Tae-Hyeon Nam",
    "orcid": null,
@@ -14696,6 +17768,39 @@
    ]
   },
   {
+   "id": "A5101832892",
+   "name": "Viet Do Hung Dang",
+   "orcid": "0000-0002-7879-7772",
+   "prevRank": 5571,
+   "pro": 55.5,
+   "vnShare": 22.2,
+   "worksWithAffil": 18,
+   "vnWorks": 4,
+   "countries": [
+    "US:14",
+    "TW:3"
+   ],
+   "units": [
+    "Joint Vietnam-Russia Tropical Science and Technology Research Center"
+   ]
+  },
+  {
+   "id": "A5066360978",
+   "name": "Nguyen Trong HIEP",
+   "orcid": "0000-0003-0529-5154",
+   "prevRank": 5572,
+   "pro": 55.5,
+   "vnShare": 22.2,
+   "worksWithAffil": 18,
+   "vnWorks": 4,
+   "countries": [
+    "JP:14"
+   ],
+   "units": [
+    "Joint Vietnam-Russia Tropical Science and Technology Research Center"
+   ]
+  },
+  {
    "id": "A5064368005",
    "name": "Constantin I. Fomichev",
    "orcid": "0000-0001-7590-2103",
@@ -14725,6 +17830,41 @@
    ],
    "units": [
     "Forest Industry Research Institute"
+   ]
+  },
+  {
+   "id": "A5110130883",
+   "name": "Mui Van Nguyen",
+   "orcid": null,
+   "prevRank": 5615,
+   "pro": 55.4,
+   "vnShare": 28.6,
+   "worksWithAffil": 21,
+   "vnWorks": 6,
+   "countries": [
+    "KR:15"
+   ],
+   "units": [
+    "Trường Đại học Gia Định",
+    "Posts and Telecommunications Institute of Technology - Ho Chi Minh City"
+   ]
+  },
+  {
+   "id": "A5023351148",
+   "name": "Duy Thong Nguyen",
+   "orcid": "0000-0002-8384-6225",
+   "prevRank": 5618,
+   "pro": 55.3,
+   "vnShare": 20.8,
+   "worksWithAffil": 24,
+   "vnWorks": 5,
+   "countries": [
+    "KR:9",
+    "US:5",
+    "FR:4"
+   ],
+   "units": [
+    "Trường Đại học Quy Nhơn"
    ]
   },
   {
@@ -14793,6 +17933,23 @@
    "units": [
     "Trường Đại học Y Dược",
     "Đại học Huế"
+   ]
+  },
+  {
+   "id": "A5029629469",
+   "name": "Nguyen Quang Chien",
+   "orcid": "0000-0002-1952-4360",
+   "prevRank": 5700,
+   "pro": 54.9,
+   "vnShare": 21.7,
+   "worksWithAffil": 23,
+   "vnWorks": 5,
+   "countries": [
+    "GB:15",
+    "SG:4"
+   ],
+   "units": [
+    "Trường Đại học Thủy lợi"
    ]
   },
   {
@@ -14915,6 +18072,24 @@
    ]
   },
   {
+   "id": "A5101808498",
+   "name": "Viet Ha Nguyen",
+   "orcid": "0000-0001-6246-8475",
+   "prevRank": 5799,
+   "pro": 54.4,
+   "vnShare": 29.3,
+   "worksWithAffil": 41,
+   "vnWorks": 12,
+   "countries": [
+    "LU:18",
+    "BE:6",
+    "AU:2"
+   ],
+   "units": [
+    "Trường Đại học Mỏ – Địa chất"
+   ]
+  },
+  {
    "id": "A5101502394",
    "name": "Dung Hoang Nguyen",
    "orcid": "0000-0002-1108-3521",
@@ -14930,6 +18105,24 @@
    ],
    "units": [
     "Viện Khoa học sự sống"
+   ]
+  },
+  {
+   "id": "A5101233287",
+   "name": "Hung Anh Nguyen",
+   "orcid": "0000-0002-7527-3383",
+   "prevRank": 5820,
+   "pro": 54.2,
+   "vnShare": 23.5,
+   "worksWithAffil": 17,
+   "vnWorks": 4,
+   "countries": [
+    "US:11",
+    "FR:2",
+    "KR:1"
+   ],
+   "units": [
+    "Trường Đại học Công nghệ (ĐHQGHN)"
    ]
   },
   {
@@ -15103,6 +18296,38 @@
    ]
   },
   {
+   "id": "A5022846140",
+   "name": "Hiep Vu-Van",
+   "orcid": "0000-0001-5581-4376",
+   "prevRank": 5951,
+   "pro": 53.5,
+   "vnShare": 25,
+   "worksWithAffil": 32,
+   "vnWorks": 8,
+   "countries": [
+    "KR:24"
+   ],
+   "units": [
+    "Trường Đại học Nguyễn Tất Thành"
+   ]
+  },
+  {
+   "id": "A5101676846",
+   "name": "Nhan Le Thanh",
+   "orcid": "0000-0003-4207-2128",
+   "prevRank": 5960,
+   "pro": 53.5,
+   "vnShare": 24.4,
+   "worksWithAffil": 45,
+   "vnWorks": 11,
+   "countries": [
+    "FR:37"
+   ],
+   "units": [
+    "Đại học Y Dược Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
    "id": "A5005703224",
    "name": "Reham Ibrahim Ahmed Abo-Shnaf",
    "orcid": "0000-0002-4033-9063",
@@ -15118,6 +18343,22 @@
    ],
    "units": [
     "Viện Bảo vệ thực vật"
+   ]
+  },
+  {
+   "id": "A5102768011",
+   "name": "Song Hong Pham",
+   "orcid": "0000-0002-2894-8907",
+   "prevRank": 5972,
+   "pro": 53.4,
+   "vnShare": 25,
+   "worksWithAffil": 16,
+   "vnWorks": 4,
+   "countries": [
+    "AU:12"
+   ],
+   "units": [
+    "Trường Đại học Kiến trúc Thành phố Hồ Chí Minh"
    ]
   },
   {
@@ -15138,6 +18379,41 @@
    ]
   },
   {
+   "id": "A5100733611",
+   "name": "Hong Loan Nguyen",
+   "orcid": "0000-0001-5635-1262",
+   "prevRank": 5977,
+   "pro": 53.4,
+   "vnShare": 27.6,
+   "worksWithAffil": 29,
+   "vnWorks": 8,
+   "countries": [
+    "US:14",
+    "AU:5",
+    "BE:2"
+   ],
+   "units": [
+    "Trường Đại học Kiến trúc Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
+   "id": "A5023116732",
+   "name": "Thi Hong Nhung Vu",
+   "orcid": "0000-0002-8462-4923",
+   "prevRank": 5983,
+   "pro": 53.3,
+   "vnShare": 21.7,
+   "worksWithAffil": 23,
+   "vnWorks": 5,
+   "countries": [
+    "KR:10",
+    "RU:8"
+   ],
+   "units": [
+    "Trường Đại học Lâm nghiệp"
+   ]
+  },
+  {
    "id": "A5014965273",
    "name": "Tamer Ibrahim Abdel-Wahab",
    "orcid": "0000-0002-8506-4200",
@@ -15151,6 +18427,24 @@
    ],
    "units": [
     "Field Crops Research Institute"
+   ]
+  },
+  {
+   "id": "A5111652514",
+   "name": "Nguyen The Khoi",
+   "orcid": null,
+   "prevRank": 6076,
+   "pro": 52.8,
+   "vnShare": 28,
+   "worksWithAffil": 25,
+   "vnWorks": 7,
+   "countries": [
+    "PL:17",
+    "NL:1"
+   ],
+   "units": [
+    "Trường Đại học Sư phạm Hà Nội",
+    "Trường Đại học Giáo dục (ĐHQGHN)"
    ]
   },
   {
@@ -15219,6 +18513,41 @@
    ]
   },
   {
+   "id": "A5085108796",
+   "name": "Thi Anh Nguyet Nguyen",
+   "orcid": null,
+   "prevRank": 6183,
+   "pro": 52.2,
+   "vnShare": 23.8,
+   "worksWithAffil": 21,
+   "vnWorks": 5,
+   "countries": [
+    "KR:8",
+    "TW:8"
+   ],
+   "units": [
+    "Trường Đại học Sư phạm Hà Nội",
+    "Trường Đại học Y tế Công cộng"
+   ]
+  },
+  {
+   "id": "A5039640196",
+   "name": "Thi Phuong Linh Le",
+   "orcid": "0000-0002-4427-8069",
+   "prevRank": 6214,
+   "pro": 51.9,
+   "vnShare": 20,
+   "worksWithAffil": 20,
+   "vnWorks": 4,
+   "countries": [
+    "KR:13",
+    "CZ:3"
+   ],
+   "units": [
+    "Trường Đại học Khoa học Tự nhiên (ĐHQGHN)"
+   ]
+  },
+  {
    "id": "A5084292200",
    "name": "Minh Tri Nguyen",
    "orcid": "0000-0002-7956-2078",
@@ -15267,6 +18596,22 @@
    ],
    "units": [
     "Trường Đại học Kỹ thuật Y Dược Đà Nẵng"
+   ]
+  },
+  {
+   "id": "A5037328641",
+   "name": "Wessam Z. Aziz",
+   "orcid": null,
+   "prevRank": 6372,
+   "pro": 50.9,
+   "vnShare": 20,
+   "worksWithAffil": 15,
+   "vnWorks": 3,
+   "countries": [
+    "EG:15"
+   ],
+   "units": [
+    "Viện Bảo vệ thực vật"
    ]
   },
   {
@@ -15442,6 +18787,22 @@
    ]
   },
   {
+   "id": "A5080398956",
+   "name": "Vanminh Le",
+   "orcid": null,
+   "prevRank": 6505,
+   "pro": 50.3,
+   "vnShare": 20,
+   "worksWithAffil": 15,
+   "vnWorks": 3,
+   "countries": [
+    "CN:12"
+   ],
+   "units": [
+    "Viện Dược liệu"
+   ]
+  },
+  {
    "id": "A5027585752",
    "name": "Yaghoob Hamedi",
    "orcid": "0000-0003-4224-3118",
@@ -15525,6 +18886,24 @@
    ]
   },
   {
+   "id": "A5112012529",
+   "name": "Dieu Linh Nguyen",
+   "orcid": "0009-0009-7929-2192",
+   "prevRank": 6629,
+   "pro": 49.6,
+   "vnShare": 25.9,
+   "worksWithAffil": 27,
+   "vnWorks": 7,
+   "countries": [
+    "US:11",
+    "KR:6",
+    "AT:1"
+   ],
+   "units": [
+    "Học viện Ngân hàng"
+   ]
+  },
+  {
    "id": "A5068608840",
    "name": "Thiago M. Pereira",
    "orcid": "0000-0001-6802-6918",
@@ -15590,6 +18969,23 @@
    ],
    "units": [
     "Field Crops Research Institute"
+   ]
+  },
+  {
+   "id": "A5027377548",
+   "name": "Ho Van Khuong",
+   "orcid": null,
+   "prevRank": 6754,
+   "pro": 49,
+   "vnShare": 20.6,
+   "worksWithAffil": 34,
+   "vnWorks": 7,
+   "countries": [
+    "KR:15",
+    "CA:12"
+   ],
+   "units": [
+    "Trường Đại học Công nghệ Thành phố Hồ Chí Minh"
    ]
   },
   {
@@ -15839,6 +19235,38 @@
    ],
    "units": [
     "Đại học Y Dược Thành phố Hồ Chí Minh"
+   ]
+  },
+  {
+   "id": "A5109577187",
+   "name": "Thi Ngoc Ha Nguyen",
+   "orcid": "0000-0001-8377-7162",
+   "prevRank": 7266,
+   "pro": 45.4,
+   "vnShare": 21.1,
+   "worksWithAffil": 19,
+   "vnWorks": 4,
+   "countries": [
+    "DE:15"
+   ],
+   "units": [
+    "Trường Đại học Kinh tế"
+   ]
+  },
+  {
+   "id": "A5022380676",
+   "name": "Yury O. Kopylov-Guskov",
+   "orcid": "0000-0002-3051-8789",
+   "prevRank": 7281,
+   "pro": 45.3,
+   "vnShare": 22.2,
+   "worksWithAffil": 18,
+   "vnWorks": 4,
+   "countries": [
+    "RU:18"
+   ],
+   "units": [
+    "Joint Vietnam-Russia Tropical Science and Technology Research Center"
    ]
   },
   {
@@ -16141,6 +19569,40 @@
    ],
    "units": [
     "Trường Đại học Thủy lợi"
+   ]
+  },
+  {
+   "id": "A5036137150",
+   "name": "Hoang Anh Pham",
+   "orcid": "0000-0001-9621-9266",
+   "prevRank": 7718,
+   "pro": 40.8,
+   "vnShare": 26.7,
+   "worksWithAffil": 15,
+   "vnWorks": 4,
+   "countries": [
+    "FR:11"
+   ],
+   "units": [
+    "Học viện Công nghệ Bưu chính Viễn thông"
+   ]
+  },
+  {
+   "id": "A5101310788",
+   "name": "Tran Trung Nguyen",
+   "orcid": "0000-0003-2086-0748",
+   "prevRank": 7737,
+   "pro": 40.6,
+   "vnShare": 29.2,
+   "worksWithAffil": 24,
+   "vnWorks": 7,
+   "countries": [
+    "DE:11",
+    "JP:6"
+   ],
+   "units": [
+    "Trường Đại học Sư phạm Thành phố Hồ Chí Minh",
+    "Trường Đại học Văn Lang"
    ]
   },
   {
