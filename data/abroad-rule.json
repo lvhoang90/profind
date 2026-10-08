@@ -1,6 +1,9 @@
 {
-  "_note": "Quy tắc 'liên kết chính ở nước ngoài' của bảng xếp hạng Việt Nam: hồ sơ có DƯỚI maxVnShare công trình mang liên kết tại Việt Nam (trong số công trình OpenAlex ghi cơ quan, tối thiểu minWorks công trình) thì không xếp hạng. Chỉ áp dụng cho bảng Việt Nam; bảng phạm vi thế giới (nếu mở rộng sau này) không có giới hạn này. Dùng bởi build-index.mjs, abroad-review.mjs, abroad-panel.mjs, build-seo-pages.mjs.",
-  "maxVnShare": 0.3,
+  "_note": "Quy tắc 'liên kết chính ở nước ngoài' của bảng xếp hạng Việt Nam (xem scripts/lib/abroad.mjs). window: số năm gần nhất tính từ năm dựng dữ liệu (3 = 2024, 2025, 2026). recentMinShare: tỉ lệ công trình có liên kết Việt Nam tối thiểu ở MỖI năm có công bố trong cửa sổ. maxVnShare: ngưỡng dài hạn, chỉ dùng khi không đủ bằng chứng gần đây. Hai ngưỡng do hội đồng mô phỏng quyết định (scripts/abroad-decision.mjs). Chỉ áp dụng cho bảng Việt Nam; bảng phạm vi thế giới (nếu mở rộng sau này) không có giới hạn này.",
+  "window": 3,
+  "recentMinWorks": 3,
   "minWorks": 15,
-  "decidedBy": "scripts/abroad-decision.mjs (tham chiếu R = trung vị đồng thuận 3 lần mô phỏng; ràng buộc loại nhầm kỳ vọng ≤ 1% cụm Việt Nam; làm tròn xuống bội 5)"
+  "recentMinShare": 0.34,
+  "maxVnShare": 0.06,
+  "decidedBy": "scripts/abroad-decision.mjs: trung vị của ba trung vị đồng thuận độc lập của hội đồng mô phỏng, làm tròn đến số nguyên"
 }

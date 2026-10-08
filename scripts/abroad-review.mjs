@@ -1,23 +1,18 @@
-// Danh sách hồ sơ có DƯỚI 20% công trình mang liên kết tại Việt Nam (theo OpenAlex authorships, data/raw/_authorship.json) để quản trị viên xác nhận ngoại lệ.
-//   node scripts/abroad-review.mjs   -> data/abroad-review.json (sắp theo hạng PRO-SCORE hiện có; chạy TRƯỚC khi dựng lại chỉ mục để còn hạng cũ)
-// Ngoại lệ (vẫn xếp hạng): thêm mã vào data/vn-confirmed.json. Quy tắc áp dụng trong scripts/build-index.mjs (ABROAD_MAX, ABROAD_MIN_WORKS).
+// Danh sách hồ sơ bị gắn nhãn "liên kết chính ở nước ngoài" mà TRƯỚC ĐÓ đang xếp hạng, để quản trị viên xác nhận ngoại lệ.
+//   node scripts/abroad-review.mjs [--old <profind.json cũ>]   -> data/abroad-review.json (sắp theo hạng cũ)
+// prevRank: hạng trước khi áp quy tắc (lấy từ ảnh chụp cũ nếu có, nếu không thì hạng trong --old, mặc định bản profind.json ở commit HEAD).
+// Ngoại lệ (vẫn xếp hạng): thêm mã vào data/vn-confirmed.json. Quy tắc: scripts/lib/abroad.mjs; ngưỡng do hội đồng mô phỏng quyết định.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-const { maxVnShare: MAX, minWorks: MIN_WORKS } = JSON.parse(readFileSync("data/abroad-rule.json", "utf8"));
-const A = JSON.parse(readFileSync("data/raw/_authorship.json", "utf8")), P = JSON.parse(readFileSync("public/data/profind.json", "utf8"));
-const CONF = new Set(JSON.parse(readFileSync("data/vn-confirmed.json", "utf8")).ids ?? []);
-const st = new Map();
-for (const k in A) { const a = k.slice(0, k.indexOf("-")), c = A[k][1] ?? []; if (!c.length) continue; const e = st.get(a) ?? st.set(a, { n: 0, vn: 0, c: {} }).get(a); e.n++; if (c.includes("VN")) e.vn++; for (const x of new Set(c)) if (x !== "VN") e.c[x] = (e.c[x] ?? 0) + 1; }
-const unit = new Map(P.institutions.map((i) => [i.id, i.name]));
-const rows = [];
+import { execSync } from "node:child_process";
+const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+const P = JSON.parse(readFileSync("public/data/profind.json", "utf8")), rule = JSON.parse(readFileSync("data/abroad-rule.json", "utf8"));
+const old = JSON.parse(arg("old") ? readFileSync(arg("old"), "utf8") : execSync("git show HEAD:public/data/profind.json", { maxBuffer: 1 << 30 }).toString()), oldRank = new Map(old.authors.map((a) => [a.id, a.proRank]));
+const snap = existsSync("data/abroad-review.json") ? JSON.parse(readFileSync("data/abroad-review.json", "utf8")) : { rows: [] }, snapRank = new Map(snap.rows.map((r) => [r.id, r.prevRank]));
+const unit = new Map(P.institutions.map((i) => [i.id, i.name])), rows = [];
 for (const a of P.authors) {
-  if (a.proRank == null || a.top2 || CONF.has(a.id)) continue;
-  const e = st.get(a.id); if (!e || e.n < MIN_WORKS || e.vn / e.n >= MAX) continue;
-  rows.push({ id: a.id, name: a.name, orcid: a.orcid, prevRank: a.proRank, pro: a.pro, vnShare: Math.round(1000 * e.vn / e.n) / 10, worksWithAffil: e.n, vnWorks: e.vn, countries: Object.entries(e.c).sort((x, y) => y[1] - x[1]).slice(0, 3).map(([c, n]) => `${c}:${n}`), units: a.institutions.map((i) => unit.get(i) ?? i) });
+  if (!a.abroadMain) continue; const prev = snapRank.get(a.id) ?? oldRank.get(a.id); if (prev == null) continue;
+  rows.push({ id: a.id, name: a.name, orcid: a.orcid, prevRank: prev, basis: a.abroadBasis, vnRecentMin: a.vnRecent, vnOverall: a.vnShare, recentWorks: a.vnRecentWorks, units: a.institutions.map((i) => unit.get(i) ?? i) });
 }
-const prev = existsSync("data/abroad-review.json") ? JSON.parse(readFileSync("data/abroad-review.json", "utf8")) : null;
-if (!rows.length && !prev) { console.log("Không có hồ sơ đang xếp hạng dưới ngưỡng."); process.exit(0); }
-if (!rows.length) { console.log("Không còn hồ sơ đang xếp hạng dưới ngưỡng (quy tắc có thể đã được áp dụng): giữ nguyên tệp cũ."); process.exit(0); }
-// Gộp với ảnh chụp cũ: hồ sơ đã có trong tệp cũ giữ nguyên (hạng cũ trước khi áp quy tắc); hồ sơ mới (khi nâng ngưỡng) ghi hạng hiện tại.
-const have = new Set((prev?.rows ?? []).map((r) => r.id)), merged = [...(prev?.rows ?? []), ...rows.filter((r) => !have.has(r.id))].sort((x, y) => x.prevRank - y.prevRank);
-writeFileSync("data/abroad-review.json", JSON.stringify({ _note: "Hồ sơ đang xếp hạng (hoặc từng xếp hạng trước khi áp quy tắc) nhưng dưới ngưỡng % công trình có liên kết VN. prevRank = hạng trước khi áp quy tắc (hồ sơ thêm khi nâng ngưỡng: hạng tại thời điểm thêm). Ngoại lệ: thêm mã vào data/vn-confirmed.json.", rule: { maxVnShare: MAX, minWorksWithAffiliation: MIN_WORKS }, total: merged.length, rows: merged }, null, 1) + "\n");
-console.log(`${merged.length} hồ sơ (thêm ${merged.length - (prev?.rows.length ?? 0)}; trong top 1000: ${merged.filter((r) => r.prevRank <= 1000).length})`);
+rows.sort((x, y) => x.prevRank - y.prevRank);
+writeFileSync("data/abroad-review.json", JSON.stringify({ _note: "Hồ sơ từng xếp hạng nhưng nay bị gắn nhãn 'liên kết chính ở nước ngoài'. prevRank = hạng trước khi áp quy tắc. Ngoại lệ: thêm mã vào data/vn-confirmed.json.", rule: { window: P.meta.abroad?.window, recentMinShare: Math.round(rule.recentMinShare * 100), maxVnShare: Math.round(rule.maxVnShare * 100) }, total: rows.length, rows }, null, 1) + "\n");
+console.log(`${rows.length} hồ sơ (top 100 cũ: ${rows.filter((r) => r.prevRank <= 100).length}; top 1000 cũ: ${rows.filter((r) => r.prevRank <= 1000).length})`);
