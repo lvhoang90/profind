@@ -1,6 +1,6 @@
 // Tìm các cặp hồ sơ có thể là CÙNG MỘT người bị OpenAlex tách đôi (khác mã, không mâu thuẫn ORCID). Chỉ ĐỀ XUẤT; việc gộp thật qua data/corrections.json (merge).
 //   node scripts/find-split.mjs            -> data/split-candidates.json (A: gộp chắc, B: cần người duyệt) + public/data/_split-review.json (cho trang duyệt ở quản trị)
-// Tầng A: tên trùng (cùng bộ từ), cùng đơn vị, đúng một hồ sơ có ORCID, cùng ngành, KHÔNG có công trình chung (DOI/nhan đề), năm công bố bổ sung nhau, và không còn người thứ ba trùng tên trong toàn bộ dữ liệu.
+// LƯU Ý: từ nay không có gộp tự động theo tên; ORCID là khóa duy nhất (cùng ORCID tự gộp ở build-index). Tầng A cũ: tên trùng (cùng bộ từ), cùng đơn vị, đúng một hồ sơ có ORCID, cùng ngành, KHÔNG có công trình chung (DOI/nhan đề), năm công bố bổ sung nhau, và không còn người thứ ba trùng tên trong toàn bộ dữ liệu.
 // Công trình chung nghĩa là hai người khác nhau (một người không thể là hai tác giả của cùng một bài) nên loại khỏi cả A lẫn B.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 const D = JSON.parse(readFileSync("public/data/profind.json", "utf8")), C = JSON.parse(readFileSync("data/corrections.json", "utf8"));
@@ -41,7 +41,7 @@ for (const g of all.values()) { const eligible = g.filter((a) => !a.suspect && !
     const sameName = key(x.name) === key(y.name) && norm(x.name) === norm(y.name);
     const exactlyOneOrcid = !!x.orcid !== !!y.orcid;
     const third = g.length > 2;
-    const tier = !hold.has([x.id, y.id].sort().join("|")) && !third && sameName && exactlyOneOrcid && overlap <= 0.5 && wx.length >= 2 && wy.length >= 2 && norm(x.name).split(" ").length >= 3 && x.disciplines.some((d) => y.disciplines.includes(d)) ? "A" : "B"; // đủ bằng chứng (≥2 công trình mỗi bên) tên đủ đặc trưng (≥3 từ) và cùng ngành
+    const tier = !hold.has([x.id, y.id].sort().join("|")) && !third && sameName && exactlyOneOrcid && overlap <= 0.5 && wx.length >= 2 && wy.length >= 2 && norm(x.name).split(" ").length >= 3 && x.disciplines.some((d) => y.disciplines.includes(d)) ? "B" : "B"; // KHÔNG tự gộp theo tên: chỉ quản trị viên xác nhận từng cặp (tầng A cũ chỉ còn là tín hiệu) // đủ bằng chứng (≥2 công trình mỗi bên) tên đủ đặc trưng (≥3 từ) và cùng ngành
     out.push({ tier, _x: x, _y: y, inst, a: x.id, b: y.id, name: x.name === y.name ? x.name : `${x.name} / ${y.name}`, groupSize: g.length, overlap: Math.round(overlap * 100) / 100, sameName, exactlyOneOrcid, shared: inst.map((s) => iName.get(s) ?? s), A: side(x), B: side(y) });
   } }
 // Điểm nghi trùng 0-100 và nhóm: 4 mức để duyệt theo cụm.
