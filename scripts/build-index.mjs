@@ -72,7 +72,7 @@ const nDupWorks = prep.length - prepared.length;
 // Với công trình thuộc tạp chí nhiều ngành, chọn ngành trong số ngành của tạp chí bằng (a) độ giống tiêu đề với các công trình ở tạp chí đơn ngành, (b) ngành mà tác giả đã có ở các công trình đơn ngành.
 const dTok = (t) => { const w = foldS(t).replace(/[^a-z0-9 ]+/g, " ").split(" ").filter((x) => x.length > 2); return [...w, ...w.slice(1).map((x, i) => `${w[i]}_${x}`)]; };
 const dTf = new Map(), dDf = new Map(); // ngành -> (từ -> số công trình)
-const MULTI = 4, multi = (p) => p.js.length >= MULTI; // tạp chí trong nước nằm ở >= 4 ngành HĐGSNN = tạp chí đa ngành
+const GENERAL = 10, MULTI = 4, multi = (p) => p.js.length >= MULTI; // tạp chí trong nước nằm ở >= 4 ngành HĐGSNN = tạp chí đa ngành
 for (const p of prepared) if (p.disc.length === 1) { const m = dTf.get(p.disc[0]) ?? new Map(); for (const t of new Set(dTok(p.w.title))) { m.set(t, (m.get(t) ?? 0) + 1); dDf.set(t, (dDf.get(t) ?? 0) + 1); } dTf.set(p.disc[0], m); }
 const nD = dTf.size || 1, dNorm = new Map(), tIdf = (t) => Math.log(1 + nD / (dDf.get(t) ?? 1));
 for (const [d, m] of dTf) { let n = 0; for (const [t, c] of m) n += (c * tIdf(t)) ** 2; dNorm.set(d, Math.sqrt(n) || 1); }
@@ -84,7 +84,9 @@ let nAmb = 0, nAmbSkipped = 0;
 for (const p of prepared) {
   if (!multi(p)) continue; nAmb++;
   const m = votes.get(p.w.authorId) ?? new Map(), pr = prior.get(p.w.authorId), toks = dTok(p.w.title);
-  const sc = p.disc.map((d) => [d, titleSim(toks, d) + (pr?.get(d) ?? 0)]), top = Math.max(...sc.map((x) => x[1]));
+  // Tạp chí tổng hợp (>= 10 ngành HĐGSNN): danh sách ngành thường thiếu ngành thật của bài (ví dụ TNU Journal không có Kinh tế), nên xét mọi ngành đã học được.
+  const cand = p.js.length >= GENERAL ? [...new Set([...p.disc, ...dTf.keys()])] : p.disc;
+  const sc = cand.map((d) => [d, titleSim(toks, d) + (pr?.get(d) ?? 0)]), top = Math.max(...sc.map((x) => x[1]));
   if (top <= 0) { if (p.disc.length > 3) { nAmbSkipped++; continue; } for (const d of p.disc) m.set(d, (m.get(d) ?? 0) + idf(d) / p.disc.length); }
   else { const win = sc.filter((x) => x[1] >= top * 0.8).map((x) => x[0]); for (const d of win) m.set(d, (m.get(d) ?? 0) + idf(d) / win.length); }
   votes.set(p.w.authorId, m);
