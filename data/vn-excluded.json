@@ -1,1 +1,9 @@
-{"_note":"Mã OpenAlex của hồ sơ cần loại khỏi xếp hạng (ví dụ nhà khoa học nước ngoài chỉ có liên kết phụ tại VN).","ids":[]}
+{
+ "_note": "Mã OpenAlex của hồ sơ cần loại khỏi xếp hạng (ví dụ nhà khoa học nước ngoài chỉ có liên kết phụ tại VN).",
+ "ids": [
+  "A5040929731"
+ ],
+ "reasons": {
+  "A5040929731": "Nhan Phan-Thien (ORCID 0000-0003-3716-7907): giáo sư danh dự NUS (Singapore) và Đại học Sydney (Úc); chỉ có liên kết phụ gần đây với Đại học Cửu Long (8/468 công trình có liên kết VN). Quản trị viên xác nhận ngày 2026-10-08."
+ }
+}
