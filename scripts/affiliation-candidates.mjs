@@ -13,7 +13,8 @@ const known = I.filter((i) => i.ror || existsSync(`data/raw/${i.id}.json`)).flat
 const GENERIC = /^(truong|dai hoc|hoc vien|vien|cao dang|trung tam|phan hieu|university|college|institute|school)( [a-z]+)?$/;
 const VN = /viet ?nam|hanoi|ha noi|ho chi minh|hcm|da nang|danang|hue|can tho|hai phong|thai nguyen|nghe an|vinh|da lat|nha trang|binh duong|dong nai|quang ninh|nam dinh|thanh hoa/;
 const hasVi = (r) => /[À-ỹ]/.test(r) || VN.test(norm(r)); // có chữ Việt có dấu hoặc địa danh Việt Nam
-const out = []; const rows = I.filter((i) => !i.ror && !existsSync(`data/raw/${i.id}.json`));
+const skip = new Set((existsSync("data/affiliation-reject.json") ? JSON.parse(readFileSync("data/affiliation-reject.json", "utf8")) : []).map((x) => x.id)); // đơn vị quản trị viên đã loại/giữ lại
+const out = []; const rows = I.filter((i) => !i.ror && !skip.has(i.id) && !existsSync(`data/raw/${i.id}.json`));
 for (const inst of rows) {
   const phrases = [...new Set([inst.name.replace(/\s*\([^)]*\)\s*$/, ""), inst.en].filter(Boolean).map((p) => p.replace(/["“”]/g, "").trim()))];
   // đủ đặc thù: ≥3 từ, không phải chuỗi chung chung, không trùng/chứa tên đơn vị đã nạp (tránh nhiễu từ đơn vị cha)
