@@ -15,6 +15,7 @@ const I = JSON.parse(readFileSync("data/institutions.json", "utf8")).institution
 const have = new Set(readdirSync("data/raw").map((f) => f.replace(".json", "")));
 const pending = JSON.parse(readFileSync("data/ingest-pending.json", "utf8")).map((x) => x.id).filter((id) => I.some((i) => i.id === id));
 const all = [...new Set([...have].filter((id) => I.some((i) => i.id === id)).concat(pending))];
+run(`node scripts/ingest-manual.mjs --mailto ${mailto} --from ${from}`); // tác giả quản trị viên chỉ định + bổ sung công trình theo ORCID (data/manual-authors.json)
 run(`node scripts/ingest-openalex.mjs --mailto ${mailto} --only "${all.join(",")}" --max-authors ${max} --from ${from}`);
 run(`node scripts/backfill-doi.mjs --mailto ${mailto}`);
 b = await budget(); if (b.daily_remaining_usd < 0.02) console.log("Ngân sách gần hết, bỏ qua bước bổ sung quốc gia; chạy lại sau.");
