@@ -9,6 +9,9 @@ const short = (id) => (id ?? "").replace("https://openalex.org/", "");
 const cleanDoi = (d) => (d ? String(d).replace(/^https?:\/\/(dx\.)?doi\.org\//i, "").trim().toLowerCase() || null : null);
 const get = async (u) => { for (let t = 0; t < 6; t++) { try { const r = await fetch(u + `&mailto=${encodeURIComponent(mailto)}&api_key=${KEY}`); if (r.ok) return r.json(); if (r.status === 429 || r.status >= 500) await new Promise((s) => setTimeout(s, 2000 * 2 ** t)); else return null; } catch { await new Promise((s) => setTimeout(s, 2000)); } } return null; };
 const C = JSON.parse(readFileSync("data/affiliation-candidates.json", "utf8"));
+// Tên khoa/trường ngắn ("Trường Sư phạm", "Trường Kinh tế"...) trùng với nhiều đại học: chuỗi cơ quan phải có thêm tên đại học chủ quản.
+const REQ = [[/^can-tho-university-/, /can tho/], [/^hue-university-/, /\bhue\b/], [/^danang-university-/, /da nang|danang/]];
+const reqFor = (id) => REQ.find(([r]) => r.test(id))?.[1] ?? null;
 for (const id of ids) {
   const c = C.find((x) => x.id === id); if (!c) { console.warn(`${id}: không có trong danh sách ứng viên`); continue; }
   const cache = `data/raw/${id}.json`; if (existsSync(cache)) { console.log(`${id}: đã có cache, bỏ qua`); continue; }
@@ -18,7 +21,7 @@ for (const id of ids) {
   while (cur && scanned < 2000) {
     const j = await get(`https://api.openalex.org/works?filter=raw_affiliation_strings.search:${encodeURIComponent('"' + c.phrase + '"')},from_publication_date:${FROM}-01-01&per-page=200&cursor=${cur}&select=id,authorships`);
     if (!j) break; scanned += j.results.length; cur = j.meta?.next_cursor && j.results.length ? j.meta.next_cursor : null;
-    for (const w of j.results) for (const a of w.authorships ?? []) if ((a.raw_affiliation_strings ?? []).some((r) => norm(r).includes(np))) { const k = short(a.author?.id); if (!k) continue; const e = cnt.get(k) ?? { id: k, name: a.author.display_name, orcid: (a.author.orcid ?? "").replace("https://orcid.org/", "") || null, n: 0 }; e.n++; cnt.set(k, e); }
+    for (const w of j.results) for (const a of w.authorships ?? []) if ((a.raw_affiliation_strings ?? []).some((r) => { const n = norm(r); return n.includes(np) && (!reqFor(id) || reqFor(id).test(n)); })) { const k = short(a.author?.id); if (!k) continue; const e = cnt.get(k) ?? { id: k, name: a.author.display_name, orcid: (a.author.orcid ?? "").replace("https://orcid.org/", "") || null, n: 0 }; e.n++; cnt.set(k, e); }
   }
   for (const e of cnt.values()) if (e.n >= MINW || e.orcid) pick.push(e);
   const authors = [], works = [];
