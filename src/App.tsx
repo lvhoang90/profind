@@ -15,7 +15,7 @@ import { useWorks } from "./wsearch";
 import { StarBtn } from "./StarBtn";
 import { ProBadge, ProBadgeTag } from "./Badge";
 import { VisitChip } from "./VisitChip";
-import { VerifiedTick, VerifiedBadge, ClaimBox } from "./Verified";
+import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg } from "./Verified";
 import { Footer, EcoLink } from "./Footer";
 import { evt, startSession } from "./analytics";
 import { getTheme, setTheme, type Theme } from "./theme";
@@ -426,7 +426,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
     <article className="ap">
       <p><a className="backl" href="#/">{t("back")}</a></p>
       <header className="hero">
-        <div className="av" style={{ background: `linear-gradient(135deg,hsl(${hue} 75% 52%),hsl(${(hue + 55) % 360} 80% 42%))` }} aria-hidden="true">{initials(a.name)}</div>
+        <div className="av" style={{ background: `linear-gradient(135deg,hsl(${hue} 75% 52%),hsl(${(hue + 55) % 360} 80% 42%))` }} aria-hidden="true"><AvatarImg id={a.id} fallback={initials(a.name)} /></div>
         <div className="hero-main">
           <h1 className="au">{a.name}<VerifiedTick id={a.id} size={22} /></h1>
           <p className="badges"><VerifiedBadge id={a.id} />{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}<Top2Tag a={a} cls="badge top2b" />{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</p>
@@ -445,6 +445,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
         <div className="kpi"><span className="kic"><Icon n="link" size={20} /></span><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span><i className="bar" role="presentation"><u style={{ width: `${Math.round(a.matchedRate * 100)}%` }} /></i></div>
       </div>
       {a.suspect && <p className="banner demo" role="note"><Icon n="info" />{t("suspectNote")}</p>}
+      <AuthorExtras id={a.id} />
       {works && works.length > 0 && (
         <div className="insights">
           <section className="card" aria-label={t("chartYear")}>

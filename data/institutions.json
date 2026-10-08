@@ -3,7 +3,7 @@
   "status": "wikipedia+ror, chờ đối chiếu danh sách chính thức Bộ GD&ĐT",
   "built": "2026-10-07",
   "count": 602,
-  "withRor": 351,
+  "withRor": 357,
   "sources": [
    "https://vi.wikipedia.org/wiki/Danh_s%C3%A1ch_tr%C6%B0%E1%BB%9Dng_%C4%91%E1%BA%A1i_h%E1%BB%8Dc,_h%E1%BB%8Dc_vi%E1%BB%87n_v%C3%A0_cao_%C4%91%E1%BA%B3ng_t%E1%BA%A1i_Vi%E1%BB%87t_Nam",
    "https://ror.org (CC0)"
@@ -1601,12 +1601,13 @@
    "type": "public-univ",
    "managedBy": "Bộ Văn hóa, Thể thao và Du lịch",
    "city": null,
-   "ror": null,
+   "ror": "https://ror.org/00pnmpx53",
    "source": "vi.wikipedia.org",
    "moetCode": "MTH",
    "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=969",
    "official": true,
-   "cityWas": "Hà Nội"
+   "cityWas": "Hà Nội",
+   "rorSource": "openalex-name"
   },
   {
    "id": "skda",
@@ -1630,12 +1631,13 @@
    "type": "public-univ",
    "managedBy": "Bộ Văn hóa, Thể thao và Du lịch",
    "city": null,
-   "ror": null,
+   "ror": "https://ror.org/0029zp883",
    "source": "vi.wikipedia.org",
    "moetCode": "DSD",
    "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=757",
    "official": true,
-   "cityWas": "Hà Nội"
+   "cityWas": "Hà Nội",
+   "rorSource": "openalex-name"
   },
   {
    "id": "hcmufa",
@@ -1660,12 +1662,13 @@
    "type": "public-univ",
    "managedBy": "Bộ Văn hóa, Thể thao và Du lịch",
    "city": null,
-   "ror": null,
+   "ror": "https://ror.org/0237dqp31",
    "source": "vi.wikipedia.org",
    "moetCode": "TDS",
    "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=696",
    "official": true,
-   "cityWas": "Hà Nội"
+   "cityWas": "Hà Nội",
+   "rorSource": "openalex-name"
   },
   {
    "id": "vhs",
@@ -1896,12 +1899,13 @@
    "type": "public-univ",
    "managedBy": "Bộ Xây dựng",
    "city": null,
-   "ror": null,
+   "ror": "https://ror.org/011c0vt04",
    "source": "vi.wikipedia.org",
    "moetCode": "GTS",
    "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=977",
    "official": true,
-   "cityWas": "Hà Nội"
+   "cityWas": "Hà Nội",
+   "rorSource": "openalex-name"
   },
   {
    "id": "vaa",
@@ -2426,12 +2430,13 @@
    "type": "public-univ",
    "managedBy": "Các cơ quan, tổ chức khác",
    "city": null,
-   "ror": null,
+   "ror": "https://ror.org/0226brd56",
    "source": "vi.wikipedia.org",
    "moetCode": "HXH",
    "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=708",
    "official": true,
-   "cityWas": "Hà Nội"
+   "cityWas": "Hà Nội",
+   "rorSource": "openalex-name"
   },
   {
    "id": "vpu",
@@ -8006,11 +8011,12 @@
    "type": "university-unclassified",
    "managedBy": null,
    "city": null,
-   "ror": null,
+   "ror": "https://ror.org/03x812s82",
    "source": "moet.gov.vn",
    "moetCode": "DHK",
    "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=701",
-   "official": true
+   "official": true,
+   "rorSource": "openalex-name"
   },
   {
    "id": "dhf",
