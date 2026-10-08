@@ -294,12 +294,12 @@ export default async function handler(request) {
       await safeMail(claim.email, claimMail("approved", { name: claim.name, authorName: claim.authorName, origin: url.origin, authorId: claim.authorId, until }));
       return rec;
     };
-    const newClaim = async ({ authorId, authorName, name, email, orcid, scholar, note, emailVerified, by }) => {
+    const newClaim = async ({ authorId, authorName, name, email, orcid, scholar, note, emailVerified, by, kind = "claim" }) => {
       const allowed = isFreeMail(email) ? ((await one(["SMEMBERS", CLA])) ?? []).includes(email) : true;
       const lk = await vfLookup(authorId, orcid);
       const r = await runChecks({ authorId, name, email, orcid, vf: lk, allowedFree: allowed, emailVerified });
-      const claim = { id: await sha(`${authorId}|${email}|${Date.now()}`, 16), authorId, authorName: authorName || r.oa?.name || authorId, name, email, orcid, scholar, note, status: "review", auto: false, checks: r.checks, oa: r.oa, createdAt: Date.now(), by: by || "user" };
-      if (r.auto) { claim.auto = true; await approveClaim(claim, "tự động"); } else { await one(["HSET", CLK, claim.id, JSON.stringify(claim)]); }
+      const claim = { id: await sha(`${authorId}|${email}|${Date.now()}`, 16), kind, authorId, authorName: authorName || r.oa?.name || authorId, name, email, orcid, scholar, note, status: "review", auto: false, checks: r.checks, oa: r.oa, createdAt: Date.now(), by: by || "user" };
+      if (r.auto && kind === "claim") { claim.auto = true; await approveClaim(claim, "tự động"); } else { await one(["HSET", CLK, claim.id, JSON.stringify(claim)]); }
       return claim;
     };
     if (op === "verified" && request.method === "GET") {
@@ -320,9 +320,32 @@ export default async function handler(request) {
       const scholar = tidy(body.scholar, 300); if (scholar && !/^https:\/\/scholar\.google\.[a-z.]+\/citations\?[^\s]*user=[A-Za-z0-9_-]{8,14}/.test(scholar)) return json({ error: "Đường dẫn Google Scholar chưa đúng." }, 400);
       const allowedFree = !isFreeMail(me.email) || (await one(["SMEMBERS", CLA]) ?? []).includes(me.email);
       if (!allowedFree) return json({ error: "freemail" }, 403);
-      const claim = await newClaim({ authorId, authorName: tidy(body.authorName, 120), name, email: me.email, orcid, scholar, note: tidy(body.note, 1000), emailVerified: true });
+      const kind = body.kind === "remove" ? "remove" : "claim", note = tidy(body.note, 1000);
+      if (kind === "remove" && note.length < 5) return json({ error: "Hãy nêu lý do đề nghị gỡ hồ sơ." }, 400);
+      const claim = await newClaim({ authorId, authorName: tidy(body.authorName, 120), name, email: me.email, orcid, scholar, note, emailVerified: true, kind });
       if (claim.status === "review") { await safeMail(claim.email, claimMail("received", { name, authorName: claim.authorName, origin: url.origin, authorId })); await notifyAdmins(claim); }
       return json({ ok: true, status: claim.status, until: claim.until || null });
+    }
+    if (op === "admin-mail-status" && request.method === "GET" || op === "admin-mail-log" && request.method === "GET") { const bad = needAdmin(); if (bad) return bad;
+      if (op === "admin-mail-status") {
+        const e = process.env, f = e.MAIL_FROM || e.CORRECTION_FROM || "";
+        return json({ provider: mailProvider(), from: f, sandbox: /resend\.dev/i.test(f), persistent: store?.kind === "redis", session: !!e.SESSION_SECRET, admins: adminEmails.length, correctionTo: e.CORRECTION_TO || "luongviethoang.hcm@gmail.com" });
+      }
+      if (op === "admin-mail-log") { const rows = Object.values(pairs(await one(["HGETALL", "profind:mlog"]))).map(jparse).filter(Boolean).sort((a, b) => b.at - a.at).slice(0, 40); return json({ rows }); }
+    }
+    if (op === "admin-mail-send" && request.method === "POST") { const bad = needAdmin(); if (bad) return bad;
+      {
+        const to = tidy(body.to, 160).toLowerCase(), subject = tidy(body.subject, 200), text = String(body.body || "").replace(/\r/g, "").trim().slice(0, 6000);
+        if (!EMAIL_RE.test(to)) return json({ error: "Email người nhận chưa đúng." }, 400);
+        if (subject.length < 3 || text.length < 5) return json({ error: "Thiếu tiêu đề hoặc nội dung." }, 400);
+        if (!(await limit(`mail:${me.id}`, 30, 3600))) return json({ error: "Gửi quá nhiều thư trong một giờ." }, 429);
+        const esc = (x) => x.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+        const html = `<div style="font-family:Arial,sans-serif;max-width:560px;margin:auto;padding:24px;color:#0f2a3d;line-height:1.6">${text.split(/\n{2,}/).map((pp) => `<p>${esc(pp).replace(/\n/g, "<br>")}</p>`).join("")}<p style="color:#5b7284;font-size:13px">ProFind · Viện ISA · profind.isavn.edu.vn</p></div>`;
+        const rec = { id: await sha(`${to}|${Date.now()}`, 12), at: Date.now(), by: me.email, to, subject, ok: true, err: "", kind: tidy(body.kind, 30) };
+        try { await sendMail(to, { subject, text, html, replyTo: me.email }); } catch (e) { rec.ok = false; rec.err = String(e.message).slice(0, 220); }
+        await one(["HSET", "profind:mlog", rec.id, JSON.stringify(rec)]);
+        return rec.ok ? json({ ok: true }) : json({ error: `Gửi thất bại: ${rec.err}` }, 502);
+      }
     }
     if (op === "admin-claims" && request.method === "GET") {
       const bad = needAdmin(); if (bad) return bad;
@@ -335,6 +358,7 @@ export default async function handler(request) {
       if (op === "admin-claim-decide") {
         const c = await loadClaim(body.id); if (!c) return json({ error: "Không tìm thấy yêu cầu." }, 404);
         const reason = tidy(body.reason, 400), d = String(body.decision);
+        if (d === "approve" && c.kind === "remove") { Object.assign(c, { status: "approved", decidedAt: Date.now(), decidedBy: me.email }); await one(["HSET", CLK, c.id, JSON.stringify(c)]); await safeMail(c.email, claimMail("removed", { name: c.name, authorName: c.authorName, origin: url.origin, authorId: c.authorId })); return json({ ok: true, status: "approved" }); }
         if (d === "approve") { await approveClaim(c, me.email); return json({ ok: true, status: "approved" }); }
         if (d === "reject" || d === "info") {
           Object.assign(c, { status: d === "reject" ? "rejected" : "info", reason, decidedAt: Date.now(), decidedBy: me.email });
