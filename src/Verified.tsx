@@ -102,10 +102,17 @@ export function AvatarImg({ id, fallback }: { id: string; fallback: ReactNode })
 
 // ---------- Tab "Hồ sơ khoa học" trong không gian tài khoản ----------
 type Mine = { authorId: string; name: string; until: number; hide?: string; profile: { disc?: string[]; orcid?: string; scholar?: string; site?: string; bio?: string; email?: string; phone?: string; showContact?: boolean; av?: number | boolean }; works: { doi: string; title: string; year: number; status: string; why: string; oa: string }[] };
+// Đọc tệp thành data: URL (CSP của trang chỉ cho img-src 'self' data:, không cho blob:), rồi cắt vuông 256 px.
 const shrink = (f: File) => new Promise<string>((res, rej) => {
-  const img = new Image(), u = URL.createObjectURL(f);
-  img.onload = () => { const s = 256, c = document.createElement("canvas"), k = Math.min(img.width, img.height); c.width = c.height = s; c.getContext("2d")!.drawImage(img, (img.width - k) / 2, (img.height - k) / 2, k, k, 0, 0, s, s); URL.revokeObjectURL(u); res(c.toDataURL("image/jpeg", 0.82)); };
-  img.onerror = () => rej(new Error("Không đọc được ảnh.")); img.src = u;
+  const fr = new FileReader();
+  fr.onerror = () => rej(new Error("Không đọc được ảnh."));
+  fr.onload = () => {
+    const img = new Image();
+    img.onload = () => { const s = 256, c = document.createElement("canvas"), k = Math.min(img.width, img.height); c.width = c.height = s; c.getContext("2d")!.drawImage(img, (img.width - k) / 2, (img.height - k) / 2, k, k, 0, 0, s, s); res(c.toDataURL("image/jpeg", 0.82)); };
+    img.onerror = () => rej(new Error("Không đọc được ảnh. Hãy dùng tệp JPG, PNG hoặc WebP."));
+    img.src = String(fr.result);
+  };
+  fr.readAsDataURL(f);
 });
 export function ScholarConsole() {
   const [list, setList] = useState<Mine[] | null>(null), [v, setV] = useState(0);
