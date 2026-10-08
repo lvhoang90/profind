@@ -399,7 +399,7 @@ export default async function handler(request) {
         if (body.clear === true) { await one(["HDEL", "profind:ins", id]); return json({ ok: true }); }
         const ok = (l) => (Array.isArray(l) ? l : []).map((x) => String(x)).filter((x) => /^[a-z0-9-]{2,80}$/.test(x)).slice(0, 12);
         const now = ok(body.now), past = ok(body.past).filter((u) => !now.includes(u)); if (!now.length) return json({ error: "Cần ít nhất một đơn vị hiện tại." }, 400);
-        await one(["HSET", "profind:ins", id, JSON.stringify({ now, past, by: me.email, at: Date.now() })]); return json({ ok: true });
+        await one(["HSET", "profind:ins", id, JSON.stringify({ now, past, by: me.email, src: "admin", at: Date.now() })]); return json({ ok: true });
       }
       if (op === "admin-claim-misattr") {
         const wid = String(body.workId || ""), m = /^(A\d{5,12})-W\d{4,14}$/.exec(wid); if (!m) return json({ error: "Mã công trình không hợp lệ." }, 400);
@@ -509,6 +509,14 @@ export default async function handler(request) {
         if (body.image === null) { p.av = false; await store.run([["HSET", APK, authorId, JSON.stringify(p)], ["HDEL", AVK, authorId]]); return json({ ok: true }); }
         const img = String(body.image || ""); if (img.length > 120000 || !/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(img)) return json({ error: "Ảnh không hợp lệ hoặc quá lớn (tối đa khoảng 90 KB)." }, 400);
         p.av = Date.now(); await store.run([["HSET", AVK, authorId, img], ["HSET", APK, authorId, JSON.stringify(p)]]); return json({ ok: true });
+      }
+      if (op === "author-inst") { // chủ hồ sơ tự chọn đơn vị hiện tại / trước đây; không ghi đè được mục do quản trị viên đặt
+        const cur = jparse(await one(["HGET", "profind:ins", authorId]));
+        if (cur?.src === "admin") return json({ error: "Đơn vị của hồ sơ này do quản trị viên xác nhận. Hãy liên hệ ProFind nếu cần thay đổi." }, 403);
+        if (body.clear === true) { await one(["HDEL", "profind:ins", authorId]); return json({ ok: true }); }
+        const ok = (l, n) => (Array.isArray(l) ? l : []).map((x) => String(x)).filter((x) => /^[a-z0-9-]{2,80}$/.test(x)).slice(0, n);
+        const now = ok(body.now, 4), past = ok(body.past, 6).filter((u) => !now.includes(u)); if (!now.length) return json({ error: "Hãy chọn ít nhất một đơn vị hiện tại." }, 400);
+        await one(["HSET", "profind:ins", authorId, JSON.stringify({ now, past, by: me.email, src: "owner", at: Date.now() })]); return json({ ok: true });
       }
       if (op === "author-privacy") {
         const mode = body.hideProfile === true ? "profile" : body.hideScore === true ? "score" : "none";

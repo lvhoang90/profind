@@ -8,7 +8,8 @@ const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY, MIN = +arg("mi
 if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
 const norm = (s) => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 const get = async (u) => { for (let t = 0; t < 5; t++) { try { const r = await fetch(u + `&mailto=${encodeURIComponent(mailto)}&api_key=${KEY}`); if (r.ok) return r.json(); if (r.status === 429 || r.status >= 500) await new Promise((s) => setTimeout(s, 2000 * 2 ** t)); else return null; } catch { await new Promise((s) => setTimeout(s, 2000)); } } return null; };
-const I = JSON.parse(readFileSync("data/institutions.json", "utf8")).institutions;
+const AL = existsSync("data/unit-alias.json") ? JSON.parse(readFileSync("data/unit-alias.json", "utf8")).alias : {}; // bản ghi trùng không dò riêng
+const I = JSON.parse(readFileSync("data/institutions.json", "utf8")).institutions.filter((i) => !AL[i.id]);
 const known = I.filter((i) => i.ror || existsSync(`data/raw/${i.id}.json`)).flatMap((i) => [norm(i.name), norm(i.en)]).filter((s) => s.length > 8);
 const GENERIC = /^(truong|dai hoc|hoc vien|vien|cao dang|trung tam|phan hieu|university|college|institute|school)( [a-z]+)?$/;
 const VN = /viet ?nam|hanoi|ha noi|ho chi minh|hcm|da nang|danang|hue|can tho|hai phong|thai nguyen|nghe an|vinh|da lat|nha trang|binh duong|dong nai|quang ninh|nam dinh|thanh hoa/;

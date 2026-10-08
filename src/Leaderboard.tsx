@@ -10,8 +10,8 @@ const MIN = 5, TOPN = 10;
 type Row = { id: string; name: string; sub: string; n: number; avg: number; p1000: number; cit: number; top: Author[] };
 type SortK = "avg" | "p1000" | "n" | "cit";
 const L = {
-  vi: { title: "Bảng xếp hạng", lead: "Xếp hạng đơn vị và ngành theo điểm trung bình của tối đa 10 nhà khoa học có PRO-SCORE cao nhất trong nhóm. Đây là chỉ số tham khảo mô phỏng, không phải xếp hạng chính thức.", units: "Đơn vị", fields: "Ngành", type: "Loại đơn vị", all: "Tất cả", rank: "Hạng", name: "Tên", avg: "Điểm TB top 10", p1000: "Trong PRO-SCORE1000", n: "Nhà khoa học có điểm", cit: "Tổng trích dẫn", top: "Đứng đầu", note: `Chỉ xét nhóm có từ ${MIN} nhà khoa học có điểm trở lên; hồ sơ nghi gộp nhầm nhiều người không được tính; chỉ tính đơn vị hiện tại của tác giả.`, view: "Xem danh sách", sort: "Sắp xếp theo", none: "Chưa có nhóm đủ điều kiện." },
-  en: { title: "Leaderboard", lead: "Institutions and fields ranked by the average PRO-SCORE of their top 10 scientists. A simulated reference index, not an official ranking.", units: "Institutions", fields: "Fields", type: "Institution type", all: "All", rank: "Rank", name: "Name", avg: "Top-10 avg score", p1000: "In PRO-SCORE1000", n: "Scored scientists", cit: "Total citations", top: "Top scientists", note: `Only groups with at least ${MIN} scored scientists are ranked; profiles suspected of merging several people are excluded; only each author's current institution counts.`, view: "View list", sort: "Sort by", none: "No eligible groups yet." },
+  vi: { title: "Bảng xếp hạng", lead: "Xếp hạng đơn vị và ngành theo điểm trung bình của tối đa 10 nhà khoa học có PRO-SCORE cao nhất trong nhóm. Đây là chỉ số tham khảo mô phỏng, không phải xếp hạng chính thức.", units: "Đơn vị", fields: "Ngành", type: "Loại đơn vị", all: "Tất cả", rank: "Hạng", name: "Tên", avg: "Điểm TB top 10", p1000: "Trong PRO-SCORE1000", n: "Nhà khoa học có điểm", cit: "Tổng trích dẫn", top: "Đứng đầu", note: `Chỉ xét nhóm có từ ${MIN} nhà khoa học có điểm trở lên; hồ sơ nghi gộp nhầm nhiều người không được tính; chỉ tính đơn vị hiện tại của tác giả; không xếp hạng cơ sở tôn giáo.`, view: "Xem danh sách", sort: "Sắp xếp theo", none: "Chưa có nhóm đủ điều kiện." },
+  en: { title: "Leaderboard", lead: "Institutions and fields ranked by the average PRO-SCORE of their top 10 scientists. A simulated reference index, not an official ranking.", units: "Institutions", fields: "Fields", type: "Institution type", all: "All", rank: "Rank", name: "Name", avg: "Top-10 avg score", p1000: "In PRO-SCORE1000", n: "Scored scientists", cit: "Total citations", top: "Top scientists", note: `Only groups with at least ${MIN} scored scientists are ranked; profiles suspected of merging several people are excluded; only each author's current institution counts; religious institutions are not ranked.`, view: "View list", sort: "Sort by", none: "No eligible groups yet." },
 };
 export function LeaderboardPage({ data, lang, num }: { data: Data; lang: Lang; num: (n: number, d?: number) => string }) {
   const t = L[lang], [tab, setTab] = useState<"u" | "f">("u"), [type, setType] = useState(""), [sort, setSort] = useState<SortK>("avg");
@@ -21,7 +21,7 @@ export function LeaderboardPage({ data, lang, num }: { data: Data; lang: Lang; n
     for (const a of data.authors) {
       if (a.suspect || a.pro == null) continue;
       const keys = tab === "u" ? a.institutions.filter((i) => !a.instPast?.includes(i)) : a.disciplines;
-      for (const k of keys) { if (tab === "u" && type && unitBy.get(k)?.type !== type) continue; (g.get(k) ?? g.set(k, []).get(k)!).push(a); }
+      for (const k of keys) { if (tab === "u" && (unitBy.get(k)?.type === "other" || (type && unitBy.get(k)?.type !== type))) continue; /* bỏ cơ sở tôn giáo */ (g.get(k) ?? g.set(k, []).get(k)!).push(a); }
     }
     const out: Row[] = [];
     for (const [k, list] of g) {
@@ -32,7 +32,7 @@ export function LeaderboardPage({ data, lang, num }: { data: Data; lang: Lang; n
     }
     return out.sort((a, b) => b[sort] - a[sort] || b.avg - a.avg);
   }, [data, tab, type, sort, lang, unitBy]);
-  const types = Object.entries(data.types ?? {});
+  const types = Object.entries(data.types ?? {}).filter(([k]) => k !== "other");
   const SORTS: [SortK, string][] = [["avg", t.avg], ["p1000", t.p1000], ["n", t.n], ["cit", t.cit]];
   return (
     <article className="lb">

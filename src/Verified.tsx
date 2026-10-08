@@ -167,6 +167,7 @@ function One({ m, reload }: { m: Mine; reload: () => void }) {
         <label className="chk"><input type="radio" name={`hide-${m.authorId}`} checked={m.hide === "score"} onChange={() => void run("author-privacy", { hideScore: true }, "Đã ẩn điểm và huy hiệu xếp hạng.")} />Ẩn điểm PRO-SCORE1000™ và huy hiệu xếp hạng (vẫn hiện công trình)</label><br />
         <label className="chk"><input type="radio" name={`hide-${m.authorId}`} checked={m.hide === "profile"} onChange={() => void run("author-privacy", { hideProfile: true }, "Đã tạm ẩn toàn bộ hồ sơ.")} />Tạm ẩn toàn bộ hồ sơ khỏi ProFind</label>
       </p>
+      <UnitPicker authorId={m.authorId} onSaved={() => void 0} />
       <h3>Ảnh đại diện</h3>
       <div className="avedit">
         {(pend || p.av) && <img className="avprev" src={pend ?? `/api/account?op=avatar&id=${encodeURIComponent(m.authorId)}&v=${p.av}`} alt={pend ? "Xem trước ảnh mới" : "Ảnh đại diện hiện tại"} width={96} height={96} />}
@@ -194,3 +195,38 @@ export function useOwnDisc(id: string): string[] | null { const d = useAuthorPub
 /** Công trình chủ hồ sơ đã báo "không phải của tôi" (ẩn khỏi danh sách; điểm tính lại ở lần dựng dữ liệu sau). */
 export function useNotMine(id: string, local: string[]): Set<string> { const d = useAuthorPub(id); return new Set([...(d?.xw ?? []), ...local]); }
 export function reportNotMine(authorId: string, workId: string): Promise<unknown> { return api("author-work-not", { authorId, workId }); }
+
+// ---------- Chủ hồ sơ tự chọn đơn vị hiện tại / trước đây ----------
+type UD = { units: { id: string; name: string; en: string }[]; mine: string[]; past: string[] };
+const udCache = new Map<string, Promise<{ units: UD["units"]; byId: Map<string, { institutions: string[]; instPast?: string[] }> }>>();
+function loadUnits() { if (!udCache.has("d")) udCache.set("d", fetch("./data/profind.json").then((r) => r.json()).then((j: { institutions: UD["units"]; authors: { id: string; institutions: string[]; instPast?: string[] }[] }) => ({ units: j.institutions, byId: new Map(j.authors.map((a) => [a.id, a])) }))); return udCache.get("d")!; }
+function UnitPicker({ authorId, onSaved }: { authorId: string; onSaved: () => void }) {
+  const [ud, setUd] = useState<UD | null>(null), [now, setNow] = useState<Set<string>>(new Set()), [past, setPast] = useState<Set<string>>(new Set()), [q, setQ] = useState(""), [msg, setMsg] = useState(""), [busy, setBusy] = useState(false), [locked, setLocked] = useState(false), [custom, setCustom] = useState(false);
+  useEffect(() => {
+    let on = true;
+    Promise.all([loadUnits(), api<{ map: Record<string, { now: string[]; past?: string[]; src?: string }> }>("inst").catch(() => ({ map: {} as Record<string, { now: string[]; past?: string[]; src?: string }> }))]).then(([d, o]) => {
+      if (!on) return; const a = d.byId.get(authorId), ov = o.map[authorId];
+      const pastIds = ov ? ov.past ?? [] : a?.instPast ?? [], nowIds = ov ? ov.now : (a?.institutions ?? []).filter((u) => !pastIds.includes(u));
+      setUd({ units: d.units, mine: [...new Set([...nowIds, ...pastIds])], past: pastIds }); setNow(new Set(nowIds)); setPast(new Set(pastIds)); setLocked(ov?.src === "admin"); setCustom(!!ov);
+    }).catch(() => {});
+    return () => { on = false; };
+  }, [authorId]);
+  if (!ud) return null;
+  const fold = (x: string) => x.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/gi, "d").toLowerCase(), name = (id: string) => ud.units.find((u) => u.id === id)?.name ?? id;
+  const shown = [...new Set([...ud.mine, ...now, ...past])], cand = q.trim().length >= 2 ? ud.units.filter((u) => (fold(u.name).includes(fold(q.trim())) || fold(u.en ?? "").includes(fold(q.trim()))) && !shown.includes(u.id)).slice(0, 8) : [];
+  const toggle = (u: string, which: "now" | "past") => { const [a, sa, sb] = which === "now" ? [now, setNow, setPast] : [past, setPast, setNow]; const n = new Set(a); if (n.has(u)) n.delete(u); else { n.add(u); sb((o) => { const m = new Set(o); m.delete(u); return m; }); } sa(n); };
+  const save = async () => { setBusy(true); setMsg(""); try { await api("author-inst", { authorId, now: [...now], past: [...past] }); setMsg("Đã lưu đơn vị. Trang công khai cập nhật trong vài chục giây."); setCustom(true); onSaved(); } catch (e) { setMsg((e as Error).message); } finally { setBusy(false); } };
+  const clear = async () => { setBusy(true); setMsg(""); try { await api("author-inst", { authorId, clear: true }); setMsg("Đã bỏ lựa chọn, hồ sơ quay về đơn vị do hệ thống suy ra."); setCustom(false); onSaved(); } catch (e) { setMsg((e as Error).message); } finally { setBusy(false); } };
+  return (
+    <>
+      <h3>Đơn vị công tác</h3>
+      <p className="meta">Hệ thống suy đơn vị từ cơ quan ghi trên công trình nên có thể sai khi bạn chuyển nơi làm việc hoặc OpenAlex gộp nhầm hồ sơ. Chọn đơn vị <b>hiện tại</b> (hiện trước) và <b>trước đây</b> (hiện mờ).</p>
+      {locked ? <p className="banner demo">Đơn vị của hồ sơ này do quản trị viên xác nhận; hãy liên hệ ProFind nếu cần thay đổi.</p> : <>
+        <table className="adm-t"><thead><tr><th>Đơn vị</th><th>Hiện tại</th><th>Trước đây</th></tr></thead><tbody>{shown.map((u) => <tr key={u}><td>{name(u)}</td><td><input type="checkbox" checked={now.has(u)} onChange={() => toggle(u, "now")} aria-label={`${name(u)}: hiện tại`} /></td><td><input type="checkbox" checked={past.has(u)} onChange={() => toggle(u, "past")} aria-label={`${name(u)}: trước đây`} /></td></tr>)}</tbody></table>
+        <label className="sel"><span>Thêm đơn vị (gõ tên)</span><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Đại học Đồng Tháp" /></label>
+        {cand.length > 0 && <ul className="mxlist">{cand.map((u) => <li key={u.id}><button type="button" className="linkbtn" onClick={() => { setNow(new Set([...now, u.id])); setQ(""); }}>{u.name}</button></li>)}</ul>}
+        <p><button type="button" className="primary" disabled={busy || !now.size} onClick={() => void save()}>Lưu đơn vị</button>{custom && <> <button type="button" disabled={busy} onClick={() => void clear()}>Bỏ lựa chọn của tôi</button></>}</p></>}
+      <div role="status" aria-live="polite">{msg && <p className="banner"><Icon n="check" />{msg}</p>}</div>
+    </>
+  );
+}
