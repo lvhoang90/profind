@@ -8351,6 +8351,17 @@
    "moetCode": "DDS",
    "moetUrl": "https://moet.gov.vn/cosogiaoduc/Pages/danh-sach.aspx?ItemID=800",
    "official": true
+  },
+  {
+   "id": "vien-isa",
+   "name": "Viện Khoa học Giáo dục và Kinh tế Đông Nam Á (ISA)",
+   "en": "Institute of Education Sciences & Economics of Southeast Asia (ISA)",
+   "abbr": "ISA",
+   "type": "institute",
+   "managedBy": null,
+   "city": "TP. Hồ Chí Minh",
+   "ror": null,
+   "source": "affiliation-string"
   }
  ],
  "types": {
