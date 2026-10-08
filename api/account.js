@@ -18,7 +18,7 @@
 // Thiếu một trong các mục trên thì tính năng tự tắt (config.enabled=false), mọi chức năng khác của ProFind vẫn chạy bình thường.
 import { makeStore } from "./_store.js";
 import { mailProvider, sendMail, codeMail, welcomeMail } from "./_mail.js";
-import { runChecks, claimMail, adminMail, isFreeMail, normOrcid, VERIFY_YEARS } from "./_claim.js";
+import { runChecks, claimMail, adminMail, isFreeMail, normOrcid, orcidValid, normDoi, lookupWork, nameCompat, VERIFY_YEARS } from "./_claim.js";
 export const config = { runtime: "edge" };
 
 const PLEDGE = { vi: "Miễn phí vĩnh viễn cho mọi người dùng đã đăng ký và xác thực email.", en: "Free forever for every user who registers and verifies their email." };
@@ -327,7 +327,7 @@ export default async function handler(request) {
     if (op === "admin-claims" && request.method === "GET") {
       const bad = needAdmin(); if (bad) return bad;
       const t = Date.now(), vf = await allVf();
-      return json({ claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [] });
+      return json({ claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [], works: await (async () => { const o = []; for (const [id, raw] of Object.entries(pairs(await one(["HGETALL", "profind:aw"])))) for (const w of jparse(raw) ?? []) if (w.status === "review") o.push({ authorId: id, ...w }); return o; })() });
     }
     if (op.startsWith("admin-claim-") && request.method === "POST") {
       const bad = needAdmin(); if (bad) return bad;
@@ -351,9 +351,73 @@ export default async function handler(request) {
         const claim = await newClaim({ authorId, authorName: tidy(body.authorName, 120), name: tidy(body.name, 80) || email, email, orcid, scholar: tidy(body.scholar, 300), note: tidy(body.note, 1000), emailVerified: false, by: me.email });
         return json({ ok: true, claim });
       }
+      if (op === "admin-claim-work") {
+        const id = String(body.authorId || ""), doi = normDoi(body.doi), ws = jparse(await one(["HGET", "profind:aw", id])) ?? [], w = ws.find((x) => x.doi === doi);
+        if (!w) return json({ error: "Không tìm thấy công trình." }, 404);
+        const nw = body.decision === "approve" ? ws.map((x) => (x === w ? { ...x, status: "ok", why: "Quản trị viên đã duyệt" } : x)) : ws.filter((x) => x !== w);
+        await one(["HSET", "profind:aw", id, JSON.stringify(nw)]); return json({ ok: true });
+      }
       if (op === "admin-claim-allow") { const e = tidy(body.email, 160).toLowerCase(); if (!EMAIL_RE.test(e)) return json({ error: "Email chưa đúng." }, 400); await one([body.on === false ? "SREM" : "SADD", CLA, e]); return json({ ok: true }); }
       if (op === "admin-claim-revoke") { const v = await getVf(String(body.authorId)); if (v) await store.run([["HDEL", VFK, v.authorId], ...(v.orcid ? [["HDEL", VFO, v.orcid]] : [])]); return json({ ok: true }); }
       if (op === "admin-claim-renew") { const v = await getVf(String(body.authorId)); if (!v) return json({ error: "Không có xác thực." }, 404); v.until = Date.now() + VERIFY_YEARS * 365.25 * 864e5; await one(["HSET", VFK, v.authorId, JSON.stringify(v)]); return json({ ok: true, until: v.until }); }
+    }
+
+    // ---------------- Bảng điều khiển của nhà khoa học đã xác thực (giai đoạn 2) ----------------
+    // Chỉ chủ hồ sơ đã xác thực còn hiệu lực mới sửa được. Công trình tự bổ sung KHÔNG tính vào PRO-SCORE cho tới khi OpenAlex ghi nhận.
+    const APK = "profind:ap", AWK = "profind:aw", AVK = "profind:av", MAXW = 60;
+    const mineVf = async (authorId) => { const v = await getVf(authorId); return v && v.email === me?.email && v.until > Date.now() ? v : null; };
+    const getProf = async (id) => jparse(await one(["HGET", APK, id])) ?? {};
+    const getWorks = async (id) => jparse(await one(["HGET", AWK, id])) ?? [];
+    if (op === "author-public" && request.method === "GET") {
+      const id = url.searchParams.get("id") || "", v = await getVf(id);
+      if (!v || v.until <= Date.now()) return json({ verified: false }, 200, { "cache-control": "public, s-maxage=120, stale-while-revalidate=300" });
+      const p = await getProf(id), pub = { orcid: p.orcid || v.orcid || "", scholar: p.scholar || v.scholar || "", site: p.site || "", bio: p.bio || "", hasAvatar: !!p.av, email: p.showContact ? p.email || "" : "", phone: p.showContact ? p.phone || "" : "" };
+      return json({ verified: true, profile: pub, works: (await getWorks(id)).filter((w) => w.status === "ok") }, 200, { "cache-control": "public, s-maxage=120, stale-while-revalidate=300" });
+    }
+    if (op === "avatar" && request.method === "GET") {
+      const id = url.searchParams.get("id") || "", p = await getProf(id), v = await getVf(id), raw = p.av && v && v.until > Date.now() ? await one(["HGET", AVK, id]) : null;
+      const m = /^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/.exec(raw || "");
+      if (!m) return new Response("", { status: 404 });
+      const bin = Uint8Array.from(atob(m[2]), (c) => c.charCodeAt(0));
+      return new Response(bin, { headers: { "content-type": m[1], "cache-control": "public, max-age=300, s-maxage=300", "x-content-type-options": "nosniff" } });
+    }
+    if (op === "author-mine" && request.method === "GET") {
+      const bad = needUser(); if (bad) return bad;
+      const t = Date.now(), out = [];
+      for (const v of (await allVf()).filter((x) => x.email === me.email && x.until > t)) out.push({ authorId: v.authorId, name: v.name, until: v.until, profile: await getProf(v.authorId), works: await getWorks(v.authorId) });
+      return json({ authors: out });
+    }
+    if (op.startsWith("author-") && op !== "author-public" && op !== "author-mine" && request.method === "POST") {
+      const bad = needUser(); if (bad) return bad;
+      const authorId = String(body.authorId || ""), v = await mineVf(authorId);
+      if (!v) return json({ error: "Bạn chưa có xác thực còn hiệu lực cho hồ sơ này." }, 403);
+      if (!(await limit(`ap:${me.id}`, 60, 3600))) return json({ error: "Thao tác quá nhiều, hãy thử lại sau." }, 429);
+      if (op === "author-save") {
+        const p = await getProf(authorId), orcidRaw = tidy(body.orcid, 40), orcid = normOrcid(orcidRaw);
+        if (orcidRaw && (!orcid || !orcidValid(orcid))) return json({ error: "Mã ORCID chưa đúng." }, 400);
+        const scholar = tidy(body.scholar, 300); if (scholar && !/^https:\/\/scholar\.google\.[a-z.]+\/citations\?[^\s]*user=[A-Za-z0-9_-]{8,14}/.test(scholar)) return json({ error: "Đường dẫn Google Scholar chưa đúng." }, 400);
+        const site = tidy(body.site, 200); if (site && !/^https?:\/\/[^\s]+\.[^\s]+$/.test(site)) return json({ error: "Trang web cá nhân phải bắt đầu bằng http(s)://" }, 400);
+        const email = tidy(body.email, 160).toLowerCase(); if (email && !EMAIL_RE.test(email)) return json({ error: "Email liên hệ chưa đúng." }, 400);
+        const phone = tidy(body.phone, 20); if (phone && !/^[0-9+ .()-]{8,20}$/.test(phone)) return json({ error: "Số điện thoại chưa đúng." }, 400);
+        Object.assign(p, { orcid, scholar, site, bio: tidy(body.bio, 600), email, phone, showContact: body.showContact === true, updatedAt: Date.now() });
+        await one(["HSET", APK, authorId, JSON.stringify(p)]); return json({ ok: true, profile: p });
+      }
+      if (op === "author-avatar") {
+        const p = await getProf(authorId);
+        if (body.image === null) { p.av = false; await store.run([["HSET", APK, authorId, JSON.stringify(p)], ["HDEL", AVK, authorId]]); return json({ ok: true }); }
+        const img = String(body.image || ""); if (img.length > 120000 || !/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(img)) return json({ error: "Ảnh không hợp lệ hoặc quá lớn (tối đa khoảng 90 KB)." }, 400);
+        p.av = Date.now(); await store.run([["HSET", AVK, authorId, img], ["HSET", APK, authorId, JSON.stringify(p)]]); return json({ ok: true });
+      }
+      if (op === "author-work-add") {
+        const doi = normDoi(body.doi); if (!doi) return json({ error: "DOI chưa đúng (dạng 10.xxxx/yyyy)." }, 400);
+        const ws = await getWorks(authorId); if (ws.some((w) => w.doi === doi)) return json({ error: "Công trình này đã được thêm." }, 409);
+        if (ws.length >= MAXW) return json({ error: `Tối đa ${MAXW} công trình tự bổ sung.` }, 400);
+        const p = await getProf(authorId), r = await lookupWork(doi, { name: v.name, orcid: p.orcid || v.orcid });
+        if (!r.found) return json({ error: "Không tra được DOI này trong Crossref. Hãy kiểm tra lại, hoặc gửi đề nghị riêng cho quản trị viên." }, 404);
+        const w = { doi, title: r.title, venue: r.venue, year: r.year, type: r.type, authors: r.authors, oa: r.oa, status: r.matched ? "ok" : "review", why: r.matched ? (r.byOrcid ? "ORCID trùng danh sách tác giả" : "Tên khớp danh sách tác giả") : "Tên/ORCID chưa khớp danh sách tác giả, chờ quản trị viên", at: Date.now() };
+        ws.push(w); await one(["HSET", AWK, authorId, JSON.stringify(ws)]); return json({ ok: true, work: w });
+      }
+      if (op === "author-work-del") { const ws = (await getWorks(authorId)).filter((w) => w.doi !== normDoi(body.doi)); await one(["HSET", AWK, authorId, JSON.stringify(ws)]); return json({ ok: true }); }
     }
 
     // ---------------- Quản trị ----------------

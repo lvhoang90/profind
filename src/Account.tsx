@@ -4,8 +4,9 @@ import { Icon, type IconName } from "./icons";
 import { useAccount, api, type User } from "./accountStore";
 import { EcoLink } from "./Footer";
 import { evt } from "./analytics";
+import { ScholarConsole } from "./Verified";
 
-const TABS: [string, string, IconName][] = [["", "tabOverview", "grid"], ["da-luu", "tabSaved", "star"], ["tim-kiem", "tabSearches", "search"], ["da-xem", "tabViewed", "eye"], ["ho-so", "tabProfile", "user"]];
+const TABS: [string, string, IconName][] = [["", "tabOverview", "grid"], ["da-luu", "tabSaved", "star"], ["tim-kiem", "tabSearches", "search"], ["da-xem", "tabViewed", "eye"], ["ho-so", "tabProfile", "user"], ["khoa-hoc", "Hồ sơ khoa học", "check"]];
 const initials = (n: string) => { const w = n.replace(/[^\p{L}\s-]/gu, " ").split(/[\s-]+/).filter(Boolean); return ((w[0]?.[0] ?? "") + (w.length > 1 ? w[w.length - 1][0] : "")).toUpperCase() || "P"; };
 const ago = (iso: string | number, lang: string) => new Date(iso).toLocaleDateString(lang === "vi" ? "vi-VN" : "en-GB", { day: "2-digit", month: "2-digit", year: "numeric" });
 
@@ -97,12 +98,13 @@ function Dashboard({ user, tab }: { user: User; tab: string }) {
           <div className="pct" role="img" aria-label={t("pDone", { n: user.profilePct })}><i><u style={{ width: `${user.profilePct}%` }} /></i><span>{t("pDone", { n: user.profilePct })}</span></div></div>
         <div className="dh-act">{user.isAdmin && <a className="btn-admin" href="#/quan-tri"><Icon n="grid" size={18} />Quản trị</a>}<button className="ghost light" onClick={() => void logout().then(() => { location.hash = "#/"; })}><Icon n="logout" size={16} />{t("logout")}</button></div>
       </header>
-      <nav className="tabs" aria-label={t("accTitle")}>{TABS.map(([k, l, ic]) => <a key={k} href={`#/tai-khoan${k ? "/" + k : ""}`} aria-current={cur === k ? "page" : undefined}><Icon n={ic} size={16} />{t(l as "tabSaved")}{k === "da-luu" && favs.size > 0 && <em>{favs.size}</em>}</a>)}</nav>
+      <nav className="tabs" aria-label={t("accTitle")}>{TABS.map(([k, l, ic]) => <a key={k} href={`#/tai-khoan${k ? "/" + k : ""}`} aria-current={cur === k ? "page" : undefined}><Icon n={ic} size={16} />{l.startsWith("tab") ? t(l as "tabSaved") : l}{k === "da-luu" && favs.size > 0 && <em>{favs.size}</em>}</a>)}</nav>
       {cur === "" && <Overview user={user} />}
       {cur === "da-luu" && <Saved />}
       {cur === "tim-kiem" && <Searches />}
       {cur === "da-xem" && <Viewed />}
       {cur === "ho-so" && <Profile user={user} />}
+      {cur === "khoa-hoc" && <ScholarConsole />}
       <span className="sr">{num(searches.length + views.length)}</span>
     </article>
   );

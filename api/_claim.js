@@ -70,3 +70,17 @@ export function adminMail({ claim, origin }) {
   const text = `Yêu cầu xác thực hồ sơ cần duyệt\n\nHồ sơ: ${claim.authorName} (${claim.authorId})\nNgười gửi: ${claim.name} <${claim.email}>\nORCID: ${claim.orcid || "-"}\nGoogle Scholar: ${claim.scholar || "-"}\n\nKết quả kiểm tra tự động:\n${rows.join("\n")}\n\nDuyệt tại: ${origin}/#/quan-tri/xac-thuc`;
   return { subject: `[ProFind] Cần duyệt xác thực hồ sơ: ${claim.authorName}`, text, html: `<pre style="font-family:Arial,sans-serif;white-space:pre-wrap">${esc(text)}</pre>` };
 }
+
+/** Chuẩn hóa DOI ("https://doi.org/10.x/y" → "10.x/y"); "" nếu sai. */
+export const normDoi = (d) => { const s = String(d ?? "").trim().replace(/^(https?:\/\/(dx\.)?doi\.org\/|doi:)/i, "").toLowerCase(); return /^10\.\d{4,9}\/\S{1,200}$/.test(s) ? s : ""; };
+/** Tra công trình tự bổ sung theo DOI: Crossref (nhan đề, năm, tác giả, ORCID) + OpenAlex (đã ghi nhận chưa). matched = tên hoặc ORCID của tác giả có trong danh sách tác giả công trình. */
+export async function lookupWork(doi, { name, orcid }) {
+  const cr = (await fetchJson(`https://api.crossref.org/works/${encodeURIComponent(doi)}?mailto=luongviethoang.hcm@gmail.com`, {}, 8000))?.message;
+  const oa = await fetchJson(`https://api.openalex.org/works/doi:${encodeURIComponent(doi)}?select=id,cited_by_count&mailto=luongviethoang.hcm@gmail.com`);
+  if (!cr) return { found: false, oa: oa ? oa.id : "" };
+  const o = normOrcid(orcid), au = cr.author ?? [];
+  const byOrcid = !!o && au.some((x) => normOrcid(x.ORCID) === o);
+  const byName = au.some((x) => nameCompat(`${x.given ?? ""} ${x.family ?? ""}`, name));
+  const y = cr.issued?.["date-parts"]?.[0]?.[0] ?? cr.published?.["date-parts"]?.[0]?.[0] ?? 0;
+  return { found: true, title: String((cr.title ?? [])[0] ?? "").slice(0, 400), venue: String((cr["container-title"] ?? [])[0] ?? "").slice(0, 200), year: y, type: cr.type ?? "", authors: au.length, matched: byOrcid || byName, byOrcid, oa: oa ? oa.id : "" };
+}
