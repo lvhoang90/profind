@@ -20,7 +20,7 @@ Vercel → dự án profind → **Settings → Environment Variables** (áp dụ
 | `RESEND_API_KEY` | khóa `re_...` tạo ở Resend → API Keys (quyền **Sending access**, chọn đúng tên miền) |
 | `MAIL_FROM` | `ProFind <no-reply@isavietnam.app>` |
 | `CORRECTION_FROM` | `ProFind <no-reply@isavietnam.app>` (cùng giá trị với `MAIL_FROM`) |
-| `CORRECTION_TO` | hộp thư nhận đính chính (mặc định luongviethoang.hcm@gmail.com) |
+| `CORRECTION_TO` | hộp thư nhận đính chính (mặc định vienisavietnam@gmail.com) |
 | `ADMIN_EMAILS` | email quản trị, ngăn cách bằng dấu phẩy |
 | `SESSION_SECRET` | chuỗi ngẫu nhiên dài (tối thiểu 32 ký tự) |
 | `KV_REST_API_URL`, `KV_REST_API_TOKEN` | từ Upstash Redis (hoặc `UPSTASH_REDIS_REST_URL/TOKEN`) |
@@ -50,4 +50,4 @@ Không bắt buộc. Gửi từ `isavietnam.app` đã hoạt động bình thư�
 4. Đổi `MAIL_FROM` và `CORRECTION_FROM` trên Vercel thành `ProFind <no-reply@isavn.edu.vn>`, tạo lại khóa API nếu khóa cũ chỉ cấp cho `isavietnam.app`, rồi **Redeploy** và kiểm tra lại như trên.
 
 ## Gợi ý chống vào Spam
-Thêm bản ghi DMARC cho tên miền gửi: TXT `_dmarc` = `v=DMARC1; p=none; rua=mailto:luongviethoang.hcm@gmail.com`. Dùng địa chỉ gửi cố định, không dùng Gmail làm `MAIL_FROM`.
+Thêm bản ghi DMARC cho tên miền gửi: TXT `_dmarc` = `v=DMARC1; p=none; rua=mailto:vienisavietnam@gmail.com`. Dùng địa chỉ gửi cố định, không dùng Gmail làm `MAIL_FROM`.

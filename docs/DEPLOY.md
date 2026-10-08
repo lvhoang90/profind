@@ -14,7 +14,7 @@ Hiện mọi thứ ở nhánh `claude/determined-wozniak-igffaa` của `lvhoang9
    - Root Directory: để trống
 3. **Environment Variables** (Production và Preview):
    - `RESEND_API_KEY`: dùng lại khóa của EduFind (Team Settings → Environment Variables → liên kết biến chia sẻ vào dự án mới).
-   - `CORRECTION_TO` (tùy chọn): email nhận yêu cầu đính chính; mặc định `luongviethoang.hcm@gmail.com`.
+   - `CORRECTION_TO` (tùy chọn): email nhận yêu cầu đính chính; mặc định `vienisavietnam@gmail.com`.
    - `CORRECTION_FROM` (tùy chọn): địa chỉ gửi đã xác minh ở Resend, ví dụ `ProFind <no-reply@isavn.edu.vn>`. Nếu bỏ trống, Resend chỉ gửi được tới email chủ tài khoản Resend.
    - Redis giới hạn 5 yêu cầu/giờ/người: tab **Storage** của dự án → kết nối Upstash đang dùng cho EduFind (tự thêm `KV_REST_API_URL`, `KV_REST_API_TOKEN`).
    - KHÔNG đặt `OPENALEX_API_KEY` ở Vercel: khóa đó chỉ dùng trên máy khi nạp dữ liệu, không cần khi build.

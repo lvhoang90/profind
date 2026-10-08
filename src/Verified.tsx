@@ -43,7 +43,7 @@ export function ClaimBox({ authorId, authorName, mode = "claim" }: { authorId: s
     e.preventDefault(); setSt("sending"); setErr("");
     const f = new FormData(e.currentTarget);
     try { setRes(await api("claim-submit", { authorId, authorName, kind: mode, name: f.get("name"), orcid: f.get("orcid"), scholar: f.get("scholar"), note: f.get("note") })); setSt("done"); }
-    catch (x) { setErr((x as Error).message === "freemail" ? "Email miễn phí (Gmail, Yahoo…) không dùng được cho yêu cầu này. Hãy đăng nhập bằng email của trường/viện, hoặc gửi thư đề nghị riêng tới luongviethoang.hcm@gmail.com để quản trị viên xem xét." : (x as Error).message); setSt("idle"); }
+    catch (x) { setErr((x as Error).message === "freemail" ? "Email miễn phí (Gmail, Yahoo…) không dùng được cho yêu cầu này. Hãy đăng nhập bằng email của trường/viện, hoặc gửi thư đề nghị riêng tới vienisavietnam@gmail.com để quản trị viên xem xét." : (x as Error).message); setSt("idle"); }
   };
   if (st === "done" && res) return <p className="banner" role="status"><Icon n="check" />{res.status === "approved" ? `Đã xác thực! Tick vàng hiện cạnh tên bạn đến ${dmy(res.until!)}.` : "Đã nhận yêu cầu. Hệ thống đã kiểm tra tự động, quản trị viên sẽ xem xét và gửi kết quả qua email."}</p>;
   const last = mine[0];

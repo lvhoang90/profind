@@ -1,6 +1,6 @@
 // Nhận yêu cầu xác nhận hồ sơ / đính chính / gỡ hồ sơ từ trang ProFind và gửi email cho người quản trị (Resend).
 //   POST /api/correction (multipart/form-data: kind = claim|correct|remove|add, author, authorName, name, email, orcid, msg, _honey)
-// Biến môi trường (dùng chung với EduFind): RESEND_API_KEY; tùy chọn CORRECTION_TO (mặc định luongviethoang.hcm@gmail.com), CORRECTION_FROM
+// Biến môi trường (dùng chung với EduFind): RESEND_API_KEY; tùy chọn CORRECTION_TO (mặc định vienisavietnam@gmail.com), CORRECTION_FROM
 // (mặc định "ProFind <onboarding@resend.dev>"), KV_REST_API_URL/KV_REST_API_TOKEN (giới hạn 5 yêu cầu/giờ/người).
 // Yêu cầu CHƯA tự sửa dữ liệu: người quản trị xác minh người yêu cầu (trả lời email, ORCID, email cơ quan) rồi ghi vào data/corrections.json; yêu cầu gỡ hồ sơ được ưu tiên xử lý nhưng vẫn phải xác minh.
 export const config = { runtime: "edge" };
@@ -46,7 +46,7 @@ export default async function handler(request) {
   const rows = [["Loại yêu cầu", KINDS[kind]], ...(scholar ? [["Google Scholar", scholar]] : []), ["Mã hồ sơ", oneLine(form.get("author"), 60)], ["Tên trong hồ sơ", oneLine(form.get("authorName"), 120)], ["Người gửi", oneLine(form.get("name"), 120)], ["Email", email], ["ORCID", orcid], ["Thời điểm (UTC)", new Date().toISOString()]];
   const html = `<h2>ProFind: ${esc(KINDS[kind])}</h2><table cellpadding="6" style="border-collapse:collapse">${rows.map(([k, v]) => `<tr><td style="border:1px solid #ddd"><b>${esc(k)}</b></td><td style="border:1px solid #ddd">${esc(v)}</td></tr>`).join("")}</table><h3>Nội dung</h3><p style="white-space:pre-wrap">${esc(msg || "(không có)")}</p>`;
   const r = await fetch("https://api.resend.com/emails", { method: "POST", headers: { authorization: `Bearer ${apiKey}`, "content-type": "application/json" }, body: JSON.stringify({
-    from: process.env.CORRECTION_FROM || "ProFind <onboarding@resend.dev>", to: [process.env.CORRECTION_TO || "luongviethoang.hcm@gmail.com"], reply_to: email,
+    from: process.env.CORRECTION_FROM || "ProFind <onboarding@resend.dev>", to: [process.env.CORRECTION_TO || "vienisavietnam@gmail.com"], reply_to: email,
     subject: `[ProFind] ${KINDS[kind]} - ${oneLine(form.get("authorName"), 60) || oneLine(form.get("author"), 40)}`, html, text: `${rows.map(([k, v]) => `${k}: ${v}`).join("\n")}\n\n${msg}` }) });
   return r.ok ? json({ ok: true }) : json({ ok: false, error: "send" }, 502);
 }
