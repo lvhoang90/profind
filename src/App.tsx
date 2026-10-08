@@ -15,7 +15,7 @@ import { useWorks } from "./wsearch";
 import { StarBtn } from "./StarBtn";
 import { ProBadge, ProBadgeTag } from "./Badge";
 import { VisitChip } from "./VisitChip";
-import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg, useVerified, useIsMine, useOwnDisc } from "./Verified";
+import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg, useVerified, useIsMine, useOwnDisc, useNotMine, reportNotMine } from "./Verified";
 import { useHidden } from "./hidden";
 import { NoDataHint } from "./NoData";
 import { Footer, EcoLink } from "./Footer";
@@ -375,7 +375,9 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   const { lang, t, num } = useT();
   const { user, cfg, favs, toggleFav, recordView } = useAccount();
   const ownDisc = useOwnDisc(a.id), mine = useIsMine(a.id), isVerified = useVerified(a.id) !== null;
-  const [works, setWorks] = useState<Work[] | null>(null);
+  const [worksAll, setWorks] = useState<Work[] | null>(null), [localXw, setLocalXw] = useState<string[]>([]);
+  const xwSet = useNotMine(a.id, localXw);
+  const works = useMemo(() => (worksAll && xwSet.size ? worksAll.filter((w) => !xwSet.has(w.id)) : worksAll), [worksAll, xwSet]);
   const [werr, setWerr] = useState(false), [tick, setTick] = useState(0), [wpage, setWpage] = useState(0);
   const [wsort, setWsort] = useState<WSort>("year"), [onlyLead, setOnlyLead] = useState(false), [allInst, setAllInst] = useState(false);
   // Hủy yêu cầu cũ khi đổi hồ sơ: không để công trình của hồ sơ trước hiện (và xuất CSV) ở hồ sơ sau.
@@ -498,6 +500,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
                 {w.quartile ? <span className={`pill sc ${w.quartile.toLowerCase()}`} title={`Scopus ${w.quartile}`}>{w.quartile}<small>Scopus</small></span> : <span className="pill none">{t("noQ")}</span>}
                 <span className="wc"><Icon n="chart" size={14} />{num(w.citations)}<span className="sr"> {t("cit")}</span></span>
                 <span className={`role ${w.role}`}>{roleCell(w)}</span>
+                {mine && <button type="button" className="linkbtn" onClick={() => { if (confirm("Bài này không phải của bạn (OpenAlex gán nhầm người trùng tên)? Bài sẽ ẩn khỏi hồ sơ.")) void reportNotMine(a.id, w.id).then(() => setLocalXw((x) => [...x, w.id])).catch((e) => alert((e as Error).message)); }}>Không phải bài của tôi</button>}
               </div>
             </li>))}</ol>)}
         {works && <Pager page={wpage} total={shown.length} set={(p) => setWpage(p)} />}

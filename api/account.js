@@ -279,6 +279,7 @@ export default async function handler(request) {
     // ---------------- Xác thực hồ sơ nhà khoa học ("Đây là tôi") ----------------
     // Chính sách: chỉ email tổ chức (đã nhập mã 6 số); email miễn phí chỉ khi quản trị viên cho phép riêng; tick vàng hiệu lực 2 năm.
     // Tự động duyệt khi email tổ chức + ORCID trùng hồ sơ OpenAlex + tên tương thích + không xung đột; còn lại chuyển quản trị viên duyệt.
+    const XWK = "profind:xw", getXw = async (id) => { const l = jparse(await one(["HGET", XWK, id])); return Array.isArray(l) ? l : []; }; // công trình chủ hồ sơ báo "không phải của tôi"
     const CLK = "profind:cl", VFK = "profind:vf", VFO = "profind:vfo", CLA = "profind:cla";
     const HSK = "profind:hs", HPK = "profind:hp"; // tập mã hồ sơ: ẩn điểm + xếp hạng; ẩn cả hồ sơ
     const setHide = async (authorId, mode) => { // mode: "score" | "profile" | "none"
@@ -357,7 +358,7 @@ export default async function handler(request) {
     if (op === "admin-claims" && request.method === "GET") {
       const bad = needAdmin(); if (bad) return bad;
       const t = Date.now(), vf = await allVf();
-      return json({ claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [], recheck: Object.values(pairs(await one(["HGETALL", "profind:rk"]))).map(jparse).filter(Boolean), units: Object.values(pairs(await one(["HGETALL", "profind:un"]))).map(jparse).filter(Boolean), split: Object.values(pairs(await one(["HGETALL", "profind:sp"]))).map(jparse).filter(Boolean), hidden: { score: (await one(["SMEMBERS", HSK])) ?? [], profile: (await one(["SMEMBERS", HPK])) ?? [] }, works: await (async () => { const o = []; for (const [id, raw] of Object.entries(pairs(await one(["HGETALL", "profind:aw"])))) for (const w of jparse(raw) ?? []) if (w.status === "review") o.push({ authorId: id, ...w }); return o; })() });
+      return json({ xw: Object.entries(pairs(await one(["HGETALL", XWK]))).flatMap(([a, v]) => (jparse(v) ?? []).map((w) => ({ authorId: a, workId: w }))), claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [], recheck: Object.values(pairs(await one(["HGETALL", "profind:rk"]))).map(jparse).filter(Boolean), units: Object.values(pairs(await one(["HGETALL", "profind:un"]))).map(jparse).filter(Boolean), split: Object.values(pairs(await one(["HGETALL", "profind:sp"]))).map(jparse).filter(Boolean), hidden: { score: (await one(["SMEMBERS", HSK])) ?? [], profile: (await one(["SMEMBERS", HPK])) ?? [] }, works: await (async () => { const o = []; for (const [id, raw] of Object.entries(pairs(await one(["HGETALL", "profind:aw"])))) for (const w of jparse(raw) ?? []) if (w.status === "review") o.push({ authorId: id, ...w }); return o; })() });
     }
     if (op.startsWith("admin-claim-") && request.method === "POST") {
       const bad = needAdmin(); if (bad) return bad;
@@ -446,7 +447,7 @@ export default async function handler(request) {
       const id = url.searchParams.get("id") || "", v = await getVf(id);
       if (!v || v.until <= Date.now()) return json({ verified: false }, 200, { "cache-control": "public, s-maxage=120, stale-while-revalidate=300" });
       const p = await getProf(id), pub = { disc: Array.isArray(p.disc) ? p.disc : [], orcid: p.orcid || v.orcid || "", scholar: p.scholar || v.scholar || "", site: p.site || "", bio: p.bio || "", hasAvatar: p.av ? Number(p.av) || true : false, email: p.showContact ? p.email || "" : "", phone: p.showContact ? p.phone || "" : "" };
-      return json({ verified: true, profile: pub, works: (await getWorks(id)).filter((w) => w.status === "ok") }, 200, { "cache-control": "public, s-maxage=120, stale-while-revalidate=300" });
+      return json({ verified: true, profile: pub, xw: await getXw(id), works: (await getWorks(id)).filter((w) => w.status === "ok") }, 200, { "cache-control": "public, s-maxage=120, stale-while-revalidate=300" });
     }
     if (op === "avatar" && request.method === "GET") {
       const id = url.searchParams.get("id") || "", p = await getProf(id), v = await getVf(id), raw = p.av && v && v.until > Date.now() ? await one(["HGET", AVK, id]) : null;
@@ -458,7 +459,7 @@ export default async function handler(request) {
     if (op === "author-mine" && request.method === "GET") {
       const bad = needUser(); if (bad) return bad;
       const t = Date.now(), out = [], hs = (await one(["SMEMBERS", HSK])) ?? [], hp = (await one(["SMEMBERS", HPK])) ?? [];
-      for (const v of (await allVf()).filter((x) => x.email === me.email && x.until > t)) out.push({ authorId: v.authorId, name: v.name, until: v.until, profile: await getProf(v.authorId), works: await getWorks(v.authorId), hide: hp.includes(v.authorId) ? "profile" : hs.includes(v.authorId) ? "score" : "" });
+      for (const v of (await allVf()).filter((x) => x.email === me.email && x.until > t)) out.push({ authorId: v.authorId, name: v.name, until: v.until, profile: await getProf(v.authorId), works: await getWorks(v.authorId), xw: await getXw(v.authorId), hide: hp.includes(v.authorId) ? "profile" : hs.includes(v.authorId) ? "score" : "" });
       return json({ authors: out });
     }
     if (op.startsWith("author-") && op !== "author-public" && op !== "author-mine" && request.method === "POST") {
@@ -476,6 +477,11 @@ export default async function handler(request) {
         const disc = (Array.isArray(body.disc) ? body.disc : []).map((x) => String(x)).filter((x) => /^[a-z0-9-]{2,40}$/.test(x)).slice(0, 3);
         Object.assign(p, { disc, orcid, scholar, site, bio: tidy(body.bio, 600), email, phone, showContact: body.showContact === true, updatedAt: Date.now() });
         await one(["HSET", APK, authorId, JSON.stringify(p)]); return json({ ok: true, profile: p });
+      }
+      if (op === "author-work-not") {
+        const wid = String(body.workId || ""); if (!new RegExp(`^${authorId}-W\\d{4,14}$`).test(wid)) return json({ error: "Mã công trình không hợp lệ." }, 400);
+        const cur = await getXw(authorId), next = body.undo === true ? cur.filter((x) => x !== wid) : [...new Set([...cur, wid])].slice(0, 100);
+        await one(["HSET", XWK, authorId, JSON.stringify(next)]); return json({ ok: true, xw: next });
       }
       if (op === "author-avatar") {
         const p = await getProf(authorId);
