@@ -1,0 +1,2573 @@
+{
+ "built": "2026-10-08",
+ "note": "Hồ sơ xếp hạng có từ 3 đơn vị hiện tại độc lập; chưa có bằng chứng ORCID đủ để tự sửa. Cần quản trị viên xác nhận từng hồ sơ.",
+ "profiles": [
+  {
+   "id": "A5007637251",
+   "name": "Nguyen Hoang Hai",
+   "orcid": "0000-0001-7488-8194",
+   "works": 103,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Bách khoa Hà Nội",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội",
+    "Đại học Quốc gia Hà Nội"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5053942121",
+   "name": "Đặng Văn Thành",
+   "orcid": "0000-0002-8870-6934",
+   "works": 85,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Y Dược",
+    "Đại học Quốc gia Hà Nội",
+    "Đại học Thái Nguyên"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5107897436",
+   "name": "Nguyễn Thị Hoàng Anh",
+   "orcid": "0000-0001-6223-5815",
+   "works": 82,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Quốc gia Hà Nội",
+    "Viện Hóa học",
+    "Trường Đại học Sài Gòn"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5041924362",
+   "name": "Tin Chanh Duc Doan",
+   "orcid": "0000-0003-4250-9078",
+   "works": 63,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Đại học Quốc gia Hà Nội",
+    "Trường Đại học Bách khoa (ĐHQG-HCM)",
+    "Đại học Bách khoa Hà Nội",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội"
+   ],
+   "orcidCurrent": [
+    "Viet Nam National University Ho Chi Minh City Advanced Materials Technology Institute"
+   ]
+  },
+  {
+   "id": "A5101724817",
+   "name": "Thanh-Hai Tran",
+   "orcid": "0000-0003-3133-3361",
+   "works": 68,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Đại học Quốc gia TP. Hồ Chí Minh",
+    "Đại học Bách khoa Hà Nội",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội"
+   ],
+   "orcidCurrent": [
+    "Hanoi University of Science and Technology"
+   ]
+  },
+  {
+   "id": "A5101517248",
+   "name": "Tuan M. Nguyen",
+   "orcid": "0000-0001-8058-7750",
+   "works": 66,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Kỹ thuật Công nghiệp",
+    "Đại học Thái Nguyên",
+    "Trường Đại học Khoa học"
+   ],
+   "orcidCurrent": [
+    "Children's Hospital 1"
+   ]
+  },
+  {
+   "id": "A5088091814",
+   "name": "Nguyễn Thị Hồng",
+   "orcid": "0000-0002-0368-6808",
+   "works": 91,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Đại học Thái Nguyên",
+    "Trường Đại học Khoa học",
+    "Trường Đại học Vinh",
+    "Trường Đại học Thủ đô Hà Nội"
+   ],
+   "orcidCurrent": [
+    "VAST Institute of Biotechnology"
+   ]
+  },
+  {
+   "id": "A5113139645",
+   "name": "Trần Thị Thu Hà",
+   "orcid": null,
+   "works": 78,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Lao động – Xã hội",
+    "Trường Đại học Nông Lâm",
+    "Đại học Thái Nguyên",
+    "Trường Đại học Y Dược Thái Bình"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5037275724",
+   "name": "Nguyễn Thị Thu Ngà",
+   "orcid": "0000-0003-0760-2031",
+   "works": 50,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Sư phạm",
+    "Đại học Thái Nguyên",
+    "Học viện Nông nghiệp Việt Nam"
+   ],
+   "orcidCurrent": [
+    "Tokyo University of Agriculture"
+   ]
+  },
+  {
+   "id": "A5057131156",
+   "name": "Nguyễn Trường Sơn",
+   "orcid": "0000-0002-1966-9009",
+   "works": 47,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Đà Nẵng",
+    "Đại học Thái Nguyên",
+    "Trường Đại học Khoa học"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5100842562",
+   "name": "Khanh Ngoc Nguyen",
+   "orcid": "0009-0003-1102-9626",
+   "works": 38,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Y Dược (ĐHQGHN)",
+    "Đại học Thái Nguyên",
+    "Trường Đại học Y Dược"
+   ],
+   "orcidCurrent": [
+    "National Hospital of Pediatrics"
+   ]
+  },
+  {
+   "id": "A5101580694",
+   "name": "Thu Huong Nguyen",
+   "orcid": "0000-0002-3555-8712",
+   "works": 28,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Thái Nguyên",
+    "Trường Đại học Khoa học",
+    "Trường Đại học Khoa học Tự nhiên (ĐHQGHN)",
+    "Trường Đại học Ngoại ngữ (ĐHQGHN)"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5053899045",
+   "name": "Nguyễn Thị Hải",
+   "orcid": "0000-0002-6703-4323",
+   "works": 34,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Đại học Thái Nguyên",
+    "Trường Đại học Khoa học",
+    "Học viện Công nghệ Bưu chính Viễn thông",
+    "Posts and Telecommunications Institute of Technology - Ho Chi Minh City"
+   ],
+   "orcidCurrent": [
+    "Vietnam Academy of Science and Technology"
+   ]
+  },
+  {
+   "id": "A5082735818",
+   "name": "Nguyen Thi Hong Vien",
+   "orcid": "0000-0002-3744-3054",
+   "works": 36,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Khoa học",
+    "Trường Đại học Vinh",
+    "Đại học Thái Nguyên"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5101050378",
+   "name": "Nam-Hoang Nguyen",
+   "orcid": null,
+   "works": 15,
+   "cat": "khong-orcid",
+   "unit": [
+    "Đại học Thái Nguyên",
+    "Trường Đại học Công nghệ (ĐHQGHN)",
+    "Trường Đại học Công nghệ Thông tin và Truyền thông"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5022830304",
+   "name": "Nguyễn Văn Chung",
+   "orcid": null,
+   "works": 24,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Y Dược",
+    "Đại học Thái Nguyên",
+    "Trường Đại học Nông Lâm"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5039789132",
+   "name": "Nguyễn Hồng Trường",
+   "orcid": null,
+   "works": 24,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Y Dược",
+    "Viện Dinh dưỡng",
+    "Đại học Thái Nguyên"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5107311722",
+   "name": "T Hong Anh Pham",
+   "orcid": "0009-0000-8450-0704",
+   "works": 9,
+   "cat": "khop-mot-phan",
+   "unit": [
+    "Đại học Thái Nguyên",
+    "Trường Đại học Khoa học",
+    "Trường Đại học Kinh tế và Quản trị kinh doanh",
+    "Trường Đại học Sư phạm"
+   ],
+   "orcidCurrent": [
+    "Thai Nguyen University"
+   ]
+  },
+  {
+   "id": "A5050963558",
+   "name": "Nguyễn Thị Ngân",
+   "orcid": null,
+   "works": 20,
+   "cat": "khong-orcid",
+   "unit": [
+    "Đại học Thái Nguyên",
+    "Trường Đại học Nông Lâm",
+    "Trường Đại học Y Dược (ĐHQGHN)"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5010185449",
+   "name": "Nguyễn Thị Bích Liên",
+   "orcid": "0000-0003-1299-9512",
+   "works": 33,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Thái Nguyên",
+    "Trường Đại học Khoa học",
+    "Viện Sức khoẻ nghề nghiệp và môi trường"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5111164857",
+   "name": "Lê Thùy Trang",
+   "orcid": null,
+   "works": 18,
+   "cat": "khong-orcid",
+   "unit": [
+    "Đại học Thái Nguyên",
+    "Trường Đại học Sư phạm",
+    "Trường Đại học Lạc Hồng"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5052724684",
+   "name": "Tam Tran",
+   "orcid": "0000-0002-2433-0077",
+   "works": 84,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Cần Thơ",
+    "Trường Đại học Sư phạm Hà Nội 2",
+    "Viện Khoa học sự sống"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5101467256",
+   "name": "Thanh Liêm Nguyễn",
+   "orcid": "0000-0002-5197-5612",
+   "works": 89,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Y Dược Cần Thơ",
+    "Trường Đại học VinUni",
+    "Đại học Cần Thơ"
+   ],
+   "orcidCurrent": [
+    "Hanoi University of Science and technology"
+   ]
+  },
+  {
+   "id": "A5082154225",
+   "name": "Nguyễn Thị Thanh Tâm",
+   "orcid": null,
+   "works": 74,
+   "cat": "khong-orcid",
+   "unit": [
+    "Đại học Cần Thơ",
+    "Học Viện Chính Trị Khu Vực I",
+    "Trường Đại học Vinh",
+    "Học viện Chính trị Quốc gia Hồ Chí Minh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5100613572",
+   "name": "Nguyễn Hoàng Nam",
+   "orcid": "0009-0006-7399-1353",
+   "works": 53,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Viện Hóa học",
+    "Đại học Cần Thơ",
+    "Trường Đại học Nam Cần Thơ"
+   ],
+   "orcidCurrent": [
+    "University of Economics Ho Chi Minh City"
+   ]
+  },
+  {
+   "id": "A5101493322",
+   "name": "Ngọc Ánh Nguyễn",
+   "orcid": "0000-0002-4840-283X",
+   "works": 45,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Cần Thơ",
+    "Trường Đại học Kinh tế (ĐHQGHN)",
+    "Trường Đại học Nông Lâm"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5101541977",
+   "name": "Tran Trung Hieu",
+   "orcid": "0000-0001-8900-9447",
+   "works": 48,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại Học An Giang - Đại Học Quốc Gia TP. Hồ Chí Minh",
+    "Trường Đại học Vinh",
+    "Đại học Cần Thơ",
+    "Trường Đại học Khoa học Tự nhiên (ĐHQGHN)"
+   ],
+   "orcidCurrent": [
+    "University of Science, Vietnam National University Ho Chi Minh City",
+    "University of Science Ho Chi Minh City"
+   ]
+  },
+  {
+   "id": "A5023760366",
+   "name": "Nguyễn Hoàng Sơn",
+   "orcid": "0000-0003-0468-8327",
+   "works": 59,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Thủy lợi",
+    "Đại học Huế",
+    "Trường Đại Học Khoa Học, Đại Học Huế"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5014277024",
+   "name": "Nguyen Duc Cuong",
+   "orcid": "0000-0002-7341-3661",
+   "works": 56,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Huế",
+    "Trường Đại học Sư phạm",
+    "Trường Đại học Công nghệ (ĐHQGHN)"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5028762623",
+   "name": "Thi Anh Thu Tran",
+   "orcid": "0000-0002-3946-2187",
+   "works": 41,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Đại học Huế",
+    "Trường Đại học Nông Lâm",
+    "Trường Đại học Nông Lâm Thành phố Hồ Chí Minh"
+   ],
+   "orcidCurrent": [
+    "Good Biomarker Sciences"
+   ]
+  },
+  {
+   "id": "A5108964061",
+   "name": "Lê Thị Hòa",
+   "orcid": null,
+   "works": 34,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại Học Khoa Học, Đại Học Huế",
+    "Đại học Huế",
+    "Trường Đại học Công nghệ Giao thông Vận tải"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5101449377",
+   "name": "Duc Thuan Nguyen",
+   "orcid": "0000-0001-9936-1954",
+   "works": 20,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Quốc tế (ĐHQGHN)",
+    "Đại học Huế",
+    "Trường Đại học Nông Lâm",
+    "Đại học Kinh tế Quốc dân"
+   ],
+   "orcidCurrent": [
+    "Military Hospital 103"
+   ]
+  },
+  {
+   "id": "A5079390955",
+   "name": "Nguyễn Thị Thủy Tiên",
+   "orcid": null,
+   "works": 32,
+   "cat": "khong-orcid",
+   "unit": [
+    "Đại học Huế",
+    "Trường Đại học Nông Lâm",
+    "Trường Đại Học Khoa Học, Đại Học Huế",
+    "Trường Đại học Khoa học Xã hội và Nhân văn (ĐHQGHN)"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5100632426",
+   "name": "Nguyen Anh Tuan",
+   "orcid": "0000-0003-0294-4884",
+   "works": 107,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Đà Nẵng",
+    "Trường Đại học Thủ đô Hà Nội",
+    "Trường Đại học Đại Nam",
+    "Trường Quốc tế (ĐHQGHN)"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5100694527",
+   "name": "Dat Nguyen",
+   "orcid": "0000-0002-9125-8941",
+   "works": 34,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Xây dựng Hà Nội",
+    "Đại học Đà Nẵng",
+    "Trường Đại học Y Hà Nội"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5071619832",
+   "name": "Khoa Tan Nguyen",
+   "orcid": "0000-0002-3106-9110",
+   "works": 38,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Đại học Đà Nẵng",
+    "Trường Đại học Sư phạm Kỹ thuật",
+    "Trường Đại học Đông Á"
+   ],
+   "orcidCurrent": [
+    "Duy Tan University",
+    "Sejong University"
+   ]
+  },
+  {
+   "id": "A5104329808",
+   "name": "Nguyễn Thị Thu Hương",
+   "orcid": "0009-0007-9452-0021",
+   "works": 36,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Đà Nẵng",
+    "Trường Khoa học liên ngành và Nghệ thuật (ĐHQGHN)",
+    "Trường Đại học Ngoại ngữ",
+    "Viện Vệ sinh Dịch tễ Trung ương"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5053814050",
+   "name": "Thanh-Phong Pham",
+   "orcid": "0000-0002-1663-4353",
+   "works": 23,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Phenikaa",
+    "Trường Đại học Sư phạm Kỹ thuật",
+    "Đại học Đà Nẵng"
+   ],
+   "orcidCurrent": [
+    "University of Education and Technology-The University of Danang"
+   ]
+  },
+  {
+   "id": "A5009575585",
+   "name": "TrungHieu Le",
+   "orcid": "0000-0003-4671-9224",
+   "works": 29,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại Học Khoa Học, Đại Học Huế",
+    "Đại học Huế",
+    "Đại học Đà Nẵng",
+    "Trường Đại học Sư phạm"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5015666823",
+   "name": "Thi Thao Nguyen",
+   "orcid": "0000-0002-9383-4762",
+   "works": 29,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Đà Nẵng",
+    "Trường Đại học Sư phạm Kỹ thuật Vĩnh Long",
+    "Trường Đại Học Trà Vinh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5101601510",
+   "name": "Nguyễn Thùy Linh",
+   "orcid": "0000-0001-8321-2655",
+   "works": 30,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Đà Nẵng",
+    "Trường Đại học Công nghệ Thông tin và Truyền thông",
+    "Trường Đại học Vinh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5060225029",
+   "name": "Arivalagan Pugazhendhi",
+   "orcid": "0000-0002-9529-3306",
+   "works": 427,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Công nghệ Đồng Nai",
+    "Trường Đại học Văn Lang",
+    "Trường Đại học Duy Tân"
+   ],
+   "orcidCurrent": [
+    "Tecnológico de Monterrey"
+   ]
+  },
+  {
+   "id": "A5100712608",
+   "name": "Nguyễn Văn Hùng",
+   "orcid": "0000-0002-7184-0715",
+   "works": 107,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Y Hà Nội",
+    "Trường Đại học Phenikaa",
+    "Đại học Bách khoa Hà Nội"
+   ],
+   "orcidCurrent": [
+    "Dong Thap University"
+   ]
+  },
+  {
+   "id": "A5050879879",
+   "name": "Tiến Hoa Nguyễn",
+   "orcid": "0000-0003-4743-5012",
+   "works": 74,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Đại học Bách khoa Hà Nội",
+    "Trường Đại học VinUni",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội"
+   ],
+   "orcidCurrent": [
+    "Hanoi University of Science and Technology"
+   ]
+  },
+  {
+   "id": "A5101790224",
+   "name": "Huu Thinh Nguyen",
+   "orcid": "0000-0002-0981-7274",
+   "works": 40,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Y Dược Cần Thơ",
+    "Trường Đại học Phenikaa",
+    "Trường Đại học Kỹ thuật Y tế Hải Dương"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5087914410",
+   "name": "Thị Thu Hiền Nguyễn",
+   "orcid": null,
+   "works": 39,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Kỹ thuật Y tế Hải Dương",
+    "Trường Đại học Phenikaa",
+    "Trường Đại học Y Dược Hải Phòng",
+    "Trường Đại học Hải Phòng"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5015754386",
+   "name": "Cuong The Pham",
+   "orcid": "0000-0001-5158-4526",
+   "works": 126,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+    "Học viện Khoa học và Công nghệ",
+    "Viện Sinh học"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5101803691",
+   "name": "Lien Thi Phuong Nguyen",
+   "orcid": "0000-0003-3527-9577",
+   "works": 87,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+    "Viện Sinh học",
+    "Học viện Khoa học và Công nghệ"
+   ],
+   "orcidCurrent": [
+    "Institute of Ecology and Biological Resources"
+   ]
+  },
+  {
+   "id": "A5089071153",
+   "name": "Ninh The Son",
+   "orcid": "0000-0002-2413-7496",
+   "works": 197,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội",
+    "Viện Hóa học"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5004259103",
+   "name": "Bùi Hồng Quang",
+   "orcid": "0000-0001-6878-7514",
+   "works": 101,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+    "Viện Sinh học",
+    "Học viện Khoa học và Công nghệ"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5037328649",
+   "name": "Nguyen Hai Dang",
+   "orcid": "0000-0002-4470-8321",
+   "works": 136,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội",
+    "Đại học Bách khoa Hà Nội"
+   ],
+   "orcidCurrent": [
+    "University of Science and Technology of Hanoi"
+   ]
+  },
+  {
+   "id": "A5010458646",
+   "name": "Phạm Minh Quân",
+   "orcid": "0000-0001-6922-1627",
+   "works": 153,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+    "Viện Hóa học",
+    "Học viện Khoa học và Công nghệ"
+   ],
+   "orcidCurrent": [
+    "Institute of Natural Products Chemistry"
+   ]
+  },
+  {
+   "id": "A5062713436",
+   "name": "Trần Thu Hương",
+   "orcid": "0000-0003-4995-1635",
+   "works": 114,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Bách khoa Hà Nội",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội",
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5101612494",
+   "name": "Nguyễn Thị Thu Hà",
+   "orcid": "0000-0003-0975-4055",
+   "works": 116,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+    "Học Viện Hành Chính Quốc Gia",
+    "Viện Hóa học"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5060002377",
+   "name": "Andrey N. Kuznetsov",
+   "orcid": "0000-0001-5595-1039",
+   "works": 81,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+    "Joint Vietnam-Russia Tropical Science and Technology Research Center",
+    "Vietnamese - German Center of Excellence in Medical Research"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5100612147",
+   "name": "Thu-Ha Nguyen",
+   "orcid": "0000-0002-5253-6865",
+   "works": 109,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+    "Học viện Khoa học và Công nghệ",
+    "Trường Đại học Văn Lang"
+   ],
+   "orcidCurrent": [
+    "BOKU University"
+   ]
+  },
+  {
+   "id": "A5090827452",
+   "name": "Đỗ Văn Hài",
+   "orcid": "0000-0001-7841-0585",
+   "works": 89,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+    "Viện Sinh học",
+    "Học viện Khoa học và Công nghệ"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5032903751",
+   "name": "Nguyen Xuan Ha",
+   "orcid": "0000-0002-8779-256X",
+   "works": 95,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+    "Trường Đại học Thủ đô Hà Nội",
+    "Viện Hóa học"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5069659660",
+   "name": "Svetlana P. Kuznetsova",
+   "orcid": "0000-0002-7610-5058",
+   "works": 66,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+    "Joint Vietnam-Russia Tropical Science and Technology Research Center",
+    "Vietnamese - German Center of Excellence in Medical Research"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5031677584",
+   "name": "Quang Huy Nguyen",
+   "orcid": "0000-0002-3452-1811",
+   "works": 55,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Khoa học và Công nghệ Hà Nội",
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+    "Đại học Bách khoa Hà Nội"
+   ],
+   "orcidCurrent": [
+    "University of Science and Technology of Hanoi"
+   ]
+  },
+  {
+   "id": "A5001498108",
+   "name": "Nguyễn Thị Kim Hoa",
+   "orcid": "0000-0003-2525-4368",
+   "works": 33,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Viện Hàn lâm Khoa học xã hội Việt Nam",
+    "Viện Khoa học Giáo dục Việt Nam",
+    "Trường Đại học Thủ đô Hà Nội"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5101541355",
+   "name": "Thi Hang Nguyen",
+   "orcid": "0000-0001-7285-6236",
+   "works": 23,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Thủy lợi",
+    "Viện Dược liệu",
+    "Viện Hàn lâm Khoa học xã hội Việt Nam"
+   ],
+   "orcidCurrent": [
+    "University of Finance and Marketing"
+   ]
+  },
+  {
+   "id": "A5073329296",
+   "name": "Van Hung",
+   "orcid": "0000-0003-2143-5903",
+   "works": 27,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Giáo dục (ĐHQGHN)",
+    "Trường Đại học Sư phạm Hà Nội",
+    "Vietnam Research and Development Institute of Clinical Microbiology"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5024071126",
+   "name": "Thuy Thi Thu Tran",
+   "orcid": "0000-0002-3232-3643",
+   "works": 17,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Y tế Công cộng",
+    "Trường Đại học Giáo dục (ĐHQGHN)",
+    "Trường Đại học Sư phạm Hà Nội",
+    "Trường Đại học Nam Cần Thơ"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5052544441",
+   "name": "Thi Anh Tuyet Nguyen",
+   "orcid": "0000-0003-1500-9668",
+   "works": 27,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Kinh tế (ĐHQGHN)",
+    "Trường Đại học Ngoại thương",
+    "Viện Sinh học"
+   ],
+   "orcidCurrent": [
+    "Vietnam National University, Hanoi"
+   ]
+  },
+  {
+   "id": "A5022296268",
+   "name": "Huyen Nguyen Thi",
+   "orcid": "0000-0003-1096-4076",
+   "works": 20,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Quốc tế (ĐHQGHN)",
+    "Trường Đại học Kinh tế (ĐHQGHN)",
+    "Trường Đại học Tài chính – Marketing"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5052054550",
+   "name": "Thị Dung Nguyễn",
+   "orcid": "0009-0001-6476-4267",
+   "works": 54,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Khoa học Tự nhiên (ĐHQGHN)",
+    "Trường Đại học Điều dưỡng Nam Định",
+    "Joint Vietnam-Russia Tropical Science and Technology Research Center"
+   ],
+   "orcidCurrent": [
+    "Hồng Đức University"
+   ]
+  },
+  {
+   "id": "A5100726139",
+   "name": "Hung Q. Nguyen",
+   "orcid": "0000-0003-3875-8098",
+   "works": 56,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Khoa học Tự nhiên (ĐHQGHN)",
+    "Trường Đại học Sư phạm Thành phố Hồ Chí Minh",
+    "Trường Đại Học Công Nghệ Thông Tin - Đại Học Quốc Gia TP. Hồ Chí Minh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5101414960",
+   "name": "Hung Viet Pham",
+   "orcid": "0000-0002-8622-9935",
+   "works": 68,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Joint Vietnam-Russia Tropical Science and Technology Research Center",
+    "Trường Đại học Khoa học Xã hội và Nhân văn (ĐHQGHN)",
+    "Trường Đại học VinUni"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5087301316",
+   "name": "Minh-Quang Duong",
+   "orcid": "0000-0001-9229-8526",
+   "works": 43,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Khoa học Xã hội và Nhân văn (ĐHQGHN)",
+    "Trường Đại Học Khoa Học Xã Hội Và Nhân Văn - Đại Học Quốc Gia TP. Hồ Chí Minh",
+    "Trường Đại học Công nghệ Giao thông Vận tải"
+   ],
+   "orcidCurrent": [
+    "Vietnam National University Ho Chi Minh City, University of Social Sciences and Humanities."
+   ]
+  },
+  {
+   "id": "A5101043818",
+   "name": "Nguyễn Thị Minh Thư",
+   "orcid": null,
+   "works": 29,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Khoa học Xã hội và Nhân văn (ĐHQGHN)",
+    "Trường Đại học Công Thương Thành phố Hồ Chí Minh",
+    "Trường Đại Học Khoa Học Xã Hội Và Nhân Văn - Đại Học Quốc Gia TP. Hồ Chí Minh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5112511008",
+   "name": "Hung Trong Nguyen",
+   "orcid": null,
+   "works": 11,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Khoa học Xã hội và Nhân văn (ĐHQGHN)",
+    "National Institute of Nutrition",
+    "Trường Đại Học Khoa Học Xã Hội Và Nhân Văn - Đại Học Quốc Gia TP. Hồ Chí Minh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5135490000",
+   "name": "Thi Thanh Huyen Nguyen",
+   "orcid": "0009-0000-2821-7488",
+   "works": 10,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Khoa học Xã hội và Nhân văn (ĐHQGHN)",
+    "Trường Đại học Tài chính – Marketing",
+    "Trường Đại học Công nghệ Đồng Nai"
+   ],
+   "orcidCurrent": [
+    "Đại học Y Hà Nội"
+   ]
+  },
+  {
+   "id": "A5104235387",
+   "name": "Nguyễn Quang Hưng",
+   "orcid": null,
+   "works": 15,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Khoa học Xã hội và Nhân văn (ĐHQGHN)",
+    "Trường Đại học Dược Hà Nội",
+    "Viện Dược liệu"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5155679536",
+   "name": "Nguyễn Thị Thanh Thương",
+   "orcid": null,
+   "works": 11,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Khoa học Xã hội và Nhân văn (ĐHQGHN)",
+    "Học viện An ninh nhân dân",
+    "Viện Văn hoá Nghệ thuật quốc gia Việt Nam"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5101847540",
+   "name": "Nguyễn Hoài Nam",
+   "orcid": "0000-0003-1064-7468",
+   "works": 47,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Institute of Materials Science",
+    "Trường Đại học Y Dược (ĐHQGHN)",
+    "Học viện Nông nghiệp Việt Nam"
+   ],
+   "orcidCurrent": [
+    "Hanoi National University of Education"
+   ]
+  },
+  {
+   "id": "A5087094279",
+   "name": "Thị Thu Trang Nguyễn",
+   "orcid": null,
+   "works": 38,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Y Dược (ĐHQGHN)",
+    "Trường Đại học Sư phạm Thành phố Hồ Chí Minh",
+    "Trường Đại học Kỹ thuật Y tế Hải Dương",
+    "Học viện Nông nghiệp Việt Nam"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5100893330",
+   "name": "Dat Nguyen",
+   "orcid": null,
+   "works": 35,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Y Dược (ĐHQGHN)",
+    "Trường Đại học Y Hà Nội",
+    "Trường Đại học Ngân hàng Thành phố Hồ Chí Minh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5101695585",
+   "name": "Thao Phuong Ngoc Nguyen",
+   "orcid": "0000-0002-2711-7407",
+   "works": 35,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Y Dược (ĐHQGHN)",
+    "Trường Đại học Văn Lang",
+    "Trường Đại học Nguyễn Tất Thành"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5061441701",
+   "name": "Nguyen Duc Quang",
+   "orcid": "0000-0001-5705-5684",
+   "works": 34,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Y Dược (ĐHQGHN)",
+    "Đại học Công nghiệp Hà Nội",
+    "Trường Đại học Nguyễn Tất Thành"
+   ],
+   "orcidCurrent": [
+    "Hanoi University of Science and Technology"
+   ]
+  },
+  {
+   "id": "A5014675831",
+   "name": "Ngan Thi Duc Hoang",
+   "orcid": "0000-0001-8162-0874",
+   "works": 30,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "National Institute of Nutrition",
+    "Viện Dinh dưỡng",
+    "Trường Đại học Y Dược (ĐHQGHN)"
+   ],
+   "orcidCurrent": [
+    "National Insitute of Nutrition",
+    "National Institute of Nutirtion"
+   ]
+  },
+  {
+   "id": "A5048057915",
+   "name": "Trung Nghĩa Nguyễn",
+   "orcid": "0000-0002-2479-5632",
+   "works": 26,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Y Dược (ĐHQGHN)",
+    "Trường Đại học Kỹ thuật Y Dược Đà Nẵng",
+    "Học viện Y – Dược học cổ truyền Việt Nam",
+    "Trường Đại học Quốc tế Hồng Bàng"
+   ],
+   "orcidCurrent": [
+    "Rutgers University Graduate School New Brunswick"
+   ]
+  },
+  {
+   "id": "A5051606679",
+   "name": "Thị Hạnh Nguyễn",
+   "orcid": null,
+   "works": 25,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Y Dược (ĐHQGHN)",
+    "Học viện Nông nghiệp Việt Nam",
+    "Trường Đại học Thăng Long"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5100709068",
+   "name": "Tiến Dũng Nguyễn",
+   "orcid": "0009-0001-7629-0951",
+   "works": 46,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Việt Nhật (ĐHQGHN)",
+    "Trường Đại học Công nghiệp Thành phố Hồ Chí Minh",
+    "Trường Đại học Tôn Đức Thắng"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5102778857",
+   "name": "Nguyễn Tiến Dũng",
+   "orcid": "0000-0002-6511-1698",
+   "works": 22,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Việt Nhật (ĐHQGHN)",
+    "Trường Đại học Nông Lâm",
+    "Trường Đại học Sư phạm Hà Nội"
+   ],
+   "orcidCurrent": [
+    "Vietnam Maritime University"
+   ]
+  },
+  {
+   "id": "A5002494940",
+   "name": "Nguyen Huu Hai",
+   "orcid": "0000-0001-7909-385X",
+   "works": 19,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Quốc tế (ĐHQGHN)",
+    "Học viện Nông nghiệp Việt Nam",
+    "Institute of Oceanography"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5102677294",
+   "name": "Ngoc Anh Nguyen",
+   "orcid": "0009-0002-8603-4377",
+   "works": 14,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Quốc tế (ĐHQGHN)",
+    "Học viện Hàng không Việt Nam",
+    "Trường Đại học Gia Định"
+   ],
+   "orcidCurrent": [
+    "Thuongmai University"
+   ]
+  },
+  {
+   "id": "A5027440694",
+   "name": "The Nu Tran",
+   "orcid": "0009-0005-4104-1014",
+   "works": 14,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Quốc tế (ĐHQGHN)",
+    "Trường Đại học Thủ đô Hà Nội",
+    "Trường Đại học Công nghệ Đông Á"
+   ],
+   "orcidCurrent": [
+    "Vietnam National University, Hanoi"
+   ]
+  },
+  {
+   "id": "A5101764295",
+   "name": "Nguyễn Hoàng Anh",
+   "orcid": "0000-0002-4483-8329",
+   "works": 74,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Bách khoa (ĐHQG-HCM)",
+    "Trường Đại học Y Dược Thái Bình",
+    "Trường Đại Học Luật - Đại Học Quốc Gia Hà Nội"
+   ],
+   "orcidCurrent": [
+    "Örebro University"
+   ]
+  },
+  {
+   "id": "A5081826794",
+   "name": "Truong Thao Nguyen",
+   "orcid": "0000-0003-3641-374X",
+   "works": 29,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Đại học Bách khoa Hà Nội",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội",
+    "Trường Đại học Bách khoa (ĐHQG-HCM)"
+   ],
+   "orcidCurrent": [
+    "National Institute of Advanced Industrial Science and Technology (AIST)"
+   ]
+  },
+  {
+   "id": "A5102840657",
+   "name": "Nguyễn Ngọc Hiếu",
+   "orcid": "0000-0001-6091-3491",
+   "works": 27,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Kinh tế – Luật (ĐHQG-HCM)",
+    "Trường Đại học Vinh",
+    "Trường Đại học Kinh tế Nghệ An"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5104020105",
+   "name": "Nguyễn Thu Hằng",
+   "orcid": null,
+   "works": 56,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Dược Hà Nội",
+    "Trường Đại học Khoa học",
+    "Trường Đại học Mỏ – Địa chất",
+    "Viện Dược liệu"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5100702858",
+   "name": "Thanh Thuy Nguyen",
+   "orcid": "0000-0002-4610-3270",
+   "works": 14,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Hoa Sen",
+    "Trường Đại học Kinh tế và Quản trị kinh doanh",
+    "Trường Đại học Ngân hàng Thành phố Hồ Chí Minh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5101549677",
+   "name": "Ha Thi Thu Nguyen",
+   "orcid": "0000-0003-4414-6944",
+   "works": 82,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Kinh tế và Quản trị kinh doanh",
+    "Trường Đại học Xây dựng Hà Nội",
+    "Trường Đại học Thương mại"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5111252189",
+   "name": "Tran Thi Hong",
+   "orcid": "0009-0002-7821-0967",
+   "works": 22,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Y Dược Hải Phòng",
+    "Trường Đại học Sư phạm",
+    "Trường Đại học Sư phạm"
+   ],
+   "orcidCurrent": [
+    "Academy of Policy and Development"
+   ]
+  },
+  {
+   "id": "A5106893943",
+   "name": "Nga Thi Thu Nguyen",
+   "orcid": null,
+   "works": 18,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Sư phạm",
+    "Học viện Nông nghiệp Việt Nam",
+    "Trường Đại học Thủ đô Hà Nội"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5129405691",
+   "name": "Tran, Thi Ngoc;Doan, Chien Thang;Nguyen, Van Bon;Nguyen, Anh Dzung;Wang, San-Lang",
+   "orcid": "0009-0006-5601-0701",
+   "works": 6,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Sư phạm",
+    "Trường Đại học Tây Nguyên",
+    "Trường Đại học Y Dược Cần Thơ"
+   ],
+   "orcidCurrent": [
+    "Viet Duc Hospital"
+   ]
+  },
+  {
+   "id": "A5044887879",
+   "name": "Nguyễn Thị Hồng Vân",
+   "orcid": "0000-0002-6910-2705",
+   "works": 88,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Y Dược",
+    "Trường Đại học Tài chính – Quản trị kinh doanh",
+    "Trường Đại học Y Dược Buôn Ma Thuột"
+   ],
+   "orcidCurrent": [
+    "Vietnam Academy of Science and Technology"
+   ]
+  },
+  {
+   "id": "A5085583576",
+   "name": "Phượng Hoàng Thị",
+   "orcid": "0000-0002-1071-0845",
+   "works": 49,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Viện Hóa học",
+    "Học viện Khoa học và Công nghệ",
+    "Đại học Y Dược Thành phố Hồ Chí Minh",
+    "Trường Đại học Y Dược"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5101581915",
+   "name": "Nguyễn Thị Thùy Trang",
+   "orcid": "0000-0002-2175-1909",
+   "works": 24,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Sư phạm",
+    "Trường Đại học Nam Cần Thơ",
+    "Trường Đại học Kiến trúc Đà Nẵng"
+   ],
+   "orcidCurrent": [
+    "Hue University's College of Education"
+   ]
+  },
+  {
+   "id": "A5100615285",
+   "name": "Vu Hoang Nguyen",
+   "orcid": "0000-0003-0855-8845",
+   "works": 57,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Y Dược",
+    "Trường Đại học Y Hà Nội",
+    "Trường Đại học Tiền Giang"
+   ],
+   "orcidCurrent": [
+    "Institute of Science and Technology Austria"
+   ]
+  },
+  {
+   "id": "A5079452828",
+   "name": "Thi Thu Ha Tran",
+   "orcid": "0000-0001-7191-8714",
+   "works": 25,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Tài nguyên và Môi trường Thành phố Hồ Chí Minh",
+    "Trường Đại học Y Dược",
+    "Trường Đại học Y Dược Cần Thơ"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5008551466",
+   "name": "Thị Hường Nguyễn",
+   "orcid": null,
+   "works": 18,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Y Dược",
+    "Viện Dinh dưỡng",
+    "Trường Đại học Quốc tế Hồng Bàng"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5013669791",
+   "name": "Nguyen Van Thao",
+   "orcid": "0009-0007-2260-5982",
+   "works": 71,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Kinh tế",
+    "Trường Đại học Công nghiệp Thành phố Hồ Chí Minh",
+    "Viện Khoa học công nghệ Năng lượng và Môi trường",
+    "Trường Đại học Nguyễn Tất Thành"
+   ],
+   "orcidCurrent": [
+    "Institute of Science and Technology of Energy and Environment"
+   ]
+  },
+  {
+   "id": "A5101528270",
+   "name": "Nguyễn Thị Thủy",
+   "orcid": "0000-0001-5067-1468",
+   "works": 44,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Kinh tế",
+    "Trường Đại học Kinh tế – Kỹ thuật Công nghiệp",
+    "Institute for Tropical Technology",
+    "Trường Đại Học Trà Vinh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5003099485",
+   "name": "Thị Thu Hiền Trần",
+   "orcid": "0000-0001-6720-3038",
+   "works": 25,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Kinh tế",
+    "Trường Đại học Quy Nhơn",
+    "Học viện Y – Dược học cổ truyền Việt Nam",
+    "Trường Đại học Luật Hà Nội"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5054482402",
+   "name": "Tuan Anh Le",
+   "orcid": "0009-0001-3494-7740",
+   "works": 33,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Kinh tế",
+    "Trường Đại học FPT",
+    "Trường Đại học Công nghệ Đông Á"
+   ],
+   "orcidCurrent": [
+    "Đại học Tài nguyên và Môi trường Hà Nội"
+   ]
+  },
+  {
+   "id": "A5043496586",
+   "name": "Hưng Nguyễn Thành",
+   "orcid": null,
+   "works": 26,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Thương mại",
+    "Viện Năng lượng nguyên tử Việt Nam",
+    "Trường Đại học Sư phạm"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5024404261",
+   "name": "Nguyen Duc Thinh",
+   "orcid": null,
+   "works": 9,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Sư phạm",
+    "Institute of Oceanography",
+    "Viện Công nghệ Thông tin"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5046263262",
+   "name": "Nguyễn Thị Hồng",
+   "orcid": null,
+   "works": 12,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Sư phạm Kỹ thuật",
+    "Trường Đại học Thăng Long",
+    "Viện Khoa học Nông nghiệp Việt Nam"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5036929225",
+   "name": "Thanh Nguyen",
+   "orcid": "0000-0002-3213-6178",
+   "works": 59,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Viện Công nghệ Sinh học và Thực phẩm",
+    "Trường Đại học Vinh",
+    "Trường Đại học Công nghiệp Thành phố Hồ Chí Minh"
+   ],
+   "orcidCurrent": [
+    "Silanna Semiconductor Pty Ltd"
+   ]
+  },
+  {
+   "id": "A5001507533",
+   "name": "Nguyễn Thị Mai Hương",
+   "orcid": "0000-0003-3067-0446",
+   "works": 41,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Viện Công nghệ Sinh học và Thực phẩm",
+    "Trường Đại học Công nghiệp Thành phố Hồ Chí Minh",
+    "Trường Cao đẳng Vĩnh Phúc"
+   ],
+   "orcidCurrent": [
+    "Industrial University of Ho Chi Minh City"
+   ]
+  },
+  {
+   "id": "A5017843121",
+   "name": "Đặng Đức Dũng",
+   "orcid": "0000-0002-1979-6796",
+   "works": 156,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Đại học Bách khoa Hà Nội",
+    "Trường Đại học Hà Nội",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội"
+   ],
+   "orcidCurrent": [
+    "Ha Noi University of Science and Technology"
+   ]
+  },
+  {
+   "id": "A5054486481",
+   "name": "Lê Anh Tuấn",
+   "orcid": "0000-0003-4609-0382",
+   "works": 132,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Đại học Bách khoa Hà Nội",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội",
+    "Trường Đại học Nguyễn Tất Thành"
+   ],
+   "orcidCurrent": [
+    "Hanoi University of Science and Technology"
+   ]
+  },
+  {
+   "id": "A5090975825",
+   "name": "Nguyễn Văn Cương",
+   "orcid": "0000-0002-6646-2705",
+   "works": 91,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Công nghệ Giao thông Vận tải",
+    "Đại học Bách khoa Hà Nội",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội"
+   ],
+   "orcidCurrent": [
+    "Sydney Vietnam Institute",
+    "Ausvet Pty Ltd"
+   ]
+  },
+  {
+   "id": "A5031204307",
+   "name": "Pham Thanh Huyen",
+   "orcid": "0000-0003-3669-8079",
+   "works": 73,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Viện Dược liệu",
+    "Đại học Bách khoa Hà Nội",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội"
+   ],
+   "orcidCurrent": [
+    "Hanoi University of Science and Technology"
+   ]
+  },
+  {
+   "id": "A5073728622",
+   "name": "Michel Lebrun",
+   "orcid": "0000-0002-5107-5948",
+   "works": 50,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Bách khoa Hà Nội",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội",
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5014374360",
+   "name": "T. Kim Le",
+   "orcid": "0000-0001-5755-7473",
+   "works": 37,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Đại học Bách khoa Hà Nội",
+    "Trường Đại học Y Hà Nội",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội"
+   ],
+   "orcidCurrent": [
+    "Mid North Coast Cancer Institute"
+   ]
+  },
+  {
+   "id": "A5101783752",
+   "name": "Tuấn Anh Vũ",
+   "orcid": "0000-0001-7662-5099",
+   "works": 57,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Kinh tế Quốc dân",
+    "Trường Đại học Hàng hải Việt Nam",
+    "Viện Dinh dưỡng"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5103971663",
+   "name": "Thi Thu Trang Nguyen",
+   "orcid": "0000-0002-7221-3369",
+   "works": 74,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Đại học Kinh tế Quốc dân",
+    "Trường Đại học Xây dựng Hà Nội",
+    "Institute of Materials Science"
+   ],
+   "orcidCurrent": [
+    "Vietnam Academy of Science and Technology"
+   ]
+  },
+  {
+   "id": "A5101908387",
+   "name": "Thi Nga Nguyen",
+   "orcid": "0000-0003-3147-771X",
+   "works": 30,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Vinh",
+    "Đại học Kinh tế Quốc dân",
+    "Học viện Ngân hàng",
+    "Trường Đại học Quốc tế Hồng Bàng"
+   ],
+   "orcidCurrent": [
+    "University of Labour and Social Affairs"
+   ]
+  },
+  {
+   "id": "A5103865235",
+   "name": "Phuong Anh Tran",
+   "orcid": "0000-0001-5877-148X",
+   "works": 17,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Kinh tế Quốc dân",
+    "Trường Đại học Kinh tế (ĐHQGHN)",
+    "Trường Đại học Nam Cần Thơ"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5101819865",
+   "name": "Giang Nguyen",
+   "orcid": "0000-0003-1333-3560",
+   "works": 20,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Kinh tế Thành phố Hồ Chí Minh",
+    "Trường Đại học FPT",
+    "Trường Đại học Kinh tế – Tài chính Thành phố Hồ Chí Minh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5037705861",
+   "name": "Trang Thi Pham",
+   "orcid": "0000-0002-5335-2670",
+   "works": 9,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Đại học Kinh tế Thành phố Hồ Chí Minh",
+    "Trường Đại học Sư phạm Kỹ thuật Vĩnh Long",
+    "Trường Đại học Kinh tế – Tài chính Thành phố Hồ Chí Minh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5010100797",
+   "name": "V. Nguyen",
+   "orcid": "0000-0001-9838-4564",
+   "works": 18,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Đại học Kinh tế Thành phố Hồ Chí Minh",
+    "Trường Đại học Đà Lạt",
+    "Trường Đại học Kinh tế – Tài chính Thành phố Hồ Chí Minh"
+   ],
+   "orcidCurrent": [
+    "Institute of Materials Science"
+   ]
+  },
+  {
+   "id": "A5027862708",
+   "name": "Nguyễn Hồng Sơn",
+   "orcid": "0000-0003-4665-0984",
+   "works": 48,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Posts and Telecommunications Institute of Technology - Ho Chi Minh City",
+    "Học viện Công nghệ Bưu chính Viễn thông",
+    "Đại học Công nghiệp Hà Nội"
+   ],
+   "orcidCurrent": [
+    "Hanoi university of industry"
+   ]
+  },
+  {
+   "id": "A5116479883",
+   "name": "Nguyễn Thị Thu Hương",
+   "orcid": "0000-0003-4429-1519",
+   "works": 65,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Quốc tế Hồng Bàng",
+    "Đại học Công nghiệp Hà Nội",
+    "Trường Đại học Sư phạm Hà Nội",
+    "Trường Đại học Lâm nghiệp"
+   ],
+   "orcidCurrent": [
+    "Thai Nguyen University"
+   ]
+  },
+  {
+   "id": "A5078017358",
+   "name": "The Huu Nguyen",
+   "orcid": "0009-0009-8819-3049",
+   "works": 19,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Đại học Công nghiệp Hà Nội",
+    "Trường Đại học Bà Rịa – Vũng Tàu",
+    "Institute of Materials Science"
+   ],
+   "orcidCurrent": [
+    "Viettel Artificial Intelligence and Data Services Center"
+   ]
+  },
+  {
+   "id": "A5023511697",
+   "name": "Tuan Anh Nguyen",
+   "orcid": "0000-0002-9939-5318",
+   "works": 28,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Học viện Quản lý giáo dục",
+    "Trường Đại học Công nghệ Kỹ thuật Thành phố Hồ Chí Minh",
+    "Trường Đại học Thăng Long"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5062430438",
+   "name": "Nguyen Thi Hai Yen",
+   "orcid": "0000-0002-6988-4778",
+   "works": 87,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Học viện Quản lý giáo dục",
+    "Trường Đại học Công nghiệp Thành phố Hồ Chí Minh",
+    "Trường Đại học Vinh",
+    "Trường Đại học Y Dược Hải Phòng"
+   ],
+   "orcidCurrent": [
+    "Industrial University of Ho Chi Minh City"
+   ]
+  },
+  {
+   "id": "A5108132703",
+   "name": "Nguyễn Tuấn Anh",
+   "orcid": null,
+   "works": 17,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Hà Nội",
+    "Trường Đại học Vinh",
+    "Institute of Materials Science"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5107334888",
+   "name": "Nguyễn Thị Mai Hương",
+   "orcid": "0000-0002-5577-7832",
+   "works": 67,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Cao đẳng Y tế Thái Nguyên",
+    "Viện Khảo cổ học",
+    "Trường Đại học Sư phạm Hà Nội"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5049387720",
+   "name": "Nguyễn Đức Trung",
+   "orcid": "0000-0002-0425-074X",
+   "works": 62,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Joint Vietnam-Russia Tropical Science and Technology Research Center",
+    "Viện Hóa học",
+    "Trường Đại học Sư phạm Hà Nội"
+   ],
+   "orcidCurrent": [
+    "Hanoi University of Science and Technology"
+   ]
+  },
+  {
+   "id": "A5021089259",
+   "name": "D. Nguyen",
+   "orcid": "0000-0001-5699-2529",
+   "works": 28,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Sư phạm Hà Nội",
+    "Đại học Bách khoa Hà Nội",
+    "Trường Đại học Khoa học và Công nghệ Hà Nội"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5047544270",
+   "name": "Vũ Thị Thu Thuỷ",
+   "orcid": "0000-0002-5791-1265",
+   "works": 22,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Sư phạm Hà Nội",
+    "Trường Đại học Y khoa Vinh",
+    "Trường Đại học Thành Đô",
+    "Trường Đại Học Luật - Đại Học Quốc Gia Hà Nội"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5106301015",
+   "name": "Thi Thu Huong Tran",
+   "orcid": "0000-0003-3059-8800",
+   "works": 33,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Học viện Ngân hàng",
+    "Trường Đại học Thương mại",
+    "Trường Đại học Công Thương Thành phố Hồ Chí Minh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5100632422",
+   "name": "Nguyễn Anh Tuấn",
+   "orcid": "0000-0002-1694-9099",
+   "works": 127,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Xây dựng Hà Nội",
+    "Viện Dinh dưỡng",
+    "Trường Cao đẳng Vĩnh Phúc"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5037862575",
+   "name": "Viêt-Anh Nguyên",
+   "orcid": "0000-0002-3114-8169",
+   "works": 67,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Xây dựng Hà Nội",
+    "Trường Đại học Công nghiệp Thành phố Hồ Chí Minh",
+    "Trường Đại học FPT",
+    "Viện Khoa học và Kỹ thuật môi trường"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5036815675",
+   "name": "Thị Hồng Minh Nguyễn",
+   "orcid": "0000-0003-4359-1763",
+   "works": 47,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Đại học Y Dược Thành phố Hồ Chí Minh",
+    "Viện Dinh dưỡng",
+    "Trường Đại học Xây dựng Hà Nội"
+   ],
+   "orcidCurrent": [
+    "Hanoi University of Science and Technology"
+   ]
+  },
+  {
+   "id": "A5108104417",
+   "name": "Nguyễn Thị Thanh",
+   "orcid": null,
+   "works": 31,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Xây dựng Hà Nội",
+    "Trường Đại học Đồng Tháp",
+    "Oxford University Clinical Research Unit"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5133625023",
+   "name": "Nguyen Thi Thu Thuy",
+   "orcid": "0000-0001-7033-7504",
+   "works": 73,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Xây dựng Hà Nội",
+    "Trường Đại học Luật Thành phố Hồ Chí Minh",
+    "Trường Đại học Ngân hàng Thành phố Hồ Chí Minh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5100642516",
+   "name": "Nguyen Van Minh",
+   "orcid": "0000-0002-3622-8758",
+   "works": 11,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Sư phạm Hà Nội 2",
+    "Trường Đại học Tây Nguyên",
+    "Trường Đại học Thành Đông"
+   ],
+   "orcidCurrent": [
+    "Thuongmai University"
+   ]
+  },
+  {
+   "id": "A5100652560",
+   "name": "Thanh Quang Nguyen",
+   "orcid": "0000-0003-4898-091X",
+   "works": 95,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Nguyễn Tất Thành",
+    "Trường Đại học Bà Rịa – Vũng Tàu",
+    "Trường Đại học Mở Thành phố Hồ Chí Minh",
+    "Trường Đại học Giao thông vận tải Thành phố Hồ Chí Minh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5102086426",
+   "name": "Thi Ngoc Linh Nguyen",
+   "orcid": null,
+   "works": 10,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Mở Thành phố Hồ Chí Minh",
+    "Trường Đại học Vinh",
+    "Institute of Advanced Technology"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5085148124",
+   "name": "Thi Thu Thuy Nguyen",
+   "orcid": "0000-0001-6140-3637",
+   "works": 12,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Institute of Advanced Technology",
+    "Trường Đại học Mở Thành phố Hồ Chí Minh",
+    "Viện Khoa học công nghệ Năng lượng và Môi trường"
+   ],
+   "orcidCurrent": [
+    "Research Institute of Aquaculture no 2"
+   ]
+  },
+  {
+   "id": "A5041272794",
+   "name": "Thi Bich Ngoc Nguyen",
+   "orcid": "0009-0001-3793-7812",
+   "works": 64,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Nông Lâm Thành phố Hồ Chí Minh",
+    "Trường Đại học Sao Đỏ",
+    "Trường Đại học Văn Hiến",
+    "Trường Đại học Giao thông vận tải Thành phố Hồ Chí Minh"
+   ],
+   "orcidCurrent": [
+    "Sungkyunkwan University"
+   ]
+  },
+  {
+   "id": "A5101990554",
+   "name": "Nguyen Thi Kim Phuong",
+   "orcid": "0000-0002-0723-6230",
+   "works": 63,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Sư phạm Thành phố Hồ Chí Minh",
+    "Học viện Khoa học và Công nghệ",
+    "Institute of Advanced Technology",
+    "Viện Dược liệu"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5064730209",
+   "name": "Hau Thi Minh Nguyen",
+   "orcid": "0000-0001-9893-2866",
+   "works": 50,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Y tế Công cộng",
+    "Trường Đại học Sư phạm Thành phố Hồ Chí Minh",
+    "Trường Đại Học Công Nghệ Thông Tin - Đại Học Quốc Gia TP. Hồ Chí Minh"
+   ],
+   "orcidCurrent": [
+    "Monash University"
+   ]
+  },
+  {
+   "id": "A5103978113",
+   "name": "Nguyễn Thị Như Quỳnh",
+   "orcid": null,
+   "works": 25,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Đà Lạt",
+    "Trường Đại học Vinh",
+    "Trường Đại học Lạc Hồng"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5103115061",
+   "name": "Ngoc B. Nguyen",
+   "orcid": "0000-0002-4602-6586",
+   "works": 32,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Đồng Tháp",
+    "Trường Đại học Y tế Công cộng",
+    "Đại học Y Dược Thành phố Hồ Chí Minh",
+    "Trường Đại học Công nghệ Sài Gòn"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5053969372",
+   "name": "Thị Thanh Hương Nguyễn",
+   "orcid": null,
+   "works": 36,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Đồng Tháp",
+    "Trường Đại học Tây Nguyên",
+    "Viện Khoa học Đo đạc và Bản đồ"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5101972756",
+   "name": "Nguyen Van Nghia",
+   "orcid": "0000-0001-7892-480X",
+   "works": 17,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Quy Nhơn",
+    "Trường Đại học Thủy lợi",
+    "Trường Đại học Kiến trúc Hà Nội"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5048660049",
+   "name": "Thi Huyen Nguyen",
+   "orcid": "0000-0002-5474-8976",
+   "works": 10,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Tây Nguyên",
+    "Trường Đại học Tây Bắc",
+    "Viện Nghiên cứu Giống và Công nghệ sinh học Lâm nghiệp",
+    "Viện Khoa học Lâm nghiệp Việt Nam"
+   ],
+   "orcidCurrent": [
+    "Hanoi University of Industry"
+   ]
+  },
+  {
+   "id": "A5114210497",
+   "name": "Thị Huyền Nguyễn",
+   "orcid": null,
+   "works": 65,
+   "cat": "khong-orcid",
+   "unit": [
+    "Học viện Nông nghiệp Việt Nam",
+    "Trường Đại học Y Hà Nội",
+    "Trường Đại học Vinh",
+    "Trường Đại học Y khoa Vinh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5000975759",
+   "name": "Hai Thanh Le",
+   "orcid": "0000-0002-7748-8281",
+   "works": 37,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Viện Môi trường và Tài nguyên",
+    "Trường Đại học Vinh",
+    "Viện Sức khoẻ nghề nghiệp và môi trường"
+   ],
+   "orcidCurrent": [
+    "Institute for Environment and Resources - IER"
+   ]
+  },
+  {
+   "id": "A5140253412",
+   "name": "Thị Thanh Nhàn Nguyễn",
+   "orcid": null,
+   "works": 14,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Vinh",
+    "Trường Đại học Kỹ thuật Y Dược Đà Nẵng",
+    "Trường Đại học Y khoa Vinh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5102953237",
+   "name": "Văn Minh Lê",
+   "orcid": "0009-0000-7752-9066",
+   "works": 68,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Viện Dược liệu",
+    "Trường Đại học Y Hà Nội",
+    "Đại học Y Dược Thành phố Hồ Chí Minh"
+   ],
+   "orcidCurrent": [
+    "Can Tho University of Medicine and Pharmacy"
+   ]
+  },
+  {
+   "id": "A5102898913",
+   "name": "Trang Thi Thu Tran",
+   "orcid": "0000-0002-0925-423X",
+   "works": 40,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Dược Hà Nội",
+    "Viện Dinh dưỡng",
+    "National Institute of Nutrition"
+   ],
+   "orcidCurrent": [
+    "Hue University of Economics"
+   ]
+  },
+  {
+   "id": "A5081520999",
+   "name": "Thị Thu Trang Trần",
+   "orcid": null,
+   "works": 27,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Thành Đô",
+    "Viện Dinh dưỡng",
+    "Trường Đại học Dược Hà Nội",
+    "National Institute of Nutrition"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5059651488",
+   "name": "Hoàng Văn Minh",
+   "orcid": "0000-0002-4749-5536",
+   "works": 356,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Y tế Công cộng",
+    "Trường Đại học Thủ đô Hà Nội",
+    "Viện Pasteur Thành phố Hồ Chí Minh"
+   ],
+   "orcidCurrent": [
+    "Hanoi School Of Public Health"
+   ]
+  },
+  {
+   "id": "A5102774522",
+   "name": "Thị Thu Hiền Lê",
+   "orcid": "0000-0003-4713-2812",
+   "works": 36,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học FPT",
+    "Đại học Y Dược Thành phố Hồ Chí Minh",
+    "Trường Đại học Y Dược Hải Phòng"
+   ],
+   "orcidCurrent": [
+    "PATH"
+   ]
+  },
+  {
+   "id": "A5100694916",
+   "name": "Thu Hien Nguyen",
+   "orcid": "0009-0009-7916-9637",
+   "works": 18,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Công Thương Thành phố Hồ Chí Minh",
+    "Trường Đại học Y Dược Hải Phòng",
+    "Viện Sinh học"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5019897276",
+   "name": "Nguyen Thi Thu Hien",
+   "orcid": "0000-0002-8457-8285",
+   "works": 29,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học Nam Cần Thơ",
+    "Trường Đại học Điều dưỡng Nam Định",
+    "Trường Đại học Kỹ thuật Y Dược Đà Nẵng"
+   ],
+   "orcidCurrent": [
+    "Bach Mai Hospital",
+    "Bạch Mai Hospital"
+   ]
+  },
+  {
+   "id": "A5006036220",
+   "name": "Tran Thi Huong",
+   "orcid": "0000-0002-1262-1803",
+   "works": 23,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Kinh tế – Kỹ thuật Công nghiệp",
+    "Trường Đại học Hùng Vương",
+    "Viện Sinh học"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5113126951",
+   "name": "Nguyễn Thanh Hiển",
+   "orcid": "0009-0004-3844-6937",
+   "works": 38,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Ngân hàng Thành phố Hồ Chí Minh",
+    "Viện Sinh học",
+    "Trường Đại học Công Thương Thành phố Hồ Chí Minh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5056306025",
+   "name": "Thị Tố Uyên Nguyễn",
+   "orcid": null,
+   "works": 31,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Tài chính – Marketing",
+    "Trường Đại học Quốc tế Hồng Bàng",
+    "Viện Dinh dưỡng"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5101838868",
+   "name": "Thi Oanh Nguyen",
+   "orcid": "0000-0003-2891-8211",
+   "works": 23,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Institute for Nuclear Science and Technology",
+    "Trường Đại học Lâm nghiệp",
+    "Viện Năng lượng nguyên tử Việt Nam"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5046003095",
+   "name": "Nguyen Van Hai",
+   "orcid": "0009-0003-3836-3085",
+   "works": 48,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Thủy lợi",
+    "Viện Nghiên cứu hải sản",
+    "Trường Đại học Lạc Hồng"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5136664130",
+   "name": "H T Nguyen",
+   "orcid": null,
+   "works": 6,
+   "cat": "khong-orcid",
+   "unit": [
+    "Học viện Ngân hàng",
+    "Trường Đại học Nguyễn Tất Thành",
+    "Trường Đại học Quốc tế Miền Đông"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5070035360",
+   "name": "Thai-Ha Le",
+   "orcid": "0000-0003-1158-7102",
+   "works": 125,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Trường Đại học VinUni",
+    "Trường Đại học Fulbright Việt Nam",
+    "Trường Đại học Tôn Đức Thắng"
+   ],
+   "orcidCurrent": [
+    "VinFuture Foundation"
+   ]
+  },
+  {
+   "id": "A5101451102",
+   "name": "Phuong Le Thi",
+   "orcid": "0000-0001-5258-531X",
+   "works": 49,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Institute of Advanced Technology",
+    "Học viện Khoa học và Công nghệ",
+    "Trường Đại học Tôn Đức Thắng"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5058507459",
+   "name": "Nguyen Thi Trang",
+   "orcid": "0000-0002-1284-5153",
+   "works": 56,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Viện Khoa học và Công nghệ Việt Nam - Hàn Quốc",
+    "Học viện Khoa học và Công nghệ",
+    "Trường Đại học Ngoại ngữ – Tin học Thành phố Hồ Chí Minh"
+   ],
+   "orcidCurrent": [
+    "Institute of Ecology and Biological Resources"
+   ]
+  },
+  {
+   "id": "A5038893491",
+   "name": "Nguyễn Trung Hiếu",
+   "orcid": "0000-0003-4769-3214",
+   "works": 44,
+   "cat": "orcid-khong-khop-don-vi",
+   "unit": [
+    "Học viện Công nghệ Bưu chính Viễn thông",
+    "Posts and Telecommunications Institute of Technology - Ho Chi Minh City",
+    "Viện Nghiên cứu Nuôi trồng Thủy sản II"
+   ],
+   "orcidCurrent": [
+    "Duy Tan University",
+    "Duy Tan University"
+   ]
+  },
+  {
+   "id": "A5009681080",
+   "name": "Hoang-Nguyen Vu",
+   "orcid": "0000-0002-9757-761X",
+   "works": 8,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Học viện Công nghệ Bưu chính Viễn thông",
+    "Health Strategy and Policy Institute",
+    "Posts and Telecommunications Institute of Technology - Ho Chi Minh City"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5137389147",
+   "name": "Sáng Nguyễn",
+   "orcid": "0009-0007-7828-7899",
+   "works": 4,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Hải Dương",
+    "Trường Đại học Kinh doanh và Công nghệ Hà Nội",
+    "Trường Đại học Thành Đông"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5021253331",
+   "name": "Tran Ngoc Anh",
+   "orcid": null,
+   "works": 3,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Quảng Nam",
+    "Trường Đại học Khánh Hòa",
+    "Trường Đại học Phạm Văn Đồng"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5093576336",
+   "name": "Hải Đặng Minh",
+   "orcid": null,
+   "works": 1,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Quảng Nam",
+    "Trường Đại học Quốc tế Bắc Hà",
+    "Trường Đại học Phan Châu Trinh"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5137048308",
+   "name": "Thị Thanh Chung Nguyễn",
+   "orcid": null,
+   "works": 8,
+   "cat": "khong-orcid",
+   "unit": [
+    "Trường Đại học Y khoa Vinh",
+    "Trường Đại học Hồng Đức",
+    "Research Center for Infectious Diseases"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5042970296",
+   "name": "Minh Thanh Vo",
+   "orcid": "0000-0003-3654-5857",
+   "works": 11,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Công nghệ Thành phố Hồ Chí Minh",
+    "Trường Đại học FPT",
+    "Trường Đại học Văn Lang"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5048764220",
+   "name": "Trần Thanh Dương",
+   "orcid": null,
+   "works": 18,
+   "cat": "khong-orcid",
+   "unit": [
+    "National Institute of Nutrition",
+    "Viện Sốt rét - Ký sinh trùng - Côn trùng Trung ương",
+    "Viện Dinh dưỡng"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5112967769",
+   "name": "Thanh Dương Trần",
+   "orcid": null,
+   "works": 17,
+   "cat": "khong-orcid",
+   "unit": [
+    "National Institute of Nutrition",
+    "Viện Sốt rét - Ký sinh trùng - Côn trùng Trung ương",
+    "Viện Dinh dưỡng"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5001664560",
+   "name": "Tung H. Nguyen",
+   "orcid": "0000-0003-0097-5791",
+   "works": 22,
+   "cat": "orcid-khong-co-viec-hien-tai",
+   "unit": [
+    "Trường Đại học Phenikaa",
+    "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+    "Học viện Khoa học và Công nghệ"
+   ],
+   "orcidCurrent": []
+  },
+  {
+   "id": "A5110835806",
+   "name": "Phạm Thị Hằng",
+   "orcid": null,
+   "works": 85,
+   "cat": "khong-orcid",
+   "unit": [
+    "Viện Dược liệu",
+    "Viện Pasteur Thành phố Hồ Chí Minh",
+    "Viện Các Khoa học Trái đất"
+   ],
+   "orcidCurrent": []
+  }
+ ]
+}
