@@ -445,7 +445,7 @@ export default async function handler(request) {
     if (op === "author-public" && request.method === "GET") {
       const id = url.searchParams.get("id") || "", v = await getVf(id);
       if (!v || v.until <= Date.now()) return json({ verified: false }, 200, { "cache-control": "public, s-maxage=120, stale-while-revalidate=300" });
-      const p = await getProf(id), pub = { orcid: p.orcid || v.orcid || "", scholar: p.scholar || v.scholar || "", site: p.site || "", bio: p.bio || "", hasAvatar: p.av ? Number(p.av) || true : false, email: p.showContact ? p.email || "" : "", phone: p.showContact ? p.phone || "" : "" };
+      const p = await getProf(id), pub = { disc: Array.isArray(p.disc) ? p.disc : [], orcid: p.orcid || v.orcid || "", scholar: p.scholar || v.scholar || "", site: p.site || "", bio: p.bio || "", hasAvatar: p.av ? Number(p.av) || true : false, email: p.showContact ? p.email || "" : "", phone: p.showContact ? p.phone || "" : "" };
       return json({ verified: true, profile: pub, works: (await getWorks(id)).filter((w) => w.status === "ok") }, 200, { "cache-control": "public, s-maxage=120, stale-while-revalidate=300" });
     }
     if (op === "avatar" && request.method === "GET") {
@@ -473,7 +473,8 @@ export default async function handler(request) {
         const site = tidy(body.site, 200); if (site && !/^https?:\/\/[^\s]+\.[^\s]+$/.test(site)) return json({ error: "Trang web cá nhân phải bắt đầu bằng http(s)://" }, 400);
         const email = tidy(body.email, 160).toLowerCase(); if (email && !EMAIL_RE.test(email)) return json({ error: "Email liên hệ chưa đúng." }, 400);
         const phone = tidy(body.phone, 20); if (phone && !/^[0-9+ .()-]{8,20}$/.test(phone)) return json({ error: "Số điện thoại chưa đúng." }, 400);
-        Object.assign(p, { orcid, scholar, site, bio: tidy(body.bio, 600), email, phone, showContact: body.showContact === true, updatedAt: Date.now() });
+        const disc = (Array.isArray(body.disc) ? body.disc : []).map((x) => String(x)).filter((x) => /^[a-z0-9-]{2,40}$/.test(x)).slice(0, 3);
+        Object.assign(p, { disc, orcid, scholar, site, bio: tidy(body.bio, 600), email, phone, showContact: body.showContact === true, updatedAt: Date.now() });
         await one(["HSET", APK, authorId, JSON.stringify(p)]); return json({ ok: true, profile: p });
       }
       if (op === "author-avatar") {

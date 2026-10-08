@@ -1,4 +1,5 @@
 // Tick vàng "Nhà khoa học đã xác thực" + hộp yêu cầu xác thực hồ sơ ("Đây là tôi").
+import { DISC } from "./disciplines";
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { api, useAccount } from "./accountStore";
 import { Icon } from "./icons";
@@ -71,7 +72,7 @@ export function ClaimBox({ authorId, authorName, mode = "claim" }: { authorId: s
 }
 
 // ---------- Dữ liệu công khai do chủ hồ sơ đã xác thực khai báo ----------
-export interface AuthorPub { verified: boolean; profile?: { orcid: string; scholar: string; site: string; bio: string; hasAvatar: boolean | number; email: string; phone: string }; works?: { doi: string; title: string; venue: string; year: number; oa: string; status: string }[] }
+export interface AuthorPub { verified: boolean; profile?: { disc?: string[]; orcid: string; scholar: string; site: string; bio: string; hasAvatar: boolean | number; email: string; phone: string }; works?: { doi: string; title: string; venue: string; year: number; oa: string; status: string }[] }
 export function useAuthorPub(id: string): AuthorPub | null {
   const ok = useVerified(id); const [d, setD] = useState<AuthorPub | null>(null);
   useEffect(() => { setD(null); if (ok) api<AuthorPub>("author-public", undefined, `&id=${encodeURIComponent(id)}`).then(setD).catch(() => {}); }, [id, ok]);
@@ -100,7 +101,7 @@ export function AvatarImg({ id, fallback }: { id: string; fallback: ReactNode })
 }
 
 // ---------- Tab "Hồ sơ khoa học" trong không gian tài khoản ----------
-type Mine = { authorId: string; name: string; until: number; hide?: string; profile: { orcid?: string; scholar?: string; site?: string; bio?: string; email?: string; phone?: string; showContact?: boolean; av?: number | boolean }; works: { doi: string; title: string; year: number; status: string; why: string; oa: string }[] };
+type Mine = { authorId: string; name: string; until: number; hide?: string; profile: { disc?: string[]; orcid?: string; scholar?: string; site?: string; bio?: string; email?: string; phone?: string; showContact?: boolean; av?: number | boolean }; works: { doi: string; title: string; year: number; status: string; why: string; oa: string }[] };
 const shrink = (f: File) => new Promise<string>((res, rej) => {
   const img = new Image(), u = URL.createObjectURL(f);
   img.onload = () => { const s = 256, c = document.createElement("canvas"), k = Math.min(img.width, img.height); c.width = c.height = s; c.getContext("2d")!.drawImage(img, (img.width - k) / 2, (img.height - k) / 2, k, k, 0, 0, s, s); URL.revokeObjectURL(u); res(c.toDataURL("image/jpeg", 0.82)); };
@@ -116,7 +117,7 @@ export function ScholarConsole() {
 function One({ m, reload }: { m: Mine; reload: () => void }) {
   const [msg, setMsg] = useState(""), [busy, setBusy] = useState(false), p = m.profile;
   const run = async (op: string, body: object, ok: string) => { setBusy(true); setMsg(""); try { await api(op, { authorId: m.authorId, ...body }); setMsg(ok); reload(); } catch (e) { setMsg((e as Error).message); } finally { setBusy(false); } };
-  const save = (e: FormEvent<HTMLFormElement>) => { e.preventDefault(); const f = new FormData(e.currentTarget); void run("author-save", { orcid: f.get("orcid"), scholar: f.get("scholar"), site: f.get("site"), bio: f.get("bio"), email: f.get("email"), phone: f.get("phone"), showContact: f.get("showContact") === "on" }, "Đã lưu."); };
+  const save = (e: FormEvent<HTMLFormElement>) => { e.preventDefault(); const f = new FormData(e.currentTarget); void run("author-save", { orcid: f.get("orcid"), scholar: f.get("scholar"), disc: f.getAll("disc"), site: f.get("site"), bio: f.get("bio"), email: f.get("email"), phone: f.get("phone"), showContact: f.get("showContact") === "on" }, "Đã lưu."); };
   const addDoi = (e: FormEvent<HTMLFormElement>) => { e.preventDefault(); const el = e.currentTarget, f = new FormData(el); void run("author-work-add", { doi: f.get("doi") }, "Đã thêm công trình.").then(() => el.reset()); };
   const [pend, setPend] = useState<string | null>(null), [avMsg, setAvMsg] = useState("");
   const pick = async (f: File | undefined) => { setAvMsg(""); setPend(null); if (!f) return; try { setPend(await shrink(f)); } catch (e) { setAvMsg((e as Error).message); } };
@@ -129,6 +130,10 @@ function One({ m, reload }: { m: Mine; reload: () => void }) {
       <form onSubmit={save} className="form">
         <label className="sel"><span>ORCID</span><input name="orcid" defaultValue={p.orcid} maxLength={40} placeholder="0000-0000-0000-0000" /></label>
         <label className="sel"><span>Google Scholar</span><input name="scholar" type="url" defaultValue={p.scholar} maxLength={300} placeholder="https://scholar.google.com/citations?user=…" /></label>
+        <fieldset className="discpick"><legend>Ngành của tôi (chọn tối đa 3; để trống thì dùng ngành hệ thống suy ra)</legend>
+          <div className="discgrid">{Object.entries(DISC).map(([k, [vi]]) => <label key={k} className="chk"><input type="checkbox" name="disc" value={k} defaultChecked={p.disc?.includes(k)} onChange={(e) => { const f = e.currentTarget.form; if (f && f.querySelectorAll('input[name="disc"]:checked').length > 3) { e.currentTarget.checked = false; } }} />{vi}</label>)}</div>
+          <p className="meta">Ngành bạn chọn hiện trên trang hồ sơ. Bộ lọc ngành và cách chấm PRO-SCORE vẫn dùng ngành suy ra từ tạp chí.</p>
+        </fieldset>
         <label className="sel"><span>Trang cá nhân</span><input name="site" type="url" defaultValue={p.site} maxLength={200} /></label>
         <label className="sel"><span>Giới thiệu ngắn (tối đa 600 ký tự)</span><textarea name="bio" rows={3} defaultValue={p.bio} maxLength={600} /></label>
         <label className="sel"><span>Email liên hệ</span><input name="email" type="email" defaultValue={p.email} maxLength={160} /></label>
@@ -160,3 +165,6 @@ function One({ m, reload }: { m: Mine; reload: () => void }) {
     </section>
   );
 }
+
+/** Ngành do chủ hồ sơ đã xác thực tự chọn (ưu tiên hơn ngành hệ thống suy ra khi hiển thị). */
+export function useOwnDisc(id: string): string[] | null { const d = useAuthorPub(id); return d?.profile?.disc?.length ? d.profile.disc : null; }

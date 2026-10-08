@@ -15,7 +15,7 @@ import { useWorks } from "./wsearch";
 import { StarBtn } from "./StarBtn";
 import { ProBadge, ProBadgeTag } from "./Badge";
 import { VisitChip } from "./VisitChip";
-import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg, useVerified, useIsMine } from "./Verified";
+import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg, useVerified, useIsMine, useOwnDisc } from "./Verified";
 import { useHidden } from "./hidden";
 import { NoDataHint } from "./NoData";
 import { Footer, EcoLink } from "./Footer";
@@ -374,7 +374,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   const hid = useHidden();
   const { lang, t, num } = useT();
   const { user, cfg, favs, toggleFav, recordView } = useAccount();
-  const mine = useIsMine(a.id), isVerified = useVerified(a.id) !== null;
+  const ownDisc = useOwnDisc(a.id), mine = useIsMine(a.id), isVerified = useVerified(a.id) !== null;
   const [works, setWorks] = useState<Work[] | null>(null);
   const [werr, setWerr] = useState(false), [tick, setTick] = useState(0), [wpage, setWpage] = useState(0);
   const [wsort, setWsort] = useState<WSort>("year"), [onlyLead, setOnlyLead] = useState(false), [allInst, setAllInst] = useState(false);
@@ -443,7 +443,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
           <ul className="chips">{(allInst ? inst : inst.slice(0, 4)).map((i) => <li key={i.id}><Icon n="building" size={14} />{instLabel(i, lang)}</li>)}{inst.length > 4 && <li className="more"><button type="button" onClick={() => setAllInst(!allInst)} aria-expanded={allInst}>{allInst ? t("instLess") : t("instMore", { n: num(inst.length - 4) })}</button></li>}{a.scholar && <li className="scholar"><a href={`https://scholar.google.com/citations?user=${a.scholar}&hl=${lang === "vi" ? "vi" : "en"}`} target="_blank" rel="noopener">Google Scholar<span className="sr"> {t("newTab")}</span></a></li>}{a.orcid && <li className="orcid"><a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}<span className="sr"> {t("newTab")}</span></a></li>}</ul>
           <ProBadgeTag rank={a.proRank} />
           {a.bigFlag && <p className="bigflag" role="note"><Icon n="users" size={18} /><span><b>{t("bigTitle")}</b> {t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}</span></p>}
-          {a.disciplines.length > 0 && <p className="hdisc">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</p>}
+          {(ownDisc ?? a.disciplines).length > 0 && <p className="hdisc">{(ownDisc ?? a.disciplines).map((s) => dName(s, lang)).join(" · ")}</p>}
           <p className="actions-row">{cfg?.enabled !== false && <button className={`ghost light${favs.has(`a|${a.id}`) ? " on" : ""}`} aria-pressed={favs.has(`a|${a.id}`)} onClick={() => void saveAuthor()}><Icon n="star" size={16} />{!user ? t("saveGate") : favs.has(`a|${a.id}`) ? t("savedA") : t("saveA")}</button>}<button className="ghost light" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button><a className="ghost-link light" href={mine ? "#/tai-khoan" : `#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{mine ? "Quản lý hồ sơ của tôi" : isVerified ? "Đính chính / gỡ hồ sơ" : t("corrLink")}</a></p>
         </div>
       </header>
