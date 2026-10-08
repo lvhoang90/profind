@@ -320,7 +320,8 @@ function Merger() {
         <p className="meta">{BANDS.find((b) => b[0] === band)?.[2]}</p>
         <p className="sprow2">{(["todo", "merge", "different"] as const).map((k) => <button key={k} className={view === k ? "primary" : ""} onClick={() => { setView(k); setPage(0); setPick(new Set()); }}>{k === "todo" ? "Chưa duyệt" : k === "merge" ? "Đã chọn gộp" : "Đã chọn khác người"}</button>)}
           <label className="sel inl"><span>Số hàng/trang</span><select value={per} onChange={(e) => { setPer(+e.target.value); setPage(0); setPick(new Set()); }}>{[25, 50, 100, 200].map((n) => <option key={n} value={n}>{n}</option>)}</select></label>
-          <button onClick={exportJson}>Xuất kết quả (JSON)</button></p>
+          <button onClick={exportJson}>Xuất kết quả (JSON)</button>
+          <button className="danger" disabled={busy} onClick={() => { if (!confirm("LÀM LẠI TỪ ĐẦU: xóa mọi quyết định gộp và khác người của tất cả các nhóm? Việc này chưa động tới dữ liệu chính vì các cặp chọn gộp mới được áp dụng sau khi bạn xuất JSON cho trợ lý.")) return; if (prompt("Gõ XOA để xác nhận") !== "XOA") return; setBusy(true); api("admin-claim-split", { reset: true }).then(() => { setMsg("Đã xóa toàn bộ quyết định."); setPick(new Set()); setV((x) => x + 1); }).catch((e) => setErr((e as Error).message)).finally(() => setBusy(false)); }}>Làm lại từ đầu</button></p>
         {msg && <p className="banner" role="status"><Icon n="check" />{msg}</p>}
         {out && <><p className="meta">Sao chép đoạn này gửi cho trợ lý để đưa vào <code>data/corrections.json</code>:</p><textarea readOnly rows={8} value={out} onFocus={(e) => e.currentTarget.select()} style={{ width: "100%" }} /></>}
       </section>
@@ -335,11 +336,17 @@ function Merger() {
           <button disabled={busy || !ticked.length} onClick={() => void saveTicked()}>Chỉ gộp {ticked.length} cặp đã tick (giữ phần còn lại)</button>
           {(band === "3" || band === "4") && <button disabled={busy} onClick={() => void allDifferent()}>Cả nhóm: khác người ({list.length})</button>}</p>
       </section>}
+      {view !== "todo" && list.length > 0 && <section className="card spact">
+        <p className="sprow2"><span className="meta">Hoàn tác (đưa về “Chưa duyệt”):</span>
+          <button disabled={busy} onClick={() => tickWhere(() => true)}>Tick cả trang</button><button disabled={busy} onClick={() => setPick(new Set())}>Bỏ tick</button>
+          <button className="primary" disabled={busy || !ticked.length} onClick={() => void send(ticked.map((p) => ({ a: p.a, b: p.b, decision: "undo" })), `Đã hoàn tác ${ticked.length} cặp.`)}>Hoàn tác {ticked.length} cặp đã tick</button>
+          <button disabled={busy} onClick={() => confirm(`Hoàn tác toàn bộ ${list.length} cặp “${view === "merge" ? "đã chọn gộp" : "đã chọn khác người"}” trong nhóm này?`) && void send(list.map((p) => ({ a: p.a, b: p.b, decision: "undo" })), `Đã hoàn tác ${list.length} cặp.`)}>Hoàn tác cả nhóm này ({list.length})</button></p>
+      </section>}
       <div className="sptable" role="list">
         {rows.map((p, i) => { const k = pk(p.a, p.b), dd = dec.get(k), on = pick.has(k);
           return (
             <div key={k} id={`sp-${i}`} role="listitem" tabIndex={0} className={`sprow${on ? " on" : ""}${i === cur ? " cur" : ""}${open === k ? " open" : ""}`} onKeyDown={(e) => onKey(e, k, i)} onFocus={() => setCur(i)}>
-              <div className="spck">{view === "todo" ? <input type="checkbox" checked={on} onChange={() => toggle(k)} aria-label={`Cùng một người: ${p.name}`} tabIndex={-1} /> : null}</div>
+              <div className="spck"><input type="checkbox" checked={on} onChange={() => toggle(k)} aria-label={view === "todo" ? `Cùng một người: ${p.name}` : `Chọn để hoàn tác: ${p.name}`} tabIndex={-1} /></div>
               <div className="spcell spmain"><p className="spn">{p.name}</p>
                 <p className="meta sps"><span className={`score s${p.band}`}>{p.score}</span> {p.shared[0]}{p.groupSize > 2 ? ` · ${p.groupSize} hồ sơ cùng tên` : ""}{p.noWorks ? " · thiếu công trình" : ""}</p>
                 <p className="meta sps"><button className="lnk" onClick={() => setOpen(open === k ? null : k)}>{open === k ? "Thu gọn" : "3 công trình"}</button>{view !== "todo" && dd ? <button className="lnk" onClick={() => void send([{ a: p.a, b: p.b, decision: "undo" }], "Đã bỏ quyết định.")}>Bỏ quyết định</button> : null}</p></div>
