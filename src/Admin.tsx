@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Icon, type IconName } from "./icons";
 import { useAccount, api } from "./accountStore";
 
-const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["don-vi", "Đơn vị mới", "building"]];
+const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["ra-soat", "Rà soát gộp", "check"], ["don-vi", "Đơn vị mới", "building"]];
 const n0 = (n: number) => new Intl.NumberFormat("vi-VN").format(Math.round(n));
 const pct = (a: number, b: number) => (b > 0 ? `${Math.round((a / b) * 100)}%` : "–");
 const delta = (a: number, b: number) => (b > 0 ? `${a >= b ? "▲" : "▼"} ${Math.abs(Math.round(((a - b) / b) * 100))}% so với 7 ngày trước` : a > 0 ? "mới có dữ liệu" : "");
@@ -34,7 +34,7 @@ export function AdminPage({ tab }: { tab: string }) {
     <article className="dash adm-page">
       <header className="dash-head"><div className="av" aria-hidden="true"><Icon n="grid" size={36} /></div><div className="dh-main"><h1>Quản trị ProFind</h1><p className="meta">{user.email} · số liệu theo giờ Việt Nam, khoảng 14 ngày gần nhất</p></div><div className="dh-act"><a className="ghost-link light" href="#/tai-khoan">← Không gian của tôi</a></div></header>
       <nav className="tabs" aria-label="Quản trị">{TABS.map(([k, l, ic]) => <a key={k} href={`#/quan-tri${k ? "/" + k : ""}`} aria-current={cur === k ? "page" : undefined}><Icon n={ic} size={16} />{l}</a>)}</nav>
-      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}{cur === "don-vi" && <Units />}
+      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}{cur === "ra-soat" && <Recheck />}{cur === "don-vi" && <Units />}
     </article>
   );
 }
@@ -420,6 +420,61 @@ function Units() {
             </div>); })}
       </div>
       {list.length === 0 && <p className="meta">Không có đơn vị nào trong mục này.</p>}
+    </>
+  );
+}
+
+type RPair = SPair & { into: string; why: string };
+function SideCell({ s, full }: { s: SSide; full: boolean }) {
+  return (
+    <div className="spcell">
+      <p className="spn"><a href={`#/tac-gia/${s.id}`} target="_blank" rel="noopener">{s.name}</a> <span className={s.orcid ? "orc yes" : "orc no"} title={s.orcid ?? "Chưa có ORCID"}>{s.orcid ? "ORCID" : "không ORCID"}</span></p>
+      <p className="meta sps">{s.works} bài · {n0(s.cites)} trích dẫn · {s.years[0] ?? "?"}–{s.years[1] ?? "?"}</p>
+      {(full ? s.top : s.top.slice(0, 1)).map((t) => <p key={t.t} className="spt">{t.d ? <a href={`https://doi.org/${t.d}`} target="_blank" rel="noopener">{t.t}</a> : t.t} <small className="meta">({t.y})</small></p>)}
+    </div>
+  );
+}
+function Recheck() {
+  const [pairs, setPairs] = useState<RPair[] | null>(null), [err, setErr] = useState(""), [v, setV] = useState(0), [pick, setPick] = useState<Set<string>>(new Set()), [open, setOpen] = useState<string | null>(null), [busy, setBusy] = useState(false), [msg, setMsg] = useState(""), [view, setView] = useState<"todo" | "keep" | "split">("todo"), [out, setOut] = useState("");
+  const { d } = useGet<{ recheck: { a: string; b: string; d: string }[] }>("admin-claims", `&rk=${v}`);
+  useEffect(() => { fetch("/data/_split-recheck.json", { cache: "no-store" }).then((r) => r.json()).then((j: { pairs: RPair[] }) => setPairs(j.pairs)).catch(() => setErr("Không tải được danh sách rà soát.")); }, []);
+  const dec = useMemo(() => new Map((d?.recheck ?? []).map((x) => [pk(x.a, x.b), x.d])), [d]);
+  if (err) return <p className="banner demo" role="alert">{err}</p>;
+  if (!pairs) return <p className="empty" role="status">Đang tải…</p>;
+  const list = pairs.filter((p) => (view === "todo" ? !dec.has(pk(p.a, p.b)) : dec.get(pk(p.a, p.b)) === view)), todo = pairs.filter((p) => !dec.has(pk(p.a, p.b))).length;
+  const cnt = { keep: pairs.filter((p) => dec.get(pk(p.a, p.b)) === "keep").length, split: pairs.filter((p) => dec.get(pk(p.a, p.b)) === "split").length };
+  const send = async (items: { a: string; b: string; decision: string }[], ok: string) => { setBusy(true); setMsg(""); try { await api("admin-claim-recheck", { items }); setMsg(ok); setPick(new Set()); setV((x) => x + 1); } catch (e) { setErr((e as Error).message); } finally { setBusy(false); } };
+  const toggle = (k: string) => setPick((s) => { const n = new Set(s); if (n.has(k)) n.delete(k); else n.add(k); return n; });
+  const ticked = list.filter((p) => pick.has(pk(p.a, p.b)));
+  const save = () => send(list.map((p) => ({ a: p.a, b: p.b, decision: pick.has(pk(p.a, p.b)) ? "split" : "keep" })), `Đã lưu ${list.length} cặp: ${ticked.length} tách ra, ${list.length - ticked.length} giữ gộp.`);
+  const exportJson = () => setOut(JSON.stringify({ split: pairs.filter((p) => dec.get(pk(p.a, p.b)) === "split").map((p) => ({ into: p.into, from: p.into === p.a ? p.b : p.a })) }, null, 1));
+  const TABS: ["todo" | "keep" | "split", string, number][] = [["todo", "Chưa rà soát", todo], ["keep", "Giữ gộp", cnt.keep], ["split", "Tách ra", cnt.split]];
+  return (
+    <>
+      <section className="card spbar">
+        <h2>Rà soát lại cặp đã gộp <small className="meta">{pairs.length - todo}/{pairs.length} đã xem</small></h2>
+        <p className="meta">{pairs.length} cặp đã gộp có điểm nghi trùng 60–65 và chủ đề công trình lệch (ít từ khóa chung, ngành ít giống hoặc thiếu công trình để so). <b>Tick = TÁCH RA</b> (hai hồ sơ trở lại độc lập); không tick = giữ gộp. Điểm thấp và chủ đề lệch chưa chắc là hai người: một số cặp là bản dịch của cùng bài viết.</p>
+        <div className="sptabs" style={{ gridTemplateColumns: "repeat(3,1fr)" }}>{TABS.map(([k, l, n]) => <button key={k} className={view === k ? "on" : ""} onClick={() => { setView(k); setPick(new Set()); }}><b>{l}</b><small>{n} cặp</small></button>)}</div>
+        <p className="sprow2"><button onClick={exportJson}>Xuất danh sách cần tách ({cnt.split})</button></p>
+        {msg && <p className="banner" role="status"><Icon n="check" />{msg}</p>}
+        {out && <><p className="meta">Sao chép đoạn này gửi cho trợ lý để tách khỏi <code>data/corrections.json</code>:</p><textarea readOnly rows={8} value={out} onFocus={(e) => e.currentTarget.select()} style={{ width: "100%" }} /></>}
+      </section>
+      {view === "todo" && list.length > 0 && <section className="card spact"><p className="sprow2">
+        <button disabled={busy} onClick={() => setPick(new Set(list.map((p) => pk(p.a, p.b))))}>Tick tất cả (tách hết)</button><button disabled={busy} onClick={() => setPick(new Set())}>Bỏ tick</button>
+        <button className="primary" disabled={busy} onClick={() => void save()}>Lưu: tách {ticked.length}, giữ gộp {list.length - ticked.length}</button></p></section>}
+      <div className="sptable" role="list">
+        {list.map((p) => { const k = pk(p.a, p.b), on = pick.has(k);
+          return (
+            <div key={k} role="listitem" className={`sprow${on ? " on" : ""}${open === k ? " open" : ""}`}>
+              <div className="spck">{view === "todo" ? <input type="checkbox" checked={on} onChange={() => toggle(k)} aria-label={`Tách ra: ${p.name}`} /> : null}</div>
+              <div className="spcell spmain"><p className="spn">{p.name}</p>
+                <p className="meta sps"><span className={`score s${p.band}`}>{p.score}</span> {p.shared[0]}</p>
+                <p className="meta sps">⚠ {p.why}</p>
+                <p className="meta sps"><button className="lnk" onClick={() => setOpen(open === k ? null : k)}>{open === k ? "Thu gọn" : "3 công trình"}</button>{view !== "todo" ? <button className="lnk" onClick={() => void send([{ a: p.a, b: p.b, decision: "undo" }], "Đã bỏ quyết định.")}>Bỏ quyết định</button> : null}</p></div>
+              <SideCell s={p.A} full={open === k} /><SideCell s={p.B} full={open === k} />
+            </div>); })}
+      </div>
+      {list.length === 0 && <p className="meta">Không có cặp nào trong mục này.</p>}
     </>
   );
 }
