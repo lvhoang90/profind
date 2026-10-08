@@ -1,7 +1,7 @@
 // Xác định đơn vị HIỆN TẠI của từng tác giả từ cơ quan ghi trên các công trình gần đây (data/raw/_authorship.json, nạp bằng fetch-authorship.mjs).
 //   node scripts/build-current-inst.mjs --mailto <email>
 // Điểm gần đây của một đơn vị = Σ 0,25^(năm mới nhất của tác giả − năm công trình) (mỗi công trình tính một lần cho mỗi đơn vị) trên các công trình ghi cơ quan đó (kể cả đơn vị cha theo lineage OpenAlex).
-// Đơn vị "hiện tại" = điểm ≥ 50% điểm cao nhất; còn lại là đơn vị cũ/liên kết phụ. Ghi data/raw/_current-inst.json = { authorId: { unitId: điểm } }.
+// Đơn vị "hiện tại" = điểm ≥ 50% điểm cao nhất; còn lại là đơn vị cũ/liên kết phụ. Ghi data/current-inst.json = { authorId: { unitId: điểm } }.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
 const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY; if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
@@ -28,5 +28,5 @@ for (const a of P.authors) {
   for (const x of rows) for (const u of new Set(AU[x.id][0].flatMap(unitsOf))) sc[u] = (sc[u] ?? 0) + 0.25 ** (maxY - x.year);
   const ks = Object.keys(sc); if (ks.length) { out[a.id] = Object.fromEntries(ks.map((u) => [u, +sc[u].toFixed(2)])); nA++; }
 }
-writeFileSync("data/raw/_current-inst.json", JSON.stringify(out)); console.log(`Đã tính đơn vị hiện tại cho ${nA} tác giả.`);
+writeFileSync("data/current-inst.json", JSON.stringify(out)); console.log(`Đã tính đơn vị hiện tại cho ${nA} tác giả.`);
 const me = out["A5011212770"]; console.log("Duy Quy Nguyen-Phuoc:", me);
