@@ -10,7 +10,7 @@ const mailto = arg("mailto"); if (!mailto) throw new Error("Cần --mailto <emai
 const KEY = process.env.OPENALEX_API_KEY; if (!KEY) throw new Error("Thiếu OPENALEX_API_KEY (khóa miễn phí tại openalex.org/settings/api).");
 const from = +arg("from", 2016), maxAuthors = +arg("max-authors", 500);
 const only = arg("only"); // ví dụ --only ctu,hust (id trong institutions.json); mặc định: mọi đơn vị có ROR
-const I = JSON.parse(readFileSync("data/institutions.json", "utf8")).institutions.filter((i) => i.ror && (!only || only.split(",").includes(i.id)));
+const I = JSON.parse(readFileSync("data/institutions.json", "utf8")).institutions.filter((i) => (i.ror || existsSync(`data/raw/${i.id}.json`)) && (!only || only.split(",").includes(i.id))); // đơn vị không có ROR nhưng đã có cache (nạp theo chuỗi cơ quan) vẫn được đọc
 if (!I.length) throw new Error("Chưa có đơn vị nào có mã ROR trong data/institutions.json.");
 mkdirSync("data/raw", { recursive: true });
 const get = async (url) => {
@@ -27,7 +27,7 @@ for (const inst of I) {
   try {
   const cache = `data/raw/${inst.id}.json`;
   if (!refresh && existsSync(cache)) { const c = JSON.parse(readFileSync(cache, "utf8")); authors.push(...c.authors); works.push(...c.works); console.log(`${inst.name}: dùng cache (${c.authors.length} tác giả)`); continue; }
-  let oa; try { oa = await get(`https://api.openalex.org/institutions/ror:${inst.ror.replace(/^https:\/\/ror.org\//, "")}`); } catch (e) { console.warn(`${inst.name}: bỏ qua (${e.message.slice(0, 60)})`); continue; }
+  let oa; try { oa = await get(`https://api.openalex.org/institutions/ror:${(inst.ror ?? "").replace(/^https:\/\/ror.org\//, "")}`); } catch (e) { console.warn(`${inst.name}: bỏ qua (${e.message.slice(0, 60)})`); continue; }
   const oid = short(oa.id); let page = 1, got = 0;
   while (got < maxAuthors) {
     const a = await get(`https://api.openalex.org/authors?filter=last_known_institutions.id:${oid}&sort=works_count:desc&per-page=100&page=${page++}`);
