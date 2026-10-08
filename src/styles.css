@@ -594,3 +594,4 @@ td.who>.meta{margin-top:3px}
 @media(max-width:600px){.about .tabs{gap:6px}.about .tabs .tabbtn{flex:1 1 calc(50% - 6px);justify-content:center;min-height:42px;padding:0 10px}}
 
 .abh{display:flex;align-items:flex-end;gap:3px;height:96px;margin:10px 0 4px;padding:4px 0;border-bottom:1px solid var(--line,#d5e2ee)}.abh i{flex:1;display:block;min-height:2px;border-radius:3px 3px 0 0;background:#93c5fd}.abh i.lo{background:#f59e0b}.psp-refs li{font-size:.88rem}
+.brand .tm{font-size:.55em;font-weight:600;vertical-align:top;margin-left:1px;position:relative;top:.05em;opacity:.9;-webkit-text-fill-color:currentColor}

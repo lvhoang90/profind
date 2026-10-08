@@ -69,7 +69,7 @@ export function ClaimBox({ authorId, authorName, mode = "claim" }: { authorId: s
   return (
     <section className="card claimbox">
       <h2>{rm ? "Đề nghị gỡ hồ sơ" : hd ? "Ẩn điểm và huy hiệu xếp hạng" : "Đây là tôi — xác thực hồ sơ"}</h2>
-      <p className="meta">{hd ? `Đăng nhập bằng email tổ chức (${user.email}). Sau khi kiểm tra danh tính, điểm PRO-SCORE1000™ và huy hiệu xếp hạng của hồ sơ này sẽ được ẩn; công trình khoa học vẫn hiển thị. Bạn có thể yêu cầu hiển thị lại bất cứ lúc nào.` : rm ? `Đăng nhập bằng email tổ chức (${user.email}). Yêu cầu gỡ được quản trị viên xem xét sau khi hệ thống kiểm tra danh tính (ORCID, tên, email). Việc gỡ chỉ áp dụng trên ProFind, dữ liệu gốc ở OpenAlex/ORCID vẫn còn.` : `Đăng nhập bằng email tổ chức (${user.email}). Hồ sơ được xác thực khi email tổ chức, ORCID và tên khớp với hồ sơ OpenAlex; nếu chưa đủ, quản trị viên sẽ xem xét. Tick vàng có hiệu lực 2 năm.`}</p>
+      <p className="meta">{hd ? `Đăng nhập bằng email tổ chức (${user.email}). Sau khi kiểm tra danh tính, điểm PRO-SCORE1000™ và huy hiệu xếp hạng của hồ sơ này sẽ được ẩn; công trình khoa học vẫn hiển thị. Bạn có thể yêu cầu hiển thị lại bất cứ lúc nào.` : rm ? `Đăng nhập bằng email tổ chức (${user.email}). Yêu cầu gỡ được quản trị viên xem xét sau khi hệ thống kiểm tra danh tính (ORCID, tên, email). Việc gỡ chỉ áp dụng trên ProFind™, dữ liệu gốc ở OpenAlex/ORCID vẫn còn.` : `Đăng nhập bằng email tổ chức (${user.email}). Hồ sơ được xác thực khi email tổ chức, ORCID và tên khớp với hồ sơ OpenAlex; nếu chưa đủ, quản trị viên sẽ xem xét. Tick vàng có hiệu lực 2 năm.`}</p>
       {last && last.status !== "approved" && <p className="meta" role="status">Yêu cầu gần nhất: {last.status === "review" ? "đang chờ duyệt" : last.status === "rejected" ? `chưa được chấp nhận${last.reason ? " — " + last.reason : ""}` : `cần bổ sung${last.reason ? " — " + last.reason : ""}`}.</p>}
       <form onSubmit={submit} className="form">
         <label className="sel"><span>Họ tên đầy đủ</span><input name="name" required maxLength={80} defaultValue={user.name} autoComplete="name" /></label>
@@ -130,7 +130,7 @@ export function ScholarConsole() {
   const [list, setList] = useState<Mine[] | null>(null), [v, setV] = useState(0);
   useEffect(() => { api<{ authors: Mine[] }>("author-mine").then((j) => setList(j.authors)).catch(() => setList([])); }, [v]);
   if (!list) return <p className="empty" role="status">Đang tải…</p>;
-  if (!list.length) return <section className="card"><h2>Hồ sơ khoa học của tôi</h2><p className="meta">Bạn chưa có hồ sơ nào được xác thực. Mở trang hồ sơ của mình trong ProFind, chọn "Đây là tôi" và gửi yêu cầu bằng email tổ chức.</p></section>;
+  if (!list.length) return <section className="card"><h2>Hồ sơ khoa học của tôi</h2><p className="meta">Bạn chưa có hồ sơ nào được xác thực. Mở trang hồ sơ của mình trong ProFind™, chọn "Đây là tôi" và gửi yêu cầu bằng email tổ chức.</p></section>;
   return <>{list.map((m) => <One key={m.authorId} m={m} reload={() => setV((x) => x + 1)} />)}</>;
 }
 function One({ m, reload }: { m: Mine; reload: () => void }) {
@@ -165,7 +165,7 @@ function One({ m, reload }: { m: Mine; reload: () => void }) {
       <p>
         <label className="chk"><input type="radio" name={`hide-${m.authorId}`} checked={!m.hide} onChange={() => void run("author-privacy", {}, "Đã hiển thị đầy đủ.")} />Hiển thị đầy đủ hồ sơ, điểm và huy hiệu</label><br />
         <label className="chk"><input type="radio" name={`hide-${m.authorId}`} checked={m.hide === "score"} onChange={() => void run("author-privacy", { hideScore: true }, "Đã ẩn điểm và huy hiệu xếp hạng.")} />Ẩn điểm PRO-SCORE1000™ và huy hiệu xếp hạng (vẫn hiện công trình)</label><br />
-        <label className="chk"><input type="radio" name={`hide-${m.authorId}`} checked={m.hide === "profile"} onChange={() => void run("author-privacy", { hideProfile: true }, "Đã tạm ẩn toàn bộ hồ sơ.")} />Tạm ẩn toàn bộ hồ sơ khỏi ProFind</label>
+        <label className="chk"><input type="radio" name={`hide-${m.authorId}`} checked={m.hide === "profile"} onChange={() => void run("author-privacy", { hideProfile: true }, "Đã tạm ẩn toàn bộ hồ sơ.")} />Tạm ẩn toàn bộ hồ sơ khỏi ProFind™</label>
       </p>
       <UnitPicker authorId={m.authorId} onSaved={() => void 0} />
       <h3>Ảnh đại diện</h3>
@@ -221,7 +221,7 @@ function UnitPicker({ authorId, onSaved }: { authorId: string; onSaved: () => vo
     <>
       <h3>Đơn vị công tác</h3>
       <p className="meta">Hệ thống suy đơn vị từ cơ quan ghi trên công trình nên có thể sai khi bạn chuyển nơi làm việc hoặc OpenAlex gộp nhầm hồ sơ. Chọn đơn vị <b>hiện tại</b> (hiện trước) và <b>trước đây</b> (hiện mờ).</p>
-      {locked ? <p className="banner demo">Đơn vị của hồ sơ này do quản trị viên xác nhận; hãy liên hệ ProFind nếu cần thay đổi.</p> : <>
+      {locked ? <p className="banner demo">Đơn vị của hồ sơ này do quản trị viên xác nhận; hãy liên hệ ProFind™ nếu cần thay đổi.</p> : <>
         <table className="adm-t"><thead><tr><th>Đơn vị</th><th>Hiện tại</th><th>Trước đây</th></tr></thead><tbody>{shown.map((u) => <tr key={u}><td>{name(u)}</td><td><input type="checkbox" checked={now.has(u)} onChange={() => toggle(u, "now")} aria-label={`${name(u)}: hiện tại`} /></td><td><input type="checkbox" checked={past.has(u)} onChange={() => toggle(u, "past")} aria-label={`${name(u)}: trước đây`} /></td></tr>)}</tbody></table>
         <label className="sel"><span>Thêm đơn vị (gõ tên)</span><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Đại học Đồng Tháp" /></label>
         {cand.length > 0 && <ul className="mxlist">{cand.map((u) => <li key={u.id}><button type="button" className="linkbtn" onClick={() => { setNow(new Set([...now, u.id])); setQ(""); }}>{u.name}</button></li>)}</ul>}

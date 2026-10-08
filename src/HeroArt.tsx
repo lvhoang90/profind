@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-// Nền đầu trang: biểu trưng ProFind lệch phải, quầng sáng và các vành quỹ đạo quay chậm; chữ cổ/ký hiệu khoa học tỏa ra từ biểu trưng
+// Nền đầu trang: biểu trưng ProFind™ lệch phải, quầng sáng và các vành quỹ đạo quay chậm; chữ cổ/ký hiệu khoa học tỏa ra từ biểu trưng
 // rồi hóa thành bit 0/1 và nối thành mạng nút dữ liệu.
 const ANCIENT = ["α", "β", "π", "Σ", "∫", "∞", "λ", "Ω", "Ψ", "∂", "ℏ", "√", "道", "学", "知", "Aa", "φ", "θ"];
 const GOLD: [number, number, number] = [245, 200, 110], CYAN: [number, number, number] = [110, 220, 255];

@@ -25,5 +25,5 @@ export function startSession() {
 /** Điểm chạm sang hệ sinh thái ISA: ghi sự kiện ẩn danh và (nếu đã đăng nhập) lượt của người dùng. */
 export type App = "edufind" | "ami" | "may";
 export const ecoUrl = (app: App, place: string, to = "") => app === "edufind"
-  ? `https://edufind.isavn.edu.vn/${to}?utm_source=profind&utm_medium=${place}&utm_campaign=ecosystem` // EduFind đọc utm_source để đo lượt vào từ ProFind
+  ? `https://edufind.isavn.edu.vn/${to}?utm_source=profind&utm_medium=${place}&utm_campaign=ecosystem` // EduFind đọc utm_source để đo lượt vào từ ProFind™
   : `https://isavn.edu.vn/go/${app}?from=profind&utm_source=profind&utm_medium=${place}&utm_campaign=ecosystem`;
