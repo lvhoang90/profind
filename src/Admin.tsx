@@ -539,12 +539,15 @@ function Misattr() {
 }
 
 type AU = { id: string; name: string; institutions: string[]; instPast?: string[] };
+type MRev = { id: string; name: string; orcid: string | null; works: number; cat: string; orcidCurrent: string[]; rankable: boolean; units: { id: string; now: boolean; w: number | null }[] };
+const MCAT: Record<string, string> = { "orcid-khong-khop-don-vi": "ORCID có việc làm hiện tại nhưng không khớp đơn vị nào", "orcid-khong-co-viec-hien-tai": "ORCID không ghi việc làm hiện tại", "khong-orcid": "Không có ORCID", "khop-mot-phan": "ORCID khớp một phần" };
 type UnitRow = { id: string; name: string };
 /** Đặt tay đơn vị công tác của tác giả (hiện ngay trên website; xuất JSON để đưa vào corrections.setInstitutions khi dựng dữ liệu). */
 function AuthorUnits() {
-  const [data, setData] = useState<{ authors: AU[]; units: UnitRow[] } | null>(null), [err, setErr] = useState(""), [q, setQ] = useState(""), [sel, setSel] = useState<AU | null>(null), [now, setNow] = useState<Set<string>>(new Set()), [past, setPast] = useState<Set<string>>(new Set()), [uq, setUq] = useState(""), [msg, setMsg] = useState("");
-  const { d: ov } = useGet<{ map: Record<string, { now: string[]; past: string[] }> }>("inst", `&v=${msg}`);
+  const [data, setData] = useState<{ authors: AU[]; units: UnitRow[] } | null>(null), [err, setErr] = useState(""), [q, setQ] = useState(""), [sel, setSel] = useState<AU | null>(null), [now, setNow] = useState<Set<string>>(new Set()), [past, setPast] = useState<Set<string>>(new Set()), [uq, setUq] = useState(""), [msg, setMsg] = useState(""), [rev, setRev] = useState<MRev[] | null>(null), [rv, setRv] = useState<"todo" | "done">("todo"), [rn, setRn] = useState(20), [ver, setVer] = useState(0);
+  const { d: ov } = useGet<{ map: Record<string, { now: string[]; past: string[] }> }>("inst", `&v=${ver}`);
   useEffect(() => { fetch("/data/profind.json").then((r) => r.json()).then((j: { authors: AU[]; institutions: { id: string; name: string }[] }) => setData({ authors: j.authors, units: j.institutions.map((i) => ({ id: i.id, name: i.name })) })).catch(() => setErr("Không tải được dữ liệu tác giả.")); }, []);
+  useEffect(() => { fetch("/data/_multi-review.json", { cache: "no-store" }).then((r) => r.json()).then((j: { profiles: MRev[] }) => setRev(j.profiles)).catch(() => setRev([])); }, []);
   if (err) return <p className="banner demo" role="alert">{err}</p>;
   if (!data) return <p className="empty" role="status">Đang tải…</p>;
   const fold = (x: string) => x.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/gi, "d").toLowerCase();
@@ -552,22 +555,35 @@ function AuthorUnits() {
   const hits = q.trim().length >= 3 ? data.authors.filter((a) => fold(a.name).includes(fold(q.trim())) || a.id.toLowerCase() === q.trim().toLowerCase()).slice(0, 12) : [];
   const pick = (a: AU) => { const o = ov?.map?.[a.id]; setSel(a); setNow(new Set(o?.now ?? a.institutions.filter((u) => !(a.instPast ?? []).includes(u)))); setPast(new Set(o?.past ?? a.instPast ?? [])); setMsg(""); };
   const toggle = (u: string, which: "now" | "past") => { const [a, b, sa, sb] = which === "now" ? [now, past, setNow, setPast] : [past, now, setPast, setNow]; const n = new Set(a); if (n.has(u)) n.delete(u); else { n.add(u); const m = new Set(b); m.delete(u); sb(m); } sa(n); };
-  const save = async () => { if (!sel) return; try { await api("admin-claim-inst", { authorId: sel.id, now: [...now], past: [...past] }); setMsg(`Đã lưu ${Date.now()}`); } catch (e) { setMsg((e as Error).message); } };
-  const clear = async () => { if (!sel) return; try { await api("admin-claim-inst", { authorId: sel.id, clear: true }); setMsg(`Đã bỏ ghi đè ${Date.now()}`); } catch (e) { setMsg((e as Error).message); } };
+  const save = async () => { if (!sel) return; try { await api("admin-claim-inst", { authorId: sel.id, now: [...now], past: [...past] }); setMsg(`Đã lưu ${Date.now()}`); setVer((x) => x + 1); } catch (e) { setMsg((e as Error).message); } };
+  const clear = async () => { if (!sel) return; try { await api("admin-claim-inst", { authorId: sel.id, clear: true }); setMsg(`Đã bỏ ghi đè ${Date.now()}`); setVer((x) => x + 1); } catch (e) { setMsg((e as Error).message); } };
   const shown = [...new Set([...now, ...past, ...(sel?.institutions ?? [])])];
   const cand = uq.trim().length >= 2 ? data.units.filter((u) => fold(u.name).includes(fold(uq.trim())) && !shown.includes(u.id)).slice(0, 8) : [];
   const all = ov?.map ?? {};
+  const reviewed = (id: string) => !!all[id], todoList = (rev ?? []).filter((r) => !reviewed(r.id)), doneList = (rev ?? []).filter((r) => reviewed(r.id));
+  const open = (id: string) => { const a = data.authors.find((x) => x.id === id); if (a) { pick(a); window.scrollTo({ top: document.getElementById("uedit-anchor")?.offsetTop ?? 0, behavior: "smooth" }); } };
+  const after = (id: string) => { const nx = todoList.find((r) => r.id !== id); if (nx) open(nx.id); };
+  const keepAsIs = async () => { if (!sel) return; try { await api("admin-claim-inst", { authorId: sel.id, now: sel.institutions.filter((u) => !(sel.instPast ?? []).includes(u)), past: sel.instPast ?? [] }); setMsg(`Đã giữ nguyên ${Date.now()}`); setVer((x) => x + 1); after(sel.id); } catch (e) { setMsg((e as Error).message); } };
+  const saveNext = async () => { if (!sel) return; await save(); after(sel.id); };
+  const rows = rv === "todo" ? todoList : doneList;
   return (
     <section className="card"><h2>Đơn vị tác giả</h2>
       <p className="meta">Dùng khi OpenAlex gộp nhiều người hoặc ghi sai nơi công tác. "Hiện tại" xếp trước; "trước đây" hiện mờ. Lưu xong website đổi ngay (không cần dựng lại); mục cuối trang cho chép JSON để đưa vào <code>corrections.setInstitutions</code> cho bản dựng sau.</p>
+      {rev && rev.length > 0 && <div className="card"><h3>Hồ sơ nhiều đơn vị cần duyệt ({todoList.length} chưa duyệt / {rev.length})</h3>
+        <p className="meta">Các hồ sơ đã xếp hạng có từ 3 đơn vị hiện tại độc lập mà ORCID chưa đủ để tự sửa. Bấm "Duyệt" để mở bộ chỉnh bên dưới: tick đơn vị đúng là "Hiện tại", đơn vị còn lại là "Trước đây", rồi "Lưu và sang hồ sơ tiếp". Nếu đơn vị đang hiển thị đã đúng, bấm "Giữ nguyên (đã xem)". Mỗi lần lưu có hiệu lực ngay, và cuối trang có nút chép JSON để đưa vào <code>corrections.setInstitutions</code>.</p>
+        <p className="sprow2"><button type="button" className={rv === "todo" ? "primary" : ""} onClick={() => { setRv("todo"); setRn(20); }}>Chưa duyệt ({todoList.length})</button> <button type="button" className={rv === "done" ? "primary" : ""} onClick={() => { setRv("done"); setRn(20); }}>Đã duyệt ({doneList.length})</button></p>
+        {rows.length === 0 ? <p className="meta">{rv === "todo" ? "Đã duyệt hết." : "Chưa có hồ sơ nào được duyệt."}</p> : <ul className="mxlist">{rows.slice(0, rn).map((r) => <li key={r.id}><b>{r.name}</b> <span className="meta">{r.id} · {r.works} công trình · {MCAT[r.cat] ?? r.cat}{r.rankable ? "" : " · không xếp hạng"}</span><br />
+          <span className="meta">{r.orcid ? <a href={`https://orcid.org/${r.orcid}`} target="_blank" rel="noopener">ORCID {r.orcid}</a> : "Không có ORCID"}{r.orcidCurrent.length ? <> · ORCID ghi hiện tại: {r.orcidCurrent.join("; ")}</> : null}</span><br />
+          <span>{r.units.map((u) => <span key={u.id} className={u.now ? "" : "past"}>{name(u.id)}{u.w != null ? ` (${u.w})` : ""}{u.now ? "" : " [cũ]"}; </span>)}</span> <a href={`#/tac-gia/${r.id}`}>Xem hồ sơ</a> <button type="button" onClick={() => open(r.id)}>{rv === "todo" ? "Duyệt" : "Sửa lại"}</button></li>)}</ul>}
+        {rows.length > rn && <p><button type="button" onClick={() => setRn(rn + 20)}>Hiện thêm 20</button></p>}</div>}
       <label className="sel"><span>Tìm tác giả (tên từ 3 ký tự, hoặc mã A…)</span><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nguyen Van Dung" /></label>
       {hits.length > 0 && <ul className="mxlist">{hits.map((a) => <li key={a.id}><button type="button" className="linkbtn" onClick={() => pick(a)}>{a.name}</button> <span className="meta">{a.id} · {a.institutions.map(name).join(", ")}</span></li>)}</ul>}
-      {sel && <div className="uedit"><h3>{sel.name} <span className="meta">{sel.id}</span></h3>
+      {sel && <div className="uedit" id="uedit-anchor"><h3>{sel.name} <span className="meta">{sel.id}</span></h3>
         <div role="status" aria-live="polite">{msg && <p className="banner"><Icon n="check" />{msg.replace(/ \d+$/, "")}</p>}</div>
         <table className="adm-t"><thead><tr><th>Đơn vị</th><th>Hiện tại</th><th>Trước đây</th></tr></thead><tbody>{shown.map((u) => <tr key={u}><td>{name(u)}</td><td><input type="checkbox" checked={now.has(u)} onChange={() => toggle(u, "now")} aria-label={`${name(u)}: hiện tại`} /></td><td><input type="checkbox" checked={past.has(u)} onChange={() => toggle(u, "past")} aria-label={`${name(u)}: trước đây`} /></td></tr>)}</tbody></table>
         <label className="sel"><span>Thêm đơn vị (gõ tên)</span><input value={uq} onChange={(e) => setUq(e.target.value)} placeholder="Đại học Đồng Tháp" /></label>
         {cand.length > 0 && <ul className="mxlist">{cand.map((u) => <li key={u.id}><button type="button" className="linkbtn" onClick={() => { setNow(new Set([...now, u.id])); setUq(""); }}>{u.name}</button></li>)}</ul>}
-        <p><button type="button" className="primary" disabled={!now.size} onClick={() => void save()}>Lưu</button> <button type="button" onClick={() => void clear()}>Bỏ ghi đè (về dữ liệu dựng sẵn)</button></p></div>}
+        <p><button type="button" className="primary" disabled={!now.size} onClick={() => void save()}>Lưu</button> {rev?.some((r) => r.id === sel.id) && <><button type="button" className="primary" disabled={!now.size} onClick={() => void saveNext()}>Lưu và sang hồ sơ tiếp</button> <button type="button" onClick={() => void keepAsIs()}>Giữ nguyên (đã xem)</button> </>}<button type="button" onClick={() => void clear()}>Bỏ ghi đè (về dữ liệu dựng sẵn)</button></p></div>}
       <h3>Đã đặt tay ({Object.keys(all).length})</h3>
       {Object.keys(all).length === 0 ? <p className="meta">Chưa có.</p> : <><ul className="xwlist">{Object.entries(all).map(([id, o]) => <li key={id}><a href={`#/tac-gia/${id}`}>{data.authors.find((a) => a.id === id)?.name ?? id}</a> · {o.now.map(name).join(", ")}{o.past?.length ? <span className="past"> · trước đây: {o.past.map(name).join(", ")}</span> : null}</li>)}</ul>
         <p><button type="button" onClick={() => void navigator.clipboard.writeText(JSON.stringify({ setInstitutions: Object.fromEntries(Object.entries(all).map(([id, o]) => [id, o.past?.length ? { now: o.now, past: o.past } : o.now])) }, null, 1)).then(() => setMsg("Đã chép JSON setInstitutions."))}>Chép JSON setInstitutions</button></p></>}
