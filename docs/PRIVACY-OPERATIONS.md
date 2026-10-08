@@ -1,6 +1,6 @@
 # Vận hành bảo vệ dữ liệu cá nhân (Luật 91/2025/QH15)
 
-Bên kiểm soát: **Viện Khoa học Giáo dục và Kinh tế Đông Nam Á (Viện ISA)**, MST 5801465662, Số 5 Thông Thiên Học, P. Xuân Hương, Đà Lạt, Lâm Đồng; đại diện pháp luật Trần Văn Tuấn.
+Bên kiểm soát: **Viện Khoa học Giáo dục và Kinh tế Đông Nam Á (Viện ISA)**. Thông tin đăng ký doanh nghiệp (mã số thuế, địa chỉ, người đại diện) lưu nội bộ, không đăng công khai.
 Tài liệu này là quy trình nội bộ; chưa thay thế ý kiến luật sư. Các nghị định hướng dẫn (thời hạn, ngưỡng "số lượng lớn", mẫu hồ sơ đánh giá tác động) cần đối chiếu khi ban hành.
 
 ## 1. Yêu cầu của chủ thể dữ liệu (Điều 4, 10, 13, 14)

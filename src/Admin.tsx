@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Icon, type IconName } from "./icons";
 import { useAccount, api } from "./accountStore";
 
-const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"]];
+const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["don-vi", "Đơn vị mới", "building"]];
 const n0 = (n: number) => new Intl.NumberFormat("vi-VN").format(Math.round(n));
 const pct = (a: number, b: number) => (b > 0 ? `${Math.round((a / b) * 100)}%` : "–");
 const delta = (a: number, b: number) => (b > 0 ? `${a >= b ? "▲" : "▼"} ${Math.abs(Math.round(((a - b) / b) * 100))}% so với 7 ngày trước` : a > 0 ? "mới có dữ liệu" : "");
@@ -34,7 +34,7 @@ export function AdminPage({ tab }: { tab: string }) {
     <article className="dash adm-page">
       <header className="dash-head"><div className="av" aria-hidden="true"><Icon n="grid" size={36} /></div><div className="dh-main"><h1>Quản trị ProFind</h1><p className="meta">{user.email} · số liệu theo giờ Việt Nam, khoảng 14 ngày gần nhất</p></div><div className="dh-act"><a className="ghost-link light" href="#/tai-khoan">← Không gian của tôi</a></div></header>
       <nav className="tabs" aria-label="Quản trị">{TABS.map(([k, l, ic]) => <a key={k} href={`#/quan-tri${k ? "/" + k : ""}`} aria-current={cur === k ? "page" : undefined}><Icon n={ic} size={16} />{l}</a>)}</nav>
-      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}
+      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}{cur === "don-vi" && <Units />}
     </article>
   );
 }
@@ -321,6 +321,37 @@ function Merger() {
           </section>); })}
       {list.length > PER && <p><button disabled={page === 0} onClick={() => { setPage(page - 1); setPick(new Set()); }}>← Trước</button> Trang {page + 1}/{Math.ceil(list.length / PER)} <button disabled={(page + 1) * PER >= list.length} onClick={() => { setPage(page + 1); setPick(new Set()); }}>Sau →</button></p>}
       {list.length === 0 && <p className="meta">Không có cặp nào trong mục này.</p>}
+    </>
+  );
+}
+
+type UCand = { id: string; name: string; en: string | null; type: string; city: string | null; phrase: string; works: number; authors: number; vnShare: number; flags: string[]; topAuthors: { id: string; name: string; orcid: string | null; n: number }[]; samples: string[] };
+type UDec = { id: string; d: string };
+function Units() {
+  const [units, setUnits] = useState<UCand[] | null>(null), [err, setErr] = useState(""), [v, setV] = useState(0), [out, setOut] = useState(""), [view, setView] = useState<"todo" | "approve" | "reject" | "skip">("todo");
+  const { d } = useGet<{ units: UDec[] }>("admin-claims", `&un=${v}`);
+  useEffect(() => { fetch("/data/_aff-review.json").then((r) => r.json()).then((j: { units: UCand[] }) => setUnits(j.units)).catch(() => setErr("Không tải được danh sách đơn vị.")); }, []);
+  const dec = useMemo(() => new Map((d?.units ?? []).map((x) => [x.id, x.d])), [d]);
+  const decide = async (id: string, decision: string) => { try { await api("admin-claim-unit", { id, decision }); setV((x) => x + 1); } catch (e) { setErr((e as Error).message); } };
+  if (err) return <p className="banner demo" role="alert">{err}</p>;
+  if (!units) return <p className="empty" role="status">Đang tải…</p>;
+  const list = units.filter((u) => (view === "todo" ? !dec.has(u.id) : dec.get(u.id) === view));
+  const approved = units.filter((u) => dec.get(u.id) === "approve").map((u) => u.id);
+  return (
+    <>
+      <section className="card"><h2>Đơn vị chưa có dữ liệu: duyệt nạp theo chuỗi cơ quan</h2>
+        <p className="meta">{units.length} đơn vị có từ 20 bài trở lên ghi tên đơn vị trong chuỗi cơ quan trên OpenAlex nhưng chưa có bản ghi đơn vị. Với mỗi đơn vị chỉ nạp tác giả có <b>chính chuỗi cơ quan của mình</b> chứa tên đơn vị (từ 2 bài, hoặc có ORCID). Cảnh báo màu vàng nghĩa là tên có thể trùng đơn vị khác: xem các chuỗi mẫu trước khi duyệt.</p>
+        <p>{(["todo", "approve", "reject", "skip"] as const).map((k) => <button key={k} className={view === k ? "primary" : ""} onClick={() => setView(k)}>{k === "todo" ? `Chưa duyệt (${units.filter((u) => !dec.has(u.id)).length})` : k === "approve" ? `Đã duyệt (${approved.length})` : k === "reject" ? "Đã loại" : "Để sau"}</button>)} <button onClick={() => setOut(JSON.stringify({ ids: approved }))}>Xuất danh sách đã duyệt</button></p>
+        {out && <><p className="meta">Sao chép gửi cho trợ lý để nạp:</p><textarea readOnly rows={3} value={out} onFocus={(e) => e.currentTarget.select()} style={{ width: "100%" }} /></>}</section>
+      {list.map((u) => (
+        <section key={u.id} className="card splitcard">
+          <p><b>{u.name}</b> <small className="meta">{u.type}{u.city ? ` · ${u.city}` : ""} · {u.works} bài · {u.authors} tác giả · chuỗi tìm: “{u.phrase}”</small></p>
+          {u.flags.map((f) => <p key={f} className="banner demo" role="note"><Icon n="info" />{f}</p>)}
+          <p className="meta">Chuỗi cơ quan mẫu: {u.samples.join(" | ")}</p>
+          <p className="meta">Tác giả nhiều bài nhất: {u.topAuthors.slice(0, 8).map((a) => `${a.name} (${a.n})`).join(", ")}</p>
+          <p>{view === "todo" ? <><button className="primary" onClick={() => void decide(u.id, "approve")}>Duyệt nạp</button> <button onClick={() => void decide(u.id, "reject")}>Loại</button> <button onClick={() => void decide(u.id, "skip")}>Để sau</button></> : <button onClick={() => void decide(u.id, "undo")}>Bỏ quyết định</button>}</p>
+        </section>))}
+      {list.length === 0 && <p className="meta">Không có đơn vị nào trong mục này.</p>}
     </>
   );
 }

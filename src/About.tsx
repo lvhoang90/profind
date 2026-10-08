@@ -1,4 +1,5 @@
 // Trang "Về ProFind, dữ liệu và giấy phép": nguồn dữ liệu, cách tính điểm, giấy phép, mã nguồn mở, quyền riêng tư. Nằm trong web, không dẫn ra ngoài.
+import { NoDataList } from "./NoData";
 import { useEffect, type ReactElement } from "react";
 import { useT } from "./i18n";
 import { Icon, type IconName } from "./icons";
@@ -84,7 +85,7 @@ export function AboutPage({ section }: { section: string }) {
     { id: "rieng-tu", icon: "user", h: vi ? "Chính sách dữ liệu cá nhân" : "Personal data policy", body: vi ? <>
       <p className="meta">Cập nhật 10/2026. Áp dụng Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 (hiệu lực từ 01/01/2026).</p>
       <h3>1. Bên chịu trách nhiệm</h3>
-      <p><b>Viện Khoa học Giáo dục và Kinh tế Đông Nam Á (Viện ISA)</b>, mã số thuế 5801465662, cấp ngày 03/06/2021. Địa chỉ: Số 5 Thông Thiên Học, Phường Xuân Hương, Đà Lạt, tỉnh Lâm Đồng. Người đại diện theo pháp luật: Trần Văn Tuấn. Là bên kiểm soát và xử lý dữ liệu cá nhân của ProFind. Liên hệ về dữ liệu cá nhân: <b>{CONTACT}</b>.</p>
+      <p><b>Viện Khoa học Giáo dục và Kinh tế Đông Nam Á (Viện ISA)</b>. Là bên kiểm soát và xử lý dữ liệu cá nhân của ProFind. Liên hệ về dữ liệu cá nhân: <b>{CONTACT}</b>.</p>
       <h3>2. Dữ liệu chúng tôi xử lý, nguồn và mục đích</h3>
       <ul>
         <li><b>Dữ liệu hồ sơ nhà khoa học</b>: họ tên, đơn vị công tác, mã ORCID, công trình công bố, trích dẫn và các chỉ số tính từ đó (kể cả PRO-SCORE1000™). Nguồn: OpenAlex (CC0), Crossref, Semantic Scholar, OpenCitations, ORCID công khai, danh mục của Hội đồng Giáo sư Nhà nước, liên kết Google Scholar do tác giả cung cấp. <i>Mục đích</i>: tra cứu, tổng hợp và thống kê học thuật. Căn cứ: tổng hợp từ nguồn dữ liệu được phép xử lý (Điều 11.3), công bố đúng nguồn gốc (Điều 16.3), kèm quyền phản đối và gỡ bên dưới.</li>
@@ -109,7 +110,7 @@ export function AboutPage({ section }: { section: string }) {
       <p>Đăng nhập bằng mã dùng một lần gửi qua email, giới hạn tần suất, phiên có chữ ký. Nếu xảy ra sự cố lộ, mất dữ liệu cá nhân, chúng tôi thông báo cơ quan có thẩm quyền trong 72 giờ và thông báo người bị ảnh hưởng.</p></> : <>
       <p className="meta">Updated 10/2026. Applies the Law on Personal Data Protection No. 91/2025/QH15 (in force from 1 January 2026).</p>
       <h3>1. Controller</h3>
-      <p><b>Institute of Education Sciences and Economics of Southeast Asia (ISA Institute)</b>, tax code 5801465662 (issued 03/06/2021), No. 5 Thong Thien Hoc, Xuan Huong Ward, Da Lat, Lam Dong, Vietnam; legal representative: Tran Van Tuan. ISA Institute controls and processes ProFind’s personal data. Contact: <b>{CONTACT}</b>.</p>
+      <p><b>Institute of Education Sciences and Economics of Southeast Asia (ISA Institute)</b>. ISA Institute controls and processes ProFind’s personal data. Contact: <b>{CONTACT}</b>.</p>
       <h3>2. Data, sources and purposes</h3>
       <ul>
         <li><b>Researcher profile data</b>: name, affiliation, ORCID, publications, citations and indicators computed from them (including PRO-SCORE1000™). Sources: OpenAlex (CC0), Crossref, Semantic Scholar, OpenCitations, public ORCID, the State Council for Professorship catalogue, Google Scholar links supplied by authors. Purpose: academic search, aggregation and statistics, with the objection and removal rights below.</li>
@@ -132,6 +133,7 @@ export function AboutPage({ section }: { section: string }) {
         <li>Retention: scientific profiles while the lookup purpose lasts; accounts until you delete them. Request and mail logs for at most 24 months.</li></ul>
       <h3>6. Security and incidents</h3>
       <p>One-time email codes, rate limiting, signed sessions. In case of a personal data breach we notify the competent authority within 72 hours and affected people.</p></> },
+    { id: "chua-du-lieu", icon: "building", h: vi ? "Đơn vị chưa có dữ liệu mở" : "Units without open data", body: <NoDataList /> },
     { id: "lien-he", icon: "mail", h: vi ? "Liên hệ" : "Contact", body: vi ? <p>Góp ý, báo lỗi, đề nghị bổ sung nhà nghiên cứu hoặc yêu cầu đính chính: dùng <a href="#/dinh-chinh">biểu mẫu trong trang</a> hoặc gửi thư tới <b>{CONTACT}</b>.</p> : <p>Feedback, bug reports, suggestions to add a researcher or correction requests: use the <a href="#/dinh-chinh">in-page form</a> or email <b>{CONTACT}</b>.</p> },
   ];
   return (

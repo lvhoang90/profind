@@ -22,5 +22,7 @@ else run(`node scripts/enrich-authors.mjs --mailto ${mailto}`);
 const left = readdirSync("data/raw").map((f) => f.replace(".json", ""));
 const still = pending.filter((id) => !left.includes(id)).map((id) => ({ id, name: I.find((i) => i.id === id)?.name, ror: I.find((i) => i.id === id)?.ror }));
 writeFileSync("data/ingest-pending.json", JSON.stringify(still, null, 1));
-run("node scripts/build-index.mjs"); run("node scripts/build-top-works.mjs"); run("node scripts/build-wsearch.mjs"); run("node scripts/check-data.mjs"); run("node scripts/cache.mjs save");
+// Mỗi tháng (ngày 1, hoặc --recheck) dò lại đơn vị chưa có dữ liệu: OpenAlex cập nhật cơ quan công tác liên tục. Chỉ tạo báo cáo/ứng viên để duyệt, không tự nạp.
+if (process.argv.includes("--recheck") || new Date().getUTCDate() === 1) { try { run(`node scripts/recheck-missing.mjs --mailto ${mailto}`); } catch (e) { console.warn("Bỏ qua kiểm tra lại đơn vị chưa có dữ liệu:", String(e.message).slice(0, 80)); } }
+run("node scripts/build-index.mjs"); run("node scripts/build-top-works.mjs"); run("node scripts/build-wsearch.mjs"); run("node scripts/build-nodata.mjs"); run("node scripts/check-data.mjs"); run("node scripts/cache.mjs save");
 console.log(`Xong. Còn ${still.length} đơn vị chưa nạp được${still.length ? " (chạy lại ngày mai)" : ""}.`);
