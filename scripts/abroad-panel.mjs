@@ -1,9 +1,11 @@
 // Mô phỏng hội đồng 1000 chuyên gia để cân nhắc ngưỡng "% công trình có liên kết tại Việt Nam" (xem trang phương pháp PRO-SCORE1000).
-//   node scripts/abroad-panel.mjs   -> public/data/abroad-panel.json
+//   node scripts/abroad-panel.mjs                       -> public/data/abroad-panel.json (lần 1: 1000 chuyên gia)
+//   node scripts/abroad-panel.mjs --run 2 --n 500 --seed 20261010 --out public/data/abroad-panel-2.json   (lần 2 kiểm định lại: 500 chuyên gia, hạt giống khác, thêm bootstrap và các cơ cấu lập trường khác)
 // ĐÂY LÀ MÔ PHỎNG, không phải ý kiến của 1000 chuyên gia thật. Phần bằng chứng lấy từ dữ liệu thật (phân bố vnShare của các hồ sơ);
 // phần giả định là mức đánh đổi giữa hai loại sai sót của từng "chuyên gia" mô phỏng (hạt giống cố định, tái lập được).
 import { readFileSync, writeFileSync } from "node:fs";
-const SEED = 20261009, N = 1000, ROUNDS = 3, RULE = JSON.parse(readFileSync("data/abroad-rule.json", "utf8")), POLICY = Math.round(RULE.maxVnShare * 100);
+const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+const RUN = +arg("run", 1), SEED = +arg("seed", 20261009), N = +arg("n", 1000), OUT = arg("out", "public/data/abroad-panel.json"), ROUNDS = 3, RULE = JSON.parse(readFileSync("data/abroad-rule.json", "utf8")), POLICY = Math.round(RULE.maxVnShare * 100);
 const P = JSON.parse(readFileSync("public/data/profind.json", "utf8"));
 const xs = P.authors.filter((a) => a.vnShare != null && !a.suspect).map((a) => Math.min(0.995, Math.max(0.005, a.vnShare / 100)));
 // 1) Mô hình hai nhóm (Beta trộn, EM): nhóm "liên kết chính ở nước ngoài" và nhóm "liên kết chính tại Việt Nam"
@@ -35,6 +37,24 @@ const byStance = STANCES.map((st) => { const v = experts.map((e, i) => (e.st ===
 const hist = Array.from({ length: 20 }, (_, i) => P.authors.filter((a) => a.vnShare != null && !a.suspect && (i === 19 ? a.vnShare >= 95 : a.vnShare >= i * 5 && a.vnShare < i * 5 + 5)).length);
 const total = xs.length, sens = [5, 10, 15, 20, 25, 30, 40, 50].map((t) => ({ t, n: P.authors.filter((a) => a.vnShare != null && !a.suspect && a.vnShare < t).length }));
 const at = (t) => ({ t, expectedWronglyExcluded: Math.round(FE[t]), expectedWronglyIncluded: Math.round(FI[t]) });
-const out = { _note: "Mô phỏng, không phải ý kiến chuyên gia thật. Sinh bởi scripts/abroad-panel.mjs.", built: P.meta.built, seed: SEED, n: N, rounds: ROUNDS, profiles: total, mixture: { piVn: Math.round(pi * 1000) / 1000, foreignBeta: A.map((v) => Math.round(v * 100) / 100), vnBeta: B.map((v) => Math.round(v * 100) / 100), bayesEqualCostThreshold: argminW(0.5) }, stances: byStance, rounds_: rounds, consensus: { median: rounds[rounds.length - 1].median, p25: rounds[rounds.length - 1].p25, p75: rounds[rounds.length - 1].p75 }, policy: POLICY, errorsAtPolicy: at(POLICY), errorsAtConsensus: at(Math.round(rounds[rounds.length - 1].median)), hist, sens };
-writeFileSync("public/data/abroad-panel.json", JSON.stringify(out) + "\n");
+const curve = T.filter((t) => t % 5 === 0).map((t) => ({ t, excluded: Math.round(FE[t]), admitted: Math.round(FI[t]), tagged: P.authors.filter((a) => a.vnShare != null && !a.suspect && a.vnShare < t).length }));
+// Hệ số đánh đổi k = (mức nặng của việc loại nhầm người tại VN) / (mức nặng của việc đưa nhầm người nước ngoài) mà tại đó ngưỡng t là tối ưu
+const implied = []; for (const t of [10, 15, 20, 25, 30, 35, 40, 45, 50, 55]) { let lo = 1, hi = 0; for (let w = 0.001; w < 1; w += 0.001) { let bt = 0, bl = Infinity; T.forEach((tt, i) => { const l = w * FE[i] + (1 - w) * FI[i]; if (l < bl - 1e-9) { bl = l; bt = tt; } }); if (bt === t) { lo = Math.min(lo, w); hi = Math.max(hi, w); } } if (lo <= hi) implied.push({ t, kFrom: Math.round((lo / (1 - lo)) * 10) / 10, kTo: Math.round((hi / (1 - hi)) * 10) / 10 }); }
+const out = { run: RUN, curve, impliedCostRatio: implied, _note: "Mô phỏng, không phải ý kiến chuyên gia thật. Sinh bởi scripts/abroad-panel.mjs.", built: P.meta.built, seed: SEED, n: N, rounds: ROUNDS, profiles: total, mixture: { piVn: Math.round(pi * 1000) / 1000, foreignBeta: A.map((v) => Math.round(v * 100) / 100), vnBeta: B.map((v) => Math.round(v * 100) / 100), bayesEqualCostThreshold: argminW(0.5) }, stances: byStance, rounds_: rounds, consensus: { median: rounds[rounds.length - 1].median, p25: rounds[rounds.length - 1].p25, p75: rounds[rounds.length - 1].p75 }, policy: POLICY, errorsAtPolicy: at(POLICY), errorsAtConsensus: at(Math.round(rounds[rounds.length - 1].median)), hist, sens };
+writeFileSync(OUT, JSON.stringify(out) + "\n");
 console.log(JSON.stringify({ mixture: out.mixture, stances: byStance.map((s) => `${s.id}:${s.median} [${s.p25}-${s.p75}]`), rounds: rounds.map((r) => `${r.round}:${r.median} [${r.p25}-${r.p75}]`), consensus: out.consensus, policy: POLICY, errPolicy: out.errorsAtPolicy, errCons: out.errorsAtConsensus, total, sens: sens.map((x) => `${x.t}:${x.n}`).join(" ") }, null, 1));
+
+// Kiểm định lại (chỉ lần 2): (a) bootstrap 200 lần trên các hồ sơ -> khoảng tin cậy 95% của ngưỡng Bayes (hai loại sai sót nặng như nhau) và của trung vị hội đồng;
+// (b) hội đồng với các cơ cấu lập trường khác để xem kết luận có phụ thuộc giả định 30/40/30 không.
+if (RUN >= 2) {
+  const consensusFor = (mix, FEb, FIb, xsb) => { const ex = []; for (const [a, b, share] of mix) for (let i = 0; i < Math.round(N * share); i++) ex.push(beta(a, b)); const arg = (w) => { let bt = 0, bl = Infinity; T.forEach((t, i) => { const l = w * FEb[i] + (1 - w) * FIb[i]; if (l < bl - 1e-9) { bl = l; bt = t; } }); return bt; }; let v = ex.map(arg); const ll = ex.map(() => 0.3 + 0.4 * rnd()); for (let r = 0; r < ROUNDS; r++) { const m = q(v, 0.5); v = v.map((t, i) => (1 - ll[i]) * t + ll[i] * m); } return q(v, 0.5); };
+  const fitMix = (data) => { let pi_ = 0.5, A_ = [0.6, 5], B_ = [5, 0.6]; const fit = (w) => { const sw = w.reduce((s_, v) => s_ + v, 0); let m = 0; data.forEach((x, i) => (m += w[i] * x)); m /= sw; let v = 0; data.forEach((x, i) => (v += w[i] * (x - m) ** 2)); v = Math.max(v / sw, 1e-4); const k = Math.max((m * (1 - m)) / v - 1, 0.2); return [m * k, (1 - m) * k]; }; for (let it = 0; it < 60; it++) { const r = data.map((x) => { const a = (1 - pi_) * bpdf(x, ...A_), b = pi_ * bpdf(x, ...B_); return b / (a + b); }); pi_ = r.reduce((s_, v) => s_ + v, 0) / r.length; B_ = fit(r); A_ = fit(r.map((v) => 1 - v)); } return { pi_, A_, B_ }; };
+  const curves = (data, m) => { const pv_ = data.map((x) => { const a = (1 - m.pi_) * bpdf(x, ...m.A_), b = m.pi_ * bpdf(x, ...m.B_); return b / (a + b); }); return { FE_: T.map((t) => data.reduce((s_, x, i) => s_ + (x < t / 100 ? pv_[i] : 0), 0)), FI_: T.map((t) => data.reduce((s_, x, i) => s_ + (x >= t / 100 ? 1 - pv_[i] : 0), 0)) }; };
+  const B = 200, bayes = [], cons = [];
+  for (let b = 0; b < B; b++) { const sample = xs.map(() => xs[Math.floor(rnd() * xs.length)]); const m = fitMix(sample), { FE_, FI_ } = curves(sample, m); let bt = 0, bl = Infinity; T.forEach((t, i) => { const l = 0.5 * FE_[i] + 0.5 * FI_[i]; if (l < bl - 1e-9) { bl = l; bt = t; } }); bayes.push(bt); cons.push(consensusFor([[6, 3, 0.3], [5, 5, 0.4], [3, 6, 0.3]], FE_, FI_, sample)); }
+  const ci = (arr) => ({ median: q(arr, 0.5), lo95: q(arr, 0.025), hi95: q(arr, 0.975) });
+  const MIXES = [["30/40/30 (như lần 1)", [[6, 3, 0.3], [5, 5, 0.4], [3, 6, 0.3]]], ["25/50/25 (nhiều cân bằng hơn)", [[6, 3, 0.25], [5, 5, 0.5], [3, 6, 0.25]]], ["50/30/20 (thiên về bao trùm)", [[6, 3, 0.5], [5, 5, 0.3], [3, 6, 0.2]]], ["20/30/50 (thiên về chặt chẽ)", [[6, 3, 0.2], [5, 5, 0.3], [3, 6, 0.5]]], ["100% bao trùm", [[6, 3, 1]]], ["100% chặt chẽ", [[3, 6, 1]]]];
+  out.verification = { bootstrap: { resamples: B, bayesEqualCost: ci(bayes), panelConsensus: ci(cons) }, mixes: MIXES.map(([label, mix]) => ({ label, median: Math.round(consensusFor(mix, FE, FI, xs) * 10) / 10 })) };
+  writeFileSync(OUT, JSON.stringify(out) + "\n");
+  console.log(JSON.stringify(out.verification, null, 1));
+}
