@@ -390,6 +390,7 @@ export default async function handler(request) {
         const nw = body.decision === "approve" ? ws.map((x) => (x === w ? { ...x, status: "ok", why: "Quản trị viên đã duyệt" } : x)) : ws.filter((x) => x !== w);
         await one(["HSET", "profind:aw", id, JSON.stringify(nw)]); return json({ ok: true });
       }
+      if (op === "admin-claim-split" && body.reset === true) { await one(["DEL", "profind:sp"]); return json({ ok: true, reset: true }); }
       if (op === "admin-claim-split") {
         const items = Array.isArray(body.items) ? body.items.slice(0, 200) : [{ a: body.a, b: body.b, decision: body.decision, into: body.into }], cmds = [];
         for (const it of items) {
