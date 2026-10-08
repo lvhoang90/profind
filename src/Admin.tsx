@@ -275,7 +275,7 @@ const BANDS: [string, string, string][] = [["1", "Rất nghi trùng", "Điểm 7
 function Merger() {
   const [pairs, setPairs] = useState<SPair[] | null>(null), [err, setErr] = useState(""), [v, setV] = useState(0), [page, setPage] = useState(0), [band, setBand] = useState("1"), [view, setView] = useState<"todo" | "merge" | "different">("todo"), [out, setOut] = useState(""), [pick, setPick] = useState<Set<string>>(new Set()), [open, setOpen] = useState<string | null>(null), [busy, setBusy] = useState(false), [msg, setMsg] = useState("");
   const { d } = useGet<{ split: SDec[] }>("admin-claims", `&sp=${v}`);
-  useEffect(() => { fetch("/data/_split-review.json").then((r) => r.json()).then((j: { pairs: SPair[] }) => setPairs(j.pairs)).catch(() => setErr("Không tải được danh sách cặp hồ sơ.")); }, []);
+  useEffect(() => { fetch("/data/_split-review.json", { cache: "no-store" }).then((r) => r.json()).then((j: { pairs: SPair[] }) => setPairs(j.pairs.some((p) => !p.band) ? null : j.pairs)).catch(() => setErr("Không tải được danh sách cặp hồ sơ.")); }, []);
   const dec = useMemo(() => new Map((d?.split ?? []).map((x) => [pk(x.a, x.b), x])), [d]);
   const counts = useMemo(() => { const c: Record<string, [number, number]> = {}; for (const p of pairs ?? []) { const t = (c[p.band] ??= [0, 0]); t[1]++; if (!dec.has(pk(p.a, p.b))) t[0]++; } return c; }, [pairs, dec]);
   const list = useMemo(() => (pairs ?? []).filter((p) => p.band === band && (view === "todo" ? !dec.has(pk(p.a, p.b)) : dec.get(pk(p.a, p.b))?.d === view)), [pairs, dec, band, view]);
@@ -330,7 +330,7 @@ type UDec = { id: string; d: string };
 function Units() {
   const [units, setUnits] = useState<UCand[] | null>(null), [err, setErr] = useState(""), [v, setV] = useState(0), [out, setOut] = useState(""), [view, setView] = useState<"todo" | "approve" | "reject" | "skip">("todo");
   const { d } = useGet<{ units: UDec[] }>("admin-claims", `&un=${v}`);
-  useEffect(() => { fetch("/data/_aff-review.json").then((r) => r.json()).then((j: { units: UCand[] }) => setUnits(j.units)).catch(() => setErr("Không tải được danh sách đơn vị.")); }, []);
+  useEffect(() => { fetch("/data/_aff-review.json", { cache: "no-store" }).then((r) => r.json()).then((j: { units: UCand[] }) => setUnits(j.units)).catch(() => setErr("Không tải được danh sách đơn vị.")); }, []);
   const dec = useMemo(() => new Map((d?.units ?? []).map((x) => [x.id, x.d])), [d]);
   const decide = async (id: string, decision: string) => { try { await api("admin-claim-unit", { id, decision }); setV((x) => x + 1); } catch (e) { setErr((e as Error).message); } };
   if (err) return <p className="banner demo" role="alert">{err}</p>;
