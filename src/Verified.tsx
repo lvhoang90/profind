@@ -65,7 +65,7 @@ export function ClaimBox({ authorId, authorName, mode = "claim" }: { authorId: s
 }
 
 // ---------- Dữ liệu công khai do chủ hồ sơ đã xác thực khai báo ----------
-export interface AuthorPub { verified: boolean; profile?: { orcid: string; scholar: string; site: string; bio: string; hasAvatar: boolean; email: string; phone: string }; works?: { doi: string; title: string; venue: string; year: number; oa: string; status: string }[] }
+export interface AuthorPub { verified: boolean; profile?: { orcid: string; scholar: string; site: string; bio: string; hasAvatar: boolean | number; email: string; phone: string }; works?: { doi: string; title: string; venue: string; year: number; oa: string; status: string }[] }
 export function useAuthorPub(id: string): AuthorPub | null {
   const ok = useVerified(id); const [d, setD] = useState<AuthorPub | null>(null);
   useEffect(() => { setD(null); if (ok) api<AuthorPub>("author-public", undefined, `&id=${encodeURIComponent(id)}`).then(setD).catch(() => {}); }, [id, ok]);
@@ -112,7 +112,9 @@ function One({ m, reload }: { m: Mine; reload: () => void }) {
   const run = async (op: string, body: object, ok: string) => { setBusy(true); setMsg(""); try { await api(op, { authorId: m.authorId, ...body }); setMsg(ok); reload(); } catch (e) { setMsg((e as Error).message); } finally { setBusy(false); } };
   const save = (e: FormEvent<HTMLFormElement>) => { e.preventDefault(); const f = new FormData(e.currentTarget); void run("author-save", { orcid: f.get("orcid"), scholar: f.get("scholar"), site: f.get("site"), bio: f.get("bio"), email: f.get("email"), phone: f.get("phone"), showContact: f.get("showContact") === "on" }, "Đã lưu."); };
   const addDoi = (e: FormEvent<HTMLFormElement>) => { e.preventDefault(); const el = e.currentTarget, f = new FormData(el); void run("author-work-add", { doi: f.get("doi") }, "Đã thêm công trình.").then(() => el.reset()); };
-  const pick = async (f: File | undefined) => { if (!f) return; try { await run("author-avatar", { image: await shrink(f) }, "Đã đổi ảnh đại diện."); } catch (e) { setMsg((e as Error).message); } };
+  const [pend, setPend] = useState<string | null>(null), [avMsg, setAvMsg] = useState("");
+  const pick = async (f: File | undefined) => { setAvMsg(""); setPend(null); if (!f) return; try { setPend(await shrink(f)); } catch (e) { setAvMsg((e as Error).message); } };
+  const upload = async () => { if (!pend) return; setBusy(true); setAvMsg(""); try { await api("author-avatar", { authorId: m.authorId, image: pend }); setPend(null); setAvMsg("Đã cập nhật ảnh đại diện. Trang hồ sơ công khai có thể mất vài phút để hiện ảnh mới."); reload(); } catch (e) { setAvMsg((e as Error).message); } finally { setBusy(false); } };
   return (
     <section className="card claimbox">
       <h2><a href={`#/tac-gia/${m.authorId}`}>{m.name}</a> <VerifiedTick id={m.authorId} /></h2>
@@ -136,7 +138,15 @@ function One({ m, reload }: { m: Mine; reload: () => void }) {
         <label className="chk"><input type="radio" name={`hide-${m.authorId}`} checked={m.hide === "profile"} onChange={() => void run("author-privacy", { hideProfile: true }, "Đã tạm ẩn toàn bộ hồ sơ.")} />Tạm ẩn toàn bộ hồ sơ khỏi ProFind</label>
       </p>
       <h3>Ảnh đại diện</h3>
-      <p><input type="file" accept="image/jpeg,image/png,image/webp" onChange={(e) => void pick(e.target.files?.[0])} aria-label="Chọn ảnh đại diện" /> {p.av ? <button type="button" onClick={() => void run("author-avatar", { image: null }, "Đã gỡ ảnh.")}>Gỡ ảnh</button> : null}</p>
+      <div className="avedit">
+        {(pend || p.av) && <img className="avprev" src={pend ?? `/api/account?op=avatar&id=${encodeURIComponent(m.authorId)}&v=${p.av}`} alt={pend ? "Xem trước ảnh mới" : "Ảnh đại diện hiện tại"} width={96} height={96} />}
+        <div>
+          <input type="file" accept="image/jpeg,image/png,image/webp" onChange={(e) => void pick(e.target.files?.[0])} aria-label="Chọn ảnh đại diện" />
+          {pend && <p className="meta">Ảnh sẽ được cắt vuông và thu nhỏ. Bấm "Dùng ảnh này" để đăng lên hồ sơ công khai của bạn.</p>}
+          <p>{pend && <><button type="button" className="primary" disabled={busy} onClick={() => void upload()}>Dùng ảnh này</button> <button type="button" disabled={busy} onClick={() => { setPend(null); setAvMsg(""); }}>Hủy</button> </>}{!pend && p.av ? <button type="button" disabled={busy} onClick={() => void run("author-avatar", { image: null }, "Đã gỡ ảnh.")}>Gỡ ảnh</button> : null}</p>
+          <div role="status" aria-live="polite">{avMsg && <p className="banner"><Icon n="check" />{avMsg}</p>}</div>
+        </div>
+      </div>
       <h3>Thêm công trình theo DOI</h3>
       <p className="meta">DOI được đối chiếu với Crossref: tên hoặc ORCID của bạn phải có trong danh sách tác giả, nếu không sẽ chờ quản trị viên duyệt. Công trình tự bổ sung chưa tính vào PRO-SCORE cho tới khi OpenAlex ghi nhận.</p>
       <form onSubmit={addDoi} className="form"><label className="sel"><span>DOI</span><input name="doi" required placeholder="10.1234/abcd" maxLength={220} /></label><p><button className="primary" disabled={busy}>Thêm công trình</button></p></form>

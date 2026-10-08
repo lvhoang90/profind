@@ -441,7 +441,7 @@ export default async function handler(request) {
     if (op === "author-public" && request.method === "GET") {
       const id = url.searchParams.get("id") || "", v = await getVf(id);
       if (!v || v.until <= Date.now()) return json({ verified: false }, 200, { "cache-control": "public, s-maxage=120, stale-while-revalidate=300" });
-      const p = await getProf(id), pub = { orcid: p.orcid || v.orcid || "", scholar: p.scholar || v.scholar || "", site: p.site || "", bio: p.bio || "", hasAvatar: !!p.av, email: p.showContact ? p.email || "" : "", phone: p.showContact ? p.phone || "" : "" };
+      const p = await getProf(id), pub = { orcid: p.orcid || v.orcid || "", scholar: p.scholar || v.scholar || "", site: p.site || "", bio: p.bio || "", hasAvatar: p.av ? Number(p.av) || true : false, email: p.showContact ? p.email || "" : "", phone: p.showContact ? p.phone || "" : "" };
       return json({ verified: true, profile: pub, works: (await getWorks(id)).filter((w) => w.status === "ok") }, 200, { "cache-control": "public, s-maxage=120, stale-while-revalidate=300" });
     }
     if (op === "avatar" && request.method === "GET") {
