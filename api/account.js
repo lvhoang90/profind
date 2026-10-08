@@ -355,7 +355,7 @@ export default async function handler(request) {
     if (op === "admin-claims" && request.method === "GET") {
       const bad = needAdmin(); if (bad) return bad;
       const t = Date.now(), vf = await allVf();
-      return json({ claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [], hidden: { score: (await one(["SMEMBERS", HSK])) ?? [], profile: (await one(["SMEMBERS", HPK])) ?? [] }, works: await (async () => { const o = []; for (const [id, raw] of Object.entries(pairs(await one(["HGETALL", "profind:aw"])))) for (const w of jparse(raw) ?? []) if (w.status === "review") o.push({ authorId: id, ...w }); return o; })() });
+      return json({ claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [], split: Object.values(pairs(await one(["HGETALL", "profind:sp"]))).map(jparse).filter(Boolean), hidden: { score: (await one(["SMEMBERS", HSK])) ?? [], profile: (await one(["SMEMBERS", HPK])) ?? [] }, works: await (async () => { const o = []; for (const [id, raw] of Object.entries(pairs(await one(["HGETALL", "profind:aw"])))) for (const w of jparse(raw) ?? []) if (w.status === "review") o.push({ authorId: id, ...w }); return o; })() });
     }
     if (op.startsWith("admin-claim-") && request.method === "POST") {
       const bad = needAdmin(); if (bad) return bad;
@@ -389,6 +389,13 @@ export default async function handler(request) {
         if (!w) return json({ error: "Không tìm thấy công trình." }, 404);
         const nw = body.decision === "approve" ? ws.map((x) => (x === w ? { ...x, status: "ok", why: "Quản trị viên đã duyệt" } : x)) : ws.filter((x) => x !== w);
         await one(["HSET", "profind:aw", id, JSON.stringify(nw)]); return json({ ok: true });
+      }
+      if (op === "admin-claim-split") {
+        const a = String(body.a || ""), b = String(body.b || ""), d = String(body.decision || ""); const k = [a, b].sort().join("|");
+        if (!/^A\d{5,12}$/.test(a) || !/^A\d{5,12}$/.test(b)) return json({ error: "Mã hồ sơ không hợp lệ." }, 400);
+        if (d === "undo") { await one(["HDEL", "profind:sp", k]); return json({ ok: true }); }
+        if (!["merge", "different", "skip"].includes(d)) return json({ error: "Quyết định không hợp lệ." }, 400);
+        await one(["HSET", "profind:sp", k, JSON.stringify({ a, b, d, by: me.email, at: Date.now(), into: tidy(body.into, 20) })]); return json({ ok: true });
       }
       if (op === "admin-claim-hide") {
         const id = String(body.authorId || ""); if (!/^A\d{5,12}$/.test(id)) return json({ error: "Mã hồ sơ không hợp lệ." }, 400);

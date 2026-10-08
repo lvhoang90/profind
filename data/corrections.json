@@ -13,6 +13,62 @@
       ],
       "date": "2026-10-07",
       "reason": "Hai hồ sơ OpenAlex của GS. Võ Tòng Xuân (người quản lý dự án yêu cầu bổ sung)"
+    },
+    {
+      "into": "A5063492978",
+      "from": [
+        "A5082556420"
+      ],
+      "date": "2026-10-08",
+      "reason": "Gộp tầng A tự động (tên trùng, cùng đơn vị, cùng ngành, một hồ sơ có ORCID, không có công trình chung, không có người thứ ba trùng tên); đã xem xét chủ đề công trình: Le Minh Cam / Lê Minh Cầm"
+    },
+    {
+      "into": "A5025973945",
+      "from": [
+        "A5111749747"
+      ],
+      "date": "2026-10-08",
+      "reason": "Gộp tầng A tự động (tên trùng, cùng đơn vị, cùng ngành, một hồ sơ có ORCID, không có công trình chung, không có người thứ ba trùng tên); đã xem xét chủ đề công trình: Tran Nam Son"
+    },
+    {
+      "into": "A5056454683",
+      "from": [
+        "A5012274976"
+      ],
+      "date": "2026-10-08",
+      "reason": "Gộp tầng A tự động (tên trùng, cùng đơn vị, cùng ngành, một hồ sơ có ORCID, không có công trình chung, không có người thứ ba trùng tên); đã xem xét chủ đề công trình: Tri Nhut Do / Tri-Nhut Do"
+    },
+    {
+      "into": "A5004041311",
+      "from": [
+        "A5108087358"
+      ],
+      "date": "2026-10-08",
+      "reason": "Gộp tầng A tự động (tên trùng, cùng đơn vị, cùng ngành, một hồ sơ có ORCID, không có công trình chung, không có người thứ ba trùng tên); đã xem xét chủ đề công trình: Nguyen Le-Phuc / Nguyen Le Phuc"
+    },
+    {
+      "into": "A5055864323",
+      "from": [
+        "A5031857165"
+      ],
+      "date": "2026-10-08",
+      "reason": "Gộp tầng A tự động (tên trùng, cùng đơn vị, cùng ngành, một hồ sơ có ORCID, không có công trình chung, không có người thứ ba trùng tên); đã xem xét chủ đề công trình: Đức Cường Lê / Duc Cuong Le"
+    },
+    {
+      "into": "A5014033511",
+      "from": [
+        "A5014413234"
+      ],
+      "date": "2026-10-08",
+      "reason": "Gộp tầng A tự động (tên trùng, cùng đơn vị, cùng ngành, một hồ sơ có ORCID, không có công trình chung, không có người thứ ba trùng tên); đã xem xét chủ đề công trình: Dao Van Thinh / Đào Văn Thịnh"
+    },
+    {
+      "into": "A5104333626",
+      "from": [
+        "A5117313981"
+      ],
+      "date": "2026-10-08",
+      "reason": "Gộp tầng A tự động (tên trùng, cùng đơn vị, cùng ngành, một hồ sơ có ORCID, không có công trình chung, không có người thứ ba trùng tên); đã xem xét chủ đề công trình: Dinh Phong Vu / Đình Phóng Vũ"
     }
   ],
   "claimed": {}
