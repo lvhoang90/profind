@@ -268,49 +268,59 @@ function Mailer() {
 }
 
 type SSide = { id: string; name: string; orcid: string | null; inst: string[]; works: number; cites: number; years: [number | null, number | null]; pro: number | null; top: { t: string; y: number; d: string | null }[] };
-type SPair = { tier: string; a: string; b: string; name: string; groupSize: number; overlap: number; exactlyOneOrcid: boolean; shared: string[]; A: SSide; B: SSide };
+type SPair = { tier: string; band: string; score: number; field: number | null; topic: number | null; a: string; b: string; name: string; groupSize: number; overlap: number; exactlyOneOrcid: boolean; noWorks: boolean; shared: string[]; A: SSide; B: SSide };
 type SDec = { a: string; b: string; d: string; at: number };
 const pk = (a: string, b: string) => [a, b].sort().join("|");
+const BANDS: [string, string, string][] = [["1", "Rất nghi trùng", "Điểm 75–100: tên giống, cùng đơn vị, thường một bên có ORCID, chủ đề công trình gần nhau."], ["2", "Nghi trùng", "Điểm 60–74."], ["3", "Ít nghi", "Điểm 45–59: nhiều khả năng là hai người cùng tên."], ["4", "Rất ít nghi", "Điểm dưới 45: hầu như chắc là hai người khác nhau."]];
 function Merger() {
-  const [pairs, setPairs] = useState<SPair[] | null>(null), [err, setErr] = useState(""), [v, setV] = useState(0), [page, setPage] = useState(0), [show, setShow] = useState<"todo" | "merge" | "different" | "skip">("todo"), [out, setOut] = useState("");
+  const [pairs, setPairs] = useState<SPair[] | null>(null), [err, setErr] = useState(""), [v, setV] = useState(0), [page, setPage] = useState(0), [band, setBand] = useState("1"), [view, setView] = useState<"todo" | "merge" | "different">("todo"), [out, setOut] = useState(""), [pick, setPick] = useState<Set<string>>(new Set()), [open, setOpen] = useState<string | null>(null), [busy, setBusy] = useState(false), [msg, setMsg] = useState("");
   const { d } = useGet<{ split: SDec[] }>("admin-claims", `&sp=${v}`);
   useEffect(() => { fetch("/data/_split-review.json").then((r) => r.json()).then((j: { pairs: SPair[] }) => setPairs(j.pairs)).catch(() => setErr("Không tải được danh sách cặp hồ sơ.")); }, []);
   const dec = useMemo(() => new Map((d?.split ?? []).map((x) => [pk(x.a, x.b), x])), [d]);
-  const list = useMemo(() => {
-    if (!pairs) return [];
-    const pr = (p: SPair) => (p.groupSize === 2 ? 0 : 4) + (p.exactlyOneOrcid ? 0 : 2) + (p.overlap <= 0.5 ? 0 : 1);
-    return pairs.filter((p) => { const x = dec.get(pk(p.a, p.b)); return show === "todo" ? !x : x?.d === show; }).sort((x, y) => pr(x) - pr(y) || (y.A.works + y.B.works) - (x.A.works + x.B.works));
-  }, [pairs, dec, show]);
-  const decide = async (p: SPair, decision: string) => { try { await api("admin-claim-split", { a: p.a, b: p.b, decision, into: p.A.orcid || p.A.works >= p.B.works ? p.a : p.b }); setV((x) => x + 1); } catch (e) { setErr((e as Error).message); } };
-  const exportJson = () => {
-    const merges = (d?.split ?? []).filter((x) => x.d === "merge").map((x) => { const p = pairs?.find((q) => pk(q.a, q.b) === pk(x.a, x.b)); const into = p ? (p.A.orcid ? p.A : p.B.orcid ? p.B : p.A.works >= p.B.works ? p.A : p.B) : null; return into ? { into: into.id, from: [into.id === p!.a ? p!.b : p!.a], date: new Date().toISOString().slice(0, 10), reason: `Gộp sau khi quản trị viên duyệt: ${p!.name}` } : null; }).filter(Boolean);
-    const diff = (d?.split ?? []).filter((x) => x.d === "different").map((x) => [x.a, x.b]);
-    setOut(JSON.stringify({ merge: merges, different: diff }, null, 1));
+  const counts = useMemo(() => { const c: Record<string, [number, number]> = {}; for (const p of pairs ?? []) { const t = (c[p.band] ??= [0, 0]); t[1]++; if (!dec.has(pk(p.a, p.b))) t[0]++; } return c; }, [pairs, dec]);
+  const list = useMemo(() => (pairs ?? []).filter((p) => p.band === band && (view === "todo" ? !dec.has(pk(p.a, p.b)) : dec.get(pk(p.a, p.b))?.d === view)), [pairs, dec, band, view]);
+  const PER = 25, rows = list.slice(page * PER, page * PER + PER);
+  const send = async (items: { a: string; b: string; decision: string }[], ok: string) => {
+    setBusy(true); setMsg("");
+    try { for (let i = 0; i < items.length; i += 200) await api("admin-claim-split", { items: items.slice(i, i + 200) }); setMsg(ok); setPick(new Set()); setV((x) => x + 1); } catch (e) { setErr((e as Error).message); } finally { setBusy(false); }
   };
-  const PER = 10, view = list.slice(page * PER, page * PER + PER);
-  const Side = ({ s }: { s: SSide }) => (
+  const toggle = (k: string) => setPick((s) => { const n = new Set(s); if (n.has(k)) n.delete(k); else n.add(k); return n; });
+  const savePage = () => send(rows.map((p) => ({ a: p.a, b: p.b, decision: pick.has(pk(p.a, p.b)) ? "merge" : "different" })), `Đã lưu ${rows.length} cặp: ${rows.filter((p) => pick.has(pk(p.a, p.b))).length} gộp, ${rows.filter((p) => !pick.has(pk(p.a, p.b))).length} khác người.`);
+  const allDifferent = () => confirm(`Đánh dấu KHÁC NGƯỜI cho toàn bộ ${list.length} cặp chưa duyệt trong nhóm này? Không có hồ sơ nào bị gộp.`) && send(list.map((p) => ({ a: p.a, b: p.b, decision: "different" })), `Đã đánh dấu ${list.length} cặp là khác người.`);
+  const exportJson = () => {
+    const merges = (d?.split ?? []).filter((x) => x.d === "merge").map((x) => { const p = pairs?.find((q) => pk(q.a, q.b) === pk(x.a, x.b)); if (!p) return null; const into = p.A.orcid ? p.A : p.B.orcid ? p.B : p.A.works >= p.B.works ? p.A : p.B; return { into: into.id, from: [into.id === p.a ? p.b : p.a], date: new Date().toISOString().slice(0, 10), reason: `Gộp sau khi quản trị viên duyệt (điểm nghi trùng ${p.score}): ${p.name}` }; }).filter(Boolean);
+    setOut(JSON.stringify({ merge: merges, different: (d?.split ?? []).filter((x) => x.d === "different").map((x) => [x.a, x.b]) }, null, 1));
+  };
+  const Side = ({ s, full }: { s: SSide; full?: boolean }) => (
     <div className="spside"><p><b><a href={`#/tac-gia/${s.id}`} target="_blank" rel="noopener">{s.name}</a></b> <small className="meta">{s.id}</small></p>
       <p className="meta">{s.orcid ? `ORCID ${s.orcid}` : "Chưa có ORCID"} · {s.inst.join("; ")}</p>
-      <p className="meta">{s.works} công trình · {n0(s.cites)} trích dẫn · {s.years[0] ?? "?"}–{s.years[1] ?? "?"}{s.pro != null ? ` · PRO ${s.pro}` : ""}</p>
-      <ul>{s.top.map((t) => <li key={t.t}>{t.d ? <a href={`https://doi.org/${t.d}`} target="_blank" rel="noopener">{t.t}</a> : t.t} <small className="meta">({t.y})</small></li>)}</ul></div>
+      <p className="meta">{s.works} công trình · {n0(s.cites)} trích dẫn · {s.years[0] ?? "?"}–{s.years[1] ?? "?"}</p>
+      <ul>{(full ? s.top : s.top.slice(0, 1)).map((t) => <li key={t.t}>{t.d ? <a href={`https://doi.org/${t.d}`} target="_blank" rel="noopener">{t.t}</a> : t.t} <small className="meta">({t.y})</small></li>)}</ul></div>
   );
   if (err) return <p className="banner demo" role="alert">{err}</p>;
   if (!pairs) return <p className="empty" role="status">Đang tải…</p>;
-  const nTodo = pairs.filter((p) => !dec.has(pk(p.a, p.b))).length;
+  const total = Object.values(counts).reduce((a, c) => a + c[0], 0);
   return (
     <>
-      <section className="card"><h2>Gộp hồ sơ bị tách đôi (tầng B)</h2>
-        <p className="meta">{pairs.length} cặp nghi cùng một người, còn {nTodo} cặp chưa duyệt. Các cặp có bài chung đã bị loại vì chắc chắn là hai người khác nhau. Cặp ưu tiên: tên trùng, chỉ 2 hồ sơ cùng tên, một bên có ORCID, năm công bố bổ sung nhau.</p>
-        <p>{(["todo", "merge", "different", "skip"] as const).map((k) => <button key={k} className={show === k ? "primary" : ""} onClick={() => { setShow(k); setPage(0); }}>{k === "todo" ? `Chưa duyệt (${nTodo})` : k === "merge" ? "Đã chọn gộp" : k === "different" ? "Khác người" : "Để sau"}</button>)} <button onClick={exportJson}>Xuất kết quả gộp (JSON)</button></p>
+      <section className="card"><h2>Gộp hồ sơ bị tách đôi</h2>
+        <p className="meta">Còn <b>{total}</b> cặp chưa duyệt, chia 4 nhóm theo điểm nghi trùng (tên, cùng đơn vị, ORCID, năm công bố, chủ đề công trình). Điểm chỉ là gợi ý để xếp thứ tự, không thay cho mắt người. Cặp có bài chung đã bị loại. <b>Mặc định không gộp:</b> chỉ tick "Cùng người" ở những cặp bạn chắc chắn, rồi bấm Lưu trang; hàng không tick được đánh dấu khác người.</p>
+        <p>{BANDS.map(([k, l]) => <button key={k} className={band === k ? "primary" : ""} onClick={() => { setBand(k); setPage(0); setPick(new Set()); }}>{l} ({counts[k]?.[0] ?? 0}/{counts[k]?.[1] ?? 0})</button>)}</p>
+        <p className="meta">{BANDS.find((b) => b[0] === band)?.[2]}</p>
+        <p>{(["todo", "merge", "different"] as const).map((k) => <button key={k} className={view === k ? "primary" : ""} onClick={() => { setView(k); setPage(0); setPick(new Set()); }}>{k === "todo" ? "Chưa duyệt" : k === "merge" ? "Đã chọn gộp" : "Đã chọn khác người"}</button>)} <button onClick={exportJson}>Xuất kết quả (JSON)</button></p>
+        {msg && <p className="banner" role="status"><Icon n="check" />{msg}</p>}
         {out && <><p className="meta">Sao chép đoạn này gửi cho trợ lý để đưa vào <code>data/corrections.json</code>:</p><textarea readOnly rows={8} value={out} onFocus={(e) => e.currentTarget.select()} style={{ width: "100%" }} /></>}</section>
-      {view.map((p) => (
-        <section key={pk(p.a, p.b)} className="card splitcard">
-          <p className="meta">{p.name} · {p.shared[0]} · {p.groupSize} hồ sơ cùng tên · mức trùng năm {Math.round(p.overlap * 100)}%{p.exactlyOneOrcid ? " · một bên có ORCID" : ""}</p>
-          <div className="spgrid"><Side s={p.A} /><Side s={p.B} /></div>
-          <p>{show === "todo" ? <><button className="primary" onClick={() => void decide(p, "merge")}>Cùng một người, gộp</button> <button onClick={() => void decide(p, "different")}>Khác người</button> <button onClick={() => void decide(p, "skip")}>Để sau</button></> : <button onClick={() => void decide(p, "undo")}>Bỏ quyết định</button>}</p>
-        </section>))}
-      {list.length > PER && <p><button disabled={page === 0} onClick={() => setPage(page - 1)}>← Trước</button> Trang {page + 1}/{Math.ceil(list.length / PER)} <button disabled={(page + 1) * PER >= list.length} onClick={() => setPage(page + 1)}>Sau →</button></p>}
-      {list.length === 0 && <p className="meta">Không có cặp nào.</p>}
+      {view === "todo" && list.length > 0 && <section className="card"><p>
+        <button className="primary" disabled={busy} onClick={() => void savePage()}>Lưu trang này ({pick.size} gộp, {rows.length - pick.size} khác người)</button>{" "}
+        <button disabled={busy} onClick={() => setPick(new Set(rows.map((p) => pk(p.a, p.b))))}>Tick cả trang</button> <button disabled={busy} onClick={() => setPick(new Set())}>Bỏ tick</button>{" "}
+        {(band === "3" || band === "4") && <button disabled={busy} onClick={() => void allDifferent()}>Cả nhóm: khác người ({list.length})</button>}</p></section>}
+      {rows.map((p) => { const k = pk(p.a, p.b), dd = dec.get(k);
+        return (
+          <section key={k} className="card splitcard">
+            <p className="meta"><label className="chk">{view === "todo" ? <input type="checkbox" checked={pick.has(k)} onChange={() => toggle(k)} /> : null}<b>{p.name}</b></label> · điểm {p.score} · {p.groupSize} hồ sơ cùng tên · {p.shared[0]}{p.exactlyOneOrcid ? " · một bên có ORCID" : ""}{p.noWorks ? " · thiếu công trình để so" : ""} · <button onClick={() => setOpen(open === k ? null : k)}>{open === k ? "Thu gọn" : "Xem 3 công trình"}</button> {view !== "todo" && dd && <button onClick={() => void send([{ a: p.a, b: p.b, decision: "undo" }], "Đã bỏ quyết định.")}>Bỏ quyết định</button>}</p>
+            <div className="spgrid"><Side s={p.A} full={open === k} /><Side s={p.B} full={open === k} /></div>
+          </section>); })}
+      {list.length > PER && <p><button disabled={page === 0} onClick={() => { setPage(page - 1); setPick(new Set()); }}>← Trước</button> Trang {page + 1}/{Math.ceil(list.length / PER)} <button disabled={(page + 1) * PER >= list.length} onClick={() => { setPage(page + 1); setPick(new Set()); }}>Sau →</button></p>}
+      {list.length === 0 && <p className="meta">Không có cặp nào trong mục này.</p>}
     </>
   );
 }
