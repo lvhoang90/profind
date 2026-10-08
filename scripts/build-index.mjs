@@ -146,8 +146,8 @@ const outAuthors = authors.map((a) => {
     foreign: TOP2[a.id] ? false : meta && meta.countries.length ? !meta.countries.includes("VN") : null,
     // dual: có đơn vị tại VN và đơn vị ở nước khác (nhà khoa học đa liên kết); nhiều quốc gia (>= 3) có thể là liên kết đa quốc gia, chưa xếp hạng trừ khi được xác nhận trong data/vn-confirmed.json.
     dual: !TOP2[a.id] && !!meta && meta.countries.includes("VN") && meta.countries.some((c) => c !== "VN"), nCountries: meta?.countries?.length ?? null,
-    // suspect: hồ sơ OpenAlex nhiều khả năng gộp nhầm nhiều người (>= 500 công trình, > 150 công trình/năm, hoặc >= 5 đơn vị); ẩn khỏi bảng mặc định và không tính thứ hạng.
-    suspect: ws.length >= 500 || ws.length / span > 150 || a.institutions.length >= 5,
+    // suspect: hồ sơ OpenAlex nhiều khả năng gộp nhầm nhiều người (>= 500 công trình, > 150 công trình/năm, >= 5 đơn vị, hoặc có trong corrections.suspect: hồ sơ gộp nhiều ORCID, mỗi ORCID vài bài); ẩn khỏi bảng mặc định và không tính thứ hạng.
+    suspect: ws.length >= 500 || ws.length / span > 150 || a.institutions.length >= 5 || (C.suspect ?? []).includes(a.id),
     oaWorks: meta?.worksTotal ?? null, ...bigStats(ws), worksCount: ws.length, countedWorks: ws.filter((w) => w.counted).length, totalScore: Math.round(ws.reduce((s, w) => s + (w.score ?? 0), 0) * 100) / 100,
     // citations: số trích dẫn TOÀN THỜI GIAN của hồ sơ OpenAlex (khớp với cách các hệ thống khác tính); citations2016: riêng các công trình trong ProFind (từ 2016).
     citations: (meta?.cited ?? ws.reduce((s, w) => s + (w.cOA ?? 0), 0)) + (extraCited.get(a.id) ?? 0) + ws.reduce((s, w) => s + Math.max(0, (w.citations ?? 0) - (w.cOA ?? 0)), 0), citations2016: ws.reduce((s, w) => s + (w.citations ?? 0), 0), hIndex: meta?.h ?? null, matchedRate: ws.length ? Math.round((matched / ws.length) * 100) / 100 : 0,
