@@ -15,7 +15,7 @@ import { useWorks } from "./wsearch";
 import { StarBtn } from "./StarBtn";
 import { ProBadge, ProBadgeTag } from "./Badge";
 import { VisitChip } from "./VisitChip";
-import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg } from "./Verified";
+import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg, useVerified, useIsMine } from "./Verified";
 import { useHidden } from "./hidden";
 import { NoDataHint } from "./NoData";
 import { Footer, EcoLink } from "./Footer";
@@ -374,6 +374,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   const hid = useHidden();
   const { lang, t, num } = useT();
   const { user, cfg, favs, toggleFav, recordView } = useAccount();
+  const mine = useIsMine(a.id), isVerified = useVerified(a.id) !== null;
   const [works, setWorks] = useState<Work[] | null>(null);
   const [werr, setWerr] = useState(false), [tick, setTick] = useState(0), [wpage, setWpage] = useState(0);
   const [wsort, setWsort] = useState<WSort>("year"), [onlyLead, setOnlyLead] = useState(false), [allInst, setAllInst] = useState(false);
@@ -443,7 +444,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
           <ProBadgeTag rank={a.proRank} />
           {a.bigFlag && <p className="bigflag" role="note"><Icon n="users" size={18} /><span><b>{t("bigTitle")}</b> {t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}</span></p>}
           {a.disciplines.length > 0 && <p className="hdisc">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</p>}
-          <p className="actions-row">{cfg?.enabled !== false && <button className={`ghost light${favs.has(`a|${a.id}`) ? " on" : ""}`} aria-pressed={favs.has(`a|${a.id}`)} onClick={() => void saveAuthor()}><Icon n="star" size={16} />{!user ? t("saveGate") : favs.has(`a|${a.id}`) ? t("savedA") : t("saveA")}</button>}<button className="ghost light" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button><a className="ghost-link light" href={`#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{t("corrLink")}</a></p>
+          <p className="actions-row">{cfg?.enabled !== false && <button className={`ghost light${favs.has(`a|${a.id}`) ? " on" : ""}`} aria-pressed={favs.has(`a|${a.id}`)} onClick={() => void saveAuthor()}><Icon n="star" size={16} />{!user ? t("saveGate") : favs.has(`a|${a.id}`) ? t("savedA") : t("saveA")}</button>}<button className="ghost light" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button><a className="ghost-link light" href={mine ? "#/tai-khoan" : `#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{mine ? "Quản lý hồ sơ của tôi" : isVerified ? "Đính chính / gỡ hồ sơ" : t("corrLink")}</a></p>
         </div>
       </header>
       <div className="kpis">
@@ -454,7 +455,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
         <div className="kpi"><span className="kic"><Icon n="link" size={20} /></span><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span><i className="bar" role="presentation"><u style={{ width: `${Math.round(a.matchedRate * 100)}%` }} /></i></div>
       </div>
       {a.suspect && <p className="banner demo" role="note"><Icon n="info" />{t("suspectNote")}</p>}
-      {hid.score.has(a.id) ? <p className="banner" role="note"><Icon n="info" />{t("hiddenScore")}</p> : <p className="meta prodisc" role="note">{t("proDisc")} <a href={`#/dinh-chinh/${encodeURIComponent(a.id)}`}>{t("proHide")}</a></p>}
+      {hid.score.has(a.id) ? <p className="banner" role="note"><Icon n="info" />{t("hiddenScore")}</p> : <p className="meta prodisc" role="note">{t("proDisc")} {mine ? <a href="#/tai-khoan">Quản lý quyền riêng tư của hồ sơ</a> : <a href={`#/dinh-chinh/${encodeURIComponent(a.id)}`}>{t("proHide")}</a>}</p>}
       <AuthorExtras id={a.id} />
       {works && works.length > 0 && (
         <div className="insights">

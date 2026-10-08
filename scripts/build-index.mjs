@@ -68,8 +68,28 @@ const prepared = [...dedup.values()];
 const nDupWorks = prep.length - prepared.length;
 
 // Ngành chính của tác giả = phiếu có trọng số idf từ MỌI công trình khớp tạp chí.
-const votes = new Map();
-for (const p of prepared) { if (!p.disc.length) continue; const m = votes.get(p.w.authorId) ?? new Map(); for (const d of p.disc) m.set(d, (m.get(d) ?? 0) + idf(d) / p.disc.length); votes.set(p.w.authorId, m); }
+// Tạp chí đa ngành (ví dụ "Khoa học Đại học Đồng Tháp" nằm ở cả Giáo dục, Chăn nuôi, Hóa...) KHÔNG được chia phiếu đều cho mọi ngành: ngành hiếm có idf cao sẽ thắng sai.
+// Với công trình thuộc tạp chí nhiều ngành, chọn ngành trong số ngành của tạp chí bằng (a) độ giống tiêu đề với các công trình ở tạp chí đơn ngành, (b) ngành mà tác giả đã có ở các công trình đơn ngành.
+const dTok = (t) => { const w = foldS(t).replace(/[^a-z0-9 ]+/g, " ").split(" ").filter((x) => x.length > 2); return [...w, ...w.slice(1).map((x, i) => `${w[i]}_${x}`)]; };
+const dTf = new Map(), dDf = new Map(); // ngành -> (từ -> số công trình)
+const MULTI = 4, multi = (p) => p.js.length >= MULTI; // tạp chí trong nước nằm ở >= 4 ngành HĐGSNN = tạp chí đa ngành
+for (const p of prepared) if (p.disc.length === 1) { const m = dTf.get(p.disc[0]) ?? new Map(); for (const t of new Set(dTok(p.w.title))) { m.set(t, (m.get(t) ?? 0) + 1); dDf.set(t, (dDf.get(t) ?? 0) + 1); } dTf.set(p.disc[0], m); }
+const nD = dTf.size || 1, dNorm = new Map(), tIdf = (t) => Math.log(1 + nD / (dDf.get(t) ?? 1));
+for (const [d, m] of dTf) { let n = 0; for (const [t, c] of m) n += (c * tIdf(t)) ** 2; dNorm.set(d, Math.sqrt(n) || 1); }
+const titleSim = (toks, d) => { const m = dTf.get(d); if (!m || !toks.length) return 0; let dot = 0, qn = 0; for (const t of new Set(toks)) { const q = tIdf(t); qn += q * q; dot += q * (m.get(t) ?? 0) * tIdf(t); } return dot / ((Math.sqrt(qn) || 1) * dNorm.get(d)); };
+const votes = new Map(), prior = new Map();
+for (const p of prepared) { if (!p.disc.length || multi(p)) continue; const m = votes.get(p.w.authorId) ?? new Map(); for (const d of p.disc) m.set(d, (m.get(d) ?? 0) + idf(d) / p.disc.length); votes.set(p.w.authorId, m); }
+for (const [id, m] of votes) { const tot = [...m.values()].reduce((x, y) => x + y, 0); prior.set(id, new Map([...m].map(([d, c]) => [d, c / tot]))); }
+let nAmb = 0, nAmbSkipped = 0;
+for (const p of prepared) {
+  if (!multi(p)) continue; nAmb++;
+  const m = votes.get(p.w.authorId) ?? new Map(), pr = prior.get(p.w.authorId), toks = dTok(p.w.title);
+  const sc = p.disc.map((d) => [d, titleSim(toks, d) + (pr?.get(d) ?? 0)]), top = Math.max(...sc.map((x) => x[1]));
+  if (top <= 0) { if (p.disc.length > 3) { nAmbSkipped++; continue; } for (const d of p.disc) m.set(d, (m.get(d) ?? 0) + idf(d) / p.disc.length); }
+  else { const win = sc.filter((x) => x[1] >= top * 0.8).map((x) => x[0]); for (const d of win) m.set(d, (m.get(d) ?? 0) + idf(d) / win.length); }
+  votes.set(p.w.authorId, m);
+}
+console.log(`Ngành: ${nAmb} công trình thuộc tạp chí nhiều ngành đã phân ngành theo tiêu đề/tiền đề tác giả (${nAmbSkipped} không đủ căn cứ nên không tính phiếu).`);
 const authorDisc = new Map();
 for (const [id, m] of votes) { const tot = [...m.values()].reduce((x, y) => x + y, 0), top = Math.max(...m.values()); authorDisc.set(id, [...m.entries()].sort((x, y) => y[1] - x[1]).filter(([, c]) => c / tot >= 0.25 || c === top).slice(0, 3).map(([d]) => d)); }
 

@@ -45,7 +45,7 @@ Bản dựng trước có 26 mã ROR dùng chung cho nhiều đơn vị khác nh
 
 ### Quyết định sau kiểm thử 07/10/2026 (xem docs/QA-2026-10-07.md)
 - **Thứ hạng** chỉ tính trong nhóm tác giả đủ điều kiện: `foreign = false`, không `suspect`, có công trình (≈4.300 người); xếp hạng thi đấu (1,2,2,4). Người ngoài nhóm không có hạng ("-"). Danh sách mặc định và hạng trên hồ sơ dùng cùng nhóm này nên nhất quán.
-- **Điểm** khi một tạp chí thuộc nhiều ngành: dùng các ngành thuộc ngành chính của tác giả (lấy cao nhất trong đó); nếu không trùng thì lấy mức thấp nhất. Ngành chính suy từ tạp chí đã đăng, phiếu có trọng số idf theo độ hiếm của ngành.
+- **Điểm** khi một tạp chí thuộc nhiều ngành: dùng các ngành thuộc ngành chính của tác giả (lấy cao nhất trong đó); nếu không trùng thì lấy mức thấp nhất. Ngành chính suy từ tạp chí đã đăng, phiếu có trọng số idf theo độ hiếm của ngành. Công trình ở tạp chí đa ngành (nằm ở ≥ 4 ngành HĐGSNN) không chia phiếu đều: ngành được chọn trong số ngành của tạp chí theo độ giống tiêu đề với công trình ở tạp chí đơn ngành cộng ngành đã có của tác giả (kiểm thử giữ lại: đúng 52% so với 11% khi để ngành hiếm thắng).
 - **Yêu cầu gỡ hồ sơ**: được ưu tiên xử lý nhưng phải xác minh người yêu cầu (trả lời email, ORCID, email cơ quan) trước khi áp dụng, để tránh bị lợi dụng gỡ hồ sơ người khác.
 - **Hồ sơ nghi gộp nhầm** (≥500 công trình, >150 công trình/năm, hoặc ≥5 đơn vị): ẩn khỏi mặc định, không xếp hạng.
 
