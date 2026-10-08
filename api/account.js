@@ -334,7 +334,7 @@ export default async function handler(request) {
     if (op === "admin-mail-status" && request.method === "GET" || op === "admin-mail-log" && request.method === "GET") { const bad = needAdmin(); if (bad) return bad;
       if (op === "admin-mail-status") {
         const e = process.env, f = e.MAIL_FROM || e.CORRECTION_FROM || "";
-        return json({ provider: mailProvider(), from: f, sandbox: /resend\.dev/i.test(f), persistent: store?.kind === "redis", session: !!e.SESSION_SECRET, admins: adminEmails.length, correctionTo: e.CORRECTION_TO || "luongviethoang.hcm@gmail.com" });
+        return json({ provider: mailProvider(), from: f, sandbox: /resend\.dev/i.test(f), persistent: store?.kind === "redis", session: !!e.SESSION_SECRET, admins: adminEmails.length, correctionTo: e.CORRECTION_TO || "vienisavietnam@gmail.com" });
       }
       if (op === "admin-mail-log") { const rows = Object.values(pairs(await one(["HGETALL", "profind:mlog"]))).map(jparse).filter(Boolean).sort((a, b) => b.at - a.at).slice(0, 40); return json({ rows }); }
     }

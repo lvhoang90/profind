@@ -39,7 +39,7 @@ export function Footer({ data: _data }: { data: Data | null }) {
           <section className="sf-who" aria-labelledby="sf-h4">
             <h2 id="sf-h4">{t("sfWho")}</h2>
             <b>Lương Việt Hoàng</b><span>ISA Vietnam</span>
-              <ul><li><a href="mailto:luongviethoang.hcm@gmail.com">luongviethoang.hcm@gmail.com</a></li><li><a href="https://zalo.me/0932956067" target="_blank" rel="noopener noreferrer">Zalo +84 932 956 067</a></li></ul>
+              <ul><li><a href="mailto:vienisavietnam@gmail.com">vienisavietnam@gmail.com</a></li><li><a href="https://zalo.me/0932956067" target="_blank" rel="noopener noreferrer">Zalo +84 932 956 067</a></li></ul>
           </section>
         </div>
         <nav className="sf-ecow" aria-labelledby="sf-h2">

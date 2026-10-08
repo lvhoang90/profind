@@ -4,7 +4,7 @@ import { useT } from "./i18n";
 import { Icon, type IconName } from "./icons";
 import { ProBadge, TIERS, type Tier } from "./Badge";
 
-const CONTACT = "luongviethoang.hcm@gmail.com";
+const CONTACT = "vienisavietnam@gmail.com";
 const PILLARS: { k: string; w: number; icon: IconName; color: string }[] = [
   { k: "impact", w: 42, icon: "chart", color: "#0ea5e9" }, { k: "output", w: 10, icon: "scroll", color: "#6366f1" }, { k: "lead", w: 10, icon: "scholar", color: "#8b5cf6" },
   { k: "quality", w: 10, icon: "book", color: "#d946ef" }, { k: "momentum", w: 17, icon: "spark", color: "#f59e0b" }, { k: "steady", w: 8, icon: "clock", color: "#10b981" }, { k: "recog", w: 3, icon: "star", color: "#ef4444" },

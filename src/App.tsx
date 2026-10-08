@@ -26,7 +26,7 @@ type SortKey = "pro" | "worksCount" | "citations" | "name" | "unit" | "lastYear"
 const TEXT_KEYS: SortKey[] = ["name", "unit"], RANK_ASC: SortKey[] = [], RANKED: SortKey[] = ["pro", "worksCount", "citations"]; // huy chương chỉ khi xếp giảm dần theo một chỉ số
 const RANK_KEY = { pro: "proRank", worksCount: "rankWorks", citations: "rankCit", name: "proRank", unit: "proRank", lastYear: "proRank", rank: "proRank" } as const;
 const EDUFIND = "https://edufind.isavn.edu.vn";
-const CONTACT = "luongviethoang.hcm@gmail.com";
+const CONTACT = "vienisavietnam@gmail.com";
 const PAGE = 25; // mỗi trang tối đa 25 kết quả
 const TOP2_DOI = "https://doi.org/10.17632/btchxktzyw.8";
 const TOP2_LIC = "https://creativecommons.org/licenses/by-nc/3.0/";
