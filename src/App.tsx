@@ -103,7 +103,8 @@ function AppInner() {
   // Tiêu đề tab, mô tả và đưa tiêu điểm về nội dung chính khi đổi trang (trình đọc màn hình biết đã chuyển trang).
   useEffect(() => {
     document.title = view === "lb" ? `${lang === "vi" ? "Bảng xếp hạng" : "Leaderboard"} | ProFind` : view === "pro" ? "PRO-SCORE1000 | ProFind" : view === "about" ? `${t("fAbout2")} | ProFind` : view === "acc" ? `${t("accTitle")} | ProFind` : view === "adm" ? "Quản trị | ProFind" : view === "author" && author ? `${author.name} | ProFind` : view === "corr" ? `${t("corrTitle")} | ProFind` : view === "nf" ? `${t("notFound").split(".")[0]} | ProFind` : t("docTitle");
-    document.querySelector('meta[name="description"]')?.setAttribute("content", t("metaDesc"));
+    const k = data?.meta?.authors ? Math.floor(data.meta.authors / 1000) * 1000 : 0; // số tác giả làm tròn xuống nghìn, luôn theo dữ liệu hiện hành
+    document.querySelector('meta[name="description"]')?.setAttribute("content", t("metaDesc").replace("{k}", k.toLocaleString(lang === "vi" ? "vi-VN" : "en-US")));
     if (first.current) { first.current = false; return; }
     scrollTo(0, 0); mainRef.current?.focus({ preventScroll: true });
   }, [view, author?.id, lang]); // eslint-disable-line react-hooks/exhaustive-deps

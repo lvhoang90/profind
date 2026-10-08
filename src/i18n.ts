@@ -3,7 +3,7 @@ export type Lang = "vi" | "en";
 export const KEY = "edufind.lang"; // dùng chung với EduFind (cùng ngôn ngữ khi chuyển ứng dụng trong hệ sinh thái)
 const vi = {
   title: "ProFind", sub: "Dữ liệu số về Nhà khoa học & công trình nghiên cứu", tagline: "Ngành · Đơn vị · Công trình · Tạp chí · ISSN · PRO-SCORE1000",
-  docTitle: "ProFind: Tra cứu nhà nghiên cứu và công trình khoa học của các trường, viện Việt Nam", metaDesc: "Tra cứu hơn 12.000 nhà nghiên cứu gắn với các trường đại học, học viện, viện nghiên cứu Việt Nam theo ngành, đơn vị, công trình, tạp chí, ISSN, DOI và chỉ số PRO-SCORE1000. Miễn phí, mã nguồn mở.",
+  docTitle: "ProFind: Tra cứu nhà nghiên cứu và công trình khoa học của các trường, viện Việt Nam", metaDesc: "Tra cứu hơn {k} nhà nghiên cứu gắn với các trường đại học, học viện, viện nghiên cứu Việt Nam theo ngành, đơn vị, công trình, tạp chí, ISSN, DOI và chỉ số PRO-SCORE1000. Miễn phí, mã nguồn mở.",
   skip: "Bỏ qua, tới nội dung chính", langLabel: "Ngôn ngữ", langVi: "Tiếng Việt", langEn: "English",
   demo: "DỮ LIỆU MẪU: tác giả và công trình là hư cấu, chỉ để chạy thử giao diện.",
   sfWho: "Tác giả", sfCopy: "Bản quyền mở, sử dụng miễn phí có trách nhiệm.", sfLegal: "Bản quyền và miễn trừ trách nhiệm", sfDisc: "Dữ liệu tổng hợp từ nguồn công khai (OpenAlex, CC0); PRO-SCORE1000 và thứ hạng chỉ mang tính tham khảo, không thay thế đánh giá chính thức của bất kỳ hội đồng nào và không nên là tiêu chí duy nhất trong tuyển dụng, xét duyệt, bổ nhiệm hay phân bổ nguồn lực. Nhà nghiên cứu có thể đính chính, ẩn điểm hoặc đề nghị gỡ hồ sơ.", notRankShort: "PRO-SCORE1000 là chỉ số tham khảo của ProFind, không phải xếp hạng chính thức.", details: "Chi tiết",
@@ -31,7 +31,7 @@ const vi = {
 };
 const en: typeof vi = {
   title: "ProFind", sub: "Digital data on scientists & research works", tagline: "Field · Institution · Works · Journal · ISSN · PRO-SCORE1000",
-  docTitle: "ProFind: Find researchers and publications of Vietnamese universities and institutes", metaDesc: "ProFind: find 12,000+ researchers affiliated with Vietnamese universities, academies and research institutes by field, institution, works, journal, ISSN and the PRO-SCORE1000 index. Open source, part of the ISA ecosystem.",
+  docTitle: "ProFind: Find researchers and publications of Vietnamese universities and institutes", metaDesc: "ProFind: find {k}+ researchers affiliated with Vietnamese universities, academies and research institutes by field, institution, works, journal, ISSN and the PRO-SCORE1000 index. Open source, part of the ISA ecosystem.",
   skip: "Skip to main content", langLabel: "Language", langVi: "Tiếng Việt", langEn: "English",
   demo: "SAMPLE DATA: authors and works are fictional, for interface testing only.",
   sfWho: "Author", sfCopy: "Open copyright: free to use, responsibly.", sfLegal: "Copyright and disclaimer", sfDisc: "Data compiled from public sources (OpenAlex, CC0); PRO-SCORE1000 and rankings are for reference only, do not replace any official evaluation and should not be the sole criterion in hiring, review, appointment or resource allocation. Researchers may correct, hide the score or request removal of their profile.", notRankShort: "PRO-SCORE1000 is ProFind’s reference index, not an official ranking.", details: "Details",
