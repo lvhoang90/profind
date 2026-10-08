@@ -2,38 +2,52 @@
 
 ProFind gửi email ở ba nơi: mã đăng nhập 6 số, thư kết quả xác thực/gỡ hồ sơ, và thư bạn soạn trong **Quản trị → Thư gửi**. Thư đính chính của người dùng gửi về hộp thư của bạn cũng đi qua cùng dịch vụ.
 
-## Vì sao cần làm
-Nếu địa chỉ gửi còn là `onboarding@resend.dev` (địa chỉ thử nghiệm của Resend) thì Resend **chỉ gửi được tới email của chủ tài khoản Resend**. Mã đăng nhập và thư gửi tác giả khác sẽ không đến nơi. Cần xác minh một tên miền của bạn trong Resend.
+## Cấu hình hiện hành (đã chạy, kiểm tra ngày 08/10/2026)
+- Dịch vụ: **Resend**, tên miền gửi đã xác minh: **`isavietnam.app`**.
+- Địa chỉ gửi: `ProFind <no-reply@isavietnam.app>`.
+- Tab **Quản trị → Thư gửi** hiện ✅ cho dịch vụ gửi thư, địa chỉ gửi, Redis (Upstash), `SESSION_SECRET` và `ADMIN_EMAILS`.
+- Cần đặt thêm `CORRECTION_FROM` bằng cùng giá trị với `MAIL_FROM` (xem bảng bên dưới). Nếu biến này còn trống thì thư đính chính gửi về hộp thư của bạn đi bằng địa chỉ thử nghiệm `onboarding@resend.dev`.
 
-## Bước 1. Xác minh tên miền trong Resend
-1. Vào https://resend.com/domains → **Add Domain**. Nhập tên miền bạn quản lý DNS (ví dụ `isavn.edu.vn`, hoặc tên miền con `mail.isavn.edu.vn`). Region chọn gần Việt Nam nhất (Singapore nếu có).
-2. Resend hiện một bảng bản ghi DNS (thường gồm 1 bản ghi **MX**, 1 bản ghi **TXT** SPF `v=spf1 include:amazonses.com ~all`, 1 bản ghi **TXT/CNAME** DKIM `resend._domainkey`).
-3. Vào nơi quản lý DNS của tên miền (nhà đăng ký tên miền hoặc Cloudflare/VNNIC...), thêm đúng các bản ghi đó, giữ nguyên Name/Value, không thêm dấu cách.
-4. Quay lại Resend bấm **Verify DNS Records**. Trạng thái chuyển sang **Verified** (vài phút đến vài giờ).
+## Vì sao phải dùng tên miền đã xác minh
+Địa chỉ `onboarding@resend.dev` là địa chỉ thử nghiệm của Resend, **chỉ gửi được tới email của chủ tài khoản Resend**. Mã đăng nhập và thư gửi tác giả khác sẽ không đến nơi. Vì vậy `MAIL_FROM` phải thuộc một tên miền đã xác minh trong Resend.
 
-## Bước 2. Tạo khóa API
-Resend → **API Keys** → **Create API Key**, quyền **Sending access**, chọn đúng tên miền vừa xác minh. Sao chép khóa (dạng `re_...`), chỉ hiện một lần.
-
-## Bước 3. Đặt biến môi trường trên Vercel
+## Biến môi trường trên Vercel
 Vercel → dự án profind → **Settings → Environment Variables** (áp dụng cho **Production**):
 
-| Biến | Giá trị |
+| Biến | Giá trị hiện hành / ví dụ |
 |---|---|
 | `MAIL_PROVIDER` | `resend` |
-| `RESEND_API_KEY` | khóa `re_...` ở bước 2 |
-| `MAIL_FROM` | `ProFind <no-reply@isavn.edu.vn>` (đúng tên miền đã xác minh) |
-| `CORRECTION_FROM` | cùng giá trị với `MAIL_FROM` (thư đính chính) |
+| `RESEND_API_KEY` | khóa `re_...` tạo ở Resend → API Keys (quyền **Sending access**, chọn đúng tên miền) |
+| `MAIL_FROM` | `ProFind <no-reply@isavietnam.app>` |
+| `CORRECTION_FROM` | `ProFind <no-reply@isavietnam.app>` (cùng giá trị với `MAIL_FROM`) |
 | `CORRECTION_TO` | hộp thư nhận đính chính (mặc định luongviethoang.hcm@gmail.com) |
 | `ADMIN_EMAILS` | email quản trị, ngăn cách bằng dấu phẩy |
 | `SESSION_SECRET` | chuỗi ngẫu nhiên dài (tối thiểu 32 ký tự) |
 | `KV_REST_API_URL`, `KV_REST_API_TOKEN` | từ Upstash Redis (hoặc `UPSTASH_REDIS_REST_URL/TOKEN`) |
 
-Sau khi lưu, vào **Deployments** → bản mới nhất → **Redeploy** (biến mới chỉ có hiệu lực ở lần triển khai kế tiếp).
+Sau khi lưu hoặc sửa biến, vào **Deployments** → bản mới nhất → **Redeploy** (biến mới chỉ có hiệu lực ở lần triển khai kế tiếp).
 
-## Bước 4. Kiểm tra
+## Kiểm tra
 1. Mở `https://profind.isavn.edu.vn/#/quan-tri/thu`. Mục **Tình trạng gửi email** phải toàn dấu ✅ (dịch vụ `resend`, địa chỉ gửi không còn `resend.dev`, Redis đã kết nối).
 2. Soạn một thư gửi tới **một email khác email Resend của bạn** (ví dụ Gmail phụ) bằng nút **Duyệt và gửi**. Thư phải đến hộp thư (kiểm tra cả Spam lần đầu).
-3. Nếu lỗi, thông báo của Resend hiện ngay (ví dụ `403 domain is not verified`: tên miền ở `MAIL_FROM` chưa xác minh hoặc gõ sai).
+3. Thử đăng ký tài khoản bằng một email khác để chắc mã đăng nhập 6 số đến nơi.
+4. Nếu lỗi, thông báo của Resend hiện ngay (ví dụ `403 domain is not verified`: tên miền ở `MAIL_FROM` chưa xác minh hoặc gõ sai).
+
+## Tùy chọn: gửi từ tên miền `isavn.edu.vn`
+Không bắt buộc. Gửi từ `isavietnam.app` đã hoạt động bình thường. Chỉ làm bước này nếu muốn địa chỉ gửi trùng tên miền website (`no-reply@isavn.edu.vn`).
+
+1. Vào https://resend.com/domains → **Add Domain**, nhập `isavn.edu.vn`.
+2. Nhờ người quản lý DNS (tên miền đang đặt trên Cloudflare) thêm 3 bản ghi Resend hiển thị, chép nguyên giá trị Content:
+
+   | Type | Name | Content | Proxy |
+   |---|---|---|---|
+   | TXT | `resend._domainkey` | giá trị bắt đầu bằng `p=MIGfMA…` | không áp dụng |
+   | CNAME | `rsend` | giá trị `rsend-ap…mta.net` | **DNS only** (tắt đám mây cam) |
+   | CNAME | `send` | giá trị `send.for…mta.net` | **DNS only** (tắt đám mây cam) |
+
+   Hai bản ghi CNAME phải để **DNS only**, nếu để Proxied thì Resend không xác minh được. Có thể bấm **Auto configure** trên trang Resend để tự thêm qua Cloudflare.
+3. Bấm **Verify DNS Records**, chờ trạng thái **Verified** (vài phút đến vài giờ).
+4. Đổi `MAIL_FROM` và `CORRECTION_FROM` trên Vercel thành `ProFind <no-reply@isavn.edu.vn>`, tạo lại khóa API nếu khóa cũ chỉ cấp cho `isavietnam.app`, rồi **Redeploy** và kiểm tra lại như trên.
 
 ## Gợi ý chống vào Spam
-Thêm bản ghi DMARC: TXT `_dmarc` = `v=DMARC1; p=none; rua=mailto:luongviethoang.hcm@gmail.com`. Dùng địa chỉ gửi cố định, không dùng Gmail làm `MAIL_FROM`.
+Thêm bản ghi DMARC cho tên miền gửi: TXT `_dmarc` = `v=DMARC1; p=none; rua=mailto:luongviethoang.hcm@gmail.com`. Dùng địa chỉ gửi cố định, không dùng Gmail làm `MAIL_FROM`.
