@@ -1,4 +1,4 @@
-// Nạp tiếp dữ liệu (dùng cho lịch tự động và chạy tay): khôi phục cache nếu thiếu -> nạp các đơn vị còn thiếu -> bổ sung quốc gia đơn vị -> dựng chỉ mục -> kiểm tra -> lưu cache.
+// Nạp tiếp dữ liệu (dùng cho lịch tự động và chạy tay): khôi phục cache nếu thiếu -> nạp các đơn vị còn thiếu -> bổ sung quốc gia đơn vị -> dựng chỉ mục -> cơ quan/ORCID từng bài (đơn vị hiện tại, bài gán nhầm) -> kiểm tra -> lưu cache.
 //   OPENALEX_API_KEY=... node scripts/refresh.mjs --mailto <email> [--from 2021] [--max-authors 50]
 // Dừng sớm (mã thoát 0, ghi lại việc còn dở) nếu OpenAlex báo hết ngân sách trong ngày; chạy lại ngày hôm sau.
 import { execSync } from "node:child_process";
@@ -24,5 +24,12 @@ const still = pending.filter((id) => !left.includes(id)).map((id) => ({ id, name
 writeFileSync("data/ingest-pending.json", JSON.stringify(still, null, 1));
 // Mỗi tháng (ngày 1, hoặc --recheck) dò lại đơn vị chưa có dữ liệu: OpenAlex cập nhật cơ quan công tác liên tục. Chỉ tạo báo cáo/ứng viên để duyệt, không tự nạp.
 if (process.argv.includes("--recheck") || new Date().getUTCDate() === 1) { try { run(`node scripts/recheck-missing.mjs --mailto ${mailto}`); } catch (e) { console.warn("Bỏ qua kiểm tra lại đơn vị chưa có dữ liệu:", String(e.message).slice(0, 80)); } }
-run("node scripts/build-index.mjs"); run("node scripts/build-top-works.mjs"); run("node scripts/build-wsearch.mjs"); run("node scripts/build-nodata.mjs"); run("node scripts/check-data.mjs"); run("node scripts/cache.mjs save");
+run("node scripts/build-index.mjs");
+// Đơn vị hiện tại + dò bài gán nhầm (OpenAlex authorships): tăng dần, chỉ nạp tác giả đổi số công trình; lỗi ở đây không làm hỏng cả đợt.
+try {
+  b = await budget();
+  if (b.daily_remaining_usd < 0.05) console.log("Ngân sách gần hết, bỏ qua bước cơ quan/ORCID từng bài; chạy lại sau.");
+  else { run(`node scripts/fetch-authorship.mjs --mailto ${mailto} --limit-usd 0.3`); run(`node scripts/fetch-orcid-per-work.mjs --mailto ${mailto}`); run(`node scripts/build-current-inst.mjs --mailto ${mailto}`); run("node scripts/build-index.mjs"); run("node scripts/find-misattributed.mjs"); }
+} catch (e) { console.warn("Bỏ qua bước đơn vị hiện tại/bài gán nhầm:", String(e.message).slice(0, 200)); }
+run("node scripts/build-top-works.mjs"); run("node scripts/build-wsearch.mjs"); run("node scripts/build-nodata.mjs"); run("node scripts/check-data.mjs"); run("node scripts/cache.mjs save");
 console.log(`Xong. Còn ${still.length} đơn vị chưa nạp được${still.length ? " (chạy lại ngày mai)" : ""}.`);

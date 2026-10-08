@@ -350,7 +350,7 @@ function Merger() {
             <div key={k} id={`sp-${i}`} role="listitem" tabIndex={0} className={`sprow${on ? " on" : ""}${i === cur ? " cur" : ""}${open === k ? " open" : ""}`} onKeyDown={(e) => onKey(e, k, i)} onFocus={() => setCur(i)}>
               <div className="spck"><input type="checkbox" checked={on} onChange={() => toggle(k)} aria-label={view === "todo" ? `Cùng một người: ${p.name}` : `Chọn để hoàn tác: ${p.name}`} tabIndex={-1} /></div>
               <div className="spcell spmain"><p className="spn">{p.name}</p>
-                <p className="meta sps"><span className={`score s${p.band}`}>{p.score}</span> {p.shared[0]}{p.groupSize > 2 ? ` · ${p.groupSize} hồ sơ cùng tên` : ""}{p.noWorks ? " · thiếu công trình" : ""}</p>
+                <p className="meta sps"><span className={`mscore s${p.band}`}>{p.score}</span> {p.shared[0]}{p.groupSize > 2 ? ` · ${p.groupSize} hồ sơ cùng tên` : ""}{p.noWorks ? " · thiếu công trình" : ""}</p>
                 <p className="meta sps"><button className="lnk" onClick={() => setOpen(open === k ? null : k)}>{open === k ? "Thu gọn" : "3 công trình"}</button>{view !== "todo" && dd ? <button className="lnk" onClick={() => void send([{ a: p.a, b: p.b, decision: "undo" }], "Đã bỏ quyết định.")}>Bỏ quyết định</button> : null}</p></div>
               <Side s={p.A} full={open === k} /><Side s={p.B} full={open === k} />
             </div>); })}
@@ -470,7 +470,7 @@ function Recheck() {
             <div key={k} role="listitem" className={`sprow${on ? " on" : ""}${open === k ? " open" : ""}`}>
               <div className="spck">{view === "todo" ? <input type="checkbox" checked={on} onChange={() => toggle(k)} aria-label={`Tách ra: ${p.name}`} /> : null}</div>
               <div className="spcell spmain"><p className="spn">{p.name}</p>
-                <p className="meta sps"><span className={`score s${p.band}`}>{p.score}</span> {p.shared[0]}</p>
+                <p className="meta sps"><span className={`mscore s${p.band}`}>{p.score}</span> {p.shared[0]}</p>
                 <p className="meta sps">⚠ {p.why}</p>
                 <p className="meta sps"><button className="lnk" onClick={() => setOpen(open === k ? null : k)}>{open === k ? "Thu gọn" : "3 công trình"}</button>{view !== "todo" ? <button className="lnk" onClick={() => void send([{ a: p.a, b: p.b, decision: "undo" }], "Đã bỏ quyết định.")}>Bỏ quyết định</button> : null}</p></div>
               <SideCell s={p.A} full={open === k} /><SideCell s={p.B} full={open === k} />

@@ -345,7 +345,7 @@ function List({ d, query }: { d: Data; query: string }) {
             <Th k="name" label={t("author")} sort={sort} dir={dir} pick={pick} />
             <Th k="unit" label={t("unit")} sort={sort} dir={dir} pick={pick} />
             <Th k="worksCount" cls="num" label={t("works")} sort={sort} dir={dir} pick={pick} />
-            <Th k="pro" cls="num" label={t("score")} sort={sort} dir={dir} pick={pick} />
+            <Th k="pro" cls="num" label={t("scoreHead")} sort={sort} dir={dir} pick={pick} />
             <Th k="citations" cls="num" title={t("citTip")} label={t("cit")} sort={sort} dir={dir} pick={pick} />
             <Th k="lastYear" label={t("years")} sort={sort} dir={dir} pick={pick} />
           </tr></thead>
