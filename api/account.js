@@ -391,11 +391,15 @@ export default async function handler(request) {
         await one(["HSET", "profind:aw", id, JSON.stringify(nw)]); return json({ ok: true });
       }
       if (op === "admin-claim-split") {
-        const a = String(body.a || ""), b = String(body.b || ""), d = String(body.decision || ""); const k = [a, b].sort().join("|");
-        if (!/^A\d{5,12}$/.test(a) || !/^A\d{5,12}$/.test(b)) return json({ error: "Mã hồ sơ không hợp lệ." }, 400);
-        if (d === "undo") { await one(["HDEL", "profind:sp", k]); return json({ ok: true }); }
-        if (!["merge", "different", "skip"].includes(d)) return json({ error: "Quyết định không hợp lệ." }, 400);
-        await one(["HSET", "profind:sp", k, JSON.stringify({ a, b, d, by: me.email, at: Date.now(), into: tidy(body.into, 20) })]); return json({ ok: true });
+        const items = Array.isArray(body.items) ? body.items.slice(0, 200) : [{ a: body.a, b: body.b, decision: body.decision, into: body.into }], cmds = [];
+        for (const it of items) {
+          const a = String(it.a || ""), b = String(it.b || ""), d = String(it.decision || ""), k = [a, b].sort().join("|");
+          if (!/^A\d{5,12}$/.test(a) || !/^A\d{5,12}$/.test(b)) return json({ error: "Mã hồ sơ không hợp lệ." }, 400);
+          if (d === "undo") cmds.push(["HDEL", "profind:sp", k]);
+          else if (["merge", "different", "skip"].includes(d)) cmds.push(["HSET", "profind:sp", k, JSON.stringify({ a, b, d, by: me.email, at: Date.now() })]);
+          else return json({ error: "Quyết định không hợp lệ." }, 400);
+        }
+        if (cmds.length) await store.run(cmds); return json({ ok: true, n: cmds.length });
       }
       if (op === "admin-claim-hide") {
         const id = String(body.authorId || ""); if (!/^A\d{5,12}$/.test(id)) return json({ error: "Mã hồ sơ không hợp lệ." }, 400);

@@ -13,6 +13,20 @@ const wcache = new Map(), works = (id) => { if (!wcache.has(id)) { let w = []; t
 const iName = new Map(D.institutions.map((i) => [i.id, i.name]));
 const side = (a) => { const w = works(a.id); return { id: a.id, name: a.name, orcid: a.orcid, inst: a.institutions.map((i) => iName.get(i) ?? i).slice(0, 3), works: a.worksCount, cites: a.citations, years: [a.firstYear, a.lastYear], pro: a.pro, top: [...w].sort((x, y) => y.citations - x.citations).slice(0, 3).map((x) => ({ t: String(x.title ?? "").slice(0, 140), y: x.year, d: x.doi })) }; };
 const hold = new Set(existsSync("data/split-hold.json") ? JSON.parse(readFileSync("data/split-hold.json", "utf8")).map((h) => [...h.pair].sort().join("|")) : []); // cặp đã xem xét thủ công và giữ ở tầng B
+// Độ giống chủ đề giữa công trình của hai hồ sơ: cosine TF-IDF trên từ trong nhan đề (bỏ từ ngắn và từ dừng), cùng với số tạp chí (ISSN) chung.
+const STOP = new Set("with from that this have been were their which using study analysis between among based effect effects results case review during under after about within through into than also more most other some such these those both each however while where when what based approach method methods model models novel high low new"
+  .split(" ").concat("nghien cuu cua cac mot nhung trong cho voi duoc nguoi tren phan tich danh gia thuc trang giai phap xay dung phat trien nang cao ung dung hieu qua tai viet nam khi sau truoc nam".split(" ")));
+const tok = (t) => norm(String(t ?? "")).split(" ").filter((w) => w.length >= 4 && !STOP.has(w));
+const profile = (id) => { const w = works(id), tf = new Map(); for (const x of w) for (const t of tok(x.title)) tf.set(t, (tf.get(t) ?? 0) + 1); return { tf, issn: new Set(w.map((x) => x.issn).filter(Boolean)), n: w.length }; };
+const pf = new Map(), prof = (id) => (pf.has(id) ? pf.get(id) : pf.set(id, profile(id)).get(id));
+let idf = null;
+const buildIdf = (ids) => { const df = new Map(); for (const id of ids) for (const t of prof(id).tf.keys()) df.set(t, (df.get(t) ?? 0) + 1); idf = new Map([...df].map(([t, n]) => [t, Math.log(1 + ids.length / n)])); };
+const cos = (a, b) => { let dot = 0, na = 0, nb = 0; for (const [t, f] of a) { const w = f * (idf.get(t) ?? 1); na += w * w; const g = b.get(t); if (g) dot += w * g * (idf.get(t) ?? 1); } for (const [t, f] of b) { const w = f * (idf.get(t) ?? 1); nb += w * w; } return na && nb ? dot / Math.sqrt(na * nb) : 0; };
+// Phân loại ngành thô theo từ khóa song ngữ (không dấu) để so được hai hồ sơ có nhan đề khác ngôn ngữ.
+const FIELDS = { y: "patient clinical disease treatment cancer hospital therapy surgery diagnos virus infect drug medic health cardio diabet benh dieu tri lam sang nguoi benh ung thu thuoc y_hoc suc khoe phau thuat chan doan nhiem sinh phu nu", hoa: "synthesis catalyst nanoparticle polymer extraction compound adsorption spectro oxide electrode crystal alkaloid terpen phenol tong hop xuc tac vat lieu chiet xuat hap phu hop chat dien cuc", tin: "learning neural network algorithm deep detection classification software cloud blockchain internet sensor wireless prediction thuat toan hoc may mang du lieu phan mem nhan dang", ky: "structure concrete energy power solar signal optical laser circuit thermal turbine battery vibration beam soil mechanic ket cau be tong nang luong dien quang nhiet co khi", nong: "soil plant crop rice fish shrimp forest species ecosystem water climate biodiversity fungi bacteria gene genome dat cay lua thuy san rung loai nuoc moi truong khi hau vi sinh", gd: "student teach curriculum education school pedagog university graduate learning outcome giao duc hoc sinh sinh vien giang day dao tao truong chuong trinh giao vien", kt: "economic firm bank financ invest market manag law legal tourism business consumer policy kinh te doanh nghiep ngan hang tai chinh quan ly phap luat du lich chinh sach", toan: "theorem equation algebra differential matrix topolog geometry integral toan phuong trinh dinh ly dai so ma tran" };
+const FKEYS = Object.keys(FIELDS), FWORDS = FKEYS.map((k) => FIELDS[k].split(" "));
+const fieldVec = (id) => { const v = FKEYS.map(() => 0); for (const x of works(id)) { const t = " " + norm(x.title ?? "") + " "; FWORDS.forEach((ws, i) => { if (ws.some((w) => t.includes(" " + w))) v[i]++; }); } return v; };
+const cosv = (a, b) => { let d = 0, na = 0, nb = 0; for (let i = 0; i < a.length; i++) { d += a[i] * b[i]; na += a[i] * a[i]; nb += b[i] * b[i]; } return na && nb ? d / Math.sqrt(na * nb) : null; };
 const out = [];
 for (const g of all.values()) { const eligible = g.filter((a) => !a.suspect && !a.demo && !done.has(a.id));
   for (let i = 0; i < eligible.length; i++) for (let j = i + 1; j < eligible.length; j++) {
@@ -28,9 +42,21 @@ for (const g of all.values()) { const eligible = g.filter((a) => !a.suspect && !
     const exactlyOneOrcid = !!x.orcid !== !!y.orcid;
     const third = g.length > 2;
     const tier = !hold.has([x.id, y.id].sort().join("|")) && !third && sameName && exactlyOneOrcid && overlap <= 0.5 && wx.length >= 2 && wy.length >= 2 && norm(x.name).split(" ").length >= 3 && x.disciplines.some((d) => y.disciplines.includes(d)) ? "A" : "B"; // đủ bằng chứng (≥2 công trình mỗi bên) tên đủ đặc trưng (≥3 từ) và cùng ngành
-    out.push({ tier, a: x.id, b: y.id, name: x.name === y.name ? x.name : `${x.name} / ${y.name}`, groupSize: g.length, overlap: Math.round(overlap * 100) / 100, sameName, exactlyOneOrcid, shared: inst.map((s) => iName.get(s) ?? s), A: side(x), B: side(y) });
+    out.push({ tier, _x: x, _y: y, inst, a: x.id, b: y.id, name: x.name === y.name ? x.name : `${x.name} / ${y.name}`, groupSize: g.length, overlap: Math.round(overlap * 100) / 100, sameName, exactlyOneOrcid, shared: inst.map((s) => iName.get(s) ?? s), A: side(x), B: side(y) });
   } }
-out.sort((p, q) => p.tier.localeCompare(q.tier) || p.groupSize - q.groupSize || (q.A.works + q.B.works) - (p.A.works + p.B.works));
+// Điểm nghi trùng 0-100 và nhóm: 4 mức để duyệt theo cụm.
+buildIdf([...new Set(out.flatMap((p) => [p.a, p.b]))]);
+for (const p of out) {
+  const x = p._x, y = p._y, px = prof(p.a), py = prof(p.b), have = px.n > 0 && py.n > 0;
+  const topic = have ? cos(px.tf, py.tf) : null, jr = [...px.issn].filter((i) => py.issn.has(i)).length;
+  const fs = have ? cosv(fieldVec(p.a), fieldVec(p.b)) : null;
+  const sc = (p.sameName ? 20 : 8) + (p.groupSize === 2 ? 12 : p.groupSize === 3 ? 6 : 0) + (p.exactlyOneOrcid ? 12 : !x.orcid && !y.orcid ? 5 : 0) + 8 + (x.disciplines.some((d) => y.disciplines.includes(d)) ? 5 : 0) + Math.round(8 * (1 - p.overlap)) + (topic == null ? 0 : Math.round(10 * Math.min(1, topic / 0.3))) + (fs == null ? 0 : Math.round(22 * fs * fs)) + (jr ? 5 : 0);
+  p.field = fs == null ? null : Math.round(fs * 100) / 100;
+  p.score = Math.min(100, sc); p.topic = topic == null ? null : Math.round(topic * 100) / 100; p.journals = jr; p.noWorks = !have;
+  p.band = p.tier === "A" ? "A" : p.score >= 75 ? "1" : p.score >= 60 ? "2" : p.score >= 45 ? "3" : "4";
+  delete p._x; delete p._y; delete p.inst;
+}
+out.sort((p, q) => p.tier.localeCompare(q.tier) || q.score - p.score || p.groupSize - q.groupSize || p.groupSize - q.groupSize || (q.A.works + q.B.works) - (p.A.works + p.B.works));
 writeFileSync("data/split-candidates.json", JSON.stringify(out, null, 1));
 writeFileSync("public/data/_split-review.json", JSON.stringify({ built: new Date().toISOString().slice(0, 10), pairs: out.filter((p) => p.tier === "B") }));
-console.log(`Tầng A (gộp chắc): ${out.filter((p) => p.tier === "A").length}; tầng B (cần duyệt): ${out.filter((p) => p.tier === "B").length}.`);
+console.log(`Tầng A (gộp chắc): ${out.filter((p) => p.tier === "A").length}; tầng B (cần duyệt): ${out.filter((p) => p.tier === "B").length}; theo nhóm:`, JSON.stringify(out.reduce((m, p) => ((m[p.band] = (m[p.band] ?? 0) + 1), m), {})));
