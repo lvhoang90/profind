@@ -3,6 +3,7 @@
 // Bổ sung bằng ORCID: lấy danh sách công trình có DOI trên ORCID (pub.orcid.org), công trình nào OpenAlex chưa gán cho hồ sơ này thì tra theo DOI và gắn vào nếu có chữ ký tác giả khớp ORCID/tên (DOI không có trong OpenAlex được báo để tác giả tự thêm).
 // Ghi data/raw/_notable-manual.json (cùng định dạng _notable-*; ingest-openalex.mjs tự gộp). refresh.mjs chạy lại mỗi kỳ để cập nhật công trình mới.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { nameMatch } from "./lib/namematch.mjs";
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
 const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY, FROM = arg("from", "2016");
 if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
@@ -37,7 +38,7 @@ for (const a of authors) {
     if (!x?.id) { notFound.push(d); continue; }
     if ((x.publication_year ?? 0) < +FROM) { old++; continue; } // ProFind chỉ nạp công trình từ năm --from
     const s = x.primary_location?.source, issn = s?.issn_l ?? s?.issn?.[0]; if (!issn) { noIssn.push(d); continue; }
-    const as = x.authorships ?? [], nm = fold(a.name).split(" ").sort().join(" "), pos = as.find((z) => (z.raw_orcid ?? "").endsWith(a.orcid) || (z.author?.orcid ?? "").endsWith(a.orcid)) ?? as.find((z) => fold(z.author?.display_name).split(" ").sort().join(" ") === nm || fold(z.raw_author_name).split(" ").sort().join(" ") === nm);
+    const as = x.authorships ?? [], nmOf = (z) => [nameMatch(a.name, z.author?.display_name), nameMatch(a.name, z.raw_author_name)], pos = as.find((z) => (z.raw_orcid ?? "").endsWith(a.orcid) || (z.author?.orcid ?? "").endsWith(a.orcid)) ?? as.find((z) => nmOf(z).includes("exact")) ?? as.find((z) => nmOf(z).includes("variant"));
     if (!pos) { notFound.push(d + " (không khớp tác giả)"); continue; }
     const nCorr = as.filter((z) => z.is_corresponding).length, lead = pos.author_position === "first" || (pos.is_corresponding && nCorr === 1);
     works.push({ id: `${a.id}-${short(x.id)}`, authorId: a.id, doi: cleanDoi(x.doi), title: x.title, year: x.publication_year, journal: s.display_name, issn, issns: s.issn ?? [issn], citations: x.cited_by_count, role: lead ? "lead" : "co", corr: nCorr, demo: false, via: "orcid" }); add++;

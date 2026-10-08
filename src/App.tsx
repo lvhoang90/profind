@@ -7,6 +7,7 @@ import type { Author, Data, Institution, Work } from "./types";
 import { AccountProvider, useAccount } from "./accountStore";
 // Trang tài khoản và quản trị tách thành các tệp nạp riêng: người chỉ tra cứu không tải mã của chúng.
 const AccountPage = lazy(() => import("./Account").then((m) => ({ default: m.AccountPage })));
+const LeaderboardPage = lazy(() => import("./Leaderboard").then((m) => ({ default: m.LeaderboardPage })));
 const ProScorePage = lazy(() => import("./ProScore").then((m) => ({ default: m.ProScorePage })));
 const AboutPage = lazy(() => import("./About").then((m) => ({ default: m.AboutPage })));
 const AdminPage = lazy(() => import("./Admin").then((m) => ({ default: m.AdminPage })));
@@ -82,9 +83,11 @@ function AppInner() {
 
   const load = () => {
     setErr(false);
-    fetch("./data/profind.json").then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }).then((d: Data) => {
+    // Đơn vị do quản trị viên đặt tay (Redis) ghi đè đơn vị trong dữ liệu dựng sẵn; lỗi/thiếu thì bỏ qua.
+    const ov = fetch("/api/account?op=inst").then((r) => (r.ok ? r.json() : { map: {} })).then((j: { map?: Record<string, { now: string[]; past?: string[] }> }) => j.map ?? {}).catch(() => ({}) as Record<string, { now: string[]; past?: string[] }>);
+    Promise.all([fetch("./data/profind.json").then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }), ov]).then(([d, map]: [Data, Record<string, { now: string[]; past?: string[] }>]) => {
       if (!d || !Array.isArray(d.authors) || !Array.isArray(d.institutions)) throw new Error("shape");
-      setData({ ...d, types: d.types ?? {}, disciplines: d.disciplines ?? [], meta: d.meta ?? ({} as Data["meta"]), authors: d.authors.map((a) => ({ ...a, institutions: a.institutions ?? [], disciplines: a.disciplines ?? [] })) });
+      setData({ ...d, types: d.types ?? {}, disciplines: d.disciplines ?? [], meta: d.meta ?? ({} as Data["meta"]), authors: d.authors.map((a) => { const o = map[a.id]; const base = { ...a, institutions: a.institutions ?? [], disciplines: a.disciplines ?? [] }; if (!o?.now?.length) return base; const past = (o.past ?? []).filter((u) => !o.now.includes(u)); return { ...base, institutions: [...o.now, ...past], instPast: past.length ? past : undefined }; }) });
     }).catch(() => setErr(true));
   };
   // Bộ dữ liệu tác giả (~5 MB) chỉ tải khi cần: trang tài khoản và quản trị không dùng nên mở nhanh hơn.
@@ -95,11 +98,11 @@ function AppInner() {
   useEffect(() => { const f = () => setRoute(parseRoute()); addEventListener("hashchange", f); return () => removeEventListener("hashchange", f); }, []);
   const { kind, id } = route;
   const author = data && id ? data.authors.find((a) => a.id === id) ?? null : null;
-  const view: "list" | "author" | "corr" | "nf" | "acc" | "adm" | "about" | "pro" = kind === "pro-score" ? "pro" : kind === "gioi-thieu" ? "about" : kind === "tai-khoan" ? "acc" : kind === "quan-tri" ? "adm" : kind === "dinh-chinh" ? "corr" : kind === "tac-gia" ? (data && !author ? "nf" : "author") : "list";
+  const view: "list" | "author" | "corr" | "nf" | "acc" | "adm" | "about" | "pro" | "lb" = kind === "bang-xep-hang" ? "lb" : kind === "pro-score" ? "pro" : kind === "gioi-thieu" ? "about" : kind === "tai-khoan" ? "acc" : kind === "quan-tri" ? "adm" : kind === "dinh-chinh" ? "corr" : kind === "tac-gia" ? (data && !author ? "nf" : "author") : "list";
 
   // Tiêu đề tab, mô tả và đưa tiêu điểm về nội dung chính khi đổi trang (trình đọc màn hình biết đã chuyển trang).
   useEffect(() => {
-    document.title = view === "pro" ? "PRO-SCORE1000 | ProFind" : view === "about" ? `${t("fAbout2")} | ProFind` : view === "acc" ? `${t("accTitle")} | ProFind` : view === "adm" ? "Quản trị | ProFind" : view === "author" && author ? `${author.name} | ProFind` : view === "corr" ? `${t("corrTitle")} | ProFind` : view === "nf" ? `${t("notFound").split(".")[0]} | ProFind` : t("docTitle");
+    document.title = view === "lb" ? `${lang === "vi" ? "Bảng xếp hạng" : "Leaderboard"} | ProFind` : view === "pro" ? "PRO-SCORE1000 | ProFind" : view === "about" ? `${t("fAbout2")} | ProFind` : view === "acc" ? `${t("accTitle")} | ProFind` : view === "adm" ? "Quản trị | ProFind" : view === "author" && author ? `${author.name} | ProFind` : view === "corr" ? `${t("corrTitle")} | ProFind` : view === "nf" ? `${t("notFound").split(".")[0]} | ProFind` : t("docTitle");
     document.querySelector('meta[name="description"]')?.setAttribute("content", t("metaDesc"));
     if (first.current) { first.current = false; return; }
     scrollTo(0, 0); mainRef.current?.focus({ preventScroll: true });
@@ -127,7 +130,8 @@ function AppInner() {
       <main className="wrap" id="main" tabIndex={-1} ref={mainRef}>
         {data?.meta.demo && <p className="banner demo" role="note"><Icon n="info" />{t("demo")}</p>}
         <Boundary key={`${view}/${author?.id ?? ""}`}>
-          {view === "pro" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><ProScorePage /></Suspense>
+          {view === "lb" ? (data ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><LeaderboardPage data={data} lang={lang} num={num} /></Suspense> : err ? <div className="empty" role="alert"><p>{t("err")}</p><button className="ghost" onClick={load}>{t("retry")}</button></div> : <p className="empty" role="status">{t("loading")}</p>)
+            : view === "pro" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><ProScorePage /></Suspense>
             : view === "about" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><AboutPage section={new URLSearchParams(route.query).get("m") ?? ""} /></Suspense>
             : view === "acc" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><AccountPage tab={id} /></Suspense>
             : view === "adm" ? <Suspense fallback={<p className="empty" role="status">Đang tải…</p>}><AdminPage tab={id} /></Suspense>
@@ -282,7 +286,7 @@ function List({ d, query }: { d: Data; query: string }) {
             <div><Icon n="scroll" size={26} /><b>{num(d.meta.works)}</b><span>{t("stWorks")}</span></div>
             <div><Icon n="building" size={26} /><b>{num(home$.nInst)}</b><span>{t("stInst")}</span></div>
           </div>
-          {home$.honor.length > 0 && <div className="hgroup honor"><h2><Icon n="trophy" size={18} />{t("honorH")}<small>{t("honorSub")}</small><a className="hmore" href="#/pro-score">{t("proMore")} →</a></h2>
+          {home$.honor.length > 0 && <div className="hgroup honor"><h2><Icon n="trophy" size={18} />{t("honorH")}<small>{t("honorSub")}</small><a className="hmore" href="#/bang-xep-hang">{lang === "vi" ? "Bảng xếp hạng đơn vị, ngành" : "Leaderboard"} →</a> <a className="hmore" href="#/pro-score">{t("proMore")} →</a></h2>
             <ol className="hon">{home$.honor.map((a) => <li key={a.id}><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}><ProBadge rank={a.proRank} size={40} /><span className="hn"><b>{a.name}</b><small>{a.institutions.slice(0, 1).map((i) => instLabel(instById.get(i), lang, i)).join("")}</small></span><span className="hs">{num(a.pro ?? 0, 1)}<small>#{a.proRank}</small></span></a></li>)}</ol></div>}
           <div className="hcols">
             <div className="hgroup"><h2><Icon n="discipline" size={18} />{t("topFields")}<small>{t("byAuthors")}</small></h2>

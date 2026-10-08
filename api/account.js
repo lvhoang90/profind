@@ -310,6 +310,11 @@ export default async function handler(request) {
       if (r.auto && kind === "claim") { claim.auto = true; await approveClaim(claim, "tự động"); } else { await one(["HSET", CLK, claim.id, JSON.stringify(claim)]); }
       return claim;
     };
+    // Đơn vị tác giả do quản trị viên đặt tay (áp dụng ngay trên website, không cần dựng lại): { authorId: { now: [mã đơn vị], past: [mã đơn vị] } }
+    if (op === "inst" && request.method === "GET") {
+      const m = {}; for (const [k, v] of Object.entries(pairs(await one(["HGETALL", "profind:ins"])))) { const o = jparse(v); if (o) m[k] = o; }
+      return json({ map: m }, 200, { "cache-control": "public, max-age=0, s-maxage=30, stale-while-revalidate=60" });
+    }
     if (op === "verified" && request.method === "GET") {
       const t = Date.now(); const items = (await allVf()).filter((v) => v.until > t).map((v) => [v.authorId, v.until]);
       return json({ items }, 200, { "cache-control": "public, s-maxage=300, stale-while-revalidate=600" });
@@ -388,6 +393,13 @@ export default async function handler(request) {
         // Quản trị viên xác nhận trực tiếp: không cần duyệt lần hai trong hàng chờ.
         if (body.direct !== false && body.direct !== "off" && claim.status !== "approved") { await approveClaim(claim, me.email); }
         return json({ ok: true, claim, status: claim.status });
+      }
+      if (op === "admin-claim-inst") {
+        const id = String(body.authorId || ""); if (!/^A\d{5,12}$/.test(id)) return json({ error: "Mã hồ sơ không hợp lệ." }, 400);
+        if (body.clear === true) { await one(["HDEL", "profind:ins", id]); return json({ ok: true }); }
+        const ok = (l) => (Array.isArray(l) ? l : []).map((x) => String(x)).filter((x) => /^[a-z0-9-]{2,80}$/.test(x)).slice(0, 12);
+        const now = ok(body.now), past = ok(body.past).filter((u) => !now.includes(u)); if (!now.length) return json({ error: "Cần ít nhất một đơn vị hiện tại." }, 400);
+        await one(["HSET", "profind:ins", id, JSON.stringify({ now, past, by: me.email, at: Date.now() })]); return json({ ok: true });
       }
       if (op === "admin-claim-misattr") {
         const wid = String(body.workId || ""), m = /^(A\d{5,12})-W\d{4,14}$/.exec(wid); if (!m) return json({ error: "Mã công trình không hợp lệ." }, 400);

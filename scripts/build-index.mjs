@@ -43,7 +43,7 @@ const xs = { n: 0, crHigher: 0, s2Higher: 0, oaHighest: 0 }, oc = { n: 0, oa: 0,
 const metaAll = existsSync("data/author-meta.json") ? rd("data/author-meta.json") : {}, extraCited = new Map();
 for (const [f, into] of alias) extraCited.set(into, (extraCited.get(into) ?? 0) + (metaAll[f]?.cited ?? 0));
 const live = new Map(authors.map((a) => [a.id, a]));
-for (const a of authors) { if (C.rename[a.id]) a.name = C.rename[a.id]; if (C.setInstitutions?.[a.id]) a.institutions = C.setInstitutions[a.id]; /* đơn vị do quản trị viên xác nhận thay cho đơn vị OpenAlex (hồ sơ gộp nhiều người) */ a.claimed = C.claimed[a.id]?.date ?? null; }
+for (const a of authors) { if (C.rename[a.id]) a.name = C.rename[a.id]; if (C.setInstitutions?.[a.id]) { const v = C.setInstitutions[a.id], now = Array.isArray(v) ? v : v.now ?? [], past = Array.isArray(v) ? [] : v.past ?? []; a.institutions = [...now, ...past.filter((u) => !now.includes(u))]; a.fixedPast = past.filter((u) => !now.includes(u)); } /* đơn vị do quản trị viên xác nhận thay cho đơn vị OpenAlex (hồ sơ gộp nhiều người) */ a.claimed = C.claimed[a.id]?.date ?? null; }
 const excl = new Set(C.excludeWorks), seen = new Set();
 const rawWorks = R.works.map((w) => ({ ...w, authorId: alias.get(w.authorId) ?? w.authorId })).filter((w) => {
   if (!live.has(w.authorId) || excl.has(w.id)) return false;
@@ -138,7 +138,7 @@ const outAuthors = authors.map((a) => {
   const matched = ws.filter((w) => w.matched).length;
   const span = years.length ? Math.max(1, Math.max(...years) - Math.min(...years) + 1) : 1;
   const meta = META[a.id];
-  return { id: a.id, name: cleanName(a.name), orcid: a.orcid, ...(() => { const r = instSplit(a.id, a.institutions); return r.instPast.length ? r : { institutions: r.institutions }; })(), disciplines, demo: !!a.demo, claimed: a.claimed,
+  return { id: a.id, name: cleanName(a.name), orcid: a.orcid, ...(() => { const r = a.fixedPast ? { institutions: a.institutions, instPast: a.fixedPast } : instSplit(a.id, a.institutions); return r.instPast.length ? r : { institutions: r.institutions }; })(), disciplines, demo: !!a.demo, claimed: a.claimed,
     scholar: SCH[a.id]?.id ?? null, scholarCit: SCH[a.id]?.citations ?? null,
     top2: TOP2[a.id] ? { rank: TOP2[a.id].rank, field: TOP2[a.id].field } : null,
     // foreign: true = có đơn vị ngoài VN; false = chỉ đơn vị VN; null = chưa biết (chưa chạy enrich-authors.mjs, hoặc OpenAlex không ghi quốc gia nào).
