@@ -233,6 +233,31 @@ As requested, your PRO-SCORE1000 score and rank badge are now hidden on ProFind.
 
 Best regards,
 ProFind team` },
+  added: { label: "Chấp nhận đề nghị bổ sung hồ sơ nhà nghiên cứu", subject: "ProFind: hồ sơ của {{name}} đã được bổ sung", body: `Kính gửi {{name}},
+
+ProFind đã tiếp nhận đề nghị bổ sung nhà nghiên cứu của thầy/cô và đã thêm hồ sơ vào hệ thống. Hồ sơ được lập từ mã ORCID và Google Scholar mà thầy/cô cung cấp, công trình lấy từ OpenAlex, ORCID và các nguồn công khai khác.
+
+Thầy/cô có thể tìm hồ sơ của mình tại https://profind.isavn.edu.vn (tìm theo tên hoặc mã ORCID). Hồ sơ sẽ hiển thị đầy đủ sau lần cập nhật dữ liệu kế tiếp nếu chưa thấy ngay.
+
+Lưu ý:
+1. PRO-SCORE1000 là chỉ số tham khảo mô phỏng của ProFind, không phải đánh giá chính thức.
+2. Nếu đơn vị, công trình hoặc thông tin nào chưa đúng, thầy/cô vui lòng trả lời thư này hoặc dùng nút "Đây là tôi / chỉnh sửa" trên trang hồ sơ để chúng tôi cập nhật.
+3. Thầy/cô có thể yêu cầu ẩn điểm và xếp hạng, hoặc gỡ hồ sơ, bất cứ lúc nào sau khi xác minh danh tính.
+
+Cảm ơn thầy/cô đã đồng hành cùng ProFind.
+
+Trân trọng,
+Nhóm ProFind` },
+  addedEn: { label: "Accept request to add a researcher profile (English)", subject: "ProFind: your profile has been added", body: `Dear Dr. {{name}},
+
+Thank you for your request. ProFind has added your researcher profile, built from the ORCID and Google Scholar identifiers you provided; publications come from OpenAlex, ORCID and other public sources.
+
+You can find your profile at https://profind.isavn.edu.vn (search by name or ORCID). If it does not appear immediately, it will show after the next data update.
+
+Please note that PRO-SCORE1000 is a simulated reference indicator, not an official evaluation. If any affiliation or publication is incorrect, reply to this email or use the "This is me / correct" option on your profile page. You may also ask us to hide your score and rank, or remove your profile, at any time after identity verification.
+
+Best regards,
+ProFind team` },
   blank: { label: "Thư trống", subject: "", body: "" },
 };
 type MailStatus = { provider: string | null; from: string; sandbox: boolean; persistent: boolean; session: boolean; admins: number; correctionTo: string };
