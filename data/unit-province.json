@@ -29,7 +29,8 @@
     "Dong Hoi": "Quảng Trị", "Đông Hà": "Quảng Trị",
     "Quảng Ngãi": "Quảng Ngãi",
     "Tuyên Quang": "Tuyên Quang",
-    "Long Xuyên": "An Giang"
+    "Long Xuyên": "An Giang",
+    "Cửa Lô": "Nghệ An", "Phủ Từ Sơn": "Bắc Ninh"
   },
   "unit": {
     "kgu": "An Giang",
@@ -53,7 +54,8 @@
     "cao-dang-cong-dong-dong-thap": "Đồng Tháp",
     "dkq": "Quảng Ngãi"
   },
-  "verify": ["dai-hoc-cong-nghe-mien-dong", "dai-hoc-quang-trung", "dai-hoc-vo-toan", "ufba"],
+  "verify": [],
+  "confirmed": {"dai-hoc-cong-nghe-mien-dong": "Đồng Nai", "dai-hoc-quang-trung": "Gia Lai", "dai-hoc-vo-toan": "Cần Thơ", "ufba": "Hưng Yên", "by": "quản trị viên", "date": "2026-10-08"},
   "merged": {
     "Hà Nội": [], "Huế": [], "Lai Châu": [], "Điện Biên": [], "Sơn La": [], "Lạng Sơn": [], "Quảng Ninh": [], "Thanh Hóa": [], "Nghệ An": [], "Hà Tĩnh": [], "Cao Bằng": [],
     "TP. Hồ Chí Minh": ["Bình Dương", "Bà Rịa - Vũng Tàu"],
