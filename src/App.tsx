@@ -16,6 +16,7 @@ import { StarBtn } from "./StarBtn";
 import { ProBadge, ProBadgeTag } from "./Badge";
 import { VisitChip } from "./VisitChip";
 import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg } from "./Verified";
+import { useHidden } from "./hidden";
 import { Footer, EcoLink } from "./Footer";
 import { evt, startSession } from "./analytics";
 import { getTheme, setTheme, type Theme } from "./theme";
@@ -62,7 +63,13 @@ function AppInner() {
   useEffect(() => { const m = matchMedia("(prefers-color-scheme: dark)"), f = () => setSysDark(m.matches); m.addEventListener("change", f); return () => m.removeEventListener("change", f); }, []);
   const dark = theme === "dark" || (theme === "auto" && sysDark); // chỉ hai trạng thái trên nút: sáng hoặc tối (mặc định theo hệ thống cho tới khi người dùng chọn)
   const [lang, setLang] = useState<Lang>(initialLang);
-  const [data, setData] = useState<Data | null>(null);
+  const [rawData, setData] = useState<Data | null>(null);
+  const hid = useHidden();
+  // Hồ sơ ẩn theo yêu cầu: bỏ khỏi danh sách; hồ sơ ẩn điểm: xóa điểm, hạng, huy hiệu (công trình vẫn giữ).
+  const data = useMemo(() => {
+    if (!rawData || (!hid.profile.size && !hid.score.size)) return rawData;
+    return { ...rawData, authors: rawData.authors.filter((a) => !hid.profile.has(a.id)).map((a) => (hid.score.has(a.id) ? { ...a, pro: null, proLo: null, proHi: null, proR10: null, proR90: null, proStab: null, proParts: null, proConf: null, proRank: null, proTier: null, rankable: false } : a)) };
+  }, [rawData, hid]);
   const [err, setErr] = useState(false);
   const [route, setRoute] = useState(parseRoute);
   const mainRef = useRef<HTMLElement>(null);
@@ -125,7 +132,7 @@ function AppInner() {
             : err ? <div className="empty" role="alert"><p>{t("err")}</p><button className="ghost" onClick={load}>{t("retry")}</button></div>
             : !data ? <p className="empty" role="status">{t("loading")}</p>
             : view === "corr" ? <Correction key={author?.id ?? "none"} a={author} />
-            : view === "nf" ? <div className="empty" role="alert"><p>{t("notFound")}</p><p><a href="#/">{t("back")}</a></p></div>
+            : view === "nf" ? <div className="empty" role="alert"><p>{hid.profile.has(id) ? t("hiddenProfile") : t("notFound")}</p><p><a href="#/">{t("back")}</a></p></div>
             : view === "author" && author ? <AuthorPage a={author} d={data} />
             : <List d={data} query={route.query} />}
         </Boundary>
@@ -363,6 +370,7 @@ const initials = (n: string) => { const w = n.replace(/[^\p{L}\s-]/gu, " ").spli
 const hueOf = (s: string) => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) % 360; return h; };
 
 function AuthorPage({ a, d }: { a: Author; d: Data }) {
+  const hid = useHidden();
   const { lang, t, num } = useT();
   const { user, cfg, favs, toggleFav, recordView } = useAccount();
   const [works, setWorks] = useState<Work[] | null>(null);
@@ -445,6 +453,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
         <div className="kpi"><span className="kic"><Icon n="link" size={20} /></span><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span><i className="bar" role="presentation"><u style={{ width: `${Math.round(a.matchedRate * 100)}%` }} /></i></div>
       </div>
       {a.suspect && <p className="banner demo" role="note"><Icon n="info" />{t("suspectNote")}</p>}
+      {hid.score.has(a.id) ? <p className="banner" role="note"><Icon n="info" />{t("hiddenScore")}</p> : <p className="meta prodisc" role="note">{t("proDisc")} <a href={`#/dinh-chinh/${encodeURIComponent(a.id)}`}>{t("proHide")}</a></p>}
       <AuthorExtras id={a.id} />
       {works && works.length > 0 && (
         <div className="insights">
@@ -525,11 +534,11 @@ function Correction({ a }: { a: Author | null }) {
       <p className="meta">{t("corrLead")}</p>
       <p className="meta">{t("corrPrivacy")}</p>
       <div role="status" aria-live="polite">{state === "ok" && <p className="banner"><Icon n="check" />{t("sent")}</p>}</div>
-      {a && (kind === "claim" || kind === "remove") && <ClaimBox key={kind} authorId={a.id} authorName={a.name} mode={kind === "remove" ? "remove" : "claim"} />}
-      {state !== "ok" && !(a && (kind === "claim" || kind === "remove")) && (
+      {a && (kind === "claim" || kind === "remove" || kind === "hide") && <ClaimBox key={kind} authorId={a.id} authorName={a.name} mode={kind === "remove" ? "remove" : kind === "hide" ? "hide" : "claim"} />}
+      {state !== "ok" && !(a && (kind === "claim" || kind === "remove" || kind === "hide")) && (
         <form onSubmit={submit} className="form">
           <fieldset><legend className="sr">{t("corrTitle")}</legend>
-            {([...(a ? [] : [["add", "kAdd"]]), ["claim", "kClaim"], ["correct", "kCorrect"], ["remove", "kRemove"]] as [string, string][]).map(([k, l]) => <label key={k} className="radio"><input type="radio" name="kind" value={k} checked={kind === k} onChange={() => setKind(k)} />{t(l as "kClaim")}</label>)}
+            {([...(a ? [] : [["add", "kAdd"]]), ["claim", "kClaim"], ["correct", "kCorrect"], ...(a ? [["hide", "kHide"]] : []), ["remove", "kRemove"]] as [string, string][]).map(([k, l]) => <label key={k} className="radio"><input type="radio" name="kind" value={k} checked={kind === k} onChange={() => setKind(k)} />{t(l as "kClaim")}</label>)}
           </fieldset>
           {!a && <label className="sel"><span>{t("fRef")}</span><input name="ref" required maxLength={160} /></label>}
           <label className="sel"><span>{t("fName")}</span><input name="name" required maxLength={120} autoComplete="name" /></label>

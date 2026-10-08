@@ -47,13 +47,13 @@ export function AboutPage({ section }: { section: string }) {
     { id: "diem", icon: "chart", h: vi ? "PRO-SCORE1000™: cách tính và giới hạn" : "PRO-SCORE1000™: method and limits", body: vi ? <>
       <p><a className="chip" href="#/pro-score">Xem trang đầy đủ về PRO-SCORE1000™ →</a></p>
       <p><b>PRO-SCORE1000™ là chỉ số tham khảo riêng của ProFind (thang 0 đến 100), không phải xếp hạng chính thức.</b> Ý tưởng do Viện ISA và tác giả Lương Việt Hoàng đề xuất.</p>
-      <p><b>Lưu ý quan trọng:</b> chỉ số được tạo bởi một hội đồng <b>mô phỏng</b> gồm 1000 chuyên gia ảo (mô hình tính toán), không phải khảo sát 1000 nhà nghiên cứu thật. Mỗi chuyên gia ảo có hồ sơ và trọng số riêng cho 7 chỉ báo (Tác động, Sản lượng, Chủ đạo, Chất lượng, Đà phát triển, Đều đặn, Ghi nhận); điểm cuối là trung bình của 1000 điểm, kèm khoảng điểm, khoảng hạng và độ vững của huy hiệu.</p>
+      <p><b>Lưu ý quan trọng:</b> chỉ số được tạo bởi một <b>mô phỏng</b> gồm 1000 cấu hình trọng số (mô hình tính toán), không phải khảo sát 1000 chuyên gia hay nhà nghiên cứu thật. Mỗi cấu hình có bộ trọng số riêng cho 7 chỉ báo (Tác động, Sản lượng, Chủ đạo, Chất lượng, Đà phát triển, Đều đặn, Ghi nhận); điểm cuối là trung bình của 1000 điểm, kèm khoảng điểm, khoảng hạng và độ vững của huy hiệu.</p>
       <ul><li>Mọi chỉ báo được quy về bách phân vị trong cùng ngành chính; trích dẫn mỗi công trình bị cắt trần; dữ liệu thiếu được làm trơn về trung bình ngành.</li>
       <li>Hạng chỉ xếp cho hồ sơ từ 10 công trình và hoạt động từ 3 năm; huy hiệu Tinh hoa (Top 10), Xuất sắc (50), Ưu tú (100), Nổi bật (500), Tiêu biểu (1000).</li>
       <li>OpenAlex chưa cho số tác giả mỗi công trình; hạng Q và vai trò chỉ có ở một phần công trình; sách, kỷ yếu, bằng sáng chế chưa được tính; hồ sơ có thể gộp nhầm hoặc tách đôi một người.</li></ul></> : <>
       <p><a className="chip" href="#/pro-score">Open the full PRO-SCORE1000™ page →</a></p>
       <p><b>PRO-SCORE1000™ is ProFind’s own reference index (scale 0 to 100), not an official ranking.</b> The idea was proposed by ISA Institute and author Luong Viet Hoang.</p>
-      <p><b>Important:</b> the index is produced by a <b>simulated</b> panel of 1000 virtual experts (a computational model), not a survey of 1000 real researchers. Each virtual expert has a profile and weights for the 7 indicators (Impact, Output, Leadership, Quality, Momentum, Consistency, Recognition); the final score is the mean of the 1000 scores, with a score range, rank range and badge robustness.</p>
+      <p><b>Important:</b> the index is produced by a <b>simulation</b> of 1000 weighting configurations (a computational model), not a survey of 1000 real experts or researchers. Each configuration has its own weights for the 7 indicators (Impact, Output, Leadership, Quality, Momentum, Consistency, Recognition); the final score is the mean of the 1000 scores, with a score range, rank range and badge robustness.</p>
       <ul><li>Every indicator is a percentile within the primary field; per-work citations are capped; missing data is smoothed toward the field average.</li>
       <li>Ranks are given only to profiles with 10+ works and 3+ active years; badges Elite (Top 10), Distinguished (50), Eminent (100), Notable (500), Rising (1000).</li>
       <li>OpenAlex gives no author count per work; quartile and role exist for only some works; books, proceedings and patents are not counted; a profile may merge or split people.</li></ul></> },
@@ -81,15 +81,57 @@ export function AboutPage({ section }: { section: string }) {
     { id: "ma-nguon", icon: "book", h: vi ? "Mã nguồn mở" : "Open source", body: vi ? <>
       <p>Toàn bộ mã nguồn và quy trình nạp dữ liệu của ProFind (giao diện, bộ nạp OpenAlex, bộ tính điểm, bộ đối chiếu Top 2%, hàm máy chủ cho tài khoản và đo lường) là mã nguồn mở theo giấy phép MIT, kèm tài liệu thiết kế và triển khai. Muốn nhận mã nguồn, đóng góp hoặc báo lỗi, hãy liên hệ qua mục Liên hệ bên dưới.</p></> : <>
       <p>All ProFind source code and the data pipeline (interface, OpenAlex loader, scoring, Top 2% matcher, server functions for accounts and analytics) are open source under the MIT licence, with design and deployment documentation. To get the source, contribute or report a bug, use the Contact section below.</p></> },
-    { id: "rieng-tu", icon: "user", h: vi ? "Quyền riêng tư" : "Privacy", body: vi ? <ul>
-      <li>ProFind chỉ dùng <b>dữ liệu công khai</b> về nhà khoa học (OpenAlex, ORCID, danh mục HĐGSNN). Không thu thập thông tin riêng tư của người được nêu tên.</li>
-      <li>Người được nêu tên có quyền <b>xác nhận, đính chính hoặc yêu cầu gỡ hồ sơ</b> bất cứ lúc nào qua biểu mẫu <a href="#/dinh-chinh">Đính chính hoặc gỡ hồ sơ</a>. Yêu cầu gỡ được ưu tiên xử lý sau khi xác minh người yêu cầu.</li>
-      <li><b>Tài khoản</b> (tùy chọn): email, số điện thoại, họ tên và dữ liệu đã lưu chỉ dùng để cung cấp tài khoản, liên hệ xác minh và hoàn thiện công cụ. Bạn có thể tải hoặc xóa toàn bộ dữ liệu trong Không gian của tôi.</li>
-      <li><b>Đo lường ẩn danh</b>: lượt truy cập, nguồn, thiết bị, thời lượng và sự kiện được đếm tổng hợp, không cookie, không lưu địa chỉ IP; từ khóa tìm kiếm được gộp chung, không gắn với người dùng.</li></ul> : <ul>
-      <li>ProFind uses only <b>public data</b> about scientists (OpenAlex, ORCID, the Council catalogue). It collects no private information about the people named.</li>
-      <li>Named people may <b>claim, correct or ask to remove their profile</b> at any time through the <a href="#/dinh-chinh">Correct or remove a profile</a> form. Removal requests take priority once the requester is verified.</li>
-      <li><b>Accounts</b> (optional): email, phone number, name and saved data are used only to provide the account, contact you for verification and improve the tool. You can download or delete all your data in My space.</li>
-      <li><b>Anonymous analytics</b>: visits, sources, devices, duration and events are counted in aggregate, with no cookies and no IP addresses stored; search keywords are pooled, not tied to any user.</li></ul> },
+    { id: "rieng-tu", icon: "user", h: vi ? "Chính sách dữ liệu cá nhân" : "Personal data policy", body: vi ? <>
+      <p className="meta">Cập nhật 10/2026. Áp dụng Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 (hiệu lực từ 01/01/2026).</p>
+      <h3>1. Bên chịu trách nhiệm</h3>
+      <p><b>Viện Khoa học Giáo dục và Kinh tế Đông Nam Á (Viện ISA)</b>, mã số thuế 5801465662, cấp ngày 03/06/2021. Địa chỉ: Số 5 Thông Thiên Học, Phường Xuân Hương, Đà Lạt, tỉnh Lâm Đồng. Người đại diện theo pháp luật: Trần Văn Tuấn. Là bên kiểm soát và xử lý dữ liệu cá nhân của ProFind. Liên hệ về dữ liệu cá nhân: <b>{CONTACT}</b>.</p>
+      <h3>2. Dữ liệu chúng tôi xử lý, nguồn và mục đích</h3>
+      <ul>
+        <li><b>Dữ liệu hồ sơ nhà khoa học</b>: họ tên, đơn vị công tác, mã ORCID, công trình công bố, trích dẫn và các chỉ số tính từ đó (kể cả PRO-SCORE1000™). Nguồn: OpenAlex (CC0), Crossref, Semantic Scholar, OpenCitations, ORCID công khai, danh mục của Hội đồng Giáo sư Nhà nước, liên kết Google Scholar do tác giả cung cấp. <i>Mục đích</i>: tra cứu, tổng hợp và thống kê học thuật. Căn cứ: tổng hợp từ nguồn dữ liệu được phép xử lý (Điều 11.3), công bố đúng nguồn gốc (Điều 16.3), kèm quyền phản đối và gỡ bên dưới.</li>
+        <li><b>Dữ liệu do nhà khoa học đã xác thực tự khai báo</b> (giới thiệu, trang cá nhân, email/điện thoại liên hệ, ảnh đại diện): chỉ hiển thị khi bạn đồng ý; email và điện thoại chỉ hiện khi bạn bật chia sẻ.</li>
+        <li><b>Tài khoản</b> (tùy chọn): email, số điện thoại, họ tên, mục đã lưu, lịch sử xem. <i>Mục đích</i>: cung cấp tài khoản, xác minh, liên hệ. Thư giới thiệu công cụ khác của hệ sinh thái ISA chỉ gửi khi bạn đồng ý riêng.</li>
+        <li><b>Yêu cầu xác thực, đính chính, gỡ hồ sơ</b>: nội dung bạn gửi và kết quả kiểm tra danh tính (email, ORCID, tên) để xử lý yêu cầu.</li>
+        <li><b>Đo lường ẩn danh</b>: số liệu tổng hợp, không cookie, không lưu địa chỉ IP.</li></ul>
+      <h3>3. Điểm PRO-SCORE1000™ là xử lý tự động</h3>
+      <p>Điểm và huy hiệu do thuật toán tính trên dữ liệu công bố công khai; phân loại rủi ro: <b>thấp</b> (không có hiệu lực pháp lý, không dùng dữ liệu nhạy cảm). Đây là chỉ số tham khảo mô phỏng, không phải đánh giá chính thức, không thay thế hội đồng chuyên môn và không nên là tiêu chí duy nhất trong tuyển dụng, xét duyệt, bổ nhiệm hay phân bổ nguồn lực.</p>
+      <h3>4. Quyền của bạn</h3>
+      <ul>
+        <li>Biết, xem, <b>chỉnh sửa</b>, <b>xóa</b>, <b>hạn chế</b> và <b>phản đối</b> việc xử lý; rút lại sự đồng ý; khiếu nại.</li>
+        <li><b>Ẩn điểm và huy hiệu xếp hạng</b> (vẫn giữ công trình) hoặc <b>ẩn/gỡ toàn bộ hồ sơ</b>: dùng <a href="#/dinh-chinh">biểu mẫu đính chính</a> (đăng nhập bằng email tổ chức để chúng tôi xác minh danh tính) hoặc gửi thư tới {CONTACT}. Sau khi xác minh, việc ẩn có hiệu lực ngay. Chúng tôi phản hồi trong thời hạn pháp luật quy định; mục tiêu là trong 72 giờ làm việc.</li>
+        <li>Nhà khoa học đã xác thực tự quản lý quyền này tại <a href="#/tai-khoan/khoa-hoc">Hồ sơ khoa học</a> trong tài khoản.</li>
+        <li>Gỡ hồ sơ chỉ áp dụng trên ProFind; dữ liệu gốc ở OpenAlex, ORCID, Crossref vẫn tồn tại ở các hệ thống đó và bạn có thể chỉnh sửa tại đó.</li></ul>
+      <h3>5. Lưu trữ, chia sẻ và chuyển ra nước ngoài</h3>
+      <ul>
+        <li>Chúng tôi <b>không mua bán dữ liệu cá nhân</b>. Không chia sẻ cho bên thứ ba ngoài các nhà cung cấp hạ tầng dưới đây.</li>
+        <li>Nhà cung cấp hạ tầng (có máy chủ ngoài Việt Nam): Vercel (lưu trữ website), Upstash (cơ sở dữ liệu tài khoản), Resend (gửi email). Chúng chỉ xử lý theo yêu cầu của Viện ISA.</li>
+        <li>Thời gian lưu: hồ sơ khoa học lưu khi còn mục đích tra cứu; tài khoản lưu đến khi bạn xóa. Yêu cầu và nhật ký thư lưu tối đa 24 tháng.</li></ul>
+      <h3>6. An toàn thông tin và sự cố</h3>
+      <p>Đăng nhập bằng mã dùng một lần gửi qua email, giới hạn tần suất, phiên có chữ ký. Nếu xảy ra sự cố lộ, mất dữ liệu cá nhân, chúng tôi thông báo cơ quan có thẩm quyền trong 72 giờ và thông báo người bị ảnh hưởng.</p></> : <>
+      <p className="meta">Updated 10/2026. Applies the Law on Personal Data Protection No. 91/2025/QH15 (in force from 1 January 2026).</p>
+      <h3>1. Controller</h3>
+      <p><b>Institute of Education Sciences and Economics of Southeast Asia (ISA Institute)</b>, tax code 5801465662 (issued 03/06/2021), No. 5 Thong Thien Hoc, Xuan Huong Ward, Da Lat, Lam Dong, Vietnam; legal representative: Tran Van Tuan. ISA Institute controls and processes ProFind’s personal data. Contact: <b>{CONTACT}</b>.</p>
+      <h3>2. Data, sources and purposes</h3>
+      <ul>
+        <li><b>Researcher profile data</b>: name, affiliation, ORCID, publications, citations and indicators computed from them (including PRO-SCORE1000™). Sources: OpenAlex (CC0), Crossref, Semantic Scholar, OpenCitations, public ORCID, the State Council for Professorship catalogue, Google Scholar links supplied by authors. Purpose: academic search, aggregation and statistics, with the objection and removal rights below.</li>
+        <li><b>Self-reported data of verified researchers</b> (bio, personal site, contact email/phone, avatar) is shown only with your consent; email and phone only when you switch sharing on.</li>
+        <li><b>Accounts</b> (optional): email, phone, name, saved items, viewing history, to provide the account, verification and contact. Emails about other ISA tools are sent only with your separate consent.</li>
+        <li><b>Verification, correction and removal requests</b>: your message and identity checks (email, ORCID, name).</li>
+        <li><b>Anonymous analytics</b>: aggregate counts, no cookies, no IP addresses stored.</li></ul>
+      <h3>3. PRO-SCORE1000™ is automated processing</h3>
+      <p>Scores and badges are computed by an algorithm on public publication data; risk class: <b>low</b> (no legal effect, no sensitive data). It is a simulated reference index, not an official assessment, does not replace expert committees and should not be the sole criterion in hiring, review, appointment or resource allocation.</p>
+      <h3>4. Your rights</h3>
+      <ul>
+        <li>To know, access, <b>correct</b>, <b>erase</b>, <b>restrict</b> and <b>object</b>; to withdraw consent; to complain.</li>
+        <li><b>Hide the score and rank badge</b> (keeping the works) or <b>hide/remove the whole profile</b>: use the <a href="#/dinh-chinh">correction form</a> (sign in with an organisational email so we can verify identity) or email {CONTACT}. Once verified the change takes effect immediately. We respond within the legal deadline; our target is 72 working hours.</li>
+        <li>Verified researchers manage this themselves in <a href="#/tai-khoan/khoa-hoc">Scholar profile</a> in their account.</li>
+        <li>Removal applies to ProFind only; the source records remain in OpenAlex, ORCID and Crossref, where you can edit them.</li></ul>
+      <h3>5. Storage, sharing and cross-border processing</h3>
+      <ul>
+        <li>We <b>do not sell personal data</b> and share it with no third party other than the infrastructure providers below.</li>
+        <li>Infrastructure providers (servers outside Vietnam): Vercel (hosting), Upstash (account database), Resend (email). They process only on ISA Institute’s instructions.</li>
+        <li>Retention: scientific profiles while the lookup purpose lasts; accounts until you delete them. Request and mail logs for at most 24 months.</li></ul>
+      <h3>6. Security and incidents</h3>
+      <p>One-time email codes, rate limiting, signed sessions. In case of a personal data breach we notify the competent authority within 72 hours and affected people.</p></> },
     { id: "lien-he", icon: "mail", h: vi ? "Liên hệ" : "Contact", body: vi ? <p>Góp ý, báo lỗi, đề nghị bổ sung nhà nghiên cứu hoặc yêu cầu đính chính: dùng <a href="#/dinh-chinh">biểu mẫu trong trang</a> hoặc gửi thư tới <b>{CONTACT}</b>.</p> : <p>Feedback, bug reports, suggestions to add a researcher or correction requests: use the <a href="#/dinh-chinh">in-page form</a> or email <b>{CONTACT}</b>.</p> },
   ];
   return (

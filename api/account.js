@@ -137,7 +137,8 @@ export default async function handler(request) {
         await store.run([["SET", K.user(id), JSON.stringify(user)], ["SADD", K.users, id],
           ["HINCRBY", `profind:all:evt:${dayKey()}`, "reg_done", 1], ["EXPIRE", `profind:all:evt:${dayKey()}`, 60 * 86400],
           ...(us ? [["HINCRBY", `profind:all:suts:${dayKey()}`, us, 1], ["EXPIRE", `profind:all:suts:${dayKey()}`, 60 * 86400]] : [])]);
-        await sendWelcome(user);
+        user.noMail = body.marketing !== true; if (user.noMail) await one(["SET", K.user(id), JSON.stringify(user)]);
+        if (body.marketing === true) await sendWelcome(user); // thư giới thiệu công cụ ISA chỉ gửi khi người dùng đồng ý riêng (Luật BVDLCN, Điều 9, 28)
       } else if (!user.phone && rec.phone) { user.phone = rec.phone; await saveUser(user); }
       await one(["HINCRBY", K.cnt(id), "login", "1"]);
       return json({ user: pub(user, pairs(await one(["HGETALL", K.cnt(id)]))), isNew }, 200, cookie(await signToken(id), SESSION_DAYS * 86400));
@@ -279,6 +280,10 @@ export default async function handler(request) {
     // Chính sách: chỉ email tổ chức (đã nhập mã 6 số); email miễn phí chỉ khi quản trị viên cho phép riêng; tick vàng hiệu lực 2 năm.
     // Tự động duyệt khi email tổ chức + ORCID trùng hồ sơ OpenAlex + tên tương thích + không xung đột; còn lại chuyển quản trị viên duyệt.
     const CLK = "profind:cl", VFK = "profind:vf", VFO = "profind:vfo", CLA = "profind:cla";
+    const HSK = "profind:hs", HPK = "profind:hp"; // tập mã hồ sơ: ẩn điểm + xếp hạng; ẩn cả hồ sơ
+    const setHide = async (authorId, mode) => { // mode: "score" | "profile" | "none"
+      await store.run([[mode === "score" ? "SADD" : "SREM", HSK, authorId], [mode === "profile" ? "SADD" : "SREM", HPK, authorId]]);
+    };
     const jparse = (v) => { try { return JSON.parse(v); } catch { return null; } };
     const allClaims = async () => Object.values(pairs(await one(["HGETALL", CLK]))).map(jparse).filter(Boolean);
     const allVf = async () => Object.values(pairs(await one(["HGETALL", VFK]))).map(jparse).filter(Boolean);
@@ -320,7 +325,7 @@ export default async function handler(request) {
       const scholar = tidy(body.scholar, 300); if (scholar && !/^https:\/\/scholar\.google\.[a-z.]+\/citations\?[^\s]*user=[A-Za-z0-9_-]{8,14}/.test(scholar)) return json({ error: "Đường dẫn Google Scholar chưa đúng." }, 400);
       const allowedFree = !isFreeMail(me.email) || (await one(["SMEMBERS", CLA]) ?? []).includes(me.email);
       if (!allowedFree) return json({ error: "freemail" }, 403);
-      const kind = body.kind === "remove" ? "remove" : "claim", note = tidy(body.note, 1000);
+      const kind = ["remove", "hide"].includes(body.kind) ? body.kind : "claim", note = tidy(body.note, 1000);
       if (kind === "remove" && note.length < 5) return json({ error: "Hãy nêu lý do đề nghị gỡ hồ sơ." }, 400);
       const claim = await newClaim({ authorId, authorName: tidy(body.authorName, 120), name, email: me.email, orcid, scholar, note, emailVerified: true, kind });
       if (claim.status === "review") { await safeMail(claim.email, claimMail("received", { name, authorName: claim.authorName, origin: url.origin, authorId })); await notifyAdmins(claim); }
@@ -350,7 +355,7 @@ export default async function handler(request) {
     if (op === "admin-claims" && request.method === "GET") {
       const bad = needAdmin(); if (bad) return bad;
       const t = Date.now(), vf = await allVf();
-      return json({ claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [], works: await (async () => { const o = []; for (const [id, raw] of Object.entries(pairs(await one(["HGETALL", "profind:aw"])))) for (const w of jparse(raw) ?? []) if (w.status === "review") o.push({ authorId: id, ...w }); return o; })() });
+      return json({ claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [], hidden: { score: (await one(["SMEMBERS", HSK])) ?? [], profile: (await one(["SMEMBERS", HPK])) ?? [] }, works: await (async () => { const o = []; for (const [id, raw] of Object.entries(pairs(await one(["HGETALL", "profind:aw"])))) for (const w of jparse(raw) ?? []) if (w.status === "review") o.push({ authorId: id, ...w }); return o; })() });
     }
     if (op.startsWith("admin-claim-") && request.method === "POST") {
       const bad = needAdmin(); if (bad) return bad;
@@ -358,7 +363,11 @@ export default async function handler(request) {
       if (op === "admin-claim-decide") {
         const c = await loadClaim(body.id); if (!c) return json({ error: "Không tìm thấy yêu cầu." }, 404);
         const reason = tidy(body.reason, 400), d = String(body.decision);
-        if (d === "approve" && c.kind === "remove") { Object.assign(c, { status: "approved", decidedAt: Date.now(), decidedBy: me.email }); await one(["HSET", CLK, c.id, JSON.stringify(c)]); await safeMail(c.email, claimMail("removed", { name: c.name, authorName: c.authorName, origin: url.origin, authorId: c.authorId })); return json({ ok: true, status: "approved" }); }
+        if (d === "approve" && (c.kind === "remove" || c.kind === "hide")) {
+          await setHide(c.authorId, c.kind === "remove" ? "profile" : "score"); // áp dụng ngay, không chờ dựng lại dữ liệu
+          Object.assign(c, { status: "approved", decidedAt: Date.now(), decidedBy: me.email }); await one(["HSET", CLK, c.id, JSON.stringify(c)]);
+          await safeMail(c.email, claimMail(c.kind === "remove" ? "removed" : "hidden", { name: c.name, authorName: c.authorName, origin: url.origin, authorId: c.authorId })); return json({ ok: true, status: "approved" });
+        }
         if (d === "approve") { await approveClaim(c, me.email); return json({ ok: true, status: "approved" }); }
         if (d === "reject" || d === "info") {
           Object.assign(c, { status: d === "reject" ? "rejected" : "info", reason, decidedAt: Date.now(), decidedBy: me.email });
@@ -381,11 +390,19 @@ export default async function handler(request) {
         const nw = body.decision === "approve" ? ws.map((x) => (x === w ? { ...x, status: "ok", why: "Quản trị viên đã duyệt" } : x)) : ws.filter((x) => x !== w);
         await one(["HSET", "profind:aw", id, JSON.stringify(nw)]); return json({ ok: true });
       }
+      if (op === "admin-claim-hide") {
+        const id = String(body.authorId || ""); if (!/^A\d{5,12}$/.test(id)) return json({ error: "Mã hồ sơ không hợp lệ." }, 400);
+        const mode = ["score", "profile", "none"].includes(body.mode) ? body.mode : "none"; await setHide(id, mode); return json({ ok: true, mode });
+      }
       if (op === "admin-claim-allow") { const e = tidy(body.email, 160).toLowerCase(); if (!EMAIL_RE.test(e)) return json({ error: "Email chưa đúng." }, 400); await one([body.on === false ? "SREM" : "SADD", CLA, e]); return json({ ok: true }); }
       if (op === "admin-claim-revoke") { const v = await getVf(String(body.authorId)); if (v) await store.run([["HDEL", VFK, v.authorId], ...(v.orcid ? [["HDEL", VFO, v.orcid]] : [])]); return json({ ok: true }); }
       if (op === "admin-claim-renew") { const v = await getVf(String(body.authorId)); if (!v) return json({ error: "Không có xác thực." }, 404); v.until = Date.now() + VERIFY_YEARS * 365.25 * 864e5; await one(["HSET", VFK, v.authorId, JSON.stringify(v)]); return json({ ok: true, until: v.until }); }
     }
 
+    // ---------------- Quyền riêng tư: ẩn điểm/huy hiệu, tạm ẩn hồ sơ (Luật BVDLCN 91/2025/QH15, Điều 4, 10, 14) ----------------
+    if (op === "hidden" && request.method === "GET") {
+      return json({ score: (await one(["SMEMBERS", HSK])) ?? [], profile: (await one(["SMEMBERS", HPK])) ?? [] }, 200, { "cache-control": "public, s-maxage=120, stale-while-revalidate=300" });
+    }
     // ---------------- Bảng điều khiển của nhà khoa học đã xác thực (giai đoạn 2) ----------------
     // Chỉ chủ hồ sơ đã xác thực còn hiệu lực mới sửa được. Công trình tự bổ sung KHÔNG tính vào PRO-SCORE cho tới khi OpenAlex ghi nhận.
     const APK = "profind:ap", AWK = "profind:aw", AVK = "profind:av", MAXW = 60;
@@ -407,8 +424,8 @@ export default async function handler(request) {
     }
     if (op === "author-mine" && request.method === "GET") {
       const bad = needUser(); if (bad) return bad;
-      const t = Date.now(), out = [];
-      for (const v of (await allVf()).filter((x) => x.email === me.email && x.until > t)) out.push({ authorId: v.authorId, name: v.name, until: v.until, profile: await getProf(v.authorId), works: await getWorks(v.authorId) });
+      const t = Date.now(), out = [], hs = (await one(["SMEMBERS", HSK])) ?? [], hp = (await one(["SMEMBERS", HPK])) ?? [];
+      for (const v of (await allVf()).filter((x) => x.email === me.email && x.until > t)) out.push({ authorId: v.authorId, name: v.name, until: v.until, profile: await getProf(v.authorId), works: await getWorks(v.authorId), hide: hp.includes(v.authorId) ? "profile" : hs.includes(v.authorId) ? "score" : "" });
       return json({ authors: out });
     }
     if (op.startsWith("author-") && op !== "author-public" && op !== "author-mine" && request.method === "POST") {
@@ -431,6 +448,10 @@ export default async function handler(request) {
         if (body.image === null) { p.av = false; await store.run([["HSET", APK, authorId, JSON.stringify(p)], ["HDEL", AVK, authorId]]); return json({ ok: true }); }
         const img = String(body.image || ""); if (img.length > 120000 || !/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(img)) return json({ error: "Ảnh không hợp lệ hoặc quá lớn (tối đa khoảng 90 KB)." }, 400);
         p.av = Date.now(); await store.run([["HSET", AVK, authorId, img], ["HSET", APK, authorId, JSON.stringify(p)]]); return json({ ok: true });
+      }
+      if (op === "author-privacy") {
+        const mode = body.hideProfile === true ? "profile" : body.hideScore === true ? "score" : "none";
+        await setHide(authorId, mode); return json({ ok: true, mode });
       }
       if (op === "author-work-add") {
         const doi = normDoi(body.doi); if (!doi) return json({ error: "DOI chưa đúng (dạng 10.xxxx/yyyy)." }, 400);

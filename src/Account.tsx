@@ -21,7 +21,7 @@ export function AccountPage({ tab }: { tab: string }) {
 function AuthPanel() {
   const { t, lang } = useT();
   const { cfg, setUser, refresh } = useAccount();
-  const [mode, setMode] = useState<"login" | "reg">("login"), [step, setStep] = useState<"form" | "code">("form"), [email, setEmail] = useState(""), [phone, setPhone] = useState(""), [name, setName] = useState(""), [consent, setConsent] = useState(false), [code, setCode] = useState("");
+  const [mode, setMode] = useState<"login" | "reg">("login"), [step, setStep] = useState<"form" | "code">("form"), [email, setEmail] = useState(""), [phone, setPhone] = useState(""), [name, setName] = useState(""), [consent, setConsent] = useState(false), [marketing, setMarketing] = useState(false), [code, setCode] = useState("");
   const [need, setNeed] = useState(false), [busy, setBusy] = useState(false), [err, setErr] = useState(""), [wait, setWait] = useState(0);
   useEffect(() => { evt("reg_open"); }, []);
   useEffect(() => { if (wait <= 0) return; const id = window.setTimeout(() => setWait(wait - 1), 1000); return () => window.clearTimeout(id); }, [wait]);
@@ -37,7 +37,7 @@ function AuthPanel() {
     e.preventDefault(); setBusy(true); setErr("");
     try {
       let rv = 0; try { rv = Number(localStorage.getItem("profind.rv")) || 0; } catch { /* bỏ qua */ }
-      const r = await api<{ user?: User; isNew?: boolean; need?: string }>("verify", { email, code, lang, rv, reason: sessionStorage.getItem("profind.reason") || "reg", ...(need || mode === "reg" ? { phone, name, consent } : {}) });
+      const r = await api<{ user?: User; isNew?: boolean; need?: string }>("verify", { email, code, lang, rv, reason: sessionStorage.getItem("profind.reason") || "reg", ...(need || mode === "reg" ? { phone, name, consent, marketing } : {}) });
       if (r.need === "profile") { setNeed(true); return; } // email chưa có tài khoản: xin bổ sung số điện thoại
       setUser(r.user!); await refresh(); evt(r.isNew ? "reg_done" : "login_done");
       const back = sessionStorage.getItem("profind.ret"); sessionStorage.removeItem("profind.ret"); sessionStorage.removeItem("profind.reason");
@@ -49,6 +49,7 @@ function AuthPanel() {
     <label className="sel"><span><Icon n="phone" size={14} />{t("aPhone")}</span><input type="tel" required autoComplete="tel" inputMode="tel" value={phone} onChange={(e) => setPhone(e.target.value)} maxLength={20} placeholder="09xx xxx xxx" /><small className="meta">{t("aPhoneHint")}</small></label>
     <label className="sel"><span><Icon n="user" size={14} />{t("aName")}</span><input autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} maxLength={80} /></label>
     <label className="chk consent"><input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} required /><span>{t("aConsent")}</span></label>
+    <label className="chk consent"><input type="checkbox" checked={marketing} onChange={(e) => setMarketing(e.target.checked)} /><span>{t("aMarket")}</span></label>
   </>;
   return (
     <article className="auth">

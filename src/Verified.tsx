@@ -30,14 +30,14 @@ export function VerifiedBadge({ id }: { id: string }) {
 }
 
 type Row = { id: string; authorId: string; status: string; until: number | null; reason: string };
-export function ClaimBox({ authorId, authorName, mode = "claim" }: { authorId: string; authorName: string; mode?: "claim" | "remove" }) {
-  const rm = mode === "remove";
+export function ClaimBox({ authorId, authorName, mode = "claim" }: { authorId: string; authorName: string; mode?: "claim" | "remove" | "hide" }) {
+  const rm = mode === "remove", hd = mode === "hide";
   const { user } = useAccount();
   const until = useVerified(authorId);
   const [st, setSt] = useState<"idle" | "sending" | "done">("idle"), [err, setErr] = useState(""), [res, setRes] = useState<{ status: string; until: number | null } | null>(null);
   const [mine, setMine] = useState<Row[]>([]);
   useEffect(() => { if (user) api<{ claims: Row[] }>("claim-status").then((j) => setMine(j.claims.filter((c) => c.authorId === authorId))).catch(() => {}); }, [user, authorId, st]);
-  if (until && !rm) return <p className="banner"><Icon n="check" />Hồ sơ này đã được xác thực, hiệu lực đến {dmy(until)}.</p>;
+  if (until && !rm && !hd) return <p className="banner"><Icon n="check" />Hồ sơ này đã được xác thực, hiệu lực đến {dmy(until)}.</p>;
   if (!user) return <p className="banner demo">Để gửi yêu cầu, hãy <a href="#/tai-khoan">đăng nhập bằng email tổ chức</a> (đuôi của trường/viện) rồi quay lại trang này.</p>;
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); setSt("sending"); setErr("");
@@ -49,15 +49,15 @@ export function ClaimBox({ authorId, authorName, mode = "claim" }: { authorId: s
   const last = mine[0];
   return (
     <section className="card claimbox">
-      <h2>{rm ? "Đề nghị gỡ hồ sơ" : "Đây là tôi — xác thực hồ sơ"}</h2>
-      <p className="meta">{rm ? `Đăng nhập bằng email tổ chức (${user.email}). Yêu cầu gỡ được quản trị viên xem xét sau khi hệ thống kiểm tra danh tính (ORCID, tên, email). Việc gỡ chỉ áp dụng trên ProFind, dữ liệu gốc ở OpenAlex/ORCID vẫn còn.` : `Đăng nhập bằng email tổ chức (${user.email}). Hồ sơ được xác thực khi email tổ chức, ORCID và tên khớp với hồ sơ OpenAlex; nếu chưa đủ, quản trị viên sẽ xem xét. Tick vàng có hiệu lực 2 năm.`}</p>
+      <h2>{rm ? "Đề nghị gỡ hồ sơ" : hd ? "Ẩn điểm và huy hiệu xếp hạng" : "Đây là tôi — xác thực hồ sơ"}</h2>
+      <p className="meta">{hd ? `Đăng nhập bằng email tổ chức (${user.email}). Sau khi kiểm tra danh tính, điểm PRO-SCORE1000™ và huy hiệu xếp hạng của hồ sơ này sẽ được ẩn; công trình khoa học vẫn hiển thị. Bạn có thể yêu cầu hiển thị lại bất cứ lúc nào.` : rm ? `Đăng nhập bằng email tổ chức (${user.email}). Yêu cầu gỡ được quản trị viên xem xét sau khi hệ thống kiểm tra danh tính (ORCID, tên, email). Việc gỡ chỉ áp dụng trên ProFind, dữ liệu gốc ở OpenAlex/ORCID vẫn còn.` : `Đăng nhập bằng email tổ chức (${user.email}). Hồ sơ được xác thực khi email tổ chức, ORCID và tên khớp với hồ sơ OpenAlex; nếu chưa đủ, quản trị viên sẽ xem xét. Tick vàng có hiệu lực 2 năm.`}</p>
       {last && last.status !== "approved" && <p className="meta" role="status">Yêu cầu gần nhất: {last.status === "review" ? "đang chờ duyệt" : last.status === "rejected" ? `chưa được chấp nhận${last.reason ? " — " + last.reason : ""}` : `cần bổ sung${last.reason ? " — " + last.reason : ""}`}.</p>}
       <form onSubmit={submit} className="form">
         <label className="sel"><span>Họ tên đầy đủ</span><input name="name" required maxLength={80} defaultValue={user.name} autoComplete="name" /></label>
         <label className="sel"><span>ORCID</span><input name="orcid" maxLength={40} placeholder="0000-0000-0000-0000" /></label>
         <label className="sel"><span>Google Scholar</span><input name="scholar" type="url" maxLength={300} placeholder="https://scholar.google.com/citations?user=…" /></label>
         <label className="sel"><span>{rm ? "Lý do đề nghị gỡ (bắt buộc)" : "Ghi chú (tuỳ chọn)"}</span><textarea name="note" rows={3} maxLength={1000} required={rm} /></label>
-        <p><button className="primary" disabled={st === "sending"}>{st === "sending" ? "Đang gửi…" : rm ? "Gửi đề nghị gỡ hồ sơ" : "Gửi yêu cầu xác thực"}</button></p>
+        <p><button className="primary" disabled={st === "sending"}>{st === "sending" ? "Đang gửi…" : rm ? "Gửi đề nghị gỡ hồ sơ" : hd ? "Gửi đề nghị ẩn điểm" : "Gửi yêu cầu xác thực"}</button></p>
         <div role="alert">{err && <p className="banner demo">{err}</p>}</div>
       </form>
     </section>
@@ -94,7 +94,7 @@ export function AvatarImg({ id, fallback }: { id: string; fallback: ReactNode })
 }
 
 // ---------- Tab "Hồ sơ khoa học" trong không gian tài khoản ----------
-type Mine = { authorId: string; name: string; until: number; profile: { orcid?: string; scholar?: string; site?: string; bio?: string; email?: string; phone?: string; showContact?: boolean; av?: number | boolean }; works: { doi: string; title: string; year: number; status: string; why: string; oa: string }[] };
+type Mine = { authorId: string; name: string; until: number; hide?: string; profile: { orcid?: string; scholar?: string; site?: string; bio?: string; email?: string; phone?: string; showContact?: boolean; av?: number | boolean }; works: { doi: string; title: string; year: number; status: string; why: string; oa: string }[] };
 const shrink = (f: File) => new Promise<string>((res, rej) => {
   const img = new Image(), u = URL.createObjectURL(f);
   img.onload = () => { const s = 256, c = document.createElement("canvas"), k = Math.min(img.width, img.height); c.width = c.height = s; c.getContext("2d")!.drawImage(img, (img.width - k) / 2, (img.height - k) / 2, k, k, 0, 0, s, s); URL.revokeObjectURL(u); res(c.toDataURL("image/jpeg", 0.82)); };
@@ -128,6 +128,13 @@ function One({ m, reload }: { m: Mine; reload: () => void }) {
         <label className="chk"><input type="checkbox" name="showContact" defaultChecked={p.showContact} />Hiện email/số điện thoại công khai trên hồ sơ</label>
         <p><button className="primary" disabled={busy}>Lưu thông tin</button></p>
       </form>
+      <h3>Quyền riêng tư</h3>
+      <p className="meta">Theo Luật Bảo vệ dữ liệu cá nhân bạn có quyền phản đối và hạn chế xử lý. Các thay đổi áp dụng ngay.</p>
+      <p>
+        <label className="chk"><input type="radio" name={`hide-${m.authorId}`} checked={!m.hide} onChange={() => void run("author-privacy", {}, "Đã hiển thị đầy đủ.")} />Hiển thị đầy đủ hồ sơ, điểm và huy hiệu</label><br />
+        <label className="chk"><input type="radio" name={`hide-${m.authorId}`} checked={m.hide === "score"} onChange={() => void run("author-privacy", { hideScore: true }, "Đã ẩn điểm và huy hiệu xếp hạng.")} />Ẩn điểm PRO-SCORE1000™ và huy hiệu xếp hạng (vẫn hiện công trình)</label><br />
+        <label className="chk"><input type="radio" name={`hide-${m.authorId}`} checked={m.hide === "profile"} onChange={() => void run("author-privacy", { hideProfile: true }, "Đã tạm ẩn toàn bộ hồ sơ.")} />Tạm ẩn toàn bộ hồ sơ khỏi ProFind</label>
+      </p>
       <h3>Ảnh đại diện</h3>
       <p><input type="file" accept="image/jpeg,image/png,image/webp" onChange={(e) => void pick(e.target.files?.[0])} aria-label="Chọn ảnh đại diện" /> {p.av ? <button type="button" onClick={() => void run("author-avatar", { image: null }, "Đã gỡ ảnh.")}>Gỡ ảnh</button> : null}</p>
       <h3>Thêm công trình theo DOI</h3>

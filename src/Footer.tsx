@@ -49,7 +49,7 @@ export function Footer({ data: _data }: { data: Data | null }) {
           </ul>
         </nav>
         <div className="sf-bottom">
-          <div><p>© 2026 Lương Việt Hoàng (ISA Vietnam). {t("sfCopy")}</p><p className="sf-disc">{t("sfDisc")} {t("notRankShort")}</p></div>
+          <div><p>© 2026 Lương Việt Hoàng (ISA Vietnam). {t("sfCopy")}</p><p className="sf-disc">Đơn vị chịu trách nhiệm dữ liệu: Viện Khoa học Giáo dục và Kinh tế Đông Nam Á (Viện ISA), MST 5801465662, Số 5 Thông Thiên Học, P. Xuân Hương, Đà Lạt, Lâm Đồng. <a href="#/gioi-thieu?m=rieng-tu">Chính sách dữ liệu cá nhân</a></p><p className="sf-disc">{t("sfDisc")} {t("notRankShort")}</p></div>
           <a href="#main" className="sf-top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>{t("fTop")} ↑</a>
         </div>
       </div>
