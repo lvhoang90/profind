@@ -32,7 +32,7 @@ for (const g of all.values()) { const eligible = g.filter((a) => !a.suspect && !
   for (let i = 0; i < eligible.length; i++) for (let j = i + 1; j < eligible.length; j++) {
     const x = eligible[i], y = eligible[j]; if (rej.has([x.id, y.id].sort().join("|"))) continue;
     if (x.orcid && y.orcid && x.orcid !== y.orcid) continue;
-    const inst = x.institutions.filter((s) => y.institutions.includes(s)); if (!inst.length) continue;
+    const inst = x.institutions.filter((s) => y.institutions.includes(s)); if (!inst.length) continue; // khác cơ quan => coi là người khác, không đề xuất gộp
     const wx = works(x.id), wy = works(y.id), dx = new Set(wx.map((w) => w.doi).filter(Boolean)), tx = new Set(wx.map((w) => normT(w.title)).filter((t) => t.length > 12));
     const sharedDoi = wy.filter((w) => w.doi && dx.has(w.doi)).length, sharedTitle = wy.filter((w) => tx.has(normT(w.title))).length;
     if (sharedDoi || sharedTitle) continue; // có bài chung => hai người khác nhau

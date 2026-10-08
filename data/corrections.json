@@ -949,14 +949,6 @@
       "reason": "Hai hồ sơ OpenAlex của GS. Võ Tòng Xuân (người quản lý dự án yêu cầu bổ sung)"
     },
     {
-      "into": "A5063492978",
-      "from": [
-        "A5082556420"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp tầng A tự động (tên trùng, cùng đơn vị, cùng ngành, một hồ sơ có ORCID, không có công trình chung, không có người thứ ba trùng tên); đã xem xét chủ đề công trình: Le Minh Cam / Lê Minh Cầm"
-    },
-    {
       "into": "A5025973945",
       "from": [
         "A5111749747"
@@ -1043,14 +1035,6 @@
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 69): Do Giang Nam / Nam Giang Do"
-    },
-    {
-      "into": "A5012953606",
-      "from": [
-        "A5037059087"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 78): Le Kieu Oanh Dao / Dao Le Kieu Oanh"
     },
     {
       "into": "A5034418727",
@@ -1173,14 +1157,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 79): Tran Thi My / My Tran Thi"
     },
     {
-      "into": "A5057550880",
-      "from": [
-        "A5125183732"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 64): Ngoc Thi Hong Dang / Dang Thi Hong Ngoc"
-    },
-    {
       "into": "A5067377215",
       "from": [
         "A5088918744"
@@ -1237,22 +1213,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 69): Tien Hai Ly / Hai Ly Tien"
     },
     {
-      "into": "A5035306169",
-      "from": [
-        "A5135476376"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 78): Truong Xuan Vuong"
-    },
-    {
-      "into": "A5108638252",
-      "from": [
-        "A5108718491"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 76): Thao Quoc Tran / Trần Quốc Thao"
-    },
-    {
       "into": "A5101798745",
       "from": [
         "A5112074617"
@@ -1269,28 +1229,12 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 75): Thị Minh Phượng Bùi / Bùi Thị Minh Phượng"
     },
     {
-      "into": "A5059651488",
-      "from": [
-        "A5133517570"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 84): Hoang Van Minh / Hoàng Văn Minh"
-    },
-    {
       "into": "A5103012692",
       "from": [
         "A5056519240"
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 81): Nguyễn Văn Lâm / Văn Lâm Nguyễn"
-    },
-    {
-      "into": "A5059185664",
-      "from": [
-        "A5084076877"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 86): Thanh Thao Nguyen / Thanh Thảo Nguyễn"
     },
     {
       "into": "A5007514576",
@@ -1307,14 +1251,6 @@
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 86): Thanh Chi Do"
-    },
-    {
-      "into": "A5061347483",
-      "from": [
-        "A5070266170"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 60): Tran Lam Dong / Lam Dong Tran"
     },
     {
       "into": "A5072211034",
@@ -1339,14 +1275,6 @@
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 82): Nguyen Thi Dinh / Nguyễn Thị Định"
-    },
-    {
-      "into": "A5102896951",
-      "from": [
-        "A5146796135"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 80): Nguyễn Thị Liên Hương"
     },
     {
       "into": "A5110546267",
@@ -1469,14 +1397,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 62): Luong Thi Theu / Thi-Theu Luong"
     },
     {
-      "into": "A5103850941",
-      "from": [
-        "A5004293448"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 82): Cẩm Phương Phạm / Phuong Cam Pham"
-    },
-    {
       "into": "A5104171614",
       "from": [
         "A5088804504"
@@ -1517,36 +1437,12 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 79): Lan Cuong Nguyen / Nguyen Lan Cuong"
     },
     {
-      "into": "A5054571288",
-      "from": [
-        "A5048175828"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 63): Nguyễn Chí Hải / Hai Chi Nguyen"
-    },
-    {
       "into": "A5108037119",
       "from": [
         "A5155803994"
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 60): Khoa Doan Quoc"
-    },
-    {
-      "into": "A5044237323",
-      "from": [
-        "A5112314057"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 80): Đỗ Trung Dũng / Dung Do Trung"
-    },
-    {
-      "into": "A5066469985",
-      "from": [
-        "A5117412089"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 76): Tran Van Do"
     },
     {
       "into": "A5066089042",
@@ -1579,15 +1475,6 @@
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 74): Quách Văn Toàn Em / Van Toan Em Quach"
-    },
-    {
-      "into": "A5018592475",
-      "from": [
-        "A5062103088",
-        "A5101801388"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 81): Nguyen Van Thin / Thin Van Nguyen; Thin Van Nguyen"
     },
     {
       "into": "A5008084229",
@@ -1660,14 +1547,6 @@
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 78): Nguyễn Văn Chính / Van Chinh Nguyen"
-    },
-    {
-      "into": "A5028147224",
-      "from": [
-        "A5103820493"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 74): Thang Huy Nguyen / Nguyen Huy Thang"
     },
     {
       "into": "A5044073333",
@@ -1766,28 +1645,12 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 75): Ha Thanh Tuyen / Tuyen Ha Thanh"
     },
     {
-      "into": "A5058893017",
-      "from": [
-        "A5058034874"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 70): Sơn Trần Cao / Cao-Son Tran"
-    },
-    {
       "into": "A5112660961",
       "from": [
         "A5031635334"
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 76): Bui Linh Chi Huynh / Bui-Linh-Chi Huynh"
-    },
-    {
-      "into": "A5037275724",
-      "from": [
-        "A5106893943"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 75): Nguyễn Thị Thu Ngà / Nga Thi Thu Nguyen"
     },
     {
       "into": "A5147506337",
@@ -1839,28 +1702,12 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 76): Tran Tinh Hien / Hien Tinh Tran"
     },
     {
-      "into": "A5031788601",
-      "from": [
-        "A5034006800"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 76): Phuong Minh Luong / Minh Phuong Luong"
-    },
-    {
       "into": "A5009177876",
       "from": [
         "A5022047499"
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 75): Vu Thi Thom / Thom Thi Vu"
-    },
-    {
-      "into": "A5026271184",
-      "from": [
-        "A5058869263"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 73): Ngoc Quyên Trân / Ngoc-Quyen Tran"
     },
     {
       "into": "A5087658530",
@@ -1997,14 +1844,6 @@
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 71): Công Long Nguyễn / Cong Long Nguyen"
-    },
-    {
-      "into": "A5027709025",
-      "from": [
-        "A5022218047"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 81): De-Thu Huynh / De Thu Huynh"
     },
     {
       "into": "A5101533886",
@@ -2191,14 +2030,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 69): Vuong Thu Bac / Thu Bac Vuong"
     },
     {
-      "into": "A5111292449",
-      "from": [
-        "A5102644801"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 68): Tung Vu"
-    },
-    {
       "into": "A5082775076",
       "from": [
         "A5136475085"
@@ -2343,14 +2174,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 64): Nam Nguyen Kim / Nguyen Kim Nam"
     },
     {
-      "into": "A5060505015",
-      "from": [
-        "A5102502395"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 90): Nguyen Thi Hoang Ha"
-    },
-    {
       "into": "A5120196808",
       "from": [
         "A5101237726"
@@ -2463,14 +2286,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 72): Ngoc Diem Tran / Tran Ngoc Diem"
     },
     {
-      "into": "A5014186775",
-      "from": [
-        "A5047174993"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 71): Quang-Viet Vu / Vu Quang Viet"
-    },
-    {
       "into": "A5049093237",
       "from": [
         "A5007798758"
@@ -2509,14 +2324,6 @@
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 79): Hien Anh Thi Nguyen / Nguyen Thi Hien Anh"
-    },
-    {
-      "into": "A5035517732",
-      "from": [
-        "A5121673183"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 62): Hung Cao Dinh / Cao Đình Hưng"
     },
     {
       "into": "A5029328135",
@@ -2615,14 +2422,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 80): Phùng Thị Thảo"
     },
     {
-      "into": "A5075217315",
-      "from": [
-        "A5071873426"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 69): Pham Quoc Thanh / Phạm Quốc Thành"
-    },
-    {
       "into": "A5063047898",
       "from": [
         "A5083411527"
@@ -2669,14 +2468,6 @@
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 77): Đỗ Quang Tuyển / Quang Tuyển Đỗ"
-    },
-    {
-      "into": "A5069934157",
-      "from": [
-        "A5108516127"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 82): Phạm Quốc Long / Quoc Long Pham"
     },
     {
       "into": "A5006670809",
@@ -2735,14 +2526,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 65): Dương Văn Hiếu / Van-Hieu Duong"
     },
     {
-      "into": "A5062494176",
-      "from": [
-        "A5090679913"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 71): Trinh Xuan Hoat / Hoat Xuan Trinh"
-    },
-    {
       "into": "A5021712504",
       "from": [
         "A5058459885"
@@ -2797,14 +2580,6 @@
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 60): Anchit Bijalwan"
-    },
-    {
-      "into": "A5035994570",
-      "from": [
-        "A5106425019"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 74): Dien Minh Tran / Minh Dien Tran"
     },
     {
       "into": "A5101803691",
@@ -2912,14 +2687,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 67): Vu Cong Nguyen / Cong Nguyen Vu"
     },
     {
-      "into": "A5053813200",
-      "from": [
-        "A5081932407"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 87): Ta Thi Hoai An / Thi Hoai An Ta"
-    },
-    {
       "into": "A5015094367",
       "from": [
         "A5129119255"
@@ -2985,14 +2752,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 62): Sy Van Hoang / Văn Sỹ Hoàng"
     },
     {
-      "into": "A5049961548",
-      "from": [
-        "A5060470073"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 61): Quan Huu Nguyen / Nguyễn Hữu Quân"
-    },
-    {
       "into": "A5066842174",
       "from": [
         "A5090806862"
@@ -3033,14 +2792,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 69): Hoang Dinh Canh / Canh Dinh Hoang"
     },
     {
-      "into": "A5069939003",
-      "from": [
-        "A5082380322"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 66): Hoang Thanh Hanh / Thanh Hanh Hoang"
-    },
-    {
       "into": "A5047757413",
       "from": [
         "A5111461179"
@@ -3071,14 +2822,6 @@
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 73): Hiep Hoang Trinh / Trinh Hoang Hiep"
-    },
-    {
-      "into": "A5050657190",
-      "from": [
-        "A5104211554"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 74): Kim Chi Vu / Kim-Chi Vu"
     },
     {
       "into": "A5101475545",
@@ -3153,14 +2896,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 79): Hương Thanh Nhạc / Thanh-Huong Nhac"
     },
     {
-      "into": "A5055880156",
-      "from": [
-        "A5110200615"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 83): Vũ Chí Dũng / Dũng Chí Vũ"
-    },
-    {
       "into": "A5018665479",
       "from": [
         "A5087640155"
@@ -3223,14 +2958,6 @@
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 62): Quang-Thien Tran / Tran Quang Thien"
-    },
-    {
-      "into": "A5002494940",
-      "from": [
-        "A5069174535"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 60): Nguyen Huu Hai / Huu Hai Nguyen"
     },
     {
       "into": "A5113107063",
@@ -3337,14 +3064,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 76): Huynh Gia Khiem / Khiem Huynh Gia"
     },
     {
-      "into": "A5071619832",
-      "from": [
-        "A5008669749"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 78): Khoa Tan Nguyen / Tan Khoa Nguyen"
-    },
-    {
       "into": "A5103057778",
       "from": [
         "A5128112961"
@@ -3425,14 +3144,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 72): Thai Long Hoang / Hoang Thai Long"
     },
     {
-      "into": "A5027283747",
-      "from": [
-        "A5102289575"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 60): Phung Dinh Trung / Dinh Trung Phung"
-    },
-    {
       "into": "A5093223700",
       "from": [
         "A5045189366"
@@ -3455,14 +3166,6 @@
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 76): Minh Sinh Do / Minh Sinh Đỗ"
-    },
-    {
-      "into": "A5101451102",
-      "from": [
-        "A5121350728"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 84): Phuong Le Thi"
     },
     {
       "into": "A5026070107",
@@ -3553,14 +3256,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 71): Nguyen Thi Khanh Van / Nguyễn Thị Khánh Vân"
     },
     {
-      "into": "A5033681618",
-      "from": [
-        "A5112899901"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 70): Hoàng Thị Thu Huyền / Thị Thu Huyền Hoàng"
-    },
-    {
       "into": "A5003368566",
       "from": [
         "A5093920086"
@@ -3583,14 +3278,6 @@
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 79): Luu M. Hai / Luu M.Hai"
-    },
-    {
-      "into": "A5101100560",
-      "from": [
-        "A5032632724"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 77): Nguyễn Hồng Thảo / Hong Thao Nguyen"
     },
     {
       "into": "A5092265683",
