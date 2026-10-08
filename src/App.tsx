@@ -17,6 +17,7 @@ import { ProBadge, ProBadgeTag } from "./Badge";
 import { VisitChip } from "./VisitChip";
 import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg } from "./Verified";
 import { useHidden } from "./hidden";
+import { NoDataHint } from "./NoData";
 import { Footer, EcoLink } from "./Footer";
 import { evt, startSession } from "./analytics";
 import { getTheme, setTheme, type Theme } from "./theme";
@@ -335,7 +336,7 @@ function List({ d, query }: { d: Data; query: string }) {
         <p className="meta" role="status" aria-live="polite">{t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</p>
         {cfg?.enabled !== false && hasFilter && <button type="button" className="ghost sm" onClick={() => void doSave()}><Icon n="star" size={16} />{user ? t("saveSearchBtn") : t("saveGate")}</button>}<span className="meta" role="status">{ssMsg}</span>
       </div>
-      {rows.length === 0 ? <p className="empty">{t("none")} <a href="#/dinh-chinh">{t("suggestAdd")}</a><br /><span className="meta">{t("ecoEmpty")} <EcoLink app="edufind" place="empty">{t("ecoEmptyB")}<span className="sr"> {t("newTab")}</span></EcoLink></span></p> : (
+      {rows.length === 0 ? <div><NoDataHint q={q} /><p className="empty">{t("none")} <a href="#/dinh-chinh">{t("suggestAdd")}</a><br /><span className="meta">{t("ecoEmpty")} <EcoLink app="edufind" place="empty">{t("ecoEmptyB")}<span className="sr"> {t("newTab")}</span></EcoLink></span></p></div> : (
         <div className="table-wrap"><table className="cards tlist">
           <caption className="sr">{t("title")}: {t("shown", { n: range(page, rows.length, num), t: num(rows.length) })}</caption>
           <thead><tr>
