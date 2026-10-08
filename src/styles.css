@@ -501,3 +501,4 @@ table.cards td.num{white-space:nowrap}
 .discpick{border:1px solid var(--line,#d6dde6);border-radius:12px;padding:10px 14px;margin:0}.discpick legend{font-weight:600;padding:0 6px}.discgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:4px 12px}
 .linkbtn{background:none;border:0;padding:2px 0;color:var(--link,#1b6a91);text-decoration:underline;cursor:pointer;font:inherit;font-size:.8rem}
 .who>.meta{padding-left:38px}
+.past{color:var(--ink-3,#6b7a8a);font-size:.82em}.chips li.pastchip{opacity:.62;border-style:dashed}

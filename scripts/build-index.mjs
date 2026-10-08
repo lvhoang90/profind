@@ -6,6 +6,9 @@ import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from "node
 import { computePro } from "./pro-score.mjs";
 const rd = (f) => JSON.parse(readFileSync(f, "utf8"));
 const J = rd("data/journals.json"), S = rd("data/sjr-rules.json"), I = rd("data/institutions.json"), R = rd("data/raw-authors.json"), C = rd("data/corrections.json");
+// Đơn vị hiện tại (scripts/build-current-inst.mjs): đơn vị có điểm gần đây < 50% đơn vị cao nhất của tác giả là đơn vị cũ (instPast), xếp sau.
+const CUR = existsSync("data/raw/_current-inst.json") ? rd("data/raw/_current-inst.json") : {};
+const instSplit = (id, list) => { const sc = CUR[id]; if (!sc || list.length < 2) return { institutions: list, instPast: [] }; const mx = Math.max(...list.map((u) => sc[u] ?? 0)); if (!(mx > 0)) return { institutions: list, instPast: [] }; const now = list.filter((u) => sc[u] === undefined || sc[u] >= 0.5 * mx).sort((x, y) => (sc[y] ?? mx) - (sc[x] ?? mx)), past = list.filter((u) => !now.includes(u)).sort((x, y) => sc[y] - sc[x]); return { institutions: [...now, ...past], instPast: past }; };
 const META = existsSync("data/author-meta.json") ? rd("data/author-meta.json") : {};
 // Nhãn Top 2% thế giới (Ioannidis et al., CC BY-NC 3.0; xem data/top2/LICENSE-NC.md): khớp bằng scripts/match-top2.mjs
 const TOP2 = existsSync("data/top2/matches.json") ? rd("data/top2/matches.json") : {};
@@ -135,7 +138,7 @@ const outAuthors = authors.map((a) => {
   const matched = ws.filter((w) => w.matched).length;
   const span = years.length ? Math.max(1, Math.max(...years) - Math.min(...years) + 1) : 1;
   const meta = META[a.id];
-  return { id: a.id, name: cleanName(a.name), orcid: a.orcid, institutions: a.institutions, disciplines, demo: !!a.demo, claimed: a.claimed,
+  return { id: a.id, name: cleanName(a.name), orcid: a.orcid, ...(() => { const r = instSplit(a.id, a.institutions); return r.instPast.length ? r : { institutions: r.institutions }; })(), disciplines, demo: !!a.demo, claimed: a.claimed,
     scholar: SCH[a.id]?.id ?? null, scholarCit: SCH[a.id]?.citations ?? null,
     top2: TOP2[a.id] ? { rank: TOP2[a.id].rank, field: TOP2[a.id].field } : null,
     // foreign: true = có đơn vị ngoài VN; false = chỉ đơn vị VN; null = chưa biết (chưa chạy enrich-authors.mjs, hoặc OpenAlex không ghi quốc gia nào).
