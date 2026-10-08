@@ -168,7 +168,13 @@ const outAuthors = authors.map((a) => {
 // Người ngoài tập (nước ngoài, nghi gộp nhầm, chưa biết) có hạng null, giao diện hiện "-".
 const CONFIRMED = new Set(existsSync("data/vn-confirmed.json") ? rd("data/vn-confirmed.json").ids ?? [] : []), EXCLUDED = new Set(existsSync("data/vn-excluded.json") ? rd("data/vn-excluded.json").ids ?? [] : []);
 // Quy ước hiện hành: mọi hồ sơ gắn với ít nhất một trường/viện trong danh sách đơn vị của Việt Nam đều được hiển thị và xếp hạng, không phân biệt quốc tịch; chỉ loại hồ sơ nghi gộp nhầm (suspect) và hồ sơ trong data/vn-excluded.json.
-for (const a of outAuthors) a.rankable = !a.suspect && !EXCLUDED.has(a.id);
+// "Liên kết chính ở nước ngoài": DƯỚI ABROAD_MAX công trình (trong số công trình OpenAlex ghi cơ quan, tối thiểu ABROAD_MIN_WORKS công trình) có liên kết tại Việt Nam thì không xếp hạng; hiện nhãn trên hồ sơ.
+// Ngoại lệ do quản trị viên xác nhận: data/vn-confirmed.json. Hồ sơ trong danh sách Top 2% mục "Việt Nam" (Elsevier) được coi là trong nước. Danh sách xem xét: scripts/abroad-review.mjs.
+const ABROAD_MAX = 0.2, ABROAD_MIN_WORKS = 15;
+const AUS = new Map();
+if (existsSync("data/raw/_authorship.json")) { const AU = rd("data/raw/_authorship.json"); for (const k in AU) { const c = AU[k][1] ?? []; if (!c.length) continue; const id = k.slice(0, k.indexOf("-")), e = AUS.get(id) ?? AUS.set(id, { n: 0, vn: 0 }).get(id); e.n++; if (c.includes("VN")) e.vn++; } }
+for (const a of outAuthors) { const e = AUS.get(a.id); a.vnShare = e && e.n >= ABROAD_MIN_WORKS ? Math.round((1000 * e.vn) / e.n) / 10 : null; a.abroadMain = a.vnShare != null && e.vn / e.n < ABROAD_MAX && !CONFIRMED.has(a.id) && !TOP2[a.id]; }
+for (const a of outAuthors) a.rankable = !a.suspect && !EXCLUDED.has(a.id) && !a.abroadMain;
 const pool = outAuthors.filter((a) => a.rankable && a.worksCount > 0);
 const rank = (key, out) => { const o = [...pool].sort((a, b) => b[key] - a[key]); o.forEach((a, i, arr) => { a[out] = i > 0 && arr[i - 1][key] === a[key] ? arr[i - 1][out] : i + 1; }); };
 for (const a of outAuthors) { a.rankScore = a.rankWorks = a.rankCit = null; }
