@@ -1,6 +1,6 @@
 // Tick vàng "Nhà khoa học đã xác thực" + hộp yêu cầu xác thực hồ sơ ("Đây là tôi").
 import { DISC } from "./disciplines";
-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useId, useState, type FormEvent, type ReactNode } from "react";
 import { api, useAccount } from "./accountStore";
 import { Icon } from "./icons";
 
@@ -19,10 +19,22 @@ export function useVerified(id: string): number | null {
 const dmy = (ms: number) => new Date(ms).toLocaleDateString("vi-VN");
 const LBL = "Nhà khoa học đã xác thực";
 
+/** Con dấu "đã xác thực": hoa 8 cánh vàng, dấu tích trắng (thay cho vòng tròn phẳng cũ). */
+export function VerifiedSeal({ size = 18 }: { size?: number }) {
+  const g = `vs${useId().replace(/:/g, "")}`;
+  return (
+    <svg className="vseal" width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+      <defs><linearGradient id={g} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#ffe27a" /><stop offset=".55" stopColor="#f5b301" /><stop offset="1" stopColor="#d98a00" /></linearGradient></defs>
+      <rect x="4" y="4" width="16" height="16" rx="4.5" fill={`url(#${g})`} /><rect x="4" y="4" width="16" height="16" rx="4.5" transform="rotate(45 12 12)" fill={`url(#${g})`} />
+      <circle cx="12" cy="12" r="7.6" fill="none" stroke="#fff" strokeOpacity=".45" strokeWidth=".8" />
+      <path d="M8.2 12.4l2.6 2.6 5-5.4" fill="none" stroke="#fff" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 export function VerifiedTick({ id, size = 16 }: { id: string; size?: number }) {
   const until = useVerified(id);
   if (!until) return null;
-  return <span className="vtick" title={`${LBL} · hiệu lực đến ${dmy(until)}`} role="img" aria-label={LBL}><Icon n="check" size={size} /></span>;
+  return <span className="vtick" title={`${LBL} · hiệu lực đến ${dmy(until)}`} role="img" aria-label={LBL}><VerifiedSeal size={size} /></span>;
 }
 /** Người đang đăng nhập có phải chủ hồ sơ đã xác thực này không (so theo email xác thực). */
 export function useIsMine(id: string): boolean {
@@ -33,7 +45,7 @@ export function useIsMine(id: string): boolean {
 export function VerifiedBadge({ id }: { id: string }) {
   const until = useVerified(id);
   if (!until) return null;
-  return <span className="badge vbadge"><span className="vtick" aria-hidden="true"><Icon n="check" size={14} /></span>{LBL} · đến {dmy(until)}</span>;
+  return <span className="badge vbadge"><VerifiedSeal size={18} /><span><b>{LBL}</b><small>hiệu lực đến {dmy(until)}</small></span></span>;
 }
 
 type Row = { id: string; authorId: string; status: string; until: number | null; reason: string };
