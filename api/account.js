@@ -355,7 +355,7 @@ export default async function handler(request) {
     if (op === "admin-claims" && request.method === "GET") {
       const bad = needAdmin(); if (bad) return bad;
       const t = Date.now(), vf = await allVf();
-      return json({ claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [], units: Object.values(pairs(await one(["HGETALL", "profind:un"]))).map(jparse).filter(Boolean), split: Object.values(pairs(await one(["HGETALL", "profind:sp"]))).map(jparse).filter(Boolean), hidden: { score: (await one(["SMEMBERS", HSK])) ?? [], profile: (await one(["SMEMBERS", HPK])) ?? [] }, works: await (async () => { const o = []; for (const [id, raw] of Object.entries(pairs(await one(["HGETALL", "profind:aw"])))) for (const w of jparse(raw) ?? []) if (w.status === "review") o.push({ authorId: id, ...w }); return o; })() });
+      return json({ claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [], recheck: Object.values(pairs(await one(["HGETALL", "profind:rk"]))).map(jparse).filter(Boolean), units: Object.values(pairs(await one(["HGETALL", "profind:un"]))).map(jparse).filter(Boolean), split: Object.values(pairs(await one(["HGETALL", "profind:sp"]))).map(jparse).filter(Boolean), hidden: { score: (await one(["SMEMBERS", HSK])) ?? [], profile: (await one(["SMEMBERS", HPK])) ?? [] }, works: await (async () => { const o = []; for (const [id, raw] of Object.entries(pairs(await one(["HGETALL", "profind:aw"])))) for (const w of jparse(raw) ?? []) if (w.status === "review") o.push({ authorId: id, ...w }); return o; })() });
     }
     if (op.startsWith("admin-claim-") && request.method === "POST") {
       const bad = needAdmin(); if (bad) return bad;
@@ -407,6 +407,15 @@ export default async function handler(request) {
         for (const it of items) {
           const id = String(it.id || ""), d = String(it.decision || ""); if (!/^[a-z0-9-]{2,80}$/.test(id)) return json({ error: "Mã đơn vị không hợp lệ." }, 400);
           if (d === "undo") cmds.push(["HDEL", "profind:un", id]); else if (["approve", "reject", "skip"].includes(d)) cmds.push(["HSET", "profind:un", id, JSON.stringify({ id, d, by: me.email, at: Date.now() })]); else return json({ error: "Quyết định không hợp lệ." }, 400);
+        }
+        if (cmds.length) await store.run(cmds); return json({ ok: true, n: cmds.length });
+      }
+      if (op === "admin-claim-recheck") {
+        const items = Array.isArray(body.items) ? body.items.slice(0, 200) : [], cmds = [];
+        for (const it of items) {
+          const a = String(it.a || ""), b = String(it.b || ""), d = String(it.decision || ""), k = [a, b].sort().join("|");
+          if (!/^A\d{5,12}$/.test(a) || !/^A\d{5,12}$/.test(b)) return json({ error: "Mã hồ sơ không hợp lệ." }, 400);
+          if (d === "undo") cmds.push(["HDEL", "profind:rk", k]); else if (["keep", "split"].includes(d)) cmds.push(["HSET", "profind:rk", k, JSON.stringify({ a, b, d, by: me.email, at: Date.now() })]); else return json({ error: "Quyết định không hợp lệ." }, 400);
         }
         if (cmds.length) await store.run(cmds); return json({ ok: true, n: cmds.length });
       }
