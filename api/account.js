@@ -402,9 +402,12 @@ export default async function handler(request) {
         if (cmds.length) await store.run(cmds); return json({ ok: true, n: cmds.length });
       }
       if (op === "admin-claim-unit") {
-        const id = String(body.id || ""), d = String(body.decision || ""); if (!/^[a-z0-9-]{2,80}$/.test(id)) return json({ error: "Mã đơn vị không hợp lệ." }, 400);
-        if (d === "undo") await one(["HDEL", "profind:un", id]); else if (["approve", "reject", "skip"].includes(d)) await one(["HSET", "profind:un", id, JSON.stringify({ id, d, by: me.email, at: Date.now() })]); else return json({ error: "Quyết định không hợp lệ." }, 400);
-        return json({ ok: true });
+        const items = Array.isArray(body.items) ? body.items.slice(0, 100) : [{ id: body.id, decision: body.decision }], cmds = [];
+        for (const it of items) {
+          const id = String(it.id || ""), d = String(it.decision || ""); if (!/^[a-z0-9-]{2,80}$/.test(id)) return json({ error: "Mã đơn vị không hợp lệ." }, 400);
+          if (d === "undo") cmds.push(["HDEL", "profind:un", id]); else if (["approve", "reject", "skip"].includes(d)) cmds.push(["HSET", "profind:un", id, JSON.stringify({ id, d, by: me.email, at: Date.now() })]); else return json({ error: "Quyết định không hợp lệ." }, 400);
+        }
+        if (cmds.length) await store.run(cmds); return json({ ok: true, n: cmds.length });
       }
       if (op === "admin-claim-hide") {
         const id = String(body.authorId || ""); if (!/^A\d{5,12}$/.test(id)) return json({ error: "Mã hồ sơ không hợp lệ." }, 400);
