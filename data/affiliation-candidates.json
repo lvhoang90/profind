@@ -2012,5 +2012,21 @@
    "Foreign Language Department, University of Finance and Business Administration, Hung Yen, Vietnam",
    "University of Finance and Business Administration (UFBA)"
   ]
+ },
+ {
+  "id": "cao-dang-y-te-ha-nam",
+  "name": "Trường Cao đẳng Y tế Hà Nam",
+  "en": "Ha Nam Medical College",
+  "type": "college",
+  "city": null,
+  "phrase": "Cao đẳng Y tế Hà Nam",
+  "works": 3,
+  "authors": 0,
+  "vnShare": 1,
+  "flags": [
+   "manual"
+  ],
+  "topAuthors": [],
+  "samples": []
  }
 ]

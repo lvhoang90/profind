@@ -4593,15 +4593,13 @@
   {
    "id": "cao-dang-y-te-ha-nam",
    "name": "Trường Cao đẳng Y tế Hà Nam",
-   "en": "Hanoi Medical College",
+   "en": "Ha Nam Medical College",
    "abbr": null,
    "type": "college",
    "managedBy": "Trường cao đẳng y tế",
    "city": null,
    "ror": null,
-   "source": "vi.wikipedia.org",
-   "rorSuspect": "https://ror.org/03dqjp752",
-   "cityWas": "Hanoi"
+   "source": "vi.wikipedia.org"
   },
   {
    "id": "cao-dang-y-te-hung-yen",
