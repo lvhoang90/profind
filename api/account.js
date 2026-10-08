@@ -296,6 +296,8 @@ export default async function handler(request) {
       Object.assign(claim, { status: "approved", decidedAt: t, decidedBy: by, until });
       const rec = { authorId: claim.authorId, claimId: claim.id, email: claim.email, name: claim.name, orcid: claim.orcid || "", scholar: claim.scholar || "", since: t, until };
       await store.run([["HSET", VFK, claim.authorId, JSON.stringify(rec)], ...(claim.orcid ? [["HSET", VFO, claim.orcid, claim.authorId]] : []), ["HSET", CLK, claim.id, JSON.stringify(claim)]]);
+      // Yêu cầu khác còn chờ cho cùng hồ sơ (gửi thêm lần nữa, hoặc nhập thủ công trùng) được đóng lại: một hồ sơ chỉ cần xác thực một lần.
+      for (const o of (await allClaims()).filter((c) => c.id !== claim.id && c.authorId === claim.authorId && (c.kind ?? "claim") === "claim" && (c.status === "review" || c.status === "info"))) { Object.assign(o, { status: "approved", decidedAt: t, decidedBy: "trùng với yêu cầu đã duyệt", until }); await one(["HSET", CLK, o.id, JSON.stringify(o)]); }
       await safeMail(claim.email, claimMail("approved", { name: claim.name, authorName: claim.authorName, origin: url.origin, authorId: claim.authorId, until }));
       return rec;
     };
@@ -382,7 +384,9 @@ export default async function handler(request) {
         const email = tidy(body.email, 160).toLowerCase(); if (!EMAIL_RE.test(email)) return json({ error: "Email chưa đúng." }, 400);
         const orcidRaw = tidy(body.orcid, 40), orcid = normOrcid(orcidRaw); if (orcidRaw && !orcid) return json({ error: "Mã ORCID chưa đúng định dạng." }, 400);
         const claim = await newClaim({ authorId, authorName: tidy(body.authorName, 120), name: tidy(body.name, 80) || email, email, orcid, scholar: tidy(body.scholar, 300), note: tidy(body.note, 1000), emailVerified: false, by: me.email });
-        return json({ ok: true, claim });
+        // Quản trị viên xác nhận trực tiếp: không cần duyệt lần hai trong hàng chờ.
+        if (body.direct !== false && body.direct !== "off" && claim.status !== "approved") { await approveClaim(claim, me.email); }
+        return json({ ok: true, claim, status: claim.status });
       }
       if (op === "admin-claim-work") {
         const id = String(body.authorId || ""), doi = normDoi(body.doi), ws = jparse(await one(["HGET", "profind:aw", id])) ?? [], w = ws.find((x) => x.doi === doi);
