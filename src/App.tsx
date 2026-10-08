@@ -463,7 +463,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
         <div className="kpi"><span className="kic"><Icon n="link" size={20} /></span><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span><i className="bar" role="presentation"><u style={{ width: `${Math.round(a.matchedRate * 100)}%` }} /></i></div>
       </div>
       {a.suspect && <p className="banner demo" role="note"><Icon n="info" />{t("suspectNote")}</p>}
-      {a.abroadMain && <p className="banner demo" role="note"><Icon n="info" />{t("abroadNote").replace("{p}", num(a.vnShare ?? 0, 1)).replace("{m}", String(d.meta.abroadMax ?? 20))}</p>}
+      {a.abroadMain && <p className="banner demo" role="note"><Icon n="info" />{a.abroadBasis === "recent" ? t("abroadNoteRecent").replace("{y}", (d.meta.abroad?.window ?? []).join(", ")).replace("{p}", num(a.vnRecent ?? 0, 1)).replace("{m}", String(d.meta.abroad?.recentMinShare ?? "")) : t("abroadNoteOverall").replace("{p}", num(a.vnShare ?? 0, 1)).replace("{m}", String(d.meta.abroad?.maxVnShare ?? ""))}</p>}
       {hid.score.has(a.id) ? <p className="banner" role="note"><Icon n="info" />{t("hiddenScore")}</p> : <p className="meta prodisc" role="note">{t("proDisc")} {mine ? <a href="#/tai-khoan">Quản lý quyền riêng tư của hồ sơ</a> : <a href={`#/dinh-chinh/${encodeURIComponent(a.id)}`}>{t("proHide")}</a>}</p>}
       <AuthorExtras id={a.id} />
       {works && works.length > 0 && (
