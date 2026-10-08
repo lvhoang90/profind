@@ -562,3 +562,5 @@ td.who>.meta{margin-top:3px}
 .mxlist{list-style:none;margin:0;padding:0}.mxlist li{padding:10px 0;border-bottom:1px solid var(--line)}.mxlist li:last-child{border-bottom:0}
 .mxact{display:inline-flex;gap:6px;margin-top:6px}.mxact button{min-height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:.82rem;font-weight:600;cursor:pointer}
 .mxact button.mx-ex{background:#fde8e8;border-color:#f3b4b4;color:#8a1c1c}.mxact button:disabled{opacity:.45;cursor:default}
+
+.xwgrp{margin:8px 0}.xwgrp summary{cursor:pointer;font-weight:600;padding:6px 0}.xwlist{list-style:none;margin:6px 0 0;padding:0;max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:10px}.xwlist li{padding:7px 12px;border-bottom:1px solid var(--line);font-size:.82rem;overflow-wrap:anywhere}.xwlist li:last-child{border-bottom:0}.xwlist b{margin:0 2px}
