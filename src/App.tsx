@@ -102,7 +102,7 @@ function AppInner() {
 
   // Tiêu đề tab, mô tả và đưa tiêu điểm về nội dung chính khi đổi trang (trình đọc màn hình biết đã chuyển trang).
   useEffect(() => {
-    document.title = view === "lb" ? `${lang === "vi" ? "Bảng xếp hạng" : "Leaderboard"} | ProFind` : view === "pro" ? "PRO-SCORE1000 | ProFind" : view === "about" ? `${t("fAbout2")} | ProFind` : view === "acc" ? `${t("accTitle")} | ProFind` : view === "adm" ? "Quản trị | ProFind" : view === "author" && author ? `${author.name} | ProFind` : view === "corr" ? `${t("corrTitle")} | ProFind` : view === "nf" ? `${t("notFound").split(".")[0]} | ProFind` : t("docTitle");
+    document.title = view === "lb" ? `${lang === "vi" ? "Bảng xếp hạng" : "Leaderboard"} | ProFind™` : view === "pro" ? "PRO-SCORE1000™ | ProFind™" : view === "about" ? `${t("fAbout2")} | ProFind™` : view === "acc" ? `${t("accTitle")} | ProFind™` : view === "adm" ? "Quản trị | ProFind™" : view === "author" && author ? `${author.name} | ProFind™` : view === "corr" ? `${t("corrTitle")} | ProFind™` : view === "nf" ? `${t("notFound").split(".")[0]} | ProFind™` : t("docTitle");
     const k = data?.meta?.authors ? Math.floor(data.meta.authors / 1000) * 1000 : 0; // số tác giả làm tròn xuống nghìn, luôn theo dữ liệu hiện hành
     document.querySelector('meta[name="description"]')?.setAttribute("content", t("metaDesc").replace("{k}", k.toLocaleString(lang === "vi" ? "vi-VN" : "en-US")));
     if (first.current) { first.current = false; return; }
@@ -116,7 +116,7 @@ function AppInner() {
       <header className="top">
         <HeroArt />
         <div className="wrap hd">
-          <a className="brand" href="#/" aria-label="ProFind"><img className="logo" src="./logo-disc.svg" alt="" width="40" height="40" /><b>Pro<i>Find</i></b></a>
+          <a className="brand" href="#/" aria-label="ProFind"><img className="logo" src="./logo-disc.svg" alt="" width="40" height="40" /><b>Pro<i>Find</i><sup className="tm">™</sup></b></a>
           <div className="hd-tools">
             <button className="icon-btn" onClick={() => { const n: Theme = dark ? "light" : "dark"; setTheme(n); setThemeState(n); evt("theme"); }} aria-label={dark ? t("themeToLight") : t("themeToDark")} title={dark ? t("themeToLight") : t("themeToDark")}><Icon n={dark ? "moon" : "sun"} size={20} /></button>
           <div className="lang" role="group" aria-label={t("langLabel")}>
@@ -475,7 +475,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
             </div>
             <p className="legend"><span><i className="sw yle" />{t("lead")}</span><span><i className="sw yco" />{t("co")}</span></p>
           </section>
-          {a.proParts && <section className="card" aria-label="PRO-SCORE1000">
+          {a.proParts && <section className="card" aria-label="PRO-SCORE1000™">
             <h2>PRO-SCORE1000™ <small className="meta">{t("proConf" + a.proConf as "proConf0")}</small></h2>
             <ul className="hbars">{(["impact", "output", "lead", "quality", "momentum", "steady", "recog"] as const).map((k) => <li key={k}><span>{t(("pp_" + k) as "pp_impact")}</span><i className="hb"><u className="c1" style={{ width: `${a.proParts![k]}%` }} /></i><b>{a.proParts![k]}</b></li>)}</ul>
             {a.proStab != null && a.proTier && <p className="meta"><b>{t("proStab", { n: String(a.proStab), t: t(("topN") as "topN", { n: a.proTier.slice(1) }) })}</b></p>}

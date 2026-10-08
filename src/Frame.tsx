@@ -5,7 +5,7 @@ import { VerifiedSeal, useVerified } from "./Verified";
 
 // Khung avatar theo nhóm nhà khoa học (từ thấp đến cao):
 //   không khung = chưa xác thực · v = đã xác thực · vt = đã xác thực + có tên trong danh sách Top 2% thế giới
-//   p (t10…t1000) = thuộc PRO-SCORE1000: vòng sáng chạy màu huy hiệu hạng, kèm huy hiệu (Top 10 có thêm vương miện).
+//   p (t10…t1000) = thuộc PRO-SCORE1000™: vòng sáng chạy màu huy hiệu hạng, kèm huy hiệu (Top 10 có thêm vương miện).
 export function AvatarFrame({ a, children }: { a: Author; children: ReactNode }) {
   const verified = useVerified(a.id) !== null, tier = tierOf(a.proRank);
   const kind = tier ? `p ${tier}` : verified && a.top2 ? "vt" : verified ? "v" : "n";

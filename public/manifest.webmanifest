@@ -1,7 +1,7 @@
 {
-  "name": "ProFind - Dữ liệu số về Nhà khoa học & công trình nghiên cứu",
-  "short_name": "ProFind",
-  "description": "Tra cứu nhà nghiên cứu gắn với các trường, viện Việt Nam theo ngành, đơn vị, công trình và chỉ số PRO-SCORE1000.",
+  "name": "ProFind™ - Dữ liệu số về Nhà khoa học & công trình nghiên cứu",
+  "short_name": "ProFind™",
+  "description": "Tra cứu nhà nghiên cứu gắn với các trường, viện Việt Nam theo ngành, đơn vị, công trình và chỉ số PRO-SCORE1000™.",
   "lang": "vi",
   "start_url": "./",
   "scope": "./",

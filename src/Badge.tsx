@@ -1,6 +1,6 @@
 import { useT } from "./i18n";
 
-// Huy hiệu PRO-SCORE1000 theo thứ hạng toàn hệ thống; tự cập nhật khi dữ liệu và thứ hạng thay đổi.
+// Huy hiệu PRO-SCORE1000™ theo thứ hạng toàn hệ thống; tự cập nhật khi dữ liệu và thứ hạng thay đổi.
 export type Tier = "t10" | "t50" | "t100" | "t500" | "t1000";
 export const tierOf = (rank: number | null | undefined): Tier | null => rank == null ? null : rank <= 10 ? "t10" : rank <= 50 ? "t50" : rank <= 100 ? "t100" : rank <= 500 ? "t500" : rank <= 1000 ? "t1000" : null;
 export const TIERS: Tier[] = ["t10", "t50", "t100", "t500", "t1000"];
