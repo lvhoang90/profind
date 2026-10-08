@@ -30,7 +30,7 @@ const RANK_KEY = { pro: "proRank", worksCount: "rankWorks", citations: "rankCit"
 const EDUFIND = "https://edufind.isavn.edu.vn";
 const CONTACT = "vienisavietnam@gmail.com";
 const PAGE = 25; // mỗi trang tối đa 25 kết quả
-const TOP2_DOI = "https://doi.org/10.17632/btchxktzyw.8";
+const TOP2_DOI = "https://doi.org/10.17632/btchxktzyw.9";
 const TOP2_LIC = "https://creativecommons.org/licenses/by-nc/3.0/";
 
 /** Giải mã đường dẫn băm an toàn: chuỗi % sai (vd. %E0%A4%A) không được làm sập trang. */
@@ -175,13 +175,16 @@ function Pager({ page, total, set }: { page: number; total: number; set: (p: num
   );
 }
 
+const countryName = (code: string | null | undefined, lang: Lang) => { if (!code) return ""; try { return new Intl.DisplayNames([lang], { type: "region" }).of(code) ?? code; } catch { return code; } };
 const instLabel = (i: Institution | undefined, lang: Lang, fallback = "") => (i ? (lang === "vi" ? i.name : i.en || i.name) : fallback);
 
 function Top2Tag({ a, cls }: { a: Author; cls: string }) {
   const { lang, t, num } = useT();
   if (!a.top2) return null;
-  const tip = t("top2Tip", { r: num(a.top2.rank), f: fieldName(a.top2.field, lang) });
-  return <a className={cls} href={TOP2_DOI} target="_blank" rel="noopener" title={tip} aria-label={`${t("top2Tag")}. ${tip} ${t("newTab")}`}>★ {t("top2Tag")}</a>;
+  const y = a.top2.scope === "y2025", tag = t(y ? "top2TagY" : "top2Tag");
+  const self = a.top2.selfPct == null ? "-" : `${num(Math.round(a.top2.selfPct * 1000) / 10, 1)}%`, ns = a.top2.inNs == null ? "" : t(a.top2.inNs ? "top2NsYes" : "top2NsNo");
+  const tip = t("top2Tip", { r: num(a.top2.rank), f: fieldName(a.top2.field, lang), c: t(y ? "top2Year" : "top2Career"), s: self, n: ns });
+  return <a className={cls} href={TOP2_DOI} target="_blank" rel="noopener" title={tip} aria-label={`${tag}. ${tip} ${t("newTab")}`}>★ {tag}</a>;
 }
 
 function List({ d, query }: { d: Data; query: string }) {
@@ -463,7 +466,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
         <div className="kpi"><span className="kic"><Icon n="link" size={20} /></span><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span><i className="bar" role="presentation"><u style={{ width: `${Math.round(a.matchedRate * 100)}%` }} /></i></div>
       </div>
       {a.suspect && <p className="banner demo" role="note"><Icon n="info" />{t("suspectNote")}</p>}
-      {a.abroadMain && <p className="banner demo" role="note"><Icon n="info" />{a.abroadBasis === "recent" ? t("abroadNoteRecent").replace("{y}", (d.meta.abroad?.window ?? []).join(", ")).replace("{p}", num(a.vnRecent ?? 0, 1)).replace("{m}", String(d.meta.abroad?.recentMinShare ?? "")) : t("abroadNoteOverall").replace("{p}", num(a.vnShare ?? 0, 1)).replace("{m}", String(d.meta.abroad?.maxVnShare ?? ""))}</p>}
+      {a.abroadMain && <p className="banner demo" role="note"><Icon n="info" />{a.abroadBasis === "main" ? (a.mainCountryWorks == null ? t("abroadNoteMain2").replace("{c}", countryName(a.mainCountry, lang)) : t("abroadNoteMain").replace("{c}", countryName(a.mainCountry, lang)).replace("{w}", num(a.mainCountryWorks ?? 0)).replace("{v}", num(a.mainCountryVn ?? 0))) : a.abroadBasis === "recent" ? t("abroadNoteRecent").replace("{y}", (d.meta.abroad?.window ?? []).join(", ")).replace("{p}", num(a.vnRecent ?? 0, 1)).replace("{m}", String(d.meta.abroad?.recentMinShare ?? "")) : t("abroadNoteOverall").replace("{p}", num(a.vnShare ?? 0, 1)).replace("{m}", String(d.meta.abroad?.maxVnShare ?? ""))}</p>}
       {hid.score.has(a.id) ? <p className="banner" role="note"><Icon n="info" />{t("hiddenScore")}</p> : <p className="meta prodisc" role="note">{t("proDisc")} {mine ? <a href="#/tai-khoan">Quản lý quyền riêng tư của hồ sơ</a> : <a href={`#/dinh-chinh/${encodeURIComponent(a.id)}`}>{t("proHide")}</a>}</p>}
       <AuthorExtras id={a.id} />
       {works && works.length > 0 && (

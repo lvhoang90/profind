@@ -66,7 +66,7 @@ export function AboutPage({ section }: { section: string }) {
       <h3>Dữ liệu bên thứ ba</h3>
       <p>OpenAlex, ORCID và ROR theo CC0. Danh mục tạp chí và điểm của HĐGSNN, danh sách cơ sở giáo dục, Semantic Scholar, SCImago/Scopus (Elsevier B.V.) và Web of Science (Clarivate) theo điều khoản và nhãn hiệu của chủ sở hữu.</p>
       <h3>Nhãn "Top 2% thế giới": CC BY-NC 3.0 (chỉ phi thương mại)</h3>
-      <p>Ioannidis J.P.A., Baas J., Klavans R., Boyack K.W. (2025), "Updated science-wide author databases of standardized citation indicators", phiên bản 8, Elsevier BV (Mendeley Data), DOI 10.17632/btchxktzyw.8, dựa trên dữ liệu Scopus. Giấy phép Creative Commons Attribution-NonCommercial 3.0.</p>
+      <p>Ioannidis J.P.A., Baas J., Klavans R., Boyack K.W. (2026), "Updated science-wide author databases of standardized citation indicators", phiên bản 9 (tháng 8/2026), Elsevier BV (Mendeley Data), DOI 10.17632/btchxktzyw.9, dựa trên dữ liệu Scopus. Giấy phép Creative Commons Attribution-NonCommercial 3.0.</p>
       <p>Trường "Top 2%" (hạng, lĩnh vực) không thuộc CC BY 4.0 của dự án. ISA Vietnam vận hành ProFind™ không nhằm mục đích thương mại. Ai dùng lại bộ dữ liệu của ProFind™ cho mục đích thương mại phải bỏ trường này. Không có tên trong danh sách không có nghĩa là ít được trích dẫn.</p>
       <details className="lic"><summary>Toàn văn giấy phép MIT</summary><pre>{MIT}</pre></details></> : <>
       <h3>Source code: MIT</h3>
@@ -76,7 +76,7 @@ export function AboutPage({ section }: { section: string }) {
       <h3>Third-party data</h3>
       <p>OpenAlex, ORCID and ROR are CC0. The Council journal catalogue and scores, the institution list, Semantic Scholar, SCImago/Scopus (Elsevier B.V.) and Web of Science (Clarivate) follow their owners' terms and trademarks.</p>
       <h3>"Top 2% worldwide" label: CC BY-NC 3.0 (non-commercial only)</h3>
-      <p>Ioannidis J.P.A., Baas J., Klavans R., Boyack K.W. (2025), "Updated science-wide author databases of standardized citation indicators", version 8, Elsevier BV (Mendeley Data), DOI 10.17632/btchxktzyw.8, based on Scopus data. Licence: Creative Commons Attribution-NonCommercial 3.0.</p>
+      <p>Ioannidis J.P.A., Baas J., Klavans R., Boyack K.W. (2026), "Updated science-wide author databases of standardized citation indicators", version 9 (August 2026), Elsevier BV (Mendeley Data), DOI 10.17632/btchxktzyw.9, based on Scopus data. Licence: Creative Commons Attribution-NonCommercial 3.0.</p>
       <p>The "Top 2%" field (rank, field) is not covered by the project's CC BY 4.0. ISA Vietnam operates ProFind™ for non-commercial purposes. Anyone reusing ProFind™ data commercially must remove this field. Not being on the list does not mean few citations.</p>
       <details className="lic"><summary>Full MIT licence text</summary><pre>{MIT}</pre></details></> },
     { id: "ma-nguon", icon: "book", h: vi ? "Mã nguồn mở" : "Open source", body: vi ? <>

@@ -66,7 +66,7 @@ export function computePro(authors, per, year) {
     const impact = 0.4 * pc("cites") + 0.3 * pc("h") + 0.3 * pc("hiS");
     const output = pc("out", Math.min(x.out, out95));
     const lead = pc("leadS");
-    const quality = x.qS, momentum = 0.5 * pc("rc") + 0.5 * pc("rn"), steady = x.steady, recog = a.top2 ? 1 : 0;
+    const quality = x.qS, momentum = 0.5 * pc("rc") + 0.5 * pc("rn"), steady = x.steady, recog = a.top2 && a.top2.inNs !== false ? 1 : 0; // chỉ tính khi vẫn đạt tiêu chí danh sách sau khi loại tự trích dẫn
     const parts = { impact, output, lead, quality, momentum, steady, recog };
     a._s = PKEYS.map((k) => parts[k]);
     a.proParts = Object.fromEntries(Object.entries(parts).map(([k, v]) => [k, Math.round(v * 100)]));
