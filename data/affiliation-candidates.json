@@ -3061,5 +3061,21 @@
    "East Siberian State University of Technology and Management",
    "Centurion University of Technology and Management, India"
   ]
+ },
+ {
+  "id": "vien-isa",
+  "name": "Viện Khoa học Giáo dục và Kinh tế Đông Nam Á (ISA)",
+  "en": "Institute of Education Sciences & Economics of Southeast Asia (ISA)",
+  "type": "institute",
+  "city": "TP. Hồ Chí Minh",
+  "phrase": "Viện Khoa học Giáo dục và Kinh tế Đông Nam Á",
+  "works": 1,
+  "authors": 1,
+  "vnShare": 1,
+  "flags": [],
+  "topAuthors": [],
+  "samples": [
+   "Viện Khoa học Giáo dục và Kinh tế Đông Nam Á (ISA), Việt Nam"
+  ]
  }
 ]
