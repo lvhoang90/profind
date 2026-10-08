@@ -82,9 +82,11 @@ function AppInner() {
 
   const load = () => {
     setErr(false);
-    fetch("./data/profind.json").then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }).then((d: Data) => {
+    // Đơn vị do quản trị viên đặt tay (Redis) ghi đè đơn vị trong dữ liệu dựng sẵn; lỗi/thiếu thì bỏ qua.
+    const ov = fetch("/api/account?op=inst").then((r) => (r.ok ? r.json() : { map: {} })).then((j: { map?: Record<string, { now: string[]; past?: string[] }> }) => j.map ?? {}).catch(() => ({}) as Record<string, { now: string[]; past?: string[] }>);
+    Promise.all([fetch("./data/profind.json").then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }), ov]).then(([d, map]: [Data, Record<string, { now: string[]; past?: string[] }>]) => {
       if (!d || !Array.isArray(d.authors) || !Array.isArray(d.institutions)) throw new Error("shape");
-      setData({ ...d, types: d.types ?? {}, disciplines: d.disciplines ?? [], meta: d.meta ?? ({} as Data["meta"]), authors: d.authors.map((a) => ({ ...a, institutions: a.institutions ?? [], disciplines: a.disciplines ?? [] })) });
+      setData({ ...d, types: d.types ?? {}, disciplines: d.disciplines ?? [], meta: d.meta ?? ({} as Data["meta"]), authors: d.authors.map((a) => { const o = map[a.id]; const base = { ...a, institutions: a.institutions ?? [], disciplines: a.disciplines ?? [] }; if (!o?.now?.length) return base; const past = (o.past ?? []).filter((u) => !o.now.includes(u)); return { ...base, institutions: [...o.now, ...past], instPast: past.length ? past : undefined }; }) });
     }).catch(() => setErr(true));
   };
   // Bộ dữ liệu tác giả (~5 MB) chỉ tải khi cần: trang tài khoản và quản trị không dùng nên mở nhanh hơn.

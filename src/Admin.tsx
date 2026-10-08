@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Icon, type IconName } from "./icons";
 import { useAccount, api } from "./accountStore";
 
-const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["ra-soat", "Rà soát gộp", "check"], ["gan-nham", "Bài gán nhầm", "check"], ["don-vi", "Đơn vị mới", "building"]];
+const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["ra-soat", "Rà soát gộp", "check"], ["gan-nham", "Bài gán nhầm", "check"], ["don-vi-tg", "Đơn vị tác giả", "building"], ["don-vi", "Đơn vị mới", "building"]];
 const n0 = (n: number) => new Intl.NumberFormat("vi-VN").format(Math.round(n));
 const pct = (a: number, b: number) => (b > 0 ? `${Math.round((a / b) * 100)}%` : "–");
 const delta = (a: number, b: number) => (b > 0 ? `${a >= b ? "▲" : "▼"} ${Math.abs(Math.round(((a - b) / b) * 100))}% so với 7 ngày trước` : a > 0 ? "mới có dữ liệu" : "");
@@ -34,7 +34,7 @@ export function AdminPage({ tab }: { tab: string }) {
     <article className="dash adm-page">
       <header className="dash-head"><div className="av" aria-hidden="true"><Icon n="grid" size={36} /></div><div className="dh-main"><h1>Quản trị ProFind</h1><p className="meta">{user.email} · số liệu theo giờ Việt Nam, khoảng 14 ngày gần nhất</p></div><div className="dh-act"><a className="ghost-link light" href="#/tai-khoan">← Không gian của tôi</a></div></header>
       <nav className="tabs adm-tabs" aria-label="Quản trị">{TABS.map(([k, l, ic]) => <a key={k} href={`#/quan-tri${k ? "/" + k : ""}`} aria-current={cur === k ? "page" : undefined}><Icon n={ic} size={16} />{l}</a>)}</nav>
-      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}{cur === "ra-soat" && <Recheck />}{cur === "gan-nham" && <Misattr />}{cur === "don-vi" && <Units />}
+      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}{cur === "ra-soat" && <Recheck />}{cur === "gan-nham" && <Misattr />}{cur === "don-vi-tg" && <AuthorUnits />}{cur === "don-vi" && <Units />}
     </article>
   );
 }
@@ -509,6 +509,43 @@ function Misattr() {
         <span className="mxact"><button type="button" className="mx-ex" onClick={() => void dec(i.wid, "exclude", i.title)} disabled={mx[i.wid] === "exclude"}>Loại bài</button><button type="button" onClick={() => void dec(i.wid, "keep", i.title)} disabled={mx[i.wid] === "keep"}>Giữ</button>{mx[i.wid] && <button type="button" onClick={() => void dec(i.wid, "clear")}>Bỏ quyết định</button>}</span>
       </li>)}</ul>
       {list.length > PG && <p><button type="button" disabled={page === 0} onClick={() => setPage(page - 1)}>Trước</button> {page + 1}/{Math.ceil(list.length / PG)} <button type="button" disabled={(page + 1) * PG >= list.length} onClick={() => setPage(page + 1)}>Sau</button></p>}
+    </section>
+  );
+}
+
+type AU = { id: string; name: string; institutions: string[]; instPast?: string[] };
+type UnitRow = { id: string; name: string };
+/** Đặt tay đơn vị công tác của tác giả (hiện ngay trên website; xuất JSON để đưa vào corrections.setInstitutions khi dựng dữ liệu). */
+function AuthorUnits() {
+  const [data, setData] = useState<{ authors: AU[]; units: UnitRow[] } | null>(null), [err, setErr] = useState(""), [q, setQ] = useState(""), [sel, setSel] = useState<AU | null>(null), [now, setNow] = useState<Set<string>>(new Set()), [past, setPast] = useState<Set<string>>(new Set()), [uq, setUq] = useState(""), [msg, setMsg] = useState("");
+  const { d: ov } = useGet<{ map: Record<string, { now: string[]; past: string[] }> }>("inst", `&v=${msg}`);
+  useEffect(() => { fetch("/data/profind.json").then((r) => r.json()).then((j: { authors: AU[]; institutions: { id: string; name: string }[] }) => setData({ authors: j.authors, units: j.institutions.map((i) => ({ id: i.id, name: i.name })) })).catch(() => setErr("Không tải được dữ liệu tác giả.")); }, []);
+  if (err) return <p className="banner demo" role="alert">{err}</p>;
+  if (!data) return <p className="empty" role="status">Đang tải…</p>;
+  const fold = (x: string) => x.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/gi, "d").toLowerCase();
+  const name = (id: string) => data.units.find((u) => u.id === id)?.name ?? id;
+  const hits = q.trim().length >= 3 ? data.authors.filter((a) => fold(a.name).includes(fold(q.trim())) || a.id.toLowerCase() === q.trim().toLowerCase()).slice(0, 12) : [];
+  const pick = (a: AU) => { const o = ov?.map?.[a.id]; setSel(a); setNow(new Set(o?.now ?? a.institutions.filter((u) => !(a.instPast ?? []).includes(u)))); setPast(new Set(o?.past ?? a.instPast ?? [])); setMsg(""); };
+  const toggle = (u: string, which: "now" | "past") => { const [a, b, sa, sb] = which === "now" ? [now, past, setNow, setPast] : [past, now, setPast, setNow]; const n = new Set(a); if (n.has(u)) n.delete(u); else { n.add(u); const m = new Set(b); m.delete(u); sb(m); } sa(n); };
+  const save = async () => { if (!sel) return; try { await api("admin-claim-inst", { authorId: sel.id, now: [...now], past: [...past] }); setMsg(`Đã lưu ${Date.now()}`); } catch (e) { setMsg((e as Error).message); } };
+  const clear = async () => { if (!sel) return; try { await api("admin-claim-inst", { authorId: sel.id, clear: true }); setMsg(`Đã bỏ ghi đè ${Date.now()}`); } catch (e) { setMsg((e as Error).message); } };
+  const shown = [...new Set([...now, ...past, ...(sel?.institutions ?? [])])];
+  const cand = uq.trim().length >= 2 ? data.units.filter((u) => fold(u.name).includes(fold(uq.trim())) && !shown.includes(u.id)).slice(0, 8) : [];
+  const all = ov?.map ?? {};
+  return (
+    <section className="card"><h2>Đơn vị tác giả</h2>
+      <p className="meta">Dùng khi OpenAlex gộp nhiều người hoặc ghi sai nơi công tác. "Hiện tại" xếp trước; "trước đây" hiện mờ. Lưu xong website đổi ngay (không cần dựng lại); mục cuối trang cho chép JSON để đưa vào <code>corrections.setInstitutions</code> cho bản dựng sau.</p>
+      <label className="sel"><span>Tìm tác giả (tên từ 3 ký tự, hoặc mã A…)</span><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nguyen Van Dung" /></label>
+      {hits.length > 0 && <ul className="mxlist">{hits.map((a) => <li key={a.id}><button type="button" className="linkbtn" onClick={() => pick(a)}>{a.name}</button> <span className="meta">{a.id} · {a.institutions.map(name).join(", ")}</span></li>)}</ul>}
+      {sel && <div className="uedit"><h3>{sel.name} <span className="meta">{sel.id}</span></h3>
+        <div role="status" aria-live="polite">{msg && <p className="banner"><Icon n="check" />{msg.replace(/ \d+$/, "")}</p>}</div>
+        <table className="adm-t"><thead><tr><th>Đơn vị</th><th>Hiện tại</th><th>Trước đây</th></tr></thead><tbody>{shown.map((u) => <tr key={u}><td>{name(u)}</td><td><input type="checkbox" checked={now.has(u)} onChange={() => toggle(u, "now")} aria-label={`${name(u)}: hiện tại`} /></td><td><input type="checkbox" checked={past.has(u)} onChange={() => toggle(u, "past")} aria-label={`${name(u)}: trước đây`} /></td></tr>)}</tbody></table>
+        <label className="sel"><span>Thêm đơn vị (gõ tên)</span><input value={uq} onChange={(e) => setUq(e.target.value)} placeholder="Đại học Đồng Tháp" /></label>
+        {cand.length > 0 && <ul className="mxlist">{cand.map((u) => <li key={u.id}><button type="button" className="linkbtn" onClick={() => { setNow(new Set([...now, u.id])); setUq(""); }}>{u.name}</button></li>)}</ul>}
+        <p><button type="button" className="primary" disabled={!now.size} onClick={() => void save()}>Lưu</button> <button type="button" onClick={() => void clear()}>Bỏ ghi đè (về dữ liệu dựng sẵn)</button></p></div>}
+      <h3>Đã đặt tay ({Object.keys(all).length})</h3>
+      {Object.keys(all).length === 0 ? <p className="meta">Chưa có.</p> : <><ul className="xwlist">{Object.entries(all).map(([id, o]) => <li key={id}><a href={`#/tac-gia/${id}`}>{data.authors.find((a) => a.id === id)?.name ?? id}</a> · {o.now.map(name).join(", ")}{o.past?.length ? <span className="past"> · trước đây: {o.past.map(name).join(", ")}</span> : null}</li>)}</ul>
+        <p><button type="button" onClick={() => void navigator.clipboard.writeText(JSON.stringify({ setInstitutions: Object.fromEntries(Object.entries(all).map(([id, o]) => [id, o.past?.length ? { now: o.now, past: o.past } : o.now])) }, null, 1)).then(() => setMsg("Đã chép JSON setInstitutions."))}>Chép JSON setInstitutions</button></p></>}
     </section>
   );
 }
