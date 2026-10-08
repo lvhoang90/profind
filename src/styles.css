@@ -476,3 +476,4 @@ table.cards td.num{white-space:nowrap}
 .vtick{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;margin-left:6px;padding:2px;border-radius:50%;background:#f5b301;color:#fff;box-shadow:0 0 0 1px #b8860b}.vtick svg{--ic2:#fff}.badge.vbadge{background:#fff3c4;color:#5c4400;border:1px solid #f5d76e}.hero .badge.vbadge{background:#fde047;color:#3b2f00;border-color:#fde047}.claimbox{margin:14px 0}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]) .badge.vbadge{background:#4d4222;color:#ffe08a}}:root[data-theme=dark] .badge.vbadge{background:#4d4222;color:#ffe08a}
 .av .avimg{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
+.spgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.spside{min-width:0;overflow-wrap:anywhere}.spside ul{padding-left:18px;margin:6px 0}@media(max-width:700px){.spgrid{grid-template-columns:1fr}}

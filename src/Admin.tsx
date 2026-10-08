@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Icon, type IconName } from "./icons";
 import { useAccount, api } from "./accountStore";
 
-const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"]];
+const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"]];
 const n0 = (n: number) => new Intl.NumberFormat("vi-VN").format(Math.round(n));
 const pct = (a: number, b: number) => (b > 0 ? `${Math.round((a / b) * 100)}%` : "–");
 const delta = (a: number, b: number) => (b > 0 ? `${a >= b ? "▲" : "▼"} ${Math.abs(Math.round(((a - b) / b) * 100))}% so với 7 ngày trước` : a > 0 ? "mới có dữ liệu" : "");
@@ -34,7 +34,7 @@ export function AdminPage({ tab }: { tab: string }) {
     <article className="dash adm-page">
       <header className="dash-head"><div className="av" aria-hidden="true"><Icon n="grid" size={36} /></div><div className="dh-main"><h1>Quản trị ProFind</h1><p className="meta">{user.email} · số liệu theo giờ Việt Nam, khoảng 14 ngày gần nhất</p></div><div className="dh-act"><a className="ghost-link light" href="#/tai-khoan">← Không gian của tôi</a></div></header>
       <nav className="tabs" aria-label="Quản trị">{TABS.map(([k, l, ic]) => <a key={k} href={`#/quan-tri${k ? "/" + k : ""}`} aria-current={cur === k ? "page" : undefined}><Icon n={ic} size={16} />{l}</a>)}</nav>
-      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}
+      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}
     </article>
   );
 }
@@ -206,6 +206,21 @@ Your profile has been removed from ProFind as requested. It will disappear from 
 
 Best regards,
 ProFind team` },
+  thanks: { label: "Cảm ơn góp ý về dữ liệu cá nhân (anh Hiếu, CSD)", subject: "Cảm ơn anh về góp ý cho ProFind", body: `Kính gửi {{name}},
+
+Cảm ơn anh đã dành thời gian góp ý chi tiết cho ProFind. Góp ý của anh rất xác đáng, và nhóm đã cập nhật ngay những nội dung sau trên website:
+
+1. Chính sách dữ liệu cá nhân đầy đủ (mục "Quyền riêng tư" trong trang Giới thiệu): nêu rõ pháp nhân chịu trách nhiệm (Viện Khoa học Giáo dục và Kinh tế Đông Nam Á), nguồn và loại dữ liệu, mục đích, thời gian lưu, nhà cung cấp hạ tầng, quy trình xử lý sự cố và kênh liên hệ.
+2. Cơ chế quyền của chủ thể dữ liệu: nhà khoa học có thể yêu cầu chỉnh sửa, ẩn điểm và huy hiệu xếp hạng (vẫn giữ công trình), tạm ẩn hoặc gỡ hồ sơ. Sau khi xác minh danh tính, việc ẩn có hiệu lực ngay.
+3. Khuyến cáo rõ ràng: PRO-SCORE1000 là chỉ số tham khảo mô phỏng của ProFind, không phải đánh giá chính thức, không thay thế hội đồng chuyên môn và không nên là tiêu chí duy nhất trong tuyển dụng, xét duyệt, bổ nhiệm hay phân bổ nguồn lực.
+4. Đổi cách diễn đạt "chuyên gia ảo" thành "cấu hình trọng số mô phỏng" để tránh hiểu nhầm đây là khảo sát chuyên gia thật.
+5. Tách riêng sự đồng ý nhận thư giới thiệu các công cụ khác khỏi việc đăng ký tài khoản.
+
+Chúng tôi đang xin ý kiến chuyên gia pháp lý về các nghĩa vụ còn lại theo Luật Bảo vệ dữ liệu cá nhân (hồ sơ đánh giá tác động, chuyển dữ liệu xuyên biên giới) và sẽ cập nhật chính sách khi có kết quả. Nếu anh thấy còn điểm nào cần hoàn thiện, rất mong tiếp tục nhận được góp ý của anh.
+
+Trân trọng,
+Lương Việt Hoàng
+Nhóm dự án ProFind, Viện ISA` },
   hidden: { label: "Xác nhận đã ẩn điểm/xếp hạng", subject: "ProFind: your score and rank have been hidden", body: `Dear Dr. {{name}},
 
 As requested, your PRO-SCORE1000 score and rank badge are now hidden on ProFind. Your scientific works remain visible. You can ask us to show them again at any time.
@@ -248,6 +263,54 @@ function Mailer() {
         <label className="sel"><span>Nội dung (chỉnh sửa tự do)</span><textarea rows={14} value={f.body} onChange={(e) => setF({ ...f, body: e.target.value })} maxLength={6000} /></label>
         <p><button className="primary" disabled={busy || !f.to || !f.body} onClick={() => void send()}>{busy ? "Đang gửi…" : "Duyệt và gửi"}</button> <small className="meta">Người nhận bấm Trả lời sẽ gửi về email của bạn.</small></p></section>
       <section className="card"><h2>Thư đã gửi gần đây</h2>{!lg.d?.rows.length ? <p className="meta">Chưa có.</p> : <ul>{lg.d.rows.map((r) => <li key={r.id}>{new Date(r.at).toLocaleString("vi-VN")} · {r.to} · {r.subject} · {r.ok ? "✅ đã gửi" : `❌ ${r.err}`}</li>)}</ul>}</section>
+    </>
+  );
+}
+
+type SSide = { id: string; name: string; orcid: string | null; inst: string[]; works: number; cites: number; years: [number | null, number | null]; pro: number | null; top: { t: string; y: number; d: string | null }[] };
+type SPair = { tier: string; a: string; b: string; name: string; groupSize: number; overlap: number; exactlyOneOrcid: boolean; shared: string[]; A: SSide; B: SSide };
+type SDec = { a: string; b: string; d: string; at: number };
+const pk = (a: string, b: string) => [a, b].sort().join("|");
+function Merger() {
+  const [pairs, setPairs] = useState<SPair[] | null>(null), [err, setErr] = useState(""), [v, setV] = useState(0), [page, setPage] = useState(0), [show, setShow] = useState<"todo" | "merge" | "different" | "skip">("todo"), [out, setOut] = useState("");
+  const { d } = useGet<{ split: SDec[] }>("admin-claims", `&sp=${v}`);
+  useEffect(() => { fetch("/data/_split-review.json").then((r) => r.json()).then((j: { pairs: SPair[] }) => setPairs(j.pairs)).catch(() => setErr("Không tải được danh sách cặp hồ sơ.")); }, []);
+  const dec = useMemo(() => new Map((d?.split ?? []).map((x) => [pk(x.a, x.b), x])), [d]);
+  const list = useMemo(() => {
+    if (!pairs) return [];
+    const pr = (p: SPair) => (p.groupSize === 2 ? 0 : 4) + (p.exactlyOneOrcid ? 0 : 2) + (p.overlap <= 0.5 ? 0 : 1);
+    return pairs.filter((p) => { const x = dec.get(pk(p.a, p.b)); return show === "todo" ? !x : x?.d === show; }).sort((x, y) => pr(x) - pr(y) || (y.A.works + y.B.works) - (x.A.works + x.B.works));
+  }, [pairs, dec, show]);
+  const decide = async (p: SPair, decision: string) => { try { await api("admin-claim-split", { a: p.a, b: p.b, decision, into: p.A.orcid || p.A.works >= p.B.works ? p.a : p.b }); setV((x) => x + 1); } catch (e) { setErr((e as Error).message); } };
+  const exportJson = () => {
+    const merges = (d?.split ?? []).filter((x) => x.d === "merge").map((x) => { const p = pairs?.find((q) => pk(q.a, q.b) === pk(x.a, x.b)); const into = p ? (p.A.orcid ? p.A : p.B.orcid ? p.B : p.A.works >= p.B.works ? p.A : p.B) : null; return into ? { into: into.id, from: [into.id === p!.a ? p!.b : p!.a], date: new Date().toISOString().slice(0, 10), reason: `Gộp sau khi quản trị viên duyệt: ${p!.name}` } : null; }).filter(Boolean);
+    const diff = (d?.split ?? []).filter((x) => x.d === "different").map((x) => [x.a, x.b]);
+    setOut(JSON.stringify({ merge: merges, different: diff }, null, 1));
+  };
+  const PER = 10, view = list.slice(page * PER, page * PER + PER);
+  const Side = ({ s }: { s: SSide }) => (
+    <div className="spside"><p><b><a href={`#/tac-gia/${s.id}`} target="_blank" rel="noopener">{s.name}</a></b> <small className="meta">{s.id}</small></p>
+      <p className="meta">{s.orcid ? `ORCID ${s.orcid}` : "Chưa có ORCID"} · {s.inst.join("; ")}</p>
+      <p className="meta">{s.works} công trình · {n0(s.cites)} trích dẫn · {s.years[0] ?? "?"}–{s.years[1] ?? "?"}{s.pro != null ? ` · PRO ${s.pro}` : ""}</p>
+      <ul>{s.top.map((t) => <li key={t.t}>{t.d ? <a href={`https://doi.org/${t.d}`} target="_blank" rel="noopener">{t.t}</a> : t.t} <small className="meta">({t.y})</small></li>)}</ul></div>
+  );
+  if (err) return <p className="banner demo" role="alert">{err}</p>;
+  if (!pairs) return <p className="empty" role="status">Đang tải…</p>;
+  const nTodo = pairs.filter((p) => !dec.has(pk(p.a, p.b))).length;
+  return (
+    <>
+      <section className="card"><h2>Gộp hồ sơ bị tách đôi (tầng B)</h2>
+        <p className="meta">{pairs.length} cặp nghi cùng một người, còn {nTodo} cặp chưa duyệt. Các cặp có bài chung đã bị loại vì chắc chắn là hai người khác nhau. Cặp ưu tiên: tên trùng, chỉ 2 hồ sơ cùng tên, một bên có ORCID, năm công bố bổ sung nhau.</p>
+        <p>{(["todo", "merge", "different", "skip"] as const).map((k) => <button key={k} className={show === k ? "primary" : ""} onClick={() => { setShow(k); setPage(0); }}>{k === "todo" ? `Chưa duyệt (${nTodo})` : k === "merge" ? "Đã chọn gộp" : k === "different" ? "Khác người" : "Để sau"}</button>)} <button onClick={exportJson}>Xuất kết quả gộp (JSON)</button></p>
+        {out && <><p className="meta">Sao chép đoạn này gửi cho trợ lý để đưa vào <code>data/corrections.json</code>:</p><textarea readOnly rows={8} value={out} onFocus={(e) => e.currentTarget.select()} style={{ width: "100%" }} /></>}</section>
+      {view.map((p) => (
+        <section key={pk(p.a, p.b)} className="card splitcard">
+          <p className="meta">{p.name} · {p.shared[0]} · {p.groupSize} hồ sơ cùng tên · mức trùng năm {Math.round(p.overlap * 100)}%{p.exactlyOneOrcid ? " · một bên có ORCID" : ""}</p>
+          <div className="spgrid"><Side s={p.A} /><Side s={p.B} /></div>
+          <p>{show === "todo" ? <><button className="primary" onClick={() => void decide(p, "merge")}>Cùng một người, gộp</button> <button onClick={() => void decide(p, "different")}>Khác người</button> <button onClick={() => void decide(p, "skip")}>Để sau</button></> : <button onClick={() => void decide(p, "undo")}>Bỏ quyết định</button>}</p>
+        </section>))}
+      {list.length > PER && <p><button disabled={page === 0} onClick={() => setPage(page - 1)}>← Trước</button> Trang {page + 1}/{Math.ceil(list.length / PER)} <button disabled={(page + 1) * PER >= list.length} onClick={() => setPage(page + 1)}>Sau →</button></p>}
+      {list.length === 0 && <p className="meta">Không có cặp nào.</p>}
     </>
   );
 }
