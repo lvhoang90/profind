@@ -273,58 +273,84 @@ type SDec = { a: string; b: string; d: string; at: number };
 const pk = (a: string, b: string) => [a, b].sort().join("|");
 const BANDS: [string, string, string][] = [["1", "Rất nghi trùng", "Điểm 75–100: tên giống, cùng đơn vị, thường một bên có ORCID, chủ đề công trình gần nhau."], ["2", "Nghi trùng", "Điểm 60–74."], ["3", "Ít nghi", "Điểm 45–59: nhiều khả năng là hai người cùng tên."], ["4", "Rất ít nghi", "Điểm dưới 45: hầu như chắc là hai người khác nhau."]];
 function Merger() {
-  const [pairs, setPairs] = useState<SPair[] | null>(null), [err, setErr] = useState(""), [v, setV] = useState(0), [page, setPage] = useState(0), [band, setBand] = useState("1"), [view, setView] = useState<"todo" | "merge" | "different">("todo"), [out, setOut] = useState(""), [pick, setPick] = useState<Set<string>>(new Set()), [open, setOpen] = useState<string | null>(null), [busy, setBusy] = useState(false), [msg, setMsg] = useState("");
+  const [pairs, setPairs] = useState<SPair[] | null>(null), [err, setErr] = useState(""), [v, setV] = useState(0), [page, setPage] = useState(0), [band, setBand] = useState("1"), [view, setView] = useState<"todo" | "merge" | "different">("todo"), [out, setOut] = useState(""), [pick, setPick] = useState<Set<string>>(new Set()), [open, setOpen] = useState<string | null>(null), [busy, setBusy] = useState(false), [msg, setMsg] = useState(""), [per, setPer] = useState(50), [thr, setThr] = useState(85), [cur, setCur] = useState(0);
   const { d } = useGet<{ split: SDec[] }>("admin-claims", `&sp=${v}`);
-  useEffect(() => { fetch("/data/_split-review.json", { cache: "no-store" }).then((r) => r.json()).then((j: { pairs: SPair[] }) => j.pairs.some((p) => !p.band) ? setErr("Dữ liệu cũ trong bộ nhớ đệm của trình duyệt, hãy tải lại trang bằng Ctrl+F5.") : setPairs(j.pairs)).catch(() => setErr("Không tải được danh sách cặp hồ sơ.")); }, []);
+  useEffect(() => { fetch("/data/_split-review.json", { cache: "no-store" }).then((r) => r.json()).then((j: { pairs: SPair[] }) => { if (j.pairs.some((p) => !p.band)) setErr("Dữ liệu cũ trong bộ nhớ đệm của trình duyệt, hãy tải lại trang bằng Ctrl+F5."); else setPairs(j.pairs); }).catch(() => setErr("Không tải được danh sách cặp hồ sơ.")); }, []);
   const dec = useMemo(() => new Map((d?.split ?? []).map((x) => [pk(x.a, x.b), x])), [d]);
   const counts = useMemo(() => { const c: Record<string, [number, number]> = {}; for (const p of pairs ?? []) { const t = (c[p.band] ??= [0, 0]); t[1]++; if (!dec.has(pk(p.a, p.b))) t[0]++; } return c; }, [pairs, dec]);
   const list = useMemo(() => (pairs ?? []).filter((p) => p.band === band && (view === "todo" ? !dec.has(pk(p.a, p.b)) : dec.get(pk(p.a, p.b))?.d === view)), [pairs, dec, band, view]);
-  const PER = 25, rows = list.slice(page * PER, page * PER + PER);
+  const rows = list.slice(page * per, page * per + per), nPages = Math.max(1, Math.ceil(list.length / per));
   const send = async (items: { a: string; b: string; decision: string }[], ok: string) => {
     setBusy(true); setMsg("");
-    try { for (let i = 0; i < items.length; i += 200) await api("admin-claim-split", { items: items.slice(i, i + 200) }); setMsg(ok); setPick(new Set()); setV((x) => x + 1); } catch (e) { setErr((e as Error).message); } finally { setBusy(false); }
+    try { for (let i = 0; i < items.length; i += 200) await api("admin-claim-split", { items: items.slice(i, i + 200) }); setMsg(ok); setPick(new Set()); setCur(0); setV((x) => x + 1); window.scrollTo({ top: 0 }); } catch (e) { setErr((e as Error).message); } finally { setBusy(false); }
   };
   const toggle = (k: string) => setPick((s) => { const n = new Set(s); if (n.has(k)) n.delete(k); else n.add(k); return n; });
-  const savePage = () => send(rows.map((p) => ({ a: p.a, b: p.b, decision: pick.has(pk(p.a, p.b)) ? "merge" : "different" })), `Đã lưu ${rows.length} cặp: ${rows.filter((p) => pick.has(pk(p.a, p.b))).length} gộp, ${rows.filter((p) => !pick.has(pk(p.a, p.b))).length} khác người.`);
+  const ticked = rows.filter((p) => pick.has(pk(p.a, p.b)));
+  const saveAll = () => send(rows.map((p) => ({ a: p.a, b: p.b, decision: pick.has(pk(p.a, p.b)) ? "merge" : "different" })), `Đã lưu ${rows.length} cặp: ${ticked.length} gộp, ${rows.length - ticked.length} khác người.`);
+  const saveTicked = () => send(ticked.map((p) => ({ a: p.a, b: p.b, decision: "merge" })), `Đã chọn gộp ${ticked.length} cặp; ${rows.length - ticked.length} cặp còn lại giữ chưa duyệt.`);
   const allDifferent = () => confirm(`Đánh dấu KHÁC NGƯỜI cho toàn bộ ${list.length} cặp chưa duyệt trong nhóm này? Không có hồ sơ nào bị gộp.`) && send(list.map((p) => ({ a: p.a, b: p.b, decision: "different" })), `Đã đánh dấu ${list.length} cặp là khác người.`);
+  const tickWhere = (f: (p: SPair) => boolean) => setPick(new Set(rows.filter(f).map((p) => pk(p.a, p.b))));
   const exportJson = () => {
     const merges = (d?.split ?? []).filter((x) => x.d === "merge").map((x) => { const p = pairs?.find((q) => pk(q.a, q.b) === pk(x.a, x.b)); if (!p) return null; const into = p.A.orcid ? p.A : p.B.orcid ? p.B : p.A.works >= p.B.works ? p.A : p.B; return { into: into.id, from: [into.id === p.a ? p.b : p.a], date: new Date().toISOString().slice(0, 10), reason: `Gộp sau khi quản trị viên duyệt (điểm nghi trùng ${p.score}): ${p.name}` }; }).filter(Boolean);
     setOut(JSON.stringify({ merge: merges, different: (d?.split ?? []).filter((x) => x.d === "different").map((x) => [x.a, x.b]) }, null, 1));
   };
-  const Side = ({ s, full }: { s: SSide; full?: boolean }) => (
-    <div className="spside"><p><b><a href={`#/tac-gia/${s.id}`} target="_blank" rel="noopener">{s.name}</a></b> <small className="meta">{s.id}</small></p>
-      <p className="meta">{s.orcid ? `ORCID ${s.orcid}` : "Chưa có ORCID"} · {s.inst.join("; ")}</p>
-      <p className="meta">{s.works} công trình · {n0(s.cites)} trích dẫn · {s.years[0] ?? "?"}–{s.years[1] ?? "?"}</p>
-      <ul>{(full ? s.top : s.top.slice(0, 1)).map((t) => <li key={t.t}>{t.d ? <a href={`https://doi.org/${t.d}`} target="_blank" rel="noopener">{t.t}</a> : t.t} <small className="meta">({t.y})</small></li>)}</ul></div>
+  const onKey = (e: React.KeyboardEvent, k: string, i: number) => {
+    if (e.target instanceof HTMLElement && (e.target.tagName === "A" || e.target.tagName === "BUTTON")) return;
+    if (e.key === " " || e.key === "x") { e.preventDefault(); toggle(k); }
+    else if (e.key === "ArrowDown" || e.key === "j") { e.preventDefault(); setCur(Math.min(rows.length - 1, i + 1)); document.getElementById(`sp-${i + 1}`)?.focus(); }
+    else if (e.key === "ArrowUp" || e.key === "k") { e.preventDefault(); setCur(Math.max(0, i - 1)); document.getElementById(`sp-${i - 1}`)?.focus(); }
+  };
+  const Side = ({ s, full }: { s: SSide; full: boolean }) => (
+    <div className="spcell">
+      <p className="spn"><a href={`#/tac-gia/${s.id}`} target="_blank" rel="noopener">{s.name}</a> <span className={s.orcid ? "orc yes" : "orc no"} title={s.orcid ?? "Chưa có ORCID"}>{s.orcid ? "ORCID" : "không ORCID"}</span></p>
+      <p className="meta sps">{s.works} bài · {n0(s.cites)} trích dẫn · {s.years[0] ?? "?"}–{s.years[1] ?? "?"}</p>
+      {(full ? s.top : s.top.slice(0, 1)).map((t) => <p key={t.t} className="spt">{t.d ? <a href={`https://doi.org/${t.d}`} target="_blank" rel="noopener">{t.t}</a> : t.t} <small className="meta">({t.y})</small></p>)}
+    </div>
   );
   if (err) return <p className="banner demo" role="alert">{err}</p>;
   if (!pairs) return <p className="empty" role="status">Đang tải…</p>;
-  const total = Object.values(counts).reduce((a, c) => a + c[0], 0);
+  const total = Object.values(counts).reduce((a, c) => a + c[0], 0), pct = pairs.length ? Math.round(((pairs.length - total) / pairs.length) * 100) : 0;
   return (
     <>
-      <section className="card"><h2>Gộp hồ sơ bị tách đôi</h2>
-        <p className="meta">Còn <b>{total}</b> cặp chưa duyệt, chia 4 nhóm theo điểm nghi trùng (tên, cùng đơn vị, ORCID, năm công bố, chủ đề công trình). Điểm chỉ là gợi ý để xếp thứ tự, không thay cho mắt người. Cặp có bài chung đã bị loại. <b>Mặc định không gộp:</b> chỉ tick "Cùng người" ở những cặp bạn chắc chắn, rồi bấm Lưu trang; hàng không tick được đánh dấu khác người.</p>
-        <p>{BANDS.map(([k, l]) => <button key={k} className={band === k ? "primary" : ""} onClick={() => { setBand(k); setPage(0); setPick(new Set()); }}>{l} ({counts[k]?.[0] ?? 0}/{counts[k]?.[1] ?? 0})</button>)}</p>
+      <section className="card spbar">
+        <h2>Gộp hồ sơ bị tách đôi <small className="meta">{pairs.length - total}/{pairs.length} đã duyệt ({pct}%)</small></h2>
+        <div className="spprog" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}><i style={{ width: `${pct}%` }} /></div>
+        <p className="meta">Điểm nghi trùng (tên, đơn vị, ORCID, năm công bố, chủ đề) chỉ để xếp thứ tự. <b>Tick = cùng một người.</b> Phím tắt: ↑ ↓ (hoặc j k) để di chuyển, Space (hoặc x) để tick.</p>
+        <div className="sptabs">{BANDS.map(([k, l]) => <button key={k} className={band === k ? "on" : ""} onClick={() => { setBand(k); setPage(0); setPick(new Set()); }}><b>{l}</b><small>{counts[k]?.[0] ?? 0} còn lại / {counts[k]?.[1] ?? 0}</small></button>)}</div>
         <p className="meta">{BANDS.find((b) => b[0] === band)?.[2]}</p>
-        <p>{(["todo", "merge", "different"] as const).map((k) => <button key={k} className={view === k ? "primary" : ""} onClick={() => { setView(k); setPage(0); setPick(new Set()); }}>{k === "todo" ? "Chưa duyệt" : k === "merge" ? "Đã chọn gộp" : "Đã chọn khác người"}</button>)} <button onClick={exportJson}>Xuất kết quả (JSON)</button></p>
+        <p className="sprow2">{(["todo", "merge", "different"] as const).map((k) => <button key={k} className={view === k ? "primary" : ""} onClick={() => { setView(k); setPage(0); setPick(new Set()); }}>{k === "todo" ? "Chưa duyệt" : k === "merge" ? "Đã chọn gộp" : "Đã chọn khác người"}</button>)}
+          <label className="sel inl"><span>Số hàng/trang</span><select value={per} onChange={(e) => { setPer(+e.target.value); setPage(0); setPick(new Set()); }}>{[25, 50, 100, 200].map((n) => <option key={n} value={n}>{n}</option>)}</select></label>
+          <button onClick={exportJson}>Xuất kết quả (JSON)</button></p>
         {msg && <p className="banner" role="status"><Icon n="check" />{msg}</p>}
-        {out && <><p className="meta">Sao chép đoạn này gửi cho trợ lý để đưa vào <code>data/corrections.json</code>:</p><textarea readOnly rows={8} value={out} onFocus={(e) => e.currentTarget.select()} style={{ width: "100%" }} /></>}</section>
-      {view === "todo" && list.length > 0 && <section className="card"><p>
-        <button className="primary" disabled={busy} onClick={() => void savePage()}>Lưu trang này ({pick.size} gộp, {rows.length - pick.size} khác người)</button>{" "}
-        <button disabled={busy} onClick={() => setPick(new Set(rows.map((p) => pk(p.a, p.b))))}>Tick cả trang</button> <button disabled={busy} onClick={() => setPick(new Set())}>Bỏ tick</button>{" "}
-        {(band === "3" || band === "4") && <button disabled={busy} onClick={() => void allDifferent()}>Cả nhóm: khác người ({list.length})</button>}</p></section>}
-      {rows.map((p) => { const k = pk(p.a, p.b), dd = dec.get(k);
-        return (
-          <section key={k} className="card splitcard">
-            <p className="meta"><label className="chk">{view === "todo" ? <input type="checkbox" checked={pick.has(k)} onChange={() => toggle(k)} /> : null}<b>{p.name}</b></label> · điểm {p.score} · {p.groupSize} hồ sơ cùng tên · {p.shared[0]}{p.exactlyOneOrcid ? " · một bên có ORCID" : ""}{p.noWorks ? " · thiếu công trình để so" : ""} · <button onClick={() => setOpen(open === k ? null : k)}>{open === k ? "Thu gọn" : "Xem 3 công trình"}</button> {view !== "todo" && dd && <button onClick={() => void send([{ a: p.a, b: p.b, decision: "undo" }], "Đã bỏ quyết định.")}>Bỏ quyết định</button>}</p>
-            <div className="spgrid"><Side s={p.A} full={open === k} /><Side s={p.B} full={open === k} /></div>
-          </section>); })}
-      {list.length > PER && <p><button disabled={page === 0} onClick={() => { setPage(page - 1); setPick(new Set()); }}>← Trước</button> Trang {page + 1}/{Math.ceil(list.length / PER)} <button disabled={(page + 1) * PER >= list.length} onClick={() => { setPage(page + 1); setPick(new Set()); }}>Sau →</button></p>}
+        {out && <><p className="meta">Sao chép đoạn này gửi cho trợ lý để đưa vào <code>data/corrections.json</code>:</p><textarea readOnly rows={8} value={out} onFocus={(e) => e.currentTarget.select()} style={{ width: "100%" }} /></>}
+      </section>
+      {view === "todo" && list.length > 0 && <section className="card spact">
+        <p className="sprow2"><span className="meta">Tick nhanh trên trang này:</span>
+          <button disabled={busy} onClick={() => tickWhere(() => true)}>Tất cả</button>
+          <button disabled={busy} onClick={() => tickWhere((p) => p.score >= thr)}>Điểm ≥</button><input className="spthr" type="number" min={0} max={100} value={thr} onChange={(e) => setThr(+e.target.value)} aria-label="Ngưỡng điểm" />
+          <button disabled={busy} onClick={() => tickWhere((p) => p.exactlyOneOrcid && p.groupSize === 2)}>Chỉ 2 hồ sơ cùng tên, một bên có ORCID</button>
+          <button disabled={busy} onClick={() => setPick(new Set())}>Bỏ tick</button></p>
+        <p className="sprow2">
+          <button className="primary" disabled={busy} onClick={() => void saveAll()}>Lưu trang: {ticked.length} gộp, {rows.length - ticked.length} khác người</button>
+          <button disabled={busy || !ticked.length} onClick={() => void saveTicked()}>Chỉ gộp {ticked.length} cặp đã tick (giữ phần còn lại)</button>
+          {(band === "3" || band === "4") && <button disabled={busy} onClick={() => void allDifferent()}>Cả nhóm: khác người ({list.length})</button>}</p>
+      </section>}
+      <div className="sptable" role="list">
+        {rows.map((p, i) => { const k = pk(p.a, p.b), dd = dec.get(k), on = pick.has(k);
+          return (
+            <div key={k} id={`sp-${i}`} role="listitem" tabIndex={0} className={`sprow${on ? " on" : ""}${i === cur ? " cur" : ""}${open === k ? " open" : ""}`} onKeyDown={(e) => onKey(e, k, i)} onFocus={() => setCur(i)}>
+              <div className="spck">{view === "todo" ? <input type="checkbox" checked={on} onChange={() => toggle(k)} aria-label={`Cùng một người: ${p.name}`} tabIndex={-1} /> : null}</div>
+              <div className="spcell spmain"><p className="spn">{p.name}</p>
+                <p className="meta sps"><span className={`score s${p.band}`}>{p.score}</span> {p.shared[0]}{p.groupSize > 2 ? ` · ${p.groupSize} hồ sơ cùng tên` : ""}{p.noWorks ? " · thiếu công trình" : ""}</p>
+                <p className="meta sps"><button className="lnk" onClick={() => setOpen(open === k ? null : k)}>{open === k ? "Thu gọn" : "3 công trình"}</button>{view !== "todo" && dd ? <button className="lnk" onClick={() => void send([{ a: p.a, b: p.b, decision: "undo" }], "Đã bỏ quyết định.")}>Bỏ quyết định</button> : null}</p></div>
+              <Side s={p.A} full={open === k} /><Side s={p.B} full={open === k} />
+            </div>); })}
+      </div>
       {list.length === 0 && <p className="meta">Không có cặp nào trong mục này.</p>}
+      {list.length > per && <p className="sprow2"><button disabled={page === 0} onClick={() => { setPage(page - 1); setPick(new Set()); setCur(0); }}>← Trước</button> Trang {page + 1}/{nPages} <button disabled={page + 1 >= nPages} onClick={() => { setPage(page + 1); setPick(new Set()); setCur(0); }}>Sau →</button></p>}
     </>
   );
 }
-
 type UCand = { id: string; name: string; en: string | null; type: string; city: string | null; phrase: string; works: number; authors: number; vnShare: number; flags: string[]; topAuthors: { id: string; name: string; orcid: string | null; n: number }[]; samples: string[] };
 type UDec = { id: string; d: string };
 function Units() {
