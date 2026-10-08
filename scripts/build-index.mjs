@@ -3,7 +3,7 @@
 // Điểm công trình = max(điểm tạp chí trong nước theo năm, điểm Scopus theo quy tắc ngành), chỉ khi là tác giả chính theo HĐGSNN (role = "lead").
 // Web of Science (SCIE/SSCI) và kỷ yếu hội nghị không suy ra được từ dữ liệu công khai nên không tính (điểm là mức tham khảo thấp hơn thực tế).
 import { cityOut } from "./lib/province.mjs";
-import { loadRule, buildStats, features, verdict, windowYears } from "./lib/abroad.mjs";
+import { loadRule, buildStats, features, verdict, windowYears, mainCountry } from "./lib/abroad.mjs";
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from "node:fs";
 import { computePro } from "./pro-score.mjs";
 const rd = (f) => JSON.parse(readFileSync(f, "utf8"));
@@ -168,12 +168,14 @@ const outAuthors = authors.map((a) => {
 });
 // Thứ hạng chỉ tính trong tập đủ điều kiện (đơn vị tại Việt Nam, không nghi gộp nhầm) = đúng tập danh sách mặc định; đồng hạng cùng số (hạng thi đấu: 1,2,2,4).
 // Người ngoài tập (nước ngoài, nghi gộp nhầm, chưa biết) có hạng null, giao diện hiện "-".
+const ISO3 = { VNM: "VN", KOR: "KR", USA: "US", GBR: "GB", AUS: "AU", JPN: "JP", IRN: "IR", FRA: "FR", NLD: "NL", MYS: "MY", CAN: "CA", CHN: "CN", BEL: "BE", NPL: "NP", DEU: "DE", KAZ: "KZ", TWN: "TW", IND: "IN", SGP: "SG", NZL: "NZ" };
 const CONFIRMED = new Set(existsSync("data/vn-confirmed.json") ? rd("data/vn-confirmed.json").ids ?? [] : []), EXCLUDED = new Set(existsSync("data/vn-excluded.json") ? rd("data/vn-excluded.json").ids ?? [] : []);
 // Quy ước hiện hành: mọi hồ sơ gắn với ít nhất một trường/viện trong danh sách đơn vị của Việt Nam đều được hiển thị và xếp hạng, không phân biệt quốc tịch; chỉ loại hồ sơ nghi gộp nhầm (suspect) và hồ sơ trong data/vn-excluded.json.
 // "Liên kết chính ở nước ngoài" (bảng chỉ dành cho Việt Nam): xem scripts/lib/abroad.mjs. Yếu tố gần đây (cửa sổ 3 năm gần nhất) quyết định khi đủ bằng chứng, nếu không thì dùng tỉ lệ dài hạn; ngưỡng do hội đồng mô phỏng quyết định.
 // Ngoại lệ do quản trị viên xác nhận: data/vn-confirmed.json. Hồ sơ trong danh sách Top 2% mục "Việt Nam" (Elsevier) được coi là trong nước. Danh sách xem xét: scripts/abroad-review.mjs.
 const ABROAD_RULE = loadRule(), BUILD_YEAR = new Date().getFullYear(), AUS = buildStats(R.works, ABROAD_RULE, BUILD_YEAR);
-for (const a of outAuthors) { const f = features(AUS.get(a.id), ABROAD_RULE, BUILD_YEAR), v = verdict(f, ABROAD_RULE); a.vnShare = f.overall; a.vnRecent = f.recent; a.vnRecentWorks = f.recentWorks; a.abroadBasis = v.abroad ? v.basis : null; a.abroadMain = v.abroad && !CONFIRMED.has(a.id); }
+for (const a of outAuthors) { const f = features(AUS.get(a.id), ABROAD_RULE, BUILD_YEAR), v = verdict(f, ABROAD_RULE); a.vnShare = f.overall; a.vnRecent = f.recent; a.vnRecentWorks = f.recentWorks; let mc = mainCountry(AUS.get(a.id), ABROAD_RULE); if (!mc && TOP2[a.id]?.topCntry) { const c2 = ISO3[String(TOP2[a.id].topCntry).toUpperCase()] ?? null; if (c2) mc = { abroad: c2 !== "VN", country: c2, works: null, vnWorks: null }; } // thiếu bằng chứng OpenAlex: dùng nước công bố chính (top_cntry_career) của bộ dữ liệu Top 2% (Scopus)
+   a.mainCountry = mc?.country ?? null; a.mainCountryWorks = mc?.works ?? null; a.mainCountryVn = mc?.vnWorks ?? null; const abroad = v.abroad || !!mc?.abroad; a.abroadBasis = mc?.abroad ? "main" : v.abroad ? v.basis : null; a.abroadMain = abroad && !CONFIRMED.has(a.id); }
 for (const a of outAuthors) a.rankable = !a.suspect && !EXCLUDED.has(a.id) && !a.abroadMain;
 const pool = outAuthors.filter((a) => a.rankable && a.worksCount > 0);
 const rank = (key, out) => { const o = [...pool].sort((a, b) => b[key] - a[key]); o.forEach((a, i, arr) => { a[out] = i > 0 && arr[i - 1][key] === a[key] ? arr[i - 1][out] : i + 1; }); };

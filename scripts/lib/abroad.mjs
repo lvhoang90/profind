@@ -14,7 +14,7 @@ export function buildStats(works, rule, year) {
   const AU = JSON.parse(readFileSync("data/raw/_authorship.json", "utf8"));
   for (const k in AU) {
     const c = AU[k][1] ?? []; if (!c.length) continue;
-    const id = k.slice(0, k.indexOf("-")), e = st.get(id) ?? st.set(id, { n: 0, vn: 0, y: {} }).get(id), v = c.includes("VN"); e.n++; if (v) e.vn++;
+    const id = k.slice(0, k.indexOf("-")), e = st.get(id) ?? st.set(id, { n: 0, vn: 0, y: {}, cn: {} }).get(id), v = c.includes("VN"); e.n++; if (v) e.vn++; for (const x of new Set(c)) e.cn[x] = (e.cn[x] ?? 0) + 1;
     const y = yr.get(k); if (win.has(y)) { const o = e.y[y] ?? (e.y[y] = { n: 0, vn: 0 }); o.n++; if (v) o.vn++; }
   }
   return st;
@@ -30,4 +30,12 @@ export function verdict(f, rule) {
   if (f.recent != null) return { basis: "recent", abroad: f.recent < rule.recentMinShare * 100 };
   if (f.overall != null) return { basis: "overall", abroad: f.overall < rule.maxVnShare * 100 };
   return { basis: null, abroad: false };
+}
+/** Quy tắc 3, NƯỚC CÔNG BỐ CHÍNH: quốc gia có nhiều công trình nhất (mỗi công trình tính một lần cho mỗi quốc gia có cơ quan của tác giả đó) mà không phải Việt Nam thì hồ sơ bị loại khỏi bảng.
+ *  Cần tối thiểu `minWorks` công trình có ghi cơ quan; Việt Nam ngang bằng quốc gia đứng đầu thì vẫn coi là Việt Nam (nghi ngờ nghiêng về giữ lại). Trả { abroad, country, works, vnWorks, n } hoặc null nếu chưa đủ bằng chứng. */
+export function mainCountry(e, rule) {
+  if (!e || e.n < rule.minWorks) return null;
+  const top = Object.entries(e.cn ?? {}).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]; if (!top) return null;
+  const vn = e.cn.VN ?? 0;
+  return vn >= top[1] ? { abroad: false, country: "VN", works: vn, vnWorks: vn, n: e.n } : { abroad: true, country: top[0], works: top[1], vnWorks: vn, n: e.n };
 }

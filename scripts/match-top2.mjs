@@ -29,6 +29,6 @@ for (const t of T) {
   if (ok.length === 1) matches[ok[0].id] = t;
   else review.push({ name: t.name, inst: t.inst, why: ok.length > 1 ? "nhiều hồ sơ khớp" : "cùng tên nhưng khác đơn vị", candidates: c.map((a) => ({ id: a.id, name: a.name, inst: a.institutions.map((i) => inst.get(i)?.en ?? i), works: a.worksCount })) });
 }
-writeFileSync("data/top2/matches.json", JSON.stringify(Object.fromEntries(Object.entries(matches).map(([id, t]) => [id, { rank: t.rank, rankNs: t.rankNs, field: t.field, subfield: t.subfield, name: t.name, inst: t.inst, selfPct: t.selfPct, inNs: t.inNs, scope: t.scope, ...(t.y25 ? { y25: true } : {}) }])), null, 1));
+writeFileSync("data/top2/matches.json", JSON.stringify(Object.fromEntries(Object.entries(matches).map(([id, t]) => [id, { rank: t.rank, rankNs: t.rankNs, field: t.field, subfield: t.subfield, name: t.name, inst: t.inst, selfPct: t.selfPct, inNs: t.inNs, topCntry: t.topCntry ?? null, topShare: t.topShare ?? null, scope: t.scope, ...(t.y25 ? { y25: true } : {}) }])), null, 1));
 writeFileSync("data/top2/review.json", JSON.stringify(review, null, 1));
 console.log(`Top 2% Việt Nam: ${T.length}; khớp tự động ${Object.keys(matches).length}; cần xem ${review.length} (${review.filter((r) => r.candidates).length} có ứng viên cùng tên)`);
