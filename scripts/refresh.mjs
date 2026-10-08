@@ -11,7 +11,7 @@ if (!existsSync("data/raw") || !readdirSync("data/raw").length) run("node script
 const budget = async () => { const r = (await (await fetch(`https://api.openalex.org/rate-limit?api_key=${KEY}`)).json()).rate_limit; return { ...r, daily_remaining_usd: r.daily_remaining_usd + (r.prepaid_remaining_usd ?? 0) }; }; // gồm cả số dư nạp trước
 let b = await budget(); console.log(`Ngân sách OpenAlex còn ${b.daily_remaining_usd} USD (đặt lại sau ${Math.round(b.resets_in_seconds / 3600)} giờ)`);
 if (b.daily_remaining_usd < 0.05) { console.log("Hết ngân sách, dừng."); process.exit(0); }
-const I = JSON.parse(readFileSync("data/institutions.json", "utf8")).institutions.filter((i) => i.ror);
+const I = JSON.parse(readFileSync("data/institutions.json", "utf8")).institutions.filter((i) => i.ror || existsSync(`data/raw/${i.id}.json`)); // gồm đơn vị nạp theo chuỗi cơ quan (chưa có ROR)
 const have = new Set(readdirSync("data/raw").map((f) => f.replace(".json", "")));
 const pending = JSON.parse(readFileSync("data/ingest-pending.json", "utf8")).map((x) => x.id).filter((id) => I.some((i) => i.id === id));
 const all = [...new Set([...have].filter((id) => I.some((i) => i.id === id)).concat(pending))];

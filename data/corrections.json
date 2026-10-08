@@ -653,14 +653,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 74): Quách Văn Toàn Em / Van Toan Em Quach"
     },
     {
-      "into": "A5101541358",
-      "from": [
-        "A5122334521"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 61): Tho Nguyen"
-    },
-    {
       "into": "A5018592475",
       "from": [
         "A5062103088",
@@ -901,14 +893,6 @@
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 69): Thi-Nhai Vu"
-    },
-    {
-      "into": "A5046224898",
-      "from": [
-        "A5100597759"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 65): Nguyen Thi Phi Nga"
     },
     {
       "into": "A5104075392",
@@ -2177,14 +2161,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 88): Thanh-Dong Pham"
     },
     {
-      "into": "A5009180662",
-      "from": [
-        "A5035052357"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 65): Dang Tran Quan / Quan Tran Dang"
-    },
-    {
       "into": "A5016524148",
       "from": [
         "A5126327466"
@@ -2457,14 +2433,6 @@
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 67): Hoàng Phú Hiệp"
     },
     {
-      "into": "A5085910857",
-      "from": [
-        "A5132995729"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 65): Nam D. Vo"
-    },
-    {
       "into": "A5059648257",
       "from": [
         "A5124020384"
@@ -2543,14 +2511,6 @@
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 61): Thai Phuong Vu / Phương Vũ Thái"
-    },
-    {
-      "into": "A5040285891",
-      "from": [
-        "A5079557509"
-      ],
-      "date": "2026-10-08",
-      "reason": "Gộp sau khi quản trị viên duyệt (tầng B, điểm nghi trùng 65): Xuan Thuy Tran / Xuân Thủy Trần"
     },
     {
       "into": "A5045060478",
