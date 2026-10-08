@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Icon, type IconName } from "./icons";
 import { useAccount, api } from "./accountStore";
 
-const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["ra-soat", "Rà soát gộp", "check"], ["don-vi", "Đơn vị mới", "building"]];
+const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["ra-soat", "Rà soát gộp", "check"], ["gan-nham", "Bài gán nhầm", "check"], ["don-vi", "Đơn vị mới", "building"]];
 const n0 = (n: number) => new Intl.NumberFormat("vi-VN").format(Math.round(n));
 const pct = (a: number, b: number) => (b > 0 ? `${Math.round((a / b) * 100)}%` : "–");
 const delta = (a: number, b: number) => (b > 0 ? `${a >= b ? "▲" : "▼"} ${Math.abs(Math.round(((a - b) / b) * 100))}% so với 7 ngày trước` : a > 0 ? "mới có dữ liệu" : "");
@@ -34,7 +34,7 @@ export function AdminPage({ tab }: { tab: string }) {
     <article className="dash adm-page">
       <header className="dash-head"><div className="av" aria-hidden="true"><Icon n="grid" size={36} /></div><div className="dh-main"><h1>Quản trị ProFind</h1><p className="meta">{user.email} · số liệu theo giờ Việt Nam, khoảng 14 ngày gần nhất</p></div><div className="dh-act"><a className="ghost-link light" href="#/tai-khoan">← Không gian của tôi</a></div></header>
       <nav className="tabs" aria-label="Quản trị">{TABS.map(([k, l, ic]) => <a key={k} href={`#/quan-tri${k ? "/" + k : ""}`} aria-current={cur === k ? "page" : undefined}><Icon n={ic} size={16} />{l}</a>)}</nav>
-      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}{cur === "ra-soat" && <Recheck />}{cur === "don-vi" && <Units />}
+      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}{cur === "ra-soat" && <Recheck />}{cur === "gan-nham" && <Misattr />}{cur === "don-vi" && <Units />}
     </article>
   );
 }
@@ -155,7 +155,7 @@ const KIND: Record<string, string> = { remove: "Gỡ hồ sơ", claim: "Xác th�
 const ST: Record<string, string> = { review: "Chờ duyệt", approved: "Đã xác thực", rejected: "Từ chối", info: "Cần bổ sung" };
 function Claims() {
   const [v, setV] = useState(0), [msg, setMsg] = useState("");
-  const { d, err } = useGet<{ claims: ClaimRec[]; verified: VfRec[]; expiring: number; allow: string[]; works: { authorId: string; doi: string; title: string; year: number; why: string }[]; hidden: { score: string[]; profile: string[] } }>("admin-claims", `&v=${v}`);
+  const { d, err } = useGet<{ claims: ClaimRec[]; verified: VfRec[]; expiring: number; allow: string[]; works: { authorId: string; doi: string; title: string; year: number; why: string }[]; hidden: { score: string[]; profile: string[] }; xw?: { authorId: string; workId: string }[] }>("admin-claims", `&v=${v}`);
   const act = async (op: string, body: object, ok: string) => { try { await api(op, body); setMsg(ok); setV((x) => x + 1); } catch (e) { setMsg((e as Error).message); } };
   const decide = (c: ClaimRec, decision: string) => { let reason = ""; if (decision !== "approve") { reason = prompt(decision === "reject" ? "Lý do từ chối (gửi cho tác giả):" : "Cần tác giả bổ sung gì?") ?? ""; if (!reason && !confirm("Gửi không kèm lý do?")) return; } act("admin-claim-decide", { id: c.id, decision, reason }, "Đã xử lý và gửi email cho tác giả."); };
   const manual = (e: FormEvent<HTMLFormElement>) => { e.preventDefault(); const f = Object.fromEntries(new FormData(e.currentTarget)); act("admin-claim-manual", { ...f, direct: f.direct === "on" }, f.direct === "on" ? "Đã xác thực ngay và gửi email cho tác giả." : "Đã chạy kiểm tra tự động cho hồ sơ này."); };
@@ -177,6 +177,8 @@ function Claims() {
         <form onSubmit={(e) => { e.preventDefault(); const f = new FormData(e.currentTarget); act("admin-claim-hide", { authorId: f.get("authorId"), mode: f.get("mode") }, "Đã cập nhật."); }} className="form"><label className="sel"><span>Mã hồ sơ (A…)</span><input name="authorId" required placeholder="A5032223071" /></label><label className="sel"><span>Chế độ</span><select name="mode" defaultValue="score"><option value="score">Ẩn điểm và huy hiệu</option><option value="profile">Ẩn toàn bộ hồ sơ</option><option value="none">Hiển thị lại</option></select></label><p><button className="primary">Áp dụng</button></p></form></section>
       <section className="card"><h2>Xác thực thủ công (ca thử, hoặc đã trao đổi riêng)</h2><p className="meta">Mặc định quản trị viên xác nhận trực tiếp (tick vàng ngay, gửi email, không cần duyệt lại). Bỏ chọn ô bên dưới để chỉ chạy kiểm tra tự động (không đạt thì vào hàng chờ). Lưu ý: tài khoản chỉ thấy hồ sơ khi đăng nhập đúng email ở ô Email; yêu cầu chờ khác của cùng hồ sơ được đóng tự động.</p>
         <form onSubmit={manual} className="form"><label className="sel"><span>Mã hồ sơ (A…)</span><input name="authorId" required placeholder="A5079721281" /></label><label className="sel"><span>Họ tên</span><input name="name" required /></label><label className="sel"><span>Email</span><input name="email" type="email" required /></label><label className="sel"><span>ORCID</span><input name="orcid" /></label><label className="sel"><span>Google Scholar</span><input name="scholar" type="url" /></label><label className="chk"><input type="checkbox" name="direct" defaultChecked />Xác thực ngay (quản trị viên xác nhận trực tiếp)</label><p><button className="primary">Chạy kiểm tra / xác thực</button></p></form></section>
+      <section className="card"><h2>Công trình chủ hồ sơ báo "không phải của tôi" ({(d.xw ?? []).length})</h2><p className="meta">Đã ẩn ngay trên hồ sơ. Để loại khỏi điểm, đưa mã vào <code>excludeWorks</code> trong <code>data/corrections.json</code> (nhờ Claude áp dụng khi dựng dữ liệu).</p>
+        {(d.xw ?? []).length === 0 ? <p className="meta">Chưa có.</p> : <><ul>{(d.xw ?? []).map((x) => <li key={x.workId}><a href={`#/tac-gia/${x.authorId}`}>{x.authorId}</a> · <a href={`https://openalex.org/${x.workId.split("-").pop()}`} target="_blank" rel="noopener">{x.workId.split("-").pop()}</a></li>)}</ul><p><button type="button" onClick={() => void navigator.clipboard.writeText(JSON.stringify({ excludeWorks: (d.xw ?? []).map((x) => x.workId) }, null, 1)).then(() => setMsg("Đã chép JSON."))}>Chép JSON excludeWorks</button></p></>}</section>
       <section className="card"><h2>Đã xác thực ({d.verified.length})</h2>{d.verified.length === 0 ? <p className="meta">Chưa có.</p> : <ul>{d.verified.map((x) => <li key={x.authorId}><a href={`#/tac-gia/${x.authorId}`}>{x.name}</a> · {x.email} · đến {dmy(x.until)} <button onClick={() => act("admin-claim-renew", { authorId: x.authorId }, "Đã gia hạn 2 năm.")}>Gia hạn</button> <button onClick={() => confirm("Gỡ tick vàng?") && act("admin-claim-revoke", { authorId: x.authorId }, "Đã gỡ xác thực.")}>Gỡ</button></li>)}</ul>}</section>
       <section className="card"><h2>Email miễn phí được cho phép</h2>{d.allow.length === 0 ? <p className="meta">Chưa có.</p> : <ul>{d.allow.map((e) => <li key={e}>{e} <button onClick={() => act("admin-claim-allow", { email: e, on: false }, "Đã gỡ.")}>Gỡ</button></li>)}</ul>}
         <form onSubmit={(e) => { e.preventDefault(); const f = new FormData(e.currentTarget); act("admin-claim-allow", { email: f.get("email") }, "Đã thêm."); e.currentTarget.reset(); }} className="form"><label className="sel"><span>Thêm email (sau khi chấp nhận thư đề nghị)</span><input name="email" type="email" required /></label><p><button>Thêm</button></p></form></section>
@@ -476,5 +478,32 @@ function Recheck() {
       </div>
       {list.length === 0 && <p className="meta">Không có cặp nào trong mục này.</p>}
     </>
+  );
+}
+
+type MX = { kind: "A" | "B"; author: string; name: string; wid: string; doi: string | null; title: string; journal: string | null; year: number; score: number | null; role: string; why: string; nWorks: number };
+/** Công trình nghi gán nhầm người trùng tên (scripts/find-misattributed.mjs): loại = ẩn ngay + đưa vào excludeWorks khi dựng; giữ = không hỏi lại. */
+function Misattr() {
+  const [items, setItems] = useState<MX[] | null>(null), [err, setErr] = useState(""), [v, setV] = useState(0), [view, setView] = useState<"todo" | "exclude" | "keep">("todo"), [kind, setKind] = useState<"A" | "B">("A"), [page, setPage] = useState(0), [msg, setMsg] = useState("");
+  const { d } = useGet<{ mx: Record<string, string>; xw: { authorId: string; workId: string }[] }>("admin-claims", `&mx=${v}`);
+  useEffect(() => { fetch("/data/_misattributed.json", { cache: "no-store" }).then((r) => r.json()).then((j: { items: MX[] }) => setItems(j.items)).catch(() => setErr("Chưa có danh sách (chạy scripts/find-misattributed.mjs).")); }, []);
+  if (err) return <p className="banner demo" role="alert">{err}</p>;
+  if (!items || !d) return <p className="empty" role="status">Đang tải…</p>;
+  const mx = d.mx ?? {}, byKind = items.filter((i) => i.kind === kind), list = byKind.filter((i) => (view === "todo" ? !mx[i.wid] : mx[i.wid] === view)), PG = 25;
+  const dec = async (wid: string, decision: string) => { try { await api("admin-claim-misattr", { workId: wid, decision }); setV((x) => x + 1); } catch (e) { setMsg((e as Error).message); } };
+  const bulk = async () => { const todo = items.filter((i) => i.kind === "A" && !mx[i.wid]); if (!todo.length || !confirm(`Loại ${todo.length} bài loại A (ORCID ghi trên bài là của người khác)?`)) return; for (const i of todo) { try { await api("admin-claim-misattr", { workId: i.wid, decision: "exclude" }); } catch { /* bỏ qua, thử lại sau */ } } setV((x) => x + 1); setMsg(`Đã loại ${todo.length} bài loại A.`); };
+  return (
+    <section className="card"><h2>Bài nghi gán nhầm người trùng tên</h2>
+      <p className="meta">Chỉ xét hồ sơ OpenAlex đang gộp từ 2 ORCID trở lên. A: ORCID ghi trên chính bài đó là của người khác (chắc chắn). B: bài không ghi ORCID nhưng cơ quan và chủ đề giống nhóm bài của người kia hơn chủ hồ sơ (cần xem). "Loại" ẩn bài ngay trên hồ sơ; điểm tính lại khi đưa mã vào <code>excludeWorks</code> (mục "Công trình chủ hồ sơ báo…" ở tab Xác thực có nút chép JSON).</p>
+      <div role="status" aria-live="polite">{msg && <p className="banner">{msg}</p>}</div>
+      {kind === "A" && view === "todo" && list.length > 0 && <p><button type="button" className="primary" onClick={() => void bulk()}>Loại tất cả {list.length} bài loại A chưa duyệt</button></p>}
+      <p>{(["A", "B"] as const).map((k) => <button key={k} type="button" className={kind === k ? "primary" : ""} onClick={() => { setKind(k); setPage(0); }}>Loại {k} ({items.filter((i) => i.kind === k).length})</button>)} {(["todo", "exclude", "keep"] as const).map((x) => <button key={x} type="button" className={view === x ? "primary" : ""} onClick={() => { setView(x); setPage(0); }}>{x === "todo" ? "Chưa duyệt" : x === "exclude" ? "Đã loại" : "Đã giữ"} ({byKind.filter((i) => (x === "todo" ? !mx[i.wid] : mx[i.wid] === x)).length})</button>)}</p>
+      <ul className="mxlist">{list.slice(page * PG, (page + 1) * PG).map((i) => <li key={i.wid}>
+        <a href={`#/tac-gia/${i.author}`}>{i.name}</a> · <a href={i.doi ? `https://doi.org/${i.doi}` : `https://openalex.org/${i.wid.split("-").pop()}`} target="_blank" rel="noopener">{i.title}</a><br />
+        <span className="meta">{i.journal ?? "—"} · {i.year}{i.score ? ` · ${i.score} điểm (${i.role})` : ""} · hồ sơ {i.nWorks} bài — {i.why}</span><br />
+        <button type="button" onClick={() => void dec(i.wid, "exclude")} disabled={mx[i.wid] === "exclude"}>Loại bài</button> <button type="button" onClick={() => void dec(i.wid, "keep")} disabled={mx[i.wid] === "keep"}>Giữ</button> {mx[i.wid] && <button type="button" onClick={() => void dec(i.wid, "clear")}>Bỏ quyết định</button>}
+      </li>)}</ul>
+      {list.length > PG && <p><button type="button" disabled={page === 0} onClick={() => setPage(page - 1)}>Trước</button> {page + 1}/{Math.ceil(list.length / PG)} <button type="button" disabled={(page + 1) * PG >= list.length} onClick={() => setPage(page + 1)}>Sau</button></p>}
+    </section>
   );
 }

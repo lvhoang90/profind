@@ -1,6 +1,6 @@
 // Tick vàng "Nhà khoa học đã xác thực" + hộp yêu cầu xác thực hồ sơ ("Đây là tôi").
 import { DISC } from "./disciplines";
-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useId, useState, type FormEvent, type ReactNode } from "react";
 import { api, useAccount } from "./accountStore";
 import { Icon } from "./icons";
 
@@ -19,10 +19,22 @@ export function useVerified(id: string): number | null {
 const dmy = (ms: number) => new Date(ms).toLocaleDateString("vi-VN");
 const LBL = "Nhà khoa học đã xác thực";
 
+/** Con dấu "đã xác thực": hoa 8 cánh vàng, dấu tích trắng (thay cho vòng tròn phẳng cũ). */
+export function VerifiedSeal({ size = 18 }: { size?: number }) {
+  const g = `vs${useId().replace(/:/g, "")}`;
+  return (
+    <svg className="vseal" width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+      <defs><linearGradient id={g} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#ffe27a" /><stop offset=".55" stopColor="#f5b301" /><stop offset="1" stopColor="#d98a00" /></linearGradient></defs>
+      <rect x="4" y="4" width="16" height="16" rx="4.5" fill={`url(#${g})`} /><rect x="4" y="4" width="16" height="16" rx="4.5" transform="rotate(45 12 12)" fill={`url(#${g})`} />
+      <circle cx="12" cy="12" r="7.6" fill="none" stroke="#fff" strokeOpacity=".45" strokeWidth=".8" />
+      <path d="M8.2 12.4l2.6 2.6 5-5.4" fill="none" stroke="#fff" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 export function VerifiedTick({ id, size = 16 }: { id: string; size?: number }) {
   const until = useVerified(id);
   if (!until) return null;
-  return <span className="vtick" title={`${LBL} · hiệu lực đến ${dmy(until)}`} role="img" aria-label={LBL}><Icon n="check" size={size} /></span>;
+  return <span className="vtick" title={`${LBL} · hiệu lực đến ${dmy(until)}`} role="img" aria-label={LBL}><VerifiedSeal size={size} /></span>;
 }
 /** Người đang đăng nhập có phải chủ hồ sơ đã xác thực này không (so theo email xác thực). */
 export function useIsMine(id: string): boolean {
@@ -33,7 +45,7 @@ export function useIsMine(id: string): boolean {
 export function VerifiedBadge({ id }: { id: string }) {
   const until = useVerified(id);
   if (!until) return null;
-  return <span className="badge vbadge"><span className="vtick" aria-hidden="true"><Icon n="check" size={14} /></span>{LBL} · đến {dmy(until)}</span>;
+  return <span className="badge vbadge"><VerifiedSeal size={18} /><span><b>{LBL}</b><small>hiệu lực đến {dmy(until)}</small></span></span>;
 }
 
 type Row = { id: string; authorId: string; status: string; until: number | null; reason: string };
@@ -72,7 +84,7 @@ export function ClaimBox({ authorId, authorName, mode = "claim" }: { authorId: s
 }
 
 // ---------- Dữ liệu công khai do chủ hồ sơ đã xác thực khai báo ----------
-export interface AuthorPub { verified: boolean; profile?: { disc?: string[]; orcid: string; scholar: string; site: string; bio: string; hasAvatar: boolean | number; email: string; phone: string }; works?: { doi: string; title: string; venue: string; year: number; oa: string; status: string }[] }
+export interface AuthorPub { verified: boolean; xw?: string[]; profile?: { disc?: string[]; orcid: string; scholar: string; site: string; bio: string; hasAvatar: boolean | number; email: string; phone: string }; works?: { doi: string; title: string; venue: string; year: number; oa: string; status: string }[] }
 export function useAuthorPub(id: string): AuthorPub | null {
   const ok = useVerified(id); const [d, setD] = useState<AuthorPub | null>(null);
   useEffect(() => { setD(null); if (ok) api<AuthorPub>("author-public", undefined, `&id=${encodeURIComponent(id)}`).then(setD).catch(() => {}); }, [id, ok]);
@@ -101,7 +113,7 @@ export function AvatarImg({ id, fallback }: { id: string; fallback: ReactNode })
 }
 
 // ---------- Tab "Hồ sơ khoa học" trong không gian tài khoản ----------
-type Mine = { authorId: string; name: string; until: number; hide?: string; profile: { disc?: string[]; orcid?: string; scholar?: string; site?: string; bio?: string; email?: string; phone?: string; showContact?: boolean; av?: number | boolean }; works: { doi: string; title: string; year: number; status: string; why: string; oa: string }[] };
+type Mine = { authorId: string; name: string; until: number; hide?: string; xw?: string[]; profile: { disc?: string[]; orcid?: string; scholar?: string; site?: string; bio?: string; email?: string; phone?: string; showContact?: boolean; av?: number | boolean }; works: { doi: string; title: string; year: number; status: string; why: string; oa: string }[] };
 // Đọc tệp thành data: URL (CSP của trang chỉ cho img-src 'self' data:, không cho blob:), rồi cắt vuông 256 px.
 const shrink = (f: File) => new Promise<string>((res, rej) => {
   const fr = new FileReader();
@@ -165,6 +177,9 @@ function One({ m, reload }: { m: Mine; reload: () => void }) {
           <div role="status" aria-live="polite">{avMsg && <p className="banner"><Icon n="check" />{avMsg}</p>}</div>
         </div>
       </div>
+      <h3>Công trình bị gán nhầm</h3>
+      <p className="meta">Nếu OpenAlex gán nhầm bài của người trùng tên vào hồ sơ của bạn, mở trang hồ sơ công khai của bạn và bấm "Không phải bài của tôi" ở bài đó. Bài sẽ ẩn ngay khỏi danh sách; điểm được tính lại ở lần cập nhật dữ liệu kế tiếp.</p>
+      {(m.xw ?? []).length > 0 && <ul>{(m.xw ?? []).map((w) => <li key={w}><code>{w.split("-").pop()}</code> đã báo không phải của bạn <button type="button" disabled={busy} onClick={() => void run("author-work-not", { workId: w, undo: true }, "Đã hoàn tác.")}>Hoàn tác</button></li>)}</ul>}
       <h3>Thêm công trình theo DOI</h3>
       <p className="meta">DOI được đối chiếu với Crossref: tên hoặc ORCID của bạn phải có trong danh sách tác giả, nếu không sẽ chờ quản trị viên duyệt. Công trình tự bổ sung chưa tính vào PRO-SCORE cho tới khi OpenAlex ghi nhận.</p>
       <form onSubmit={addDoi} className="form"><label className="sel"><span>DOI</span><input name="doi" required placeholder="10.1234/abcd" maxLength={220} /></label><p><button className="primary" disabled={busy}>Thêm công trình</button></p></form>
@@ -175,3 +190,7 @@ function One({ m, reload }: { m: Mine; reload: () => void }) {
 
 /** Ngành do chủ hồ sơ đã xác thực tự chọn (ưu tiên hơn ngành hệ thống suy ra khi hiển thị). */
 export function useOwnDisc(id: string): string[] | null { const d = useAuthorPub(id); return d?.profile?.disc?.length ? d.profile.disc : null; }
+
+/** Công trình chủ hồ sơ đã báo "không phải của tôi" (ẩn khỏi danh sách; điểm tính lại ở lần dựng dữ liệu sau). */
+export function useNotMine(id: string, local: string[]): Set<string> { const d = useAuthorPub(id); return new Set([...(d?.xw ?? []), ...local]); }
+export function reportNotMine(authorId: string, workId: string): Promise<unknown> { return api("author-work-not", { authorId, workId }); }

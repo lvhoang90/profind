@@ -14,8 +14,9 @@ import { HeroArt } from "./HeroArt";
 import { useWorks } from "./wsearch";
 import { StarBtn } from "./StarBtn";
 import { ProBadge, ProBadgeTag } from "./Badge";
+import { AvatarFrame } from "./Frame";
 import { VisitChip } from "./VisitChip";
-import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg, useVerified, useIsMine, useOwnDisc } from "./Verified";
+import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg, useVerified, useIsMine, useOwnDisc, useNotMine, reportNotMine } from "./Verified";
 import { useHidden } from "./hidden";
 import { NoDataHint } from "./NoData";
 import { Footer, EcoLink } from "./Footer";
@@ -352,7 +353,7 @@ function List({ d, query }: { d: Data; query: string }) {
             <tr key={a.id}>
               <td className="num rankc" data-l={t("stt")}><span className={`rk r${medal ? Math.min(pos, 4) : 4}`}>{num(pos)}</span></td>
               <td className="who"><StarBtn className="inrow" k={`a|${a.id}`} meta={{ t: a.name, s: a.institutions.slice(0, 2).map((i) => instLabel(instById.get(i), lang, i)).join(", "), sc: a.pro ?? undefined, rk: a.proRank ?? undefined }} /><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a><VerifiedTick id={a.id} size={15} /><ProBadge rank={a.proRank} size={24} className="inrow" />{a.bigFlag && <span className="bigtag" title={t("bigTitle") + ": " + t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}><Icon n="users" size={12} /></span>}{a.claimed && <><Icon n="check" size={14} className="ok" /><span className="sr"> {t("claimedSr")}</span></>}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}<Top2Tag a={a} cls="top2" /><div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
-              <td data-l={t("unit")}>{a.institutions.map((i) => instLabel(instById.get(i), lang, i)).join(", ")}</td>
+              <td data-l={t("unit")}>{a.institutions.filter((i) => !a.instPast?.includes(i)).map((i) => instLabel(instById.get(i), lang, i)).join(", ")}{a.instPast?.length ? <small className="past" title="Đơn vị trước đây, theo cơ quan ghi trên các công trình gần đây"> · {lang === "vi" ? "trước đây" : "formerly"}: {a.instPast.map((i) => instLabel(instById.get(i), lang, i)).join(", ")}</small> : null}</td>
               <td className={`num${a.worksCount >= 1000 ? " lg" : ""}`} data-l={t("works")}>{num(a.worksCount)}</td><td className="num" data-l={t("scoreShort")}><span className="score">{a.pro == null ? "-" : num(a.pro, 1)}</span></td><td className={`num${a.citations >= 100000 ? " lg" : ""}`} data-l={t("cit")}>{num(a.citations)}</td>
               <td className="meta yrs" data-l={t("years")}>{a.firstYear ?? "-"}–{a.lastYear ?? "-"}</td>
             </tr>); })}</tbody>
@@ -375,7 +376,9 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   const { lang, t, num } = useT();
   const { user, cfg, favs, toggleFav, recordView } = useAccount();
   const ownDisc = useOwnDisc(a.id), mine = useIsMine(a.id), isVerified = useVerified(a.id) !== null;
-  const [works, setWorks] = useState<Work[] | null>(null);
+  const [worksAll, setWorks] = useState<Work[] | null>(null), [localXw, setLocalXw] = useState<string[]>([]);
+  const xwSet = useNotMine(a.id, localXw);
+  const works = useMemo(() => (worksAll && xwSet.size ? worksAll.filter((w) => !xwSet.has(w.id)) : worksAll), [worksAll, xwSet]);
   const [werr, setWerr] = useState(false), [tick, setTick] = useState(0), [wpage, setWpage] = useState(0);
   const [wsort, setWsort] = useState<WSort>("year"), [onlyLead, setOnlyLead] = useState(false), [allInst, setAllInst] = useState(false);
   // Hủy yêu cầu cũ khi đổi hồ sơ: không để công trình của hồ sơ trước hiện (và xuất CSV) ở hồ sơ sau.
@@ -435,15 +438,15 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   return (
     <article className="ap">
       <p><a className="backl" href="#/">{t("back")}</a></p>
-      <header className="hero">
-        <div className="av" style={{ background: `linear-gradient(135deg,hsl(${hue} 75% 52%),hsl(${(hue + 55) % 360} 80% 42%))` }} aria-hidden="true"><AvatarImg id={a.id} fallback={initials(a.name)} /></div>
+      <header className="hero hero2">
+        <AvatarFrame a={a}><div className="av" style={{ background: `linear-gradient(135deg,hsl(${hue} 75% 52%),hsl(${(hue + 55) % 360} 80% 42%))` }} aria-hidden="true"><AvatarImg id={a.id} fallback={initials(a.name)} /></div></AvatarFrame>
         <div className="hero-main">
-          <h1 className="au">{a.name}<VerifiedTick id={a.id} size={22} /></h1>
-          <p className="badges"><VerifiedBadge id={a.id} />{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}<Top2Tag a={a} cls="badge top2b" />{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</p>
-          <ul className="chips">{(allInst ? inst : inst.slice(0, 4)).map((i) => <li key={i.id}><Icon n="building" size={14} />{instLabel(i, lang)}</li>)}{inst.length > 4 && <li className="more"><button type="button" onClick={() => setAllInst(!allInst)} aria-expanded={allInst}>{allInst ? t("instLess") : t("instMore", { n: num(inst.length - 4) })}</button></li>}{a.scholar && <li className="scholar"><a href={`https://scholar.google.com/citations?user=${a.scholar}&hl=${lang === "vi" ? "vi" : "en"}`} target="_blank" rel="noopener">Google Scholar<span className="sr"> {t("newTab")}</span></a></li>}{a.orcid && <li className="orcid"><a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}<span className="sr"> {t("newTab")}</span></a></li>}</ul>
-          <ProBadgeTag rank={a.proRank} />
+          <div className="hname"><h1 className="au">{a.name}</h1><VerifiedTick id={a.id} size={28} /></div>
+          <div className="hstat"><VerifiedBadge id={a.id} /><ProBadgeTag rank={a.proRank} /><Top2Tag a={a} cls="badge top2b" />{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</div>
+          <ul className="chips">{(allInst ? inst : inst.slice(0, 4)).map((i) => { const past = a.instPast?.includes(i.id); return <li key={i.id} className={past ? "pastchip" : undefined} title={past ? "Đơn vị trước đây, theo cơ quan ghi trên các công trình gần đây" : undefined}><Icon n="building" size={14} />{past ? (lang === "vi" ? "Trước đây: " : "Formerly: ") : ""}{instLabel(i, lang)}</li>; })}{inst.length > 4 && <li className="more"><button type="button" onClick={() => setAllInst(!allInst)} aria-expanded={allInst}>{allInst ? t("instLess") : t("instMore", { n: num(inst.length - 4) })}</button></li>}</ul>
           {a.bigFlag && <p className="bigflag" role="note"><Icon n="users" size={18} /><span><b>{t("bigTitle")}</b> {t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}</span></p>}
           {(ownDisc ?? a.disciplines).length > 0 && <p className="hdisc">{(ownDisc ?? a.disciplines).map((s) => dName(s, lang)).join(" · ")}</p>}
+          {(a.scholar || a.orcid) && <ul className="hlinks" aria-label="Định danh học thuật">{a.scholar && <li className="idl scholar"><a href={`https://scholar.google.com/citations?user=${a.scholar}&hl=${lang === "vi" ? "vi" : "en"}`} target="_blank" rel="noopener"><i className="idk">Google Scholar</i><span className="sr"> {t("newTab")}</span></a></li>}{a.orcid && <li className="idl orcid"><a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener"><i className="idk">ORCID</i><span className="idv">{a.orcid}</span><span className="sr"> {t("newTab")}</span></a></li>}</ul>}
           <p className="actions-row">{cfg?.enabled !== false && <button className={`ghost light${favs.has(`a|${a.id}`) ? " on" : ""}`} aria-pressed={favs.has(`a|${a.id}`)} onClick={() => void saveAuthor()}><Icon n="star" size={16} />{!user ? t("saveGate") : favs.has(`a|${a.id}`) ? t("savedA") : t("saveA")}</button>}<button className="ghost light" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button><a className="ghost-link light" href={mine ? "#/tai-khoan" : `#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{mine ? "Quản lý hồ sơ của tôi" : isVerified ? "Đính chính / gỡ hồ sơ" : t("corrLink")}</a></p>
         </div>
       </header>
@@ -498,6 +501,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
                 {w.quartile ? <span className={`pill sc ${w.quartile.toLowerCase()}`} title={`Scopus ${w.quartile}`}>{w.quartile}<small>Scopus</small></span> : <span className="pill none">{t("noQ")}</span>}
                 <span className="wc"><Icon n="chart" size={14} />{num(w.citations)}<span className="sr"> {t("cit")}</span></span>
                 <span className={`role ${w.role}`}>{roleCell(w)}</span>
+                {mine && <button type="button" className="linkbtn" onClick={() => { if (confirm("Bài này không phải của bạn (OpenAlex gán nhầm người trùng tên)? Bài sẽ ẩn khỏi hồ sơ.")) void reportNotMine(a.id, w.id).then(() => setLocalXw((x) => [...x, w.id])).catch((e) => alert((e as Error).message)); }}>Không phải bài của tôi</button>}
               </div>
             </li>))}</ol>)}
         {works && <Pager page={wpage} total={shown.length} set={(p) => setWpage(p)} />}
