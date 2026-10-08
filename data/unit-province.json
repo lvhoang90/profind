@@ -298,33 +298,36 @@
     "dai-hoc-greenwich-fpt-viet-nam": "Hà Nội",
     "dai-hoc-cong-nghe-swinburne-fpt-viet-nam": "TP. Hồ Chí Minh",
     "cao-dang-co-dien-va-nong-nghiep-nam-bo": "Cần Thơ",
-    "cao-dang-luat-mien-trung": "Đà Nẵng"
+    "cao-dang-luat-mien-trung": "Đà Nẵng",
+    "cao-dang-kinh-te-ky-thuat-cong-thuong": "Thanh Hóa",
+    "cao-dang-nguyen-du": "Hà Tĩnh"
   },
-  "verify": [
-    "buv",
-    "cao-dang-co-dien-va-nong-nghiep-nam-bo",
-    "cao-dang-cong-nghe-kinh-te-va-thuy-loi-mien-trung",
-    "cao-dang-cong-nghiep-thuc-pham",
-    "cao-dang-cong-thuong-mien-trung",
-    "cao-dang-luat-mien-trung",
-    "dai-hoc-cong-nghe-swinburne-fpt-viet-nam",
-    "dai-hoc-cong-nghiep-vinh",
-    "dai-hoc-greenwich-fpt-viet-nam",
-    "dai-hoc-ha-hoa-tien",
-    "dai-hoc-intracom",
-    "dai-hoc-ngo-quyen-dai-hoc-si-quan-cong-binh",
-    "dai-hoc-nguyen-hue-dai-hoc-si-quan-luc-quan-2",
-    "dai-hoc-si-quan-tang-thiet-giap",
-    "ngoai-ngu",
-    "vts"
-  ],
+  "verify": [],
   "confirmed": {
     "dai-hoc-cong-nghe-mien-dong": "Đồng Nai",
     "dai-hoc-quang-trung": "Gia Lai",
     "dai-hoc-vo-toan": "Cần Thơ",
     "ufba": "Hưng Yên",
     "by": "quản trị viên",
-    "date": "2026-10-08"
+    "date": "2026-10-08",
+    "buv": "Hưng Yên",
+    "cao-dang-co-dien-va-nong-nghiep-nam-bo": "Cần Thơ",
+    "cao-dang-cong-nghe-kinh-te-va-thuy-loi-mien-trung": "Đắk Lắk",
+    "cao-dang-cong-nghiep-thuc-pham": "Phú Thọ",
+    "cao-dang-cong-thuong-mien-trung": "Đắk Lắk",
+    "cao-dang-luat-mien-trung": "Đà Nẵng",
+    "dai-hoc-cong-nghe-swinburne-fpt-viet-nam": "TP. Hồ Chí Minh",
+    "dai-hoc-cong-nghiep-vinh": "Nghệ An",
+    "dai-hoc-greenwich-fpt-viet-nam": "Hà Nội",
+    "dai-hoc-ha-hoa-tien": "Hà Nội",
+    "dai-hoc-intracom": "Hà Nội",
+    "dai-hoc-ngo-quyen-dai-hoc-si-quan-cong-binh": "TP. Hồ Chí Minh",
+    "dai-hoc-nguyen-hue-dai-hoc-si-quan-luc-quan-2": "Đồng Nai",
+    "dai-hoc-si-quan-tang-thiet-giap": "Phú Thọ",
+    "ngoai-ngu": "Thái Nguyên",
+    "vts": "Bắc Ninh",
+    "cao-dang-kinh-te-ky-thuat-cong-thuong": "Thanh Hóa",
+    "cao-dang-nguyen-du": "Hà Tĩnh"
   },
   "merged": {
     "Hà Nội": [],
@@ -413,9 +416,5 @@
     "An Giang": [
       "Kiên Giang"
     ]
-  },
-  "unassigned": [
-    "cao-dang-kinh-te-ky-thuat-cong-thuong",
-    "cao-dang-nguyen-du"
-  ]
+  }
 }
