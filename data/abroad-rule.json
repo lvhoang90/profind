@@ -7,5 +7,5 @@
   "maxVnShare": 0.06,
   "decidedBy": "scripts/abroad-decision.mjs: trung vị của ba trung vị đồng thuận độc lập của hội đồng mô phỏng, làm tròn đến số nguyên",
   "mainCountry": true,
-  "_note2": "Quy tắc 3 (08/10/2026, quyết định của quản trị viên): nếu nước công bố chính (nước có nhiều công trình nhất theo cơ quan của chính tác giả, cần tối thiểu minWorks công trình có ghi cơ quan) không phải Việt Nam thì bỏ ra khỏi bảng xếp hạng. Việt Nam ngang bằng nước đứng đầu thì vẫn giữ. Ngoại lệ: data/vn-confirmed.json."
+  "_note2": "Quy tắc 3 (08/10/2026, quyết định của quản trị viên): nếu nước công bố chính trong cửa sổ `window` năm gần nhất (nước có nhiều công trình nhất theo cơ quan của chính tác giả, cần tối thiểu recentMinWorks công trình trong cửa sổ; chưa đủ thì dùng toàn bộ công trình, tối thiểu minWorks) không phải Việt Nam thì bỏ ra khỏi bảng xếp hạng. Việt Nam ngang bằng nước đứng đầu thì vẫn giữ. Ngoại lệ: data/vn-confirmed.json."
 }
