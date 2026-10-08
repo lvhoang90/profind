@@ -143,7 +143,7 @@ const bigStats = (ws) => { const big = ws.filter((w) => (w.na ?? 0) >= 50), all 
 const outAuthors = authors.map((a) => {
   const ws = per.get(a.id) ?? [], jc = new Map();
   for (const w of ws) jc.set(`${w.journal}|${w.issn}`, (jc.get(`${w.journal}|${w.issn}`) ?? 0) + 1);
-  const disciplines = authorDisc.get(a.id) ?? [];
+  const disciplines = C.setDisciplines?.[a.id] ?? authorDisc.get(a.id) ?? []; // đính chính ngành do quản trị viên đặt (xem corrections.json)
   const years = ws.map((w) => w.year);
   const matched = ws.filter((w) => w.matched).length;
   const span = years.length ? Math.max(1, Math.max(...years) - Math.min(...years) + 1) : 1;
