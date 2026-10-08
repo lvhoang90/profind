@@ -10,7 +10,9 @@
   "rename": {
     "A5066728998": "Võ Tòng Xuân"
   },
-  "excludeWorks": [],
+  "excludeWorks": [
+    "A5108957051-W7141923280"
+  ],
   "merge": [
     {
       "into": "A5066728998",
