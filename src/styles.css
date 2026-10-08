@@ -553,3 +553,12 @@ td.who>.meta{margin-top:3px}
 @media(prefers-reduced-motion:reduce){.avf.p{animation:none}}
 @media(max-width:700px){.hero2{padding:20px 16px;gap:16px}.avf{width:76px;height:76px;margin:6px 8px 8px 4px;border-radius:22px}.avf .av{font-size:1.5rem}.avf.v .av,.avf.vt .av,.avf.p .av{border-radius:18px}.avf-seal{left:-6px;bottom:-6px}.avf-seal svg{width:22px;height:22px}.avf-medal{right:-9px;bottom:-9px}.avf-medal svg{width:30px;height:30px}.avf-crown{top:-15px;width:26px}.hstat .badge{min-height:36px}}
 @media(max-width:480px){.hero2{flex-direction:column}}
+
+/* thanh tab quản trị: xuống dòng thay vì tràn ngang */
+.tabs.adm-tabs{flex-wrap:wrap;overflow-x:visible;gap:6px 6px}.tabs.adm-tabs a{min-height:38px;padding:0 13px;font-size:.86rem}
+/* nút phân đoạn (tab Bài gán nhầm) */
+.seg{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0}.seg button{min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:.86rem;font-weight:600;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}.segsep{width:1px;height:22px;background:var(--line);margin:0 6px}
+.mxlist{list-style:none;margin:0;padding:0}.mxlist li{padding:10px 0;border-bottom:1px solid var(--line)}.mxlist li:last-child{border-bottom:0}
+.mxact{display:inline-flex;gap:6px;margin-top:6px}.mxact button{min-height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:.82rem;font-weight:600;cursor:pointer}
+.mxact button.mx-ex{background:#fde8e8;border-color:#f3b4b4;color:#8a1c1c}.mxact button:disabled{opacity:.45;cursor:default}
