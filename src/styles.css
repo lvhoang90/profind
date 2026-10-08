@@ -587,3 +587,8 @@ td.who>.meta{margin-top:3px}
 .lb-nums{display:flex;gap:16px;margin:0;text-align:right}.lb-nums div{min-width:64px}.lb-nums dt{font-size:.68rem;color:var(--ink-2);line-height:1.2}.lb-nums dd{margin:2px 0 0;font-weight:700;font-variant-numeric:tabular-nums}.lb-avg dd .score{font-size:1rem}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]) .lb-top.t1{background:linear-gradient(90deg,#3a3217,var(--surface))}}:root[data-theme=dark] .lb-top.t1{background:linear-gradient(90deg,#3a3217,var(--surface))}
 @media(max-width:700px){.lb-list li{grid-template-columns:38px minmax(0,1fr);padding:12px}.lb-nums{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:left}.lb-nums div{min-width:0}}
+/* Trang giới thiệu: tab xuống dòng thay vì kéo ngang; nút gọn, đều nhau */
+.about .tabs{flex-wrap:wrap;overflow-x:visible;gap:8px;padding:14px 0 6px}
+.about .tabs .tabbtn{min-height:38px;padding:0 14px;font-size:.86rem;flex:0 0 auto}
+.about .tabs .tabbtn[aria-selected=true],.about .tabs .tabbtn[aria-pressed=true],.about .tabs .tabbtn.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+@media(max-width:600px){.about .tabs{gap:6px}.about .tabs .tabbtn{flex:1 1 calc(50% - 6px);justify-content:center;min-height:42px;padding:0 10px}}

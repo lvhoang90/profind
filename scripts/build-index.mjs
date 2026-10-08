@@ -75,7 +75,17 @@ const nDupWorks = prep.length - prepared.length;
 // Với công trình thuộc tạp chí nhiều ngành, chọn ngành trong số ngành của tạp chí bằng (a) độ giống tiêu đề với các công trình ở tạp chí đơn ngành, (b) ngành mà tác giả đã có ở các công trình đơn ngành.
 const dTok = (t) => { const w = foldS(t).replace(/[^a-z0-9 ]+/g, " ").split(" ").filter((x) => x.length > 2); return [...w, ...w.slice(1).map((x, i) => `${w[i]}_${x}`)]; };
 const dTf = new Map(), dDf = new Map(); // ngành -> (từ -> số công trình)
-const GENERAL = 10, MULTI = 4, multi = (p) => p.js.length >= MULTI; // tạp chí trong nước nằm ở >= 4 ngành HĐGSNN = tạp chí đa ngành
+// Tạp chí "đại trà" (PLoS ONE, Scientific Reports, Journal of Cleaner Production...): danh mục chỉ xếp vào vài ngành nhưng thực tế đăng mọi lĩnh vực nên không dùng làm bằng chứng ngành.
+// Nhận diện theo dữ liệu: tạp chí có >= 60 công trình của các tác giả đã có ngành sơ bộ (từ tạp chí không đại trà) mà ngành phổ biến nhất chiếm < 40%.
+const issnsOf = (p) => [...new Set([p.w.issn, ...(p.w.issns ?? [])].filter(Boolean))];
+const volByIssn = new Map(); for (const p of prepared) for (const i of issnsOf(p)) volByIssn.set(i, (volByIssn.get(i) ?? 0) + 1);
+const pre = new Map(); for (const p of prepared) { if (!p.disc.length || p.disc.length > 2 || issnsOf(p).some((i) => (volByIssn.get(i) ?? 0) >= 150)) continue; const m = pre.get(p.w.authorId) ?? new Map(); for (const d of p.disc) m.set(d, (m.get(d) ?? 0) + 1 / p.disc.length); pre.set(p.w.authorId, m); }
+const preTop = new Map([...pre].map(([a, m]) => [a, [...m].sort((x, y) => y[1] - x[1])[0][0]]));
+const spread = new Map(); for (const p of prepared) { const d = preTop.get(p.w.authorId); if (!d) continue; for (const i of issnsOf(p)) { const m = spread.get(i) ?? new Map(); m.set(d, (m.get(d) ?? 0) + 1); spread.set(i, m); } }
+const listedBy = new Map(); for (const p of prepared) for (const i of issnsOf(p)) { const l = listedBy.get(i) ?? new Set(); for (const d of p.disc) l.add(d); listedBy.set(i, l); }
+// "ngành khai báo của tạp chí không khớp tác giả đăng ở đó": < 25% công trình thuộc tác giả có ngành sơ bộ nằm trong các ngành tạp chí khai báo (ví dụ PLoS ONE chỉ khai "Chăn nuôi")
+const GENERAL_ISSN = new Set(); for (const [i, m] of spread) { const tot = [...m.values()].reduce((x, y) => x + y, 0), l = listedBy.get(i) ?? new Set(), fit = [...m].filter(([d]) => l.has(d)).reduce((x, [, c]) => x + c, 0) / (tot || 1); if (tot >= 40 && (Math.max(...m.values()) / tot < 0.4 || fit < 0.25)) GENERAL_ISSN.add(i); }
+const GENERAL = 10, MULTI = 4, isGeneral = (p) => p.js.length >= GENERAL || issnsOf(p).some((i) => GENERAL_ISSN.has(i)), multi = (p) => p.js.length >= MULTI || isGeneral(p); // tạp chí trong nước nằm ở >= 4 ngành HĐGSNN hoặc tạp chí đại trà = đa ngành
 for (const p of prepared) if (p.disc.length === 1) { const m = dTf.get(p.disc[0]) ?? new Map(); for (const t of new Set(dTok(p.w.title))) { m.set(t, (m.get(t) ?? 0) + 1); dDf.set(t, (dDf.get(t) ?? 0) + 1); } dTf.set(p.disc[0], m); }
 const nD = dTf.size || 1, dNorm = new Map(), tIdf = (t) => Math.log(1 + nD / (dDf.get(t) ?? 1));
 for (const [d, m] of dTf) { let n = 0; for (const [t, c] of m) n += (c * tIdf(t)) ** 2; dNorm.set(d, Math.sqrt(n) || 1); }
@@ -88,9 +98,9 @@ for (const p of prepared) {
   if (!multi(p)) continue; nAmb++;
   const m = votes.get(p.w.authorId) ?? new Map(), pr = prior.get(p.w.authorId), toks = dTok(p.w.title);
   // Tạp chí tổng hợp (>= 10 ngành HĐGSNN): danh sách ngành thường thiếu ngành thật của bài (ví dụ TNU Journal không có Kinh tế), nên xét mọi ngành đã học được.
-  const cand = p.js.length >= GENERAL ? [...new Set([...p.disc, ...dTf.keys()])] : p.disc;
+  const cand = isGeneral(p) ? [...new Set([...p.disc, ...dTf.keys()])] : p.disc;
   const sc = cand.map((d) => [d, titleSim(toks, d) + (pr?.get(d) ?? 0)]), top = Math.max(...sc.map((x) => x[1]));
-  if (top <= 0) { if (p.disc.length > 3) { nAmbSkipped++; continue; } for (const d of p.disc) m.set(d, (m.get(d) ?? 0) + idf(d) / p.disc.length); }
+  if (top <= 0) { if (p.disc.length > 3 || isGeneral(p)) { nAmbSkipped++; continue; } for (const d of p.disc) m.set(d, (m.get(d) ?? 0) + idf(d) / p.disc.length); }
   else { const win = sc.filter((x) => x[1] >= top * 0.8).map((x) => x[0]); for (const d of win) m.set(d, (m.get(d) ?? 0) + idf(d) / win.length); }
   votes.set(p.w.authorId, m);
 }
