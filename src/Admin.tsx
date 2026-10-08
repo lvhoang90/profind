@@ -328,11 +328,13 @@ function Merger() {
 type UCand = { id: string; name: string; en: string | null; type: string; city: string | null; phrase: string; works: number; authors: number; vnShare: number; flags: string[]; topAuthors: { id: string; name: string; orcid: string | null; n: number }[]; samples: string[] };
 type UDec = { id: string; d: string };
 function Units() {
-  const [units, setUnits] = useState<UCand[] | null>(null), [err, setErr] = useState(""), [v, setV] = useState(0), [out, setOut] = useState(""), [view, setView] = useState<"todo" | "approve" | "reject" | "skip">("todo");
+  const [units, setUnits] = useState<UCand[] | null>(null), [err, setErr] = useState(""), [v, setV] = useState(0), [out, setOut] = useState(""), [view, setView] = useState<"todo" | "approve" | "reject" | "skip">("todo"), [pick, setPick] = useState<Set<string>>(new Set()), [busy, setBusy] = useState(false), [msg, setMsg] = useState("");
   const { d } = useGet<{ units: UDec[] }>("admin-claims", `&un=${v}`);
   useEffect(() => { fetch("/data/_aff-review.json", { cache: "no-store" }).then((r) => r.json()).then((j: { units: UCand[] }) => setUnits(j.units)).catch(() => setErr("Không tải được danh sách đơn vị.")); }, []);
   const dec = useMemo(() => new Map((d?.units ?? []).map((x) => [x.id, x.d])), [d]);
-  const decide = async (id: string, decision: string) => { try { await api("admin-claim-unit", { id, decision }); setV((x) => x + 1); } catch (e) { setErr((e as Error).message); } };
+  const decideMany = async (ids: string[], decision: string, ok: string) => { setBusy(true); setMsg(""); try { await api("admin-claim-unit", { items: ids.map((id) => ({ id, decision })) }); setMsg(ok); setPick(new Set()); setV((x) => x + 1); } catch (e) { setErr((e as Error).message); } finally { setBusy(false); } };
+  const decide = (id: string, decision: string) => decideMany([id], decision, "Đã lưu.");
+  const toggle = (id: string) => setPick((s) => { const n = new Set(s); if (n.has(id)) n.delete(id); else n.add(id); return n; });
   if (err) return <p className="banner demo" role="alert">{err}</p>;
   if (!units) return <p className="empty" role="status">Đang tải…</p>;
   const list = units.filter((u) => (view === "todo" ? !dec.has(u.id) : dec.get(u.id) === view));
@@ -342,10 +344,17 @@ function Units() {
       <section className="card"><h2>Đơn vị chưa có dữ liệu: duyệt nạp theo chuỗi cơ quan</h2>
         <p className="meta">{units.length} đơn vị có từ 20 bài trở lên ghi tên đơn vị trong chuỗi cơ quan trên OpenAlex nhưng chưa có bản ghi đơn vị. Với mỗi đơn vị chỉ nạp tác giả có <b>chính chuỗi cơ quan của mình</b> chứa tên đơn vị (từ 2 bài, hoặc có ORCID). Cảnh báo màu vàng nghĩa là tên có thể trùng đơn vị khác: xem các chuỗi mẫu trước khi duyệt.</p>
         <p>{(["todo", "approve", "reject", "skip"] as const).map((k) => <button key={k} className={view === k ? "primary" : ""} onClick={() => setView(k)}>{k === "todo" ? `Chưa duyệt (${units.filter((u) => !dec.has(u.id)).length})` : k === "approve" ? `Đã duyệt (${approved.length})` : k === "reject" ? "Đã loại" : "Để sau"}</button>)} <button onClick={() => setOut(JSON.stringify({ ids: approved }))}>Xuất danh sách đã duyệt</button></p>
+        {msg && <p className="banner" role="status"><Icon n="check" />{msg}</p>}
         {out && <><p className="meta">Sao chép gửi cho trợ lý để nạp:</p><textarea readOnly rows={3} value={out} onFocus={(e) => e.currentTarget.select()} style={{ width: "100%" }} /></>}</section>
+      {view === "todo" && list.length > 0 && <section className="card"><p>
+        <button disabled={busy} onClick={() => setPick(new Set(list.filter((u) => !u.flags.length).map((u) => u.id)))}>Tick tất cả đơn vị không cảnh báo ({list.filter((u) => !u.flags.length).length})</button>{" "}
+        <button disabled={busy} onClick={() => setPick(new Set(list.map((u) => u.id)))}>Tick tất cả ({list.length})</button> <button disabled={busy} onClick={() => setPick(new Set())}>Bỏ tick</button></p>
+        <p><button className="primary" disabled={busy || !pick.size} onClick={() => void decideMany([...pick], "approve", `Đã duyệt nạp ${pick.size} đơn vị.`)}>Duyệt nạp ({pick.size} đã tick)</button>{" "}
+        <button disabled={busy || !pick.size} onClick={() => void decideMany([...pick], "reject", `Đã loại ${pick.size} đơn vị.`)}>Loại ({pick.size})</button>{" "}
+        <button disabled={busy || !pick.size} onClick={() => void decideMany([...pick], "skip", `Đã để sau ${pick.size} đơn vị.`)}>Để sau ({pick.size})</button></p></section>}
       {list.map((u) => (
         <section key={u.id} className="card splitcard">
-          <p><b>{u.name}</b> <small className="meta">{u.type}{u.city ? ` · ${u.city}` : ""} · {u.works} bài · {u.authors} tác giả · chuỗi tìm: “{u.phrase}”</small></p>
+          <p>{view === "todo" && <label className="chk"><input type="checkbox" checked={pick.has(u.id)} onChange={() => toggle(u.id)} aria-label={`Chọn ${u.name}`} /></label>}<b>{u.name}</b> <small className="meta">{u.type}{u.city ? ` · ${u.city}` : ""} · {u.works} bài · {u.authors} tác giả · chuỗi tìm: “{u.phrase}”</small></p>
           {u.flags.map((f) => <p key={f} className="banner demo" role="note"><Icon n="info" />{f}</p>)}
           <p className="meta">Chuỗi cơ quan mẫu: {u.samples.join(" | ")}</p>
           <p className="meta">Tác giả nhiều bài nhất: {u.topAuthors.slice(0, 8).map((a) => `${a.name} (${a.n})`).join(", ")}</p>
