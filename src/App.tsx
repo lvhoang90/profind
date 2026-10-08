@@ -15,6 +15,7 @@ import { useWorks } from "./wsearch";
 import { StarBtn } from "./StarBtn";
 import { ProBadge, ProBadgeTag } from "./Badge";
 import { VisitChip } from "./VisitChip";
+import { VerifiedTick, VerifiedBadge, ClaimBox } from "./Verified";
 import { Footer, EcoLink } from "./Footer";
 import { evt, startSession } from "./analytics";
 import { getTheme, setTheme, type Theme } from "./theme";
@@ -342,7 +343,7 @@ function List({ d, query }: { d: Data; query: string }) {
           <tbody>{rows.slice(page * PAGE, (page + 1) * PAGE).map((a, idx) => { const pos = page * PAGE + idx + 1, medal = RANKED.includes(sort) && dir === -1; return (
             <tr key={a.id}>
               <td className="num rankc" data-l={t("stt")}><span className={`rk r${medal ? Math.min(pos, 4) : 4}`}>{num(pos)}</span></td>
-              <td className="who"><StarBtn className="inrow" k={`a|${a.id}`} meta={{ t: a.name, s: a.institutions.slice(0, 2).map((i) => instLabel(instById.get(i), lang, i)).join(", "), sc: a.pro ?? undefined, rk: a.proRank ?? undefined }} /><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a><ProBadge rank={a.proRank} size={24} className="inrow" />{a.bigFlag && <span className="bigtag" title={t("bigTitle") + ": " + t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}><Icon n="users" size={12} /></span>}{a.claimed && <><Icon n="check" size={14} className="ok" /><span className="sr"> {t("claimedSr")}</span></>}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}<Top2Tag a={a} cls="top2" /><div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
+              <td className="who"><StarBtn className="inrow" k={`a|${a.id}`} meta={{ t: a.name, s: a.institutions.slice(0, 2).map((i) => instLabel(instById.get(i), lang, i)).join(", "), sc: a.pro ?? undefined, rk: a.proRank ?? undefined }} /><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a><VerifiedTick id={a.id} size={15} /><ProBadge rank={a.proRank} size={24} className="inrow" />{a.bigFlag && <span className="bigtag" title={t("bigTitle") + ": " + t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}><Icon n="users" size={12} /></span>}{a.claimed && <><Icon n="check" size={14} className="ok" /><span className="sr"> {t("claimedSr")}</span></>}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}<Top2Tag a={a} cls="top2" /><div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
               <td data-l={t("unit")}>{a.institutions.map((i) => instLabel(instById.get(i), lang, i)).join(", ")}</td>
               <td className={`num${a.worksCount >= 1000 ? " lg" : ""}`} data-l={t("works")}>{num(a.worksCount)}</td><td className="num" data-l={t("scoreShort")}><span className="score">{a.pro == null ? "-" : num(a.pro, 1)}</span></td><td className={`num${a.citations >= 100000 ? " lg" : ""}`} data-l={t("cit")}>{num(a.citations)}</td>
               <td className="meta yrs" data-l={t("years")}>{a.firstYear ?? "-"}–{a.lastYear ?? "-"}</td>
@@ -427,8 +428,8 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
       <header className="hero">
         <div className="av" style={{ background: `linear-gradient(135deg,hsl(${hue} 75% 52%),hsl(${(hue + 55) % 360} 80% 42%))` }} aria-hidden="true">{initials(a.name)}</div>
         <div className="hero-main">
-          <h1 className="au">{a.name}</h1>
-          <p className="badges">{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}<Top2Tag a={a} cls="badge top2b" />{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</p>
+          <h1 className="au">{a.name}<VerifiedTick id={a.id} size={22} /></h1>
+          <p className="badges"><VerifiedBadge id={a.id} />{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}<Top2Tag a={a} cls="badge top2b" />{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</p>
           <ul className="chips">{(allInst ? inst : inst.slice(0, 4)).map((i) => <li key={i.id}><Icon n="building" size={14} />{instLabel(i, lang)}</li>)}{inst.length > 4 && <li className="more"><button type="button" onClick={() => setAllInst(!allInst)} aria-expanded={allInst}>{allInst ? t("instLess") : t("instMore", { n: num(inst.length - 4) })}</button></li>}{a.scholar && <li className="scholar"><a href={`https://scholar.google.com/citations?user=${a.scholar}&hl=${lang === "vi" ? "vi" : "en"}`} target="_blank" rel="noopener">Google Scholar<span className="sr"> {t("newTab")}</span></a></li>}{a.orcid && <li className="orcid"><a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener">ORCID {a.orcid}<span className="sr"> {t("newTab")}</span></a></li>}</ul>
           <ProBadgeTag rank={a.proRank} />
           {a.bigFlag && <p className="bigflag" role="note"><Icon n="users" size={18} /><span><b>{t("bigTitle")}</b> {t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}</span></p>}
@@ -523,7 +524,8 @@ function Correction({ a }: { a: Author | null }) {
       <p className="meta">{t("corrLead")}</p>
       <p className="meta">{t("corrPrivacy")}</p>
       <div role="status" aria-live="polite">{state === "ok" && <p className="banner"><Icon n="check" />{t("sent")}</p>}</div>
-      {state !== "ok" && (
+      {a && kind === "claim" && <ClaimBox authorId={a.id} authorName={a.name} />}
+      {state !== "ok" && !(a && kind === "claim") && (
         <form onSubmit={submit} className="form">
           <fieldset><legend className="sr">{t("corrTitle")}</legend>
             {([...(a ? [] : [["add", "kAdd"]]), ["claim", "kClaim"], ["correct", "kCorrect"], ["remove", "kRemove"]] as [string, string][]).map(([k, l]) => <label key={k} className="radio"><input type="radio" name="kind" value={k} checked={kind === k} onChange={() => setKind(k)} />{t(l as "kClaim")}</label>)}

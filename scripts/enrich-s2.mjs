@@ -25,7 +25,7 @@ try {
     batch.forEach((d, k) => { const p = res[k]; out[d] = p && typeof p.citationCount === "number" ? p.citationCount : 0; });
     n += batch.length;
     if ((i / 500) % 10 === 9) { writeFileSync("data/raw/_s2.json", JSON.stringify(out)); console.log(`${n}/${todo.length}`); }
-    await new Promise((s) => setTimeout(s, KEY ? 150 : 1100)); // không dùng khóa: giữ dưới 1 yêu cầu/giây
+    await new Promise((s) => setTimeout(s, 1100)); // khóa S2 giới hạn 1 yêu cầu/giây (cộng dồn mọi endpoint)
   }
 } catch (e) { console.warn("Dừng:", e.message, "(lần sau chạy tiếp)"); }
 writeFileSync("data/raw/_s2.json", JSON.stringify(out)); console.log(`Xong: ${Object.keys(out).length} DOI.`);

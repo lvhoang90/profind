@@ -1,5 +1,7 @@
 // Tài khoản ProFind: đăng ký/đăng nhập không mật khẩu bằng mã 6 số gửi qua email, kèm số điện thoại liên hệ (bắt buộc khi đăng ký),
 // lưu tác giả, lưu tìm kiếm, công trình đã xem, thống kê dùng và trang quản trị. Một hàm Edge, chọn thao tác bằng ?op=
+//   GET  verified (công khai: mã hồ sơ đã xác thực + hạn tick) | claim-status | admin-claims
+//   POST claim-submit {authorId, authorName, name, orcid, scholar, note} (cần đăng nhập) | admin-claim-decide | admin-claim-manual | admin-claim-allow | admin-claim-revoke | admin-claim-renew
 //   GET  config | me | history | favs | ss | rv | export | admin-summary | admin-users | admin-traffic | admin-content | admin-csv | unsub
 //   POST request {email, phone, name, consent, lang} → gửi mã | verify {email, code} → đăng nhập, tạo tài khoản nếu chưa có
 //        logout | profile | delete | track | hop {to, place} | fav | ssave | rvput | rvdel
@@ -16,6 +18,7 @@
 // Thiếu một trong các mục trên thì tính năng tự tắt (config.enabled=false), mọi chức năng khác của ProFind vẫn chạy bình thường.
 import { makeStore } from "./_store.js";
 import { mailProvider, sendMail, codeMail, welcomeMail } from "./_mail.js";
+import { runChecks, claimMail, adminMail, isFreeMail, normOrcid, VERIFY_YEARS } from "./_claim.js";
 export const config = { runtime: "edge" };
 
 const PLEDGE = { vi: "Miễn phí vĩnh viễn cho mọi người dùng đã đăng ký và xác thực email.", en: "Free forever for every user who registers and verifies their email." };
@@ -270,6 +273,87 @@ export default async function handler(request) {
       const favs = pairs(await one(["HGETALL", K.fav(me.id)]));
       await store.run([["DEL", K.user(me.id)], ["DEL", K.cnt(me.id)], ["SREM", K.users, me.id], ["DEL", K.fav(me.id)], ["DEL", K.uh(me.id)], ["DEL", K.ss(me.id)], ["DEL", K.rv(me.id)], ...Object.keys(favs).map((k) => ["HINCRBY", K.favTop, k, "-1"])]);
       return json({ ok: true }, 200, cookie("", 0));
+    }
+
+    // ---------------- Xác thực hồ sơ nhà khoa học ("Đây là tôi") ----------------
+    // Chính sách: chỉ email tổ chức (đã nhập mã 6 số); email miễn phí chỉ khi quản trị viên cho phép riêng; tick vàng hiệu lực 2 năm.
+    // Tự động duyệt khi email tổ chức + ORCID trùng hồ sơ OpenAlex + tên tương thích + không xung đột; còn lại chuyển quản trị viên duyệt.
+    const CLK = "profind:cl", VFK = "profind:vf", VFO = "profind:vfo", CLA = "profind:cla";
+    const jparse = (v) => { try { return JSON.parse(v); } catch { return null; } };
+    const allClaims = async () => Object.values(pairs(await one(["HGETALL", CLK]))).map(jparse).filter(Boolean);
+    const allVf = async () => Object.values(pairs(await one(["HGETALL", VFK]))).map(jparse).filter(Boolean);
+    const getVf = async (authorId) => jparse(await one(["HGET", VFK, authorId]));
+    const vfLookup = async (authorId, orcid) => { const oa = orcid ? await one(["HGET", VFO, orcid]) : null; return { byAuthor: await getVf(authorId), byOrcid: oa ? await getVf(oa) : null }; };
+    const safeMail = async (to, mail) => { try { await sendMail(to, mail); return true; } catch (e) { console.error("[claim-mail]", e.message); return false; } };
+    const notifyAdmins = (claim) => Promise.all(adminEmails.slice(0, 3).map((a) => safeMail(a, adminMail({ claim, origin: url.origin }))));
+    const approveClaim = async (claim, by) => {
+      const t = Date.now(), until = t + VERIFY_YEARS * 365.25 * 864e5;
+      Object.assign(claim, { status: "approved", decidedAt: t, decidedBy: by, until });
+      const rec = { authorId: claim.authorId, claimId: claim.id, email: claim.email, name: claim.name, orcid: claim.orcid || "", scholar: claim.scholar || "", since: t, until };
+      await store.run([["HSET", VFK, claim.authorId, JSON.stringify(rec)], ...(claim.orcid ? [["HSET", VFO, claim.orcid, claim.authorId]] : []), ["HSET", CLK, claim.id, JSON.stringify(claim)]]);
+      await safeMail(claim.email, claimMail("approved", { name: claim.name, authorName: claim.authorName, origin: url.origin, authorId: claim.authorId, until }));
+      return rec;
+    };
+    const newClaim = async ({ authorId, authorName, name, email, orcid, scholar, note, emailVerified, by }) => {
+      const allowed = isFreeMail(email) ? ((await one(["SMEMBERS", CLA])) ?? []).includes(email) : true;
+      const lk = await vfLookup(authorId, orcid);
+      const r = await runChecks({ authorId, name, email, orcid, vf: lk, allowedFree: allowed, emailVerified });
+      const claim = { id: await sha(`${authorId}|${email}|${Date.now()}`, 16), authorId, authorName: authorName || r.oa?.name || authorId, name, email, orcid, scholar, note, status: "review", auto: false, checks: r.checks, oa: r.oa, createdAt: Date.now(), by: by || "user" };
+      if (r.auto) { claim.auto = true; await approveClaim(claim, "tự động"); } else { await one(["HSET", CLK, claim.id, JSON.stringify(claim)]); }
+      return claim;
+    };
+    if (op === "verified" && request.method === "GET") {
+      const t = Date.now(); const items = (await allVf()).filter((v) => v.until > t).map((v) => [v.authorId, v.until]);
+      return json({ items }, 200, { "cache-control": "public, s-maxage=300, stale-while-revalidate=600" });
+    }
+    if (op === "claim-status" && request.method === "GET") {
+      const bad = needUser(); if (bad) return bad;
+      const t = Date.now();
+      return json({ claims: (await allClaims()).filter((c) => c.email === me.email).sort((a, b) => b.createdAt - a.createdAt).slice(0, 10).map((c) => ({ id: c.id, authorId: c.authorId, authorName: c.authorName, status: c.status, until: c.until || null, reason: c.reason || "", createdAt: c.createdAt })), verified: (await allVf()).filter((v) => v.email === me.email && v.until > t).map((v) => ({ authorId: v.authorId, until: v.until })) });
+    }
+    if (op === "claim-submit" && request.method === "POST") {
+      const bad = needUser(); if (bad) return bad;
+      if (!(await limit(`claim:${me.id}`, 6, 3600))) return json({ error: "Bạn gửi quá nhiều yêu cầu, hãy thử lại sau." }, 429);
+      const authorId = String(body.authorId || ""); if (!/^A\d{5,12}$/.test(authorId)) return json({ error: "Mã hồ sơ không hợp lệ." }, 400);
+      const name = tidy(body.name || me.name, 80); if (name.length < 3) return json({ error: "Hãy nhập họ tên đầy đủ của bạn." }, 400);
+      const orcidRaw = tidy(body.orcid, 40), orcid = normOrcid(orcidRaw); if (orcidRaw && !orcid) return json({ error: "Mã ORCID chưa đúng định dạng." }, 400);
+      const scholar = tidy(body.scholar, 300); if (scholar && !/^https:\/\/scholar\.google\.[a-z.]+\/citations\?[^\s]*user=[A-Za-z0-9_-]{8,14}/.test(scholar)) return json({ error: "Đường dẫn Google Scholar chưa đúng." }, 400);
+      const allowedFree = !isFreeMail(me.email) || (await one(["SMEMBERS", CLA]) ?? []).includes(me.email);
+      if (!allowedFree) return json({ error: "freemail" }, 403);
+      const claim = await newClaim({ authorId, authorName: tidy(body.authorName, 120), name, email: me.email, orcid, scholar, note: tidy(body.note, 1000), emailVerified: true });
+      if (claim.status === "review") { await safeMail(claim.email, claimMail("received", { name, authorName: claim.authorName, origin: url.origin, authorId })); await notifyAdmins(claim); }
+      return json({ ok: true, status: claim.status, until: claim.until || null });
+    }
+    if (op === "admin-claims" && request.method === "GET") {
+      const bad = needAdmin(); if (bad) return bad;
+      const t = Date.now(), vf = await allVf();
+      return json({ claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [] });
+    }
+    if (op.startsWith("admin-claim-") && request.method === "POST") {
+      const bad = needAdmin(); if (bad) return bad;
+      const loadClaim = async (id) => jparse(await one(["HGET", CLK, String(id)]));
+      if (op === "admin-claim-decide") {
+        const c = await loadClaim(body.id); if (!c) return json({ error: "Không tìm thấy yêu cầu." }, 404);
+        const reason = tidy(body.reason, 400), d = String(body.decision);
+        if (d === "approve") { await approveClaim(c, me.email); return json({ ok: true, status: "approved" }); }
+        if (d === "reject" || d === "info") {
+          Object.assign(c, { status: d === "reject" ? "rejected" : "info", reason, decidedAt: Date.now(), decidedBy: me.email });
+          await one(["HSET", CLK, c.id, JSON.stringify(c)]);
+          await safeMail(c.email, claimMail(d === "reject" ? "rejected" : "info", { name: c.name, authorName: c.authorName, origin: url.origin, authorId: c.authorId, reason }));
+          return json({ ok: true, status: c.status });
+        }
+        return json({ error: "Quyết định không hợp lệ." }, 400);
+      }
+      if (op === "admin-claim-manual") {
+        const authorId = String(body.authorId || ""); if (!/^A\d{5,12}$/.test(authorId)) return json({ error: "Mã hồ sơ không hợp lệ." }, 400);
+        const email = tidy(body.email, 160).toLowerCase(); if (!EMAIL_RE.test(email)) return json({ error: "Email chưa đúng." }, 400);
+        const orcidRaw = tidy(body.orcid, 40), orcid = normOrcid(orcidRaw); if (orcidRaw && !orcid) return json({ error: "Mã ORCID chưa đúng định dạng." }, 400);
+        const claim = await newClaim({ authorId, authorName: tidy(body.authorName, 120), name: tidy(body.name, 80) || email, email, orcid, scholar: tidy(body.scholar, 300), note: tidy(body.note, 1000), emailVerified: false, by: me.email });
+        return json({ ok: true, claim });
+      }
+      if (op === "admin-claim-allow") { const e = tidy(body.email, 160).toLowerCase(); if (!EMAIL_RE.test(e)) return json({ error: "Email chưa đúng." }, 400); await one([body.on === false ? "SREM" : "SADD", CLA, e]); return json({ ok: true }); }
+      if (op === "admin-claim-revoke") { const v = await getVf(String(body.authorId)); if (v) await store.run([["HDEL", VFK, v.authorId], ...(v.orcid ? [["HDEL", VFO, v.orcid]] : [])]); return json({ ok: true }); }
+      if (op === "admin-claim-renew") { const v = await getVf(String(body.authorId)); if (!v) return json({ error: "Không có xác thực." }, 404); v.until = Date.now() + VERIFY_YEARS * 365.25 * 864e5; await one(["HSET", VFK, v.authorId, JSON.stringify(v)]); return json({ ok: true, until: v.until }); }
     }
 
     // ---------------- Quản trị ----------------
