@@ -57,8 +57,9 @@ export function claimMail(kind, { name, authorName, origin, authorId, until, rea
   const link = `${origin}/#/tac-gia/${authorId}`;
   const T = {
     approved: [`ProFind: hồ sơ của bạn đã được xác thực`, `Hồ sơ "${authorName}" trên ProFind đã được xác thực là của bạn. Tick vàng "Nhà khoa học đã xác thực" hiện cạnh tên trong 2 năm (đến ${dmy(until)}), sau đó ProFind sẽ xem xét lại. Bạn có thể xem hồ sơ tại ${link}.`],
-    received: [`ProFind: đã nhận yêu cầu xác thực hồ sơ`, `ProFind đã nhận yêu cầu xác thực hồ sơ "${authorName}". Hệ thống đã kiểm tra tự động và chuyển quản trị viên xem xét; kết quả sẽ được gửi qua email này.`],
+    received: [`ProFind: đã nhận yêu cầu`, `ProFind đã nhận yêu cầu xác thực hồ sơ "${authorName}". Hệ thống đã kiểm tra tự động và chuyển quản trị viên xem xét; kết quả sẽ được gửi qua email này.`],
     rejected: [`ProFind: yêu cầu xác thực hồ sơ chưa được chấp nhận`, `Yêu cầu xác thực hồ sơ "${authorName}" chưa được chấp nhận${reason ? `. Lý do: ${reason}` : ""}. Bạn có thể gửi lại kèm thông tin bổ sung (ví dụ ORCID, đường dẫn Google Scholar) hoặc trả lời email này.`],
+    removed: [`ProFind: hồ sơ đã được gỡ`, `Theo đề nghị của bạn, hồ sơ "${authorName}" sẽ được gỡ khỏi ProFind trong lần cập nhật dữ liệu kế tiếp. Lưu ý: việc gỡ chỉ áp dụng trên ProFind; dữ liệu gốc ở OpenAlex và ORCID vẫn còn, bạn có thể chỉnh sửa tại các hệ thống đó.`],
     info: [`ProFind: cần bổ sung thông tin xác thực hồ sơ`, `Để xác thực hồ sơ "${authorName}", ProFind cần thêm thông tin${reason ? `: ${reason}` : ""}. Bạn trả lời email này hoặc gửi lại yêu cầu trên trang hồ sơ.`],
   }[kind];
   const text = `Chào ${name || "bạn"},\n\n${T[1]}\n\nTrân trọng,\nProFind · Viện ISA`;

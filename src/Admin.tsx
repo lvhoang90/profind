@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Icon, type IconName } from "./icons";
 import { useAccount, api } from "./accountStore";
 
-const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"]];
+const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"]];
 const n0 = (n: number) => new Intl.NumberFormat("vi-VN").format(Math.round(n));
 const pct = (a: number, b: number) => (b > 0 ? `${Math.round((a / b) * 100)}%` : "–");
 const delta = (a: number, b: number) => (b > 0 ? `${a >= b ? "▲" : "▼"} ${Math.abs(Math.round(((a - b) / b) * 100))}% so với 7 ngày trước` : a > 0 ? "mới có dữ liệu" : "");
@@ -34,7 +34,7 @@ export function AdminPage({ tab }: { tab: string }) {
     <article className="dash adm-page">
       <header className="dash-head"><div className="av" aria-hidden="true"><Icon n="grid" size={36} /></div><div className="dh-main"><h1>Quản trị ProFind</h1><p className="meta">{user.email} · số liệu theo giờ Việt Nam, khoảng 14 ngày gần nhất</p></div><div className="dh-act"><a className="ghost-link light" href="#/tai-khoan">← Không gian của tôi</a></div></header>
       <nav className="tabs" aria-label="Quản trị">{TABS.map(([k, l, ic]) => <a key={k} href={`#/quan-tri${k ? "/" + k : ""}`} aria-current={cur === k ? "page" : undefined}><Icon n={ic} size={16} />{l}</a>)}</nav>
-      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}
+      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}
     </article>
   );
 }
@@ -148,9 +148,10 @@ function Users() {
   );
 }
 
-type ClaimRec = { id: string; authorId: string; authorName: string; name: string; email: string; orcid: string; scholar: string; note: string; status: string; auto: boolean; reason?: string; createdAt: number; until?: number; decidedBy?: string; checks: { k: string; ok: boolean | null; label: string; detail: string }[]; oa: { works: number; cited: number } | null };
+type ClaimRec = { id: string; kind?: string; authorId: string; authorName: string; name: string; email: string; orcid: string; scholar: string; note: string; status: string; auto: boolean; reason?: string; createdAt: number; until?: number; decidedBy?: string; checks: { k: string; ok: boolean | null; label: string; detail: string }[]; oa: { works: number; cited: number } | null };
 type VfRec = { authorId: string; email: string; name: string; until: number; since: number };
 const dmy = (ms: number) => new Date(ms).toLocaleDateString("vi-VN");
+const KIND: Record<string, string> = { remove: "Gỡ hồ sơ", claim: "Xác thực" };
 const ST: Record<string, string> = { review: "Chờ duyệt", approved: "Đã xác thực", rejected: "Từ chối", info: "Cần bổ sung" };
 function Claims() {
   const [v, setV] = useState(0), [msg, setMsg] = useState("");
@@ -166,7 +167,7 @@ function Claims() {
       <div role="status" aria-live="polite">{msg && <p className="banner"><Icon n="check" />{msg}</p>}</div>
       <section className="card"><h2>Chính sách xác thực</h2><p className="meta">Chỉ email tổ chức; email miễn phí phải có đề nghị riêng và được thêm vào danh sách cho phép bên dưới. Tick vàng hiệu lực 2 năm rồi xem xét lại{d.expiring ? ` — ${d.expiring} hồ sơ sắp hết hạn trong 60 ngày` : ""}. Tự động duyệt khi: email tổ chức + ORCID trùng OpenAlex + tên khớp + không xung đột.</p></section>
       <section className="card"><h2>Chờ duyệt ({pend.length})</h2>{pend.length === 0 && <p className="meta">Không có yêu cầu nào đang chờ.</p>}
-        {pend.map((c) => <div key={c.id} className="claimrow"><p><b><a href={`#/tac-gia/${c.authorId}`}>{c.authorName}</a></b> · {c.name} &lt;{c.email}&gt;{c.orcid && <> · ORCID {c.orcid}</>}{c.scholar && <> · <a href={c.scholar} target="_blank" rel="noopener">Scholar</a></>}</p>
+        {pend.map((c) => <div key={c.id} className="claimrow"><p>{c.kind === "remove" && <span className="badge warnb">Đề nghị gỡ hồ sơ</span>} <b><a href={`#/tac-gia/${c.authorId}`}>{c.authorName}</a></b> · {c.name} &lt;{c.email}&gt;{c.orcid && <> · ORCID {c.orcid}</>}{c.scholar && <> · <a href={c.scholar} target="_blank" rel="noopener">Scholar</a></>}</p>
           <ul className="meta">{c.checks.map((k) => <li key={k.k}>{k.ok === true ? "✅" : k.ok === false ? "❌" : "⚠️"} {k.label}{k.detail ? `: ${k.detail}` : ""}</li>)}</ul>{c.note && <p className="meta">Ghi chú: {c.note}</p>}
           <p><button className="primary" onClick={() => decide(c, "approve")}>Duyệt</button> <button onClick={() => decide(c, "info")}>Cần bổ sung</button> <button onClick={() => decide(c, "reject")}>Từ chối</button></p></div>)}</section>
       <section className="card"><h2>Công trình tự bổ sung chờ duyệt ({d.works?.length ?? 0})</h2>{!d.works?.length ? <p className="meta">Không có.</p> : <ul>{d.works.map((w) => <li key={w.authorId + w.doi}><a href={`#/tac-gia/${w.authorId}`}>{w.authorId}</a> · <a href={`https://doi.org/${w.doi}`} target="_blank" rel="noopener">{w.title || w.doi}</a> {w.year || ""} · {w.why} <button onClick={() => act("admin-claim-work", { authorId: w.authorId, doi: w.doi, decision: "approve" }, "Đã duyệt công trình.")}>Duyệt</button> <button onClick={() => act("admin-claim-work", { authorId: w.authorId, doi: w.doi, decision: "reject" }, "Đã loại công trình.")}>Loại</button></li>)}</ul>}</section>
@@ -176,6 +177,67 @@ function Claims() {
       <section className="card"><h2>Email miễn phí được cho phép</h2>{d.allow.length === 0 ? <p className="meta">Chưa có.</p> : <ul>{d.allow.map((e) => <li key={e}>{e} <button onClick={() => act("admin-claim-allow", { email: e, on: false }, "Đã gỡ.")}>Gỡ</button></li>)}</ul>}
         <form onSubmit={(e) => { e.preventDefault(); const f = new FormData(e.currentTarget); act("admin-claim-allow", { email: f.get("email") }, "Đã thêm."); e.currentTarget.reset(); }} className="form"><label className="sel"><span>Thêm email (sau khi chấp nhận thư đề nghị)</span><input name="email" type="email" required /></label><p><button>Thêm</button></p></form></section>
       <section className="card"><h2>Lịch sử yêu cầu</h2><ul>{d.claims.filter((c) => c.status !== "review").slice(0, 40).map((c) => <li key={c.id}>{dmy(c.createdAt)} · {c.authorName} · {c.email} · <b>{ST[c.status] ?? c.status}</b>{c.auto ? " (tự động)" : c.decidedBy ? ` (${c.decidedBy})` : ""}</li>)}</ul></section>
+    </>
+  );
+}
+
+const TPL: Record<string, { label: string; subject: string; body: string }> = {
+  remove: { label: "Phản hồi yêu cầu gỡ hồ sơ (cần xác minh)", subject: "ProFind: about your profile removal request", body: `Dear Dr. {{name}},
+
+Thank you for contacting ProFind. To protect researchers from unauthorised removal requests, we verify the requester's identity before acting.
+
+Please do one of the following:
+1) Reply from your university email, or sign in to ProFind with that email and use "This is me / correct / remove profile" on your profile page; or
+2) If only Gmail is available, add a short line "ProFind removal request" to your public ORCID biography so we can verify it.
+
+If some information in your profile is incorrect, tell us which works or details are wrong and we can correct them directly instead of removing the profile.
+
+Please note that removal hides the profile on ProFind only; the underlying records remain in OpenAlex and ORCID.
+
+Best regards,
+ProFind team` },
+  removed: { label: "Xác nhận đã gỡ hồ sơ", subject: "ProFind: your profile has been removed", body: `Dear Dr. {{name}},
+
+Your profile has been removed from ProFind as requested. It will disappear from the site at the next data update. The underlying records remain in OpenAlex and ORCID, where you can edit them.
+
+Best regards,
+ProFind team` },
+  blank: { label: "Thư trống", subject: "", body: "" },
+};
+type MailStatus = { provider: string | null; from: string; sandbox: boolean; persistent: boolean; session: boolean; admins: number; correctionTo: string };
+type MailRow = { id: string; at: number; to: string; subject: string; ok: boolean; err: string; by: string };
+function Mailer() {
+  const [v, setV] = useState(0), [msg, setMsg] = useState(""), [busy, setBusy] = useState(false), [tpl, setTpl] = useState("remove");
+  const [f, setF] = useState({ to: "", name: "", subject: TPL.remove.subject, body: TPL.remove.body });
+  const st = useGet<MailStatus>("admin-mail-status"), lg = useGet<{ rows: MailRow[] }>("admin-mail-log", `&v=${v}`);
+  const pick = (k: string) => { setTpl(k); setF((x) => ({ ...x, subject: TPL[k].subject, body: TPL[k].body })); };
+  const send = async () => {
+    const body = f.body.replace(/\{\{name\}\}/g, f.name || "colleague"), subject = f.subject.replace(/\{\{name\}\}/g, f.name || "colleague");
+    if (!confirm(`Gửi thư tới ${f.to}?\n\nTiêu đề: ${subject}`)) return;
+    setBusy(true); setMsg("");
+    try { await api("admin-mail-send", { to: f.to, subject, body, kind: tpl }); setMsg("Đã gửi thư."); setV((x) => x + 1); } catch (e) { setMsg((e as Error).message); } finally { setBusy(false); }
+  };
+  const s = st.d;
+  return (
+    <>
+      <section className="card"><h2>Tình trạng gửi email</h2>
+        {!s ? <p className="meta">Đang kiểm tra…</p> : <ul>
+          <li>{s.provider ? "✅" : "❌"} Dịch vụ gửi thư: <b>{s.provider ?? "chưa cấu hình"}</b></li>
+          <li>{s.from && !s.sandbox ? "✅" : "⚠️"} Địa chỉ gửi: <b>{s.from || "chưa đặt (MAIL_FROM)"}</b>{s.sandbox && " — đang dùng địa chỉ thử nghiệm của Resend, CHỈ gửi được tới chủ tài khoản Resend; cần xác minh tên miền"}</li>
+          <li>{s.persistent ? "✅" : "❌"} Lưu trữ Redis (Upstash): {s.persistent ? "đã kết nối" : "chưa có, dữ liệu xác thực sẽ mất"}</li>
+          <li>{s.session ? "✅" : "❌"} SESSION_SECRET: {s.session ? "đã đặt" : "chưa đặt"}</li>
+          <li>{s.admins ? "✅" : "❌"} Số email quản trị (ADMIN_EMAILS): {s.admins}</li>
+          <li>Thư đính chính gửi về: {s.correctionTo}</li></ul>}
+        <p className="meta">Gửi một thư tới chính bạn ở bên dưới để thử. Nếu báo lỗi, nội dung lỗi của nhà cung cấp sẽ hiện ngay.</p></section>
+      <section className="card"><h2>Soạn thư (duyệt xong mới gửi)</h2>
+        <div role="status" aria-live="polite">{msg && <p className={msg.startsWith("Đã") ? "banner" : "banner demo"}>{msg}</p>}</div>
+        <label className="sel"><span>Mẫu thư</span><select value={tpl} onChange={(e) => pick(e.target.value)}>{Object.entries(TPL).map(([k, t]) => <option key={k} value={k}>{t.label}</option>)}</select></label>
+        <label className="sel"><span>Người nhận (email)</span><input type="email" value={f.to} onChange={(e) => setF({ ...f, to: e.target.value })} /></label>
+        <label className="sel"><span>Tên người nhận (thay vào {"{{name}}"})</span><input value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} /></label>
+        <label className="sel"><span>Tiêu đề</span><input value={f.subject} onChange={(e) => setF({ ...f, subject: e.target.value })} maxLength={200} /></label>
+        <label className="sel"><span>Nội dung (chỉnh sửa tự do)</span><textarea rows={14} value={f.body} onChange={(e) => setF({ ...f, body: e.target.value })} maxLength={6000} /></label>
+        <p><button className="primary" disabled={busy || !f.to || !f.body} onClick={() => void send()}>{busy ? "Đang gửi…" : "Duyệt và gửi"}</button> <small className="meta">Người nhận bấm Trả lời sẽ gửi về email của bạn.</small></p></section>
+      <section className="card"><h2>Thư đã gửi gần đây</h2>{!lg.d?.rows.length ? <p className="meta">Chưa có.</p> : <ul>{lg.d.rows.map((r) => <li key={r.id}>{new Date(r.at).toLocaleString("vi-VN")} · {r.to} · {r.subject} · {r.ok ? "✅ đã gửi" : `❌ ${r.err}`}</li>)}</ul>}</section>
     </>
   );
 }
