@@ -43,3 +43,6 @@ npm run d:check                              # kiểm tra nhất quán
 
 ## Top 2% (Việt Nam) chưa gắn hồ sơ
 - `find-top2.mjs` dò OpenAlex theo tên + đơn vị (ghi `found.json`, ghim vào `pinned-orcids.json`); `match-top2.mjs` gắn nhãn; `build-top2-review.mjs` ghi `data/top2/admin-review.json` (người chưa gắn kèm ứng viên) cho tab quản trị "Top 2% chưa gắn" (API `admin-t2`, chỉ quản trị viên; quyết định ở Redis `profind:t2`). Quyết định được chép ra JSON `{overrides, pins}` để đưa vào `data/top2/overrides.json` và `pinned-orcids.json`.
+
+## "Đều đặn" (steady) và tuổi nghề
+- `pro-score.mjs` tính tuổi nghề từ năm công bố đầu tiên đến năm cuối nhưng bỏ năm công bố lẻ loi ở đầu hồ sơ (cách năm kế tiếp trên 5 năm, lặp lại đến khi hết). Lý do: một bài lẻ cũ (thường của người khác bị gộp nhầm) kéo tuổi nghề dài ra và làm điểm "Đều đặn" thấp oan (ví dụ hồ sơ A5061727008 có bài năm 1964: 39 -> 73). Ảnh hưởng 1.559 hồ sơ có hạng, chỉ làm điểm tăng.

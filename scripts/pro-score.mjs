@@ -38,11 +38,14 @@ export function computePro(authors, per, year) {
     const ws = per.get(a.id) ?? [], c = (() => { let t = 0, w = 0; for (const [d, p] of mix(a)) if (cap.has(d)) { t += p * cap.get(d); w += p; } return w ? t / w : 1e9; })(), yrs = new Set(ws.map((w) => w.year));
     const excess = ws.reduce((s, w) => s + Math.max(0, (w.citations ?? 0) - c), 0);
     const known = ws.filter((w) => !w.ru), lead = known.filter((w) => w.role === "lead").length, qs = ws.filter((w) => QV[w.quartile]);
-    const rec = ws.filter((w) => w.year >= year - 4), span = a.firstYear && a.lastYear ? a.lastYear - a.firstYear + 1 : 1;
+    const rec = ws.filter((w) => w.year >= year - 4);
+    // Tuổi nghề cho "Đều đặn": bỏ năm công bố lẻ loi ở đầu hồ sơ (cách năm kế tiếp trên 5 năm; thường là bài của người khác bị gộp nhầm hoặc bài cũ không liên quan), lặp lại đến khi hết.
+    const ys = [...yrs].filter(Number.isFinite).sort((x, y) => x - y); while (ys.length > 1 && ys[1] - ys[0] > 5) ys.shift();
+    const span = ys.length ? ys[ys.length - 1] - ys[0] + 1 : 1;
     feat.set(a.id, {
       cites: Math.log1p(Math.max(0, a.citations - excess)), h: a.hIndex ?? 0, hi: ws.filter((w) => (w.citations ?? 0) >= 10).length, n: ws.length,
       out: Math.log1p(ws.length), known: known.length, lead, qn: qs.length, qsum: qs.reduce((s, w) => s + QV[w.quartile], 0),
-      rc: Math.log1p(rec.reduce((s, w) => s + (w.citations ?? 0), 0)), rn: Math.log1p(rec.length), act: yrs.size, span,
+      rc: Math.log1p(rec.reduce((s, w) => s + (w.citations ?? 0), 0)), rn: Math.log1p(rec.length), act: ys.length || yrs.size, span,
     });
   }
   // Trung bình ngành cho các tỉ lệ cần làm trơn.
