@@ -1,0 +1,892 @@
+{
+ "_note": "Bảng quy đổi tiểu lĩnh vực (subfield) của OpenAlex sang 28 ngành HĐGSNN dùng trong ProFind. Tác giả ProFind có phân bố tiểu lĩnh vực theo nội dung công trình (data/author-topics.json, từ OpenAlex); bảng này chuyển phân bố đó thành phân bố ngành. Trọng số do người xây dựng đặt theo nội dung từng tiểu lĩnh vực và phạm vi các ngành HĐGSNN (một tiểu lĩnh vực liên ngành được chia cho nhiều ngành, tổng bằng 1), không học từ dữ liệu để tránh vòng lặp với phân loại theo tạp chí. Ngành quân sự và an ninh không có tiểu lĩnh vực tương ứng nên chỉ dựa vào tạp chí.",
+ "version": 2,
+ "date": "2026-10-09",
+ "source": "OpenAlex subfields (252, Scopus ASJC) -> HĐGSNN",
+ "map": {
+  "Electrical and Electronic Engineering": {
+   "dien-tu": 1
+  },
+  "Civil and Structural Engineering": {
+   "xay-dung": 0.85,
+   "co-hoc": 0.15
+  },
+  "Biomedical Engineering": {
+   "y-hoc": 0.35,
+   "dien-tu": 0.35,
+   "sinh-hoc": 0.15,
+   "vat-ly": 0.15
+  },
+  "Control and Systems Engineering": {
+   "dien-tu": 0.6,
+   "cntt": 0.2,
+   "co-khi": 0.2
+  },
+  "Mechanical Engineering": {
+   "co-khi": 0.8,
+   "co-hoc": 0.2
+  },
+  "Mechanics of Materials": {
+   "co-hoc": 0.6,
+   "luyen-kim": 0.2,
+   "xay-dung": 0.2
+  },
+  "Aerospace Engineering": {
+   "co-hoc": 0.5,
+   "co-khi": 0.5
+  },
+  "Computational Mechanics": {
+   "co-hoc": 0.8,
+   "toan-hoc": 0.2
+  },
+  "Building and Construction": {
+   "xay-dung": 1
+  },
+  "Automotive Engineering": {
+   "co-khi": 0.7,
+   "giao-thong": 0.3
+  },
+  "Safety, Risk, Reliability and Quality": {
+   "xay-dung": 0.35,
+   "co-khi": 0.35,
+   "giao-thong": 0.15,
+   "kinh-te": 0.15
+  },
+  "Ocean Engineering": {
+   "thuy-loi": 0.4,
+   "giao-thong": 0.3,
+   "trai-dat-mo": 0.3
+  },
+  "Industrial and Manufacturing Engineering": {
+   "co-khi": 0.7,
+   "kinh-te": 0.3
+  },
+  "Media Technology": {
+   "cntt": 0.5,
+   "dien-tu": 0.5
+  },
+  "Architecture": {
+   "xay-dung": 1
+  },
+  "General Engineering": {
+   "co-khi": 0.4,
+   "xay-dung": 0.3,
+   "dien-tu": 0.3
+  },
+  "Plant Science": {
+   "nong-lam": 0.7,
+   "sinh-hoc": 0.3
+  },
+  "Ecology, Evolution, Behavior and Systematics": {
+   "sinh-hoc": 0.6,
+   "nong-lam": 0.2,
+   "trai-dat-mo": 0.2
+  },
+  "Food Science": {
+   "hoa-thuc-pham": 1
+  },
+  "Aquatic Science": {
+   "chan-nuoi": 0.6,
+   "sinh-hoc": 0.2,
+   "trai-dat-mo": 0.2
+  },
+  "Soil Science": {
+   "nong-lam": 0.8,
+   "trai-dat-mo": 0.2
+  },
+  "Animal Science and Zoology": {
+   "chan-nuoi": 0.7,
+   "sinh-hoc": 0.3
+  },
+  "Agronomy and Crop Science": {
+   "nong-lam": 1
+  },
+  "Insect Science": {
+   "nong-lam": 0.5,
+   "sinh-hoc": 0.5
+  },
+  "General Agricultural and Biological Sciences": {
+   "nong-lam": 0.5,
+   "sinh-hoc": 0.5
+  },
+  "Forestry": {
+   "nong-lam": 1
+  },
+  "Horticulture": {
+   "nong-lam": 1
+  },
+  "Artificial Intelligence": {
+   "cntt": 0.85,
+   "toan-hoc": 0.15
+  },
+  "Computer Vision and Pattern Recognition": {
+   "cntt": 0.8,
+   "dien-tu": 0.2
+  },
+  "Computer Networks and Communications": {
+   "cntt": 0.5,
+   "dien-tu": 0.5
+  },
+  "Information Systems": {
+   "cntt": 0.7,
+   "kinh-te": 0.3
+  },
+  "Computational Theory and Mathematics": {
+   "cntt": 0.6,
+   "toan-hoc": 0.4
+  },
+  "Signal Processing": {
+   "dien-tu": 0.6,
+   "cntt": 0.4
+  },
+  "Hardware and Architecture": {
+   "cntt": 0.5,
+   "dien-tu": 0.5
+  },
+  "Software": {
+   "cntt": 1
+  },
+  "Human-Computer Interaction": {
+   "cntt": 0.6,
+   "tam-ly": 0.4
+  },
+  "Computer Graphics and Computer-Aided Design": {
+   "cntt": 0.7,
+   "co-khi": 0.3
+  },
+  "Computer Science Applications": {
+   "cntt": 1
+  },
+  "Pharmacology": {
+   "duoc": 0.7,
+   "y-hoc": 0.3
+  },
+  "Biochemistry": {
+   "sinh-hoc": 0.5,
+   "y-hoc": 0.3,
+   "hoa-thuc-pham": 0.2
+  },
+  "Physiology": {
+   "y-hoc": 0.7,
+   "sinh-hoc": 0.3
+  },
+  "Complementary and alternative medicine": {
+   "duoc": 0.5,
+   "y-hoc": 0.5
+  },
+  "Health Informatics": {
+   "y-hoc": 0.5,
+   "cntt": 0.5
+  },
+  "Water Science and Technology": {
+   "thuy-loi": 0.4,
+   "trai-dat-mo": 0.3,
+   "hoa-thuc-pham": 0.3
+  },
+  "Global and Planetary Change": {
+   "trai-dat-mo": 0.6,
+   "sinh-hoc": 0.2,
+   "nong-lam": 0.2
+  },
+  "Ecology": {
+   "sinh-hoc": 0.6,
+   "nong-lam": 0.2,
+   "trai-dat-mo": 0.2
+  },
+  "Health, Toxicology and Mutagenesis": {
+   "y-hoc": 0.5,
+   "duoc": 0.3,
+   "hoa-thuc-pham": 0.2
+  },
+  "Pollution": {
+   "hoa-thuc-pham": 0.4,
+   "trai-dat-mo": 0.4,
+   "xay-dung": 0.2
+  },
+  "Nature and Landscape Conservation": {
+   "sinh-hoc": 0.5,
+   "nong-lam": 0.5
+  },
+  "Environmental Engineering": {
+   "xay-dung": 0.4,
+   "hoa-thuc-pham": 0.3,
+   "trai-dat-mo": 0.3
+  },
+  "Management, Monitoring, Policy and Law": {
+   "kinh-te": 0.4,
+   "trai-dat-mo": 0.3,
+   "luat": 0.3
+  },
+  "Waste Management and Disposal": {
+   "xay-dung": 0.4,
+   "hoa-thuc-pham": 0.3,
+   "nong-lam": 0.3
+  },
+  "Environmental Chemistry": {
+   "hoa-thuc-pham": 0.6,
+   "trai-dat-mo": 0.4
+  },
+  "Ecological Modeling": {
+   "sinh-hoc": 0.5,
+   "trai-dat-mo": 0.5
+  },
+  "Materials Chemistry": {
+   "hoa-thuc-pham": 0.45,
+   "luyen-kim": 0.3,
+   "vat-ly": 0.25
+  },
+  "Electronic, Optical and Magnetic Materials": {
+   "vat-ly": 0.6,
+   "dien-tu": 0.4
+  },
+  "Biomaterials": {
+   "hoa-thuc-pham": 0.4,
+   "y-hoc": 0.3,
+   "sinh-hoc": 0.3
+  },
+  "Polymers and Plastics": {
+   "hoa-thuc-pham": 0.8,
+   "luyen-kim": 0.2
+  },
+  "Ceramics and Composites": {
+   "luyen-kim": 0.5,
+   "xay-dung": 0.3,
+   "hoa-thuc-pham": 0.2
+  },
+  "Surfaces, Coatings and Films": {
+   "luyen-kim": 0.5,
+   "vat-ly": 0.5
+  },
+  "Metals and Alloys": {
+   "luyen-kim": 1
+  },
+  "General Materials Science": {
+   "luyen-kim": 0.4,
+   "vat-ly": 0.3,
+   "hoa-thuc-pham": 0.3
+  },
+  "Molecular Biology": {
+   "sinh-hoc": 0.6,
+   "y-hoc": 0.4
+  },
+  "Genetics": {
+   "sinh-hoc": 0.6,
+   "y-hoc": 0.3,
+   "nong-lam": 0.1
+  },
+  "Molecular Medicine": {
+   "y-hoc": 0.7,
+   "sinh-hoc": 0.3
+  },
+  "Biotechnology": {
+   "sinh-hoc": 0.5,
+   "hoa-thuc-pham": 0.3,
+   "nong-lam": 0.2
+  },
+  "Cancer Research": {
+   "y-hoc": 1
+  },
+  "Cell Biology": {
+   "sinh-hoc": 0.6,
+   "y-hoc": 0.4
+  },
+  "Endocrinology": {
+   "y-hoc": 1
+  },
+  "Clinical Biochemistry": {
+   "y-hoc": 0.7,
+   "sinh-hoc": 0.3
+  },
+  "Biophysics": {
+   "vat-ly": 0.5,
+   "sinh-hoc": 0.5
+  },
+  "Developmental Biology": {
+   "sinh-hoc": 1
+  },
+  "Aging": {
+   "y-hoc": 1
+  },
+  "Nuclear and High Energy Physics": {
+   "vat-ly": 1
+  },
+  "Atomic and Molecular Physics, and Optics": {
+   "vat-ly": 0.7,
+   "dien-tu": 0.3
+  },
+  "Statistical and Nonlinear Physics": {
+   "vat-ly": 0.8,
+   "toan-hoc": 0.2
+  },
+  "Radiation": {
+   "vat-ly": 0.6,
+   "y-hoc": 0.4
+  },
+  "Condensed Matter Physics": {
+   "vat-ly": 1
+  },
+  "Astronomy and Astrophysics": {
+   "vat-ly": 1
+  },
+  "Instrumentation": {
+   "vat-ly": 0.5,
+   "dien-tu": 0.5
+  },
+  "Acoustics and Ultrasonics": {
+   "vat-ly": 0.6,
+   "co-hoc": 0.4
+  },
+  "Applied Mathematics": {
+   "toan-hoc": 1
+  },
+  "Mathematical Physics": {
+   "toan-hoc": 0.6,
+   "vat-ly": 0.4
+  },
+  "Geometry and Topology": {
+   "toan-hoc": 1
+  },
+  "Statistics and Probability": {
+   "toan-hoc": 1
+  },
+  "Algebra and Number Theory": {
+   "toan-hoc": 1
+  },
+  "Modeling and Simulation": {
+   "toan-hoc": 0.6,
+   "cntt": 0.2,
+   "co-hoc": 0.2
+  },
+  "Numerical Analysis": {
+   "toan-hoc": 0.7,
+   "co-hoc": 0.3
+  },
+  "Discrete Mathematics and Combinatorics": {
+   "toan-hoc": 0.6,
+   "cntt": 0.4
+  },
+  "Computational Mathematics": {
+   "toan-hoc": 0.6,
+   "cntt": 0.4
+  },
+  "Theoretical Computer Science": {
+   "cntt": 0.6,
+   "toan-hoc": 0.4
+  },
+  "Sociology and Political Science": {
+   "triet-xhh": 0.4,
+   "kinh-te": 0.25,
+   "van-hoa": 0.15,
+   "giao-duc": 0.1,
+   "luat": 0.1
+  },
+  "Education": {
+   "giao-duc": 1
+  },
+  "Political Science and International Relations": {
+   "triet-xhh": 0.8,
+   "luat": 0.2
+  },
+  "Safety Research": {
+   "giao-thong": 0.4,
+   "y-hoc": 0.3,
+   "xay-dung": 0.3
+  },
+  "Communication": {
+   "van-hoa": 0.5,
+   "ngon-ngu": 0.5
+  },
+  "Transportation": {
+   "giao-thong": 1
+  },
+  "Health": {
+   "y-hoc": 1
+  },
+  "Linguistics and Language": {
+   "ngon-ngu": 1
+  },
+  "Human Factors and Ergonomics": {
+   "tam-ly": 0.5,
+   "co-khi": 0.3,
+   "y-hoc": 0.2
+  },
+  "Law": {
+   "luat": 1
+  },
+  "Gender Studies": {
+   "triet-xhh": 1
+  },
+  "Demography": {
+   "triet-xhh": 0.5,
+   "kinh-te": 0.5
+  },
+  "Public Administration": {
+   "kinh-te": 0.4,
+   "luat": 0.3,
+   "triet-xhh": 0.3
+  },
+  "General Social Sciences": {
+   "triet-xhh": 0.5,
+   "giao-duc": 0.5
+  },
+  "Urban Studies": {
+   "xay-dung": 0.5,
+   "kinh-te": 0.25,
+   "triet-xhh": 0.25
+  },
+  "Geography, Planning and Development": {
+   "trai-dat-mo": 0.4,
+   "kinh-te": 0.3,
+   "xay-dung": 0.3
+  },
+  "Anthropology": {
+   "van-hoa": 0.5,
+   "su-hoc": 0.5
+  },
+  "Cultural Studies": {
+   "van-hoa": 1
+  },
+  "Library and Information Sciences": {
+   "van-hoa": 0.5,
+   "cntt": 0.5
+  },
+  "Development": {
+   "kinh-te": 1
+  },
+  "Life-span and Life-course Studies": {
+   "tam-ly": 1
+  },
+  "Strategy and Management": {
+   "kinh-te": 1
+  },
+  "Accounting": {
+   "kinh-te": 1
+  },
+  "Marketing": {
+   "kinh-te": 1
+  },
+  "Organizational Behavior and Human Resource Management": {
+   "kinh-te": 1
+  },
+  "Management Information Systems": {
+   "kinh-te": 0.6,
+   "cntt": 0.4
+  },
+  "Management of Technology and Innovation": {
+   "kinh-te": 1
+  },
+  "Tourism, Leisure and Hospitality Management": {
+   "kinh-te": 0.6,
+   "van-hoa": 0.4
+  },
+  "Industrial relations": {
+   "kinh-te": 1
+  },
+  "Business and International Management": {
+   "kinh-te": 1
+  },
+  "Economics and Econometrics": {
+   "kinh-te": 1
+  },
+  "Finance": {
+   "kinh-te": 1
+  },
+  "General Economics, Econometrics and Finance": {
+   "kinh-te": 1
+  },
+  "Management Science and Operations Research": {
+   "kinh-te": 0.5,
+   "toan-hoc": 0.3,
+   "cntt": 0.2
+  },
+  "Information Systems and Management": {
+   "kinh-te": 0.5,
+   "cntt": 0.5
+  },
+  "Statistics, Probability and Uncertainty": {
+   "toan-hoc": 1
+  },
+  "General Decision Sciences": {
+   "kinh-te": 0.5,
+   "toan-hoc": 0.5
+  },
+  "Organic Chemistry": {
+   "hoa-thuc-pham": 0.7,
+   "duoc": 0.3
+  },
+  "Inorganic Chemistry": {
+   "hoa-thuc-pham": 1
+  },
+  "Physical and Theoretical Chemistry": {
+   "hoa-thuc-pham": 0.6,
+   "vat-ly": 0.4
+  },
+  "Spectroscopy": {
+   "hoa-thuc-pham": 0.6,
+   "vat-ly": 0.4
+  },
+  "Electrochemistry": {
+   "hoa-thuc-pham": 0.6,
+   "luyen-kim": 0.2,
+   "dien-tu": 0.2
+  },
+  "Analytical Chemistry": {
+   "hoa-thuc-pham": 1
+  },
+  "Oceanography": {
+   "trai-dat-mo": 0.7,
+   "thuy-loi": 0.3
+  },
+  "Atmospheric Science": {
+   "trai-dat-mo": 1
+  },
+  "Earth-Surface Processes": {
+   "trai-dat-mo": 0.7,
+   "thuy-loi": 0.3
+  },
+  "Geophysics": {
+   "trai-dat-mo": 1
+  },
+  "Paleontology": {
+   "trai-dat-mo": 0.6,
+   "sinh-hoc": 0.4
+  },
+  "Geology": {
+   "trai-dat-mo": 1
+  },
+  "Geochemistry and Petrology": {
+   "trai-dat-mo": 0.7,
+   "luyen-kim": 0.3
+  },
+  "Space and Planetary Science": {
+   "vat-ly": 1
+  },
+  "Renewable Energy, Sustainability and the Environment": {
+   "dien-tu": 0.25,
+   "co-khi": 0.2,
+   "hoa-thuc-pham": 0.25,
+   "vat-ly": 0.1,
+   "kinh-te": 0.1,
+   "trai-dat-mo": 0.1
+  },
+  "Energy Engineering and Power Technology": {
+   "dien-tu": 0.6,
+   "co-khi": 0.4
+  },
+  "General Energy": {
+   "dien-tu": 0.4,
+   "co-khi": 0.3,
+   "vat-ly": 0.3
+  },
+  "Fuel Technology": {
+   "hoa-thuc-pham": 0.5,
+   "co-khi": 0.5
+  },
+  "Immunology": {
+   "y-hoc": 0.6,
+   "sinh-hoc": 0.4
+  },
+  "Applied Microbiology and Biotechnology": {
+   "sinh-hoc": 0.5,
+   "hoa-thuc-pham": 0.3,
+   "nong-lam": 0.2
+  },
+  "Microbiology": {
+   "sinh-hoc": 0.6,
+   "y-hoc": 0.4
+  },
+  "Parasitology": {
+   "y-hoc": 0.5,
+   "chan-nuoi": 0.25,
+   "sinh-hoc": 0.25
+  },
+  "Virology": {
+   "y-hoc": 0.5,
+   "sinh-hoc": 0.5
+  },
+  "Language and Linguistics": {
+   "ngon-ngu": 1
+  },
+  "Literature and Literary Theory": {
+   "van-hoc": 1
+  },
+  "Archeology": {
+   "su-hoc": 1
+  },
+  "Visual Arts and Performing Arts": {
+   "van-hoa": 1
+  },
+  "History": {
+   "su-hoc": 1
+  },
+  "History and Philosophy of Science": {
+   "triet-xhh": 0.5,
+   "su-hoc": 0.5
+  },
+  "Philosophy": {
+   "triet-xhh": 1
+  },
+  "Museology": {
+   "van-hoa": 0.5,
+   "su-hoc": 0.5
+  },
+  "Music": {
+   "van-hoa": 1
+  },
+  "Religious studies": {
+   "triet-xhh": 1
+  },
+  "Classics": {
+   "van-hoc": 0.5,
+   "su-hoc": 0.5
+  },
+  "Conservation": {
+   "van-hoa": 0.5,
+   "su-hoc": 0.5
+  },
+  "General Arts and Humanities": {
+   "van-hoa": 1
+  },
+  "Developmental and Educational Psychology": {
+   "tam-ly": 0.6,
+   "giao-duc": 0.4
+  },
+  "Social Psychology": {
+   "tam-ly": 1
+  },
+  "Clinical Psychology": {
+   "tam-ly": 0.6,
+   "y-hoc": 0.4
+  },
+  "Experimental and Cognitive Psychology": {
+   "tam-ly": 1
+  },
+  "Applied Psychology": {
+   "tam-ly": 1
+  },
+  "Neuropsychology and Physiological Psychology": {
+   "tam-ly": 0.6,
+   "y-hoc": 0.4
+  },
+  "General Health Professions": {
+   "y-hoc": 1
+  },
+  "Health Information Management": {
+   "y-hoc": 0.6,
+   "cntt": 0.4
+  },
+  "Physical Therapy, Sports Therapy and Rehabilitation": {
+   "y-hoc": 0.7,
+   "van-hoa": 0.3
+  },
+  "Radiological and Ultrasound Technology": {
+   "y-hoc": 1
+  },
+  "Occupational Therapy": {
+   "y-hoc": 1
+  },
+  "Emergency Medical Services": {
+   "y-hoc": 1
+  },
+  "Speech and Hearing": {
+   "y-hoc": 1
+  },
+  "Pharmacy": {
+   "duoc": 1
+  },
+  "Complementary and Manual Therapy": {
+   "y-hoc": 1
+  },
+  "Medical Laboratory Technology": {
+   "y-hoc": 1
+  },
+  "Nutrition and Dietetics": {
+   "y-hoc": 0.5,
+   "hoa-thuc-pham": 0.5
+  },
+  "Research and Theory": {
+   "y-hoc": 1
+  },
+  "Leadership and Management": {
+   "y-hoc": 0.5,
+   "kinh-te": 0.5
+  },
+  "Issues, ethics and legal aspects": {
+   "y-hoc": 0.5,
+   "luat": 0.5
+  },
+  "Fluid Flow and Transfer Processes": {
+   "co-khi": 0.4,
+   "hoa-thuc-pham": 0.3,
+   "co-hoc": 0.3
+  },
+  "Catalysis": {
+   "hoa-thuc-pham": 1
+  },
+  "Bioengineering": {
+   "sinh-hoc": 0.5,
+   "hoa-thuc-pham": 0.5
+  },
+  "Process Chemistry and Technology": {
+   "hoa-thuc-pham": 1
+  },
+  "Filtration and Separation": {
+   "hoa-thuc-pham": 1
+  },
+  "Chemical Health and Safety": {
+   "hoa-thuc-pham": 1
+  },
+  "Pharmaceutical Science": {
+   "duoc": 1
+  },
+  "Toxicology": {
+   "duoc": 0.6,
+   "y-hoc": 0.4
+  },
+  "Cognitive Neuroscience": {
+   "tam-ly": 0.5,
+   "y-hoc": 0.5
+  },
+  "Cellular and Molecular Neuroscience": {
+   "y-hoc": 0.6,
+   "sinh-hoc": 0.4
+  },
+  "Sensory Systems": {
+   "y-hoc": 1
+  },
+  "Endocrine and Autonomic Systems": {
+   "y-hoc": 1
+  },
+  "Developmental Neuroscience": {
+   "y-hoc": 0.6,
+   "sinh-hoc": 0.4
+  },
+  "Behavioral Neuroscience": {
+   "tam-ly": 0.5,
+   "y-hoc": 0.5
+  },
+  "Orthodontics": {
+   "y-hoc": 1
+  },
+  "Periodontics": {
+   "y-hoc": 1
+  },
+  "Oral Surgery": {
+   "y-hoc": 1
+  },
+  "General Dentistry": {
+   "y-hoc": 1
+  },
+  "Small Animals": {
+   "chan-nuoi": 1
+  },
+  "Equine": {
+   "chan-nuoi": 1
+  },
+  "Public Health, Environmental and Occupational Health": {
+   "y-hoc": 1
+  },
+  "Radiology, Nuclear Medicine and Imaging": {
+   "y-hoc": 1
+  },
+  "Endocrinology, Diabetes and Metabolism": {
+   "y-hoc": 1
+  },
+  "Infectious Diseases": {
+   "y-hoc": 1
+  },
+  "Epidemiology": {
+   "y-hoc": 1
+  },
+  "Oncology": {
+   "y-hoc": 1
+  },
+  "Cardiology and Cardiovascular Medicine": {
+   "y-hoc": 1
+  },
+  "Surgery": {
+   "y-hoc": 1
+  },
+  "Pulmonary and Respiratory Medicine": {
+   "y-hoc": 1
+  },
+  "Pathology and Forensic Medicine": {
+   "y-hoc": 1
+  },
+  "Urology": {
+   "y-hoc": 1
+  },
+  "Psychiatry and Mental health": {
+   "y-hoc": 1
+  },
+  "Rheumatology": {
+   "y-hoc": 1
+  },
+  "Neurology": {
+   "y-hoc": 1
+  },
+  "Hematology": {
+   "y-hoc": 1
+  },
+  "Reproductive Medicine": {
+   "y-hoc": 1
+  },
+  "Otorhinolaryngology": {
+   "y-hoc": 1
+  },
+  "Pediatrics, Perinatology and Child Health": {
+   "y-hoc": 1
+  },
+  "Rehabilitation": {
+   "y-hoc": 1
+  },
+  "Obstetrics and Gynecology": {
+   "y-hoc": 1
+  },
+  "Hepatology": {
+   "y-hoc": 1
+  },
+  "Transplantation": {
+   "y-hoc": 1
+  },
+  "Nephrology": {
+   "y-hoc": 1
+  },
+  "Geriatrics and Gerontology": {
+   "y-hoc": 1
+  },
+  "Family Practice": {
+   "y-hoc": 1
+  },
+  "Anesthesiology and Pain Medicine": {
+   "y-hoc": 1
+  },
+  "Orthopedics and Sports Medicine": {
+   "y-hoc": 1
+  },
+  "Ophthalmology": {
+   "y-hoc": 1
+  },
+  "Gastroenterology": {
+   "y-hoc": 1
+  },
+  "Critical Care and Intensive Care Medicine": {
+   "y-hoc": 1
+  },
+  "Internal Medicine": {
+   "y-hoc": 1
+  },
+  "Immunology and Allergy": {
+   "y-hoc": 1
+  },
+  "Emergency Medicine": {
+   "y-hoc": 1
+  },
+  "Dermatology": {
+   "y-hoc": 1
+  },
+  "Anatomy": {
+   "y-hoc": 1
+  }
+ }
+}

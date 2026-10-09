@@ -27,12 +27,15 @@ function pctMap(items, key) {
 export function computePro(authors, per, year) {
   const pool = authors.filter((a) => a.rankable && a.worksCount > 0);
   const field = (a) => a.disciplines?.[0] ?? "_";
+  // Liên ngành: hồ sơ có phân bố ngành (discShares, từ build-index.mjs) được so sánh với MỌI nhóm ngành của mình theo tỉ trọng, thay vì chỉ ngành đứng đầu,
+  // để một phân loại ngành sai lệch hoặc một nhà khoa học liên ngành không bị dồn hẳn vào một nhóm. Nhóm so sánh (byF) vẫn lập theo ngành chính.
+  const mix = (a) => { const e = Object.entries(a.discShares ?? {}); return e.length ? e.map(([d, p]) => [d, p / 100]) : [[field(a), 1]]; };
   // Trần trích dẫn mỗi công trình = P99 của ngành, để một bài nhóm lớn không kéo cả hồ sơ.
   const byF = new Map(); for (const a of pool) { const f = field(a); if (!byF.has(f)) byF.set(f, []); byF.get(f).push(a); }
   const cap = new Map(); for (const [f, as] of byF) cap.set(f, Math.max(20, quant(as.flatMap((a) => (per.get(a.id) ?? []).map((w) => w.citations ?? 0)), 0.99)));
   const feat = new Map();
   for (const a of pool) {
-    const ws = per.get(a.id) ?? [], c = cap.get(field(a)) ?? 1e9, yrs = new Set(ws.map((w) => w.year));
+    const ws = per.get(a.id) ?? [], c = (() => { let t = 0, w = 0; for (const [d, p] of mix(a)) if (cap.has(d)) { t += p * cap.get(d); w += p; } return w ? t / w : 1e9; })(), yrs = new Set(ws.map((w) => w.year));
     const excess = ws.reduce((s, w) => s + Math.max(0, (w.citations ?? 0) - c), 0);
     const known = ws.filter((w) => !w.ru), lead = known.filter((w) => w.role === "lead").length, qs = ws.filter((w) => QV[w.quartile]);
     const rec = ws.filter((w) => w.year >= year - 4), span = a.firstYear && a.lastYear ? a.lastYear - a.firstYear + 1 : 1;
@@ -50,7 +53,7 @@ export function computePro(authors, per, year) {
     prior.set(f, { hi: mean(as, "hi") / n, lead: Math.min(0.85, mean(as, "lead") / kn), q: qn ? mean(as, "qsum") / qn : 0.6 });
   }
   for (const a of pool) {
-    const x = feat.get(a.id), p = prior.get(field(a));
+    const x = feat.get(a.id), p = (() => { const o = { hi: 0, lead: 0, q: 0 }; let w = 0; for (const [d, q] of mix(a)) { const pr = prior.get(d); if (!pr) continue; o.hi += q * pr.hi; o.lead += q * pr.lead; o.q += q * pr.q; w += q; } return w ? { hi: o.hi / w, lead: o.lead / w, q: o.q / w } : prior.get(field(a)); })();
     x.hiS = (x.hi + 5 * p.hi) / (x.n + 5);
     x.leadS = Math.min(0.85, (x.lead + 8 * p.lead) / (x.known + 8));
     x.qS = (x.qsum + 5 * p.q) / (x.qn + 5);
@@ -61,12 +64,13 @@ export function computePro(authors, per, year) {
   const loc = new Map(); for (const [f, as] of byF) loc.set(f, Object.fromEntries(KEYS.map((k) => [k, pctMap(as.map((a) => feat.get(a.id)), k)])));
   const out95 = quant(pool.map((a) => feat.get(a.id).out), 0.95);
   for (const a of pool) {
-    const x = feat.get(a.id), f = field(a), n = byF.get(f).length, L = loc.get(f), B = 50;
-    const pc = (k, v = x[k]) => (n * L[k](v) + (n < B ? (B - n) : 0) * glob[k](v)) / (n + (n < B ? B - n : 0));
+    const x = feat.get(a.id), B = 50, mx = mix(a).filter(([d]) => byF.has(d));
+    const pcOne = (d, k, v) => { const n = byF.get(d).length, L = loc.get(d); return (n * L[k](v) + (n < B ? (B - n) : 0) * glob[k](v)) / (n + (n < B ? B - n : 0)); };
+    const pc = (k, v = x[k]) => { if (!mx.length) return glob[k](v); const w = mx.reduce((t, [, p]) => t + p, 0); return mx.reduce((t, [d, p]) => t + p * pcOne(d, k, v), 0) / w; };
     const impact = 0.4 * pc("cites") + 0.3 * pc("h") + 0.3 * pc("hiS");
     const output = pc("out", Math.min(x.out, out95));
     const lead = pc("leadS");
-    const quality = x.qS, momentum = 0.5 * pc("rc") + 0.5 * pc("rn"), steady = x.steady, recog = a.top2 && a.top2.inNs !== false ? 1 : 0; // chỉ tính khi vẫn đạt tiêu chí danh sách sau khi loại tự trích dẫn
+    const quality = x.qS, momentum = 0.5 * pc("rc") + 0.5 * pc("rn"), steady = x.steady, recog = a.top2 ? 1 : 0; // có tên trong danh sách Top 2% (sự nghiệp hoặc năm 2025); tự trích dẫn chỉ được nêu ở chú giải nhãn
     const parts = { impact, output, lead, quality, momentum, steady, recog };
     a._s = PKEYS.map((k) => parts[k]);
     a.proParts = Object.fromEntries(Object.entries(parts).map(([k, v]) => [k, Math.round(v * 100)]));
