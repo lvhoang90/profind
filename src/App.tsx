@@ -426,16 +426,15 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   // Chia sẻ hồ sơ: sao chép liên kết kèm lời giới thiệu ngắn, dễ dán vào Zalo, Facebook, LinkedIn. Chỉ dùng dữ liệu công khai; hồ sơ ẩn điểm thì không nêu hạng và điểm.
   const [shared, setShared] = useState(false);
   const shareText = () => {
-    const vi = lang === "vi", n = (x: number) => num(x), dsc = a.disciplines.slice(0, 2).map((x) => dName(x, lang)).join(" · "), org = inst.slice(0, 1).map((i) => instLabel(i, lang)).join(""), ranked = a.pro != null && a.proRank != null;
+    const vi = lang === "vi", ranked = a.pro != null && a.proRank != null, score = a.pro?.toFixed(1) ?? "";
     const link = `${location.origin}/?utm_source=share&utm_medium=profile${user?.ref ? `&ref=${user.ref}` : ""}#/tac-gia/${encodeURIComponent(a.id)}`;
-    const hook = ranked && a.proRank! <= 10 ? (vi ? `🏆 ${a.name} đang đứng hạng #${a.proRank} PRO-SCORE1000™ trên ProFind™ (${a.pro!.toFixed(1)}/100).` : `🏆 ${a.name} ranks #${a.proRank} on ProFind™ PRO-SCORE1000™ (${a.pro!.toFixed(1)}/100).`)
-      : a.top2 ? (vi ? `★ ${a.name} nằm trong Top 2% nhà khoa học có ảnh hưởng nhất thế giới.` : `★ ${a.name} is on the global Top 2% most-cited scientists list.`)
-      : ranked ? (vi ? `🌸 ${a.name} có PRO-SCORE1000™ ${a.pro!.toFixed(1)}/100 trên ProFind™${a.proRank != null ? `, hạng #${a.proRank}` : ""}.` : `🌸 ${a.name} scores ${a.pro!.toFixed(1)}/100 on ProFind™ PRO-SCORE1000™.`)
-      : (vi ? `🌸 Hồ sơ nhà khoa học ${a.name} trên ProFind™.` : `🌸 ${a.name}'s researcher profile on ProFind™.`);
-    const facts = [org, dsc, `${n(a.worksCount)} ${vi ? "công trình" : "works"}`, a.citations > 0 ? `${n(a.citations)} ${vi ? "trích dẫn" : "citations"}` : "", ranked && !(a.proRank! <= 10) && a.top2 ? `PRO-SCORE1000™ ${a.pro!.toFixed(1)}${a.proRank != null ? ` · #${a.proRank}` : ""}` : "", a.top2 && a.proRank != null && a.proRank <= 10 ? (vi ? "★ Top 2% thế giới" : "★ Global Top 2%") : ""].filter(Boolean).join(" · ");
-    const note = ranked ? (vi ? "\n(PRO-SCORE1000™ là chỉ số tham khảo, không phải xếp hạng chính thức.)" : "\n(PRO-SCORE1000™ is a reference index, not an official ranking.)") : "";
+    const head = ranked ? `${a.proRank! <= 10 ? "🏆" : "⭐"} ${a.name} ${vi ? `đang đứng hạng #${a.proRank} bảng xếp hạng PRO-SCORE1000™ (${score}/100)` : `ranks #${a.proRank} on the PRO-SCORE1000™ leaderboard (${score}/100)`}`
+      : `📖 ${vi ? `Hồ sơ nhà khoa học ${a.name} trên ProFind™` : `${a.name}'s researcher profile on ProFind™`}`;
+    const stats = [`${num(a.worksCount)} ${vi ? "công trình" : "works"}`, a.citations > 0 ? `${num(a.citations)} ${vi ? "trích dẫn" : "citations"}` : ""].filter(Boolean);
+    const top2 = vi ? "nằm trong danh sách Top 2% nhà khoa học có ảnh hưởng nhất thế giới" : "is on the global Top 2% most-influential scientists list";
+    const body = vi ? `Tác giả có ${stats.join(", ")}${a.top2 ? ` và ${top2}` : ""}.` : `The author has ${stats.join(", ")}${a.top2 ? ` and ${top2}` : ""}.`;
     const cta = vi ? "Xem hồ sơ, công trình và so sánh trên ProFind™:" : "See the profile, works and comparisons on ProFind™:";
-    return `${hook}\n${facts}${note}\n${cta} ${link}`;
+    return `${head}\n\n${body}\n\n${cta} ${link}`;
   };
   const shareProfile = async () => {
     const text = shareText(); evt("share_profile", a.id, a.name);
