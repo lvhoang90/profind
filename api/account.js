@@ -422,7 +422,7 @@ export default async function handler(request) {
       const t = Date.now(), vf = await allVf();
       return json({ xwdone: Object.entries(pairs(await one(["HGETALL", XDK]))).flatMap(([a, v]) => (jparse(v) ?? []).map((x) => ({ authorId: a, ...x }))).sort((p, q) => q.at - p.at).slice(0, 400), mx: pairs(await one(["HGETALL", "profind:mx"])), xw: Object.entries(pairs(await one(["HGETALL", XWK]))).flatMap(([a, v]) => (jparse(v) ?? []).map((w) => ({ authorId: a, workId: w }))), claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [], recheck: Object.values(pairs(await one(["HGETALL", "profind:rk"]))).map(jparse).filter(Boolean), units: Object.values(pairs(await one(["HGETALL", "profind:un"]))).map(jparse).filter(Boolean), split: Object.values(pairs(await one(["HGETALL", "profind:sp"]))).map(jparse).filter(Boolean), hidden: { score: (await one(["SMEMBERS", HSK])) ?? [], profile: (await one(["SMEMBERS", HPK])) ?? [] }, works: await (async () => { const o = []; for (const [id, raw] of Object.entries(pairs(await one(["HGETALL", "profind:aw"])))) for (const w of jparse(raw) ?? []) if (w.status === "review") o.push({ authorId: id, ...w }); return o; })() });
     }
-    if (op.startsWith("admin-claim-") && request.method === "POST") {
+    if ((op.startsWith("admin-claim-") || op === "admin-t2" || op === "admin-mrisk") && request.method === "POST") {
       const bad = needAdmin(); if (bad) return bad;
       const loadClaim = async (id) => jparse(await one(["HGET", CLK, String(id)]));
       if (op === "admin-claim-decide") {
