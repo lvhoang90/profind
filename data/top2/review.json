@@ -10,28 +10,8 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Phan-Thien, N.",
-  "inst": "Mekong University",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Thwaites, Guy E.",
-  "inst": "Oxford University Clinical Research Unit",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
   "name": "El-Ghaoui, Laurent E.I.",
   "inst": "VinUniversity",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Craig, Timothy J.",
-  "inst": "VinUniversity",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Vasant, Pandian M.",
-  "inst": "Ton-Duc-Thang University",
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
@@ -47,11 +27,6 @@
  {
   "name": "Khoa, Dao Tien",
   "inst": "Vietnam Atomic Energy Institute",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Poddighe, D.",
-  "inst": "VinUniversity",
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
@@ -77,11 +52,6 @@
  {
   "name": "Ghalambaz, Mohammad G.",
   "inst": "Ton-Duc-Thang University",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Capdevila, Xavier J.",
-  "inst": "VinUniversity",
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
@@ -285,11 +255,6 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Chu, Lan Khanh",
-  "inst": "Banking Academy of Vietnam",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
   "name": "Dúc, Nguyenhuu",
   "inst": "Vietnam National University, Hanoi",
   "why": "không có hồ sơ cùng tên trong ProFind"
@@ -483,142 +448,13 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Vo, Bay",
-  "inst": "Ho Chi Minh City University of Technology - HUTECH",
-  "why": "nhiều hồ sơ khớp",
-  "candidates": [
-   {
-    "id": "A5053403067",
-    "name": "Bay Vo",
-    "inst": [
-     "Ho Chi Minh City University of Technology",
-     "Hue University",
-     "VNUHCM-University of Technology"
-    ],
-    "works": 107
-   },
-   {
-    "id": "A5062373963",
-    "name": "Bay Vo",
-    "inst": [
-     "Ho Chi Minh City University of Technology"
-    ],
-    "works": 95
-   }
-  ]
- },
- {
-  "name": "Nguyen, Hoang",
-  "inst": "Hanoi University of Mining and Geology",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5101881366",
-    "name": "Hoang Nguyen",
-    "inst": [
-     "Hue University",
-     "Hue University of Medicine and Pharmacy"
-    ],
-    "works": 37
-   },
-   {
-    "id": "A5080411341",
-    "name": "Hoang Nguyen",
-    "inst": [
-     "Duy Tan University"
-    ],
-    "works": 179
-   },
-   {
-    "id": "A5006380421",
-    "name": "Hoang Nguyen",
-    "inst": [
-     "Ho Chi Minh University of Law"
-    ],
-    "works": 40
-   },
-   {
-    "id": "A5109559930",
-    "name": "Nguyen Hoang Nguyen",
-    "inst": [
-     "Nong Lam University"
-    ],
-    "works": 6
-   },
-   {
-    "id": "A5114157179",
-    "name": "Hoàng Nguyễn",
-    "inst": [
-     "Hanoi University of Pharmacy"
-    ],
-    "works": 12
-   },
-   {
-    "id": "A5101721695",
-    "name": "Nguyen Hoang",
-    "inst": [
-     "Ho Chi Minh National Academy of Politics"
-    ],
-    "works": 10
-   },
-   {
-    "id": "A5110837157",
-    "name": "Nguyen Hoang",
-    "inst": [
-     "University of Khanh Hoa",
-     "Tay Do University"
-    ],
-    "works": 16
-   },
-   {
-    "id": "A5066773035",
-    "name": "Hoang Nguyen",
-    "inst": [
-     "Ho Chi Minh City University of Technology"
-    ],
-    "works": 39
-   },
-   {
-    "id": "A5000914178",
-    "name": "Hoang Nguyen",
-    "inst": [
-     "Nam Can Tho University"
-    ],
-    "works": 38
-   },
-   {
-    "id": "A5110460180",
-    "name": "Hoang Nguyen",
-    "inst": [
-     "Nam Can Tho University"
-    ],
-    "works": 7
-   }
-  ]
- },
- {
   "name": "Long, H. V.",
   "inst": "University of Technology - Logistics of Public Security",
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Ninh, Dinh Gia",
-  "inst": "Hanoi University of Science and Technology",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Tran, Trong Nhan",
-  "inst": "Industrial University of Ho Chi Minh City",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
   "name": "Dinh Long, Nguyen Dinh",
   "inst": "Duy Tan University",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Nguyen, Minh T.",
-  "inst": "Thai Nguyen University of Technology",
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {

@@ -40,3 +40,13 @@ npm run d:check                              # kiểm tra nhất quán
 - Tab quản trị "Nghi gộp nhiều người" lấy danh sách từ API `admin-mrisk` (API nhúng `data/merge-risk.json` khi triển khai, chỉ quản trị viên đọc được; file không để ở `public/`); quyết định "Một người/Nhiều người" lưu ở Redis (`profind:mr`, op `admin-mrisk`).
 - `node scripts/build-merge-risk.mjs` (chạy sau `build-index.mjs`) chấm điểm rủi ro từ số hồ sơ cùng tên, số đơn vị, entropy lĩnh vực và tỉ trọng lĩnh vực thứ ba (từ `data/author-topics.json`); ghi `data/merge-risk.json`.
 - Kiểm định trên mẫu 180 hồ sơ gán nhãn: AUC 0,78; nhóm 11% cao nhất chính xác ~76%, bắt ~30% hồ sơ nghi gộp. Vì vậy chỉ dùng làm danh sách rà cho quản trị viên, không tự ẩn hay đổi hạng. Đính chính qua `corrections.json` (`suspect`, `notSuspect`, `setInstitutions`).
+
+## Top 2% (Việt Nam) chưa gắn hồ sơ
+- `find-top2.mjs` dò OpenAlex theo tên + đơn vị (ghi `found.json`, ghim vào `pinned-orcids.json`); `match-top2.mjs` gắn nhãn; `build-top2-review.mjs` ghi `data/top2/admin-review.json` (người chưa gắn kèm ứng viên) cho tab quản trị "Top 2% chưa gắn" (API `admin-t2`, chỉ quản trị viên; quyết định ở Redis `profind:t2`). Quyết định được chép ra JSON `{overrides, pins}` để đưa vào `data/top2/overrides.json` và `pinned-orcids.json`.
+
+## "Đều đặn" (steady) và tuổi nghề
+- `pro-score.mjs` tính tuổi nghề từ năm công bố đầu tiên đến năm cuối nhưng bỏ năm công bố lẻ loi ở đầu hồ sơ (cách năm kế tiếp trên 5 năm, lặp lại đến khi hết). Lý do: một bài lẻ cũ (thường của người khác bị gộp nhầm) kéo tuổi nghề dài ra và làm điểm "Đều đặn" thấp oan (ví dụ hồ sơ A5061727008 có bài năm 1964: 39 -> 73). Ảnh hưởng 1.559 hồ sơ có hạng, chỉ làm điểm tăng.
+
+## SEO
+- Trang tĩnh do `scripts/build-seo-pages.mjs` sinh sau `vite build`: `/don-vi/`, `/nganh/`, `/tinh-thanh/`, `/pro-score/` và `/top-2-phan-tram/` (Top 2% thế giới: số liệu theo lĩnh vực, trường/viện, FAQ có dữ liệu cấu trúc FAQPage, nguồn và giấy phép). Chỉ số liệu tổng hợp, không nêu tên cá nhân. Trang đơn vị có thêm số hồ sơ thuộc Top 2% (ô thống kê và mô tả).
+- Trang chủ (`index.html`): tiêu đề, mô tả (khoảng 140 ký tự), từ khóa và văn bản dự phòng trong `#root` nhắm các truy vấn tiếng Việt (tra cứu/xếp hạng nhà khoa học Việt Nam, top 2% thế giới, ORCID, ISSN, DOI). Sitemap: `dist/sitemap.xml`. Liên kết nội bộ: thanh trên của trang tĩnh và chân trang ứng dụng trỏ tới `/top-2-phan-tram/`.

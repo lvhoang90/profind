@@ -55,6 +55,20 @@
   "scope": "career",
   "y25": true
  },
+ "A5040929731": {
+  "rank": 22115,
+  "rankNs": 22373,
+  "field": "Chemistry",
+  "subfield": "Polymers",
+  "name": "Phan-Thien, N.",
+  "inst": "Mekong University",
+  "selfPct": 0.126,
+  "inNs": true,
+  "topCntry": "AUS",
+  "topShare": 0.586,
+  "scope": "career",
+  "y25": true
+ },
  "A5001100407": {
   "rank": 22686,
   "rankNs": 24187,
@@ -94,6 +108,20 @@
   "inNs": true,
   "topCntry": "VNM",
   "topShare": 0.9751,
+  "scope": "career",
+  "y25": true
+ },
+ "A5013471493": {
+  "rank": 27221,
+  "rankNs": 27190,
+  "field": "Biomedical Research",
+  "subfield": "Microbiology",
+  "name": "Thwaites, Guy E.",
+  "inst": "Oxford University Clinical Research Unit",
+  "selfPct": 0.1167,
+  "inNs": true,
+  "topCntry": "GBR",
+  "topShare": 0.996,
   "scope": "career",
   "y25": true
  },
@@ -192,6 +220,20 @@
   "inNs": true,
   "topCntry": "VNM",
   "topShare": 0.9712,
+  "scope": "career",
+  "y25": true
+ },
+ "A5062644309": {
+  "rank": 40401,
+  "rankNs": 46798,
+  "field": "Clinical Medicine",
+  "subfield": "Allergy",
+  "name": "Craig, Timothy J.",
+  "inst": "VinUniversity",
+  "selfPct": 0.224,
+  "inNs": true,
+  "topCntry": "USA",
+  "topShare": 0.9949,
   "scope": "career",
   "y25": true
  },
@@ -334,6 +376,20 @@
   "scope": "career",
   "y25": true
  },
+ "A5089550455": {
+  "rank": 73728,
+  "rankNs": 80151,
+  "field": "Information & Communication Technologies",
+  "subfield": "Artificial Intelligence & Image Processing",
+  "name": "Vasant, Pandian M.",
+  "inst": "Ton-Duc-Thang University",
+  "selfPct": 0.1597,
+  "inNs": true,
+  "topCntry": "MYS",
+  "topShare": 0.8906,
+  "scope": "career",
+  "y25": true
+ },
  "A5101466867": {
   "rank": 87248,
   "rankNs": 81370,
@@ -473,6 +529,20 @@
   "scope": "career",
   "y25": true
  },
+ "A5038804399": {
+  "rank": 122258,
+  "rankNs": 131689,
+  "field": "Clinical Medicine",
+  "subfield": "General & Internal Medicine",
+  "name": "Poddighe, D.",
+  "inst": "VinUniversity",
+  "selfPct": 0.1298,
+  "inNs": true,
+  "topCntry": "KAZ",
+  "topShare": 0.614,
+  "scope": "career",
+  "y25": true
+ },
  "A5113402818": {
   "rank": 131696,
   "rankNs": 138156,
@@ -499,6 +569,20 @@
   "topCntry": "GBR",
   "topShare": 0.4173,
   "scope": "career"
+ },
+ "A5063282981": {
+  "rank": 171392,
+  "rankNs": 156207,
+  "field": "Clinical Medicine",
+  "subfield": "Anesthesiology",
+  "name": "Capdevila, Xavier J.",
+  "inst": "VinUniversity",
+  "selfPct": 0.0923,
+  "inNs": true,
+  "topCntry": "FRA",
+  "topShare": 0.9288,
+  "scope": "career",
+  "y25": true
  },
  "A5062896363": {
   "rank": 197518,
@@ -605,6 +689,20 @@
   "name": "Thai, Chien H.",
   "inst": "Ton-Duc-Thang University",
   "selfPct": 0.1981,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "career",
+  "y25": true
+ },
+ "A5029716735": {
+  "rank": 244678,
+  "rankNs": 228294,
+  "field": "Earth & Environmental Sciences",
+  "subfield": "Environmental Sciences",
+  "name": "Chu, Lan Khanh",
+  "inst": "Banking Academy of Vietnam",
+  "selfPct": 0.0859,
   "inNs": true,
   "topCntry": "VNM",
   "topShare": 1,
@@ -819,6 +917,20 @@
   "scope": "career",
   "y25": true
  },
+ "A5053403067": {
+  "rank": 250807,
+  "rankNs": 307763,
+  "field": "Information & Communication Technologies",
+  "subfield": "Artificial Intelligence & Image Processing",
+  "name": "Vo, Bay",
+  "inst": "Ho Chi Minh City University of Technology - HUTECH",
+  "selfPct": 0.1374,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.9903,
+  "scope": "career",
+  "y25": true
+ },
  "A5067709216": {
   "rank": 218432,
   "rankNs": 312798,
@@ -831,6 +943,20 @@
   "topCntry": "DEU",
   "topShare": 0.7778,
   "scope": "career"
+ },
+ "A5080411341": {
+  "rank": 317417,
+  "rankNs": 321707,
+  "field": "Earth & Environmental Sciences",
+  "subfield": "Design Practice & Management",
+  "name": "Nguyen, Hoang",
+  "inst": "Hanoi University of Mining and Geology",
+  "selfPct": 0.1764,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "career",
+  "y25": true
  },
  "A5035085724": {
   "rank": 322011,
@@ -941,6 +1067,20 @@
   "scope": "career",
   "y25": true
  },
+ "A5079563148": {
+  "rank": 357725,
+  "rankNs": 361251,
+  "field": "Engineering",
+  "subfield": "Civil Engineering",
+  "name": "Ninh, Dinh Gia",
+  "inst": "Hanoi University of Science and Technology",
+  "selfPct": 0.1452,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.9231,
+  "scope": "career",
+  "y25": true
+ },
  "A5072173287": {
   "rank": 372020,
   "rankNs": 361882,
@@ -1024,6 +1164,20 @@
   "scope": "career",
   "y25": true
  },
+ "A5067890490": {
+  "rank": 417091,
+  "rankNs": 393167,
+  "field": "Engineering",
+  "subfield": "Mechanical Engineering & Transports",
+  "name": "Tran, Trong Nhan",
+  "inst": "Industrial University of Ho Chi Minh City",
+  "selfPct": 0.1025,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "career",
+  "y25": true
+ },
  "A5024957412": {
   "rank": 355589,
   "rankNs": 462442,
@@ -1089,6 +1243,20 @@
   "inNs": true,
   "topCntry": "VNM",
   "topShare": 0.992,
+  "scope": "career",
+  "y25": true
+ },
+ "A5014854859": {
+  "rank": 361942,
+  "rankNs": 518253,
+  "field": "Information & Communication Technologies",
+  "subfield": "Networking & Telecommunications",
+  "name": "Nguyen, Minh T.",
+  "inst": "Thai Nguyen University of Technology",
+  "selfPct": 0.3319,
+  "inNs": false,
+  "topCntry": "VNM",
+  "topShare": 0.9213,
   "scope": "career",
   "y25": true
  },

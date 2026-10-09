@@ -34,7 +34,7 @@ for (const r of rev) {
     const j = await get(`https://api.openalex.org/authors?search=${encodeURIComponent(q)}&per-page=25&select=id,display_name,orcid,works_count,last_known_institutions`);
     const np = t.np ?? 0, wanted = itoks(t.inst ?? "");
     const instHit = (a) => (a.last_known_institutions ?? []).some((i) => [...itoks(i.display_name ?? "")].some((x) => wanted.has(x)));
-    if (T.filter((x) => x.name === r.name).length > 1) { report.push({ name: r.name, inst: r.inst, np, why: "tên trùng nhau trong danh sách Top 2% (nhiều người)" }); continue; }
+    if (new Set(T.filter((x) => x.name === r.name).map((x) => x.inst)).size > 1) { report.push({ name: r.name, inst: r.inst, np, why: "tên trùng nhau trong danh sách Top 2% (nhiều người)" }); continue; }
     let c = j.results.filter((a) => nameOk(r.name, a.display_name) && (exact(r.name, a.display_name) || instHit(a)) && (a.last_known_institutions ?? []).some((i) => i.country_code === "VN") && a.works_count >= 0.4 * np && a.works_count <= 4 * np);
     if (c.length > 1) { const withInst = c.filter(instHit); if (withInst.length === 1) c = withInst; }
     if (c.length === 1) found[r.name] = { oaId: c[0].id.replace("https://openalex.org/", ""), display: c[0].display_name, works: c[0].works_count, np: t.np, inst: t.inst };
