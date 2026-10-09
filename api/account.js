@@ -21,7 +21,7 @@ import { makeStore } from "./_store.js";
 import T2R from "../data/top2/admin-review.json"; // người trong Top 2% (Việt Nam) chưa gắn hồ sơ, kèm ứng viên: chỉ trả cho quản trị viên (op admin-t2)
 import MRISK from "../data/merge-risk.json"; // danh sách rà hồ sơ gộp nhiều người: chỉ trả cho quản trị viên (op admin-mrisk), không để ở public/
 import { mailProvider, sendMail, codeMail, welcomeMail, worksRemovedMail } from "./_mail.js";
-import { runChecks, claimMail, adminMail, isFreeMail, normOrcid, orcidValid, normDoi, lookupWork, nameCompat, VERIFY_YEARS } from "./_claim.js";
+import { runChecks, claimMail, adminMail, isFreeMail, normOrcid, orcidValid, normDoi, lookupWork, matchTitles, nameCompat, VERIFY_YEARS } from "./_claim.js";
 export const config = { runtime: "edge" };
 
 const PLEDGE = { vi: "Miễn phí vĩnh viễn cho mọi người dùng đã đăng ký và xác thực email.", en: "Free forever for every user who registers and verifies their email." };
@@ -601,6 +601,14 @@ export default async function handler(request) {
         if (!r.found) return json({ error: "Không tra được DOI này trong Crossref. Hãy kiểm tra lại, hoặc gửi đề nghị riêng cho quản trị viên." }, 404);
         const w = { doi, title: r.title, venue: r.venue, year: r.year, type: r.type, authors: r.authors, oa: r.oa, status: r.matched ? "ok" : "review", why: r.matched ? (r.byOrcid ? "ORCID trùng danh sách tác giả" : "Tên khớp danh sách tác giả") : "Tên/ORCID chưa khớp danh sách tác giả, chờ quản trị viên", at: Date.now() };
         ws.push(w); await one(["HSET", AWK, authorId, JSON.stringify(ws)]); return json({ ok: true, work: w });
+      }
+      if (op === "author-work-match") { // dán danh sách nhan đề (Google Scholar) -> DOI trong Crossref; không ghi gì, chủ hồ sơ tick chọn rồi mới thêm
+        const ts = [...new Set((Array.isArray(body.titles) ? body.titles : []).map((x) => tidy(x, 300)).filter((x) => x.length >= 12))].slice(0, 40);
+        if (!ts.length) return json({ error: "Hãy dán ít nhất một nhan đề (mỗi dòng một bài)." }, 400);
+        if (!(await limit(`am:${me.id}`, 6, 3600))) return json({ error: "Tra nhan đề quá nhiều lần, hãy thử lại sau." }, 429);
+        const p = await getProf(authorId), have = new Set((await getWorks(authorId)).map((w) => w.doi));
+        const rs = await matchTitles(ts, { name: v.name, orcid: p.orcid || v.orcid });
+        return json({ ok: true, results: rs.map((r) => ({ ...r, have: !!r.hit && have.has(r.hit.doi) })) });
       }
       if (op === "author-work-del") { const ws = (await getWorks(authorId)).filter((w) => w.doi !== normDoi(body.doi)); await one(["HSET", AWK, authorId, JSON.stringify(ws)]); return json({ ok: true }); }
     }

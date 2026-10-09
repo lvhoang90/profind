@@ -86,3 +86,31 @@ export async function lookupWork(doi, { name, orcid }) {
   const y = cr.issued?.["date-parts"]?.[0]?.[0] ?? cr.published?.["date-parts"]?.[0]?.[0] ?? 0;
   return { found: true, title: String((cr.title ?? [])[0] ?? "").slice(0, 400), venue: String((cr["container-title"] ?? [])[0] ?? "").slice(0, 200), year: y, type: cr.type ?? "", authors: au.length, matched: byOrcid || byName, byOrcid, oa: oa ? oa.id : "" };
 }
+
+const fold = (x) => String(x ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/gi, "d").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+/** Độ giống nhau của hai nhan đề (0..1): tỉ lệ từ chung trên từ của nhan đề dài hơn. */
+export function titleSim(a, b) {
+  const x = fold(a).split(" ").filter(Boolean), y = new Set(fold(b).split(" ").filter(Boolean));
+  if (!x.length || !y.size) return 0;
+  const common = x.filter((w) => y.has(w)).length;
+  return common / Math.max(x.length, y.size);
+}
+/** Khớp danh sách nhan đề (dán từ Google Scholar) với DOI trong Crossref. Mỗi nhan đề: ứng viên tốt nhất có độ giống >= 0.75, kèm cờ tên tác giả khớp. */
+export async function matchTitles(titles, { name, orcid }) {
+  const o = normOrcid(orcid), out = [];
+  for (let i = 0; i < titles.length; i += 5) {
+    out.push(...(await Promise.all(titles.slice(i, i + 5).map(async (t) => {
+      const j = await fetchJson(`https://api.crossref.org/works?query.bibliographic=${encodeURIComponent(t)}&rows=3&select=DOI,title,author,issued,container-title,type&mailto=luongviethoang.hcm@gmail.com`, {}, 8000);
+      let best = null;
+      for (const c of j?.message?.items ?? []) {
+        const ct = String((c.title ?? [])[0] ?? ""), sim = titleSim(t, ct);
+        if (sim >= 0.75 && (!best || sim > best.sim)) {
+          const au = c.author ?? [], y = c.issued?.["date-parts"]?.[0]?.[0] ?? 0;
+          best = { doi: normDoi(c.DOI), title: ct.slice(0, 300), venue: String((c["container-title"] ?? [])[0] ?? "").slice(0, 160), year: y, sim: Math.round(sim * 100) / 100, name: au.some((x) => nameCompat(`${x.given ?? ""} ${x.family ?? ""}`, name)) || (!!o && au.some((x) => normOrcid(x.ORCID) === o)) };
+        }
+      }
+      return { q: t, hit: best && best.doi ? best : null };
+    }))));
+  }
+  return out;
+}
