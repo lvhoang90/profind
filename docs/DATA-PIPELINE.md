@@ -30,3 +30,8 @@ npm run d:check                              # kiểm tra nhất quán
 - `scripts/pro-score.mjs`: bách phân vị, trung bình ngành (làm trơn Bayes) và trần trích dẫn được tính theo từng ngành rồi trộn theo `discShares`.
 - `data/discipline-review.json`: hồ sơ có hạng mà hai nguồn bất đồng (xem lại, đính chính bằng `setDisciplines`).
 - Chạy lại chủ đề: `node scripts/fetch-author-topics.mjs` (xóa `data/author-topics.json` để tải lại toàn bộ). Kiểm định nội bộ: mẫu 180 hồ sơ đọc mù (xem mô tả trong PR), ngành chính khớp 54% -> 70%.
+
+## Vị trí tác giả (vai trò "Chủ đạo")
+- `node scripts/fetch-positions.mjs` tải vị trí từng tác giả trong từng công trình (đứng đầu, giữa, cuối, có phải liên hệ) vào `data/raw/_positions.json` (chạy lại chỉ tải công trình còn thiếu).
+- `build-index.mjs` tính lại vai trò: tác giả chính = đứng đầu HOẶC là tác giả liên hệ (một hay nhiều người). Trước đây chỉ tính liên hệ khi là người duy nhất nên bỏ sót bài đồng liên hệ. Công trình thiếu dữ liệu vị trí giữ vai trò cũ. Đặt `NO_POSITIONS=1` để dựng theo cách cũ.
+- Kết quả: công trình tác giả chính 160.367 → 182.201 (trên 445.839).

@@ -49,7 +49,11 @@ for (const [f, into] of alias) extraCited.set(into, (extraCited.get(into) ?? 0) 
 const live = new Map(authors.map((a) => [a.id, a]));
 for (const a of authors) { if (C.rename[a.id]) a.name = C.rename[a.id]; if (C.setInstitutions?.[a.id]) { const v = C.setInstitutions[a.id], now = Array.isArray(v) ? v : v.now ?? [], past = Array.isArray(v) ? [] : v.past ?? []; a.institutions = [...now, ...past.filter((u) => !now.includes(u))]; a.fixedPast = past.filter((u) => !now.includes(u)); } /* đơn vị do quản trị viên xác nhận thay cho đơn vị OpenAlex (hồ sơ gộp nhiều người) */ a.claimed = C.claimed[a.id]?.date ?? null; }
 const excl = new Set(C.excludeWorks), seen = new Set();
-const rawWorks = R.works.map((w) => ({ ...w, authorId: alias.get(w.authorId) ?? w.authorId })).filter((w) => {
+// Vai trò theo vị trí tác giả tải lại từ OpenAlex (scripts/fetch-positions.mjs): tác giả chính (HĐGSNN) = tác giả đứng đầu HOẶC tác giả liên hệ (một hay nhiều người);
+// trước đây chỉ tính tác giả liên hệ khi là người duy nhất nên bỏ sót các bài đồng liên hệ. Không có dữ liệu vị trí thì giữ vai trò cũ.
+const POS = existsSync("data/raw/_positions.json") && !process.env.NO_POSITIONS ? rd("data/raw/_positions.json") : {};
+const withPos = (w) => { const p = POS[w.id.split("-").pop()], q = p?.a?.[w.id.split("-")[0]]; return q ? { ...w, role: /[fc]/.test(q) ? "lead" : "co", corr: p.c } : w; };
+const rawWorks = R.works.map((w) => ({ ...withPos(w), authorId: alias.get(w.authorId) ?? w.authorId })).filter((w) => {
   if (!live.has(w.authorId) || excl.has(w.id)) return false;
   const k = `${w.authorId}|${w.id.split("-").pop()}`; if (seen.has(k)) return false; seen.add(k); return true;
 });
