@@ -12,7 +12,7 @@
    "same": 1,
    "H": 0,
    "fld3": 0,
-   "risk": 38.17,
+   "risk": 38.18,
    "reviewed": false,
    "high": true
   },
@@ -25,7 +25,7 @@
    "same": 2,
    "H": 0.28,
    "fld3": 0.09,
-   "risk": 27.76,
+   "risk": 27.77,
    "reviewed": false,
    "high": true
   },
@@ -51,7 +51,7 @@
    "same": 38,
    "H": 0.32,
    "fld3": 0.2,
-   "risk": 16.72,
+   "risk": 16.71,
    "reviewed": false,
    "high": true
   },
@@ -123,7 +123,7 @@
   {
    "id": "A5023511697",
    "name": "Tuan Anh Nguyen",
-   "rank": 3758,
+   "rank": 3759,
    "works": 28,
    "units": 3,
    "same": 38,
@@ -155,7 +155,7 @@
    "same": 38,
    "H": 0.28,
    "fld3": 0.19,
-   "risk": 11.95,
+   "risk": 11.94,
    "reviewed": false,
    "high": true
   },
@@ -168,7 +168,7 @@
    "same": 38,
    "H": 0.42,
    "fld3": 0.24,
-   "risk": 11.85,
+   "risk": 11.84,
    "reviewed": false,
    "high": true
   },
@@ -181,20 +181,20 @@
    "same": 38,
    "H": 0.4,
    "fld3": 0.17,
-   "risk": 11.84,
+   "risk": 11.83,
    "reviewed": false,
    "high": true
   },
   {
    "id": "A5100632422",
    "name": "Nguyễn Anh Tuấn",
-   "rank": 1923,
+   "rank": 1924,
    "works": 127,
    "units": 4,
    "same": 38,
    "H": 0.23,
    "fld3": 0.12,
-   "risk": 11.7,
+   "risk": 11.69,
    "reviewed": false,
    "high": true
   },
@@ -214,13 +214,13 @@
   {
    "id": "A5101904743",
    "name": "Anh Tuan Nguyen",
-   "rank": 4374,
+   "rank": 4375,
    "works": 17,
    "units": 1,
    "same": 38,
    "H": 0.41,
    "fld3": 0.2,
-   "risk": 11.31,
+   "risk": 11.3,
    "reviewed": false,
    "high": true
   },
@@ -233,14 +233,14 @@
    "same": 18,
    "H": 0.41,
    "fld3": 0.18,
-   "risk": 11.3,
+   "risk": 11.29,
    "reviewed": false,
    "high": true
   },
   {
    "id": "A5101786594",
    "name": "Tuan Anh Nguyen",
-   "rank": 3746,
+   "rank": 3745,
    "works": 49,
    "units": 2,
    "same": 38,
@@ -272,14 +272,14 @@
    "same": 38,
    "H": 0.27,
    "fld3": 0.16,
-   "risk": 10.59,
+   "risk": 10.58,
    "reviewed": false,
    "high": true
   },
   {
    "id": "A5100632425",
    "name": "Nguyễn Anh Tuấn",
-   "rank": 2021,
+   "rank": 2020,
    "works": 78,
    "units": 4,
    "same": 38,
@@ -337,7 +337,7 @@
    "same": 38,
    "H": 0.25,
    "fld3": 0.13,
-   "risk": 10.1,
+   "risk": 10.09,
    "reviewed": false,
    "high": true
   },
@@ -370,13 +370,13 @@
   {
    "id": "A5004842579",
    "name": "Nguyen Thi Thu Ha",
-   "rank": 2756,
+   "rank": 2757,
    "works": 72,
    "units": 4,
    "same": 25,
    "H": 0.31,
    "fld3": 0.2,
-   "risk": 9.9,
+   "risk": 9.89,
    "reviewed": true,
    "high": true
   },
@@ -409,7 +409,7 @@
   {
    "id": "A5100631109",
    "name": "Anh Tuấn Nguyễn",
-   "rank": 1828,
+   "rank": 1829,
    "works": 134,
    "units": 4,
    "same": 38,
@@ -454,7 +454,7 @@
    "same": 38,
    "H": 0.11,
    "fld3": 0,
-   "risk": 9.33,
+   "risk": 9.32,
    "reviewed": false,
    "high": true
   },
@@ -532,7 +532,7 @@
    "same": 25,
    "H": 0.34,
    "fld3": 0.31,
-   "risk": 8.78,
+   "risk": 8.77,
    "reviewed": false,
    "high": true
   },
@@ -552,13 +552,13 @@
   {
    "id": "A5101549677",
    "name": "Ha Thi Thu Nguyen",
-   "rank": 3539,
+   "rank": 3540,
    "works": 82,
    "units": 3,
    "same": 25,
    "H": 0.35,
    "fld3": 0.14,
-   "risk": 8.75,
+   "risk": 8.74,
    "reviewed": false,
    "high": true
   },
@@ -656,7 +656,7 @@
   {
    "id": "A5104329808",
    "name": "Nguyễn Thị Thu Hương",
-   "rank": 3779,
+   "rank": 3780,
    "works": 36,
    "units": 4,
    "same": 14,
@@ -675,20 +675,20 @@
    "same": 22,
    "H": 0.37,
    "fld3": 0.17,
-   "risk": 8.38,
+   "risk": 8.37,
    "reviewed": false,
    "high": true
   },
   {
    "id": "A5077562805",
    "name": "Tuan Anh Nguyen",
-   "rank": 1954,
+   "rank": 1953,
    "works": 90,
    "units": 2,
    "same": 38,
    "H": 0.2,
    "fld3": 0,
-   "risk": 8.36,
+   "risk": 8.35,
    "reviewed": false,
    "high": true
   },
@@ -714,7 +714,7 @@
    "same": 22,
    "H": 0.16,
    "fld3": 0,
-   "risk": 8.31,
+   "risk": 8.3,
    "reviewed": false,
    "high": true
   },
@@ -792,7 +792,7 @@
    "same": 14,
    "H": 0.27,
    "fld3": 0.14,
-   "risk": 7.97,
+   "risk": 7.96,
    "reviewed": false,
    "high": true
   },
@@ -849,6 +849,19 @@
    "high": true
   },
   {
+   "id": "A5101788557",
+   "name": "Nguyễn Tiến Đạt",
+   "rank": null,
+   "works": 45,
+   "units": 6,
+   "same": 5,
+   "H": 0.49,
+   "fld3": 0.18,
+   "risk": 7.78,
+   "reviewed": false,
+   "high": true
+  },
+  {
    "id": "A5100697525",
    "name": "Thi Thu Ha Nguyen",
    "rank": 2903,
@@ -857,7 +870,7 @@
    "same": 25,
    "H": 0.4,
    "fld3": 0.18,
-   "risk": 7.79,
+   "risk": 7.78,
    "reviewed": false,
    "high": true
   },
@@ -869,19 +882,6 @@
    "units": 1,
    "same": 25,
    "H": 0.4,
-   "fld3": 0.18,
-   "risk": 7.79,
-   "reviewed": false,
-   "high": true
-  },
-  {
-   "id": "A5101788557",
-   "name": "Nguyễn Tiến Đạt",
-   "rank": null,
-   "works": 45,
-   "units": 6,
-   "same": 5,
-   "H": 0.49,
    "fld3": 0.18,
    "risk": 7.78,
    "reviewed": false,
@@ -987,7 +987,7 @@
    "same": 38,
    "H": 0,
    "fld3": 0,
-   "risk": 7.64,
+   "risk": 7.63,
    "reviewed": false,
    "high": true
   },
@@ -1059,13 +1059,26 @@
   {
    "id": "A5088231118",
    "name": "Thanh Trung Nguyen",
-   "rank": 3249,
+   "rank": 3250,
    "works": 17,
    "units": 2,
    "same": 22,
    "H": 0.32,
    "fld3": 0.2,
    "risk": 7.52,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5101764295",
+   "name": "Nguyễn Hoàng Anh",
+   "rank": 751,
+   "works": 74,
+   "units": 3,
+   "same": 14,
+   "H": 0.41,
+   "fld3": 0.24,
+   "risk": 7.51,
    "reviewed": false,
    "high": true
   },
@@ -1083,19 +1096,6 @@
    "high": true
   },
   {
-   "id": "A5063417481",
-   "name": "Kien Trung Nguyen",
-   "rank": 1257,
-   "works": 42,
-   "units": 2,
-   "same": 16,
-   "H": 0.4,
-   "fld3": 0.28,
-   "risk": 7.5,
-   "reviewed": false,
-   "high": true
-  },
-  {
    "id": "A5011060904",
    "name": "Мартыненко Никита Александрович",
    "rank": null,
@@ -1105,6 +1105,19 @@
    "H": 0.37,
    "fld3": 0.17,
    "risk": 7.5,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5063417481",
+   "name": "Kien Trung Nguyen",
+   "rank": 1258,
+   "works": 42,
+   "units": 2,
+   "same": 16,
+   "H": 0.4,
+   "fld3": 0.28,
+   "risk": 7.49,
    "reviewed": false,
    "high": true
   },
@@ -1150,7 +1163,7 @@
   {
    "id": "A5112372852",
    "name": "Nguyễn Tuấn Anh",
-   "rank": 6888,
+   "rank": 6889,
    "works": 20,
    "units": 1,
    "same": 38,
@@ -1221,7 +1234,7 @@
    "same": 20,
    "H": 0.38,
    "fld3": 0.19,
-   "risk": 7.33,
+   "risk": 7.32,
    "reviewed": false,
    "high": true
   },
@@ -1260,19 +1273,6 @@
    "same": 22,
    "H": 0.24,
    "fld3": 0.08,
-   "risk": 7.27,
-   "reviewed": false,
-   "high": true
-  },
-  {
-   "id": "A5101764295",
-   "name": "Nguyễn Hoàng Anh",
-   "rank": 751,
-   "works": 74,
-   "units": 3,
-   "same": 13,
-   "H": 0.41,
-   "fld3": 0.24,
    "risk": 7.26,
    "reviewed": false,
    "high": true
@@ -1332,7 +1332,7 @@
   {
    "id": "A5062964141",
    "name": "Thị Phương Thảo Nguyễn",
-   "rank": 3400,
+   "rank": 3401,
    "works": 33,
    "units": 2,
    "same": 20,
@@ -1351,7 +1351,7 @@
    "same": 38,
    "H": 0.16,
    "fld3": 0,
-   "risk": 7.12,
+   "risk": 7.11,
    "reviewed": false,
    "high": true
   },
@@ -1366,6 +1366,19 @@
    "fld3": 0.17,
    "risk": 7.08,
    "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5107847565",
+   "name": "Nguyễn Hoàng Anh",
+   "rank": 5666,
+   "works": 40,
+   "units": 3,
+   "same": 14,
+   "H": 0.41,
+   "fld3": 0.2,
+   "risk": 7.06,
+   "reviewed": true,
    "high": true
   },
   {
@@ -1390,7 +1403,7 @@
    "same": 15,
    "H": 0.48,
    "fld3": 0.2,
-   "risk": 7.03,
+   "risk": 7.02,
    "reviewed": false,
    "high": true
   },
@@ -1494,21 +1507,8 @@
    "same": 38,
    "H": 0.12,
    "fld3": 0,
-   "risk": 6.83,
+   "risk": 6.82,
    "reviewed": false,
-   "high": true
-  },
-  {
-   "id": "A5107847565",
-   "name": "Nguyễn Hoàng Anh",
-   "rank": 5665,
-   "works": 40,
-   "units": 3,
-   "same": 13,
-   "H": 0.41,
-   "fld3": 0.2,
-   "risk": 6.81,
-   "reviewed": true,
    "high": true
   },
   {
@@ -1657,7 +1657,7 @@
   {
    "id": "A5034712174",
    "name": "Nguyen Thi Thu Hang",
-   "rank": 1985,
+   "rank": 1984,
    "works": 37,
    "units": 2,
    "same": 13,
@@ -1694,19 +1694,6 @@
    "high": true
   },
   {
-   "id": "A5112708643",
-   "name": "Tien Dung Nguyen",
-   "rank": 5423,
-   "works": 30,
-   "units": 1,
-   "same": 16,
-   "H": 0.49,
-   "fld3": 0.2,
-   "risk": 6.48,
-   "reviewed": false,
-   "high": true
-  },
-  {
    "id": "A5100387323",
    "name": "Thanh Binh Nguyen",
    "rank": 1106,
@@ -1715,6 +1702,19 @@
    "same": 20,
    "H": 0.3,
    "fld3": 0.17,
+   "risk": 6.47,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5112708643",
+   "name": "Tien Dung Nguyen",
+   "rank": 5424,
+   "works": 30,
+   "units": 1,
+   "same": 16,
+   "H": 0.49,
+   "fld3": 0.2,
    "risk": 6.47,
    "reviewed": false,
    "high": true
@@ -1735,7 +1735,7 @@
   {
    "id": "A5101528271",
    "name": "Thủy Nguyễn Thị",
-   "rank": 1997,
+   "rank": 1996,
    "works": 62,
    "units": 4,
    "same": 17,
@@ -1780,7 +1780,7 @@
    "same": 20,
    "H": 0.39,
    "fld3": 0.17,
-   "risk": 6.33,
+   "risk": 6.32,
    "reviewed": false,
    "high": true
   },
@@ -1811,19 +1811,6 @@
    "high": true
   },
   {
-   "id": "A5100458403",
-   "name": "Tuan Le Anh",
-   "rank": 4007,
-   "works": 22,
-   "units": 1,
-   "same": 19,
-   "H": 0.4,
-   "fld3": 0.18,
-   "risk": 6.28,
-   "reviewed": false,
-   "high": true
-  },
-  {
    "id": "A5087094279",
    "name": "Thị Thu Trang Nguyễn",
    "rank": 5970,
@@ -1845,6 +1832,19 @@
    "same": 9,
    "H": 0.42,
    "fld3": 0.23,
+   "risk": 6.27,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5100458403",
+   "name": "Tuan Le Anh",
+   "rank": 4007,
+   "works": 22,
+   "units": 1,
+   "same": 19,
+   "H": 0.4,
+   "fld3": 0.18,
    "risk": 6.27,
    "reviewed": false,
    "high": true
@@ -1982,7 +1982,7 @@
   {
    "id": "A5100610743",
    "name": "Nguyễn Thanh Tùng",
-   "rank": 5228,
+   "rank": 5229,
    "works": 15,
    "units": 1,
    "same": 18,
@@ -2001,7 +2001,7 @@
    "same": 17,
    "H": 0.22,
    "fld3": 0.1,
-   "risk": 6.13,
+   "risk": 6.12,
    "reviewed": false,
    "high": true
   },
@@ -2073,7 +2073,7 @@
   {
    "id": "A5101084112",
    "name": "Nguyễn Thanh Vân",
-   "rank": 7321,
+   "rank": 7322,
    "works": 19,
    "units": 1,
    "same": 17,
@@ -2092,19 +2092,6 @@
    "same": 1,
    "H": 0.38,
    "fld3": 0.19,
-   "risk": 6.05,
-   "reviewed": false,
-   "high": true
-  },
-  {
-   "id": "A5101581517",
-   "name": "Nguyễn Thị Vân Anh",
-   "rank": 411,
-   "works": 152,
-   "units": 2,
-   "same": 12,
-   "H": 0.48,
-   "fld3": 0.18,
    "risk": 6.05,
    "reviewed": false,
    "high": true
@@ -2136,28 +2123,28 @@
    "high": true
   },
   {
-   "id": "A5003045908",
-   "name": "Thi Thuy Nguyen",
-   "rank": 5616,
-   "works": 15,
+   "id": "A5101581517",
+   "name": "Nguyễn Thị Vân Anh",
+   "rank": 411,
+   "works": 152,
    "units": 2,
-   "same": 17,
-   "H": 0.32,
+   "same": 12,
+   "H": 0.48,
    "fld3": 0.18,
    "risk": 6.04,
    "reviewed": false,
    "high": true
   },
   {
-   "id": "A5101612494",
-   "name": "Nguyễn Thị Thu Hà",
-   "rank": 1940,
-   "works": 116,
-   "units": 3,
-   "same": 25,
-   "H": 0.21,
-   "fld3": 0,
-   "risk": 6.03,
+   "id": "A5003045908",
+   "name": "Thi Thuy Nguyen",
+   "rank": 5617,
+   "works": 15,
+   "units": 2,
+   "same": 17,
+   "H": 0.32,
+   "fld3": 0.18,
+   "risk": 6.04,
    "reviewed": false,
    "high": true
   },
@@ -2171,6 +2158,19 @@
    "H": 0.31,
    "fld3": 0.22,
    "risk": 6.03,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5101612494",
+   "name": "Nguyễn Thị Thu Hà",
+   "rank": 1940,
+   "works": 116,
+   "units": 3,
+   "same": 25,
+   "H": 0.21,
+   "fld3": 0,
+   "risk": 6.02,
    "reviewed": false,
    "high": true
   },
@@ -2287,7 +2287,7 @@
    "same": 38,
    "H": 0,
    "fld3": 0,
-   "risk": 5.91,
+   "risk": 5.9,
    "reviewed": false,
    "high": true
   },
@@ -2300,7 +2300,7 @@
    "same": 38,
    "H": 0,
    "fld3": 0,
-   "risk": 5.91,
+   "risk": 5.9,
    "reviewed": false,
    "high": true
   },
@@ -2313,7 +2313,7 @@
    "same": 38,
    "H": 0,
    "fld3": 0,
-   "risk": 5.91,
+   "risk": 5.9,
    "reviewed": false,
    "high": true
   },
@@ -2326,7 +2326,7 @@
    "same": 38,
    "H": 0,
    "fld3": 0,
-   "risk": 5.91,
+   "risk": 5.9,
    "reviewed": false,
    "high": true
   },
@@ -2339,7 +2339,7 @@
    "same": 38,
    "H": 0,
    "fld3": 0,
-   "risk": 5.91,
+   "risk": 5.9,
    "reviewed": false,
    "high": true
   },
@@ -2352,7 +2352,7 @@
    "same": 14,
    "H": 0.41,
    "fld3": 0.24,
-   "risk": 5.86,
+   "risk": 5.85,
    "reviewed": false,
    "high": true
   },
@@ -2372,7 +2372,7 @@
   {
    "id": "A5101659993",
    "name": "Nguyen Thanh Hung",
-   "rank": 4149,
+   "rank": 4148,
    "works": 27,
    "units": 2,
    "same": 10,
@@ -2385,7 +2385,7 @@
   {
    "id": "A5101488315",
    "name": "Hang Thi Thu Nguyen",
-   "rank": 1537,
+   "rank": 1538,
    "works": 23,
    "units": 2,
    "same": 13,
@@ -2411,7 +2411,7 @@
   {
    "id": "A5101432910",
    "name": "NGUYEN Thi Huyen Trang",
-   "rank": 5668,
+   "rank": 5669,
    "works": 32,
    "units": 2,
    "same": 10,
@@ -2580,7 +2580,7 @@
   {
    "id": "A5068001257",
    "name": "Hang Thu Nguyen",
-   "rank": 1318,
+   "rank": 1319,
    "works": 23,
    "units": 4,
    "same": 8,
@@ -2645,7 +2645,7 @@
   {
    "id": "A5112911020",
    "name": "Phương Nguyễn Thị",
-   "rank": 5230,
+   "rank": 5231,
    "works": 31,
    "units": 1,
    "same": 14,
@@ -2671,7 +2671,7 @@
   {
    "id": "A5101467256",
    "name": "Thanh Liêm Nguyễn",
-   "rank": 2066,
+   "rank": 2065,
    "works": 89,
    "units": 3,
    "same": 5,
@@ -2749,7 +2749,7 @@
   {
    "id": "A5038893491",
    "name": "Nguyễn Trung Hiếu",
-   "rank": 4880,
+   "rank": 4881,
    "works": 44,
    "units": 3,
    "same": 9,
@@ -2762,7 +2762,7 @@
   {
    "id": "A5101601510",
    "name": "Nguyễn Thùy Linh",
-   "rank": 4148,
+   "rank": 4149,
    "works": 30,
    "units": 3,
    "same": 8,
@@ -2801,7 +2801,7 @@
   {
    "id": "A5012114425",
    "name": "Nam Tien Duong",
-   "rank": 1036,
+   "rank": 1039,
    "works": 88,
    "units": 4,
    "same": 1,
@@ -2853,7 +2853,7 @@
   {
    "id": "A5101445939",
    "name": "Nguyễn Thị Minh Nguyệt",
-   "rank": 2760,
+   "rank": 2761,
    "works": 118,
    "units": 4,
    "same": 4,
@@ -2890,19 +2890,6 @@
    "high": true
   },
   {
-   "id": "A5054486481",
-   "name": "Lê Anh Tuấn",
-   "rank": 624,
-   "works": 132,
-   "units": 4,
-   "same": 19,
-   "H": 0.18,
-   "fld3": 0,
-   "risk": 5.12,
-   "reviewed": false,
-   "high": true
-  },
-  {
    "id": "A5023810707",
    "name": "Pham Thi Thu Ha",
    "rank": null,
@@ -2911,6 +2898,19 @@
    "same": 2,
    "H": 0.28,
    "fld3": 0.15,
+   "risk": 5.11,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5054486481",
+   "name": "Lê Anh Tuấn",
+   "rank": 624,
+   "works": 132,
+   "units": 4,
+   "same": 19,
+   "H": 0.18,
+   "fld3": 0,
    "risk": 5.11,
    "reviewed": false,
    "high": true
@@ -2931,7 +2931,7 @@
   {
    "id": "A5003224362",
    "name": "Tham Thi Nguyen",
-   "rank": 1259,
+   "rank": 1260,
    "works": 83,
    "units": 3,
    "same": 7,
@@ -3100,7 +3100,7 @@
   {
    "id": "A5100638742",
    "name": "Văn Hùng Nguyễn",
-   "rank": 2284,
+   "rank": 2285,
    "works": 68,
    "units": 2,
    "same": 11,
@@ -3158,7 +3158,7 @@
    "same": 20,
    "H": 0.29,
    "fld3": 0.12,
-   "risk": 4.97,
+   "risk": 4.96,
    "reviewed": false,
    "high": true
   },
@@ -3243,7 +3243,7 @@
   {
    "id": "A5025917967",
    "name": "Nguyễn Thị Bích Ngọc",
-   "rank": 3355,
+   "rank": 3354,
    "works": 64,
    "units": 2,
    "same": 8,
@@ -3269,7 +3269,7 @@
   {
    "id": "A5100613572",
    "name": "Nguyễn Hoàng Nam",
-   "rank": 4789,
+   "rank": 4790,
    "works": 53,
    "units": 3,
    "same": 7,
@@ -3620,7 +3620,7 @@
   {
    "id": "A5101505293",
    "name": "Nguyễn Thị Hoa",
-   "rank": 6027,
+   "rank": 6028,
    "works": 29,
    "units": 1,
    "same": 11,
@@ -3685,7 +3685,7 @@
   {
    "id": "A5029262713",
    "name": "Thi Hong Nguyen",
-   "rank": 611,
+   "rank": 612,
    "works": 64,
    "units": 3,
    "same": 12,
@@ -3711,7 +3711,7 @@
   {
    "id": "A5137095099",
    "name": "Thành Long Nguyễn",
-   "rank": 6031,
+   "rank": 6032,
    "works": 19,
    "units": 1,
    "same": 7,
@@ -3737,7 +3737,7 @@
   {
    "id": "A5100690906",
    "name": "Dung Tien Nguyen",
-   "rank": 3481,
+   "rank": 3482,
    "works": 32,
    "units": 2,
    "same": 16,
@@ -3789,7 +3789,7 @@
   {
    "id": "A5101847540",
    "name": "Nguyễn Hoài Nam",
-   "rank": 3217,
+   "rank": 3216,
    "works": 47,
    "units": 3,
    "same": 7,
@@ -3802,13 +3802,13 @@
   {
    "id": "A5113629018",
    "name": "The-Vinh Nguyen",
-   "rank": 4048,
+   "rank": 4049,
    "works": 17,
    "units": 1,
    "same": 16,
    "H": 0.32,
    "fld3": 0.14,
-   "risk": 4.48,
+   "risk": 4.47,
    "reviewed": false,
    "high": true
   },
@@ -3821,19 +3821,6 @@
    "same": 1,
    "H": 0.4,
    "fld3": 0.19,
-   "risk": 4.46,
-   "reviewed": false,
-   "high": true
-  },
-  {
-   "id": "A5047293384",
-   "name": "Nguyễn Văn Toản",
-   "rank": 3944,
-   "works": 39,
-   "units": 2,
-   "same": 6,
-   "H": 0.41,
-   "fld3": 0.22,
    "risk": 4.46,
    "reviewed": false,
    "high": true
@@ -3854,13 +3841,26 @@
   {
    "id": "A5090975825",
    "name": "Nguyễn Văn Cương",
-   "rank": 1210,
+   "rank": 1211,
    "works": 91,
    "units": 3,
    "same": 7,
    "H": 0.32,
    "fld3": 0.19,
    "risk": 4.46,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5047293384",
+   "name": "Nguyễn Văn Toản",
+   "rank": 3944,
+   "works": 39,
+   "units": 2,
+   "same": 6,
+   "H": 0.41,
+   "fld3": 0.22,
+   "risk": 4.45,
    "reviewed": false,
    "high": true
   },
@@ -3904,19 +3904,6 @@
    "high": true
   },
   {
-   "id": "A5016778915",
-   "name": "Phuong Thi Nguyen",
-   "rank": 2884,
-   "works": 23,
-   "units": 1,
-   "same": 14,
-   "H": 0.32,
-   "fld3": 0.18,
-   "risk": 4.44,
-   "reviewed": false,
-   "high": true
-  },
-  {
    "id": "A5006078763",
    "name": "Van Thi Hong Nguyen",
    "rank": 4998,
@@ -3943,6 +3930,19 @@
    "high": true
   },
   {
+   "id": "A5016778915",
+   "name": "Phuong Thi Nguyen",
+   "rank": 2884,
+   "works": 23,
+   "units": 1,
+   "same": 14,
+   "H": 0.32,
+   "fld3": 0.18,
+   "risk": 4.43,
+   "reviewed": false,
+   "high": true
+  },
+  {
    "id": "A5049198999",
    "name": "Tuan Minh Le",
    "rank": 1892,
@@ -3964,19 +3964,6 @@
    "same": 11,
    "H": 0.31,
    "fld3": 0.18,
-   "risk": 4.42,
-   "reviewed": false,
-   "high": true
-  },
-  {
-   "id": "A5040976606",
-   "name": "Kien Trung Nguyen",
-   "rank": 5546,
-   "works": 32,
-   "units": 1,
-   "same": 16,
-   "H": 0.29,
-   "fld3": 0.16,
    "risk": 4.42,
    "reviewed": false,
    "high": true
@@ -4021,6 +4008,19 @@
    "high": true
   },
   {
+   "id": "A5040976606",
+   "name": "Kien Trung Nguyen",
+   "rank": 5546,
+   "works": 32,
+   "units": 1,
+   "same": 16,
+   "H": 0.29,
+   "fld3": 0.16,
+   "risk": 4.41,
+   "reviewed": false,
+   "high": true
+  },
+  {
    "id": "A5101431506",
    "name": "Trần Tuấn Anh",
    "rank": 5312,
@@ -4049,7 +4049,7 @@
   {
    "id": "A5103065532",
    "name": "Nguyễn Trường Sơn",
-   "rank": 1508,
+   "rank": 1509,
    "works": 99,
    "units": 3,
    "same": 7,
@@ -4088,7 +4088,7 @@
   {
    "id": "A5056839415",
    "name": "Kiet Tuan Nguyen",
-   "rank": 941,
+   "rank": 942,
    "works": 62,
    "units": 4,
    "same": 2,
@@ -4203,19 +4203,6 @@
    "high": true
   },
   {
-   "id": "A5101764364",
-   "name": "Nguyễn Thị Nga",
-   "rank": null,
-   "works": 27,
-   "units": 2,
-   "same": 12,
-   "H": 0.28,
-   "fld3": 0.17,
-   "risk": 4.32,
-   "reviewed": false,
-   "high": true
-  },
-  {
    "id": "A5079452828",
    "name": "Thi Thu Ha Tran",
    "rank": 4222,
@@ -4225,6 +4212,19 @@
    "H": 0.32,
    "fld3": 0.18,
    "risk": 4.32,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5101764364",
+   "name": "Nguyễn Thị Nga",
+   "rank": null,
+   "works": 27,
+   "units": 2,
+   "same": 12,
+   "H": 0.28,
+   "fld3": 0.17,
+   "risk": 4.31,
    "reviewed": false,
    "high": true
   },
@@ -4268,19 +4268,6 @@
    "high": true
   },
   {
-   "id": "A5049193064",
-   "name": "Ван Киен Донг",
-   "rank": 7717,
-   "works": 16,
-   "units": 1,
-   "same": 25,
-   "H": 0.21,
-   "fld3": 0,
-   "risk": 4.31,
-   "reviewed": false,
-   "high": true
-  },
-  {
    "id": "A5101645840",
    "name": "Nguyen Thi Thuy Linh",
    "rank": null,
@@ -4302,6 +4289,19 @@
    "same": 12,
    "H": 0.31,
    "fld3": 0.15,
+   "risk": 4.3,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5049193064",
+   "name": "Ван Киен Донг",
+   "rank": 7717,
+   "works": 16,
+   "units": 1,
+   "same": 25,
+   "H": 0.21,
+   "fld3": 0,
    "risk": 4.3,
    "reviewed": false,
    "high": true
@@ -4372,19 +4372,6 @@
    "high": true
   },
   {
-   "id": "A5100777903",
-   "name": "Van Minh Nguyen",
-   "rank": null,
-   "works": 34,
-   "units": 2,
-   "same": 10,
-   "H": 0.32,
-   "fld3": 0.18,
-   "risk": 4.25,
-   "reviewed": false,
-   "high": true
-  },
-  {
    "id": "A5073338061",
    "name": "Binh Thanh Nguyen",
    "rank": 1348,
@@ -4405,6 +4392,19 @@
    "units": 3,
    "same": 7,
    "H": 0.3,
+   "fld3": 0.18,
+   "risk": 4.24,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5100777903",
+   "name": "Van Minh Nguyen",
+   "rank": null,
+   "works": 34,
+   "units": 2,
+   "same": 10,
+   "H": 0.32,
    "fld3": 0.18,
    "risk": 4.24,
    "reviewed": false,
@@ -4751,7 +4751,7 @@
   {
    "id": "A5052084100",
    "name": "Nguyễn Thị Hương Lan",
-   "rank": 3813,
+   "rank": 3812,
    "works": 18,
    "units": 1,
    "same": 8,
@@ -4803,7 +4803,7 @@
   {
    "id": "A5108964061",
    "name": "Lê Thị Hòa",
-   "rank": 4865,
+   "rank": 4866,
    "works": 34,
    "units": 3,
    "same": 5,
@@ -4816,7 +4816,7 @@
   {
    "id": "A5086377289",
    "name": "Tuan Anh Tran",
-   "rank": 5371,
+   "rank": 5372,
    "works": 39,
    "units": 2,
    "same": 13,
@@ -4842,7 +4842,7 @@
   {
    "id": "A5108631295",
    "name": "Nguyễn Thị Liên",
-   "rank": 4049,
+   "rank": 4050,
    "works": 26,
    "units": 1,
    "same": 6,
@@ -4998,7 +4998,7 @@
   {
    "id": "A5032254224",
    "name": "Nguyễn Quốc Việt",
-   "rank": 3235,
+   "rank": 3233,
    "works": 44,
    "units": 4,
    "same": 3,
@@ -5037,7 +5037,7 @@
   {
    "id": "A5101677643",
    "name": "Nguyễn Thị Minh Phương",
-   "rank": 2029,
+   "rank": 2028,
    "works": 44,
    "units": 2,
    "same": 5,
@@ -5063,7 +5063,7 @@
   {
    "id": "A5001507533",
    "name": "Nguyễn Thị Mai Hương",
-   "rank": 4373,
+   "rank": 4374,
    "works": 41,
    "units": 3,
    "same": 9,
@@ -5076,7 +5076,7 @@
   {
    "id": "A5102770902",
    "name": "Nguyễn Thị Mỹ Linh",
-   "rank": 5375,
+   "rank": 5376,
    "works": 33,
    "units": 2,
    "same": 5,
@@ -5141,7 +5141,7 @@
   {
    "id": "A5000852576",
    "name": "Lê Trung Kiên",
-   "rank": 4606,
+   "rank": 4597,
    "works": 18,
    "units": 2,
    "same": 3,
@@ -5178,19 +5178,6 @@
    "high": true
   },
   {
-   "id": "A5053100707",
-   "name": "Hai Thanh Nguyen",
-   "rank": 3618,
-   "works": 31,
-   "units": 1,
-   "same": 15,
-   "H": 0.3,
-   "fld3": 0.14,
-   "risk": 4,
-   "reviewed": false,
-   "high": true
-  },
-  {
    "id": "A5101922668",
    "name": "Thi Hanh Nguyen",
    "rank": 3434,
@@ -5212,6 +5199,19 @@
    "same": 11,
    "H": 0.32,
    "fld3": 0.21,
+   "risk": 3.99,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5053100707",
+   "name": "Hai Thanh Nguyen",
+   "rank": 3618,
+   "works": 31,
+   "units": 1,
+   "same": 15,
+   "H": 0.3,
+   "fld3": 0.14,
    "risk": 3.99,
    "reviewed": false,
    "high": true
@@ -5362,7 +5362,7 @@
   {
    "id": "A5101839577",
    "name": "Nguyễn Thế Anh",
-   "rank": 5051,
+   "rank": 5052,
    "works": 27,
    "units": 1,
    "same": 7,
@@ -5425,9 +5425,22 @@
    "high": true
   },
   {
+   "id": "A5064645144",
+   "name": "Ngô Xuân Quảng",
+   "rank": 444,
+   "works": 152,
+   "units": 3,
+   "same": 1,
+   "H": 0.33,
+   "fld3": 0.26,
+   "risk": 3.89,
+   "reviewed": true,
+   "high": true
+  },
+  {
    "id": "A5061277637",
    "name": "Nguyễn Đăng Khoa",
-   "rank": 1188,
+   "rank": 1189,
    "works": 69,
    "units": 3,
    "same": 6,
@@ -5440,7 +5453,7 @@
   {
    "id": "A5011305407",
    "name": "Thi Lan Pham",
-   "rank": 4284,
+   "rank": 4285,
    "works": 23,
    "units": 2,
    "same": 4,
@@ -5451,22 +5464,9 @@
    "high": true
   },
   {
-   "id": "A5064645144",
-   "name": "Ngô Xuân Quảng",
-   "rank": 444,
-   "works": 152,
-   "units": 3,
-   "same": 1,
-   "H": 0.33,
-   "fld3": 0.26,
-   "risk": 3.88,
-   "reviewed": true,
-   "high": true
-  },
-  {
    "id": "A5082577776",
    "name": "Nguyen Van Quyet",
-   "rank": 2757,
+   "rank": 2754,
    "works": 31,
    "units": 4,
    "same": 3,
@@ -5503,22 +5503,9 @@
    "high": true
   },
   {
-   "id": "A5059569662",
-   "name": "Hoa Thi Nguyen",
-   "rank": null,
-   "works": 28,
-   "units": 1,
-   "same": 11,
-   "H": 0.37,
-   "fld3": 0.16,
-   "risk": 3.86,
-   "reviewed": false,
-   "high": true
-  },
-  {
    "id": "A5005115625",
    "name": "Hong Nhung Nguyen",
-   "rank": 5959,
+   "rank": 5960,
    "works": 38,
    "units": 2,
    "same": 4,
@@ -5536,6 +5523,19 @@
    "units": 2,
    "same": 7,
    "H": 0.39,
+   "fld3": 0.16,
+   "risk": 3.85,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5059569662",
+   "name": "Hoa Thi Nguyen",
+   "rank": null,
+   "works": 28,
+   "units": 1,
+   "same": 11,
+   "H": 0.37,
    "fld3": 0.16,
    "risk": 3.85,
    "reviewed": false,
@@ -5635,25 +5635,12 @@
   {
    "id": "A5038013289",
    "name": "Phan Trọng Trịnh",
-   "rank": 853,
+   "rank": 852,
    "works": 70,
    "units": 3,
    "same": 1,
    "H": 0.33,
    "fld3": 0.25,
-   "risk": 3.81,
-   "reviewed": false,
-   "high": true
-  },
-  {
-   "id": "A5112105655",
-   "name": "Nguyễn Thị Thu Hà",
-   "rank": 5156,
-   "works": 43,
-   "units": 1,
-   "same": 25,
-   "H": 0.15,
-   "fld3": 0,
    "risk": 3.81,
    "reviewed": false,
    "high": true
@@ -5667,6 +5654,19 @@
    "same": 5,
    "H": 0.31,
    "fld3": 0.18,
+   "risk": 3.8,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5112105655",
+   "name": "Nguyễn Thị Thu Hà",
+   "rank": 5156,
+   "works": 43,
+   "units": 1,
+   "same": 25,
+   "H": 0.15,
+   "fld3": 0,
    "risk": 3.8,
    "reviewed": false,
    "high": true
@@ -5724,19 +5724,6 @@
    "high": true
   },
   {
-   "id": "A5010120471",
-   "name": "Thị Thu Hà Nguyễn",
-   "rank": 3798,
-   "works": 98,
-   "units": 1,
-   "same": 25,
-   "H": 0.14,
-   "fld3": 0,
-   "risk": 3.77,
-   "reviewed": false,
-   "high": true
-  },
-  {
    "id": "A5004093997",
    "name": "Tung Manh Ho",
    "rank": 95,
@@ -5747,6 +5734,19 @@
    "fld3": 0.16,
    "risk": 3.76,
    "reviewed": true,
+   "high": true
+  },
+  {
+   "id": "A5010120471",
+   "name": "Thị Thu Hà Nguyễn",
+   "rank": 3799,
+   "works": 98,
+   "units": 1,
+   "same": 25,
+   "H": 0.14,
+   "fld3": 0,
+   "risk": 3.76,
+   "reviewed": false,
    "high": true
   },
   {
@@ -5882,7 +5882,7 @@
   {
    "id": "A5053942121",
    "name": "Đặng Văn Thành",
-   "rank": 1829,
+   "rank": 1830,
    "works": 85,
    "units": 4,
    "same": 1,
@@ -5960,7 +5960,7 @@
   {
    "id": "A5101588168",
    "name": "Anh Tuan Pham",
-   "rank": 188,
+   "rank": 187,
    "works": 32,
    "units": 1,
    "same": 7,
@@ -5986,7 +5986,7 @@
   {
    "id": "A5101435184",
    "name": "Hoa Thi Nguyen",
-   "rank": 1927,
+   "rank": 1928,
    "works": 24,
    "units": 1,
    "same": 11,
@@ -6012,7 +6012,7 @@
   {
    "id": "A5104347996",
    "name": "Nguyễn Văn Sáng",
-   "rank": 5787,
+   "rank": 5788,
    "works": 23,
    "units": 2,
    "same": 4,
@@ -6036,22 +6036,9 @@
    "high": true
   },
   {
-   "id": "A5102006834",
-   "name": "Thùy Linh Nguyễn",
-   "rank": 1424,
-   "works": 78,
-   "units": 1,
-   "same": 8,
-   "H": 0.4,
-   "fld3": 0.19,
-   "risk": 3.7,
-   "reviewed": false,
-   "high": true
-  },
-  {
    "id": "A5041168486",
    "name": "Thanh Van Nguyen",
-   "rank": 2012,
+   "rank": 2011,
    "works": 19,
    "units": 1,
    "same": 17,
@@ -6096,6 +6083,19 @@
    "same": 3,
    "H": 0.32,
    "fld3": 0.21,
+   "risk": 3.69,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5102006834",
+   "name": "Thùy Linh Nguyễn",
+   "rank": 1424,
+   "works": 78,
+   "units": 1,
+   "same": 8,
+   "H": 0.4,
+   "fld3": 0.19,
    "risk": 3.69,
    "reviewed": false,
    "high": true
@@ -6233,7 +6233,7 @@
   {
    "id": "A5084799680",
    "name": "Thanh Ngoc Nguyen",
-   "rank": 3612,
+   "rank": 3613,
    "works": 28,
    "units": 2,
    "same": 6,
@@ -6337,7 +6337,7 @@
   {
    "id": "A5071547141",
    "name": "Do Mai Nguyen",
-   "rank": 4866,
+   "rank": 4867,
    "works": 38,
    "units": 3,
    "same": 2,
@@ -6389,7 +6389,7 @@
   {
    "id": "A5101899516",
    "name": "Nguyễn Thị Kim Cúc",
-   "rank": 2370,
+   "rank": 2371,
    "works": 53,
    "units": 2,
    "same": 3,
@@ -6584,7 +6584,7 @@
   {
    "id": "A5033184121",
    "name": "Nguyễn Văn Hạnh",
-   "rank": 397,
+   "rank": 398,
    "works": 52,
    "units": 2,
    "same": 2,
@@ -6675,7 +6675,7 @@
   {
    "id": "A5041122573",
    "name": "Ngọc Tuấn Nguyễn",
-   "rank": 1724,
+   "rank": 1725,
    "works": 89,
    "units": 2,
    "same": 4,
@@ -6803,19 +6803,6 @@
    "high": true
   },
   {
-   "id": "A5116479883",
-   "name": "Nguyễn Thị Thu Hương",
-   "rank": 2404,
-   "works": 65,
-   "units": 4,
-   "same": 14,
-   "H": 0.13,
-   "fld3": 0,
-   "risk": 3.51,
-   "reviewed": false,
-   "high": true
-  },
-  {
    "id": "A5101990554",
    "name": "Nguyen Thi Kim Phuong",
    "rank": 1472,
@@ -6868,6 +6855,19 @@
    "high": true
   },
   {
+   "id": "A5116479883",
+   "name": "Nguyễn Thị Thu Hương",
+   "rank": 2404,
+   "works": 65,
+   "units": 4,
+   "same": 14,
+   "H": 0.13,
+   "fld3": 0,
+   "risk": 3.5,
+   "reviewed": false,
+   "high": true
+  },
+  {
    "id": "A5119564603",
    "name": "Phi Long Nguyen",
    "rank": 3398,
@@ -6883,7 +6883,7 @@
   {
    "id": "A5025699088",
    "name": "Nguyễn Thị",
-   "rank": 5141,
+   "rank": 5142,
    "works": 49,
    "units": 1,
    "same": 8,
@@ -6959,19 +6959,6 @@
    "high": true
   },
   {
-   "id": "A5005696632",
-   "name": "Phuong-Thao Tran",
-   "rank": 1809,
-   "works": 40,
-   "units": 1,
-   "same": 6,
-   "H": 0.33,
-   "fld3": 0.27,
-   "risk": 3.49,
-   "reviewed": false,
-   "high": true
-  },
-  {
    "id": "A5015318434",
    "name": "Tấn Khanh Nguyễn",
    "rank": null,
@@ -6981,6 +6968,19 @@
    "H": 0.34,
    "fld3": 0.3,
    "risk": 3.49,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5005696632",
+   "name": "Phuong-Thao Tran",
+   "rank": 1809,
+   "works": 40,
+   "units": 1,
+   "same": 6,
+   "H": 0.33,
+   "fld3": 0.27,
+   "risk": 3.48,
    "reviewed": false,
    "high": true
   },
@@ -7026,7 +7026,7 @@
   {
    "id": "A5052479268",
    "name": "Trần Đình Trung",
-   "rank": 2368,
+   "rank": 2370,
    "works": 51,
    "units": 3,
    "same": 1,
@@ -7052,7 +7052,7 @@
   {
    "id": "A5100709069",
    "name": "Tiến Dũng Nguyễn",
-   "rank": 2680,
+   "rank": 2681,
    "works": 67,
    "units": 1,
    "same": 16,
@@ -7065,7 +7065,7 @@
   {
    "id": "A5075895158",
    "name": "Nguyen Thanh Hoai Nam",
-   "rank": 2265,
+   "rank": 2266,
    "works": 166,
    "units": 4,
    "same": 1,
@@ -7091,7 +7091,7 @@
   {
    "id": "A5100670952",
    "name": "Thị Thu Hương Phạm",
-   "rank": 1206,
+   "rank": 1207,
    "works": 63,
    "units": 4,
    "same": 3,
@@ -7182,7 +7182,7 @@
   {
    "id": "A5076838913",
    "name": "Tuyet Thi Anh Nguyen",
-   "rank": 2041,
+   "rank": 2040,
    "works": 32,
    "units": 2,
    "same": 5,
@@ -7325,7 +7325,7 @@
   {
    "id": "A5103042703",
    "name": "Luan Minh Nguyen",
-   "rank": 1597,
+   "rank": 1598,
    "works": 34,
    "units": 2,
    "same": 1,
@@ -7344,6 +7344,19 @@
    "same": 10,
    "H": 0.31,
    "fld3": 0.19,
+   "risk": 3.41,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5021712504",
+   "name": "Do Van Tu",
+   "rank": 1543,
+   "works": 65,
+   "units": 2,
+   "same": 1,
+   "H": 0.38,
+   "fld3": 0.26,
    "risk": 3.41,
    "reviewed": false,
    "high": true
@@ -7383,19 +7396,6 @@
    "same": 7,
    "H": 0.41,
    "fld3": 0.18,
-   "risk": 3.4,
-   "reviewed": false,
-   "high": true
-  },
-  {
-   "id": "A5021712504",
-   "name": "Do Van Tu",
-   "rank": 1542,
-   "works": 65,
-   "units": 2,
-   "same": 1,
-   "H": 0.38,
-   "fld3": 0.26,
    "risk": 3.4,
    "reviewed": false,
    "high": true
@@ -7468,7 +7468,7 @@
   {
    "id": "A5094364950",
    "name": "Hai Pham-The",
-   "rank": 889,
+   "rank": 890,
    "works": 105,
    "units": 3,
    "same": 1,
@@ -7546,7 +7546,7 @@
   {
    "id": "A5023867815",
    "name": "Nguyen The Vinh",
-   "rank": 2011,
+   "rank": 2010,
    "works": 31,
    "units": 1,
    "same": 16,
@@ -7572,7 +7572,7 @@
   {
    "id": "A5007294395",
    "name": "Nguyễn Văn Sáng",
-   "rank": 1827,
+   "rank": 1828,
    "works": 52,
    "units": 2,
    "same": 4,
@@ -7598,7 +7598,7 @@
   {
    "id": "A5015321173",
    "name": "Nguyễn Thị Phương Lan",
-   "rank": 1321,
+   "rank": 1318,
    "works": 81,
    "units": 2,
    "same": 7,
@@ -7624,7 +7624,7 @@
   {
    "id": "A5041369109",
    "name": "Bùi Thị Phương Thuý",
-   "rank": 662,
+   "rank": 661,
    "works": 76,
    "units": 2,
    "same": 2,
@@ -7637,7 +7637,7 @@
   {
    "id": "A5072707226",
    "name": "Chanh-Nghiem Nguyen",
-   "rank": 4411,
+   "rank": 4412,
    "works": 53,
    "units": 2,
    "same": 1,
@@ -7676,7 +7676,7 @@
   {
    "id": "A5101505528",
    "name": "Hoang C. Nguyen",
-   "rank": 2003,
+   "rank": 2002,
    "works": 26,
    "units": 2,
    "same": 1,
@@ -7721,19 +7721,6 @@
    "same": 1,
    "H": 0.4,
    "fld3": 0.17,
-   "risk": 3.33,
-   "reviewed": false,
-   "high": true
-  },
-  {
-   "id": "A5100753115",
-   "name": "Anh Tuấn Lê",
-   "rank": 1213,
-   "works": 127,
-   "units": 2,
-   "same": 19,
-   "H": 0.17,
-   "fld3": 0,
    "risk": 3.33,
    "reviewed": false,
    "high": true
@@ -7817,9 +7804,22 @@
    "high": true
   },
   {
+   "id": "A5100753115",
+   "name": "Anh Tuấn Lê",
+   "rank": 1214,
+   "works": 127,
+   "units": 2,
+   "same": 19,
+   "H": 0.17,
+   "fld3": 0,
+   "risk": 3.32,
+   "reviewed": false,
+   "high": true
+  },
+  {
    "id": "A5103275525",
    "name": "Huong Thi Thu Tran",
-   "rank": 2793,
+   "rank": 2792,
    "works": 27,
    "units": 1,
    "same": 5,
@@ -7910,7 +7910,7 @@
   {
    "id": "A5112735183",
    "name": "Duc-Hung Nguyen",
-   "rank": 4764,
+   "rank": 4765,
    "works": 22,
    "units": 3,
    "same": 3,
@@ -7962,7 +7962,7 @@
   {
    "id": "A5100694911",
    "name": "T. Hien Nguyen",
-   "rank": 1790,
+   "rank": 1791,
    "works": 48,
    "units": 1,
    "same": 2,
@@ -8040,7 +8040,7 @@
   {
    "id": "A5079601153",
    "name": "Phuong Anh Nguyen",
-   "rank": 1832,
+   "rank": 1833,
    "works": 51,
    "units": 1,
    "same": 6,
@@ -8066,7 +8066,7 @@
   {
    "id": "A5101917646",
    "name": "Hoang-Dung Nguyen",
-   "rank": 3900,
+   "rank": 3902,
    "works": 28,
    "units": 1,
    "same": 7,
@@ -8157,7 +8157,7 @@
   {
    "id": "A5108739942",
    "name": "Pham Thi Thu Thuy",
-   "rank": 2550,
+   "rank": 2551,
    "works": 47,
    "units": 4,
    "same": 2,
@@ -8181,19 +8181,6 @@
    "high": true
   },
   {
-   "id": "A5000914178",
-   "name": "Hoang Nguyen",
-   "rank": null,
-   "works": 38,
-   "units": 1,
-   "same": 9,
-   "H": 0.38,
-   "fld3": 0.14,
-   "risk": 3.25,
-   "reviewed": false,
-   "high": true
-  },
-  {
    "id": "A5087774518",
    "name": "Nguyen Quoc Anh",
    "rank": 2416,
@@ -8209,7 +8196,7 @@
   {
    "id": "A5017044953",
    "name": "Thi Thanh Huong Tran",
-   "rank": 4303,
+   "rank": 4304,
    "works": 20,
    "units": 1,
    "same": 3,
@@ -8222,7 +8209,7 @@
   {
    "id": "A5100777966",
    "name": "Huong Thi Thanh Nguyen",
-   "rank": 1037,
+   "rank": 1038,
    "works": 60,
    "units": 1,
    "same": 10,
@@ -8241,6 +8228,19 @@
    "same": 12,
    "H": 0.35,
    "fld3": 0.1,
+   "risk": 3.24,
+   "reviewed": false,
+   "high": true
+  },
+  {
+   "id": "A5000914178",
+   "name": "Hoang Nguyen",
+   "rank": null,
+   "works": 38,
+   "units": 1,
+   "same": 9,
+   "H": 0.38,
+   "fld3": 0.14,
    "risk": 3.24,
    "reviewed": false,
    "high": true
@@ -8430,7 +8430,7 @@
   {
    "id": "A5113736229",
    "name": "Ngoc Le",
-   "rank": 5424,
+   "rank": 5425,
    "works": 26,
    "units": 2,
    "same": 2,
@@ -8534,7 +8534,7 @@
   {
    "id": "A5038872232",
    "name": "Trà Văn Tung",
-   "rank": 1982,
+   "rank": 1981,
    "works": 35,
    "units": 1,
    "same": 2,
@@ -8612,7 +8612,7 @@
   {
    "id": "A5112973963",
    "name": "Nguyễn Thị Tình",
-   "rank": 3757,
+   "rank": 3758,
    "works": 21,
    "units": 2,
    "same": 1,
@@ -8664,25 +8664,12 @@
   {
    "id": "A5032470329",
    "name": "Trần Thị Thu Hiền",
-   "rank": 2361,
+   "rank": 2363,
    "works": 47,
    "units": 1,
    "same": 3,
    "H": 0.49,
    "fld3": 0.19,
-   "risk": 3.15,
-   "reviewed": false,
-   "high": true
-  },
-  {
-   "id": "A5111295052",
-   "name": "Thuy Van Nguyen",
-   "rank": 4138,
-   "works": 24,
-   "units": 1,
-   "same": 8,
-   "H": 0.32,
-   "fld3": 0.2,
    "risk": 3.15,
    "reviewed": false,
    "high": true
@@ -8792,9 +8779,22 @@
    "high": true
   },
   {
+   "id": "A5111295052",
+   "name": "Thuy Van Nguyen",
+   "rank": 4138,
+   "works": 24,
+   "units": 1,
+   "same": 8,
+   "H": 0.32,
+   "fld3": 0.2,
+   "risk": 3.14,
+   "reviewed": false,
+   "high": true
+  },
+  {
    "id": "A5101731998",
    "name": "Nguyễn Minh Tuấn",
-   "rank": 1774,
+   "rank": 1775,
    "works": 53,
    "units": 1,
    "same": 12,
@@ -8820,7 +8820,7 @@
   {
    "id": "A5021670064",
    "name": "Hường Thị Thu Phùng",
-   "rank": 1035,
+   "rank": 1037,
    "works": 62,
    "units": 2,
    "same": 1,
@@ -8922,6 +8922,19 @@
    "high": true
   },
   {
+   "id": "A5090687073",
+   "name": "Anh Van Pham",
+   "rank": 1423,
+   "works": 72,
+   "units": 4,
+   "same": 3,
+   "H": 0.29,
+   "fld3": 0.1,
+   "risk": 3.1,
+   "reviewed": false,
+   "high": true
+  },
+  {
    "id": "A5060713170",
    "name": "Nguyen Thi Le",
    "rank": 6816,
@@ -8944,19 +8957,6 @@
    "H": 0.46,
    "fld3": 0.13,
    "risk": 3.1,
-   "reviewed": false,
-   "high": true
-  },
-  {
-   "id": "A5090687073",
-   "name": "Anh Van Pham",
-   "rank": 1423,
-   "works": 72,
-   "units": 4,
-   "same": 3,
-   "H": 0.29,
-   "fld3": 0.1,
-   "risk": 3.09,
    "reviewed": false,
    "high": true
   },
@@ -9015,7 +9015,7 @@
   {
    "id": "A5073923084",
    "name": "Truong Giang Nguyen",
-   "rank": 3745,
+   "rank": 3746,
    "works": 36,
    "units": 1,
    "same": 5,
@@ -9104,6 +9104,19 @@
    "high": true
   },
   {
+   "id": "A5023935150",
+   "name": "Phạm Hoàng Sơn Hưng",
+   "rank": 3724,
+   "works": 46,
+   "units": 3,
+   "same": 1,
+   "H": 0.3,
+   "fld3": 0.21,
+   "risk": 3.07,
+   "reviewed": false,
+   "high": true
+  },
+  {
    "id": "A5051771032",
    "name": "Minh Hai Ngo",
    "rank": 976,
@@ -9119,7 +9132,7 @@
   {
    "id": "A5050442504",
    "name": "Van Quy Nguyen",
-   "rank": 1989,
+   "rank": 1988,
    "works": 33,
    "units": 2,
    "same": 3,
@@ -9152,19 +9165,6 @@
    "H": 0.49,
    "fld3": 0.17,
    "risk": 3.07,
-   "reviewed": false,
-   "high": true
-  },
-  {
-   "id": "A5023935150",
-   "name": "Phạm Hoàng Sơn Hưng",
-   "rank": 3724,
-   "works": 46,
-   "units": 3,
-   "same": 1,
-   "H": 0.3,
-   "fld3": 0.21,
-   "risk": 3.06,
    "reviewed": false,
    "high": true
   },
@@ -9286,19 +9286,6 @@
    "high": true
   },
   {
-   "id": "A5100610142",
-   "name": "Thuy Thi Nguyen",
-   "rank": null,
-   "works": 51,
-   "units": 2,
-   "same": 17,
-   "H": 0.2,
-   "fld3": 0,
-   "risk": 3.04,
-   "reviewed": false,
-   "high": true
-  },
-  {
    "id": "A5068820258",
    "name": "Đỗ Hùng Trần",
    "rank": 4902,
@@ -9377,6 +9364,19 @@
    "high": true
   },
   {
+   "id": "A5100610142",
+   "name": "Thuy Thi Nguyen",
+   "rank": null,
+   "works": 51,
+   "units": 2,
+   "same": 17,
+   "H": 0.2,
+   "fld3": 0,
+   "risk": 3.03,
+   "reviewed": false,
+   "high": true
+  },
+  {
    "id": "A5101976916",
    "name": "Tai Tan Tran",
    "rank": 688,
@@ -9418,7 +9418,7 @@
   {
    "id": "A5108312868",
    "name": "Thị Mỹ Duyên Nguyễn",
-   "rank": 6652,
+   "rank": 6653,
    "works": 16,
    "units": 2,
    "same": 2,
@@ -9522,7 +9522,7 @@
   {
    "id": "A5102937502",
    "name": "Huu Cong Nguyen",
-   "rank": 2328,
+   "rank": 2329,
    "works": 34,
    "units": 3,
    "same": 2,
@@ -9626,7 +9626,7 @@
   {
    "id": "A5075403721",
    "name": "Duc Hung Nguyen",
-   "rank": 3541,
+   "rank": 3543,
    "works": 22,
    "units": 2,
    "same": 3,
@@ -9691,7 +9691,7 @@
   {
    "id": "A5083902869",
    "name": "Nguyễn Văn Nghĩa",
-   "rank": 319,
+   "rank": 320,
    "works": 64,
    "units": 2,
    "same": 5,
@@ -9717,7 +9717,7 @@
   {
    "id": "A5044237323",
    "name": "Đỗ Trung Dũng",
-   "rank": 2058,
+   "rank": 2057,
    "works": 44,
    "units": 2,
    "same": 2,
@@ -9782,7 +9782,7 @@
   {
    "id": "A5009585629",
    "name": "Quoc-Thai Nguyen",
-   "rank": 1948,
+   "rank": 1947,
    "works": 27,
    "units": 1,
    "same": 4,
@@ -9821,7 +9821,7 @@
   {
    "id": "A5101866340",
    "name": "Thi Hoai Thu Nguyen",
-   "rank": 2329,
+   "rank": 2328,
    "works": 53,
    "units": 2,
    "same": 7,
@@ -9853,19 +9853,6 @@
    "same": 1,
    "H": 0.25,
    "fld3": 0.15,
-   "risk": 2.96,
-   "reviewed": false,
-   "high": true
-  },
-  {
-   "id": "A5101892312",
-   "name": "Tinh Van Nguyen",
-   "rank": null,
-   "works": 22,
-   "units": 1,
-   "same": 6,
-   "H": 0.33,
-   "fld3": 0.22,
    "risk": 2.96,
    "reviewed": false,
    "high": true
@@ -9923,6 +9910,19 @@
    "high": true
   },
   {
+   "id": "A5101892312",
+   "name": "Tinh Van Nguyen",
+   "rank": null,
+   "works": 22,
+   "units": 1,
+   "same": 6,
+   "H": 0.33,
+   "fld3": 0.22,
+   "risk": 2.95,
+   "reviewed": false,
+   "high": true
+  },
+  {
    "id": "A5006523848",
    "name": "Châu Nguyễn Minh",
    "rank": 7573,
@@ -9951,7 +9951,7 @@
   {
    "id": "A5110833948",
    "name": "Thị Hồng Trần",
-   "rank": 7158,
+   "rank": 7159,
    "works": 16,
    "units": 1,
    "same": 4,
@@ -10211,7 +10211,7 @@
   {
    "id": "A5038579761",
    "name": "Nguyễn Văn Phúc",
-   "rank": 4030,
+   "rank": 4031,
    "works": 42,
    "units": 1,
    "same": 6,
@@ -10237,7 +10237,7 @@
   {
    "id": "A5061610263",
    "name": "Van Thi Thanh Ho",
-   "rank": 2549,
+   "rank": 2550,
    "works": 48,
    "units": 1,
    "same": 1,
@@ -10354,7 +10354,7 @@
   {
    "id": "A5079341310",
    "name": "Nguyễn Văn Tuyên",
-   "rank": 3560,
+   "rank": 3561,
    "works": 50,
    "units": 2,
    "same": 7,
@@ -10367,7 +10367,7 @@
   {
    "id": "A5101922085",
    "name": "Nguyễn Thị Huế",
-   "rank": 5396,
+   "rank": 5397,
    "works": 33,
    "units": 1,
    "same": 11,
@@ -10406,7 +10406,7 @@
   {
    "id": "A5112653500",
    "name": "Hong Quang Nguyen",
-   "rank": 2605,
+   "rank": 2606,
    "works": 18,
    "units": 2,
    "same": 6,
@@ -10536,7 +10536,7 @@
   {
    "id": "A5010233171",
    "name": "Minh Hà Nguyễn",
-   "rank": 5790,
+   "rank": 5791,
    "works": 28,
    "units": 1,
    "same": 3,
@@ -10614,7 +10614,7 @@
   {
    "id": "A5080391526",
    "name": "Huong Thi Trinh",
-   "rank": 1914,
+   "rank": 1915,
    "works": 24,
    "units": 1,
    "same": 2,
@@ -10705,7 +10705,7 @@
   {
    "id": "A5052039993",
    "name": "Thi Huong Nguyen",
-   "rank": 4605,
+   "rank": 4606,
    "works": 41,
    "units": 2,
    "same": 12,
@@ -10718,7 +10718,7 @@
   {
    "id": "A5043579443",
    "name": "Văn Duy Nguyễn",
-   "rank": 985,
+   "rank": 986,
    "works": 40,
    "units": 1,
    "same": 2,
@@ -10731,7 +10731,7 @@
   {
    "id": "A5052600395",
    "name": "Nguyen Thi Van Anh",
-   "rank": 5402,
+   "rank": 5403,
    "works": 22,
    "units": 1,
    "same": 12,
@@ -10835,7 +10835,7 @@
   {
    "id": "A5019323825",
    "name": "Nguyen Thanh Hoan",
-   "rank": 2019,
+   "rank": 2018,
    "works": 32,
    "units": 2,
    "same": 1,
@@ -10900,7 +10900,7 @@
   {
    "id": "A5102865837",
    "name": "Huong Thu Nguyen",
-   "rank": 1211,
+   "rank": 1212,
    "works": 17,
    "units": 2,
    "same": 10,
@@ -10939,7 +10939,7 @@
   {
    "id": "A5101958583",
    "name": "Phạm Văn Tuấn",
-   "rank": 2018,
+   "rank": 2017,
    "works": 44,
    "units": 1,
    "same": 5,
@@ -10991,7 +10991,7 @@
   {
    "id": "A5007516044",
    "name": "Cao Thi Thanh",
-   "rank": 4012,
+   "rank": 4013,
    "works": 23,
    "units": 1,
    "same": 1,
@@ -11004,7 +11004,7 @@
   {
    "id": "A5071401582",
    "name": "Duong Cao Phan",
-   "rank": 1960,
+   "rank": 1959,
    "works": 18,
    "units": 2,
    "same": 1,

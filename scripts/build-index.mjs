@@ -55,7 +55,9 @@ const POS = existsSync("data/raw/_positions.json") && !process.env.NO_POSITIONS 
 // Tác giả cuối (không phải đầu hay liên hệ) của công trình có từ minAuthors tác giả: đánh dấu last = 1; pro-score.mjs chỉ tính vào chỉ báo "Chủ đạo" ở nhóm ngành có quy ước (data/last-author-disciplines.json). Không đổi vai trò "lead" dùng cho điểm công trình HĐGSNN.
 const LAST_IND = rd("data/last-author-disciplines.json").minAuthors, LAST_MIN = 0;
 const withPos = (w) => { const p = POS[w.id.split("-").pop()], q = p?.a?.[w.id.split("-")[0]]; return q ? { ...w, role: /[fc]/.test(q) || (LAST_MIN > 0 && q.includes("l") && p.n >= LAST_MIN) ? "lead" : "co", corr: p.c, ...(LAST_IND > 0 && q.includes("l") && !/[fc]/.test(q) && p.n >= LAST_IND ? { last: 1 } : {}) } : w; };
-const rawWorks = R.works.map((w) => ({ ...withPos(w), authorId: alias.get(w.authorId) ?? w.authorId })).filter((w) => {
+// corrections.assignWorks: { "<mã công trình>": "<mã tác giả đích>" }: chuyển một công trình khỏi hồ sơ OpenAlex gộp nhiều người sang hồ sơ đúng người (vai trò tác giả vẫn tra theo mã gốc)
+const AW = C.assignWorks ?? {};
+const rawWorks = R.works.map((w) => ({ ...withPos(w), authorId: alias.get(AW[w.id] ?? w.authorId) ?? AW[w.id] ?? w.authorId })).filter((w) => {
   if (!live.has(w.authorId) || excl.has(w.id)) return false;
   const k = `${w.authorId}|${w.id.split("-").pop()}`; if (seen.has(k)) return false; seen.add(k); return true;
 });
