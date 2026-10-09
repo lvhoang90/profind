@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Icon, type IconName } from "./icons";
 import { useAccount, api } from "./accountStore";
 
-const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["ra-soat", "Rà soát gộp", "check"], ["gan-nham", "Bài gán nhầm", "check"], ["nghi-gop", "Nghi gộp nhiều người", "check"], ["top2", "Top 2% chưa gắn", "check"], ["don-vi-tg", "Đơn vị tác giả", "building"], ["don-vi", "Đơn vị mới", "building"]];
+const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["nghi-gop", "Nghi gộp nhiều người", "check"], ["top2", "Top 2% chưa gắn", "check"], ["don-vi-tg", "Đơn vị tác giả", "building"]];
 const n0 = (n: number) => new Intl.NumberFormat("vi-VN").format(Math.round(n));
 const pct = (a: number, b: number) => (b > 0 ? `${Math.round((a / b) * 100)}%` : "–");
 const delta = (a: number, b: number) => (b > 0 ? `${a >= b ? "▲" : "▼"} ${Math.abs(Math.round(((a - b) / b) * 100))}% so với 7 ngày trước` : a > 0 ? "mới có dữ liệu" : "");
@@ -34,7 +34,7 @@ export function AdminPage({ tab }: { tab: string }) {
     <article className="dash adm-page">
       <header className="dash-head"><div className="av" aria-hidden="true"><Icon n="grid" size={36} /></div><div className="dh-main"><h1>Quản trị ProFind</h1><p className="meta">{user.email} · số liệu theo giờ Việt Nam, khoảng 14 ngày gần nhất</p></div><div className="dh-act"><a className="ghost-link light" href="#/tai-khoan">← Không gian của tôi</a></div></header>
       <nav className="tabs adm-tabs" aria-label="Quản trị">{TABS.map(([k, l, ic]) => <a key={k} href={`#/quan-tri${k ? "/" + k : ""}`} aria-current={cur === k ? "page" : undefined}><Icon n={ic} size={16} />{l}</a>)}</nav>
-      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}{cur === "ra-soat" && <Recheck />}{cur === "gan-nham" && <Misattr />}{cur === "nghi-gop" && <MergeRisk />}{cur === "top2" && <Top2Review />}{cur === "don-vi-tg" && <AuthorUnits />}{cur === "don-vi" && <Units />}
+      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}{cur === "nghi-gop" && <MergeRisk />}{cur === "top2" && <Top2Review />}{cur === "don-vi-tg" && <AuthorUnits />}
     </article>
   );
 }
@@ -394,155 +394,6 @@ function Merger() {
     </>
   );
 }
-type UCand = { id: string; name: string; en: string | null; type: string; city: string | null; phrase: string; works: number; authors: number; vnShare: number; flags: string[]; topAuthors: { id: string; name: string; orcid: string | null; n: number }[]; samples: string[] };
-type UDec = { id: string; d: string };
-const tidyAff = (x: string) => x.replace(/^a:\d+:\{i:\d+;s:\d+:"(.*)";\}$/, "$1"); // một số chuỗi cơ quan trong OpenAlex bị lưu dạng PHP-serialized
-const UTYPE: Record<string, string> = { institute: "Viện", "public-univ": "ĐH công lập", "private-univ": "ĐH tư thục", college: "Cao đẳng", "university-unclassified": "Đại học/Học viện", other: "Khác" };
-function Units() {
-  const [units, setUnits] = useState<UCand[] | null>(null), [err, setErr] = useState(""), [v, setV] = useState(0), [out, setOut] = useState(""), [view, setView] = useState<"todo" | "approve" | "reject" | "skip">("todo"), [pick, setPick] = useState<Set<string>>(new Set()), [busy, setBusy] = useState(false), [msg, setMsg] = useState(""), [open, setOpen] = useState<string | null>(null), [cur, setCur] = useState(0);
-  const { d } = useGet<{ units: UDec[] }>("admin-claims", `&un=${v}`);
-  useEffect(() => { fetch("/data/_aff-review.json", { cache: "no-store" }).then((r) => r.json()).then((j: { units: UCand[] }) => setUnits(j.units)).catch(() => setErr("Không tải được danh sách đơn vị.")); }, []);
-  const dec = useMemo(() => new Map((d?.units ?? []).map((x) => [x.id, x.d])), [d]);
-  const decideMany = async (ids: string[], decision: string, ok: string) => { setBusy(true); setMsg(""); try { await api("admin-claim-unit", { items: ids.map((id) => ({ id, decision })) }); setMsg(ok); setPick(new Set()); setCur(0); setV((x) => x + 1); } catch (e) { setErr((e as Error).message); } finally { setBusy(false); } };
-  const toggle = (id: string) => setPick((s) => { const n = new Set(s); if (n.has(id)) n.delete(id); else n.add(id); return n; });
-  const onKey = (e: React.KeyboardEvent, id: string, i: number, n: number) => {
-    if (e.target instanceof HTMLElement && (e.target.tagName === "A" || e.target.tagName === "BUTTON")) return;
-    if (e.key === " " || e.key === "x") { e.preventDefault(); toggle(id); }
-    else if (e.key === "ArrowDown" || e.key === "j") { e.preventDefault(); setCur(Math.min(n - 1, i + 1)); document.getElementById(`un-${i + 1}`)?.focus(); }
-    else if (e.key === "ArrowUp" || e.key === "k") { e.preventDefault(); setCur(Math.max(0, i - 1)); document.getElementById(`un-${i - 1}`)?.focus(); }
-  };
-  if (err) return <p className="banner demo" role="alert">{err}</p>;
-  if (!units) return <p className="empty" role="status">Đang tải…</p>;
-  const cnt = { todo: units.filter((u) => !dec.has(u.id)).length, approve: 0, reject: 0, skip: 0 };
-  for (const u of units) { const x = dec.get(u.id); if (x === "approve" || x === "reject" || x === "skip") cnt[x]++; }
-  const list = units.filter((u) => (view === "todo" ? !dec.has(u.id) : dec.get(u.id) === view)), clean = list.filter((u) => !u.flags.length), approved = units.filter((u) => dec.get(u.id) === "approve").map((u) => u.id);
-  const done = units.length - cnt.todo, pct = units.length ? Math.round((done / units.length) * 100) : 0, n = pick.size;
-  const TABS: ["todo" | "approve" | "reject" | "skip", string][] = [["todo", "Chưa duyệt"], ["approve", "Đã duyệt nạp"], ["reject", "Đã loại"], ["skip", "Để sau"]];
-  return (
-    <>
-      <section className="card spbar">
-        <h2>Đơn vị chưa có dữ liệu: duyệt nạp theo chuỗi cơ quan <small className="meta">{done}/{units.length} đã xử lý ({pct}%)</small></h2>
-        <div className="spprog" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}><i style={{ width: `${pct}%` }} /></div>
-        <p className="meta">{units.length} đơn vị có từ 20 bài trở lên ghi tên đơn vị trong chuỗi cơ quan trên OpenAlex nhưng chưa có bản ghi đơn vị. Chỉ nạp tác giả có <b>chính chuỗi cơ quan của mình</b> chứa tên đơn vị (từ 2 bài hoặc có ORCID). Huy hiệu vàng là cảnh báo tên có thể trùng đơn vị khác: xem chuỗi mẫu trước khi duyệt. Phím tắt: ↑ ↓ (j k) di chuyển, Space (x) tick.</p>
-        <div className="sptabs">{TABS.map(([k, l]) => <button key={k} className={view === k ? "on" : ""} onClick={() => { setView(k); setPick(new Set()); setCur(0); }}><b>{l}</b><small>{cnt[k]} đơn vị</small></button>)}</div>
-        <p className="sprow2"><button onClick={() => setOut(JSON.stringify({ ids: approved }))}>Xuất danh sách đã duyệt ({approved.length})</button></p>
-        {msg && <p className="banner" role="status"><Icon n="check" />{msg}</p>}
-        {out && <><p className="meta">Sao chép gửi cho trợ lý để nạp:</p><textarea readOnly rows={3} value={out} onFocus={(e) => e.currentTarget.select()} style={{ width: "100%" }} /></>}
-      </section>
-      {view === "todo" && list.length > 0 && <section className="card spact">
-        <p className="sprow2"><span className="meta">Tick nhanh:</span>
-          <button disabled={busy} onClick={() => setPick(new Set(clean.map((u) => u.id)))}>Đơn vị không cảnh báo ({clean.length})</button>
-          <button disabled={busy} onClick={() => setPick(new Set(list.map((u) => u.id)))}>Tất cả ({list.length})</button>
-          <button disabled={busy} onClick={() => setPick(new Set())}>Bỏ tick</button></p>
-        <p className="sprow2">
-          <button className="primary" disabled={busy || !n} onClick={() => void decideMany([...pick], "approve", `Đã duyệt nạp ${n} đơn vị.`)}>Duyệt nạp {n} đơn vị đã tick</button>
-          <button disabled={busy || !n} onClick={() => void decideMany([...pick], "reject", `Đã loại ${n} đơn vị.`)}>Loại ({n})</button>
-          <button disabled={busy || !n} onClick={() => void decideMany([...pick], "skip", `Đã để sau ${n} đơn vị.`)}>Để sau ({n})</button></p>
-      </section>}
-      <div className="sptable" role="list">
-        {list.map((u, i) => { const on = pick.has(u.id), isOpen = open === u.id;
-          return (
-            <div key={u.id} id={`un-${i}`} role="listitem" tabIndex={0} className={`sprow urow${on ? " on" : ""}${i === cur ? " cur" : ""}${isOpen ? " open" : ""}`} onKeyDown={(e) => onKey(e, u.id, i, list.length)} onFocus={() => setCur(i)}>
-              <div className="spck">{view === "todo" ? <input type="checkbox" checked={on} onChange={() => toggle(u.id)} aria-label={`Chọn ${u.name}`} tabIndex={-1} /> : null}</div>
-              <div className="spcell spmain"><p className="spn">{u.name}</p>
-                <p className="meta sps">{UTYPE[u.type] ?? u.type}{u.city ? ` · ${u.city}` : ""}</p>
-                <p className="sps"><span className="pill">{u.works} bài</span> <span className="pill">{u.authors} tác giả</span>{u.flags.map((f) => <span key={f} className="pill warn" title={f}>⚠ {f.length > 34 ? f.slice(0, 32) + "…" : f}</span>)}</p>
-                {u.flags.length > 0 && isOpen && u.flags.map((f) => <p key={f} className="meta sps">⚠ {f}</p>)}</div>
-              <div className="spcell"><p className="meta sps"><b>Chuỗi cơ quan mẫu</b> (tìm “{u.phrase}”)</p>
-                {(isOpen ? u.samples : u.samples.slice(0, 2)).map((x) => <p key={x} className="spt">{tidyAff(x)}</p>)}</div>
-              <div className="spcell"><p className="meta sps"><b>Tác giả nhiều bài nhất</b></p>
-                <p className="spt">{u.topAuthors.slice(0, isOpen ? 12 : 5).map((a) => `${a.name} (${a.n})`).join(", ")}</p>
-                <p className="meta sps"><button className="lnk" onClick={() => setOpen(isOpen ? null : u.id)}>{isOpen ? "Thu gọn" : "Xem thêm"}</button>{view !== "todo" ? <button className="lnk" onClick={() => void decideMany([u.id], "undo", "Đã bỏ quyết định.")}>Bỏ quyết định</button> : null}</p></div>
-            </div>); })}
-      </div>
-      {list.length === 0 && <p className="meta">Không có đơn vị nào trong mục này.</p>}
-    </>
-  );
-}
-
-type RPair = SPair & { into: string; why: string };
-function SideCell({ s, full }: { s: SSide; full: boolean }) {
-  return (
-    <div className="spcell">
-      <p className="spn"><a href={`#/tac-gia/${s.id}`} target="_blank" rel="noopener">{s.name}</a> <span className={s.orcid ? "orc yes" : "orc no"} title={s.orcid ?? "Chưa có ORCID"}>{s.orcid ? "ORCID" : "không ORCID"}</span></p>
-      <p className="meta sps">{s.works} bài · {n0(s.cites)} trích dẫn · {s.years[0] ?? "?"}–{s.years[1] ?? "?"}</p>
-      {(full ? s.top : s.top.slice(0, 1)).map((t) => <p key={t.t} className="spt">{t.d ? <a href={`https://doi.org/${t.d}`} target="_blank" rel="noopener">{t.t}</a> : t.t} <small className="meta">({t.y})</small></p>)}
-    </div>
-  );
-}
-function Recheck() {
-  const [pairs, setPairs] = useState<RPair[] | null>(null), [err, setErr] = useState(""), [v, setV] = useState(0), [pick, setPick] = useState<Set<string>>(new Set()), [open, setOpen] = useState<string | null>(null), [busy, setBusy] = useState(false), [msg, setMsg] = useState(""), [view, setView] = useState<"todo" | "keep" | "split">("todo"), [out, setOut] = useState("");
-  const { d } = useGet<{ recheck: { a: string; b: string; d: string }[] }>("admin-claims", `&rk=${v}`);
-  useEffect(() => { fetch("/data/_split-recheck.json", { cache: "no-store" }).then((r) => r.json()).then((j: { pairs: RPair[] }) => setPairs(j.pairs)).catch(() => setErr("Không tải được danh sách rà soát.")); }, []);
-  const dec = useMemo(() => new Map((d?.recheck ?? []).map((x) => [pk(x.a, x.b), x.d])), [d]);
-  if (err) return <p className="banner demo" role="alert">{err}</p>;
-  if (!pairs) return <p className="empty" role="status">Đang tải…</p>;
-  const list = pairs.filter((p) => (view === "todo" ? !dec.has(pk(p.a, p.b)) : dec.get(pk(p.a, p.b)) === view)), todo = pairs.filter((p) => !dec.has(pk(p.a, p.b))).length;
-  const cnt = { keep: pairs.filter((p) => dec.get(pk(p.a, p.b)) === "keep").length, split: pairs.filter((p) => dec.get(pk(p.a, p.b)) === "split").length };
-  const send = async (items: { a: string; b: string; decision: string }[], ok: string) => { setBusy(true); setMsg(""); try { await api("admin-claim-recheck", { items }); setMsg(ok); setPick(new Set()); setV((x) => x + 1); } catch (e) { setErr((e as Error).message); } finally { setBusy(false); } };
-  const toggle = (k: string) => setPick((s) => { const n = new Set(s); if (n.has(k)) n.delete(k); else n.add(k); return n; });
-  const ticked = list.filter((p) => pick.has(pk(p.a, p.b)));
-  const save = () => send(list.map((p) => ({ a: p.a, b: p.b, decision: pick.has(pk(p.a, p.b)) ? "split" : "keep" })), `Đã lưu ${list.length} cặp: ${ticked.length} tách ra, ${list.length - ticked.length} giữ gộp.`);
-  const exportJson = () => setOut(JSON.stringify({ split: pairs.filter((p) => dec.get(pk(p.a, p.b)) === "split").map((p) => ({ into: p.into, from: p.into === p.a ? p.b : p.a })) }, null, 1));
-  const TABS: ["todo" | "keep" | "split", string, number][] = [["todo", "Chưa rà soát", todo], ["keep", "Giữ gộp", cnt.keep], ["split", "Tách ra", cnt.split]];
-  return (
-    <>
-      <section className="card spbar">
-        <h2>Rà soát lại cặp đã gộp <small className="meta">{pairs.length - todo}/{pairs.length} đã xem</small></h2>
-        <p className="meta">{pairs.length} cặp đã gộp có điểm nghi trùng 60–65 và chủ đề công trình lệch (ít từ khóa chung, ngành ít giống hoặc thiếu công trình để so). <b>Tick = TÁCH RA</b> (hai hồ sơ trở lại độc lập); không tick = giữ gộp. Điểm thấp và chủ đề lệch chưa chắc là hai người: một số cặp là bản dịch của cùng bài viết.</p>
-        <div className="sptabs" style={{ gridTemplateColumns: "repeat(3,1fr)" }}>{TABS.map(([k, l, n]) => <button key={k} className={view === k ? "on" : ""} onClick={() => { setView(k); setPick(new Set()); }}><b>{l}</b><small>{n} cặp</small></button>)}</div>
-        <p className="sprow2"><button onClick={exportJson}>Xuất danh sách cần tách ({cnt.split})</button></p>
-        {msg && <p className="banner" role="status"><Icon n="check" />{msg}</p>}
-        {out && <><p className="meta">Sao chép đoạn này gửi cho trợ lý để tách khỏi <code>data/corrections.json</code>:</p><textarea readOnly rows={8} value={out} onFocus={(e) => e.currentTarget.select()} style={{ width: "100%" }} /></>}
-      </section>
-      {view === "todo" && list.length > 0 && <section className="card spact"><p className="sprow2">
-        <button disabled={busy} onClick={() => setPick(new Set(list.map((p) => pk(p.a, p.b))))}>Tick tất cả (tách hết)</button><button disabled={busy} onClick={() => setPick(new Set())}>Bỏ tick</button>
-        <button className="primary" disabled={busy} onClick={() => void save()}>Lưu: tách {ticked.length}, giữ gộp {list.length - ticked.length}</button></p></section>}
-      <div className="sptable" role="list">
-        {list.map((p) => { const k = pk(p.a, p.b), on = pick.has(k);
-          return (
-            <div key={k} role="listitem" className={`sprow${on ? " on" : ""}${open === k ? " open" : ""}`}>
-              <div className="spck">{view === "todo" ? <input type="checkbox" checked={on} onChange={() => toggle(k)} aria-label={`Tách ra: ${p.name}`} /> : null}</div>
-              <div className="spcell spmain"><p className="spn">{p.name}</p>
-                <p className="meta sps"><span className={`mscore s${p.band}`}>{p.score}</span> {p.shared[0]}</p>
-                <p className="meta sps">⚠ {p.why}</p>
-                <p className="meta sps"><button className="lnk" onClick={() => setOpen(open === k ? null : k)}>{open === k ? "Thu gọn" : "3 công trình"}</button>{view !== "todo" ? <button className="lnk" onClick={() => void send([{ a: p.a, b: p.b, decision: "undo" }], "Đã bỏ quyết định.")}>Bỏ quyết định</button> : null}</p></div>
-              <SideCell s={p.A} full={open === k} /><SideCell s={p.B} full={open === k} />
-            </div>); })}
-      </div>
-      {list.length === 0 && <p className="meta">Không có cặp nào trong mục này.</p>}
-    </>
-  );
-}
-
-type MX = { kind: "A" | "B"; author: string; name: string; wid: string; doi: string | null; title: string; journal: string | null; year: number; score: number | null; role: string; why: string; nWorks: number };
-/** Công trình nghi gán nhầm người trùng tên (scripts/find-misattributed.mjs): loại = ẩn ngay + đưa vào excludeWorks khi dựng; giữ = không hỏi lại. */
-function Misattr() {
-  const [items, setItems] = useState<MX[] | null>(null), [err, setErr] = useState(""), [v, setV] = useState(0), [view, setView] = useState<"todo" | "exclude" | "keep">("todo"), [kind, setKind] = useState<"A" | "B">("A"), [page, setPage] = useState(0), [msg, setMsg] = useState(""), [loc, setLoc] = useState<Record<string, string>>({});
-  const { d } = useGet<{ mx: Record<string, string>; xw: { authorId: string; workId: string }[] }>("admin-claims", `&mx=${v}`);
-  useEffect(() => { fetch("/data/_misattributed.json", { cache: "no-store" }).then((r) => r.json()).then((j: { items: MX[] }) => setItems(j.items)).catch(() => setErr("Chưa có danh sách (chạy scripts/find-misattributed.mjs).")); }, []);
-  if (err) return <p className="banner demo" role="alert">{err}</p>;
-  if (!items || !d) return <p className="empty" role="status">Đang tải…</p>;
-  const mx: Record<string, string> = { ...(d.mx ?? {}) }; for (const [k, v] of Object.entries(loc)) { if (v === "clear") delete mx[k]; else mx[k] = v; }
-  const byKind = items.filter((i) => i.kind === kind), list = byKind.filter((i) => (view === "todo" ? !mx[i.wid] : mx[i.wid] === view)), PG = 25;
-  const dec = async (wid: string, decision: string, title = "") => { const prev = loc[wid]; setLoc((l) => ({ ...l, [wid]: decision })); try { await api("admin-claim-misattr", { workId: wid, decision }); setMsg(decision === "exclude" ? `Đã loại: ${title.slice(0, 70)}` : decision === "keep" ? `Đã giữ: ${title.slice(0, 70)}` : "Đã bỏ quyết định."); } catch (e) { setLoc((l) => { const n = { ...l }; if (prev === undefined) delete n[wid]; else n[wid] = prev; return n; }); setMsg((e as Error).message); } };
-  const bulk = async () => { const todo = items.filter((i) => i.kind === "A" && !mx[i.wid]); if (!todo.length || !confirm(`Loại ${todo.length} bài loại A (ORCID ghi trên bài là của người khác)?`)) return; for (const i of todo) { try { await api("admin-claim-misattr", { workId: i.wid, decision: "exclude" }); setLoc((l) => ({ ...l, [i.wid]: "exclude" })); } catch { /* bỏ qua, thử lại sau */ } } setMsg(`Đã loại ${todo.length} bài loại A.`); };
-  return (
-    <section className="card"><h2>Bài nghi gán nhầm người trùng tên</h2>
-      <p className="meta">Chỉ xét hồ sơ OpenAlex đang gộp từ 2 ORCID trở lên. A: ORCID ghi trên chính bài đó là của người khác (chắc chắn). B: bài không ghi ORCID nhưng cơ quan và chủ đề giống nhóm bài của người kia hơn chủ hồ sơ (cần xem). "Loại" ẩn bài ngay trên hồ sơ; điểm tính lại khi đưa mã vào <code>excludeWorks</code> (mục "Công trình chủ hồ sơ báo…" ở tab Xác thực có nút chép JSON).</p>
-      <div role="status" aria-live="polite">{msg && <p className="banner">{msg}</p>}</div>
-      {kind === "A" && view === "todo" && list.length > 0 && <p><button type="button" className="primary" onClick={() => void bulk()}>Loại tất cả {list.length} bài loại A chưa duyệt</button></p>}
-      <div className="seg">{(["A", "B"] as const).map((k) => <button key={k} type="button" aria-pressed={kind === k} onClick={() => { setKind(k); setPage(0); }}>Loại {k} ({items.filter((i) => i.kind === k).length})</button>)}<span className="segsep" aria-hidden="true" />{(["todo", "exclude", "keep"] as const).map((x) => <button key={x} type="button" aria-pressed={view === x} onClick={() => { setView(x); setPage(0); }}>{x === "todo" ? "Chưa duyệt" : x === "exclude" ? "Đã loại" : "Đã giữ"} ({byKind.filter((i) => (x === "todo" ? !mx[i.wid] : mx[i.wid] === x)).length})</button>)}</div>
-      <ul className="mxlist">{list.slice(page * PG, (page + 1) * PG).map((i) => <li key={i.wid}>
-        <a href={`#/tac-gia/${i.author}`}>{i.name}</a> · <a href={i.doi ? `https://doi.org/${i.doi}` : `https://openalex.org/${i.wid.split("-").pop()}`} target="_blank" rel="noopener">{i.title}</a><br />
-        <span className="meta">{i.journal ?? "—"} · {i.year}{i.score ? ` · ${i.score} điểm (${i.role})` : ""} · hồ sơ {i.nWorks} bài — {i.why}</span><br />
-        <span className="mxact"><button type="button" className="mx-ex" onClick={() => void dec(i.wid, "exclude", i.title)} disabled={mx[i.wid] === "exclude"}>Loại bài</button><button type="button" onClick={() => void dec(i.wid, "keep", i.title)} disabled={mx[i.wid] === "keep"}>Giữ</button>{mx[i.wid] && <button type="button" onClick={() => void dec(i.wid, "clear")}>Bỏ quyết định</button>}</span>
-      </li>)}</ul>
-      {list.length > PG && <p><button type="button" disabled={page === 0} onClick={() => setPage(page - 1)}>Trước</button> {page + 1}/{Math.ceil(list.length / PG)} <button type="button" disabled={(page + 1) * PG >= list.length} onClick={() => setPage(page + 1)}>Sau</button></p>}
-    </section>
-  );
-}
-
 type AU = { id: string; name: string; institutions: string[]; instPast?: string[] };
 type MUnit = { id: string; now: boolean; w: number | null; sim?: number | null; n: number; y: [number, number] | null; same: number; other: number; none: number; inRec: number; s: { t: string; y: number; j: string | null; d: string | null; st: string }[] };
 type MRev = { id: string; name: string; mainUnit?: string | null; orcid: string | null; works: number; cat: string; orcidCurrent: string[]; rankable: boolean; ids: { scopus: string | null; scholar: string | null; observed: string[]; orcidWorks: number | null }; ev: { works: number; authOrcidSame: number; authOrcidOther: number; authOrcidNone: number; inOrcidRecord: number; withDoi: number; otherOrcids: { o: string; n: number }[] }; units: MUnit[] };
