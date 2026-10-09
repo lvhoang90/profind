@@ -3189,6 +3189,14 @@
       ],
       "date": "2026-10-08",
       "reason": "Gộp sau khi quản trị viên duyệt (điểm nghi trùng 78): Trường Giang Huỳnh / Huỳnh Trường Giang"
+    },
+    {
+      "into": "A5150047125",
+      "from": [
+        "A5098398751"
+      ],
+      "date": "2026-10-09",
+      "reason": "Hồ sơ OpenAlex thứ hai của TS. Nguyễn Hoàng Anh (ĐH Đồng Tháp): cùng tên, cùng đơn vị (Phòng Đào tạo Sau đại học, ĐH Đồng Tháp), cùng lĩnh vực dạy học vật lí; đối chiếu danh sách Google Scholar"
     }
   ],
   "claimed": {},

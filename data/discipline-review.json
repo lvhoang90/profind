@@ -878,7 +878,7 @@
   {
    "id": "A5059958821",
    "name": "Cuong Nguyen",
-   "rank": 265,
+   "rank": 266,
    "disc": {
     "giao-duc": 55,
     "triet-xhh": 45
@@ -3453,9 +3453,26 @@
    ]
   },
   {
+   "id": "A5083206065",
+   "name": "Nguyễn Thị Hồng Chuyên",
+   "rank": 1109,
+   "disc": {
+    "giao-duc": 68,
+    "ngon-ngu": 32
+   },
+   "j": [
+    "giao-duc",
+    86
+   ],
+   "t": [
+    "ngon-ngu",
+    43
+   ]
+  },
+  {
    "id": "A5101845660",
    "name": "Mai Thanh Thi Nguyen",
-   "rank": 1109,
+   "rank": 1110,
    "disc": {
     "hoa-thuc-pham": 37,
     "sinh-hoc": 33,
@@ -3473,7 +3490,7 @@
   {
    "id": "A5070213145",
    "name": "Nguyễn Văn Tú",
-   "rank": 1110,
+   "rank": 1111,
    "disc": {
     "sinh-hoc": 57,
     "trai-dat-mo": 43
@@ -3485,23 +3502,6 @@
    "t": [
     "trai-dat-mo",
     44
-   ]
-  },
-  {
-   "id": "A5083206065",
-   "name": "Nguyễn Thị Hồng Chuyên",
-   "rank": 1111,
-   "disc": {
-    "giao-duc": 68,
-    "ngon-ngu": 32
-   },
-   "j": [
-    "giao-duc",
-    86
-   ],
-   "t": [
-    "ngon-ngu",
-    43
    ]
   },
   {
@@ -4769,7 +4769,7 @@
   {
    "id": "A5082260732",
    "name": "Doan Nhu Hai",
-   "rank": 1536,
+   "rank": 1535,
    "disc": {
     "sinh-hoc": 52,
     "trai-dat-mo": 48
@@ -8023,7 +8023,7 @@
   {
    "id": "A5112653500",
    "name": "Hong Quang Nguyen",
-   "rank": 2606,
+   "rank": 2605,
    "disc": {
     "kinh-te": 100
    },
@@ -8594,7 +8594,7 @@
   {
    "id": "A5023214935",
    "name": "Võ Thanh Hà",
-   "rank": 2790,
+   "rank": 2789,
    "disc": {
     "co-khi": 54,
     "dien-tu": 46
@@ -8783,7 +8783,7 @@
   {
    "id": "A5040382149",
    "name": "Q Lê",
-   "rank": 2846,
+   "rank": 2845,
    "disc": {
     "kinh-te": 53,
     "y-hoc": 47
@@ -8800,7 +8800,7 @@
   {
    "id": "A5038916058",
    "name": "Son Hoang Trinh",
-   "rank": 2847,
+   "rank": 2846,
    "disc": {
     "cntt": 58,
     "xay-dung": 42
@@ -10987,7 +10987,7 @@
   {
    "id": "A5100623588",
    "name": "Ha Nguyen",
-   "rank": 3481,
+   "rank": 3485,
    "disc": {
     "y-hoc": 41,
     "giao-duc": 37,
@@ -12429,9 +12429,26 @@
    ]
   },
   {
+   "id": "A5113275011",
+   "name": "Thanh Thai Nguyen",
+   "rank": 3814,
+   "disc": {
+    "giao-duc": 69,
+    "ngon-ngu": 31
+   },
+   "j": [
+    "giao-duc",
+    89
+   ],
+   "t": [
+    "ngon-ngu",
+    43
+   ]
+  },
+  {
    "id": "A5040393149",
    "name": "Hoang Dinh Huong",
-   "rank": 3816,
+   "rank": 3817,
    "disc": {
     "kinh-te": 52,
     "van-hoa": 48
@@ -12448,7 +12465,7 @@
   {
    "id": "A5083101436",
    "name": "Nguyễn Đăng Chiến",
-   "rank": 3817,
+   "rank": 3818,
    "disc": {
     "dien-tu": 51,
     "vat-ly": 49
@@ -12460,23 +12477,6 @@
    "t": [
     "dien-tu",
     73
-   ]
-  },
-  {
-   "id": "A5113275011",
-   "name": "Thanh Thai Nguyen",
-   "rank": 3819,
-   "disc": {
-    "giao-duc": 69,
-    "ngon-ngu": 31
-   },
-   "j": [
-    "giao-duc",
-    89
-   ],
-   "t": [
-    "ngon-ngu",
-    43
    ]
   },
   {
@@ -13059,7 +13059,7 @@
   {
    "id": "A5034048261",
    "name": "Nguyễn Văn Đăng",
-   "rank": 4012,
+   "rank": 4011,
    "disc": {
     "vat-ly": 38,
     "hoa-thuc-pham": 34,
@@ -15130,25 +15130,9 @@
    ]
   },
   {
-   "id": "A5000852576",
-   "name": "Lê Trung Kiên",
-   "rank": 4597,
-   "disc": {
-    "giao-duc": 100
-   },
-   "j": [
-    "giao-duc",
-    70
-   ],
-   "t": [
-    "ngon-ngu",
-    30
-   ]
-  },
-  {
    "id": "A5006083880",
    "name": "Hoang Kim Khuyen",
-   "rank": 4599,
+   "rank": 4598,
    "disc": {
     "luat": 41,
     "an-ninh": 31,
@@ -15166,7 +15150,7 @@
   {
    "id": "A5091319087",
    "name": "Cao Van Hoang",
-   "rank": 4601,
+   "rank": 4600,
    "disc": {
     "nong-lam": 51,
     "hoa-thuc-pham": 49
@@ -15178,6 +15162,22 @@
    "t": [
     "dien-tu",
     26
+   ]
+  },
+  {
+   "id": "A5000852576",
+   "name": "Lê Trung Kiên",
+   "rank": 4601,
+   "disc": {
+    "giao-duc": 100
+   },
+   "j": [
+    "giao-duc",
+    70
+   ],
+   "t": [
+    "ngon-ngu",
+    30
    ]
   },
   {
@@ -20362,7 +20362,7 @@
   {
    "id": "A5068908636",
    "name": "Phan Thi Thanh Huyen",
-   "rank": 6015,
+   "rank": 6016,
    "disc": {
     "kinh-te": 100
    },
