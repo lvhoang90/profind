@@ -35,3 +35,7 @@ npm run d:check                              # kiểm tra nhất quán
 - `node scripts/fetch-positions.mjs` tải vị trí từng tác giả trong từng công trình (đứng đầu, giữa, cuối, có phải liên hệ) vào `data/raw/_positions.json` (chạy lại chỉ tải công trình còn thiếu).
 - `build-index.mjs` tính lại vai trò: tác giả chính = đứng đầu HOẶC là tác giả liên hệ (một hay nhiều người). Trước đây chỉ tính liên hệ khi là người duy nhất nên bỏ sót bài đồng liên hệ. Công trình thiếu dữ liệu vị trí giữ vai trò cũ. Đặt `NO_POSITIONS=1` để dựng theo cách cũ.
 - Kết quả: công trình tác giả chính 160.367 → 182.201 (trên 445.839).
+
+## Phát hiện hồ sơ gộp nhiều người
+- `node scripts/build-merge-risk.mjs` (chạy sau `build-index.mjs`) chấm điểm rủi ro từ số hồ sơ cùng tên, số đơn vị, entropy lĩnh vực và tỉ trọng lĩnh vực thứ ba (từ `data/author-topics.json`); ghi `data/merge-risk.json`.
+- Kiểm định trên mẫu 180 hồ sơ gán nhãn: AUC 0,78; nhóm 11% cao nhất chính xác ~76%, bắt ~30% hồ sơ nghi gộp. Vì vậy chỉ dùng làm danh sách rà cho quản trị viên, không tự ẩn hay đổi hạng. Đính chính qua `corrections.json` (`suspect`, `notSuspect`, `setInstitutions`).
