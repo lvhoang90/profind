@@ -1,7 +1,7 @@
 // Tài khoản ProFind: đăng ký/đăng nhập không mật khẩu bằng mã 6 số gửi qua email, kèm số điện thoại liên hệ (bắt buộc khi đăng ký),
 // lưu tác giả, lưu tìm kiếm, công trình đã xem, thống kê dùng và trang quản trị. Một hàm Edge, chọn thao tác bằng ?op=
 //   GET  verified (công khai: mã hồ sơ đã xác thực + hạn tick) | claim-status | admin-claims
-//   POST claim-submit {authorId, authorName, name, orcid, scholar, note} (cần đăng nhập) | admin-claim-decide | admin-claim-manual | admin-claim-allow | admin-claim-revoke | admin-claim-renew | admin-mrisk {authorId, decision: one|multi|clear} | admin-t2 {name, decision: mã hồ sơ|none|clear}
+//   POST claim-submit {authorId, authorName, name, orcid, scholar, note} (cần đăng nhập) | admin-claim-decide | admin-claim-manual | admin-claim-allow | admin-claim-revoke | admin-claim-renew | xw-sweep (cron/quản trị: báo chủ hồ sơ khi công trình đã loại) | admin-mrisk {authorId, decision: one|multi|clear} | admin-t2 {name, decision: mã hồ sơ|none|clear}
 //   GET  config | me | history | favs | ss | rv | export | admin-summary | admin-users | admin-traffic | admin-content | admin-csv | unsub
 //   POST request {email, phone, name, consent, lang} → gửi mã | verify {email, code} → đăng nhập, tạo tài khoản nếu chưa có
 //        logout | profile | delete | track | hop {to, place} | fav | ssave | rvput | rvdel
@@ -15,11 +15,12 @@
 //   Lưu trữ    KV_REST_API_URL + KV_REST_API_TOKEN (hoặc UPSTASH_REDIS_REST_URL/TOKEN)
 //   Bảo mật    SESSION_SECRET (chuỗi ngẫu nhiên dài, bắt buộc)
 //   Quản trị   ADMIN_EMAILS=email1,email2
+//   Báo tự động chủ hồ sơ khi công trình "không phải của tôi" đã loại: CRON_SECRET=<chuỗi ngẫu nhiên> (Vercel Cron gọi /api/account?op=xw-sweep mỗi ngày kèm Authorization: Bearer; không có biến này thì chỉ nút "Quét ngay" của quản trị viên hoạt động)
 // Thiếu một trong các mục trên thì tính năng tự tắt (config.enabled=false), mọi chức năng khác của ProFind vẫn chạy bình thường.
 import { makeStore } from "./_store.js";
 import T2R from "../data/top2/admin-review.json"; // người trong Top 2% (Việt Nam) chưa gắn hồ sơ, kèm ứng viên: chỉ trả cho quản trị viên (op admin-t2)
 import MRISK from "../data/merge-risk.json"; // danh sách rà hồ sơ gộp nhiều người: chỉ trả cho quản trị viên (op admin-mrisk), không để ở public/
-import { mailProvider, sendMail, codeMail, welcomeMail } from "./_mail.js";
+import { mailProvider, sendMail, codeMail, welcomeMail, worksRemovedMail } from "./_mail.js";
 import { runChecks, claimMail, adminMail, isFreeMail, normOrcid, orcidValid, normDoi, lookupWork, nameCompat, VERIFY_YEARS } from "./_claim.js";
 export const config = { runtime: "edge" };
 
@@ -282,6 +283,9 @@ export default async function handler(request) {
     // Chính sách: chỉ email tổ chức (đã nhập mã 6 số); email miễn phí chỉ khi quản trị viên cho phép riêng; tick vàng hiệu lực 2 năm.
     // Tự động duyệt khi email tổ chức + ORCID trùng hồ sơ OpenAlex + tên tương thích + không xung đột; còn lại chuyển quản trị viên duyệt.
     const XWK = "profind:xw", getXw = async (id) => { const l = jparse(await one(["HGET", XWK, id])); return Array.isArray(l) ? l : []; }; // công trình chủ hồ sơ báo "không phải của tôi"
+    // Tự động báo chủ hồ sơ khi công trình họ báo "không phải của tôi" đã được loại khỏi dữ liệu (đã dựng lại): thư + chuyển sang nhật ký 90 ngày.
+    // "Đã xử lý" = mã công trình không còn trong public/data/works/<mã tác giả>.json đang chạy. Gọi bởi Vercel Cron (GET, Authorization: Bearer CRON_SECRET) hoặc nút "Quét ngay" (POST, quản trị viên).
+    const XDK = "profind:xwdone", XTK = "profind:xwtry", XW_KEEP = 90 * 864e5, XW_AUTHORS = 25;
     const CLK = "profind:cl", VFK = "profind:vf", VFO = "profind:vfo", CLA = "profind:cla";
     const HSK = "profind:hs", HPK = "profind:hp"; // tập mã hồ sơ: ẩn điểm + xếp hạng; ẩn cả hồ sơ
     const setHide = async (authorId, mode) => { // mode: "score" | "profile" | "none"
@@ -294,6 +298,43 @@ export default async function handler(request) {
     const vfLookup = async (authorId, orcid) => { const oa = orcid ? await one(["HGET", VFO, orcid]) : null; return { byAuthor: await getVf(authorId), byOrcid: oa ? await getVf(oa) : null }; };
     const safeMail = async (to, mail) => { try { await sendMail(to, mail); return true; } catch (e) { console.error("[claim-mail]", e.message); return false; } };
     const notifyAdmins = (claim) => Promise.all(adminEmails.slice(0, 3).map((a) => safeMail(a, adminMail({ claim, origin: url.origin }))));
+    const sweepXw = async () => {
+      const now = Date.now(), sum = { authors: 0, works: 0, mailed: 0, noEmail: 0, failed: 0, retry: 0, pruned: 0 };
+      const pubO = (process.env.PUBLIC_ORIGIN || "https://profind.isavn.edu.vn").replace(/\/$/, "");
+      // Lần quét đầu tiên (khi mới bật tính năng): các công trình ĐÃ xử lý từ trước chỉ được dọn và ghi nhật ký, KHÔNG gửi thư hàng loạt; từ lần sau mới gửi.
+      const backlog = !(await one(["GET", "profind:xwstart"])); if (backlog) await one(["SET", "profind:xwstart", String(now)]);
+      for (const [authorId, raw] of Object.entries(pairs(await one(["HGETALL", XWK]))).slice(0, XW_AUTHORS)) {
+        const re = new RegExp(`^${authorId.replace(/[^A-Za-z0-9]/g, "")}-W\\d{4,14}$`), ids = (jparse(raw) ?? []).filter((w) => re.test(w));
+        if (!ids.length) { await one(["HDEL", XWK, authorId]); continue; }
+        let shard; try { const r = await fetch(`${url.origin}/data/works/${encodeURIComponent(authorId)}.json?s=${now}`); if (!r.ok) continue; shard = await r.json(); } catch { continue; }
+        if (!Array.isArray(shard)) continue;
+        const present = new Set(shard.map((w) => w.id)), done = ids.filter((w) => !present.has(w)); if (!done.length) continue;
+        const info = {}; try { const r = await fetch(`https://api.openalex.org/works?filter=openalex:${done.slice(0, 50).map((w) => w.split("-").pop()).join("|")}&select=id,title,publication_year&per-page=50&mailto=${encodeURIComponent(adminEmails[0] || "profind@isavn.edu.vn")}`); if (r.ok) for (const x of (await r.json()).results ?? []) info[String(x.id).replace("https://openalex.org/", "")] = { t: tidy(x.title, 200), y: x.publication_year }; } catch { /* không có tiêu đề thì ghi mã */ }
+        const works = done.map((w) => ({ w, t: info[w.split("-").pop()]?.t || "", y: info[w.split("-").pop()]?.y || null }));
+        const vf = await getVf(authorId), email = vf?.email && EMAIL_RE.test(vf.email) ? String(vf.email).toLowerCase() : "";
+        let mail = backlog ? "backlog" : "no-email";
+        if (email && !backlog) {
+          try {
+            const uidU = await sha(email), u = await loadUser(uidU);
+            const m = worksRemovedMail({ lang: u?.lang === "en" ? "en" : "vi", name: vf.name || u?.name || "", works, profileUrl: `${pubO}/?utm_source=email&utm_medium=works_removed&utm_campaign=report#/tac-gia/${authorId}`, openalexUrl: `https://openalex.org/${authorId}`, unsub: u ? `${pubO}/api/account?op=unsub&u=${uidU}&s=${(await hmac(`unsub:${uidU}`)).slice(0, 32)}` : "" });
+            await Promise.race([sendMail(email, { ...m, replyTo: adminEmails[0] }), new Promise((_, rej) => setTimeout(() => rej(new Error("hết thời gian gửi")), 8000))]);
+            mail = "sent";
+          } catch (e) {
+            console.error("[xw-mail]", e.message);
+            if (Number(await one(["HINCRBY", XTK, authorId, "1"])) < 3) { sum.retry++; continue; } // thử lại ở lần quét sau, tối đa 3 lần
+            mail = "failed";
+          }
+        }
+        const log = jparse(await one(["HGET", XDK, authorId])) ?? [];
+        await store.run([["HSET", XDK, authorId, JSON.stringify([...log, ...works.map((x) => ({ ...x, at: now, mail }))])], ...(ids.length > done.length ? [["HSET", XWK, authorId, JSON.stringify(ids.filter((w) => !done.includes(w)))]] : [["HDEL", XWK, authorId]]), ["HDEL", XTK, authorId]]);
+        sum.authors++; sum.works += done.length; if (mail === "sent") sum.mailed++; else if (mail === "no-email" || mail === "backlog") sum.noEmail++; else sum.failed++;
+      }
+      for (const [authorId, raw] of Object.entries(pairs(await one(["HGETALL", XDK])))) { // giữ nhật ký 90 ngày
+        const log = jparse(raw) ?? [], keep = log.filter((x) => now - x.at < XW_KEEP); if (keep.length === log.length) continue;
+        sum.pruned += log.length - keep.length; await one(keep.length ? ["HSET", XDK, authorId, JSON.stringify(keep)] : ["HDEL", XDK, authorId]);
+      }
+      return sum;
+    };
     const approveClaim = async (claim, by) => {
       const t = Date.now(), until = t + VERIFY_YEARS * 365.25 * 864e5;
       Object.assign(claim, { status: "approved", decidedAt: t, decidedBy: by, until });
@@ -371,10 +412,15 @@ export default async function handler(request) {
       const bad = needAdmin(); if (bad) return bad;
       return json({ map: pairs(await one(["HGETALL", "profind:mr"])), profiles: MRISK.profiles });
     }
+    if (op === "xw-sweep") {
+      const cs = process.env.CRON_SECRET || "", byCron = request.method === "GET" && !!cs && safeEq(request.headers.get("authorization") || "", `Bearer ${cs}`), byAdmin = request.method === "POST" && isAdmin(me);
+      if (!byCron && !byAdmin) return json({ error: "Không có quyền." }, 403);
+      return json({ ok: true, ...(await sweepXw()) });
+    }
     if (op === "admin-claims" && request.method === "GET") {
       const bad = needAdmin(); if (bad) return bad;
       const t = Date.now(), vf = await allVf();
-      return json({ mx: pairs(await one(["HGETALL", "profind:mx"])), xw: Object.entries(pairs(await one(["HGETALL", XWK]))).flatMap(([a, v]) => (jparse(v) ?? []).map((w) => ({ authorId: a, workId: w }))), claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [], recheck: Object.values(pairs(await one(["HGETALL", "profind:rk"]))).map(jparse).filter(Boolean), units: Object.values(pairs(await one(["HGETALL", "profind:un"]))).map(jparse).filter(Boolean), split: Object.values(pairs(await one(["HGETALL", "profind:sp"]))).map(jparse).filter(Boolean), hidden: { score: (await one(["SMEMBERS", HSK])) ?? [], profile: (await one(["SMEMBERS", HPK])) ?? [] }, works: await (async () => { const o = []; for (const [id, raw] of Object.entries(pairs(await one(["HGETALL", "profind:aw"])))) for (const w of jparse(raw) ?? []) if (w.status === "review") o.push({ authorId: id, ...w }); return o; })() });
+      return json({ xwdone: Object.entries(pairs(await one(["HGETALL", XDK]))).flatMap(([a, v]) => (jparse(v) ?? []).map((x) => ({ authorId: a, ...x }))).sort((p, q) => q.at - p.at).slice(0, 400), mx: pairs(await one(["HGETALL", "profind:mx"])), xw: Object.entries(pairs(await one(["HGETALL", XWK]))).flatMap(([a, v]) => (jparse(v) ?? []).map((w) => ({ authorId: a, workId: w }))), claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [], recheck: Object.values(pairs(await one(["HGETALL", "profind:rk"]))).map(jparse).filter(Boolean), units: Object.values(pairs(await one(["HGETALL", "profind:un"]))).map(jparse).filter(Boolean), split: Object.values(pairs(await one(["HGETALL", "profind:sp"]))).map(jparse).filter(Boolean), hidden: { score: (await one(["SMEMBERS", HSK])) ?? [], profile: (await one(["SMEMBERS", HPK])) ?? [] }, works: await (async () => { const o = []; for (const [id, raw] of Object.entries(pairs(await one(["HGETALL", "profind:aw"])))) for (const w of jparse(raw) ?? []) if (w.status === "review") o.push({ authorId: id, ...w }); return o; })() });
     }
     if (op.startsWith("admin-claim-") && request.method === "POST") {
       const bad = needAdmin(); if (bad) return bad;

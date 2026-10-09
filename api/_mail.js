@@ -62,3 +62,30 @@ export function welcomeMail({ lang, u }) {
   const html = `<div style="font-family:Arial,sans-serif;max-width:540px;margin:auto;padding:24px;color:#0f2a3d;line-height:1.55"><h2 style="margin:0 0 8px;font-size:20px">${escH(T.hi)}</h2><p style="margin:0 0 16px">${escH(T.lead)}</p><h3 style="margin:18px 0 8px;font-size:16px">${escH(T.h)}</h3>${T.steps.map((s, i) => `<div style="margin:0 0 12px;padding:10px 12px;border:1px solid #d9e2ea;border-radius:10px"><b>${i + 1}. ${escH(s[0])}</b><br><span style="color:#51677a">${escH(s[1])}</span><br>${btn(s[2], s[3])}</div>`).join("")}<h3 style="margin:18px 0 8px;font-size:16px">${escH(T.next)}</h3>${T.apps.map((a) => `<p style="margin:0 0 8px"><b>${escH(a[0])}</b> ${escH(a[1])} <a href="${escH(a[2])}">${escH(a[3])}</a></p>`).join("")}<p style="margin:16px 0 4px">${escH(T.bye)}</p><p style="margin:0;color:#51677a">${escH(T.by)}</p><p style="margin:18px 0 0;font-size:12px;color:#51677a"><a href="${escH(u.unsub)}" style="color:#51677a">${escH(T.stop)}</a></p></div>`;
   return { subject: T.subject, text, html };
 }
+
+/** Thư báo đã loại công trình mà chủ hồ sơ báo "không phải của tôi" (gửi tự động khi công trình đã biến khỏi dữ liệu). */
+export function worksRemovedMail({ lang, name, works, profileUrl, openalexUrl, unsub }) {
+  const en = lang === "en", n = works.length, shown = works.slice(0, 20), more = n - shown.length;
+  const line = (w) => `${w.t || w.w.split("-").pop()}${w.y ? ` (${w.y})` : ""}`;
+  const T = en ? {
+    subject: n === 1 ? "ProFind: the work you reported has been removed from your profile" : `ProFind: ${n} works you reported have been removed from your profile`,
+    hi: `Hello ${name || ""},`.trim(),
+    lead: n === 1 ? "As you requested, ProFind has removed this work from your profile because it is not yours:" : `As you requested, ProFind has removed these ${n} works from your profile because they are not yours:`,
+    more: more > 0 ? `...and ${more} more.` : "",
+    after: "Your profile, ranking and indicators were recalculated without them. The works stay in the open sources (OpenAlex, ORCID, Crossref); to fix them at the source you can ask OpenAlex to correct the author.",
+    help: "If something was removed by mistake or you spot other works that are not yours, just reply to this email or use \"This is me / correct my profile\" on your profile page.",
+    btn: "Open your profile", fix: "Correct the author in OpenAlex", by: "ProFind · ISA Vietnam", stop: "Stop information emails",
+  } : {
+    subject: n === 1 ? "ProFind: công trình bạn báo đã được loại khỏi hồ sơ" : `ProFind: ${n} công trình bạn báo đã được loại khỏi hồ sơ`,
+    hi: `Chào ${name || "bạn"},`,
+    lead: n === 1 ? "Theo đề nghị của bạn, ProFind đã loại công trình sau khỏi hồ sơ vì không phải của bạn:" : `Theo đề nghị của bạn, ProFind đã loại ${n} công trình sau khỏi hồ sơ vì không phải của bạn:`,
+    more: more > 0 ? `...và ${more} công trình khác.` : "",
+    after: "Hồ sơ, thứ hạng và các chỉ báo đã được tính lại khi không có các công trình này. Công trình vẫn còn trong nguồn dữ liệu mở (OpenAlex, ORCID, Crossref); muốn sửa tận gốc, bạn có thể đề nghị OpenAlex chỉnh lại tác giả.",
+    help: "Nếu loại nhầm hoặc bạn thấy còn công trình khác không phải của mình, hãy trả lời thư này hoặc dùng \"Đây là tôi / đính chính hồ sơ\" trên trang hồ sơ.",
+    btn: "Mở hồ sơ của bạn", fix: "Chỉnh tác giả trên OpenAlex", by: "ProFind · ISA Việt Nam", stop: "Không nhận thư thông tin nữa",
+  };
+  const text = `${T.hi}\n\n${T.lead}\n${shown.map((w) => `- ${line(w)}`).join("\n")}${T.more ? `\n${T.more}` : ""}\n\n${T.after}\n${T.help}\n\n${T.btn}: ${profileUrl}\n${T.fix}: ${openalexUrl}\n\n${T.by}${unsub ? `\n${T.stop}: ${unsub}` : ""}`;
+  const li = (w) => `<li style="margin:4px 0">${escH(line(w))}</li>`;
+  const html = `<div style="font-family:Arial,sans-serif;max-width:540px;margin:auto;padding:24px;color:#0f2a3d;line-height:1.55"><p style="margin:0 0 10px">${escH(T.hi)}</p><p style="margin:0 0 8px">${escH(T.lead)}</p><ul style="margin:0 0 8px;padding-left:20px">${shown.map(li).join("")}</ul>${T.more ? `<p style="margin:0 0 8px">${escH(T.more)}</p>` : ""}<p style="margin:12px 0">${escH(T.after)}</p><p style="margin:12px 0">${escH(T.help)}</p><p><a href="${escH(profileUrl)}" style="display:inline-block;background:#17688f;color:#fff;text-decoration:none;font-weight:700;padding:8px 14px;border-radius:8px;font-size:14px">${escH(T.btn)}</a> <a href="${escH(openalexUrl)}" style="font-size:14px;margin-left:8px">${escH(T.fix)}</a></p><p style="margin:18px 0 0;color:#55708a;font-size:13px">${escH(T.by)}${unsub ? ` · <a href="${escH(unsub)}" style="color:#55708a">${escH(T.stop)}</a>` : ""}</p></div>`;
+  return { subject: T.subject, text, html };
+}

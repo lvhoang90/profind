@@ -65,3 +65,9 @@ npm run d:check                              # kiểm tra nhất quán
 - `corrections.assignWorks`: `{ "<mã công trình A…-W…>": "<mã tác giả đích>" }` chuyển từng công trình sang hồ sơ đúng người (hồ sơ đích phải có trong dữ liệu: ghim bằng `data/pinned-orcids.json`). Vai trò tác giả vẫn tra theo mã gốc. Kết hợp `rename`, `setInstitutions` và `data/scholar.json` để hoàn thiện hồ sơ mới.
 - `data/namesakes.json`: ghi lại các người trùng tên đã được quản trị viên xác nhận là khác người (kèm mã Google Scholar), để không gộp nhầm về sau.
 - Ví dụ: Nguyễn Hoàng Anh (Đại học Đồng Tháp, Scholar 6V_gx5cAAAAJ) tách khỏi hồ sơ gộp A5101797172.
+
+## Báo chủ hồ sơ khi công trình "không phải của tôi" đã xử lý
+- Chủ hồ sơ đã xác thực bấm "không phải của tôi": mã công trình vào Redis `profind:xw` và bị ẩn ngay trên hồ sơ. Quản trị viên chép JSON `excludeWorks` vào `data/corrections.json`; sau khi dựng lại, công trình biến khỏi `public/data/works/<mã>.json`.
+- `api/account.js` `op=xw-sweep` (Vercel Cron mỗi ngày 02:00 UTC = 09:00 giờ Việt Nam, kèm `Authorization: Bearer $CRON_SECRET`; hoặc nút "Quét ngay" và tự quét khi quản trị viên mở tab Xác thực): với từng chủ hồ sơ, mã nào không còn trong dữ liệu đang chạy là "đã xử lý". Hệ thống gửi MỘT thư gộp cho email đã xác thực (mẫu `worksRemovedMail` trong `api/_mail.js`, vi/en, kèm liên kết hủy thư thông tin), chuyển các mã sang nhật ký `profind:xwdone` (lưu 90 ngày rồi tự xóa) và bỏ khỏi danh sách chờ.
+- Lần quét đầu tiên (khi mới bật, khóa `profind:xwstart`): các công trình đã xử lý từ trước chỉ được dọn và ghi nhật ký (`backlog`), không gửi thư hàng loạt. Chủ hồ sơ không có email xác thực: dọn, không gửi (`no-email`). Gửi lỗi: thử lại ở lần quét sau, tối đa 3 lần rồi ghi `failed`.
+- Cần đặt biến môi trường `CRON_SECRET` trong Vercel (chuỗi ngẫu nhiên dài); thiếu biến này, lịch tự động bị từ chối (403), còn nút "Quét ngay" vẫn dùng được.
