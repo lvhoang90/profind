@@ -597,3 +597,4 @@ td.who>.meta{margin-top:3px}
 .brand .tm{font-size:.55em;font-weight:600;vertical-align:top;margin-left:1px;position:relative;top:.05em;opacity:.9;-webkit-text-fill-color:currentColor}
 .mxev{margin:.5rem 0;font-size:.85rem}.mxev p{margin:.35rem 0}.mxs{margin:0;padding-left:1rem}.mxs li{margin:.15rem 0}.mxlist details{margin-top:.4rem}.mxlist summary{cursor:pointer;color:var(--ink-2)}
 .warnb{color:#b3261e}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .warnb{color:#ff9a8f}}:root[data-theme="dark"] .warnb{color:#ff9a8f}
+.prof-sci{margin:26px 0 4px;font-size:1.25rem}
