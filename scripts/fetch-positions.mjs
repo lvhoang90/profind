@@ -9,7 +9,7 @@ const MAIL = arg("mailto", "luongviethoang.safi@gmail.com"), KEY = process.env.O
 const OUT = "data/raw/_positions.json", have = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : {};
 const mine = new Set(JSON.parse(readFileSync("data/raw-authors.json", "utf8")).authors.map((a) => a.id));
 const need = new Set();
-for (const f of readdirSync("public/data/works")) { if (!f.endsWith(".json")) continue; for (const w of JSON.parse(readFileSync(`public/data/works/${f}`, "utf8"))) { const k = String(w.id).split("-")[1]; if (k && !(k in have)) need.add(k); } }
+for (const w of JSON.parse(readFileSync("data/raw-authors.json", "utf8")).works) { const k = String(w.id).split("-")[1]; if (k && !(k in have)) need.add(k); }
 const ids = [...need]; console.log(`Cần tải ${ids.length} công trình (${Object.keys(have).length} đã có).`);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const get = async (u) => { for (let t = 0; t < 6; t++) { try { const r = await fetch(u); if (r.ok) return r.json(); if (r.status === 429) { await sleep(5000 * (t + 1)); continue; } if (r.status === 403) throw new Error("403: hết ngân sách hoặc khóa không hợp lệ"); await sleep(1500 * 2 ** t); } catch (e) { if (String(e.message).startsWith("403")) throw e; await sleep(1500 * 2 ** t); } } return null; };
