@@ -183,7 +183,7 @@ function Top2Tag({ a, cls }: { a: Author; cls: string }) {
   if (!a.top2) return null;
   const y = a.top2.scope === "y2025", tag = t(y ? "top2TagY" : "top2Tag");
   const self = a.top2.selfPct == null ? "-" : `${num(Math.round(a.top2.selfPct * 1000) / 10, 1)}%`, ns = a.top2.inNs == null ? "" : t(a.top2.inNs ? "top2NsYes" : "top2NsNo");
-  const tip = t("top2Tip", { r: num(a.top2.rank), f: fieldName(a.top2.field, lang), c: t(y ? "top2Year" : "top2Career"), s: self, n: ns });
+  const rn = a.top2.rankNs == null ? "" : lang === "en" ? `, ${num(a.top2.rankNs)} (ranked with self-citations excluded)` : `, ${num(a.top2.rankNs)} (xếp khi loại tự trích dẫn)`, tip = t("top2Tip", { r: num(a.top2.rank), rn, f: fieldName(a.top2.field, lang), c: t(y ? "top2Year" : "top2Career"), s: self, n: ns });
   return <a className={cls} href={TOP2_DOI} target="_blank" rel="noopener" title={tip} aria-label={`${tag}. ${tip} ${t("newTab")}`}>★ {tag}</a>;
 }
 
