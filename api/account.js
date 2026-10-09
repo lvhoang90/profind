@@ -17,6 +17,7 @@
 //   Quản trị   ADMIN_EMAILS=email1,email2
 // Thiếu một trong các mục trên thì tính năng tự tắt (config.enabled=false), mọi chức năng khác của ProFind vẫn chạy bình thường.
 import { makeStore } from "./_store.js";
+import MRISK from "../data/merge-risk.json"; // danh sách rà hồ sơ gộp nhiều người: chỉ trả cho quản trị viên (op admin-mrisk), không để ở public/
 import { mailProvider, sendMail, codeMail, welcomeMail } from "./_mail.js";
 import { runChecks, claimMail, adminMail, isFreeMail, normOrcid, orcidValid, normDoi, lookupWork, nameCompat, VERIFY_YEARS } from "./_claim.js";
 export const config = { runtime: "edge" };
@@ -363,7 +364,7 @@ export default async function handler(request) {
     // Quyết định của quản trị viên về hồ sơ nghi gộp nhiều người (tab "Nghi gộp"): { authorId: "one" (một người) | "multi" (nhiều người, cần tách) }
     if (op === "admin-mrisk" && request.method === "GET") {
       const bad = needAdmin(); if (bad) return bad;
-      return json({ map: pairs(await one(["HGETALL", "profind:mr"])) });
+      return json({ map: pairs(await one(["HGETALL", "profind:mr"])), profiles: MRISK.profiles });
     }
     if (op === "admin-claims" && request.method === "GET") {
       const bad = needAdmin(); if (bad) return bad;

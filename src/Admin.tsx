@@ -556,9 +556,9 @@ function Evidence({ r, name }: { r: MRev; name: (id: string) => string }) {
 type MR = { id: string; name: string; rank: number | null; works: number; units: number; same: number; H: number; fld3: number; risk: number; reviewed: boolean };
 /** Hồ sơ nghi gộp nhiều người, chấm từ chủ đề công trình + tên + số đơn vị (scripts/build-merge-risk.mjs). Chỉ để rà: không tự ẩn hồ sơ. */
 function MergeRisk() {
-  const [list, setList] = useState<MR[] | null>(null), [ver, setVer] = useState(0), [view, setView] = useState<"todo" | "one" | "multi">("todo"), [n, setN] = useState(25), [msg, setMsg] = useState(""), [loc, setLoc] = useState<Record<string, string>>({});
-  const { d } = useGet<{ map: Record<string, string> }>("admin-mrisk", `&v=${ver}`);
-  useEffect(() => { fetch("/data/merge-risk.json", { cache: "no-store" }).then((r) => r.json()).then((j: { profiles: MR[] }) => setList(j.profiles)).catch(() => setList([])); }, []);
+  const [ver, setVer] = useState(0), [view, setView] = useState<"todo" | "one" | "multi">("todo"), [n, setN] = useState(25), [msg, setMsg] = useState(""), [loc, setLoc] = useState<Record<string, string>>({});
+  const { d } = useGet<{ map: Record<string, string>; profiles: MR[] }>("admin-mrisk", `&v=${ver}`);
+  const list = d?.profiles ?? null;
   if (!list || !d) return <p className="empty" role="status">Đang tải…</p>;
   const map: Record<string, string> = { ...d.map }; for (const [k, v] of Object.entries(loc)) { if (v === "clear") delete map[k]; else map[k] = v; }
   const rows = list.filter((r) => (view === "todo" ? !map[r.id] : map[r.id] === view)), cnt = (k: string) => list.filter((r) => map[r.id] === k).length;
