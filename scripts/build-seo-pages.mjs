@@ -1,8 +1,8 @@
 // Trang tĩnh để công cụ tìm kiếm lập chỉ mục: /don-vi/, /don-vi/<id>/, /nganh/, /nganh/<id>/, /tinh-thanh/, /tinh-thanh/<slug>/, /pro-score/, /top-2-phan-tram/ + sitemap.xml đầy đủ.
-// Chạy sau `vite build` (npm run build): đọc public/data/profind.json, ghi vào dist/. Chỉ số liệu tổng hợp, KHÔNG có tên hay hồ sơ cá nhân.
+// Chạy sau `vite build` (npm run build): đọc public/data/profind.json, ghi vào dist/. Chỉ số liệu tổng hợp, trừ /tac-gia/<tên>-<mã>/: trang tóm tắt riêng cho nhà khoa học có tên trong danh sách Top 2% (dữ liệu gốc đã công khai; data/seo-exclude.json = đề nghị gỡ trang).
 // Đơn vị/ngành dưới MIN_INDEX nhà khoa học: noindex và không vào sitemap (tránh trang mỏng).
 import { UP, provinceOf } from "./lib/province.mjs";
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 const SITE = "https://profind.isavn.edu.vn", MIN_INDEX = 3, TOPN = 10;
 const P = JSON.parse(readFileSync("public/data/profind.json", "utf8")), M = P.meta, built = M.built ?? new Date().toISOString().slice(0, 10);
 const DISC = Object.fromEntries([...readFileSync("src/disciplines.ts", "utf8").matchAll(/"([a-z-]+)":\s*\["([^"]+)",\s*"([^"]+)"\]/g)].map((m) => [m[1], { vi: m[2], en: m[3] }]));
@@ -39,7 +39,7 @@ for (const [id, list] of byUnit) {
   const loc = [typeVi(u.type), provOf(u)].filter(Boolean).join(" · ");
   const title = `Nhà khoa học và công trình của ${u.name} | ProFind™`, desc = `${u.name}${u.en && u.en !== u.name ? ` (${u.en})` : ""}: ${vn(s.n)} nhà khoa học, ${vn(s.works)} công trình, ${vn(s.cit)} trích dẫn từ 2016 theo OpenAlex/ORCID/Crossref; ${vn(s.p1000)} người trong PRO-SCORE1000™${s.n2 ? `; ${vn(s.n2)} người có tên trong danh sách Top 2% nhà khoa học thế giới (Stanford/Elsevier)` : ""}.`;
   put(path, page({ path, title, desc, h1: u.name, sub: [u.en && u.en !== u.name ? u.en : "", loc].filter(Boolean).join(" · "), crumbs: [["ProFind™", "/"], ["Theo đơn vị", "/don-vi/"], [u.name, path]], index: ix,
-    body: `${stats(s)}<!--CITY:${esc(provOf(u))}--><a class="cta" href="/#/?i=${encodeURIComponent(id)}&amp;b=1">Xem danh sách nhà khoa học của đơn vị</a>${ds.length ? `<h2>Ngành nghiên cứu nổi bật</h2><ul class="l">${ds.map(([d, n]) => `<li><a href="/nganh/${d}/">${esc(DISC[d].vi)}</a><em>${vn(n)} nhà khoa học</em></li>`).join("")}</ul>` : ""}`,
+    body: `${stats(s)}<!--CITY:${esc(provOf(u))}--><!--T2:${esc(id)}--><a class="cta" href="/#/?i=${encodeURIComponent(id)}&amp;b=1">Xem danh sách nhà khoa học của đơn vị</a>${ds.length ? `<h2>Ngành nghiên cứu nổi bật</h2><ul class="l">${ds.map(([d, n]) => `<li><a href="/nganh/${d}/">${esc(DISC[d].vi)}</a><em>${vn(n)} nhà khoa học</em></li>`).join("")}</ul>` : ""}`,
     ld: [{ "@type": u.type?.includes("univ") || u.type === "college" ? "CollegeOrUniversity" : "ResearchOrganization", name: u.name, ...(u.en && u.en !== u.name ? { alternateName: u.en } : {}), ...(provOf(u) ? { address: { "@type": "PostalAddress", addressRegion: provOf(u), addressCountry: "VN" } } : {}), url: SITE + path }] }));
   unitRows.push({ id, u, s }); if (ix) sm.push([SITE + path, 0.6]);
 }
@@ -147,9 +147,13 @@ ${abroadSection()}
   const nameCar = new Set(CAR.authors.map((a) => a.name)), nBoth = new Set([...nameCar, ...SGL.authors.map((a) => a.name)]).size;
   const fc = new Map(); for (const a of CAR.authors) fc.set(a.field, (fc.get(a.field) ?? 0) + 1);
   const fields = [...fc].sort((a, b) => b[1] - a[1]);
+  // Trang riêng từng nhà khoa học: chỉ nhóm có tên trong danh sách Top 2% (dữ liệu gốc đã công khai). data/seo-exclude.json: mã hồ sơ đề nghị gỡ trang (không tạo trang, không vào sitemap).
+  const EXC = new Set(existsSync("data/seo-exclude.json") ? JSON.parse(readFileSync("data/seo-exclude.json", "utf8")).ids : []);
   const tagged = people.filter((a) => a.top2), ranked = tagged.filter((a) => a.proRank).length;
   const uc = new Map(); for (const a of tagged) for (const u of a.institutions ?? []) { if (a.instPast?.includes(u) || !instBy.get(u) || instBy.get(u).type === "other") continue; uc.set(u, (uc.get(u) ?? 0) + 1); }
   const units = [...uc].sort((a, b) => b[1] - a[1] || instBy.get(a[0]).name.localeCompare(instBy.get(b[0]).name, "vi")).slice(0, 20);
+  const unitOf = (a) => { const u = (a.institutions ?? []).find((x) => !a.instPast?.includes(x) && instBy.get(x) && instBy.get(x).type !== "other") ?? (a.institutions ?? []).find((x) => instBy.get(x)); return u ? instBy.get(u).name : ""; };
+  const pages = tagged.filter((a) => !EXC.has(a.id)).sort((x, y) => x.top2.rank - y.top2.rank).map((a) => ({ a, path: `/tac-gia/${slugify(a.name)}-${a.id}/`, unit: unitOf(a) }));
   const path = "/top-2-phan-tram/", title = `Top 2% nhà khoa học thế giới 2026: ${vn(nCar)} người Việt Nam | ProFind™`;
   const desc = `Top 2% nhà khoa học thế giới 2026 (Stanford/Elsevier): Việt Nam có ${vn(nCar)} người từ ${vn(nInst)} đơn vị. Tiêu chí, trường nhiều người nhất, cách tra cứu trên ProFind™.`;
   const faq = [
@@ -160,7 +164,7 @@ ${abroadSection()}
     ["Làm sao biết một nhà khoa học Việt Nam có trong danh sách Top 2%?", "Tìm tên trên ProFind™: hồ sơ nào đã khớp với bộ dữ liệu gốc sẽ có nhãn \"Top 2% thế giới\" kèm lĩnh vực, tỉ lệ tự trích dẫn và hai số thứ tự của bộ dữ liệu gốc (xếp theo toàn bộ trích dẫn và xếp khi loại tự trích dẫn). Bạn cũng có thể lọc riêng các hồ sơ có nhãn này. Nếu thấy thiếu hoặc nhầm, hãy dùng chức năng đính chính."],
     ["Top 2% khác PRO-SCORE1000™ như thế nào?", "Top 2% là danh sách do Stanford/Elsevier công bố, chỉ dựa trên trích dẫn Scopus. PRO-SCORE1000™ là chỉ số tham khảo của ProFind™ gồm 7 chỉ báo (tác động, sản lượng, vai trò chủ đạo, chất lượng tạp chí, đà phát triển, đều đặn, ghi nhận), so cùng ngành. Có tên trong Top 2% chỉ đóng góp 3% điểm PRO-SCORE1000™ (chỉ báo Ghi nhận) để không trùng đếm với tác động."],
   ];
-  const body = `<p class="warn"><b>Lưu ý.</b> Đây là trang tổng hợp, không nêu tên cá nhân. Danh sách gốc do Stanford/Elsevier công bố; ProFind™ chỉ gắn nhãn cho hồ sơ đã khớp chắc chắn và không đánh giá thay cho nguồn gốc. Không có tên trong danh sách không có nghĩa là ít được trích dẫn.</p>
+  const body = `<p class="warn"><b>Lưu ý.</b> Danh sách gốc do Stanford/Elsevier công bố; ProFind™ chỉ gắn nhãn cho hồ sơ đã khớp chắc chắn và không đánh giá thay cho nguồn gốc. Không có tên trong danh sách không có nghĩa là ít được trích dẫn.</p>
 <div class="stats"><div><b>${vn(nCar)}</b><span>nhà khoa học Việt Nam, bảng sự nghiệp (bản ${ver})</span></div><div><b>${vn(nInst)}</b><span>đơn vị</span></div><div><b>${vn(nSgl)}</b><span>nhà khoa học, bảng năm 2025</span></div><div><b>${vn(tagged.length)}</b><span>hồ sơ đã gắn nhãn trên ProFind™</span></div></div>
 <a class="cta" href="/#/?t2=1&amp;b=1">Xem các hồ sơ có nhãn Top 2% trên ProFind™</a>
 <h2>Top 2% nhà khoa học thế giới là gì?</h2>
@@ -172,13 +176,37 @@ ${abroadSection()}
 <h2>Trường, viện có nhiều hồ sơ gắn nhãn Top 2% trên ProFind™</h2>
 <p class="sub">Đếm theo hồ sơ ProFind™ đã khớp với bộ dữ liệu gốc (cả hai bảng), theo đơn vị hiện tại; một người có nhiều đơn vị được tính ở từng đơn vị. Số này khác số của nguồn gốc vì cách ghi tên cơ quan và vì có hồ sơ chưa khớp.</p>
 <ul class="l">${units.map(([u, n]) => `<li><a href="/don-vi/${encodeURIComponent(u)}/">${esc(instBy.get(u).name)}</a><em>${vn(n)} hồ sơ</em></li>`).join("")}</ul>
-<h2>Câu hỏi thường gặp</h2>${faq.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join("")}
+${pages.length ? `<h2>Hồ sơ nhà khoa học có tên trong Top 2% (${vn(pages.length)})</h2><p class="sub">Sắp theo số thứ tự của bộ dữ liệu gốc (xếp theo toàn bộ trích dẫn), không phải hạng của ProFind™. Mỗi tên dẫn tới trang hồ sơ tóm tắt.</p><ul class="l">${pages.map((r) => `<li><a href="${r.path}">${esc(r.a.name)}</a><em>${esc(r.unit)}</em></li>`).join("")}</ul>` : ""}<h2>Câu hỏi thường gặp</h2>${faq.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join("")}
 <h2>Nguồn và giấy phép</h2>
 <p>Ioannidis J.P.A., Baas J., Klavans R., Boyack K.W. (2026). Updated science-wide author databases of standardized citation indicators, phiên bản ${ver}. Elsevier BV, Mendeley Data. <a href="https://doi.org/10.17632/btchxktzyw.${ver}">doi:10.17632/btchxktzyw.${ver}</a>. Giấy phép CC BY-NC 3.0 (phi thương mại). ${vn(ranked)} trong ${vn(tagged.length)} hồ sơ gắn nhãn đang có hạng PRO-SCORE1000™; hồ sơ có liên kết chính ở nước ngoài không được xếp hạng.</p>
 <p><a href="/pro-score/">Phương pháp PRO-SCORE1000™</a> · <a href="/don-vi/">Nhà khoa học theo trường, viện</a> · <a href="/nganh/">Theo ngành</a></p>`;
   put(path, page({ path, title, desc, h1: "Top 2% nhà khoa học thế giới 2026: nhà khoa học Việt Nam", sub: `Stanford/Elsevier, bản ${ver} · ${vn(nCar)} người, ${vn(nInst)} đơn vị (bảng sự nghiệp)`, crumbs: [["ProFind™", "/"], ["Top 2% thế giới", path]], body,
     ld: [{ "@type": "Article", headline: title, description: desc, inLanguage: "vi", datePublished: "2026-10-09", dateModified: built, author: { "@type": "Person", name: "Lương Việt Hoàng" }, publisher: { "@type": "Organization", name: "ISA Vietnam", url: "https://isavn.edu.vn/" }, mainEntityOfPage: SITE + path },
       { "@type": "FAQPage", mainEntity: faq.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) }] }));
+
+  // danh sách người Top 2% trên trang đơn vị (liên kết nội bộ tới trang hồ sơ)
+  { const byU = new Map(); for (const r of pages) for (const x of r.a.institutions ?? []) if (!r.a.instPast?.includes(x)) (byU.get(x) ?? byU.set(x, []).get(x)).push(r);
+    for (const [p0, html] of out) if (p0.startsWith("/don-vi/") && html.includes("<!--T2:")) out.set(p0, html.replace(/<!--T2:([^>]*?)-->/, (_, id) => { const l = byU.get(id.replace(/&amp;/g, "&")) ?? []; return l.length ? `<h2>Nhà khoa học thuộc Top 2% thế giới (${vn(l.length)})</h2><ul class="l">${l.slice(0, 40).map((r) => `<li><a href="${r.path}">${esc(r.a.name)}</a><em>Top 2% · ${esc(TOP2_VI[r.a.top2.field] ?? r.a.top2.field)}</em></li>`).join("")}</ul>` : ""; })); }
+  // ---- trang hồ sơ tóm tắt cho từng người trong Top 2%
+  const works = (id) => { try { return JSON.parse(readFileSync(`public/data/works/${id}.json`, "utf8")); } catch { return []; } };
+  const EXW = new Set(JSON.parse(readFileSync("data/corrections.json", "utf8")).excludeWorks ?? []);
+  for (const { a, path: ap, unit } of pages) {
+    const t2 = a.top2, y = t2.scope === "y2025", fld = TOP2_VI[t2.field] ?? t2.field, uns = (a.institutions ?? []).filter((x) => !a.instPast?.includes(x) && instBy.get(x) && instBy.get(x).type !== "other").map((x) => instBy.get(x));
+    const dn = (a.disciplines ?? []).filter((d) => DISC[d]).map((d) => DISC[d]);
+    const top = works(a.id).filter((w) => w.title && !EXW.has(w.id) && (w.citations ?? 0) > 0).sort((p, q) => (q.citations ?? 0) - (p.citations ?? 0)).slice(0, 5);
+    const ttl = `${a.name}: Top 2% nhà khoa học thế giới${unit ? `, ${unit}` : ""} | ProFind™`, ds = `${a.name}${unit ? ` (${unit})` : ""}: Top 2% nhà khoa học thế giới 2026, lĩnh vực ${fld}; ${vn(a.worksCount)} công trình, ${vn(a.citations)} trích dẫn.`;
+    const abroad = a.abroadMain ? `<p class="warn">Theo quy tắc “liên kết chính” của ProFind™, hồ sơ này có liên kết chính ở nước ngoài nên không được xếp hạng PRO-SCORE1000™.</p>` : "";
+    const ab = `<p>${esc(a.name)} có tên trong danh sách Top 2% nhà khoa học được trích dẫn nhiều nhất thế giới (Ioannidis và cộng sự, Elsevier, phiên bản ${ver}, ${y ? "bảng ảnh hưởng trong năm 2025" : "bảng ảnh hưởng suốt sự nghiệp"}), lĩnh vực ${esc(fld)}${t2.subfield ? "" : ""}. Số thứ tự trong bộ dữ liệu gốc: ${vn(t2.rank)} (xếp theo toàn bộ trích dẫn)${t2.rankNs ? `, ${vn(t2.rankNs)} (xếp khi loại tự trích dẫn)` : ""}${t2.selfPct != null ? `; tỉ lệ tự trích dẫn ${vn(Math.round(t2.selfPct * 1000) / 10, 1)}%` : ""}. Đây là số thứ tự của nguồn gốc, không phải hạng của ProFind™.</p>`;
+    const bd = `${abroad}${ab}<div class="stats"><div><b>${vn(a.worksCount)}</b><span>công trình</span></div><div><b>${vn(a.citations)}</b><span>trích dẫn</span></div>${a.hIndex != null ? `<div><b>${vn(a.hIndex)}</b><span>chỉ số h</span></div>` : ""}</div>
+${uns.length ? `<h2>Đơn vị công tác</h2><ul class="l">${uns.map((u) => `<li><a href="/don-vi/${encodeURIComponent(u.id)}/">${esc(u.name)}</a><em>${esc(typeVi(u.type))}</em></li>`).join("")}</ul>` : ""}
+${dn.length ? `<h2>Ngành nghiên cứu</h2><ul class="l">${(a.disciplines ?? []).filter((d) => DISC[d]).map((d) => `<li><a href="/nganh/${d}/">${esc(DISC[d].vi)}</a>${a.discShares?.[d] && dn.length > 1 ? `<em>${a.discShares[d]}%</em>` : ""}</li>`).join("")}</ul>` : ""}
+${top.length ? `<h2>Công trình được trích dẫn nhiều</h2><ol class="s">${top.map((w) => `<li>${w.doi ? `<a href="https://doi.org/${esc(w.doi)}" rel="noopener">${esc(w.title)}</a>` : esc(w.title)}<br><span class="sub">${esc(w.journal ?? "")}${w.year ? ` · ${w.year}` : ""} · ${vn(w.citations)} trích dẫn</span></li>`).join("")}</ol>` : ""}
+<a class="cta" href="/#/tac-gia/${a.id}">Xem hồ sơ đầy đủ trên ProFind™</a>
+<p class="sub">Mã định danh: ${a.orcid ? `<a href="https://orcid.org/${esc(a.orcid)}" rel="noopener">ORCID ${esc(a.orcid)}</a> · ` : ""}<a href="https://openalex.org/${a.id}" rel="noopener">OpenAlex ${a.id}</a>. Dữ liệu tổng hợp từ nguồn công khai (OpenAlex, ORCID, Crossref và danh sách Top 2%); có thể thiếu hoặc sai sót. Nếu cần đính chính hoặc đề nghị gỡ trang này, xem <a href="/#/dinh-chinh">đính chính</a> hoặc liên hệ <a href="mailto:vienisavietnam@gmail.com">vienisavietnam@gmail.com</a>. <a href="/top-2-phan-tram/">Top 2% nhà khoa học thế giới</a>.</p>`;
+    put(ap, page({ path: ap, title: ttl, desc: ds, h1: a.name, sub: [unit, `Top 2% thế giới · ${fld}`].filter(Boolean).join(" · "), crumbs: [["ProFind™", "/"], ["Top 2% thế giới", "/top-2-phan-tram/"], [a.name, ap]], body: bd,
+      ld: [{ "@type": "ProfilePage", mainEntity: { "@type": "Person", name: a.name, ...(uns[0] ? { affiliation: uns.slice(0, 3).map((u) => ({ "@type": "Organization", name: u.name })) } : {}), ...(dn.length ? { knowsAbout: dn.map((d) => d.vi) } : {}), sameAs: [a.orcid ? `https://orcid.org/${a.orcid}` : null, `https://openalex.org/${a.id}`].filter(Boolean), url: SITE + ap }, dateModified: built }] }));
+    sm.push([SITE + ap, 0.5]);
+  }
   sm.push([SITE + path, 0.9]);
 }
 // ---- trang chỉ mục
@@ -190,4 +218,4 @@ put("/nganh/", page({ path: "/nganh/", title: "Nhà khoa học theo ngành tại
 sm.push([`${SITE}/nganh/`, 0.8]);
 for (const [p, html] of out) { const dir = `dist${p}`; mkdirSync(dir, { recursive: true }); writeFileSync(`${dir}index.html`, html); }
 writeFileSync("dist/sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${sm.map(([u, p]) => `<url><loc>${u}</loc><lastmod>${built}</lastmod><changefreq>weekly</changefreq><priority>${p}</priority></url>`).join("")}</urlset>\n`);
-console.log(`Trang tĩnh: ${out.size} trang (${ixU.length} đơn vị + ${ixD.length} ngành + ${ixC.length} tỉnh/thành được lập chỉ mục, + trang PRO-SCORE1000™ và trang Top 2%), sitemap ${sm.length} URL.`);
+console.log(`Trang tĩnh: ${out.size} trang (${ixU.length} đơn vị + ${ixD.length} ngành + ${ixC.length} tỉnh/thành được lập chỉ mục, + trang PRO-SCORE1000™, trang Top 2% và ${[...out.keys()].filter((k) => k.startsWith("/tac-gia/")).length} trang hồ sơ Top 2%), sitemap ${sm.length} URL.`);
