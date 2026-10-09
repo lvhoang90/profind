@@ -55,3 +55,8 @@ npm run d:check                              # kiểm tra nhất quán
 - `build-seo-pages.mjs` tạo `/tac-gia/<tên>-<mã>/` cho hồ sơ có nhãn Top 2% (không nghi gộp), gồm: nhãn và hai số thứ tự của bộ dữ liệu gốc, số công trình/trích dẫn/chỉ số h, đơn vị, ngành, 5 công trình được trích dẫn nhiều (trừ bài đã loại), ORCID/OpenAlex, dữ liệu cấu trúc ProfilePage/Person. Không đưa PRO-SCORE1000™ và hạng của ProFind vào trang tĩnh.
 - Gỡ trang theo đề nghị: thêm mã vào `data/seo-exclude.json` (`ids`) rồi dựng lại. Tên hiển thị lấy từ hồ sơ ProFind (đính chính bằng `corrections.rename`).
 - Trang `/top-2-phan-tram/` và trang đơn vị liên kết tới các trang này.
+
+## Tác giả cuối và chỉ báo "Chủ đạo"
+- `build-index.mjs` đánh dấu `last = 1` cho công trình có từ 3 tác giả mà tác giả đứng cuối không phải đứng đầu hay liên hệ. Vai trò `lead` (dùng cho điểm công trình HĐGSNN) không đổi.
+- `pro-score.mjs` chỉ tính `last` vào chỉ báo "Chủ đạo" ở nhóm ngành có quy ước (`data/last-author-disciplines.json`: y sinh, hóa, sinh, kỹ thuật); công trình tạp chí nhiều ngành chỉ tính khi mọi ngành của tạp chí nằm trong danh sách, công trình chưa rõ ngành dùng ngành chính của tác giả. Sửa danh sách ngành ở file JSON rồi dựng lại.
+- Đo ảnh hưởng trước khi áp dụng: Spearman 0,996 với bản cũ khi áp cho mọi ngành; áp cho nhóm ngành này, hạng đổi trung vị 33 bậc (p90 160), top 100 giữ 96, top 1000 giữ 967.

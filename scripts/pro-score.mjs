@@ -16,6 +16,7 @@
 const W = { impact: 0.42, output: 0.1, lead: 0.1, quality: 0.1, momentum: 0.17, steady: 0.08, recog: 0.03 };
 export const PRO_VERSION = "2.0";
 import { makePanel, summarize, KEYS as PKEYS } from "./pro-panel.mjs";
+import { readFileSync } from "node:fs";
 const QV = { Q1: 1, Q2: 0.75, Q3: 0.5, Q4: 0.25 };
 const quant = (arr, p) => { if (!arr.length) return Infinity; const s = [...arr].sort((a, b) => a - b); return s[Math.min(s.length - 1, Math.floor(p * s.length))]; };
 /** Bách phân vị trung điểm (0..1) của từng giá trị trong mảng cùng nhóm. */
@@ -24,6 +25,7 @@ function pctMap(items, key) {
   return (x) => (n ? (lo(x) + hi(x)) / 2 / n : 0.5);
 }
 
+const LASTD = new Set(JSON.parse(readFileSync(new URL("../data/last-author-disciplines.json", import.meta.url), "utf8")).disciplines);
 export function computePro(authors, per, year) {
   const pool = authors.filter((a) => a.rankable && a.worksCount > 0);
   const field = (a) => a.disciplines?.[0] ?? "_";
@@ -37,7 +39,8 @@ export function computePro(authors, per, year) {
   for (const a of pool) {
     const ws = per.get(a.id) ?? [], c = (() => { let t = 0, w = 0; for (const [d, p] of mix(a)) if (cap.has(d)) { t += p * cap.get(d); w += p; } return w ? t / w : 1e9; })(), yrs = new Set(ws.map((w) => w.year));
     const excess = ws.reduce((s, w) => s + Math.max(0, (w.citations ?? 0) - c), 0);
-    const known = ws.filter((w) => !w.ru), lead = known.filter((w) => w.role === "lead").length, qs = ws.filter((w) => QV[w.quartile]);
+    const lastOk = (w) => w.last && (w.disc?.length ? w.disc.every((d) => LASTD.has(d)) : LASTD.has(a.disciplines?.[0])); // tác giả cuối chỉ tính ở ngành có quy ước
+    const known = ws.filter((w) => !w.ru || lastOk(w)), lead = known.filter((w) => w.role === "lead" || lastOk(w)).length, qs = ws.filter((w) => QV[w.quartile]);
     const rec = ws.filter((w) => w.year >= year - 4);
     // Tuổi nghề cho "Đều đặn": bỏ năm công bố lẻ loi ở đầu hồ sơ (cách năm kế tiếp trên 5 năm; thường là bài của người khác bị gộp nhầm hoặc bài cũ không liên quan), lặp lại đến khi hết.
     const ys = [...yrs].filter(Number.isFinite).sort((x, y) => x - y); while (ys.length > 1 && ys[1] - ys[0] > 5) ys.shift();

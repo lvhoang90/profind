@@ -1,0 +1,5 @@
+{
+  "_note": "Nhóm ngành có quy ước vị trí tác giả cuối là người dẫn dắt nhóm (y sinh, hóa, sinh, kỹ thuật). Chỉ ở các ngành này, công trình có từ 3 tác giả mà tác giả đứng CUỐI (không phải đầu hay liên hệ) được tính vào chỉ báo \"Chủ đạo\" của PRO-SCORE1000™. Điểm công trình theo HĐGSNN không đổi. Toán, kinh tế, giáo dục, xã hội nhân văn, CNTT, vật lý, khoa học Trái đất không áp dụng (nhiều nơi xếp tên theo thứ tự chữ cái hoặc không có quy ước). Công trình thuộc tạp chí nhiều ngành chỉ tính khi mọi ngành của tạp chí nằm trong danh sách; công trình chưa rõ ngành tạp chí dùng ngành chính của tác giả.",
+  "minAuthors": 3,
+  "disciplines": ["y-hoc", "duoc", "sinh-hoc", "hoa-thuc-pham", "nong-lam", "chan-nuoi", "dien-tu", "co-khi", "co-hoc", "xay-dung", "thuy-loi", "giao-thong", "luyen-kim"]
+}
