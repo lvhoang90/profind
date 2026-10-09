@@ -52,7 +52,9 @@ const excl = new Set(C.excludeWorks), seen = new Set();
 // Vai trò theo vị trí tác giả tải lại từ OpenAlex (scripts/fetch-positions.mjs): tác giả chính (HĐGSNN) = tác giả đứng đầu HOẶC tác giả liên hệ (một hay nhiều người);
 // trước đây chỉ tính tác giả liên hệ khi là người duy nhất nên bỏ sót các bài đồng liên hệ. Không có dữ liệu vị trí thì giữ vai trò cũ.
 const POS = existsSync("data/raw/_positions.json") && !process.env.NO_POSITIONS ? rd("data/raw/_positions.json") : {};
-const withPos = (w) => { const p = POS[w.id.split("-").pop()], q = p?.a?.[w.id.split("-")[0]]; return q ? { ...w, role: /[fc]/.test(q) ? "lead" : "co", corr: p.c } : w; };
+// Tác giả cuối (không phải đầu hay liên hệ) của công trình có từ minAuthors tác giả: đánh dấu last = 1; pro-score.mjs chỉ tính vào chỉ báo "Chủ đạo" ở nhóm ngành có quy ước (data/last-author-disciplines.json). Không đổi vai trò "lead" dùng cho điểm công trình HĐGSNN.
+const LAST_IND = rd("data/last-author-disciplines.json").minAuthors, LAST_MIN = 0;
+const withPos = (w) => { const p = POS[w.id.split("-").pop()], q = p?.a?.[w.id.split("-")[0]]; return q ? { ...w, role: /[fc]/.test(q) || (LAST_MIN > 0 && q.includes("l") && p.n >= LAST_MIN) ? "lead" : "co", corr: p.c, ...(LAST_IND > 0 && q.includes("l") && !/[fc]/.test(q) && p.n >= LAST_IND ? { last: 1 } : {}) } : w; };
 const rawWorks = R.works.map((w) => ({ ...withPos(w), authorId: alias.get(w.authorId) ?? w.authorId })).filter((w) => {
   if (!live.has(w.authorId) || excl.has(w.id)) return false;
   const k = `${w.authorId}|${w.id.split("-").pop()}`; if (seen.has(k)) return false; seen.add(k); return true;
