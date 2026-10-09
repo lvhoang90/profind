@@ -153,7 +153,7 @@ export default async function handler(request) {
       try {
         const pubO = (process.env.PUBLIC_ORIGIN || "https://profind.isavn.edu.vn").replace(/\/$/, ""), utmq = "utm_source=email&utm_medium=welcome&utm_campaign=new_user";
         const go = (app) => `https://isavn.edu.vn/go/${app}?from=profind&utm_source=profind&utm_medium=email&utm_campaign=welcome`;
-        const mail = welcomeMail({ lang: u.lang === "en" ? "en" : "vi", u: { account: `${pubO}/?${utmq}#/tai-khoan`, profile: `${pubO}/?${utmq}#/tai-khoan/ho-so`, start: `${pubO}/?${utmq}`, edufind: go("edufind"), ami: go("ami"), may: go("may"), unsub: `${pubO}/api/account?op=unsub&u=${u.id}&s=${(await hmac(`unsub:${u.id}`)).slice(0, 32)}` } });
+        const mail = welcomeMail({ lang: u.lang === "en" ? "en" : "vi", u: { account: `${pubO}/?${utmq}#/tai-khoan`, profile: `${pubO}/?${utmq}#/tai-khoan`, start: `${pubO}/?${utmq}`, edufind: go("edufind"), ami: go("ami"), may: go("may"), unsub: `${pubO}/api/account?op=unsub&u=${u.id}&s=${(await hmac(`unsub:${u.id}`)).slice(0, 32)}` } });
         await Promise.race([sendMail(u.email, mail), new Promise((_, rej) => setTimeout(() => rej(new Error("hết thời gian gửi")), 4000))]);
         await store.run([["HINCRBY", `profind:all:evt:${dayKey()}`, "welcome_sent", 1], ["EXPIRE", `profind:all:evt:${dayKey()}`, 60 * 86400]]);
       } catch (e) { console.error("[welcome]", e.message); }

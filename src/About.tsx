@@ -98,7 +98,7 @@ export function AboutPage({ section }: { section: string }) {
       <ul>
         <li>Biết, xem, <b>chỉnh sửa</b>, <b>xóa</b>, <b>hạn chế</b> và <b>phản đối</b> việc xử lý; rút lại sự đồng ý; khiếu nại.</li>
         <li><b>Ẩn điểm và huy hiệu xếp hạng</b> (vẫn giữ công trình) hoặc <b>ẩn/gỡ toàn bộ hồ sơ</b>: dùng <a href="#/dinh-chinh">biểu mẫu đính chính</a> (đăng nhập bằng email tổ chức để chúng tôi xác minh danh tính) hoặc gửi thư tới {CONTACT}. Sau khi xác minh, việc ẩn có hiệu lực ngay. Chúng tôi phản hồi trong thời hạn pháp luật quy định; mục tiêu là trong 72 giờ làm việc.</li>
-        <li>Nhà khoa học đã xác thực tự quản lý quyền này tại <a href="#/tai-khoan/khoa-hoc">Hồ sơ khoa học</a> trong tài khoản.</li>
+        <li>Nhà khoa học đã xác thực tự quản lý quyền này tại <a href="#/tai-khoan">Hồ sơ khoa học</a> trong tài khoản.</li>
         <li>Gỡ hồ sơ chỉ áp dụng trên ProFind™; dữ liệu gốc ở OpenAlex, ORCID, Crossref vẫn tồn tại ở các hệ thống đó và bạn có thể chỉnh sửa tại đó.</li></ul>
       <h3>5. Lưu trữ, chia sẻ và chuyển ra nước ngoài</h3>
       <ul>
@@ -123,7 +123,7 @@ export function AboutPage({ section }: { section: string }) {
       <ul>
         <li>To know, access, <b>correct</b>, <b>erase</b>, <b>restrict</b> and <b>object</b>; to withdraw consent; to complain.</li>
         <li><b>Hide the score and rank badge</b> (keeping the works) or <b>hide/remove the whole profile</b>: use the <a href="#/dinh-chinh">correction form</a> (sign in with an organisational email so we can verify identity) or email {CONTACT}. Once verified the change takes effect immediately. We respond within the legal deadline; our target is 72 working hours.</li>
-        <li>Verified researchers manage this themselves in <a href="#/tai-khoan/khoa-hoc">Scholar profile</a> in their account.</li>
+        <li>Verified researchers manage this themselves in <a href="#/tai-khoan">Scholar profile</a> in their account.</li>
         <li>Removal applies to ProFind™ only; the source records remain in OpenAlex, ORCID and Crossref, where you can edit them.</li></ul>
       <h3>5. Storage, sharing and cross-border processing</h3>
       <ul>
