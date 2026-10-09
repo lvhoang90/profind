@@ -50,3 +50,8 @@ npm run d:check                              # kiểm tra nhất quán
 ## SEO
 - Trang tĩnh do `scripts/build-seo-pages.mjs` sinh sau `vite build`: `/don-vi/`, `/nganh/`, `/tinh-thanh/`, `/pro-score/` và `/top-2-phan-tram/` (Top 2% thế giới: số liệu theo lĩnh vực, trường/viện, FAQ có dữ liệu cấu trúc FAQPage, nguồn và giấy phép). Chỉ số liệu tổng hợp, không nêu tên cá nhân. Trang đơn vị có thêm số hồ sơ thuộc Top 2% (ô thống kê và mô tả).
 - Trang chủ (`index.html`): tiêu đề, mô tả (khoảng 140 ký tự), từ khóa và văn bản dự phòng trong `#root` nhắm các truy vấn tiếng Việt (tra cứu/xếp hạng nhà khoa học Việt Nam, top 2% thế giới, ORCID, ISSN, DOI). Sitemap: `dist/sitemap.xml`. Liên kết nội bộ: thanh trên của trang tĩnh và chân trang ứng dụng trỏ tới `/top-2-phan-tram/`.
+
+## Trang hồ sơ tóm tắt cho nhóm Top 2%
+- `build-seo-pages.mjs` tạo `/tac-gia/<tên>-<mã>/` cho hồ sơ có nhãn Top 2% (không nghi gộp), gồm: nhãn và hai số thứ tự của bộ dữ liệu gốc, số công trình/trích dẫn/chỉ số h, đơn vị, ngành, 5 công trình được trích dẫn nhiều (trừ bài đã loại), ORCID/OpenAlex, dữ liệu cấu trúc ProfilePage/Person. Không đưa PRO-SCORE1000™ và hạng của ProFind vào trang tĩnh.
+- Gỡ trang theo đề nghị: thêm mã vào `data/seo-exclude.json` (`ids`) rồi dựng lại. Tên hiển thị lấy từ hồ sơ ProFind (đính chính bằng `corrections.rename`).
+- Trang `/top-2-phan-tram/` và trang đơn vị liên kết tới các trang này.
