@@ -75,11 +75,6 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "TAYLOR-ROBINSON, ANDREW W.",
-  "inst": "VinUniversity",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
   "name": "Ghalambaz, Mohammad G.",
   "inst": "Ton-Duc-Thang University",
   "why": "không có hồ sơ cùng tên trong ProFind"
@@ -632,23 +627,8 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Maheshwari, Greeni",
-  "inst": "RMIT University Vietnam",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
   "name": "Nguyen, Quang Khai",
   "inst": "Đại học Mở Thành phố Hồ Chí Minh",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Akram, Umair",
-  "inst": "RMIT University Vietnam",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Chi, Nguyen Thi Khanh",
-  "inst": "Foreign Trade University",
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
@@ -715,16 +695,6 @@
  {
   "name": "Le, Tu D.Q.",
   "inst": "Viet Nam National University Ho Chi Minh City",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Nguyen-Phuoc, Duy Q.",
-  "inst": "VinUniversity",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Ngo, Vu Minh",
-  "inst": "University of Economics Ho Chi Minh City",
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
@@ -1539,115 +1509,8 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Nguyen-Trong, Nghia",
-  "inst": "Nextwaves Industries",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5034859176",
-    "name": "Trong Nghia-Nguyen",
-    "inst": [
-     "Vietnamese - German University"
-    ],
-    "works": 33
-   },
-   {
-    "id": "A5114231970",
-    "name": "Nguyễn Trọng Nghĩa",
-    "inst": [
-     "Hung Yen University of Technology Education"
-    ],
-    "works": 29
-   },
-   {
-    "id": "A5050246251",
-    "name": "Nghia Nguyen-Trong",
-    "inst": [
-     "University of Architecture Ho Chi Minh City"
-    ],
-    "works": 90
-   }
-  ]
- },
- {
-  "name": "Nguyen, Long Hoang",
-  "inst": "Ton-Duc-Thang University",
-  "why": "nhiều hồ sơ khớp",
-  "candidates": [
-   {
-    "id": "A5060213605",
-    "name": "Nguyễn Hoàng Long",
-    "inst": [
-     "Quy Nhon University"
-    ],
-    "works": 34
-   },
-   {
-    "id": "A5065021757",
-    "name": "Hoàng Long Nguyễn",
-    "inst": [
-     "University of Transport Technology"
-    ],
-    "works": 47
-   },
-   {
-    "id": "A5104086735",
-    "name": "Nguyễn Hoàng Long",
-    "inst": [
-     "VinUniversity",
-     "University of Transport Technology",
-     "Ton Duc Thang University"
-    ],
-    "works": 53
-   },
-   {
-    "id": "A5039222358",
-    "name": "Hoang-Long Nguyen",
-    "inst": [
-     "University of Transport Technology",
-     "Hong Duc University"
-    ],
-    "works": 19
-   },
-   {
-    "id": "A5057530879",
-    "name": "Long Hoang Nguyen",
-    "inst": [
-     "Ton Duc Thang University"
-    ],
-    "works": 31
-   }
-  ]
- },
- {
-  "name": "Huong, D. C.",
-  "inst": "Industrial University of Ho Chi Minh City",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "La, Duc Duong",
-  "inst": "Institute of Chemistry and Materials",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5020953748",
-    "name": "Duong Duc La",
-    "inst": [
-     "Ton Duc Thang University",
-     "Viện Hóa học"
-    ],
-    "works": 235
-   }
-  ]
- },
- {
   "name": "Vuong, Lan Ngoc",
   "inst": "University of Medicine and Pharmacy at HCMC",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Do, Ha Huu",
-  "inst": "Dại học Nguyen Tat Thanh",
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
@@ -1674,7 +1537,7 @@
     "inst": [
      "University of Transport Technology"
     ],
-    "works": 47
+    "works": 61
    },
    {
     "id": "A5104086735",
@@ -1706,39 +1569,9 @@
   ]
  },
  {
-  "name": "Smith, Julia H.",
-  "inst": "VinUniversity",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Le, Ngoc Lieu",
-  "inst": "International University - Vietnam National University HCM City",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Luy, Nguyen Tan",
-  "inst": "Ho Chi Minh City University of Technology - HCMUT",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
   "name": "Nguyen, Hoang Chinh",
   "inst": "Ton-Duc-Thang University",
   "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Phung, Manh Duong",
-  "inst": "Fulbright University Vietnam",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5004803753",
-    "name": "Manh Duong Phung",
-    "inst": [
-     "VinUniversity"
-    ],
-    "works": 46
-   }
-  ]
  },
  {
   "name": "Pham, Viet–Thanh",
@@ -1771,11 +1604,6 @@
  {
   "name": "Thao, Nguyen Xuan",
   "inst": "Banking Academy of Vietnam",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Le, Van Thao",
-  "inst": "Le Quy Don Technical University",
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
@@ -1880,220 +1708,9 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Thai, Son",
-  "inst": "Viet Nam National University Ho Chi Minh City",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
   "name": "Cong, Phamhong",
   "inst": "Vietnam Academy of Science and Technology",
   "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Nguyen, Trung Thanh",
-  "inst": "Le Quy Don Technical University",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5090452852",
-    "name": "Nguyễn Thành Trung",
-    "inst": [
-     "Vietnam National University, Hanoi",
-     "Vietnam National University Ho Chi Minh City",
-     "VNU-University of Medicine and Pharmacy",
-     "University of Transport and Communications",
-     "Tay Do University",
-     "Lac Hong University",
-     "Viện Môi trường và Tài nguyên"
-    ],
-    "works": 119
-   },
-   {
-    "id": "A5077121485",
-    "name": "Thành Trung Nguyễn",
-    "inst": [
-     "Hanoi Medical University",
-     "Vietnam National University, Hanoi",
-     "VNU-Hanoi University of Science"
-    ],
-    "works": 124
-   },
-   {
-    "id": "A5035601093",
-    "name": "Thanh Trung Nguyen",
-    "inst": [
-     "Vietnam National University, Hanoi",
-     "Hue University",
-     "Vietnam Academy of Science and Technology",
-     "VNU-Vietnam - Japan University",
-     "Hanoi University of Natural Resources and Environment",
-     "Viện Khoa học công nghệ Năng lượng và Môi trường"
-    ],
-    "works": 106
-   },
-   {
-    "id": "A5053044483",
-    "name": "Trung Thanh Nguyen",
-    "inst": [
-     "An Giang University",
-     "Hue University",
-     "Duy Tan University",
-     "Trường Đại học Khoa học"
-    ],
-    "works": 86
-   },
-   {
-    "id": "A5020157017",
-    "name": "Trung Thanh Nguyen",
-    "inst": [
-     "NEU College of Business",
-     "Phenikaa University"
-    ],
-    "works": 40
-   },
-   {
-    "id": "A5076608776",
-    "name": "Nguyễn Trung Thành",
-    "inst": [
-     "VNU-Hanoi University of Science",
-     "HUST School of Information and Communication Technology",
-     "University of Science and Technology Hanoi"
-    ],
-    "works": 92
-   },
-   {
-    "id": "A5007712986",
-    "name": "Nguyễn Thành Trung",
-    "inst": [
-     "VNU-University of Medicine and Pharmacy"
-    ],
-    "works": 47
-   },
-   {
-    "id": "A5100675794",
-    "name": "Trung Thanh Nguyen",
-    "inst": [
-     "Thai Nguyen University of Education",
-     "VNU-University of Medicine and Pharmacy"
-    ],
-    "works": 15
-   },
-   {
-    "id": "A5100675789",
-    "name": "Trung-Thanh Nguyen",
-    "inst": [
-     "Hanoi University of Civil Engineering",
-     "Viện Kiểm nghiệm an toàn vệ sinh thực phẩm quốc gia"
-    ],
-    "works": 69
-   },
-   {
-    "id": "A5101640944",
-    "name": "Thanh Trung Nguyên",
-    "inst": [
-     "Ho Chi Minh University of Education"
-    ],
-    "works": 1
-   },
-   {
-    "id": "A5046932726",
-    "name": "Trung Thành Nguyễn",
-    "inst": [
-     "University of Transports Ho Chi Minh City",
-     "Van Lang University"
-    ],
-    "works": 108
-   },
-   {
-    "id": "A5088231118",
-    "name": "Thanh Trung Nguyen",
-    "inst": [
-     "Vietnam National University of Agriculture",
-     "National Institute Of Hygiene And Epidemiology"
-    ],
-    "works": 17
-   },
-   {
-    "id": "A5101926595",
-    "name": "Thành Trung Nguyen",
-    "inst": [
-     "Hanoi University of Natural Resources and Environment"
-    ],
-    "works": 25
-   },
-   {
-    "id": "A5101718799",
-    "name": "Trung Thanh Nguyen",
-    "inst": [
-     "University of Management and Technology Ho Chi Minh City"
-    ],
-    "works": 10
-   },
-   {
-    "id": "A5021571129",
-    "name": "Thanh-Trung Nguyen",
-    "inst": [
-     "Trường Đại học Công nghệ Đồng Nai"
-    ],
-    "works": 3
-   },
-   {
-    "id": "A5028311006",
-    "name": "Trung Nguyễn Thành",
-    "inst": [
-     "Viện Kiểm nghiệm an toàn vệ sinh thực phẩm quốc gia"
-    ],
-    "works": 12
-   },
-   {
-    "id": "A5015407848",
-    "name": "Thanh Nguyen Trung",
-    "inst": [
-     "Viện Các Khoa học Trái đất"
-    ],
-    "works": 20
-   },
-   {
-    "id": "A5101718798",
-    "name": "Trung Thành Nguyễn",
-    "inst": [
-     "Viện Nghiên cứu và Ứng dụng Trí tuệ nhân tạo"
-    ],
-    "works": 37
-   },
-   {
-    "id": "A5134275730",
-    "name": "Thanh Trung Nguyen",
-    "inst": [
-     "Viện Nghiên cứu và Ứng dụng Trí tuệ nhân tạo"
-    ],
-    "works": 3
-   },
-   {
-    "id": "A5135945772",
-    "name": "Thanh Trung Nguyen",
-    "inst": [
-     "Viện Nghiên cứu và Ứng dụng Trí tuệ nhân tạo"
-    ],
-    "works": 1
-   },
-   {
-    "id": "A5134144002",
-    "name": "Thanh Trung Nguyen",
-    "inst": [
-     "Viện Nghiên cứu và Ứng dụng Trí tuệ nhân tạo"
-    ],
-    "works": 14
-   },
-   {
-    "id": "A5147435077",
-    "name": "Thanh Trung Nguyen",
-    "inst": [
-     "Viện Nghiên cứu và Ứng dụng Trí tuệ nhân tạo"
-    ],
-    "works": 1
-   }
-  ]
  },
  {
   "name": "Nguyen, Tuan Anh",
@@ -2459,43 +2076,8 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Tran, Thao T.D.",
-  "inst": "Ton-Duc-Thang University",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5027280509",
-    "name": "Thao T.D. Tran",
-    "inst": [
-     "Vietnam National University Ho Chi Minh City"
-    ],
-    "works": 117
-   }
-  ]
- },
- {
-  "name": "Vu, Giang Thu",
-  "inst": "Institute of Health Economics and Technology",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5065915693",
-    "name": "Giang Thu Vu",
-    "inst": [
-     "VinUniversity"
-    ],
-    "works": 191
-   }
-  ]
- },
- {
   "name": "Carrique-Mas, Juan J.",
   "inst": "Food and Agriculture Organization of the United Nations (FAO)",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Dang, Thai Viet",
-  "inst": "Hanoi University of Science and Technology",
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
@@ -2603,21 +2185,6 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Tran, Thanh Trung",
-  "inst": "Le Quy Don Technical University",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5025882285",
-    "name": "Trần Thành Trung",
-    "inst": [
-     "Ho Chi Minh City University of Industry and Trade"
-    ],
-    "works": 7
-   }
-  ]
- },
- {
   "name": "Tu, Tranminh",
   "inst": "Hanoi University of Civil Engineering",
   "why": "không có hồ sơ cùng tên trong ProFind"
@@ -2625,11 +2192,6 @@
  {
   "name": "Huynh, Dang Van",
   "inst": "VNUHCM - University of Information Technology",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Pham, Thuy Anh Vu",
-  "inst": "Viet Nam National University Ho Chi Minh City",
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
@@ -2643,77 +2205,8 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Vu, Hoai Nam",
-  "inst": "Đại học Công nghệ Giao thông vận tải",
-  "why": "nhiều hồ sơ khớp",
-  "candidates": [
-   {
-    "id": "A5020424588",
-    "name": "Vũ Hoài Nam",
-    "inst": [
-     "University of Transport Technology"
-    ],
-    "works": 96
-   },
-   {
-    "id": "A5036923740",
-    "name": "Hoai Nam Vu",
-    "inst": [
-     "Posts & Telecoms Institute of Technology"
-    ],
-    "works": 26
-   },
-   {
-    "id": "A5103089012",
-    "name": "Nam Hoai Vu",
-    "inst": [
-     "Saigon International University"
-    ],
-    "works": 7
-   }
-  ]
- },
- {
-  "name": "Hien, Nguyen Dinh",
-  "inst": "Thu Dau Mo University",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5091133342",
-    "name": "Nguyen Dinh Hien",
-    "inst": [
-     "Duy Tan University"
-    ],
-    "works": 66
-   }
-  ]
- },
- {
   "name": "Vu, Danh C.",
   "inst": "Thu Dau Mot University",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "van Kiem, Phan",
-  "inst": "National Institute of Drug Quality Control",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5014245013",
-    "name": "Phan Văn Kiệm",
-    "inst": [
-     "Vietnam Academy of Science and Technology",
-     "Viện Hóa học",
-     "Graduate University of Science and Technology",
-     "Viện Kiểm nghiệm thuốc Trung ương"
-    ],
-    "works": 369
-   }
-  ]
- },
- {
-  "name": "Le, Van Tao",
-  "inst": "Le Quy Don Technical University",
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
@@ -2829,16 +2322,6 @@
   ]
  },
  {
-  "name": "Bui, Linh P.",
-  "inst": "VinUniversity",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Gouran, Sina",
-  "inst": "Duy Tan University",
-  "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
   "name": "Vu, Anh Tuan",
   "inst": "Hanoi University of Science and Technology",
   "why": "cùng tên nhưng khác đơn vị",
@@ -2894,10 +2377,5 @@
     "works": 25
    }
   ]
- },
- {
-  "name": "Hai, Dao Thanh",
-  "inst": "RMIT University Vietnam",
-  "why": "không có hồ sơ cùng tên trong ProFind"
  }
 ]
