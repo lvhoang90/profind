@@ -33,7 +33,7 @@ const KEY_RE = /^[aw]\|[A-Za-z0-9._-]{1,60}$/; // a|<mã tác giả> hoặc w|<m
 const FAV_MAX = 300, SS_MAX = 30, SS_Q_MAX = 80, RV_MAX = 150, RV_TTL = 90 * 864e5;
 const REASONS = ["reg", "banner", "fav", "ss", "csv", "view", "eco"];
 const APPS = ["edufind", "ami", "may"];
-const K = { user: (id) => `profind:u:${id}`, cnt: (id) => `profind:uc:${id}`, users: "profind:users", otp: (id) => `profind:otp:${id}`, rl: (k) => `profind:arl:${k}`, au: (d) => `profind:au:${d}`, fav: (id) => `profind:fav:${id}`, uh: (id) => `profind:uh:${id}`, ss: (id) => `profind:ss:${id}`, rv: (id) => `profind:rv:${id}`, favTop: "profind:favtop", favTitle: "profind:favtt" };
+const K = { user: (id) => `profind:u:${id}`, cnt: (id) => `profind:uc:${id}`, users: "profind:users", otp: (id) => `profind:otp:${id}`, rl: (k) => `profind:arl:${k}`, au: (d) => `profind:au:${d}`, fav: (id) => `profind:fav:${id}`, uh: (id) => `profind:uh:${id}`, ss: (id) => `profind:ss:${id}`, rv: (id) => `profind:rv:${id}`, ref: (c) => `profind:ref:${c}`, favTop: "profind:favtop", favTitle: "profind:favtt" };
 
 const json = (body, status = 200, headers = {}) => new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store", ...headers } });
 const tidy = (s, max) => String(s ?? "").replace(/[\u0000-\u001f\u007f<>]/g, " ").replace(/\s+/g, " ").trim().slice(0, max);
@@ -75,9 +75,13 @@ export default async function handler(request) {
   const saveUser = (u) => one(["SET", K.user(u.id), JSON.stringify(u)]);
   /** Mức hoàn thiện hồ sơ (5 mục, mỗi mục 20%). */
   const profilePct = (u) => Math.round(["name", "phone", "job", "org", "address"].filter((k) => String(u[k] || "").trim()).length * 20);
-  const counts = (h) => ({ visits: Number(h.visits || 0), days: Number(h.days || 0), login: Number(h.login || 0), views: Number(h.views || 0), searches: Number(h.searches || 0) });
+  const counts = (h) => {
+    // Chuỗi ngày liên tiếp: còn hiệu lực khi hôm nay hoặc hôm qua có dùng, quá đó về 0 (kỷ lục giữ nguyên).
+    const d0 = dayKey(), d1 = dayKey(new Date(Date.now() - 864e5)), live = h.lastDay === d0 || h.lastDay === d1;
+    return { visits: Number(h.visits || 0), days: Number(h.days || 0), login: Number(h.login || 0), views: Number(h.views || 0), searches: Number(h.searches || 0), streak: live ? Number(h.streak || 0) : 0, best: Math.max(Number(h.best || 0), live ? Number(h.streak || 0) : 0), invited: Number(h.invited || 0), invitedVerified: Number(h.invitedVerified || 0), today: h.lastDay === d0 };
+  };
   const hopsOf = (h) => Object.fromEntries(APPS.map((a) => [a, Number(h[`hop_${a}`] || 0)]));
-  const pub = (u, h) => ({ email: u.email, name: u.name || "", phone: u.phone || "", job: u.job || "", org: u.org || "", address: u.address || "", createdAt: u.createdAt, regVisits: u.regVisits || 0, regReason: u.regReason || "", lastSeen: h.lastSeen || u.createdAt, plan: "free-forever", isAdmin: isAdmin(u), profilePct: profilePct(u), utm: u.utm || "", consentAt: u.consentAt || "", noMail: !!u.noMail, hops: hopsOf(h), counts: counts(h) });
+  const pub = (u, h) => ({ email: u.email, name: u.name || "", phone: u.phone || "", job: u.job || "", org: u.org || "", address: u.address || "", createdAt: u.createdAt, regVisits: u.regVisits || 0, regReason: u.regReason || "", lastSeen: h.lastSeen || u.createdAt, plan: "free-forever", isAdmin: isAdmin(u), profilePct: profilePct(u), utm: u.utm || "", consentAt: u.consentAt || "", noMail: !!u.noMail, hops: hopsOf(h), counts: counts(h), ref: u.ref || "" });
   const limit = async (key, max, ex) => { const [n] = await store.run([["INCR", K.rl(key)]]); if (n === 1) await one(["EXPIRE", K.rl(key), String(ex)]); return n <= max; };
 
   const uid = await readToken(cookies[COOKIE]);
@@ -93,7 +97,17 @@ export default async function handler(request) {
   const mine = async (kf) => Object.entries(pairs(await one(["HGETALL", kf(me.id)]))).map(([k, v]) => { try { return { k, ...JSON.parse(v) }; } catch { return null; } }).filter(Boolean);
 
   try {
-    if (op === "me") return json({ user: me ? pub(me, pairs(await one(["HGETALL", K.cnt(me.id)]))) : null });
+    /** Mã giới thiệu 7 ký tự (chữ thường và số), tạo một lần cho mỗi tài khoản. */
+    const ensureRef = async (u) => {
+      if (u.ref) return u;
+      for (let i = 0; i < 6; i++) {
+        const code = Array.from(crypto.getRandomValues(new Uint8Array(7)), (b) => "abcdefghjkmnpqrstuvwxyz23456789"[b % 31]).join("");
+        if (await one(["GET", K.ref(code)])) continue;
+        await one(["SET", K.ref(code), u.id]); u.ref = code; await saveUser(u); break;
+      }
+      return u;
+    };
+    if (op === "me") { if (me) await ensureRef(me); return json({ user: me ? pub(me, pairs(await one(["HGETALL", K.cnt(me.id)]))) : null }); }
 
     if (op === "request" && request.method === "POST") {
       const email = String(body.email || "").trim().toLowerCase(), lang = body.lang === "en" ? "en" : "vi", phone = normPhone(body.phone);
@@ -137,9 +151,16 @@ export default async function handler(request) {
         const us = /^[a-z0-9_-]{1,30}$/.test(String(body.us || "")) ? String(body.us) : "";
         user = { id, email, lang: body.lang === "en" ? "en" : "vi", name: rec.name || "", phone: rec.phone || "", job: "", org: "", address: "", createdAt: now, verifiedAt: now, consentAt: rec.consentAt, regVisits: Math.min(99, Math.max(0, Math.floor(Number(body.rv)) || 0)), regReason: REASONS.includes(body.reason) ? body.reason : "" };
         if (us) user.utm = us;
+        // Mã giới thiệu: mỗi tài khoản mới chỉ ghi nhận cho một người mời, không tự mời mình, giới hạn theo IP.
+        const rc = String(body.ref || "").toLowerCase(); let invitedBy = "";
+        if (/^[a-z0-9]{7}$/.test(rc) && (await limit(`ref:${await sha((request.headers.get("x-forwarded-for") || "?").split(",")[0].trim(), 16)}`, 10, 86400))) {
+          const by = await one(["GET", K.ref(rc)]); if (by && by !== id) { invitedBy = by; user.invitedBy = by; }
+        }
         await store.run([["SET", K.user(id), JSON.stringify(user)], ["SADD", K.users, id],
           ["HINCRBY", `profind:all:evt:${dayKey()}`, "reg_done", 1], ["EXPIRE", `profind:all:evt:${dayKey()}`, 60 * 86400],
           ...(us ? [["HINCRBY", `profind:all:suts:${dayKey()}`, us, 1], ["EXPIRE", `profind:all:suts:${dayKey()}`, 60 * 86400]] : [])]);
+        if (invitedBy) await one(["HINCRBY", K.cnt(invitedBy), "invited", "1"]);
+        await ensureRef(user);
         user.noMail = body.marketing !== true; if (user.noMail) await one(["SET", K.user(id), JSON.stringify(user)]);
         if (body.marketing === true) await sendWelcome(user); // thư giới thiệu công cụ ISA chỉ gửi khi người dùng đồng ý riêng (Luật BVDLCN, Điều 9, 28)
       } else if (!user.phone && rec.phone) { user.phone = rec.phone; await saveUser(user); }
@@ -180,7 +201,10 @@ export default async function handler(request) {
       const bad = needUser(); if (bad) return bad;
       const d = dayKey(), h = pairs(await one(["HGETALL", K.cnt(me.id)]));
       const cmds = [["HINCRBY", K.cnt(me.id), "visits", "1"], ["HSET", K.cnt(me.id), "lastSeen", new Date().toISOString()]];
-      if (h.lastDay !== d) cmds.push(["HINCRBY", K.cnt(me.id), "days", "1"], ["HSET", K.cnt(me.id), "lastDay", d]);
+      if (h.lastDay !== d) {
+        const streak = h.lastDay === dayKey(new Date(Date.now() - 864e5)) ? Number(h.streak || 0) + 1 : 1;
+        cmds.push(["HINCRBY", K.cnt(me.id), "days", "1"], ["HSET", K.cnt(me.id), "lastDay", d], ["HSET", K.cnt(me.id), "streak", String(streak)], ["HSET", K.cnt(me.id), "best", String(Math.max(Number(h.best || 0), streak))]);
+      }
       cmds.push(["SADD", K.au(d), me.id], ["EXPIRE", K.au(d), String(60 * 86400)], ["HINCRBY", K.uh(me.id), d, "1"]);
       if (h.lastDay !== d) { const old = Object.keys(pairs(await one(["HGETALL", K.uh(me.id)]))).filter((f) => f < dayKey(new Date(Date.now() - 100 * 864e5))); old.forEach((f) => cmds.push(["HDEL", K.uh(me.id), f])); }
       await store.run(cmds);
@@ -275,7 +299,7 @@ export default async function handler(request) {
     if (op === "delete" && request.method === "POST") {
       const bad = needUser(); if (bad) return bad;
       const favs = pairs(await one(["HGETALL", K.fav(me.id)]));
-      await store.run([["DEL", K.user(me.id)], ["DEL", K.cnt(me.id)], ["SREM", K.users, me.id], ["DEL", K.fav(me.id)], ["DEL", K.uh(me.id)], ["DEL", K.ss(me.id)], ["DEL", K.rv(me.id)], ...Object.keys(favs).map((k) => ["HINCRBY", K.favTop, k, "-1"])]);
+      await store.run([["DEL", K.user(me.id)], ...(me.ref ? [["DEL", K.ref(me.ref)]] : []), ["DEL", K.cnt(me.id)], ["SREM", K.users, me.id], ["DEL", K.fav(me.id)], ["DEL", K.uh(me.id)], ["DEL", K.ss(me.id)], ["DEL", K.rv(me.id)], ...Object.keys(favs).map((k) => ["HINCRBY", K.favTop, k, "-1"])]);
       return json({ ok: true }, 200, cookie("", 0));
     }
 
@@ -342,6 +366,8 @@ export default async function handler(request) {
       await store.run([["HSET", VFK, claim.authorId, JSON.stringify(rec)], ...(claim.orcid ? [["HSET", VFO, claim.orcid, claim.authorId]] : []), ["HSET", CLK, claim.id, JSON.stringify(claim)]]);
       // Yêu cầu khác còn chờ cho cùng hồ sơ (gửi thêm lần nữa, hoặc nhập thủ công trùng) được đóng lại: một hồ sơ chỉ cần xác thực một lần.
       for (const o of (await allClaims()).filter((c) => c.id !== claim.id && c.authorId === claim.authorId && (c.kind ?? "claim") === "claim" && (c.status === "review" || c.status === "info"))) { Object.assign(o, { status: "approved", decidedAt: t, decidedBy: "trùng với yêu cầu đã duyệt", until }); await one(["HSET", CLK, o.id, JSON.stringify(o)]); }
+      // Người được mời xác thực thành công (lần đầu) thì người mời được ghi nhận thêm một lượt.
+      try { const iu = await loadUser(await sha(claim.email)); if (iu?.invitedBy && !iu.refVerified) { iu.refVerified = true; await saveUser(iu); await one(["HINCRBY", K.cnt(iu.invitedBy), "invitedVerified", "1"]); } } catch { /* không ảnh hưởng xác thực */ }
       await safeMail(claim.email, claimMail("approved", { name: claim.name, authorName: claim.authorName, origin: url.origin, authorId: claim.authorId, until }));
       return rec;
     };

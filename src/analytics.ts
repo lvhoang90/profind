@@ -8,6 +8,7 @@ export function evt(name: string, k?: string, t?: string) {
 }
 const SKEY = "profind.session", RKEY = "profind.rv";
 export function startSession() {
+  try { const r = new URLSearchParams(location.search).get("ref"); if (r && /^[a-z0-9]{7}$/i.test(r)) localStorage.setItem("profind.ref", r.toLowerCase()); } catch { /* bỏ qua */ }
   try {
     if (sessionStorage.getItem(SKEY)) return; sessionStorage.setItem(SKEY, "1");
     let rv = 1; try { rv = (Number(localStorage.getItem(RKEY)) || 0) + 1; localStorage.setItem(RKEY, String(rv)); } catch { /* bỏ qua */ }
