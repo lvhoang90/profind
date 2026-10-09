@@ -3,7 +3,9 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Icon, type IconName } from "./icons";
 import { useAccount, api } from "./accountStore";
 
-const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["nghi-gop", "Nghi gộp nhiều người", "check"], ["top2", "Top 2% chưa gắn", "check"], ["don-vi-tg", "Đơn vị tác giả", "building"]];
+const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["noi-dung", "Nội dung", "book"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["nghi-gop", "Nghi gộp nhiều người", "check"], ["top2", "Top 2% chưa gắn", "check"], ["don-vi-tg", "Đơn vị tác giả", "building"]];
+/** Nhóm điều hướng: hàng trên là nhóm, hàng dưới là mục trong nhóm đang chọn (đường dẫn cũ vẫn dùng được). */
+const GROUPS: [string, IconName, string[]][] = [["Tổng quan", "grid", [""]], ["Phân tích", "chart", ["truy-cap", "noi-dung", "he-sinh-thai"]], ["Người dùng", "users", ["nguoi-dung"]], ["Xác thực", "check", ["xac-thuc", "thu"]], ["Rà soát dữ liệu", "scroll", ["gop", "nghi-gop", "top2", "don-vi-tg"]]];
 const n0 = (n: number) => new Intl.NumberFormat("vi-VN").format(Math.round(n));
 const pct = (a: number, b: number) => (b > 0 ? `${Math.round((a / b) * 100)}%` : "–");
 const delta = (a: number, b: number) => (b > 0 ? `${a >= b ? "▲" : "▼"} ${Math.abs(Math.round(((a - b) / b) * 100))}% so với 7 ngày trước` : a > 0 ? "mới có dữ liệu" : "");
@@ -33,7 +35,8 @@ export function AdminPage({ tab }: { tab: string }) {
   return (
     <article className="dash adm-page">
       <header className="dash-head"><div className="av" aria-hidden="true"><Icon n="grid" size={36} /></div><div className="dh-main"><h1>Quản trị ProFind</h1><p className="meta">{user.email} · số liệu theo giờ Việt Nam, khoảng 14 ngày gần nhất</p></div><div className="dh-act"><a className="ghost-link light" href="#/tai-khoan">← Không gian của tôi</a></div></header>
-      <nav className="tabs adm-tabs" aria-label="Quản trị">{TABS.map(([k, l, ic]) => <a key={k} href={`#/quan-tri${k ? "/" + k : ""}`} aria-current={cur === k ? "page" : undefined}><Icon n={ic} size={16} />{l}</a>)}</nav>
+      <nav className="tabs adm-tabs" aria-label="Quản trị">{GROUPS.map(([l, ic, keys]) => <a key={l} href={`#/quan-tri${keys[0] ? "/" + keys[0] : ""}`} aria-current={keys.includes(cur) ? "page" : undefined}><Icon n={ic} size={16} />{l}</a>)}</nav>
+      {(() => { const g = GROUPS.find(([, , keys]) => keys.includes(cur)); return g && g[2].length > 1 ? <nav className="subtabs" aria-label={g[0]}>{g[2].map((k) => <a key={k} href={`#/quan-tri/${k}`} aria-current={cur === k ? "page" : undefined}>{TABS.find((x) => x[0] === k)![1]}</a>)}</nav> : null; })()}
       {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}{cur === "nghi-gop" && <MergeRisk />}{cur === "top2" && <Top2Review />}{cur === "don-vi-tg" && <AuthorUnits />}
     </article>
   );
@@ -41,24 +44,21 @@ export function AdminPage({ tab }: { tab: string }) {
 
 function Summary() {
   const { d, err } = useGet<any>("admin-summary");
+  const cl = useGet<any>("admin-claims").d, t2 = useGet<{ map: Record<string, string>; items: { name: string }[] }>("admin-t2").d, mr = useGet<{ map: Record<string, string>; profiles: { id: string }[] }>("admin-mrisk").d;
   if (err) return <p className="banner demo">{err}</p>; if (!d) return <p className="empty">Đang tải…</p>;
-  const rg = Object.entries(d.byReason as Record<string, number>).map(([name, n]) => ({ name: ({ reg: "Nút đăng ký", banner: "Lời mời", fav: "Khi lưu tác giả", ss: "Khi lưu tìm kiếm", csv: "Khi tải CSV", view: "Khi xem hồ sơ", eco: "Từ hệ sinh thái" } as any)[name] || name, n }));
+  const pending = cl ? (cl.claims as any[]).filter((c) => c.status === "review" || c.status === "info").length : null;
+  const queue: [string, number | null, string, string][] = [["Yêu cầu xác thực chờ duyệt", pending, "#/quan-tri/xac-thuc", "Duyệt hoặc từ chối"], ["Người Top 2% chưa gắn hồ sơ", t2 ? t2.items.filter((i) => !t2.map[i.name]).length : null, "#/quan-tri/top2", "Chọn đúng hồ sơ"], ["Hồ sơ nghi gộp nhiều người", mr ? mr.profiles.filter((p) => !mr.map[p.id]).length : null, "#/quan-tri/nghi-gop", "Xác nhận một người hay nhiều"], ["Xác thực sắp hết hạn (60 ngày)", cl ? cl.expiring : null, "#/quan-tri/xac-thuc", "Gia hạn"]];
   return (
     <>
-      <div className="kpis">
+      <section className="queue" aria-label="Việc cần làm"><h2>Việc cần làm</h2>
+        <ul>{queue.map(([l, n, h, a]) => <li key={l} className={n ? "has" : ""}><a href={h}><b>{n === null ? "…" : n}</b><span>{l}</span><em>{n ? a : "Không còn việc"}</em></a></li>)}</ul></section>
+      <div className="kpis four">
         <Kpi icon="users" label="Người dùng đã đăng ký" value={n0(d.users)} sub={`${n0(d.new7)} mới trong 7 ngày · ${delta(d.new7, d.newPrev7)}`} />
         <Kpi icon="clock" label="Hoạt động 7 ngày" value={n0(d.active7)} sub={pct(d.active7, d.users) + " tổng số người dùng"} />
+        <Kpi icon="check" label="Hồ sơ khoa học đã xác thực" value={cl ? n0((cl.verified as any[]).length) : "…"} sub={cl ? `${n0(pending ?? 0)} yêu cầu đang chờ` : ""} />
         <Kpi icon="eye" label="Quay lại (từ 2 ngày)" value={pct(d.returning, d.users)} sub={`${n0(d.returning)} người`} />
-        <Kpi icon="star" label="Đã lưu tác giả" value={n0(d.savers)} sub={`${pct(d.savers, d.users)} người dùng · ${n0(d.favTotal)} lượt lưu`} />
-        <Kpi icon="user" label="Hồ sơ trung bình" value={`${d.profile.avg}%`} sub={`${d.profile.full} người khai đủ`} />
       </div>
       <div className="insights"><Bars data={d.signups} title="Đăng ký mới theo ngày" /><Bars data={d.activeDaily} title="Người dùng hoạt động theo ngày" color="dom" /></div>
-      <div className="insights">
-        <section className="card"><h2>Giữ chân</h2><ul className="hbars wide"><li><span>Sau 1 ngày</span><i className="hb"><u className="c1" style={{ width: pct(d.ret1.back, d.ret1.n) }} /></i><b>{pct(d.ret1.back, d.ret1.n)}</b></li><li><span>Sau 7 ngày</span><i className="hb"><u className="c1" style={{ width: pct(d.ret7.back, d.ret7.n) }} /></i><b>{pct(d.ret7.back, d.ret7.n)}</b></li></ul><p className="meta">Tỷ lệ người đã đăng ký ít nhất 1 hoặc 7 ngày và đã quay lại dùng ở ngày khác.</p></section>
-        <HList title="Đăng ký từ đâu" rows={rg} />
-      </div>
-      <div className="insights"><HList title="Nghề nghiệp" rows={d.byJob} /><HList title="Đơn vị công tác" rows={d.byOrg} /></div>
-      <section className="card"><h2>Người dùng tích cực nhất</h2><table className="adm-t"><thead><tr><th>Email</th><th>Họ tên</th><th className="num">Ngày dùng</th><th className="num">Đã lưu</th><th className="num">Sang ISA</th></tr></thead><tbody>{d.top.map((u: any) => <tr key={u.email}><td>{u.email}</td><td>{u.name}</td><td className="num">{u.counts.days}</td><td className="num">{u.favs}</td><td className="num">{u.eco}</td></tr>)}</tbody></table></section>
       {!d.persistent && <p className="banner demo">Đang dùng kho tạm trong bộ nhớ: dữ liệu mất khi máy chủ khởi động lại. Cấu hình Upstash Redis (KV_REST_API_URL, KV_REST_API_TOKEN) để lưu bền.</p>}
     </>
   );
@@ -118,13 +118,15 @@ function Eco() {
   );
 }
 
+/** Mã công trình có dạng "<mã tác giả>-W…": mở trang tác giả trong ProFind; không có mã tác giả thì mở OpenAlex. */
+const workHref = (k: string) => { const m = /^(A\d+)-(W\d+)$/.exec(k); return m ? `#/tac-gia/${m[1]}` : /^W\d+$/.test(k) ? `https://openalex.org/${k}` : undefined; };
 function Content() {
   const { d, err } = useGet<any>("admin-content");
   if (err) return <p className="banner demo">{err}</p>; if (!d) return <p className="empty">Đang tải…</p>;
   const a = (rows: any[], pre: string) => rows.map((r) => ({ name: r.name, n: r.n, href: `#/tac-gia/${pre ? r.k.slice(pre.length) : r.k}` }));
   return <><div className="insights"><HList title="Tác giả được xem nhiều nhất" rows={a(d.authors, "")} /><HList title="Tác giả được lưu nhiều nhất" rows={d.saved.filter((r: any) => r.k.startsWith("a|")).map((r: any) => ({ name: r.name, n: r.n, href: `#/tac-gia/${r.k.slice(2)}` }))} /></div>
-    <div className="insights"><HList title="Từ khóa tìm kiếm phổ biến" rows={d.queries} /><HList title="Công trình được mở nhiều nhất" rows={d.works.map((r: any) => ({ name: r.name, n: r.n }))} /></div>
-    <div className="insights"><HList title="Công trình được lưu nhiều nhất" rows={d.saved.filter((r: any) => r.k.startsWith("w|")).map((r: any) => ({ name: r.name, n: r.n }))} /></div>
+    <div className="insights"><HList title="Từ khóa tìm kiếm phổ biến" rows={d.queries} /><HList title="Công trình được mở nhiều nhất" rows={d.works.map((r: any) => ({ name: r.name, n: r.n, href: workHref(r.k) }))} /></div>
+    <div className="insights"><HList title="Công trình được lưu nhiều nhất" rows={d.saved.filter((r: any) => r.k.startsWith("w|")).map((r: any) => ({ name: r.name, n: r.n, href: workHref(r.k.slice(2)) }))} /></div>
     <p className="meta">Từ khóa tìm kiếm được gộp chung, không gắn với người dùng hay thiết bị. Chỉ ghi từ khóa từ 3 ký tự trở lên.</p></>;
 }
 
