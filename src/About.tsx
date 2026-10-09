@@ -1,5 +1,4 @@
 // Trang "Về ProFind™, dữ liệu và giấy phép": nguồn dữ liệu, cách tính điểm, giấy phép, mã nguồn mở, quyền riêng tư. Nằm trong web, không dẫn ra ngoài.
-import { NoDataList } from "./NoData";
 import { useEffect, type ReactElement } from "react";
 import { useT } from "./i18n";
 import { Icon, type IconName } from "./icons";
@@ -133,7 +132,6 @@ export function AboutPage({ section }: { section: string }) {
         <li>Retention: scientific profiles while the lookup purpose lasts; accounts until you delete them. Request and mail logs for at most 24 months.</li></ul>
       <h3>6. Security and incidents</h3>
       <p>One-time email codes, rate limiting, signed sessions. In case of a personal data breach we notify the competent authority within 72 hours and affected people.</p></> },
-    { id: "chua-du-lieu", icon: "building", h: vi ? "Đơn vị chưa có dữ liệu mở" : "Units without open data", body: <NoDataList /> },
     { id: "lien-he", icon: "mail", h: vi ? "Liên hệ" : "Contact", body: vi ? <p>Góp ý, báo lỗi, đề nghị bổ sung nhà nghiên cứu hoặc yêu cầu đính chính: dùng <a href="#/dinh-chinh">biểu mẫu trong trang</a> hoặc gửi thư tới <b>{CONTACT}</b>.</p> : <p>Feedback, bug reports, suggestions to add a researcher or correction requests: use the <a href="#/dinh-chinh">in-page form</a> or email <b>{CONTACT}</b>.</p> },
   ];
   return (
