@@ -306,6 +306,20 @@
   "topShare": 0.9406,
   "scope": "career"
  },
+ "A5027412817": {
+  "rank": 80289,
+  "rankNs": 77949,
+  "field": "Economics & Business",
+  "subfield": "Economics",
+  "name": "Heshmati, Almas",
+  "inst": "University of Economics Ho Chi Minh City",
+  "selfPct": 0.0775,
+  "inNs": true,
+  "topCntry": "KOR",
+  "topShare": 0.5485,
+  "scope": "career",
+  "y25": true
+ },
  "A5055984626": {
   "rank": 90051,
   "rankNs": 80004,
@@ -360,6 +374,20 @@
   "topCntry": "DEU",
   "topShare": 0.9854,
   "scope": "career"
+ },
+ "A5077810443": {
+  "rank": 102747,
+  "rankNs": 92298,
+  "field": "Economics & Business",
+  "subfield": "Economics",
+  "name": "Huynh, Toan Luu Duc",
+  "inst": "University of Economics Ho Chi Minh City",
+  "selfPct": 0.0721,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.9403,
+  "scope": "career",
+  "y25": true
  },
  "A5087322465": {
   "rank": 110450,
@@ -458,6 +486,19 @@
   "topShare": 0.7622,
   "scope": "career",
   "y25": true
+ },
+ "A5056951761": {
+  "rank": 138836,
+  "rankNs": 145856,
+  "field": "Clinical Medicine",
+  "subfield": "Immunology",
+  "name": "TAYLOR-ROBINSON, ANDREW W.",
+  "inst": "VinUniversity",
+  "selfPct": 0.1416,
+  "inNs": false,
+  "topCntry": "GBR",
+  "topShare": 0.4173,
+  "scope": "career"
  },
  "A5062896363": {
   "rank": 197518,
@@ -640,6 +681,19 @@
   "scope": "career",
   "y25": true
  },
+ "A5086748255": {
+  "rank": 183637,
+  "rankNs": 247706,
+  "field": "Physics & Astronomy",
+  "subfield": "General Physics",
+  "name": "Van Hoang, Vo Van",
+  "inst": "Ho Chi Minh City University of Technology - HCMUT",
+  "selfPct": 0.3078,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "career"
+ },
  "A5084344101": {
   "rank": 236576,
   "rankNs": 256744,
@@ -665,6 +719,34 @@
   "inNs": true,
   "topCntry": "VNM",
   "topShare": 1,
+  "scope": "career",
+  "y25": true
+ },
+ "A5090114815": {
+  "rank": 224547,
+  "rankNs": 273608,
+  "field": "Enabling & Strategic Technologies",
+  "subfield": "Industrial Engineering & Automation",
+  "name": "Trung, Do Duc",
+  "inst": "Hanoi University of Industry",
+  "selfPct": 0.2815,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.9908,
+  "scope": "career",
+  "y25": true
+ },
+ "A5080216121": {
+  "rank": 290511,
+  "rankNs": 278478,
+  "field": "Earth & Environmental Sciences",
+  "subfield": "Environmental Sciences",
+  "name": "Bui, Xuan Thanh",
+  "inst": "Ho Chi Minh City University of Technology - HCMUT",
+  "selfPct": 0.1188,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.9914,
   "scope": "career",
   "y25": true
  },
@@ -845,6 +927,20 @@
   "topShare": 0.9085,
   "scope": "career"
  },
+ "A5015095214": {
+  "rank": 332353,
+  "rankNs": 354784,
+  "field": "Engineering",
+  "subfield": "Nursing",
+  "name": "Lieu, Qui X.",
+  "inst": "Viet Nam National University Ho Chi Minh City",
+  "selfPct": 0.186,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.7869,
+  "scope": "career",
+  "y25": true
+ },
  "A5072173287": {
   "rank": 372020,
   "rankNs": 361882,
@@ -942,6 +1038,19 @@
   "scope": "career",
   "y25": true
  },
+ "A5023041667": {
+  "rank": 344168,
+  "rankNs": 464824,
+  "field": "Information & Communication Technologies",
+  "subfield": "Artificial Intelligence & Image Processing",
+  "name": "Le, Dac Nhuong",
+  "inst": "Haiphong University",
+  "selfPct": 0.2199,
+  "inNs": false,
+  "topCntry": "VNM",
+  "topShare": 0.9879,
+  "scope": "career"
+ },
  "A5088106269": {
   "rank": 311280,
   "rankNs": 466569,
@@ -997,6 +1106,32 @@
   "scope": "career",
   "y25": true
  },
+ "A5039112242": {
+  "rank": 2802,
+  "rankNs": 3144,
+  "field": "Economics & Business",
+  "subfield": "Business & Management",
+  "name": "Duong, Cong Doanh",
+  "inst": "National Economics University",
+  "selfPct": 0.0865,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "y2025"
+ },
+ "A5072353666": {
+  "rank": 4504,
+  "rankNs": 4356,
+  "field": "Economics & Business",
+  "subfield": "Business & Management",
+  "name": "Le, Thanh Tiep",
+  "inst": "University of Economics Ho Chi Minh City",
+  "selfPct": 0.0305,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "y2025"
+ },
  "A5031141167": {
   "rank": 16223,
   "rankNs": 15507,
@@ -1010,6 +1145,45 @@
   "topShare": 0.8929,
   "scope": "y2025"
  },
+ "A5061504918": {
+  "rank": 13915,
+  "rankNs": 16578,
+  "field": "Economics & Business",
+  "subfield": "Business & Management",
+  "name": "Le, Ba Phong",
+  "inst": "Hanoi University of Industry",
+  "selfPct": 0.1276,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.9038,
+  "scope": "y2025"
+ },
+ "A5045644992": {
+  "rank": 16849,
+  "rankNs": 18063,
+  "field": "Social Sciences",
+  "subfield": "Education",
+  "name": "Maheshwari, Greeni",
+  "inst": "RMIT University Vietnam",
+  "selfPct": 0.0644,
+  "inNs": true,
+  "topCntry": "AUS",
+  "topShare": 1,
+  "scope": "y2025"
+ },
+ "A5050016740": {
+  "rank": 26482,
+  "rankNs": 25079,
+  "field": "Economics & Business",
+  "subfield": "Business & Management",
+  "name": "Nguyen-Viet, Bang",
+  "inst": "University of Economics Ho Chi Minh City",
+  "selfPct": 0.0337,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "y2025"
+ },
  "A5067824236": {
   "rank": 34119,
   "rankNs": 31435,
@@ -1021,6 +1195,19 @@
   "inNs": true,
   "topCntry": "VNM",
   "topShare": 0.9833,
+  "scope": "y2025"
+ },
+ "A5020268376": {
+  "rank": 31283,
+  "rankNs": 31770,
+  "field": "Economics & Business",
+  "subfield": "Business & Management",
+  "name": "Nguyen, Phong Nguyen",
+  "inst": "University of Economics Ho Chi Minh City",
+  "selfPct": 0.0825,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.9897,
   "scope": "y2025"
  },
  "A5036280582": {
@@ -1075,6 +1262,32 @@
   "topShare": 0.9512,
   "scope": "y2025"
  },
+ "A5027561746": {
+  "rank": 46254,
+  "rankNs": 45973,
+  "field": "Economics & Business",
+  "subfield": "Economics",
+  "name": "Su, Thanh Dinh",
+  "inst": "University of Economics Ho Chi Minh City",
+  "selfPct": 0.0841,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "y2025"
+ },
+ "A5029474879": {
+  "rank": 49576,
+  "rankNs": 47737,
+  "field": "Economics & Business",
+  "subfield": "Sport, Leisure & Tourism",
+  "name": "Dang-Van, Thac",
+  "inst": "University of Economics Ho Chi Minh City",
+  "selfPct": 0.0531,
+  "inNs": true,
+  "topCntry": "CHN",
+  "topShare": 0.5882,
+  "scope": "y2025"
+ },
  "A5061985179": {
   "rank": 51542,
   "rankNs": 55022,
@@ -1088,6 +1301,19 @@
   "topShare": 0.901,
   "scope": "y2025"
  },
+ "A5022979224": {
+  "rank": 63676,
+  "rankNs": 55319,
+  "field": "Economics & Business",
+  "subfield": "Economics",
+  "name": "Quang-Thanh, Ngo",
+  "inst": "University of Economics Ho Chi Minh City",
+  "selfPct": 0.0201,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "y2025"
+ },
  "A5069214273": {
   "rank": 66088,
   "rankNs": 58134,
@@ -1099,6 +1325,58 @@
   "inNs": true,
   "topCntry": "VNM",
   "topShare": 0.9203,
+  "scope": "y2025"
+ },
+ "A5044603891": {
+  "rank": 70952,
+  "rankNs": 63392,
+  "field": "Economics & Business",
+  "subfield": "Business & Management",
+  "name": "Akram, Umair",
+  "inst": "RMIT University Vietnam",
+  "selfPct": 0.0434,
+  "inNs": true,
+  "topCntry": "CHN",
+  "topShare": 0.619,
+  "scope": "y2025"
+ },
+ "A5012869871": {
+  "rank": 74959,
+  "rankNs": 66433,
+  "field": "Economics & Business",
+  "subfield": "Business & Management",
+  "name": "Chi, Nguyen Thi Khanh",
+  "inst": "Foreign Trade University",
+  "selfPct": 0.0237,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "y2025"
+ },
+ "A5035207025": {
+  "rank": 24144,
+  "rankNs": 68920,
+  "field": "Enabling & Strategic Technologies",
+  "subfield": "Energy",
+  "name": "Xuan, Vu Ngoc",
+  "inst": "National Economics University",
+  "selfPct": 0.3682,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "y2025"
+ },
+ "A5089793687": {
+  "rank": 69066,
+  "rankNs": 69427,
+  "field": "Information & Communication Technologies",
+  "subfield": "Networking & Telecommunications",
+  "name": "Luong, Nguyen Cong",
+  "inst": "Phenikaa University",
+  "selfPct": 0.0486,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.8681,
   "scope": "y2025"
  },
  "A5072616270": {
@@ -1125,6 +1403,19 @@
   "inNs": true,
   "topCntry": "VNM",
   "topShare": 1,
+  "scope": "y2025"
+ },
+ "A5032091221": {
+  "rank": 50073,
+  "rankNs": 77184,
+  "field": "Earth & Environmental Sciences",
+  "subfield": "Environmental Sciences",
+  "name": "Nguyen, Minh Ky",
+  "inst": "Nong Lam University, Ho Chi Minh City",
+  "selfPct": 0.1509,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.8941,
   "scope": "y2025"
  },
  "A5087574413": {
@@ -1179,6 +1470,32 @@
   "topShare": 0.9167,
   "scope": "y2025"
  },
+ "A5011212770": {
+  "rank": 91227,
+  "rankNs": 97355,
+  "field": "Economics & Business",
+  "subfield": "Logistics & Transportation",
+  "name": "Nguyen-Phuoc, Duy Q.",
+  "inst": "VinUniversity",
+  "selfPct": 0.1624,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.8986,
+  "scope": "y2025"
+ },
+ "A5053295960": {
+  "rank": 104835,
+  "rankNs": 97923,
+  "field": "Economics & Business",
+  "subfield": "Economics",
+  "name": "Ngo, Vu Minh",
+  "inst": "University of Economics Ho Chi Minh City",
+  "selfPct": 0.0242,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.9,
+  "scope": "y2025"
+ },
  "A5031378749": {
   "rank": 30863,
   "rankNs": 99622,
@@ -1187,6 +1504,32 @@
   "name": "Pham, Luan Thanh",
   "inst": "Vietnam National University, Hanoi",
   "selfPct": 0.4947,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "y2025"
+ },
+ "A5074310189": {
+  "rank": 109162,
+  "rankNs": 100325,
+  "field": "Built Environment & Design",
+  "subfield": "Building & Construction",
+  "name": "Tran, Duc Hoc",
+  "inst": "Viet Nam National University Ho Chi Minh City",
+  "selfPct": 0.0705,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.8125,
+  "scope": "y2025"
+ },
+ "A5063689926": {
+  "rank": 95618,
+  "rankNs": 101317,
+  "field": "Engineering",
+  "subfield": "Civil Engineering",
+  "name": "Cuong-Le, Thanh",
+  "inst": "Đại học Mở Thành phố Hồ Chí Minh",
+  "selfPct": 0.0936,
   "inNs": true,
   "topCntry": "VNM",
   "topShare": 1,
@@ -1216,6 +1559,19 @@
   "inNs": true,
   "topCntry": "KOR",
   "topShare": 0.9359,
+  "scope": "y2025"
+ },
+ "A5076945065": {
+  "rank": 111189,
+  "rankNs": 108330,
+  "field": "Chemistry",
+  "subfield": "Physical Chemistry",
+  "name": "Phung, Thanh Khoa",
+  "inst": "International University - Vietnam National University HCM City",
+  "selfPct": 0.0585,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.7451,
   "scope": "y2025"
  },
  "A5083902869": {
@@ -1255,6 +1611,19 @@
   "inNs": true,
   "topCntry": "VNM",
   "topShare": 0.9712,
+  "scope": "y2025"
+ },
+ "A5050246251": {
+  "rank": 132685,
+  "rankNs": 126145,
+  "field": "Information & Communication Technologies",
+  "subfield": "Networking & Telecommunications",
+  "name": "Nguyen-Trong, Nghia",
+  "inst": "Nextwaves Industries",
+  "selfPct": 0.0723,
+  "inNs": true,
+  "topCntry": "AUS",
+  "topShare": 0.8511,
   "scope": "y2025"
  },
  "A5061049640": {
@@ -1322,6 +1691,32 @@
   "topShare": 0.9639,
   "scope": "y2025"
  },
+ "A5065021757": {
+  "rank": 148653,
+  "rankNs": 134404,
+  "field": "Biomedical Research",
+  "subfield": "Toxicology",
+  "name": "Nguyen, Long Hoang",
+  "inst": "Ton-Duc-Thang University",
+  "selfPct": 0.0419,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.7756,
+  "scope": "y2025"
+ },
+ "A5022549493": {
+  "rank": 110996,
+  "rankNs": 135083,
+  "field": "Engineering",
+  "subfield": "Industrial Engineering & Automation",
+  "name": "Huong, D. C.",
+  "inst": "Industrial University of Ho Chi Minh City",
+  "selfPct": 0.1675,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.9865,
+  "scope": "y2025"
+ },
  "A5023034501": {
   "rank": 158416,
   "rankNs": 137164,
@@ -1335,6 +1730,32 @@
   "topShare": 0.6753,
   "scope": "y2025"
  },
+ "A5020953748": {
+  "rank": 117269,
+  "rankNs": 137464,
+  "field": "Chemistry",
+  "subfield": "Organic Chemistry",
+  "name": "La, Duc Duong",
+  "inst": "Institute of Chemistry and Materials",
+  "selfPct": 0.1083,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.7225,
+  "scope": "y2025"
+ },
+ "A5068570499": {
+  "rank": 159165,
+  "rankNs": 139108,
+  "field": "Enabling & Strategic Technologies",
+  "subfield": "Energy",
+  "name": "Do, Ha Huu",
+  "inst": "Dại học Nguyen Tat Thanh",
+  "selfPct": 0.0271,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.5362,
+  "scope": "y2025"
+ },
  "A5035286000": {
   "rank": 70395,
   "rankNs": 139513,
@@ -1346,6 +1767,32 @@
   "inNs": false,
   "topCntry": "VNM",
   "topShare": 1,
+  "scope": "y2025"
+ },
+ "A5053495766": {
+  "rank": 115823,
+  "rankNs": 141031,
+  "field": "Information & Communication Technologies",
+  "subfield": "Artificial Intelligence & Image Processing",
+  "name": "Tran, Minh Triet",
+  "inst": "University of Science, Viet Nam National University Ho Chi Minh City",
+  "selfPct": 0.1827,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.9726,
+  "scope": "y2025"
+ },
+ "A5091893691": {
+  "rank": 146968,
+  "rankNs": 152394,
+  "field": "Public Health & Health Services",
+  "subfield": "Public Health",
+  "name": "Smith, Julia H.",
+  "inst": "VinUniversity",
+  "selfPct": 0.0729,
+  "inNs": true,
+  "topCntry": "CAN",
+  "topShare": 0.9571,
   "scope": "y2025"
  },
  "A5076045469": {
@@ -1400,6 +1847,32 @@
   "topShare": 0.8108,
   "scope": "y2025"
  },
+ "A5080870118": {
+  "rank": 175994,
+  "rankNs": 155102,
+  "field": "Engineering",
+  "subfield": "Chemical Engineering",
+  "name": "Le, Ngoc Lieu",
+  "inst": "International University - Vietnam National University HCM City",
+  "selfPct": 0.026,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.68,
+  "scope": "y2025"
+ },
+ "A5038470670": {
+  "rank": 174477,
+  "rankNs": 155565,
+  "field": "Engineering",
+  "subfield": "Industrial Engineering & Automation",
+  "name": "Luy, Nguyen Tan",
+  "inst": "Ho Chi Minh City University of Technology - HCMUT",
+  "selfPct": 0.042,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "y2025"
+ },
  "A5016434028": {
   "rank": 183419,
   "rankNs": 158330,
@@ -1439,6 +1912,19 @@
   "topShare": 0.4728,
   "scope": "y2025"
  },
+ "A5076598105": {
+  "rank": 125430,
+  "rankNs": 161160,
+  "field": "Information & Communication Technologies",
+  "subfield": "Artificial Intelligence & Image Processing",
+  "name": "Dinh, Phu Hung",
+  "inst": "Thuyloi University",
+  "selfPct": 0.1786,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "y2025"
+ },
  "A5079129680": {
   "rank": 176663,
   "rankNs": 165616,
@@ -1476,6 +1962,19 @@
   "inNs": true,
   "topCntry": "VNM",
   "topShare": 0.7941,
+  "scope": "y2025"
+ },
+ "A5004803753": {
+  "rank": 189762,
+  "rankNs": 171968,
+  "field": "Engineering",
+  "subfield": "Industrial Engineering & Automation",
+  "name": "Phung, Manh Duong",
+  "inst": "Fulbright University Vietnam",
+  "selfPct": 0.0488,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.7292,
   "scope": "y2025"
  },
  "A5036538864": {
@@ -1556,6 +2055,19 @@
   "topShare": 0.9703,
   "scope": "y2025"
  },
+ "A5054867958": {
+  "rank": 198059,
+  "rankNs": 187839,
+  "field": "Chemistry",
+  "subfield": "Organic Chemistry",
+  "name": "Nguyen, Manh B.",
+  "inst": "Vietnam Academy of Science and Technology",
+  "selfPct": 0.1464,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "y2025"
+ },
  "A5000073264": {
   "rank": 153963,
   "rankNs": 190526,
@@ -1567,6 +2079,19 @@
   "inNs": true,
   "topCntry": "VNM",
   "topShare": 0.913,
+  "scope": "y2025"
+ },
+ "A5088779561": {
+  "rank": 190679,
+  "rankNs": 190847,
+  "field": "Engineering",
+  "subfield": "Industrial Engineering & Automation",
+  "name": "Le, Van Thao",
+  "inst": "Le Quy Don Technical University",
+  "selfPct": 0.1175,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.8333,
   "scope": "y2025"
  },
  "A5071906586": {
@@ -1673,6 +2198,19 @@
   "topShare": 0.9905,
   "scope": "y2025"
  },
+ "A5020382582": {
+  "rank": 251461,
+  "rankNs": 221307,
+  "field": "Engineering",
+  "subfield": "Civil Engineering",
+  "name": "Thai, Son",
+  "inst": "Viet Nam National University Ho Chi Minh City",
+  "selfPct": 0.0539,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.6774,
+  "scope": "y2025"
+ },
  "A5062359795": {
   "rank": 220923,
   "rankNs": 222964,
@@ -1697,6 +2235,32 @@
   "inNs": false,
   "topCntry": "VNM",
   "topShare": 0.8605,
+  "scope": "y2025"
+ },
+ "A5021444959": {
+  "rank": 251416,
+  "rankNs": 225078,
+  "field": "Information & Communication Technologies",
+  "subfield": "Artificial Intelligence & Image Processing",
+  "name": "Truong Hoang, Vinh",
+  "inst": "Đại học Mở Thành phố Hồ Chí Minh",
+  "selfPct": 0.0474,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.9706,
+  "scope": "y2025"
+ },
+ "A5100675789": {
+  "rank": 194624,
+  "rankNs": 225691,
+  "field": "Engineering",
+  "subfield": "Industrial Engineering & Automation",
+  "name": "Nguyen, Trung Thanh",
+  "inst": "Le Quy Don Technical University",
+  "selfPct": 0.1742,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.8846,
   "scope": "y2025"
  },
  "A5009209108": {
@@ -1764,6 +2328,19 @@
   "topShare": 0.8254,
   "scope": "y2025"
  },
+ "A5027988721": {
+  "rank": 234694,
+  "rankNs": 246838,
+  "field": "Enabling & Strategic Technologies",
+  "subfield": "Materials",
+  "name": "Nguyen, Hoc Thang",
+  "inst": "Ho Chi Minh City University of Industry and Trade",
+  "selfPct": 0.0295,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "y2025"
+ },
  "A5073356298": {
   "rank": 296446,
   "rankNs": 255940,
@@ -1775,6 +2352,32 @@
   "inNs": true,
   "topCntry": "VNM",
   "topShare": 0.9647,
+  "scope": "y2025"
+ },
+ "A5027280509": {
+  "rank": 276102,
+  "rankNs": 263213,
+  "field": "Clinical Medicine",
+  "subfield": "Pharmacology & Pharmacy",
+  "name": "Tran, Thao T.D.",
+  "inst": "Ton-Duc-Thang University",
+  "selfPct": 0.0594,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.913,
+  "scope": "y2025"
+ },
+ "A5065915693": {
+  "rank": 289371,
+  "rankNs": 264471,
+  "field": "Biomedical Research",
+  "subfield": "Toxicology",
+  "name": "Vu, Giang Thu",
+  "inst": "Institute of Health Economics and Technology",
+  "selfPct": 0.0516,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.8352,
   "scope": "y2025"
  },
  "A5077500815": {
@@ -1829,6 +2432,19 @@
   "topShare": 0.9703,
   "scope": "y2025"
  },
+ "A5008459322": {
+  "rank": 173258,
+  "rankNs": 276664,
+  "field": "Engineering",
+  "subfield": "Mechanical Engineering & Transports",
+  "name": "Dang, Thai Viet",
+  "inst": "Hanoi University of Science and Technology",
+  "selfPct": 0.4094,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "y2025"
+ },
  "A5038396319": {
   "rank": 306020,
   "rankNs": 277592,
@@ -1881,6 +2497,19 @@
   "topShare": 0.9259,
   "scope": "y2025"
  },
+ "A5062984384": {
+  "rank": 156767,
+  "rankNs": 315667,
+  "field": "Engineering",
+  "subfield": "Civil Engineering",
+  "name": "Pham, Vu Hong Son",
+  "inst": "Ho Chi Minh City University of Technology - HCMUT",
+  "selfPct": 0.3213,
+  "inNs": false,
+  "topCntry": "VNM",
+  "topShare": 0.9739,
+  "scope": "y2025"
+ },
  "A5004618448": {
   "rank": 332918,
   "rankNs": 317142,
@@ -1905,6 +2534,19 @@
   "inNs": true,
   "topCntry": "VNM",
   "topShare": 0.8974,
+  "scope": "y2025"
+ },
+ "A5101826892": {
+  "rank": 280631,
+  "rankNs": 324793,
+  "field": "Engineering",
+  "subfield": "Mechanical Engineering & Transports",
+  "name": "Tran, Thanh Trung",
+  "inst": "Le Quy Don Technical University",
+  "selfPct": 0.2203,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
   "scope": "y2025"
  },
  "A5083749847": {
@@ -1933,6 +2575,19 @@
   "topShare": 0.8497,
   "scope": "y2025"
  },
+ "A5008217567": {
+  "rank": 399657,
+  "rankNs": 355959,
+  "field": "Clinical Medicine",
+  "subfield": "Dentistry",
+  "name": "Pham, Thuy Anh Vu",
+  "inst": "Viet Nam National University Ho Chi Minh City",
+  "selfPct": 0.0316,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 0.9706,
+  "scope": "y2025"
+ },
  "A5092131028": {
   "rank": 50366,
   "rankNs": 358623,
@@ -1959,6 +2614,19 @@
   "topShare": 1,
   "scope": "y2025"
  },
+ "A5020424588": {
+  "rank": 316007,
+  "rankNs": 403510,
+  "field": "Engineering",
+  "subfield": "Mechanical Engineering & Transports",
+  "name": "Vu, Hoai Nam",
+  "inst": "Đại học Công nghệ Giao thông vận tải",
+  "selfPct": 0.2236,
+  "inNs": false,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "y2025"
+ },
  "A5011924340": {
   "rank": 413924,
   "rankNs": 405221,
@@ -1970,6 +2638,45 @@
   "inNs": true,
   "topCntry": "IND",
   "topShare": 0.4625,
+  "scope": "y2025"
+ },
+ "A5091133342": {
+  "rank": 267903,
+  "rankNs": 405347,
+  "field": "Physics & Astronomy",
+  "subfield": "Applied Physics",
+  "name": "Hien, Nguyen Dinh",
+  "inst": "Thu Dau Mo University",
+  "selfPct": 0.3286,
+  "inNs": false,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "y2025"
+ },
+ "A5014245013": {
+  "rank": 366344,
+  "rankNs": 422742,
+  "field": "Chemistry",
+  "subfield": "Medicinal & Biomolecular Chemistry",
+  "name": "van Kiem, Phan",
+  "inst": "National Institute of Drug Quality Control",
+  "selfPct": 0.1201,
+  "inNs": false,
+  "topCntry": "VNM",
+  "topShare": 0.9916,
+  "scope": "y2025"
+ },
+ "A5076337116": {
+  "rank": 110136,
+  "rankNs": 426803,
+  "field": "Engineering",
+  "subfield": "Mechanical Engineering & Transports",
+  "name": "Le, Van Tao",
+  "inst": "Le Quy Don Technical University",
+  "selfPct": 0.5702,
+  "inNs": false,
+  "topCntry": "VNM",
+  "topShare": 1,
   "scope": "y2025"
  },
  "A5061202699": {
@@ -2011,6 +2718,19 @@
   "topShare": 0.5946,
   "scope": "y2025"
  },
+ "A5080925078": {
+  "rank": 586505,
+  "rankNs": 542250,
+  "field": "Clinical Medicine",
+  "subfield": "General & Internal Medicine",
+  "name": "Bui, Linh P.",
+  "inst": "VinUniversity",
+  "selfPct": 0.1142,
+  "inNs": true,
+  "topCntry": "VNM",
+  "topShare": 1,
+  "scope": "y2025"
+ },
  "A5017843121": {
   "rank": 263639,
   "rankNs": 578981,
@@ -2035,6 +2755,19 @@
   "inNs": false,
   "topCntry": "VNM",
   "topShare": 0.7358,
+  "scope": "y2025"
+ },
+ "A5063797105": {
+  "rank": 224344,
+  "rankNs": 615427,
+  "field": "Engineering",
+  "subfield": "Mechanical Engineering & Transports",
+  "name": "Gouran, Sina",
+  "inst": "Duy Tan University",
+  "selfPct": 0.5588,
+  "inNs": false,
+  "topCntry": "IRN",
+  "topShare": 0.8667,
   "scope": "y2025"
  },
  "A5041882067": {
@@ -2087,6 +2820,32 @@
   "inNs": false,
   "topCntry": "VNM",
   "topShare": 0.8652,
+  "scope": "y2025"
+ },
+ "A5029102378": {
+  "rank": 319289,
+  "rankNs": 1168889,
+  "field": "Information & Communication Technologies",
+  "subfield": "Networking & Telecommunications",
+  "name": "Hai, Dao Thanh",
+  "inst": "RMIT University Vietnam",
+  "selfPct": 0.625,
+  "inNs": false,
+  "topCntry": "VNM",
+  "topShare": 0.6486,
+  "scope": "y2025"
+ },
+ "A5073815942": {
+  "rank": 183009,
+  "rankNs": 1680776,
+  "field": "Information & Communication Technologies",
+  "subfield": "Networking & Telecommunications",
+  "name": "Ho-Van, Khuong",
+  "inst": "Ho Chi Minh City University of Industry and Trade",
+  "selfPct": 0.6685,
+  "inNs": false,
+  "topCntry": "VNM",
+  "topShare": 0.8272,
   "scope": "y2025"
  }
 }

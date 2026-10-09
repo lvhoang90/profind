@@ -1,447 +1,104 @@
 [
  {
-  "name": "Porikli, Fatih Murat",
-  "inst": "Qualcomm AI Research",
-  "np": 338,
-  "why": "không có ứng viên đạt",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5038550641",
-    "name": "Fatih Porikli",
-    "works": 485,
-    "inst": "Qualcomm (United Kingdom); Qualcomm (United States)"
-   },
-   {
-    "id": "https://openalex.org/A5102948566",
-    "name": "Fatih Porikli",
-    "works": 11,
-    "inst": "Qualcomm (United Kingdom); Qualcomm (United States)"
-   }
-  ]
+  "name": "Baird, John Kevin",
+  "inst": "Oxford University Clinical Research Unit",
+  "np": 296,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
-  "name": "Thwaites, G. Edward",
+  "name": "Do, Minh N.",
+  "inst": "VinUniversity",
+  "np": 284,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
+ },
+ {
+  "name": "Phan-Thien, N.",
+  "inst": "Mekong University",
+  "np": 436,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
+ },
+ {
+  "name": "Thwaites, Guy E.",
   "inst": "Oxford University Clinical Research Unit",
-  "np": 506,
-  "why": "không có ứng viên đạt",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5013471493",
-    "name": "Guy Edward Thwaites",
-    "works": 769,
-    "inst": "University of Oxford; Oxford University Clinical Research Unit"
-   }
-  ]
+  "np": 531,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
   "name": "El-Ghaoui, Laurent E.I.",
   "inst": "VinUniversity",
-  "np": 142,
-  "why": "không có ứng viên đạt",
-  "cands": []
+  "np": 151,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
-  "name": "Vũ, Van Huong",
-  "inst": "GeneStory JSC",
-  "np": 145,
-  "why": "không có ứng viên đạt",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5112910526",
-    "name": "Huong Van Vu",
-    "works": 31,
-    "inst": "Vietnam National University, Hanoi"
-   },
-   {
-    "id": "https://openalex.org/A5020033089",
-    "name": "Vu Van Huong",
-    "works": 9,
-    "inst": "VNU University of Economics and Business"
-   },
-   {
-    "id": "https://openalex.org/A5009775245",
-    "name": "Huong Vu Van",
-    "works": 13,
-    "inst": "Vietnam National University, Hanoi; VNU University of Economics and Business"
-   },
-   {
-    "id": "https://openalex.org/A5078643801",
-    "name": "Van Huong Vu",
-    "works": 8,
-    "inst": ""
-   },
-   {
-    "id": "https://openalex.org/A5103108626",
-    "name": "Thanh-Huong Nguyen-Vu",
-    "works": 3,
-    "inst": "Vietnam National University Ho Chi Minh City"
-   }
-  ]
- },
- {
-  "name": "Nguyen, Thanh Binh",
-  "inst": "Can Tho University of Medicine and Pharmacy",
-  "np": 92,
-  "why": "nhiều ứng viên",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5100613698",
-    "name": "Thanh-Binh Nguyen",
-    "works": 175,
-    "inst": "Ho Chi Minh City University of Technology and Engineering; National Kaohsiung University of Science and Technology"
-   },
-   {
-    "id": "https://openalex.org/A5073338061",
-    "name": "Binh Thanh Nguyen",
-    "works": 117,
-    "inst": "Vietnam National University Ho Chi Minh City; Hanoi Medical University; University of Information Technology"
-   },
-   {
-    "id": "https://openalex.org/A5002536039",
-    "name": "Thanh Bình Nguyễn",
-    "works": 244,
-    "inst": "Université Paris-Sud; Centre National de la Recherche Scientifique; Institut de Chimie des Substances Naturelles; Université Paris-Est Créteil; Université Paris-Saclay; Viện Hóa học; Vietnam Academy of Science and Technology"
-   },
-   {
-    "id": "https://openalex.org/A5100387323",
-    "name": "Thanh Binh Nguyen",
-    "works": 176,
-    "inst": "International Institute for Applied Systems Analysis; Ho Chi Minh City University of Science; University of Da Nang; HUTECH University"
-   },
-   {
-    "id": "https://openalex.org/A5100635560",
-    "name": "Nguyễn Thanh Bình",
-    "works": 276,
-    "inst": "Hanoi National University of Education; Ho Chi Minh City University of Foreign Languages - Information Technology; Hospital for Tropical Diseases; 108 Military Central Hospital; HUTECH University; Viện Vật lý; Ho Chi Minh City University of Technology; Vietnam Academy of Science and Technology"
-   }
-  ]
+  "name": "Craig, Timothy J.",
+  "inst": "VinUniversity",
+  "np": 418,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
   "name": "Vasant, Pandian M.",
   "inst": "Ton-Duc-Thang University",
-  "np": 316,
-  "why": "không có ứng viên đạt",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5089550455",
-    "name": "Pandian Vasant",
-    "works": 564,
-    "inst": "Ton Duc Thang University"
-   },
-   {
-    "id": "https://openalex.org/A5071995357",
-    "name": "M Vasant Pandian",
-    "works": 3,
-    "inst": ""
-   },
-   {
-    "id": "https://openalex.org/A5076566447",
-    "name": "Truong Hoang Khoa Pandian M Vasant",
-    "works": 1,
-    "inst": ""
-   }
-  ]
- },
- {
-  "name": "Van Hung, Pham",
-  "inst": "Industrial University of Ho Chi Minh City",
-  "np": 73,
-  "why": "nhiều ứng viên",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5055984626",
-    "name": "Pham Van Hung",
-    "works": 91,
-    "inst": "Vietnam National University Ho Chi Minh City"
-   },
-   {
-    "id": "https://openalex.org/A5047403902",
-    "name": "Van Hung Pham",
-    "works": 67,
-    "inst": "University of Medicine and Pharmacy at Ho Chi Minh City; Vietnam Research and Development Institute of Clinical Microbiology"
-   },
-   {
-    "id": "https://openalex.org/A5030284025",
-    "name": "Phạm Văn Hưng",
-    "works": 72,
-    "inst": "Vietnam National University of Agriculture"
-   },
-   {
-    "id": "https://openalex.org/A5069785443",
-    "name": "Phạm Hùng Vân",
-    "works": 37,
-    "inst": "Vietnam Research and Development Institute of Clinical Microbiology"
-   },
-   {
-    "id": "https://openalex.org/A5032097766",
-    "name": "Hung Van Pham",
-    "works": 28,
-    "inst": "RMIT Vietnam; Hanoi University of Industry"
-   }
-  ]
+  "np": 324,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
   "name": "Moayedi, Hossien",
   "inst": "Duy Tan University",
-  "np": 300,
-  "why": "không có ứng viên đạt",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5010417006",
-    "name": "Moayedi Hossien",
-    "works": 1,
-    "inst": "Kermanshah University of Technology"
-   }
-  ]
+  "np": 313,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
-  "name": "Buntine, Wray L.",
-  "inst": "VinUniversity",
-  "np": 146,
-  "why": "không có ứng viên đạt",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5005792924",
-    "name": "Wray Buntine",
-    "works": 302,
-    "inst": "VinUniversity"
-   }
-  ]
- },
- {
-  "name": "Dell, B.",
-  "inst": "Vietnamese Academy of Forest Sciences",
-  "np": 285,
-  "why": "không có ứng viên đạt",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5065305055",
-    "name": "Bernard Dell",
-    "works": 527,
-    "inst": "Murdoch University; Vietnamese Academy of Forest Sciences"
-   },
-   {
-    "id": "https://openalex.org/A5108435022",
-    "name": "Ralph B. Dell",
-    "works": 93,
-    "inst": ""
-   },
-   {
-    "id": "https://openalex.org/A5082986402",
-    "name": "Daniela Belli Dell’Amico",
-    "works": 306,
-    "inst": "University of Pisa"
-   },
-   {
-    "id": "https://openalex.org/A5041419700",
-    "name": "B. Dell Isola",
-    "works": 4,
-    "inst": "Hôpital Boucicaut"
-   },
-   {
-    "id": "https://openalex.org/A5035672754",
-    "name": "Michael B. Dell",
-    "works": 4,
-    "inst": ""
-   }
-  ]
+  "name": "Khang, Alex",
+  "inst": "Global Research Institute of Technology and Engineering",
+  "np": 305,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
   "name": "Khoa, Dao Tien",
   "inst": "Vietnam Atomic Energy Institute",
   "np": 100,
-  "why": "không có ứng viên đạt",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5091424745",
-    "name": "Dao T. Khoa",
-    "works": 134,
-    "inst": "Institute for Nuclear Science and Technology; Vietnam Atomic Energy Instiute"
-   },
-   {
-    "id": "https://openalex.org/A5094127295",
-    "name": "Dao Thi Bich Ngoc",
-    "works": 2,
-    "inst": "Duy Tan University"
-   },
-   {
-    "id": "https://openalex.org/A5054677212",
-    "name": "Khoa Tien Dao",
-    "works": 1,
-    "inst": "Institute for Nuclear Science and Technology"
-   }
-  ]
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
-  "name": "Nguyen, Van Hieu",
-  "inst": "Phenikaa University",
-  "np": 175,
-  "why": "nhiều ứng viên",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5101801606",
-    "name": "Nguyễn Văn Hiếu",
-    "works": 217,
-    "inst": ""
-   },
-   {
-    "id": "https://openalex.org/A5026220137",
-    "name": "Nguyễn Hữu Hiếu",
-    "works": 299,
-    "inst": "Vietnam National University Ho Chi Minh City; University of Da Nang; University of Science and Technology - The University of Da Nang; Ho Chi Minh City University of Technology"
-   },
-   {
-    "id": "https://openalex.org/A5101801605",
-    "name": "Nguyen Van Hieu",
-    "works": 86,
-    "inst": "Dong Thap University"
-   },
-   {
-    "id": "https://openalex.org/A5075978730",
-    "name": "Văn Hiếu Nguyễn",
-    "works": 143,
-    "inst": "Vietnam National University Ho Chi Minh City; Le Quy Don Technical University; Hanoi Medical University; Ho Chi Minh City University of Architecture; Viện Dược liệu"
-   },
-   {
-    "id": "https://openalex.org/A5072867245",
-    "name": "Hieu V. Nguyen",
-    "works": 115,
-    "inst": "University of Da Nang; University of Science and Technology - The University of Da Nang"
-   }
-  ]
+  "name": "Poddighe, D.",
+  "inst": "VinUniversity",
+  "np": 176,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
   "name": "van Hieu, Dang",
   "inst": "College of Air Force",
   "np": 89,
-  "why": "không có ứng viên đạt",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5002646790",
-    "name": "Dang Van Hieu",
-    "works": 92,
-    "inst": ""
-   },
-   {
-    "id": "https://openalex.org/A5008917272",
-    "name": "Dang Van Hieu",
-    "works": 33,
-    "inst": "Phenikaa University"
-   },
-   {
-    "id": "https://openalex.org/A5100638743",
-    "name": "Van Hung Nguyen",
-    "works": 104,
-    "inst": "Beth Israel Deaconess Medical Center; Colorado Department of Public Health and Environment; Harvard University; Hanoi Medical University; Phenikaa (Vietnam); Phenikaa University; Hanoi Medical University Hospital; Huế University of Medicine and Pharmacy; Ajou University"
-   },
-   {
-    "id": "https://openalex.org/A5000620813",
-    "name": "Chu Thai Hoanh",
-    "works": 216,
-    "inst": "International Water Management Institute (IWMI)"
-   },
-   {
-    "id": "https://openalex.org/A5063664155",
-    "name": "Van Hieu Dang",
-    "works": 4,
-    "inst": "VNU University of Engineering and Technology"
-   }
-  ]
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
   "name": "Asadi, Amin",
   "inst": "Ton-Duc-Thang University",
   "np": 55,
-  "why": "không có ứng viên đạt",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5026701353",
-    "name": "Amin Asadi",
-    "works": 66,
-    "inst": "University of Nevada, Las Vegas"
-   },
-   {
-    "id": "https://openalex.org/A5033417164",
-    "name": "Mohammad Amin Asadi Zarch",
-    "works": 12,
-    "inst": "Yazd University"
-   },
-   {
-    "id": "https://openalex.org/A5034542634",
-    "name": "Amin Asadi",
-    "works": 17,
-    "inst": "University of Twente"
-   },
-   {
-    "id": "https://openalex.org/A5108331123",
-    "name": "Maryam asadi Amin",
-    "works": 2,
-    "inst": "University of Birjand"
-   },
-   {
-    "id": "https://openalex.org/A5039832943",
-    "name": "Amin Asadi",
-    "works": 4,
-    "inst": "Shahid Sadoughi University of Medical Sciences and Health Services"
-   }
-  ]
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
-  "name": "Dang Nam, Nguyen",
-  "inst": "Duy Tan University",
-  "np": 171,
-  "why": "nhiều ứng viên",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5111583046",
-    "name": "Nguyễn Đăng Nam",
-    "works": 120,
-    "inst": "Duy Tan University; Phenikaa University"
-   },
-   {
-    "id": "https://openalex.org/A5113402818",
-    "name": "Nam Nguyen Dang",
-    "works": 79,
-    "inst": "Duy Tan University"
-   },
-   {
-    "id": "https://openalex.org/A5112651481",
-    "name": "Dang Nam Nguyen",
-    "works": 7,
-    "inst": "Vietnam National University, Hanoi; VNU University of Economics and Business"
-   },
-   {
-    "id": "https://openalex.org/A5102918181",
-    "name": "N.D. Nam",
-    "works": 25,
-    "inst": ""
-   },
-   {
-    "id": "https://openalex.org/A5109348805",
-    "name": "Nguyen Nam Anh Dang",
-    "works": 7,
-    "inst": "University of Huddersfield"
-   }
-  ]
+  "name": "Ghalambaz, Mohammad G.",
+  "inst": "Ton-Duc-Thang University",
+  "np": 248,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
+ },
+ {
+  "name": "Capdevila, Xavier J.",
+  "inst": "VinUniversity",
+  "np": 340,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
   "name": "Nam, Nguyenhai",
   "inst": "Hanoi College of Pharmacy",
-  "np": 95,
-  "why": "không có ứng viên đạt",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5061212817",
-    "name": "Nam NguyenHai",
-    "works": 1,
-    "inst": ""
-   }
-  ]
+  "np": 99,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
   "name": "Phat, Vu Ngoc",
   "inst": "Hanoi Institute of Mathematics",
-  "np": 137,
+  "np": 139,
   "why": "không có ứng viên đạt",
   "cands": [
    {
@@ -471,13 +128,6 @@
   ]
  },
  {
-  "name": "Ghalambaz, Mohammad G.",
-  "inst": "Ton-Duc-Thang University",
-  "np": 233,
-  "why": "không có ứng viên đạt",
-  "cands": []
- },
- {
   "name": "An, Nguyenba",
   "inst": "Vietnamese Academy of Science and Technology Institute of Physics and Electronics",
   "np": 111,
@@ -485,9 +135,21 @@
   "cands": []
  },
  {
+  "name": "Nguyen, Trung Kien",
+  "inst": "Ho Chi Minh City University of Technology - HUTECH",
+  "np": 77,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
+ },
+ {
+  "name": "Ha, Lethanh",
+  "inst": "National Economics University",
+  "np": 154,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
+ },
+ {
   "name": "Bui, Hung Hai",
   "inst": "VinAI Research",
-  "np": 108,
+  "np": 112,
   "why": "không có ứng viên đạt",
   "cands": [
    {
@@ -523,56 +185,10 @@
   ]
  },
  {
-  "name": "Nguyen, Liem Thanh",
-  "inst": "VinUniversity",
-  "np": 159,
-  "why": "nhiều ứng viên",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5010264989",
-    "name": "Nguyễn Thanh Liêm",
-    "works": 90,
-    "inst": "Lac Hong University"
-   },
-   {
-    "id": "https://openalex.org/A5107501208",
-    "name": "Nguyễn Thanh Liêm",
-    "works": 152,
-    "inst": "University of Iowa; Can Tho University; University of Iowa Hospitals and Clinics; University of Iowa Health Care"
-   },
-   {
-    "id": "https://openalex.org/A5101467255",
-    "name": "Nguyễn Thanh Liêm",
-    "works": 40,
-    "inst": "Institute of Population, Health and Development"
-   },
-   {
-    "id": "https://openalex.org/A5025693541",
-    "name": "Liem Nguyen Thanh",
-    "works": 30,
-    "inst": "Vinmec Times City International Hospital; VinUniversity; Tay Do University; Vinmec Research Institute of Stem Cell and Gene Technology; Vinmec Healthcare System"
-   },
-   {
-    "id": "https://openalex.org/A5101467256",
-    "name": "Thanh Liêm Nguyễn",
-    "works": 82,
-    "inst": "Can Tho University; VinUniversity; Can Tho University of Medicine and Pharmacy; Vinmec Research Institute of Stem Cell and Gene Technology"
-   }
-  ]
- },
- {
-  "name": "Nogami, Massayuki",
-  "inst": "Hanoi University of Science and Technology",
-  "np": 182,
-  "why": "không có ứng viên đạt",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5009838353",
-    "name": "Masayuki Nogami",
-    "works": 641,
-    "inst": "Nagoya Institute of Technology"
-   }
-  ]
+  "name": "Tuan, Nguyenhuy",
+  "inst": "Banking University of Ho Chi Minh City",
+  "np": 198,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
   "name": "Long, Hoang Ngoc",
@@ -607,36 +223,80 @@
    {
     "id": "https://openalex.org/A5124893580",
     "name": "T D K Nguyen",
-    "works": 149,
+    "works": 148,
     "inst": "Université Paris-Sud; Institut polytechnique de Grenoble; FPT University; Centre National de la Recherche Scientifique; Institut de Chimie des Substances Naturelles; Université de Bordeaux; Inserm; Can Tho University; Université Paris-Saclay; Da Nang Hospital; Hai phong University Of Medicine and Pharmacy; Trường ĐH Nguyễn Tất Thành; University of Da Nang; University of Oxford; Hue University; Ministry of Public Security; Hue Central Hospital; Hong Bang International University; Institut des Géosciences de l'Environnement; Hue University of Education; Tien Giang General Hospital; Institut Européen de Chimie et Biologie; Hung Vuong Hospital; Oxford University Clinical Research Unit; Institut de Recherche pour le Développement; Acides nucléiques: Régulations naturelles et artificielles; Can Tho University of Medicine and Pharmacy; Thanh Do University; Hung Vuong University; Nam Can Tho University; Huế University of Medicine and Pharmacy; Can Tho Central General Hospital; Bệnh viện Phụ Sản Hà Nội; Trường Đại học Thái Bình; Vietnamese-German University; Université Grenoble Alpes"
    }
   ]
  },
  {
+  "name": "Trung, Ngo Viet",
+  "inst": "Hanoi Institute of Mathematics",
+  "np": 92,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5102888341",
+    "name": "Ngô Viêt Trung",
+    "works": 135,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5064998963",
+    "name": "Trung Ngo Viet",
+    "works": 1,
+    "inst": "Institute of Mathematics"
+   },
+   {
+    "id": "https://openalex.org/A5045047819",
+    "name": "Viêt Trung Ngô",
+    "works": 2,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5024325226",
+    "name": "Ngo Trung Viet",
+    "works": 6,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5153963886",
+    "name": "ThS.Nguyễn Thị Mỹ Dung",
+    "works": 29,
+    "inst": ""
+   }
+  ]
+ },
+ {
+  "name": "Nogami, Massayuki",
+  "inst": "Hanoi University of Science and Technology",
+  "np": 182,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5009838353",
+    "name": "Masayuki Nogami",
+    "works": 641,
+    "inst": "Nagoya Institute of Technology"
+   }
+  ]
+ },
+ {
+  "name": "Chu, Lan Khanh",
+  "inst": "Banking Academy of Vietnam",
+  "np": 42,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
+ },
+ {
   "name": "Dúc, Nguyenhuu",
   "inst": "Vietnam National University, Hanoi",
-  "np": 133,
-  "why": "không có ứng viên đạt",
-  "cands": []
- },
- {
-  "name": "Tuan, Nguyenhuy",
-  "inst": "Banking University - Ho Chi Minh City",
-  "np": 193,
-  "why": "không có ứng viên đạt",
-  "cands": []
- },
- {
-  "name": "Nayak, Rajkishore K.",
-  "inst": "RMIT University Vietnam",
-  "np": 128,
+  "np": 134,
   "why": "không có ứng viên đạt",
   "cands": []
  },
  {
   "name": "Hien, L. V.",
   "inst": "Trường Đại học Sư phạm Hà Nội",
-  "np": 70,
+  "np": 75,
   "why": "không có ứng viên đạt",
   "cands": [
    {
@@ -660,224 +320,1131 @@
   ]
  },
  {
+  "name": "Dang, Lienminh",
+  "inst": "Duy Tan University",
+  "np": 82,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
+ },
+ {
   "name": "Tuan, Le Anh",
   "inst": "Vietnam Maritime University",
-  "np": 42,
-  "why": "nhiều ứng viên",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5054486481",
-    "name": "Lê Anh Tuấn",
-    "works": 157,
-    "inst": "Trường ĐH Nguyễn Tất Thành; University of Labor and Social Affairs; Trường Đại học Khoa học và Công nghệ Hà Nội; Chalmers University of Technology; Hanoi University of Science and Technology"
-   },
-   {
-    "id": "https://openalex.org/A5037073589",
-    "name": "Anh Tuan Hoang",
-    "works": 409,
-    "inst": "Agency for Science, Technology and Research; Ho Chi Minh City University of Transport; Korea University; Institute for Infocomm Research; Korea University; Trường Đại học Công nghệ Đồng Nai"
-   },
-   {
-    "id": "https://openalex.org/A5100753115",
-    "name": "Anh Tuấn Lê",
-    "works": 137,
-    "inst": "Vietnam Academy of Science and Technology; Hanoi University of Science and Technology"
-   },
-   {
-    "id": "https://openalex.org/A5100753114",
-    "name": "Anh‐Tuan Le",
-    "works": 198,
-    "inst": "Phenikaa University"
-   },
-   {
-    "id": "https://openalex.org/A5061680998",
-    "name": "Lê Anh Tuấn",
-    "works": 136,
-    "inst": "Vietnam National University Ho Chi Minh City; Ho Chi Minh City University of Technology; Hanoi University of Science and Technology"
-   }
-  ]
+  "np": 43,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
   "name": "Phung-Van, P.",
   "inst": "Ho Chi Minh City University of Technology - HUTECH",
-  "np": 82,
-  "why": "không có ứng viên đạt",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5025349017",
-    "name": "Phuc Phung-Van",
-    "works": 107,
-    "inst": "HUTECH University"
-   },
-   {
-    "id": "https://openalex.org/A5004095167",
-    "name": "P. Dong",
-    "works": 81,
-    "inst": "Phenikaa University"
-   },
-   {
-    "id": "https://openalex.org/A5008437473",
-    "name": "Phùng Văn Phách",
-    "works": 34,
-    "inst": "Institute of Marine Geology and Geophysics; Vietnam Academy of Science and Technology"
-   },
-   {
-    "id": "https://openalex.org/A5081048168",
-    "name": "Phung Van Manh",
-    "works": 31,
-    "inst": "Hanoi National University of Education"
-   },
-   {
-    "id": "https://openalex.org/A5109329791",
-    "name": "Phuc Phung Van",
-    "works": 9,
-    "inst": "HUTECH University"
-   }
-  ]
+  "np": 90,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
+ },
+ {
+  "name": "Vo, Bay",
+  "inst": "Ho Chi Minh City University of Technology - HUTECH",
+  "np": 315,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
+ },
+ {
+  "name": "Nguyen, Hoang",
+  "inst": "Hanoi University of Mining and Geology",
+  "np": 96,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
   "name": "Long, H. V.",
+  "inst": "University of Technology - Logistics of Public Security",
+  "np": 95,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
+ },
+ {
+  "name": "Ninh, Dinh Gia",
   "inst": "Hanoi University of Science and Technology",
-  "np": 91,
-  "why": "không có ứng viên đạt",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5071356090",
-    "name": "M.G. Mazarakis",
-    "works": 273,
-    "inst": ""
-   },
-   {
-    "id": "https://openalex.org/A5004726013",
-    "name": "Valencia Long",
-    "works": 66,
-    "inst": "National Skin Centre; National University of Singapore; National University Hospital"
-   },
-   {
-    "id": "https://openalex.org/A5016977907",
-    "name": "Van Hong Hoang",
-    "works": 4,
-    "inst": "Centre National de la Recherche Scientifique; Université Paris Sciences et Lettres; Observatoire de Paris; Sorbonne Université; Sorbonne Paris Cité; Laboratoire d’études spatiales et d’instrumentation en astrophysique; Université Paris Diderot; Viện Vật lý; Vietnam Academy of Science and Technology"
-   },
-   {
-    "id": "https://openalex.org/A5135985502",
-    "name": "K H V Long",
-    "works": 1,
-    "inst": "Ton Duc Thang University"
-   }
-  ]
+  "np": 52,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
   "name": "Tran, Trong Nhan",
   "inst": "Industrial University of Ho Chi Minh City",
-  "np": 29,
-  "why": "không có ứng viên đạt",
-  "cands": [
-   {
-    "id": "https://openalex.org/A5067890490",
-    "name": "TrongNhan Tran",
-    "works": 30,
-    "inst": "Industrial University of Ho Chi Minh City"
-   },
-   {
-    "id": "https://openalex.org/A5026796590",
-    "name": "Trong Nhan Tran",
-    "works": 3,
-    "inst": "Ton Duc Thang University"
-   },
-   {
-    "id": "https://openalex.org/A5103812753",
-    "name": "T Nhan",
-    "works": 5,
-    "inst": "University of Medicine and Pharmacy at Ho Chi Minh City"
-   },
-   {
-    "id": "https://openalex.org/A5041989141",
-    "name": "Nhan Trong Tran",
-    "works": 1,
-    "inst": "Vietnam National University Ho Chi Minh City; Ho Chi Minh City University of Science"
-   },
-   {
-    "id": "https://openalex.org/A5011448867",
-    "name": "Nhan Pham Nguyen Trong",
-    "works": 3,
-    "inst": "Trường ĐH Nguyễn Tất Thành"
-   }
-  ]
+  "np": 38,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
+ },
+ {
+  "name": "Dinh Long, Nguyen Dinh",
+  "inst": "Duy Tan University",
+  "np": 74,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
  },
  {
   "name": "Nguyen, Minh T.",
   "inst": "Thai Nguyen University of Technology",
-  "np": 78,
+  "np": 89,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
+ },
+ {
+  "name": "Nguyen, Thi Hong Hue",
+  "inst": "Can Tho University",
+  "np": 52,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
+ },
+ {
+  "name": "Nguyen, Quang Khai",
+  "inst": "Đại học Mở Thành phố Hồ Chí Minh",
+  "np": 30,
   "why": "không có ứng viên đạt",
   "cands": [
    {
-    "id": "https://openalex.org/A5003396849",
-    "name": "Minh Tho Nguyen",
-    "works": 892,
-    "inst": "Sandia National Laboratories California; Sandia National Laboratories; Van Lang University; VinUniversity"
+    "id": "https://openalex.org/A5040904063",
+    "name": "Quang Nguyen",
+    "works": 86,
+    "inst": "Ho Chi Minh City Open University"
    },
    {
-    "id": "https://openalex.org/A5017696669",
-    "name": "Tony Gherghetta A",
-    "works": 165,
-    "inst": "University of Minnesota"
+    "id": "https://openalex.org/A5006287655",
+    "name": "Tran Quang Khai Nguyen",
+    "works": 26,
+    "inst": "Thales (France)"
    },
    {
-    "id": "https://openalex.org/A5061106379",
-    "name": "Minh T. Nguyen",
-    "works": 112,
-    "inst": "The University of Texas at Austin"
+    "id": "https://openalex.org/A5059918526",
+    "name": "Nguyen Quang Khai",
+    "works": 4,
+    "inst": "Vietnam National University Ho Chi Minh City; VNU University of Economics and Business; Trường Đại học Khoa học và Công nghệ Hà Nội; Ho Chi Minh City University of Technology; VNU University of Science; Hanoi University of Science and Technology"
    },
    {
-    "id": "https://openalex.org/A5036789267",
-    "name": "M. Hong Nguyen",
-    "works": 228,
-    "inst": "University of Pittsburgh; University of Pittsburgh Medical Center"
+    "id": "https://openalex.org/A5065284521",
+    "name": "Quang Khai Nguyen",
+    "works": 7,
+    "inst": "Pusan National University"
    },
    {
-    "id": "https://openalex.org/A5084246309",
-    "name": "Nguyen Tran Minh Duc",
+    "id": "https://openalex.org/A5103809389",
+    "name": "Kien Gia To",
+    "works": 44,
+    "inst": "University of Medicine and Pharmacy at Ho Chi Minh City; Bệnh viện Nhân dân Gia Định"
+   }
+  ]
+ },
+ {
+  "name": "Tran, Oanh Thi",
+  "inst": "University of Finance - Marketing",
+  "np": 30,
+  "why": "nhiều ứng viên",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5005323032",
+    "name": "Oanh Tran",
+    "works": 60,
+    "inst": "Madigan Army Medical Center; Children's Hospital of Philadelphia; The Geneva Foundation; University of Pennsylvania"
+   },
+   {
+    "id": "https://openalex.org/A5081835298",
+    "name": "Tran Thi Kim Oanh",
+    "works": 35,
+    "inst": "University of Finance - Marketing"
+   },
+   {
+    "id": "https://openalex.org/A5054260359",
+    "name": "Thi-Oanh Tran",
+    "works": 9,
+    "inst": "Bạch Mai Hospital; Taipei Medical University"
+   },
+   {
+    "id": "https://openalex.org/A5061533358",
+    "name": "Tran Thi Mai Oanh",
+    "works": 26,
+    "inst": "Health Strategy and Policy Institute"
+   },
+   {
+    "id": "https://openalex.org/A5101958751",
+    "name": "Oanh Tran Thi Kim",
+    "works": 17,
+    "inst": "Kyung Hee University"
+   }
+  ]
+ },
+ {
+  "name": "Doan, Dinhquan",
+  "inst": "Hung Yen University of Technology and Education",
+  "np": 38,
+  "why": "không có ứng viên đạt",
+  "cands": []
+ },
+ {
+  "name": "Nguyen, Chuong V.",
+  "inst": "Le Quy Don Technical University",
+  "np": 130,
+  "why": "nhiều ứng viên",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5100623711",
+    "name": "Chuong V. Nguyen",
+    "works": 149,
+    "inst": "Le Quy Don Technical University; Duy Tan University"
+   },
+   {
+    "id": "https://openalex.org/A5046133873",
+    "name": "Chuong Vinh Nguyen",
     "works": 67,
+    "inst": "Commonwealth Scientific and Industrial Research Organisation; Data61"
+   },
+   {
+    "id": "https://openalex.org/A5100623707",
+    "name": "Chương V. Nguyen",
+    "works": 69,
+    "inst": "Le Quy Don Technical University"
+   },
+   {
+    "id": "https://openalex.org/A5103888052",
+    "name": "Minh Vu Chuong Nguyen",
+    "works": 36,
+    "inst": "Translational Innovation in Medicine and Complexity; Université Grenoble Alpes"
+   },
+   {
+    "id": "https://openalex.org/A5153550373",
+    "name": "Nguyen, Chuong, V",
+    "works": 1,
     "inst": ""
    }
   ]
  },
  {
-  "name": "Nguyen, Thi Hong",
-  "inst": "Can Tho University",
+  "name": "van Minh, Hoang V.",
+  "inst": "Ha Noi Medical University",
+  "np": 206,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5059651488",
+    "name": "Hoàng Văn Minh",
+    "works": 337,
+    "inst": "Hanoi School Of Public Health"
+   },
+   {
+    "id": "https://openalex.org/A5107998643",
+    "name": "Nguyễn Văn Minh Hoàng",
+    "works": 50,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5100766543",
+    "name": "Van Hoang Nguyen",
+    "works": 112,
+    "inst": "Vietnam National University Ho Chi Minh City; Le Quy Don Technical University; Ho Chi Minh City University of Science; Trường Đại học Khoa học và Công nghệ Hà Nội; Ho Chi Minh City University of Technology; Saudi Arabia Basic Industries (United States); Hanoi University of Science and Technology"
+   },
+   {
+    "id": "https://openalex.org/A5101541497",
+    "name": "Minh Van Nguyen",
+    "works": 77,
+    "inst": "Nha Trang University"
+   },
+   {
+    "id": "https://openalex.org/A5081622130",
+    "name": "Nguyen Van Hoang",
+    "works": 31,
+    "inst": "Le Quy Don Technical University"
+   }
+  ]
+ },
+ {
+  "name": "Thong, Duongviet",
+  "inst": "National Economics University",
+  "np": 93,
+  "why": "không có ứng viên đạt",
+  "cands": []
+ },
+ {
+  "name": "Le, Tu D.Q.",
+  "inst": "Viet Nam National University Ho Chi Minh City",
+  "np": 53,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5062560716",
+    "name": "Tu Le",
+    "works": 91,
+    "inst": "Vietnam National University, Hanoi; University of Economics and Law"
+   },
+   {
+    "id": "https://openalex.org/A5136656060",
+    "name": "T D Le",
+    "works": 22,
+    "inst": "Vietnam National University Ho Chi Minh City; University of Economics Ho Chi Minh City; Academy Of Finance; Ho Chi Minh City University of Technology and Engineering; University of Economics and Law; Ho Chi Minh City University of Technology; London School of Economics and Political Science"
+   }
+  ]
+ },
+ {
+  "name": "Nguyen, Xuan Cuong",
+  "inst": "Duy Tan University",
+  "np": 86,
+  "why": "nhiều ứng viên",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5022231076",
+    "name": "Xuan Cuong Nguyen",
+    "works": 99,
+    "inst": "Chungbuk National University; Duy Tan University"
+   },
+   {
+    "id": "https://openalex.org/A5035101973",
+    "name": "Nguyễn Xuân Cường",
+    "works": 305,
+    "inst": "Duy Tan University; Viện Hóa học; Vietnam Academy of Science and Technology"
+   },
+   {
+    "id": "https://openalex.org/A5018346389",
+    "name": "Cuong Xuan Nguyen",
+    "works": 19,
+    "inst": "Viện Sinh học; Vietnam Academy of Science and Technology"
+   },
+   {
+    "id": "https://openalex.org/A5101918597",
+    "name": "Thành Tâm Nguyên",
+    "works": 239,
+    "inst": "Griffith University; Hanoi University of Science and Technology"
+   },
+   {
+    "id": "https://openalex.org/A5070720996",
+    "name": "Xuan Cuong Nguyen",
+    "works": 7,
+    "inst": "Hanoi University of Civil Engineering"
+   }
+  ]
+ },
+ {
+  "name": "Nguyen, Tuan Anh",
+  "inst": "Thuyloi University",
+  "np": 73,
+  "why": "tên trùng nhau trong danh sách Top 2% (nhiều người)"
+ },
+ {
+  "name": "Nguyen, Minh Hieu",
+  "inst": "Trường Đại học Giao thông vận tải",
+  "np": 47,
+  "why": "nhiều ứng viên",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5052925867",
+    "name": "Minh Hieu Nguyen",
+    "works": 56,
+    "inst": "FPT University; Ho Chi Minh City University of Transport; University of Transport and Communications"
+   },
+   {
+    "id": "https://openalex.org/A5065228550",
+    "name": "Nguyễn Minh Hiếu",
+    "works": 64,
+    "inst": "Le Quy Don Technical University; Phenikaa University"
+   },
+   {
+    "id": "https://openalex.org/A5081622130",
+    "name": "Nguyen Van Hoang",
+    "works": 31,
+    "inst": "Le Quy Don Technical University"
+   },
+   {
+    "id": "https://openalex.org/A5060505015",
+    "name": "Nguyen Thi Hoang Ha",
+    "works": 102,
+    "inst": "Vietnam National University, Hanoi; VNU Vietnam Japan University"
+   },
+   {
+    "id": "https://openalex.org/A5068509694",
+    "name": "Quang Hieu Vu",
+    "works": 64,
+    "inst": "Vietnam National University Ho Chi Minh City; University of Information Technology"
+   }
+  ]
+ },
+ {
+  "name": "Hoang, Khanh",
+  "inst": "VNUHCM-University of Economics and Law",
+  "np": 47,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5101601514",
+    "name": "Nguyen Hoang Khanh Linh",
+    "works": 68,
+    "inst": "Vietnam National University Ho Chi Minh City; Vietnam National University, Hanoi; Hue University; Hue University of Education; Bạch Mai Hospital; National Institute of Veterinary Research; University of Economics and Law; VNU University of Medicine and Pharmacy; Ho Chi Minh City University of Technology"
+   },
+   {
+    "id": "https://openalex.org/A5064782058",
+    "name": "Khanh-Dung Hoang Nguyen",
+    "works": 18,
+    "inst": "Biogen (United States)"
+   },
+   {
+    "id": "https://openalex.org/A5047715377",
+    "name": "Khanh Cong Gia Hoang",
+    "works": 74,
+    "inst": "University of Economics Ho Chi Minh City; Lincoln University"
+   },
+   {
+    "id": "https://openalex.org/A5050267995",
+    "name": "Minh‐Hoang Nguyen",
+    "works": 611,
+    "inst": "Phenikaa University; Trường Đại học Khoa học và Công nghệ Hà Nội; Hanoi University of Science and Technology"
+   },
+   {
+    "id": "https://openalex.org/A5025847533",
+    "name": "Khanh Hoang Nguyen",
+    "works": 32,
+    "inst": "Technical University of Denmark"
+   }
+  ]
+ },
+ {
+  "name": "Vuong, Lan Ngoc",
+  "inst": "University of Medicine and Pharmacy at HCMC",
+  "np": 109,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5000738203",
+    "name": "Lan N. Vuong",
+    "works": 207,
+    "inst": "University of Medicine and Pharmacy at Ho Chi Minh City; My Duc Hospital"
+   },
+   {
+    "id": "https://openalex.org/A5000360756",
+    "name": "Vương Thị Ngọc Lan",
+    "works": 1,
+    "inst": "University of Medicine and Pharmacy at Ho Chi Minh City"
+   },
+   {
+    "id": "https://openalex.org/A5124217004",
+    "name": "Vuong LN",
+    "works": 3,
+    "inst": "University of Medicine and Pharmacy at Ho Chi Minh City"
+   },
+   {
+    "id": "https://openalex.org/A5155039812",
+    "name": "Nguyen Van Duy, Vuong Thi Lan Anh, Van Thi Chieu, Le Thi Mai Hoa,Nguyen Thi Thu Phuong, Dao Anh Tien, Nguyen Ngoc Giap and Tran Thanh Van",
+    "works": 2,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5121658859",
+    "name": "Vương Thị Ngọc Lan",
+    "works": 1,
+    "inst": ""
+   }
+  ]
+ },
+ {
+  "name": "Abdolrasol, Maher",
+  "inst": "Duy Tan University",
+  "np": 49,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5037819210",
+    "name": "Maher G. M. Abdolrasol",
+    "works": 53,
+    "inst": "Duy Tan University"
+   }
+  ]
+ },
+ {
+  "name": "Nguyen, Hoang Long",
+  "inst": "Hanoi University of Mining and Geology",
+  "np": 66,
+  "why": "nhiều ứng viên",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5100623041",
+    "name": "Long Hoang Nguyen",
+    "works": 131,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5100623040",
+    "name": "Long Hoang Nguyen",
+    "works": 322,
+    "inst": "Broad Institute; Harvard University; University of California, Los Angeles; Massachusetts General Hospital; Massachusetts Institute of Technology"
+   },
+   {
+    "id": "https://openalex.org/A5057530879",
+    "name": "Long Hoang Nguyen",
+    "works": 33,
+    "inst": "Ton Duc Thang University"
+   },
+   {
+    "id": "https://openalex.org/A5101810362",
+    "name": "Nguyễn Hoàng Long",
+    "works": 19,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5065021757",
+    "name": "Hoàng Long Nguyễn",
+    "works": 68,
+    "inst": "Nanyang Technological University; University Of Transport Technology"
+   }
+  ]
+ },
+ {
+  "name": "Nguyen, Hoang Chinh",
+  "inst": "Ton-Duc-Thang University",
+  "np": 64,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5035406180",
+    "name": "Hoang Chinh Nguyen",
+    "works": 90,
+    "inst": "Deakin University"
+   },
+   {
+    "id": "https://openalex.org/A5010017514",
+    "name": "Hoa Q. Nguyen",
+    "works": 49,
+    "inst": "National Economics University"
+   },
+   {
+    "id": "https://openalex.org/A5124893580",
+    "name": "T D K Nguyen",
+    "works": 148,
+    "inst": "Université Paris-Sud; Institut polytechnique de Grenoble; FPT University; Centre National de la Recherche Scientifique; Institut de Chimie des Substances Naturelles; Université de Bordeaux; Inserm; Can Tho University; Université Paris-Saclay; Da Nang Hospital; Hai phong University Of Medicine and Pharmacy; Trường ĐH Nguyễn Tất Thành; University of Da Nang; University of Oxford; Hue University; Ministry of Public Security; Hue Central Hospital; Hong Bang International University; Institut des Géosciences de l'Environnement; Hue University of Education; Tien Giang General Hospital; Institut Européen de Chimie et Biologie; Hung Vuong Hospital; Oxford University Clinical Research Unit; Institut de Recherche pour le Développement; Acides nucléiques: Régulations naturelles et artificielles; Can Tho University of Medicine and Pharmacy; Thanh Do University; Hung Vuong University; Nam Can Tho University; Huế University of Medicine and Pharmacy; Can Tho Central General Hospital; Bệnh viện Phụ Sản Hà Nội; Trường Đại học Thái Bình; Vietnamese-German University; Université Grenoble Alpes"
+   },
+   {
+    "id": "https://openalex.org/A5145190275",
+    "name": "Hoang-Chinh Nguyen",
+    "works": 1,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5117694406",
+    "name": "Nguyễn Hoàng Chính",
+    "works": 2,
+    "inst": "Deakin University"
+   }
+  ]
+ },
+ {
+  "name": "Pham, Viet–Thanh",
+  "inst": "Industrial University of Ho Chi Minh City",
+  "np": 395,
+  "why": "nhiều ứng viên",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5029973339",
+    "name": "Viet–Thanh Pham",
+    "works": 215,
+    "inst": "Industrial University of Ho Chi Minh City"
+   },
+   {
+    "id": "https://openalex.org/A5058754932",
+    "name": "Viet–Thanh Pham",
+    "works": 170,
+    "inst": "Industrial University of Ho Chi Minh City"
+   },
+   {
+    "id": "https://openalex.org/A5036929225",
+    "name": "Thanh Nguyen",
+    "works": 66,
+    "inst": "Vinh University; Industrial University of Ho Chi Minh City; Viện Công nghệ Sinh học và Thực phẩm"
+   },
+   {
+    "id": "https://openalex.org/A5108296873",
+    "name": "Pham Viet Thanh",
+    "works": 16,
+    "inst": "Hanoi University of Industry"
+   },
+   {
+    "id": "https://openalex.org/A5114083769",
+    "name": "Viet Thanh Pham",
+    "works": 9,
+    "inst": "Vietnam National University, Hanoi; VNU University of Science"
+   }
+  ]
+ },
+ {
+  "name": "Anh, Pham K.",
+  "inst": "Vietnam National University, Hanoi",
+  "np": 108,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5037239372",
+    "name": "K. A. Pham",
+    "works": 71,
+    "inst": "University of Minnesota"
+   },
+   {
+    "id": "https://openalex.org/A5068615374",
+    "name": "Pham Ky Anh",
+    "works": 56,
+    "inst": "Vietnam National University, Hanoi; Quy Nhon University"
+   },
+   {
+    "id": "https://openalex.org/A5101483284",
+    "name": "Anh Khoa Pham",
+    "works": 21,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5109145563",
+    "name": "Kim Anh Pham",
+    "works": 8,
+    "inst": "Georgia Institute of Technology"
+   },
+   {
+    "id": "https://openalex.org/A5005724853",
+    "name": "Anh K. Pham",
+    "works": 3,
+    "inst": ""
+   }
+  ]
+ },
+ {
+  "name": "Thao, Nguyen Xuan",
+  "inst": "Banking Academy of Vietnam",
+  "np": 30,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5016374952",
+    "name": "Nguyễn Xuân Thảo",
+    "works": 45,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5022231076",
+    "name": "Xuan Cuong Nguyen",
+    "works": 99,
+    "inst": "Chungbuk National University; Duy Tan University"
+   },
+   {
+    "id": "https://openalex.org/A5051115805",
+    "name": "Xuan-Thao Nguyen",
+    "works": 7,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5000837628",
+    "name": "Tri Nguyen",
+    "works": 99,
+    "inst": "Ho Chi Minh City Open University; Institute of Advanced Technology; Vietnam Academy of Science and Technology"
+   },
+   {
+    "id": "https://openalex.org/A5022069329",
+    "name": "Huu‐Thanh Nguyen",
+    "works": 54,
+    "inst": "Vietnam National University, Hanoi; An Giang University"
+   }
+  ]
+ },
+ {
+  "name": "Nguyen, Ngoc Hieu",
+  "inst": "Duy Tan University",
+  "np": 266,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5021501825",
+    "name": "Nguyen N. Hieu",
+    "works": 313,
+    "inst": "Duy Tan University"
+   },
+   {
+    "id": "https://openalex.org/A5047517734",
+    "name": "Ngoc Thanh Nguyên",
+    "works": 543,
+    "inst": "Wrocław University of Science and Technology; Thuyloi University; Trường ĐH Nguyễn Tất Thành"
+   },
+   {
+    "id": "https://openalex.org/A5061934686",
+    "name": "Hieu Nguyen-Ngoc",
+    "works": 45,
+    "inst": "Phenikaa University"
+   },
+   {
+    "id": "https://openalex.org/A5000620813",
+    "name": "Chu Thai Hoanh",
+    "works": 216,
+    "inst": "International Water Management Institute (IWMI)"
+   },
+   {
+    "id": "https://openalex.org/A5104351126",
+    "name": "Ngoc Hieu Nguyen",
+    "works": 16,
+    "inst": "Vinh University; Duy Tan University; University of Medicine and Pharmacy at Ho Chi Minh City"
+   }
+  ]
+ },
+ {
+  "name": "Le-Minh, Hoangle",
+  "inst": "Đại học Mở Thành phố Hồ Chí Minh",
+  "np": 34,
+  "why": "không có ứng viên đạt",
+  "cands": []
+ },
+ {
+  "name": "Nguyen, Dai H.",
+  "inst": "Vietnam Academy of Science and Technology",
+  "np": 155,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5105657014",
+    "name": "H. D. N. Nguyen",
+    "works": 446,
+    "inst": "South Australia Pathology; Commissariat à l'Énergie Atomique et aux Énergies Alternatives; CEA Paris-Saclay - Etablissement de Saclay; CEA Paris-Saclay; Centre for Cancer Biology; Institut de Recherche sur les Lois Fondamentales de l'Univers; Adelaide University; The University of Adelaide; Université de Montréal"
+   },
+   {
+    "id": "https://openalex.org/A5080003296",
+    "name": "Dai H. Nguyen",
+    "works": 6,
+    "inst": "Queensland University of Technology"
+   },
+   {
+    "id": "https://openalex.org/A5108143734",
+    "name": "Hoang Dai Nghia Nguyen",
+    "works": 63,
+    "inst": "University of Illinois Urbana-Champaign; Commissariat à l'Énergie Atomique et aux Énergies Alternatives; CEA Paris-Saclay - Etablissement de Saclay; University of Illinois System; CEA Paris-Saclay; Institut de Recherche sur les Lois Fondamentales de l'Univers; Université de Montréal"
+   },
+   {
+    "id": "https://openalex.org/A5141524815",
+    "name": "Hoang Dai Nghia Nguyen",
+    "works": 188,
+    "inst": "University of Illinois Urbana-Champaign; Université de Montréal"
+   },
+   {
+    "id": "https://openalex.org/A5047422016",
+    "name": "H T Nguyen",
+    "works": 10,
+    "inst": "Université de Montréal"
+   }
+  ]
+ },
+ {
+  "name": "Walker, Timothy M.",
+  "inst": "Oxford University Clinical Research Unit",
+  "np": 101,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5046626888",
+    "name": "A Sarah Walker",
+    "works": 334,
+    "inst": "University of Oxford; Oxford University Clinical Research Unit"
+   },
+   {
+    "id": "https://openalex.org/A5136876413",
+    "name": "Timothy Walker",
+    "works": 2,
+    "inst": "University of Oxford; Oxford University Clinical Research Unit"
+   }
+  ]
+ },
+ {
+  "name": "Nguyen, Thuy Trang",
+  "inst": "Ho Chi Minh City University of Technology - HUTECH",
   "np": 44,
   "why": "nhiều ứng viên",
   "cands": [
    {
-    "id": "https://openalex.org/A5109224855",
-    "name": "V. Nguyen Thi Hong",
-    "works": 246,
-    "inst": "Commissariat à l'Énergie Atomique et aux Énergies Alternatives; CEA Paris-Saclay; Institut de Recherche sur les Lois Fondamentales de l'Univers"
+    "id": "https://openalex.org/A5003720656",
+    "name": "Thuy Trang Nguyen",
+    "works": 73,
+    "inst": "Hanoi University"
    },
    {
-    "id": "https://openalex.org/A5105240340",
-    "name": "V. Nguyen Thi Hong",
-    "works": 11,
-    "inst": "University of California, Santa Cruz; Commissariat à l'Énergie Atomique et aux Énergies Alternatives; University at Albany, State University of New York; CEA Paris-Saclay; Institut de Recherche sur les Lois Fondamentales de l'Univers; The University of Adelaide"
+    "id": "https://openalex.org/A5102728427",
+    "name": "Thuy Trang Nguyen",
+    "works": 56,
+    "inst": "University of Wisconsin–Madison; Hanoi Medical University; Hanoi Medical University Hospital"
    },
    {
-    "id": "https://openalex.org/A5088091814",
-    "name": "Nguyễn Thị Hồng",
-    "works": 101,
-    "inst": "Vinh University; Thai Nguyen University; Trường Đại học Khoa học"
+    "id": "https://openalex.org/A5013745213",
+    "name": "Nguyễn Thùy Trang",
+    "works": 66,
+    "inst": "Can Tho University"
    },
    {
-    "id": "https://openalex.org/A5037088485",
-    "name": "Thi Hong Hai Nguyen",
-    "works": 75,
-    "inst": "Hue University; University of Greenwich"
+    "id": "https://openalex.org/A5103072720",
+    "name": "Thuy N Nguyen",
+    "works": 63,
+    "inst": "University of North Texas; East Asia University of Technology; VNU University of Economics and Business"
    },
    {
-    "id": "https://openalex.org/A5029866557",
-    "name": "Nguyễn Thụy Thương Thương",
-    "works": 200,
-    "inst": "Harvard University; University of Oxford; Oxford University Clinical Research Unit; Hospital for Tropical Diseases"
+    "id": "https://openalex.org/A5059644538",
+    "name": "Trang Thi Thuy Nguyen",
+    "works": 62,
+    "inst": "The University of Melbourne"
+   }
+  ]
+ },
+ {
+  "name": "Thanh, Dang Ngoc Hoang",
+  "inst": "University of Economics Ho Chi Minh City",
+  "np": 104,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5088674960",
+    "name": "Dang N. H. Thanh",
+    "works": 110,
+    "inst": "University of Economics Ho Chi Minh City"
+   },
+   {
+    "id": "https://openalex.org/A5109582797",
+    "name": "Huy Thanh Dang",
+    "works": 9,
+    "inst": "Can Tho University of Medicine and Pharmacy; Dalat Nuclear Research Institute; International University of Health and Welfare"
+   },
+   {
+    "id": "https://openalex.org/A5157478671",
+    "name": "Bui Thi Thu Trang, Mai Van Trinh, Dinh Thai Hung, Quang Thi Thuong Thuong, Phan Thu Tiep, Hoang Thi Trang, Dang Ngoc Tu",
+    "works": 4,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5002862060",
+    "name": "Đặng Ngọc Hoàng Thành",
+    "works": 1,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5079522726",
+    "name": "Đặng Văn Thắng",
+    "works": 3,
+    "inst": ""
+   }
+  ]
+ },
+ {
+  "name": "Cong, Phamhong",
+  "inst": "Vietnam Academy of Science and Technology",
+  "np": 37,
+  "why": "không có ứng viên đạt",
+  "cands": []
+ },
+ {
+  "name": "Mondal, Subhra Rani",
+  "inst": "Duy Tan University",
+  "np": 49,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5015027626",
+    "name": "Subhra R. Mondal",
+    "works": 57,
+    "inst": "Duy Tan University"
+   }
+  ]
+ },
+ {
+  "name": "Carrique-Mas, Juan J.",
+  "inst": "Food and Agriculture Organization of the United Nations (FAO)",
+  "np": 127,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5083649958",
+    "name": "Juan J. Carrique-Mas",
+    "works": 148,
+    "inst": "Food and Agriculture Organization of the United Nations"
+   }
+  ]
+ },
+ {
+  "name": "Do Van, Thom",
+  "inst": "Le Quy Don Technical University",
+  "np": 62,
+  "why": "nhiều ứng viên",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5080080089",
+    "name": "Do Van Thom",
+    "works": 44,
+    "inst": "Le Quy Don Technical University"
+   },
+   {
+    "id": "https://openalex.org/A5103210639",
+    "name": "Do Van Thom",
+    "works": 27,
+    "inst": "Le Quy Don Technical University"
+   },
+   {
+    "id": "https://openalex.org/A5088734924",
+    "name": "Thơm Đỗ Văn",
+    "works": 1,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5156362357",
+    "name": "Đặng Thị Thơm Đỗ Văn Mạnh*",
+    "works": 1,
+    "inst": ""
+   }
+  ]
+ },
+ {
+  "name": "van Nguyen, Minh",
+  "inst": "HCMC University of Technology and Engineering (HCM-UTE)",
+  "np": 34,
+  "why": "nhiều ứng viên",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5100642515",
+    "name": "Nguyễn Văn Minh",
+    "works": 159,
+    "inst": "Vinh Long University of Technology Education"
+   },
+   {
+    "id": "https://openalex.org/A5107998643",
+    "name": "Nguyễn Văn Minh Hoàng",
+    "works": 50,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5037305946",
+    "name": "Van‐Dinh Nguyen",
+    "works": 258,
+    "inst": "Trinity College Dublin; VinUniversity"
+   },
+   {
+    "id": "https://openalex.org/A5002282875",
+    "name": "Truong Quang Nguyen",
+    "works": 468,
+    "inst": "Vietnam National University, Hanoi; Vietnam National University of Forestry; Graduate University of Science and Technology; Viện Sinh học; Trường Đại học Khoa học và Công nghệ Hà Nội; Viện Khoa học sự sống; Viện Sinh thái và Tài nguyên sinh vật; Vietnam Academy of Science and Technology; Hanoi University of Science and Technology"
+   },
+   {
+    "id": "https://openalex.org/A5100642513",
+    "name": "Nguyễn Văn Minh",
+    "works": 144,
+    "inst": ""
+   }
+  ]
+ },
+ {
+  "name": "Dang, Tranngoc",
+  "inst": "University of Medicine and Pharmacy at HCMC",
+  "np": 105,
+  "why": "không có ứng viên đạt",
+  "cands": []
+ },
+ {
+  "name": "Tu, Tranminh",
+  "inst": "Hanoi University of Civil Engineering",
+  "np": 62,
+  "why": "không có ứng viên đạt",
+  "cands": []
+ },
+ {
+  "name": "Huynh, Dang Van",
+  "inst": "VNUHCM - University of Information Technology",
+  "np": 44,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5112959160",
+    "name": "Dang Van Huynh",
+    "works": 45,
+    "inst": "Memorial University of Newfoundland"
+   },
+   {
+    "id": "https://openalex.org/A5031665633",
+    "name": "Dang Huynh-Van",
+    "works": 8,
+    "inst": "Vietnam National University Ho Chi Minh City; University of Information Technology"
+   },
+   {
+    "id": "https://openalex.org/A5135923618",
+    "name": "Dang Huynh",
+    "works": 6,
+    "inst": "Vietnam National University Ho Chi Minh City; Memorial University of Newfoundland; Fulbright University Vietnam; University of Information Technology"
+   },
+   {
+    "id": "https://openalex.org/A5110877271",
+    "name": "Dang Huynh Cuu Quan",
+    "works": 4,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5157581117",
+    "name": "Huynh Thi Lan Huong, Koos Neefjes, Nguyen Xuan Hien, Tran Van Tra, Dang Linh Chi, Duong Hong Nhung",
+    "works": 1,
+    "inst": ""
+   }
+  ]
+ },
+ {
+  "name": "Lefeuvre, Pierre F.",
+  "inst": "Can Tho University",
+  "np": 128,
+  "why": "không có ứng viên đạt",
+  "cands": []
+ },
+ {
+  "name": "Nguyen, V. T.",
+  "inst": "Dại học Nguyen Tat Thanh",
+  "np": 57,
+  "why": "nhiều ứng viên",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5068483265",
+    "name": "Tuan V. Nguyen",
+    "works": 399,
+    "inst": "University of Technology Sydney; Garvan Institute of Medical Research; UNSW Sydney; Tam Anh Research Institute"
+   },
+   {
+    "id": "https://openalex.org/A5105514023",
+    "name": "V. Nguyen",
+    "works": 297,
+    "inst": "Northeastern University"
+   },
+   {
+    "id": "https://openalex.org/A5027797818",
+    "name": "Vicky V. T. Doan‐Nguyen",
+    "works": 69,
+    "inst": "The Ohio State University"
+   },
+   {
+    "id": "https://openalex.org/A5100634151",
+    "name": "Văn Thành Nguyễn",
+    "works": 175,
+    "inst": "Industrial University of Ho Chi Minh City; Ho Chi Minh City University of Technology and Engineering"
+   },
+   {
+    "id": "https://openalex.org/A5100754036",
+    "name": "Van Thanh Nguyen",
+    "works": 17,
+    "inst": ""
+   }
+  ]
+ },
+ {
+  "name": "Vu, Danh C.",
+  "inst": "Thu Dau Mot University",
+  "np": 63,
+  "why": "không có ứng viên đạt",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5022245617",
+    "name": "Danh Cong Vu",
+    "works": 68,
+    "inst": "University of Pittsburgh at Titusville; University of Pittsburgh at Greensburg"
+   },
+   {
+    "id": "https://openalex.org/A5149979086",
+    "name": "Danh C. Vu",
+    "works": 4,
+    "inst": ""
+   }
+  ]
+ },
+ {
+  "name": "Nguyen, Van Truong",
+  "inst": "Phuong Dong University",
+  "np": 62,
+  "why": "nhiều ứng viên",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5002282875",
+    "name": "Truong Quang Nguyen",
+    "works": 468,
+    "inst": "Vietnam National University, Hanoi; Vietnam National University of Forestry; Graduate University of Science and Technology; Viện Sinh học; Trường Đại học Khoa học và Công nghệ Hà Nội; Viện Khoa học sự sống; Viện Sinh thái và Tài nguyên sinh vật; Vietnam Academy of Science and Technology; Hanoi University of Science and Technology"
+   },
+   {
+    "id": "https://openalex.org/A5052113946",
+    "name": "Van‐Truong Nguyen",
+    "works": 83,
+    "inst": "Hanoi University of Industry"
+   },
+   {
+    "id": "https://openalex.org/A5046386361",
+    "name": "Nguyễn Văn Trưởng",
+    "works": 110,
+    "inst": "Thai Nguyen University of Technology; Vietnam Maritime University"
+   },
+   {
+    "id": "https://openalex.org/A5026404081",
+    "name": "Trinh Duy Nguyen",
+    "works": 253,
+    "inst": "Vietnam National University Ho Chi Minh City; Ho Chi Minh City University of Science; Trường ĐH Nguyễn Tất Thành"
+   },
+   {
+    "id": "https://openalex.org/A5075381376",
+    "name": "Truong Van Nguyen",
+    "works": 15,
+    "inst": ""
+   }
+  ]
+ },
+ {
+  "name": "Nguyen, Huong Lan Thi",
+  "inst": "Duy Tan University",
+  "np": 93,
+  "why": "nhiều ứng viên",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5088067338",
+    "name": "Huong Lan Thi Nguyen",
+    "works": 90,
+    "inst": "Duy Tan University; Nanyang Technological University; National Centre for Infectious Diseases"
+   },
+   {
+    "id": "https://openalex.org/A5040542719",
+    "name": "Huong Lan Thi Nguyen",
+    "works": 40,
+    "inst": ""
+   },
+   {
+    "id": "https://openalex.org/A5112398181",
+    "name": "Huong Lan Thi Nguyen",
+    "works": 14,
+    "inst": "Duy Tan University"
+   },
+   {
+    "id": "https://openalex.org/A5101674638",
+    "name": "Huong Lan Thi Nguyen",
+    "works": 50,
+    "inst": "Viet Duc Hospital; The University of Adelaide"
+   },
+   {
+    "id": "https://openalex.org/A5112042878",
+    "name": "Nguyễn Thị Lan Hương",
+    "works": 144,
+    "inst": "Ho Chi Minh City University of Science; University of Medicine and Pharmacy at Ho Chi Minh City; Ho Chi Minh City University of Law; Hanoi University of Natural Resources and Environment; 108 Military Central Hospital; Viện Các Khoa học Trái đất; Trường Đại học Khoa học và Công nghệ Hà Nội; Trường Đại học Tài nguyên và Môi trường TP. Hồ Chí Minh; Saigon University; Vietnam Academy of Science and Technology; Hanoi University of Science and Technology; University of Lausanne"
+   }
+  ]
+ },
+ {
+  "name": "Vu, Anh Tuan",
+  "inst": "Hanoi University of Science and Technology",
+  "np": 75,
+  "why": "nhiều ứng viên",
+  "cands": [
+   {
+    "id": "https://openalex.org/A5100671645",
+    "name": "Anh V. Nguyen",
+    "works": 539,
+    "inst": "The University of Queensland; ARC Centre of Excellence for Enabling Eco-Efficient Beneficiation of Minerals; Vietnam Academy of Science and Technology"
+   },
+   {
+    "id": "https://openalex.org/A5036869152",
+    "name": "Anh‐Tuan Vu",
+    "works": 56,
+    "inst": "Trường Đại học Khoa học và Công nghệ Hà Nội; Hanoi University of Science and Technology"
+   },
+   {
+    "id": "https://openalex.org/A5041664690",
+    "name": "Tuan A. Vu",
+    "works": 76,
+    "inst": "Trường Đại học Khoa học và Công nghệ Hà Nội; Hanoi University of Science and Technology"
+   },
+   {
+    "id": "https://openalex.org/A5103860711",
+    "name": "Vu Anh Tuan",
+    "works": 25,
+    "inst": "Vietnam National University, Hanoi; VNU University of Science"
+   },
+   {
+    "id": "https://openalex.org/A5101519611",
+    "name": "Anh Tuan Vu",
+    "works": 40,
+    "inst": "Vietnamese-German University"
    }
   ]
  }

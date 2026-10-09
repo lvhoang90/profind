@@ -1,4 +1,214 @@
 {
+ "TAYLOR-ROBINSON, ANDREW W.": {
+  "oaId": "A5056951761",
+  "display": "Andrew William Taylor-Robinson",
+  "works": 323,
+  "np": 160,
+  "inst": "VinUniversity"
+ },
+ "Maheshwari, Greeni": {
+  "oaId": "A5045644992",
+  "display": "Greeni Maheshwari",
+  "works": 55,
+  "np": 35,
+  "inst": "RMIT University Vietnam"
+ },
+ "Akram, Umair": {
+  "oaId": "A5044603891",
+  "display": "Umair Akram",
+  "works": 148,
+  "np": 127,
+  "inst": "RMIT University Vietnam"
+ },
+ "Chi, Nguyen Thi Khanh": {
+  "oaId": "A5012869871",
+  "display": "Nguyen Thi Khanh",
+  "works": 52,
+  "np": 26,
+  "inst": "Foreign Trade University"
+ },
+ "Nguyen-Phuoc, Duy Q.": {
+  "oaId": "A5011212770",
+  "display": "Duy Quy Nguyen-Phuoc",
+  "works": 95,
+  "np": 70,
+  "inst": "VinUniversity"
+ },
+ "Ngo, Vu Minh": {
+  "oaId": "A5053295960",
+  "display": "Vu Minh Ngo",
+  "works": 83,
+  "np": 60,
+  "inst": "University of Economics Ho Chi Minh City"
+ },
+ "Nguyen-Trong, Nghia": {
+  "oaId": "A5050246251",
+  "display": "Nghia Nguyen‐Trong",
+  "works": 151,
+  "np": 141,
+  "inst": "Nextwaves Industries"
+ },
+ "Nguyen, Long Hoang": {
+  "oaId": "A5065021757",
+  "display": "Hoàng Long Nguyễn",
+  "works": 68,
+  "np": 162,
+  "inst": "Ton-Duc-Thang University"
+ },
+ "Huong, D. C.": {
+  "oaId": "A5022549493",
+  "display": "Dinh Cong Huong",
+  "works": 90,
+  "np": 74,
+  "inst": "Industrial University of Ho Chi Minh City"
+ },
+ "La, Duc Duong": {
+  "oaId": "A5020953748",
+  "display": "Duong Duc La",
+  "works": 266,
+  "np": 173,
+  "inst": "Institute of Chemistry and Materials"
+ },
+ "Do, Ha Huu": {
+  "oaId": "A5068570499",
+  "display": "Ha Huu",
+  "works": 80,
+  "np": 69,
+  "inst": "Dại học Nguyen Tat Thanh"
+ },
+ "Smith, Julia H.": {
+  "oaId": "A5091893691",
+  "display": "Julia Smith",
+  "works": 134,
+  "np": 72,
+  "inst": "VinUniversity"
+ },
+ "Le, Ngoc Lieu": {
+  "oaId": "A5080870118",
+  "display": "Ngoc Lieu Le",
+  "works": 69,
+  "np": 50,
+  "inst": "International University - Vietnam National University HCM City"
+ },
+ "Luy, Nguyen Tan": {
+  "oaId": "A5038470670",
+  "display": "Luy Nguyen Tan",
+  "works": 34,
+  "np": 35,
+  "inst": "Ho Chi Minh City University of Technology - HCMUT"
+ },
+ "Phung, Manh Duong": {
+  "oaId": "A5004803753",
+  "display": "Manh Duong Phung",
+  "works": 78,
+  "np": 48,
+  "inst": "Fulbright University Vietnam"
+ },
+ "Le, Van Thao": {
+  "oaId": "A5088779561",
+  "display": "Van Thao Le",
+  "works": 74,
+  "np": 60,
+  "inst": "Le Quy Don Technical University"
+ },
+ "Thai, Son": {
+  "oaId": "A5020382582",
+  "display": "Son Thai",
+  "works": 45,
+  "np": 31,
+  "inst": "Viet Nam National University Ho Chi Minh City"
+ },
+ "Nguyen, Trung Thanh": {
+  "oaId": "A5100675789",
+  "display": "Trung-Thanh Nguyen",
+  "works": 100,
+  "np": 78,
+  "inst": "Le Quy Don Technical University"
+ },
+ "Tran, Thao T.D.": {
+  "oaId": "A5027280509",
+  "display": "Thao T.D. Tran",
+  "works": 122,
+  "np": 115,
+  "inst": "Ton-Duc-Thang University"
+ },
+ "Vu, Giang Thu": {
+  "oaId": "A5065915693",
+  "display": "Giang Thu Vu",
+  "works": 197,
+  "np": 182,
+  "inst": "Institute of Health Economics and Technology"
+ },
+ "Dang, Thai Viet": {
+  "oaId": "A5008459322",
+  "display": "Thai-Viet Dang",
+  "works": 48,
+  "np": 30,
+  "inst": "Hanoi University of Science and Technology"
+ },
+ "Tran, Thanh Trung": {
+  "oaId": "A5101826892",
+  "display": "Trung Thanh Tran",
+  "works": 84,
+  "np": 53,
+  "inst": "Le Quy Don Technical University"
+ },
+ "Pham, Thuy Anh Vu": {
+  "oaId": "A5008217567",
+  "display": "Thuy Anh Vu Pham",
+  "works": 44,
+  "np": 35,
+  "inst": "Viet Nam National University Ho Chi Minh City"
+ },
+ "Vu, Hoai Nam": {
+  "oaId": "A5020424588",
+  "display": "Vũ Hoài Nam",
+  "works": 98,
+  "np": 78,
+  "inst": "Đại học Công nghệ Giao thông vận tải"
+ },
+ "Hien, Nguyen Dinh": {
+  "oaId": "A5091133342",
+  "display": "Nguyen Dinh Hien",
+  "works": 66,
+  "np": 57,
+  "inst": "Thu Dau Mo University"
+ },
+ "van Kiem, Phan": {
+  "oaId": "A5014245013",
+  "display": "Phan Văn Kiệm",
+  "works": 537,
+  "np": 474,
+  "inst": "National Institute of Drug Quality Control"
+ },
+ "Le, Van Tao": {
+  "oaId": "A5076337116",
+  "display": "Van Tao Le",
+  "works": 33,
+  "np": 26,
+  "inst": "Le Quy Don Technical University"
+ },
+ "Bui, Linh P.": {
+  "oaId": "A5080925078",
+  "display": "Linh Bui",
+  "works": 36,
+  "np": 30,
+  "inst": "VinUniversity"
+ },
+ "Gouran, Sina": {
+  "oaId": "A5063797105",
+  "display": "Sina Gouran",
+  "works": 17,
+  "np": 15,
+  "inst": "Duy Tan University"
+ },
+ "Hai, Dao Thanh": {
+  "oaId": "A5029102378",
+  "display": "Dao Thanh Hai",
+  "works": 54,
+  "np": 37,
+  "inst": "RMIT University Vietnam"
+ },
  "Pham, Binh Thai": {
   "oaId": "A5029814958",
   "display": "Binh Thai Pham",

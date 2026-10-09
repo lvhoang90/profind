@@ -20,9 +20,12 @@ const all = (s) => new Set(fold(s).split(/[^a-z]+/).filter(Boolean));
 const jac = (a, b) => { let k = 0; for (const x of a) if (b.has(x)) k++; return a.size + b.size - k ? k / (a.size + b.size - k) : 0; };
 // Đơn vị khớp nếu: (1) có từ khóa riêng chung (sau khi bỏ từ chung), hoặc (2) toàn bộ từ giống nhau >= 0.6 (các tên chung như "Vietnam National University, Hanoi").
 const instOverlap = (dsInst, a) => { const d = itoks(dsInst), D = all(dsInst); return a.institutions.some((id) => { const i = inst.get(id); if (!i) return false; const t = new Set([...itoks(i.en ?? ""), ...itoks(i.name ?? ""), ...itoks(i.abbr ?? "")]); for (const x of d) if (t.has(x)) return true; return [i.en, i.name].filter(Boolean).some((n) => jac(D, all(n)) >= 0.6); }); };
+// data/top2/found.json (scripts/find-top2.mjs): tên -> hồ sơ OpenAlex đã dò theo tên + đơn vị Việt Nam + số bài; chỉ dùng khi hồ sơ đó đã có trong ProFind.
+const FD = existsSync("data/top2/found.json") ? JSON.parse(readFileSync("data/top2/found.json", "utf8")) : {}, byId = new Map(P.authors.map((a) => [a.id, a]));
 const matches = {}, review = [];
 for (const t of T) {
   if (t.name in OV) { if (OV[t.name]) matches[OV[t.name]] = t; continue; }
+  if (FD[t.name]?.oaId && byId.has(FD[t.name].oaId)) { matches[FD[t.name].oaId] = t; continue; }
   const c = byName.get(key(t.name)) ?? [];
   if (c.length === 0) { review.push({ name: t.name, inst: t.inst, why: "không có hồ sơ cùng tên trong ProFind" }); continue; }
   const ok = c.filter((a) => instOverlap(t.inst, a));
