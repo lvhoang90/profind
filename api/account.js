@@ -649,6 +649,13 @@ export default async function handler(request) {
       const filtered = (list) => { const q = String(url.searchParams.get("q") || "").toLowerCase().trim(), f = SEGS[url.searchParams.get("f")] || SEGS.all; return list.filter((u) => f(u) && (!q || [u.email, u.name, u.job, u.org, u.address, u.phone].join(" ").toLowerCase().includes(q))).sort(sort); };
       const sum = (a) => a.reduce((x, y) => x + Number(y || 0), 0);
 
+      if (op === "admin-user") { // chi tiết một người dùng (quản trị viên xem): thông tin đăng ký, mục đã lưu, tìm kiếm, đã xem, xác thực và yêu cầu hồ sơ
+        const email = String(url.searchParams.get("email") || "").trim().toLowerCase(), uid2 = await sha(email), u = await loadUser(uid2);
+        if (!u) return json({ error: "Không tìm thấy người dùng." }, 404);
+        const rd = async (kf) => Object.entries(pairs(await one(["HGETALL", kf(uid2)]))).map(([k, v]) => { try { return { k, ...JSON.parse(v) }; } catch { return null; } }).filter(Boolean);
+        const [h, saved, searches, viewed, vf, cl] = await Promise.all([one(["HGETALL", K.cnt(uid2)]), rd(K.fav), rd(K.ss), rd(K.rv), allVf(), allClaims()]);
+        return reply({ user: { ...pub(u, pairs(h)), lang: u.lang || "" }, saved: saved.slice(0, 100), searches: searches.sort((a, b) => String(b.at).localeCompare(String(a.at))).slice(0, 50), viewed: viewed.sort((a, b) => Number(b.at) - Number(a.at)).slice(0, 50), verified: vf.filter((v) => v.email === email), claims: cl.filter((c) => c.email === email).sort((a, b) => b.createdAt - a.createdAt).slice(0, 20).map((c) => ({ id: c.id, authorId: c.authorId, authorName: c.authorName, kind: c.kind || "claim", status: c.status, createdAt: c.createdAt })) });
+      }
       if (op === "admin-users") {
         const list = await loadList(), out = filtered(list), per = Math.max(5, Math.min(100, Number(url.searchParams.get("per")) || 25)), pages = Math.max(1, Math.ceil(out.length / per));
         const page = Math.max(1, Math.min(pages, Number(url.searchParams.get("page")) || 1));

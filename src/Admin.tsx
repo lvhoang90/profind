@@ -131,8 +131,42 @@ function Content() {
 const SEGS: [string, string][] = [["all", "Tất cả"], ["saver", "Đã lưu tác giả"], ["noeco", "Chưa sang ISA"], ["edufind", "Đã sang EduFind"], ["ami", "Đã sang Ami"], ["may", "Đã sang Mây"], ["noprofile", "Hồ sơ dưới 40%"], ["full", "Hồ sơ đủ"], ["oneday", "Mới dùng 1 ngày"]];
 const ini = (n: string) => { const w = n.replace(/[^\p{L}\s-]/gu, " ").split(/[\s-]+/).filter(Boolean); return ((w[0]?.[0] ?? "") + (w.length > 1 ? w[w.length - 1][0] : "")).toUpperCase() || "?"; };
 const dm = (iso: unknown) => { const x = String(iso ?? "").slice(0, 10).split("-"); return x.length === 3 ? `${x[2]}/${x[1]}/${x[0]}` : "—"; };
+type UD = { user: any; saved: { k: string; t?: string; at?: number | string }[]; searches: { k: string; q?: string; d?: string; ty?: string; i?: string; sc?: string; at?: string }[]; viewed: { k: string; t?: string; at?: number }[]; verified: { authorId: string; name: string; since: number; until: number; orcid?: string }[]; claims: { id: string; authorId: string; authorName: string; kind: string; status: string; createdAt: number }[] };
+const REASON: Record<string, string> = { reg: "Nút đăng ký", banner: "Lời mời", fav: "Khi lưu tác giả", ss: "Khi lưu tìm kiếm", csv: "Khi tải CSV", view: "Khi xem hồ sơ", eco: "Từ hệ sinh thái" };
+/** Ngăn chi tiết một người dùng (chỉ quản trị viên): thông tin đăng ký, hoạt động, mục đã lưu, tìm kiếm, đã xem, xác thực. */
+function UserDetail({ email, onClose }: { email: string; onClose: () => void }) {
+  const { d, err } = useGet<UD>("admin-user", `&email=${encodeURIComponent(email)}`);
+  useEffect(() => { const k = (e: KeyboardEvent) => e.key === "Escape" && onClose(); document.addEventListener("keydown", k); return () => document.removeEventListener("keydown", k); }, [onClose]);
+  const u = d?.user, row = (l: string, v: React.ReactNode) => <div className="udr"><dt>{l}</dt><dd>{v || <span className="meta">—</span>}</dd></div>;
+  const tm = (ms: unknown) => { const t = new Date(typeof ms === "number" ? ms : String(ms)); return isNaN(+t) ? "—" : t.toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "short" }); };
+  const ref = (k: string, t?: string) => { const [ty, id] = k.split("|"); return ty === "a" && id ? <a href={`#/tac-gia/${id}`} target="_blank" rel="noopener">{t || id}</a> : <span>{t || k}</span>; };
+  return (
+    <div className="ud-back" onClick={onClose}>
+      <aside className="ud" role="dialog" aria-modal="true" aria-label="Chi tiết người dùng" onClick={(e) => e.stopPropagation()}>
+        <header><div><h2>{u?.name || (d ? "(chưa khai tên)" : "Đang tải…")}</h2><p className="meta">{email}</p></div><button className="ghost" onClick={onClose} aria-label="Đóng">✕</button></header>
+        {err ? <p className="banner demo">{err}</p> : !d ? <p className="empty">Đang tải…</p> : <>
+          <dl className="udl">
+            {row("Điện thoại", u.phone)}{row("Nghề nghiệp", u.job)}{row("Đơn vị", u.org)}{row("Địa chỉ", u.address)}
+            {row("Đăng ký", tm(u.createdAt))}{row("Lần cuối", tm(u.lastSeen))}{row("Nguồn đăng ký", [REASON[u.regReason] ?? u.regReason, u.utm].filter(Boolean).join(" · "))}
+            {row("Ngày dùng / Sang ISA", `${u.counts.days} ngày · EduFind ${u.hops.edufind}, Ami ${u.hops.ami}, Mây ${u.hops.may}`)}
+            {row("Hồ sơ khai", `${u.profilePct}%`)}{row("Đồng ý điều khoản", u.consentAt ? tm(u.consentAt) : "")}{row("Nhận thư thông tin", u.noMail ? "Không" : "Có")}{row("Ngôn ngữ", u.lang)}
+          </dl>
+          <h3>Xác thực hồ sơ khoa học ({d.verified.length})</h3>
+          {d.verified.length ? <ul>{d.verified.map((v) => <li key={v.authorId}><a href={`#/tac-gia/${v.authorId}`} target="_blank" rel="noopener">{v.name || v.authorId}</a> · đến {new Date(v.until).toLocaleDateString("vi-VN")}</li>)}</ul> : <p className="meta">Chưa có.</p>}
+          {d.claims.length > 0 && <><h3>Yêu cầu hồ sơ ({d.claims.length})</h3><ul>{d.claims.map((c) => <li key={c.id}>{c.kind === "remove" ? "Gỡ hồ sơ" : c.kind === "hide" ? "Ẩn" : "Xác thực"} · <a href={`#/tac-gia/${c.authorId}`} target="_blank" rel="noopener">{c.authorName || c.authorId}</a> · {ST[c.status] ?? c.status} · {new Date(c.createdAt).toLocaleDateString("vi-VN")}</li>)}</ul></>}
+          <h3>Đã lưu ({d.saved.length})</h3>
+          {d.saved.length ? <ul>{d.saved.map((x) => <li key={x.k}>{ref(x.k, x.t)}</li>)}</ul> : <p className="meta">Chưa lưu mục nào.</p>}
+          <h3>Tìm kiếm đã lưu ({d.searches.length})</h3>
+          {d.searches.length ? <ul>{d.searches.map((x) => <li key={x.k}><b>{x.q || "(trống)"}</b>{[x.d, x.i, x.ty].filter(Boolean).length ? <span className="meta"> · {[x.d, x.i, x.ty].filter(Boolean).join(" · ")}</span> : null}{x.at ? <span className="meta"> · {tm(x.at)}</span> : null}</li>)}</ul> : <p className="meta">Chưa có.</p>}
+          <h3>Đã xem gần đây ({d.viewed.length})</h3>
+          {d.viewed.length ? <ul>{d.viewed.map((x) => <li key={x.k}>{ref(x.k, x.t)}{x.at ? <span className="meta"> · {tm(x.at)}</span> : null}</li>)}</ul> : <p className="meta">Chưa có.</p>}
+        </>}
+      </aside>
+    </div>
+  );
+}
 function Users() {
-  const [q, setQ] = useState(""), [f, setF] = useState("all"), [sort, setSort] = useState("score"), [dir, setDir] = useState("desc"), [page, setPage] = useState(1), [dq, setDq] = useState("");
+  const [sel, setSel] = useState<string | null>(null), [q, setQ] = useState(""), [f, setF] = useState("all"), [sort, setSort] = useState("score"), [dir, setDir] = useState("desc"), [page, setPage] = useState(1), [dq, setDq] = useState("");
   useEffect(() => { const id = setTimeout(() => { setDq(q); setPage(1); }, 300); return () => clearTimeout(id); }, [q]);
   const qs = useMemo(() => `&q=${encodeURIComponent(dq)}&f=${f}&sort=${sort}&dir=${dir}&page=${page}&per=25`, [dq, f, sort, dir, page]);
   const { d, err } = useGet<any>("admin-users", qs);
@@ -144,13 +178,14 @@ function Users() {
       <div className="seg wrap" role="group" aria-label="Nhóm người dùng">{SEGS.map(([k, l]) => <button key={k} aria-pressed={f === k} onClick={() => { setF(k); setPage(1); }}>{l}{d?.seg ? <em>{d.seg[k] ?? 0}</em> : null}</button>)}</div>
       {err ? <p className="banner demo">{err}</p> : !d ? <p className="empty">Đang tải…</p> : (
         <div className="table-wrap"><table className="adm-t users"><thead><tr>{th("name", "Người dùng")}{th("org", "Đơn vị")}<th>Điện thoại</th>{th("createdAt", "Đăng ký")}{th("lastSeen", "Lần cuối")}{th("days", "Ngày dùng", true)}{th("favs", "Đã lưu", true)}{th("eco", "Sang ISA", true)}{th("profile", "Hồ sơ", true)}</tr></thead>
-          <tbody>{d.users.map((u: any) => <tr key={u.email}>
-            <td><div className="ucell"><span className="uav" aria-hidden="true">{ini(u.name || u.email)}</span><span className="utxt"><b title={u.name}>{u.name || "(chưa khai tên)"}</b><small title={u.email}>{u.email}</small></span></div></td>
+          <tbody>{d.users.map((u: any) => <tr key={u.email} className="clk" onClick={() => setSel(u.email)}>
+            <td><div className="ucell"><span className="uav" aria-hidden="true">{ini(u.name || u.email)}</span><span className="utxt"><button type="button" className="ulink" onClick={(e) => { e.stopPropagation(); setSel(u.email); }} title="Xem chi tiết"><b title={u.name}>{u.name || "(chưa khai tên)"}</b></button><small title={u.email}>{u.email}</small></span></div></td>
             <td className="uorg" title={u.org}>{u.org || <span className="meta">—</span>}</td>
             <td className="nw">{u.phone || <span className="meta">—</span>}</td>
             <td className="nw">{dm(u.createdAt)}</td><td className="nw">{dm(u.lastSeen)}</td>
             <td className="num">{u.counts.days}</td><td className="num">{u.favs}</td><td className="num" title={`EduFind ${u.hops.edufind} · Ami ${u.hops.ami} · Mây ${u.hops.may}`}>{u.eco}</td>
             <td className="num"><span className="upct" title={`${u.profilePct}%`}><i><u style={{ width: `${u.profilePct}%` }} /></i><em>{u.profilePct}%</em></span></td></tr>)}</tbody></table></div>)}
+      {sel && <UserDetail email={sel} onClose={() => setSel(null)} />}
       {d && <div className="pager"><button className="ghost" disabled={page <= 1} onClick={() => setPage(page - 1)}>‹ Trước</button><span className="meta">Trang {d.page}/{d.pages} · {n0(d.total)} người</span><button className="ghost" disabled={page >= d.pages} onClick={() => setPage(page + 1)}>Sau ›</button></div>}
     </>
   );
