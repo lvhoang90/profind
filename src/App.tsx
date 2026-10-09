@@ -423,6 +423,26 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
     const url = URL.createObjectURL(new Blob(["\ufeff" + body], { type: "text/csv;charset=utf-8" }));
     Object.assign(document.createElement("a"), { href: url, download: `${slug(a.name)}-${a.id}.csv` }).click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
+  // Chia sẻ hồ sơ: sao chép liên kết kèm lời giới thiệu ngắn, dễ dán vào Zalo, Facebook, LinkedIn. Chỉ dùng dữ liệu công khai; hồ sơ ẩn điểm thì không nêu hạng và điểm.
+  const [shared, setShared] = useState(false);
+  const shareText = () => {
+    const vi = lang === "vi", n = (x: number) => num(x), dsc = a.disciplines.slice(0, 2).map((x) => dName(x, lang)).join(" · "), org = inst.slice(0, 1).map((i) => instLabel(i, lang)).join(""), ranked = a.pro != null && a.proRank != null;
+    const link = `${location.origin}/?utm_source=share&utm_medium=profile${user?.ref ? `&ref=${user.ref}` : ""}#/tac-gia/${encodeURIComponent(a.id)}`;
+    const hook = ranked && a.proRank! <= 10 ? (vi ? `🏆 ${a.name} đang đứng hạng #${a.proRank} PRO-SCORE1000™ trên ProFind™ (${a.pro!.toFixed(1)}/100).` : `🏆 ${a.name} ranks #${a.proRank} on ProFind™ PRO-SCORE1000™ (${a.pro!.toFixed(1)}/100).`)
+      : a.top2 ? (vi ? `★ ${a.name} nằm trong Top 2% nhà khoa học có ảnh hưởng nhất thế giới.` : `★ ${a.name} is on the global Top 2% most-cited scientists list.`)
+      : ranked ? (vi ? `🌸 ${a.name} có PRO-SCORE1000™ ${a.pro!.toFixed(1)}/100 trên ProFind™${a.proRank != null ? `, hạng #${a.proRank}` : ""}.` : `🌸 ${a.name} scores ${a.pro!.toFixed(1)}/100 on ProFind™ PRO-SCORE1000™.`)
+      : (vi ? `🌸 Hồ sơ nhà khoa học ${a.name} trên ProFind™.` : `🌸 ${a.name}'s researcher profile on ProFind™.`);
+    const facts = [org, dsc, `${n(a.worksCount)} ${vi ? "công trình" : "works"}`, a.citations > 0 ? `${n(a.citations)} ${vi ? "trích dẫn" : "citations"}` : "", ranked && !(a.proRank! <= 10) && a.top2 ? `PRO-SCORE1000™ ${a.pro!.toFixed(1)}${a.proRank != null ? ` · #${a.proRank}` : ""}` : "", a.top2 && a.proRank != null && a.proRank <= 10 ? (vi ? "★ Top 2% thế giới" : "★ Global Top 2%") : ""].filter(Boolean).join(" · ");
+    const note = ranked ? (vi ? "\n(PRO-SCORE1000™ là chỉ số tham khảo, không phải xếp hạng chính thức.)" : "\n(PRO-SCORE1000™ is a reference index, not an official ranking.)") : "";
+    const cta = vi ? "Xem hồ sơ, công trình và so sánh trên ProFind™:" : "See the profile, works and comparisons on ProFind™:";
+    return `${hook}\n${facts}${note}\n${cta} ${link}`;
+  };
+  const shareProfile = async () => {
+    const text = shareText(); evt("share_profile", a.id, a.name);
+    try { await navigator.clipboard.writeText(text); }
+    catch { try { const ta = Object.assign(document.createElement("textarea"), { value: text }); document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); } catch { window.prompt(lang === "vi" ? "Sao chép nội dung chia sẻ:" : "Copy to share:", text); return; } }
+    setShared(true); setTimeout(() => setShared(false), 2500);
+  };
   const saveAuthor = async () => {
     if (!user) { try { sessionStorage.setItem("profind.ret", location.hash); sessionStorage.setItem("profind.reason", "fav"); } catch { /* bỏ qua */ } evt("save_gate"); location.hash = "#/tai-khoan"; return; }
     try { await toggleFav(`a|${a.id}`, { t: a.name, s: inst.slice(0, 2).map((i) => instLabel(i, lang)).join(", "), sc: a.pro ?? undefined, rk: a.proRank ?? undefined }); } catch (e: any) { alert(e?.message || t("saveFail")); }
@@ -465,7 +485,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
           {a.bigFlag && <p className="bigflag" role="note"><Icon n="users" size={18} /><span><b>{t("bigTitle")}</b> {t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}</span></p>}
           {(ownDisc ?? a.disciplines).length > 0 && <p className="hdisc" title={!ownDisc && a.discBasis ? t(("discBasis_" + a.discBasis) as "discUncertain") : undefined}>{(ownDisc ?? a.disciplines).map((s) => dName(s, lang) + (!ownDisc && a.discShares && a.disciplines.length > 1 && a.discShares[s] ? ` ${a.discShares[s]}%` : "")).join(" · ")}{!ownDisc && a.discBasis === "khac-biet" && <small className="meta"> · {t("discUncertain")}</small>}</p>}
           {(a.scholar || a.orcid) && <ul className="hlinks" aria-label="Định danh học thuật">{a.scholar && <li className="idl scholar"><a href={`https://scholar.google.com/citations?user=${a.scholar}&hl=${lang === "vi" ? "vi" : "en"}`} target="_blank" rel="noopener"><i className="idk">Google Scholar</i><span className="sr"> {t("newTab")}</span></a></li>}{a.orcid && <li className="idl orcid"><a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener"><i className="idk">ORCID</i><span className="idv">{a.orcid}</span><span className="sr"> {t("newTab")}</span></a></li>}</ul>}
-          <p className="actions-row">{cfg?.enabled !== false && <button className={`ghost light${favs.has(`a|${a.id}`) ? " on" : ""}`} aria-pressed={favs.has(`a|${a.id}`)} onClick={() => void saveAuthor()}><Icon n="star" size={16} />{!user ? t("saveGate") : favs.has(`a|${a.id}`) ? t("savedA") : t("saveA")}</button>}<button className="ghost light" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button><a className="ghost-link light" href={mine ? "#/tai-khoan" : `#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{mine ? "Quản lý hồ sơ của tôi" : isVerified ? "Đính chính / gỡ hồ sơ" : t("corrLink")}</a></p>
+          <p className="actions-row">{cfg?.enabled !== false && <button className={`ghost light${favs.has(`a|${a.id}`) ? " on" : ""}`} aria-pressed={favs.has(`a|${a.id}`)} onClick={() => void saveAuthor()}><Icon n="star" size={16} />{!user ? t("saveGate") : favs.has(`a|${a.id}`) ? t("savedA") : t("saveA")}</button>}<button className="ghost light" onClick={() => void shareProfile()} aria-live="polite"><Icon n="external" size={16} />{shared ? (lang === "vi" ? "Đã sao chép ✓" : "Copied ✓") : (lang === "vi" ? "Chia sẻ" : "Share")}</button><button className="ghost light" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button><a className="ghost-link light" href={mine ? "#/tai-khoan" : `#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{mine ? "Quản lý hồ sơ của tôi" : isVerified ? "Đính chính / gỡ hồ sơ" : t("corrLink")}</a></p>
         </div>
       </header>
       <div className="kpis">
