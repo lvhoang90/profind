@@ -429,7 +429,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
     const vi = lang === "vi", ranked = a.pro != null && a.proRank != null, score = a.pro?.toFixed(1) ?? "";
     const link = `${location.origin}/?utm_source=share&utm_medium=profile${user?.ref ? `&ref=${user.ref}` : ""}#/tac-gia/${encodeURIComponent(a.id)}`;
     const head = ranked ? `${a.proRank! <= 10 ? "🏆" : "⭐"} ${a.name} ${vi ? `đang đứng hạng #${a.proRank} bảng xếp hạng PRO-SCORE1000™ (${score}/100)` : `ranks #${a.proRank} on the PRO-SCORE1000™ leaderboard (${score}/100)`}`
-      : `🌸 ${vi ? `Hồ sơ nhà khoa học ${a.name} trên ProFind™` : `${a.name}'s researcher profile on ProFind™`}`;
+      : `📖 ${vi ? `Hồ sơ nhà khoa học ${a.name} trên ProFind™` : `${a.name}'s researcher profile on ProFind™`}`;
     const stats = [`${num(a.worksCount)} ${vi ? "công trình" : "works"}`, a.citations > 0 ? `${num(a.citations)} ${vi ? "trích dẫn" : "citations"}` : ""].filter(Boolean);
     const top2 = vi ? "nằm trong danh sách Top 2% nhà khoa học có ảnh hưởng nhất thế giới" : "is on the global Top 2% most-influential scientists list";
     const body = vi ? `Tác giả có ${stats.join(", ")}${a.top2 ? ` và ${top2}` : ""}.` : `The author has ${stats.join(", ")}${a.top2 ? ` and ${top2}` : ""}.`;
