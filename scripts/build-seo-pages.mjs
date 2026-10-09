@@ -11,7 +11,7 @@ const vn = (n, d = 0) => Number(n).toLocaleString("vi-VN", { maximumFractionDigi
 const typeVi = (t) => P.types?.[t]?.vi ?? t;
 const instBy = new Map(P.institutions.map((i) => [i.id, i]));
 const people = P.authors.filter((a) => !a.suspect && !a.demo);
-const agg = (list) => { const n2 = list.filter((a) => a.top2).length, sc = list.filter((a) => a.pro != null).sort((x, y) => y.pro - x.pro), t10 = sc.slice(0, TOPN); return { n2, n: list.length, scored: sc.length, works: list.reduce((s, a) => s + (a.worksCount ?? 0), 0), cit: list.reduce((s, a) => s + (a.citations ?? 0), 0), p1000: list.filter((a) => (a.proRank ?? 1e9) <= 1000).length, avg: t10.length ? t10.reduce((s, a) => s + a.pro, 0) / t10.length : null }; };
+const agg = (list) => { const n2 = list.filter((a) => a.top2).length, sc = list.filter((a) => a.pro != null).sort((x, y) => y.pro - x.pro || (x.proRank ?? 1e9) - (y.proRank ?? 1e9)), t10 = sc.slice(0, TOPN); return { n2, n: list.length, scored: sc.length, works: list.reduce((s, a) => s + (a.worksCount ?? 0), 0), cit: list.reduce((s, a) => s + (a.citations ?? 0), 0), p1000: list.filter((a) => (a.proRank ?? 1e9) <= 1000).length, avg: t10.length ? t10.reduce((s, a) => s + a.pro, 0) / t10.length : null }; };
 const byUnit = new Map(), byDisc = new Map();
 for (const a of people) {
   for (const u of a.institutions ?? []) { if (a.instPast?.includes(u) || instBy.get(u)?.type === "other") continue; (byUnit.get(u) ?? byUnit.set(u, []).get(u)).push(a); }

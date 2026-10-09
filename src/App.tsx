@@ -257,7 +257,7 @@ function List({ d, query }: { d: Data; query: string }) {
       else if (sort === "unit") { const u = (x: Author) => x.institutions.map((i) => instLabel(instById.get(i), lang, i)).join(", "); c = u(a).localeCompare(u(b), "vi"); }
       else if (sort === "rank") c = (a.proRank ?? Infinity) === (b.proRank ?? Infinity) ? 0 : (a.proRank ?? Infinity) < (b.proRank ?? Infinity) ? -1 : 1;
       else c = ((a[sort] ?? 0) as number) - ((b[sort] ?? 0) as number);
-      return c * dir || (b.pro ?? -1) - (a.pro ?? -1) || b.worksCount - a.worksCount || a.name.localeCompare(b.name, "vi");
+      return c * dir || (a.proRank ?? Infinity) - (b.proRank ?? Infinity) || (b.pro ?? -1) - (a.pro ?? -1) || b.worksCount - a.worksCount || a.name.localeCompare(b.name, "vi");
     });
   }, [d, dq, disc, type, instSel, sort, dir, scope, instById, jn, lang, hay, top2only]);
   useEffect(() => setPage(0), [dq, disc, type, instSel, sort, dir, scope, top2only]);
