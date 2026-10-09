@@ -60,7 +60,7 @@ const foldS = (x) => String(x ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g
 const df = new Map(), allIssn = new Set();
 for (const [i, v] of Object.entries(S.sjrByIssn)) { allIssn.add(i); for (const d of new Set(v.map((x) => x[0]))) df.set(d, (df.get(d) ?? 0) + 1); }
 for (const j of J.journals) for (const i of j.issn) { allIssn.add(i); }
-const idf = (d) => Math.log(1 + allIssn.size / (df.get(d) ?? 1));
+const IDF_POW = Number(process.env.DISC_IDF_POW ?? 0.5), idf = (d) => Math.pow(Math.log(1 + allIssn.size / (df.get(d) ?? 1)), IDF_POW); // IDF_POW = 0,5 (căn bậc hai của idf; trước đây 1) để giảm ưu ái ngành hiếm như Dược học, Luyện kim
 
 const prep = rawWorks.map((w) => {
   const all = [...new Set([w.issn, ...(w.issns ?? [])].filter(Boolean))];
@@ -109,8 +109,32 @@ for (const p of prepared) {
   votes.set(p.w.authorId, m);
 }
 console.log(`Ngành: ${nAmb} công trình thuộc tạp chí nhiều ngành đã phân ngành theo tiêu đề/tiền đề tác giả (${nAmbSkipped} không đủ căn cứ nên không tính phiếu).`);
-const authorDisc = new Map();
-for (const [id, m] of votes) { const tot = [...m.values()].reduce((x, y) => x + y, 0), top = Math.max(...m.values()); authorDisc.set(id, [...m.entries()].sort((x, y) => y[1] - x[1]).filter(([, c]) => c / tot >= 0.25 || c === top).slice(0, 3).map(([d]) => d)); }
+// ---- Ngành cuối cùng của tác giả: kết hợp hai nguồn độc lập (xem data/discipline-crosswalk.json và mục Phương pháp) ----
+//  J = phiếu theo danh mục tạp chí (phần trên). T = phân bố chủ đề theo nội dung công trình của OpenAlex (data/author-topics.json) quy đổi sang ngành HĐGSNN.
+//  Danh mục tạp chí xếp nhiều tạp chí liên ngành vào một ngành duy nhất (ví dụ cơ học tính toán vào Toán học) và ưu ái ngành hiếm (trọng số idf), nên chỉ riêng J dễ xếp sai; T quy theo nội dung nhưng thô hơn với một số ngành.
+//  Kết quả = 0,5 T + 0,5 J (hai nguồn độc lập, trọng số bằng nhau) (ngành quân sự và an ninh không có trong T nên lấy theo J). Giữ tối đa 3 ngành có tỉ trọng từ 20%; chỉ ngành đứng đầu mới quyết định nhóm so sánh chính, các ngành còn lại có tỉ trọng dùng để trộn khi tính điểm (pro-score.mjs).
+const XW = existsSync("data/discipline-crosswalk.json") ? rd("data/discipline-crosswalk.json").map : {}, AT = existsSync("data/author-topics.json") ? rd("data/author-topics.json") : {};
+const W_T = 0.5, W_J = 0.5, MIN_T = 5, KEEP = 0.2, NOT_IN_T = new Set(["quan-su", "an-ninh"]);
+const jShare = (id) => { const m = votes.get(id); if (!m) return null; const tot = [...m.values()].reduce((x, y) => x + y, 0); return tot > 0 ? Object.fromEntries([...m].map(([d, c]) => [d, c / tot])) : null; };
+const tShare = (id) => { const v = AT[id]?.s ?? [], tot = v.reduce((x, [, , c]) => x + c, 0); if (tot < MIN_T) return null; const o = {}; for (const [sf, , c] of v) for (const [d, w] of Object.entries(XW[sf] ?? {})) o[d] = (o[d] ?? 0) + (w * c) / tot; const t = Object.values(o).reduce((x, y) => x + y, 0); if (!(t > 0)) return null; for (const d in o) o[d] /= t; return o; };
+const topOf = (o) => Object.entries(o).sort((x, y) => y[1] - x[1])[0];
+if (process.env.DUMP_DISC) writeFileSync(process.env.DUMP_DISC, JSON.stringify(Object.fromEntries([...votes].map(([id]) => [id, jShare(id)]))));
+const authorDisc = new Map(), discShares = new Map(), discBasis = new Map(), discSrc = new Map();
+for (const a of authors) {
+  const id = a.id, ov = C.setDisciplines?.[id];
+  if (ov?.length) { authorDisc.set(id, ov); discShares.set(id, Object.fromEntries(ov.map((d) => [d, Math.round(100 / ov.length)]))); discBasis.set(id, "hieu-chinh"); continue; }
+  const J = jShare(id), T = tShare(id); if (!J && !T) continue;
+  const comb = {};
+  if (J && T) { for (const d of new Set([...Object.keys(J), ...Object.keys(T)])) comb[d] = W_T * (NOT_IN_T.has(d) ? (J[d] ?? 0) : (T[d] ?? 0)) + W_J * (J[d] ?? 0); }
+  else for (const [d, x] of Object.entries(J ?? T)) comb[d] = x;
+  const tot = Object.values(comb).reduce((x, y) => x + y, 0); for (const d in comb) comb[d] /= tot;
+  const kept = Object.entries(comb).sort((x, y) => y[1] - x[1]).filter(([, c], i) => i === 0 || c >= KEEP).slice(0, 3), kt = kept.reduce((x, [, c]) => x + c, 0);
+  const pct = kept.map(([d, c]) => [d, Math.round((100 * c) / kt)]); pct[0][1] += 100 - pct.reduce((x, [, c]) => x + c, 0);
+  authorDisc.set(id, pct.map(([d]) => d)); discShares.set(id, Object.fromEntries(pct));
+  const jt = J && topOf(J)[0], tt = T && topOf(T)[0];
+  discBasis.set(id, !J ? "chu-de" : !T ? "tap-chi" : jt === tt ? "dong-thuan" : (J[tt] ?? 0) >= 0.15 || (T[jt] ?? 0) >= 0.15 ? "lien-nganh" : "khac-biet");
+  discSrc.set(id, { j: J ? topOf(J).map((x, i) => (i ? Math.round(x * 100) : x)) : null, t: T ? topOf(T).map((x, i) => (i ? Math.round(x * 100) : x)) : null });
+}
 
 // ---- 3. Chấm điểm từng công trình ----
 // Điểm phụ thuộc ngành của người được xét. Một tạp chí thuộc nhiều ngành: chỉ lấy các ngành thuộc ngành của tác giả (lấy cao nhất trong đó);
@@ -147,12 +171,12 @@ const bigStats = (ws) => { const big = ws.filter((w) => (w.na ?? 0) >= 50), all 
 const outAuthors = authors.map((a) => {
   const ws = per.get(a.id) ?? [], jc = new Map();
   for (const w of ws) jc.set(`${w.journal}|${w.issn}`, (jc.get(`${w.journal}|${w.issn}`) ?? 0) + 1);
-  const disciplines = C.setDisciplines?.[a.id] ?? authorDisc.get(a.id) ?? []; // đính chính ngành do quản trị viên đặt (xem corrections.json)
+  const disciplines = authorDisc.get(a.id) ?? []; // đã gồm đính chính ngành do quản trị viên đặt (corrections.setDisciplines)
   const years = ws.map((w) => w.year);
   const matched = ws.filter((w) => w.matched).length;
   const span = years.length ? Math.max(1, Math.max(...years) - Math.min(...years) + 1) : 1;
   const meta = META[a.id];
-  return { id: a.id, name: cleanName(a.name), orcid: a.orcid, ...(() => { const r = a.fixedPast ? { institutions: a.institutions, instPast: a.fixedPast } : instSplit(a.id, a.institutions); return r.instPast.length ? r : { institutions: r.institutions }; })(), disciplines, demo: !!a.demo, claimed: a.claimed,
+  return { id: a.id, name: cleanName(a.name), orcid: a.orcid, ...(() => { const r = a.fixedPast ? { institutions: a.institutions, instPast: a.fixedPast } : instSplit(a.id, a.institutions); return r.instPast.length ? r : { institutions: r.institutions }; })(), disciplines, discShares: discShares.get(a.id) ?? null, discBasis: discBasis.get(a.id) ?? null, demo: !!a.demo, claimed: a.claimed,
     scholar: SCH[a.id]?.id ?? null, scholarCit: SCH[a.id]?.citations ?? null,
     top2: TOP2[a.id] ? { rank: TOP2[a.id].rank, field: TOP2[a.id].field, rankNs: TOP2[a.id].rankNs ?? null, selfPct: TOP2[a.id].selfPct ?? null, inNs: TOP2[a.id].inNs ?? null, scope: TOP2[a.id].scope ?? "career" } : null,
     // foreign: true = có đơn vị ngoài VN; false = chỉ đơn vị VN; null = chưa biết (chưa chạy enrich-authors.mjs, hoặc OpenAlex không ghi quốc gia nào).
@@ -195,6 +219,8 @@ writeFileSync("public/data/jn.json", JSON.stringify(jn));
 const usedInst = new Set(outAuthors.flatMap((a) => a.institutions));
 const insts = I.institutions.filter((i) => usedInst.has(i.id)).map(({ id, name, en, abbr, type, city, official, moetCode }) => ({ id, name, en, abbr, type, city: cityOut({ id, city }), ...(official ? { official, moetCode } : {}) }));
 const disciplines = [...new Set(outAuthors.flatMap((a) => a.disciplines))].sort();
+// Danh sách hồ sơ cần xem lại ngành (hai nguồn bất đồng), ưu tiên theo hạng, để quản trị viên đính chính bằng corrections.setDisciplines.
+writeFileSync("data/discipline-review.json", JSON.stringify({ built: new Date().toISOString().slice(0, 10), note: "Hồ sơ có hạng mà ngành xác định từ danh mục tạp chí (j) và chủ đề công trình (t) khác nhau. j/t = [ngành đứng đầu, tỉ trọng %]. Đính chính ngành bằng corrections.setDisciplines.", profiles: outAuthors.filter((a) => a.discBasis === "khac-biet" && a.proRank).sort((x, y) => x.proRank - y.proRank).map((a) => ({ id: a.id, name: a.name, rank: a.proRank, disc: a.discShares, j: discSrc.get(a.id)?.j ?? null, t: discSrc.get(a.id)?.t ?? null })) }, null, 1));
 writeFileSync("public/data/profind.json", JSON.stringify({ meta: { demo: !!R.meta?.demo, built: new Date().toISOString().slice(0, 10), authors: outAuthors.length, works: works.length, rankPool: PRO.eligible, abroad: { window: windowYears(ABROAD_RULE, BUILD_YEAR), recentMinShare: Math.round(ABROAD_RULE.recentMinShare * 100), recentMinWorks: ABROAD_RULE.recentMinWorks, maxVnShare: Math.round(ABROAD_RULE.maxVnShare * 100), minWorks: ABROAD_RULE.minWorks }, source: R.meta?.source ?? null, fetched: R.meta?.fetched ?? null }, institutions: insts, types: I.types, disciplines, authors: outAuthors }));
 if (xs.n) console.log(`Đối chiếu trích dẫn trên ${xs.n} công trình có DOI trong Crossref: Crossref cao hơn OpenAlex ở ${xs.crHigher}, Semantic Scholar cao hơn OpenAlex ở ${xs.s2Higher}, OpenAlex cao nhất hoặc bằng ở ${xs.oaHighest}.`);
 if (oc.n) console.log(`Kiểm toán OpenCitations trên mẫu ${oc.n} DOI: tổng trích dẫn OpenAlex ${oc.oa}, Crossref ${oc.cr}, Semantic Scholar ${oc.s2}, OpenCitations ${oc.oc}; OpenCitations <= OpenAlex ở ${Math.round(100 * oc.ocLeOA / oc.n)}% công trình.`);

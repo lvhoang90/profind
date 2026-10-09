@@ -23,3 +23,10 @@ npm run d:check                              # kiểm tra nhất quán
 - `node scripts/match-top2.mjs`: khớp theo tập từ của tên + đơn vị -> `data/top2/matches.json`; ca chưa chắc ở `data/top2/review.json`; quyết định tay ở `data/top2/overrides.json`. Hiện gắn 42/94 người (nhiều người là nhà khoa học nước ngoài có đơn vị phụ tại Việt Nam, hoặc chưa nằm trong tập tác giả đã nạp). Sau đó `npm run d:index`.
 - Khi có phiên bản mới của bộ dữ liệu (thường tháng 9-10 hằng năm): tải bảng career mới, quét `cntry = vnm`, thay tệp JSON, chạy lại match.
 - Việc không có tên trong danh sách không có nghĩa tác giả ít được trích dẫn; giao diện chỉ hiện nhãn cho người có tên, và không dùng danh sách để chấm điểm.
+
+## Ngành và liên ngành của tác giả (xem mục Phương pháp trên trang PRO-SCORE1000™)
+- Hai nguồn độc lập: (1) phiếu theo danh mục tạp chí (phần "Ngành của từng tạp chí" trong `scripts/build-index.mjs`; trọng số idf nay lấy căn bậc hai, `DISC_IDF_POW`, mặc định 0,5); (2) chủ đề công trình theo OpenAlex (`scripts/fetch-author-topics.mjs` -> `data/author-topics.json`), quy đổi sang 28 ngành bằng `data/discipline-crosswalk.json` (239 tiểu lĩnh vực; trọng số do người xây dựng đặt theo nội dung, có thể sửa).
+- Kết hợp: tỉ trọng = 0,5 × chủ đề + 0,5 × tạp chí (quân sự và an ninh chỉ theo tạp chí); giữ tối đa 3 ngành có tỉ trọng từ 20%. Kết quả trong `profind.json`: `disciplines` (ngành chính trước), `discShares` (% mỗi ngành), `discBasis` (`dong-thuan`, `lien-nganh`, `khac-biet`, `tap-chi`, `chu-de`, `hieu-chinh`). `corrections.setDisciplines` vẫn là đính chính cuối và áp dụng cả cho chấm điểm công trình.
+- `scripts/pro-score.mjs`: bách phân vị, trung bình ngành (làm trơn Bayes) và trần trích dẫn được tính theo từng ngành rồi trộn theo `discShares`.
+- `data/discipline-review.json`: hồ sơ có hạng mà hai nguồn bất đồng (xem lại, đính chính bằng `setDisciplines`).
+- Chạy lại chủ đề: `node scripts/fetch-author-topics.mjs` (xóa `data/author-topics.json` để tải lại toàn bộ). Kiểm định nội bộ: mẫu 180 hồ sơ đọc mù (xem mô tả trong PR), ngành chính khớp 54% -> 70%.
