@@ -781,7 +781,7 @@
   {
    "id": "A5031141167",
    "name": "Mike Perkins",
-   "rank": 220,
+   "rank": 221,
    "disc": {
     "giao-duc": 100
    },
@@ -3811,7 +3811,7 @@
   {
    "id": "A5023637327",
    "name": "Trần Thị Minh Tuyết",
-   "rank": 1203,
+   "rank": 1204,
    "disc": {
     "van-hoa": 63,
     "triet-xhh": 37
@@ -6163,7 +6163,7 @@
   {
    "id": "A5080263390",
    "name": "Ngo Sy Trung",
-   "rank": 1937,
+   "rank": 1936,
    "disc": {
     "luat": 55,
     "giao-duc": 45
@@ -6180,7 +6180,7 @@
   {
    "id": "A5007813226",
    "name": "Viet Duc Bui",
-   "rank": 1940,
+   "rank": 1939,
    "disc": {
     "kinh-te": 43,
     "cntt": 32,
@@ -6198,7 +6198,7 @@
   {
    "id": "A5019936892",
    "name": "Manh Hoang Tran",
-   "rank": 1942,
+   "rank": 1941,
    "disc": {
     "hoa-thuc-pham": 35,
     "luyen-kim": 33,
@@ -6216,7 +6216,7 @@
   {
    "id": "A5019805633",
    "name": "Hoan Ngoc Doan",
-   "rank": 1950,
+   "rank": 1949,
    "disc": {
     "hoa-thuc-pham": 36,
     "luyen-kim": 33,
@@ -6234,7 +6234,7 @@
   {
    "id": "A5060462253",
    "name": "Kien-Trinh Thi Bui",
-   "rank": 1964,
+   "rank": 1963,
    "disc": {
     "xay-dung": 56,
     "trai-dat-mo": 44
@@ -6251,7 +6251,7 @@
   {
    "id": "A5074819366",
    "name": "Tan-Van Vu",
-   "rank": 1971,
+   "rank": 1970,
    "disc": {
     "toan-hoc": 57,
     "co-hoc": 43
@@ -6268,7 +6268,7 @@
   {
    "id": "A5038872232",
    "name": "Trà Văn Tung",
-   "rank": 1982,
+   "rank": 1981,
    "disc": {
     "nong-lam": 51,
     "vat-ly": 49
@@ -6285,7 +6285,7 @@
   {
    "id": "A5071455766",
    "name": "Van-Hai Nguyen",
-   "rank": 1988,
+   "rank": 1987,
    "disc": {
     "hoa-thuc-pham": 66,
     "co-khi": 34
@@ -6302,7 +6302,7 @@
   {
    "id": "A5050442504",
    "name": "Van Quy Nguyen",
-   "rank": 1989,
+   "rank": 1988,
    "disc": {
     "hoa-thuc-pham": 100
    },
@@ -6318,7 +6318,7 @@
   {
    "id": "A5053758843",
    "name": "Phan Minh Duc",
-   "rank": 1992,
+   "rank": 1991,
    "disc": {
     "kinh-te": 53,
     "giao-duc": 47
@@ -6335,7 +6335,7 @@
   {
    "id": "A5002241836",
    "name": "Lieu B. Nguyen",
-   "rank": 1995,
+   "rank": 1994,
    "disc": {
     "cntt": 64,
     "co-hoc": 36
@@ -6352,7 +6352,7 @@
   {
    "id": "A5052661315",
    "name": "Trần Văn Sung",
-   "rank": 2001,
+   "rank": 2000,
    "disc": {
     "sinh-hoc": 54,
     "hoa-thuc-pham": 46
@@ -6369,7 +6369,7 @@
   {
    "id": "A5101704561",
    "name": "Dinh Trần Ngọc Huy",
-   "rank": 2020,
+   "rank": 2019,
    "disc": {
     "kinh-te": 100
    },
@@ -6385,7 +6385,7 @@
   {
    "id": "A5075849754",
    "name": "Tu Anh",
-   "rank": 2025,
+   "rank": 2024,
    "disc": {
     "xay-dung": 55,
     "luyen-kim": 45
@@ -6402,7 +6402,7 @@
   {
    "id": "A5086984815",
    "name": "Nguyen Tran Truc Phuong",
-   "rank": 2026,
+   "rank": 2025,
    "disc": {
     "dien-tu": 56,
     "vat-ly": 44
@@ -6419,7 +6419,7 @@
   {
    "id": "A5069090260",
    "name": "Van Thong Nguyen",
-   "rank": 2028,
+   "rank": 2027,
    "disc": {
     "xay-dung": 54,
     "y-hoc": 46
@@ -6436,7 +6436,7 @@
   {
    "id": "A5074976419",
    "name": "Tien T. Dang",
-   "rank": 2053,
+   "rank": 2052,
    "disc": {
     "sinh-hoc": 38,
     "hoa-thuc-pham": 33,
@@ -6454,7 +6454,7 @@
   {
    "id": "A5017159389",
    "name": "Do Thi Hai Ha",
-   "rank": 2071,
+   "rank": 2070,
    "disc": {
     "giao-duc": 40,
     "triet-xhh": 33,
@@ -8543,7 +8543,7 @@
   {
    "id": "A5101937289",
    "name": "Tran Thanh Long",
-   "rank": 2773,
+   "rank": 2771,
    "disc": {
     "y-hoc": 59,
     "trai-dat-mo": 41
@@ -13685,7 +13685,7 @@
   {
    "id": "A5027862708",
    "name": "Nguyễn Hồng Sơn",
-   "rank": 4192,
+   "rank": 4193,
    "disc": {
     "dien-tu": 100
    },
@@ -16952,7 +16952,7 @@
   {
    "id": "A5103104242",
    "name": "Minh Duc Vu",
-   "rank": 5154,
+   "rank": 5152,
    "disc": {
     "trai-dat-mo": 61,
     "hoa-thuc-pham": 39
@@ -24000,14 +24000,14 @@
   {
    "id": "A5034194873",
    "name": "Hoàng Đình Trung",
-   "rank": 7141,
+   "rank": 7140,
    "disc": {
-    "y-hoc": 54,
-    "trai-dat-mo": 46
+    "y-hoc": 56,
+    "trai-dat-mo": 44
    },
    "j": [
     "y-hoc",
-    51
+    54
    ],
    "t": [
     "sinh-hoc",
