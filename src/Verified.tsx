@@ -133,6 +133,41 @@ export function ScholarConsole() {
   if (!list.length) return <section className="card"><h2>Hồ sơ khoa học của tôi</h2><p className="meta">Bạn chưa có hồ sơ nào được xác thực. Mở trang hồ sơ của mình trong ProFind™, chọn "Đây là tôi" và gửi yêu cầu bằng email tổ chức.</p></section>;
   return <>{list.map((m) => <One key={m.authorId} m={m} reload={() => setV((x) => x + 1)} />)}</>;
 }
+type MatchRes = { q: string; have: boolean; hit: { doi: string; title: string; venue: string; year: number; sim: number; name: boolean } | null };
+/** Dán danh sách nhan đề từ Google Scholar (mỗi dòng một bài) -> tra DOI trong Crossref -> tick chọn rồi thêm. */
+function MatchTitles({ authorId, reload }: { authorId: string; reload: () => void }) {
+  const [txt, setTxt] = useState(""), [res, setRes] = useState<MatchRes[] | null>(null), [pick, setPick] = useState<Set<string>>(new Set()), [busy, setBusy] = useState(false), [msg, setMsg] = useState("");
+  const find = async () => {
+    // Scholar chép ra thường kèm dòng tác giả/tạp chí/năm: chỉ giữ dòng đủ dài, người dùng nên dán riêng nhan đề.
+    const titles = txt.split(/\n+/).map((x) => x.trim()).filter((x) => x.length >= 12);
+    setBusy(true); setMsg(""); setRes(null);
+    try { const r = await api<{ results: MatchRes[] }>("author-work-match", { authorId, titles }); setRes(r.results); setPick(new Set(r.results.filter((x) => x.hit && x.hit.name && !x.have).map((x) => x.hit!.doi))); }
+    catch (e) { setMsg((e as Error).message); } finally { setBusy(false); }
+  };
+  const add = async () => {
+    setBusy(true); setMsg(""); let ok = 0, bad = 0;
+    for (const doi of pick) { try { await api("author-work-add", { authorId, doi }); ok++; } catch { bad++; } }
+    setMsg(`Đã thêm ${ok} công trình${bad ? `, ${bad} công trình không thêm được (đã có hoặc quá giới hạn)` : ""}.`); setRes(null); setPick(new Set()); setTxt(""); setBusy(false); reload();
+  };
+  const hits = res?.filter((x) => x.hit && !x.have) ?? [];
+  return (
+    <>
+      <h3>Dán danh sách từ Google Scholar để khớp DOI</h3>
+      <p className="meta">Mở hồ sơ Google Scholar của bạn, chép các nhan đề bài (mỗi dòng một bài) rồi dán vào đây. ProFind tra DOI trong Crossref; bài nào có tên bạn trong danh sách tác giả được chọn sẵn, bạn xem lại rồi bấm thêm. Bài không có DOI (nhiều tạp chí trong nước) không thêm được bằng cách này.</p>
+      <textarea rows={6} value={txt} onChange={(e) => setTxt(e.target.value)} maxLength={20000} placeholder={"Mỗi dòng một nhan đề, tối đa 40 bài mỗi lần"} aria-label="Danh sách nhan đề" />
+      <p><button type="button" className="primary" disabled={busy || txt.trim().length < 12} onClick={() => void find()}>{busy && !res ? "Đang tra…" : "Tra DOI"}</button></p>
+      <div role="status" aria-live="polite">{msg && <p className="banner"><Icon n="check" />{msg}</p>}</div>
+      {res && <>
+        <p className="meta">Tìm thấy DOI cho {res.filter((x) => x.hit).length}/{res.length} nhan đề.</p>
+        <ul>{res.map((x) => <li key={x.q}>
+          {x.hit ? <label className="chk"><input type="checkbox" disabled={x.have} checked={pick.has(x.hit.doi)} onChange={(e) => setPick((p) => { const n = new Set(p); if (e.target.checked) n.add(x.hit!.doi); else n.delete(x.hit!.doi); return n; })} /><span><a href={`https://doi.org/${x.hit.doi}`} target="_blank" rel="noopener">{x.hit.title}</a>{x.hit.year ? ` · ${x.hit.year}` : ""}{x.hit.venue ? ` · ${x.hit.venue}` : ""} · {x.have ? <b>đã có</b> : x.hit.name ? <b>tên bạn khớp</b> : <i>tên bạn chưa khớp, sẽ chờ quản trị viên duyệt</i>}</span></label>
+            : <span className="meta">Chưa thấy DOI: {x.q}</span>}
+        </li>)}</ul>
+        {hits.length > 0 && <p><button type="button" className="primary" disabled={busy || !pick.size} onClick={() => void add()}>Thêm {pick.size} công trình đã chọn</button></p>}
+      </>}
+    </>
+  );
+}
 function One({ m, reload }: { m: Mine; reload: () => void }) {
   const [msg, setMsg] = useState(""), [busy, setBusy] = useState(false), p = m.profile;
   const run = async (op: string, body: object, ok: string) => { setBusy(true); setMsg(""); try { await api(op, { authorId: m.authorId, ...body }); setMsg(ok); reload(); } catch (e) { setMsg((e as Error).message); } finally { setBusy(false); } };
@@ -181,6 +216,7 @@ function One({ m, reload }: { m: Mine; reload: () => void }) {
       <h3>Công trình bị gán nhầm</h3>
       <p className="meta">Nếu OpenAlex gán nhầm bài của người trùng tên vào hồ sơ của bạn, mở trang hồ sơ công khai của bạn và bấm "Không phải bài của tôi" ở bài đó. Bài sẽ ẩn ngay khỏi danh sách; điểm được tính lại ở lần cập nhật dữ liệu kế tiếp.</p>
       {(m.xw ?? []).length > 0 && <ul>{(m.xw ?? []).map((w) => <li key={w}><code>{w.split("-").pop()}</code> đã báo không phải của bạn <button type="button" disabled={busy} onClick={() => void run("author-work-not", { workId: w, undo: true }, "Đã hoàn tác.")}>Hoàn tác</button></li>)}</ul>}
+      <MatchTitles authorId={m.authorId} reload={reload} />
       <h3>Thêm công trình theo DOI</h3>
       <p className="meta">DOI được đối chiếu với Crossref: tên hoặc ORCID của bạn phải có trong danh sách tác giả, nếu không sẽ chờ quản trị viên duyệt. Công trình tự bổ sung chưa tính vào PRO-SCORE cho tới khi OpenAlex ghi nhận.</p>
       <form onSubmit={addDoi} className="form"><label className="sel"><span>DOI</span><input name="doi" required placeholder="10.1234/abcd" maxLength={220} /></label><p><button className="primary" disabled={busy}>Thêm công trình</button></p></form>

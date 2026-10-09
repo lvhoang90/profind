@@ -1,5 +1,5 @@
 :root{--bg:#f4f6f8;--surface:#fff;--ink:#0f2a3d;--ink-2:#51677a;--line:#d9e2ea;--field:#7b8ba0;--accent:#17688f;--accent-ink:#fff;--warn:#9a4a07;--s1:#eef1f5;--s3:#dcebf5;color-scheme:light dark}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#14171d;--surface:#1c2029;--ink:#e8eaf0;--ink-2:#a9b2c3;--line:#2c3240;--field:#7a859a;--accent:#6fb0e0;--accent-ink:#0d1218;--warn:#f0b34a;--s1:#262b36;--s3:#25384a}}:root[data-theme=dark]{--bg:#14171d;--surface:#1c2029;--ink:#e8eaf0;--ink-2:#a9b2c3;--line:#2c3240;--field:#7a859a;--accent:#6fb0e0;--accent-ink:#0d1218;--warn:#f0b34a;--s1:#262b36;--s3:#25384a}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#1a2030;--surface:#242c3d;--ink:#f1f4fa;--ink-2:#bcc6d8;--line:#3a465d;--field:#8c98b0;--accent:#7cc0ee;--accent-ink:#0d1218;--warn:#f0b34a;--s1:#2d3649;--s3:#2b4560}}:root[data-theme=dark]{--bg:#1a2030;--surface:#242c3d;--ink:#f1f4fa;--ink-2:#bcc6d8;--line:#3a465d;--field:#8c98b0;--accent:#7cc0ee;--accent-ink:#0d1218;--warn:#f0b34a;--s1:#2d3649;--s3:#2b4560}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);line-height:1.5;overflow-wrap:break-word}
 h1,h2,.ht,.brand,.stats b,.rk{font-family:var(--font-display);letter-spacing:-.01em}
@@ -99,7 +99,7 @@ button.primary{border:0;background:var(--accent);color:var(--accent-ink);border-
 
 /* ===== Trang tác giả (v2): hero, chỉ số, biểu đồ, danh sách công trình dạng thẻ ===== */
 .ap{--q1:#16a34a;--q2:#2f8fd8;--q3:#d99a14;--q4:#e0662b;--dom:#7c5cff;--lead:#17688f;--co:#9fc4da}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .ap{--q1:#4ade80;--q2:#60a5fa;--q3:#fbbf24;--q4:#fb923c;--dom:#a78bfa;--lead:#6fb0e0;--co:#3a5a73}}:root[data-theme=dark] .ap{--q1:#4ade80;--q2:#60a5fa;--q3:#fbbf24;--q4:#fb923c;--dom:#a78bfa;--lead:#6fb0e0;--co:#3a5a73}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .ap{--q1:#4ade80;--q2:#60a5fa;--q3:#fbbf24;--q4:#fb923c;--dom:#a78bfa;--lead:#6fb0e0;--co:#5a86a8}}:root[data-theme=dark] .ap{--q1:#4ade80;--q2:#60a5fa;--q3:#fbbf24;--q4:#fb923c;--dom:#a78bfa;--lead:#6fb0e0;--co:#5a86a8}
 .hero{display:flex;gap:22px;align-items:flex-start;padding:26px;border-radius:22px;color:#fff;background:radial-gradient(60% 120% at 0 0,rgba(56,189,248,.3),transparent 65%),radial-gradient(50% 120% at 100% 0,rgba(139,92,246,.38),transparent 65%),linear-gradient(160deg,#08202f,#0b2a40 50%,#0f3d5e);box-shadow:0 24px 40px -28px rgba(8,32,47,.8);position:relative;overflow:hidden}
 .hero .av{flex:none;width:96px;height:96px;border-radius:26px;display:grid;place-items:center;font:700 2.1rem var(--font-display);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.25);box-shadow:inset 0 0 0 3px rgba(255,255,255,.35),0 12px 24px -12px rgba(0,0,0,.6)}
 .hero-main{min-width:0;flex:1}.hero .au{margin:0 0 4px;color:#fff;font-size:clamp(1.5rem,4vw,2.3rem)}
@@ -566,8 +566,8 @@ td.who>.meta{margin-top:3px}
 .xwgrp{margin:8px 0}.xwgrp summary{cursor:pointer;font-weight:600;padding:6px 0}.xwlist{list-style:none;margin:6px 0 0;padding:0;max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:10px}.xwlist li{padding:7px 12px;border-bottom:1px solid var(--line);font-size:.82rem;overflow-wrap:anywhere}.xwlist li:last-child{border-bottom:0}.xwlist b{margin:0 2px}
 /* màu cột biểu đồ: trước đây chỉ khai báo trong .ap (trang tác giả) nên các cột ở trang quản trị bị trong suốt */
 :root{--q1:#16a34a;--q2:#2f8fd8;--q3:#d99a14;--q4:#e0662b;--dom:#7c5cff;--lead:#17688f;--co:#9fc4da}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--q1:#4ade80;--q2:#60a5fa;--q3:#fbbf24;--q4:#fb923c;--dom:#a78bfa;--lead:#6fb0e0;--co:#3a5a73}}
-:root[data-theme=dark]{--q1:#4ade80;--q2:#60a5fa;--q3:#fbbf24;--q4:#fb923c;--dom:#a78bfa;--lead:#6fb0e0;--co:#3a5a73}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--q1:#4ade80;--q2:#60a5fa;--q3:#fbbf24;--q4:#fb923c;--dom:#a78bfa;--lead:#6fb0e0;--co:#5a86a8}}
+:root[data-theme=dark]{--q1:#4ade80;--q2:#60a5fa;--q3:#fbbf24;--q4:#fb923c;--dom:#a78bfa;--lead:#6fb0e0;--co:#5a86a8}
 /* danh sách xếp hạng ở trang quản trị */
 .hbars.wide{counter-reset:r;gap:10px}.hbars.wide li{counter-increment:r;grid-template-columns:minmax(0,16em) 1fr 3.2em}
 .hbars.wide li>span::before{content:counter(r);display:inline-grid;place-items:center;width:20px;height:20px;margin-right:8px;border-radius:6px;background:var(--s1);color:var(--ink-2);font-size:.7rem;font-weight:700}
