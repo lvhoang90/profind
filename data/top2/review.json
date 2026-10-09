@@ -30,21 +30,6 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Heshmati, Almas",
-  "inst": "University of Economics Ho Chi Minh City",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5027412817",
-    "name": "Almas Heshmati",
-    "inst": [
-     "UEH College of Business"
-    ],
-    "works": 459
-   }
-  ]
- },
- {
   "name": "Vasant, Pandian M.",
   "inst": "Ton-Duc-Thang University",
   "why": "không có hồ sơ cùng tên trong ProFind"
@@ -53,21 +38,6 @@
   "name": "Moayedi, Hossien",
   "inst": "Duy Tan University",
   "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Huynh, Toan Luu Duc",
-  "inst": "University of Economics Ho Chi Minh City",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5077810443",
-    "name": "Toan Luu Duc Huynh",
-    "inst": [
-     "UEH College of Business"
-    ],
-    "works": 131
-   }
-  ]
  },
  {
   "name": "Khang, Alex",
@@ -330,69 +300,14 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Van Hoang, Vo Van",
-  "inst": "Ho Chi Minh City University of Technology - HCMUT",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5086748255",
-    "name": "Vo Van Hoang",
-    "inst": [
-     "Vietnam National University Ho Chi Minh City",
-     "VNUHCM-University of Technology"
-    ],
-    "works": 130
-   }
-  ]
- },
- {
   "name": "Hien, L. V.",
   "inst": "Trường Đại học Sư phạm Hà Nội",
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Trung, Do Duc",
-  "inst": "Hanoi University of Industry",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5090114815",
-    "name": "Do Duc Trung",
-    "inst": [
-     "HaUI School of Information and Communication Technology"
-    ],
-    "works": 88
-   }
-  ]
- },
- {
   "name": "Dang, Lienminh",
   "inst": "Duy Tan University",
   "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Bui, Xuan Thanh",
-  "inst": "Ho Chi Minh City University of Technology - HCMUT",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5080216121",
-    "name": "Xuan-Thanh Bui",
-    "inst": [
-     "Vietnam National University Ho Chi Minh City",
-     "VNUHCM-University of Technology"
-    ],
-    "works": 390
-   },
-   {
-    "id": "A5026457039",
-    "name": "Xuan Bui Thanh",
-    "inst": [
-     "Học viện Hải quân"
-    ],
-    "works": 2
-   }
-  ]
  },
  {
   "name": "Tuan, Le Anh",
@@ -687,21 +602,6 @@
   ]
  },
  {
-  "name": "Lieu, Qui X.",
-  "inst": "Viet Nam National University Ho Chi Minh City",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5015095214",
-    "name": "Qui X. Lieu",
-    "inst": [
-     "VNUHCM-University of Technology"
-    ],
-    "works": 73
-   }
-  ]
- },
- {
   "name": "Long, H. V.",
   "inst": "University of Technology - Logistics of Public Security",
   "why": "không có hồ sơ cùng tên trong ProFind"
@@ -722,24 +622,6 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Le, Dac Nhuong",
-  "inst": "Haiphong University",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5023041667",
-    "name": "Dac-Nhuong Le",
-    "inst": [
-     "Hai Phong University",
-     "Duy Tan University",
-     "Ho Chi Minh City University of Industry and Trade",
-     "Hai Phong University of Management and Technology"
-    ],
-    "works": 159
-   }
-  ]
- },
- {
   "name": "Nguyen, Minh T.",
   "inst": "Thai Nguyen University of Technology",
   "why": "không có hồ sơ cùng tên trong ProFind"
@@ -750,137 +632,9 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Duong, Cong Doanh",
-  "inst": "National Economics University",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5039112242",
-    "name": "Cong Doanh Duong",
-    "inst": [
-     "NEU College of Business"
-    ],
-    "works": 135
-   }
-  ]
- },
- {
-  "name": "Le, Thanh Tiep",
-  "inst": "University of Economics Ho Chi Minh City",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5072353666",
-    "name": "Thanh Tiep Le",
-    "inst": [
-     "UEH College of Business"
-    ],
-    "works": 104
-   }
-  ]
- },
- {
-  "name": "Le, Ba Phong",
-  "inst": "Hanoi University of Industry",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5061504918",
-    "name": "Phong Ba Le",
-    "inst": [
-     "HaUI School of Information and Communication Technology"
-    ],
-    "works": 73
-   }
-  ]
- },
- {
   "name": "Maheshwari, Greeni",
   "inst": "RMIT University Vietnam",
   "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Nguyen-Viet, Bang",
-  "inst": "University of Economics Ho Chi Minh City",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5050016740",
-    "name": "Bang Nguyen-Viet",
-    "inst": [
-     "UEH College of Business"
-    ],
-    "works": 86
-   }
-  ]
- },
- {
-  "name": "Nguyen, Phong Nguyen",
-  "inst": "University of Economics Ho Chi Minh City",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5020268376",
-    "name": "Nguyen Phong Nguyen",
-    "inst": [
-     "UEH College of Business"
-    ],
-    "works": 125
-   }
-  ]
- },
- {
-  "name": "Su, Thanh Dinh",
-  "inst": "University of Economics Ho Chi Minh City",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5027561746",
-    "name": "Thanh Dinh Su",
-    "inst": [
-     "UEH College of Business"
-    ],
-    "works": 99
-   }
-  ]
- },
- {
-  "name": "Dang-Van, Thac",
-  "inst": "University of Economics Ho Chi Minh City",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5110846464",
-    "name": "Thac Dang-Van",
-    "inst": [
-     "Trường Đại học Công nghệ Đồng Nai"
-    ],
-    "works": 9
-   },
-   {
-    "id": "A5029474879",
-    "name": "Van Thac Dang",
-    "inst": [
-     "UEH College of Business"
-    ],
-    "works": 53
-   }
-  ]
- },
- {
-  "name": "Quang-Thanh, Ngo",
-  "inst": "University of Economics Ho Chi Minh City",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5022979224",
-    "name": "Thanh Quang Ngo",
-    "inst": [
-     "UEH College of Business"
-    ],
-    "works": 88
-   }
-  ]
  },
  {
   "name": "Nguyen, Quang Khai",
@@ -896,68 +650,6 @@
   "name": "Chi, Nguyen Thi Khanh",
   "inst": "Foreign Trade University",
   "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Xuan, Vu Ngoc",
-  "inst": "National Economics University",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5035207025",
-    "name": "Vu Ngoc Xuan",
-    "inst": [
-     "NEU College of Business"
-    ],
-    "works": 87
-   }
-  ]
- },
- {
-  "name": "Luong, Nguyen Cong",
-  "inst": "Phenikaa University",
-  "why": "nhiều hồ sơ khớp",
-  "candidates": [
-   {
-    "id": "A5089793687",
-    "name": "Nguyen Cong Luong",
-    "inst": [
-     "Phenikaa University"
-    ],
-    "works": 83
-   },
-   {
-    "id": "A5103271962",
-    "name": "Nguyen Cong Luong",
-    "inst": [
-     "Phenikaa University"
-    ],
-    "works": 40
-   }
-  ]
- },
- {
-  "name": "Nguyen, Minh Ky",
-  "inst": "Nong Lam University, Ho Chi Minh City",
-  "why": "nhiều hồ sơ khớp",
-  "candidates": [
-   {
-    "id": "A5032091221",
-    "name": "Minh-Ky Nguyen",
-    "inst": [
-     "Nong Lam University",
-     "Duy Tan University"
-    ],
-    "works": 116
-   },
-   {
-    "id": "A5078269932",
-    "name": "Nguyễn Minh Kỳ",
-    "inst": [
-     "Nong Lam University"
-    ],
-    "works": 10
-   }
-  ]
  },
  {
   "name": "Tran, Oanh Thi",
@@ -1036,54 +728,6 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Tran, Duc Hoc",
-  "inst": "Viet Nam National University Ho Chi Minh City",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5074310189",
-    "name": "Duc-Hoc Tran",
-    "inst": [
-     "VNUHCM-University of Technology",
-     "Ho Chi Minh University of Technology and Engineering",
-     "Ho Chi Minh City University of Technology"
-    ],
-    "works": 65
-   }
-  ]
- },
- {
-  "name": "Cuong-Le, Thanh",
-  "inst": "Đại học Mở Thành phố Hồ Chí Minh",
-  "why": "nhiều hồ sơ khớp",
-  "candidates": [
-   {
-    "id": "A5063689926",
-    "name": "Thanh Cuong-Le",
-    "inst": [
-     "Ho Chi Minh City Open University"
-    ],
-    "works": 142
-   },
-   {
-    "id": "A5043586424",
-    "name": "Le Thanh Cuong",
-    "inst": [
-     "Viet Tri University of Industry"
-    ],
-    "works": 3
-   },
-   {
-    "id": "A5147585901",
-    "name": "Cuong Le Thanh",
-    "inst": [
-     "Ho Chi Minh City Open University"
-    ],
-    "works": 7
-   }
-  ]
- },
- {
   "name": "Nguyen, Xuan Cuong",
   "inst": "Duy Tan University",
   "why": "nhiều hồ sơ khớp",
@@ -1113,21 +757,6 @@
      "Viện Sinh học"
     ],
     "works": 19
-   }
-  ]
- },
- {
-  "name": "Phung, Thanh Khoa",
-  "inst": "International University - Vietnam National University HCM City",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5076945065",
-    "name": "Thanh Khoa Phung",
-    "inst": [
-     "Vietnam National University, Hanoi"
-    ],
-    "works": 62
    }
   ]
  },
@@ -2027,23 +1656,6 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Tran, Minh Triet",
-  "inst": "University of Science, Viet Nam National University Ho Chi Minh City",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5053495766",
-    "name": "Minh-Triet Tran",
-    "inst": [
-     "Vietnam National University, Hanoi",
-     "Vietnam National University Ho Chi Minh City",
-     "Viện John von Neumann"
-    ],
-    "works": 290
-   }
-  ]
- },
- {
   "name": "Nguyen, Hoang Long",
   "inst": "Hanoi University of Mining and Geology",
   "why": "cùng tên nhưng khác đơn vị",
@@ -2109,21 +1721,6 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Dinh, Phu Hung",
-  "inst": "Thuyloi University",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5076598105",
-    "name": "Phu-Hung Dinh",
-    "inst": [
-     "Thuy Loi University"
-    ],
-    "works": 21
-   }
-  ]
- },
- {
   "name": "Nguyen, Hoang Chinh",
   "inst": "Ton-Duc-Thang University",
   "why": "không có hồ sơ cùng tên trong ProFind"
@@ -2175,21 +1772,6 @@
   "name": "Thao, Nguyen Xuan",
   "inst": "Banking Academy of Vietnam",
   "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Nguyen, Manh B.",
-  "inst": "Vietnam Academy of Science and Technology",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5054867958",
-    "name": "Manh B. Nguyen",
-    "inst": [
-     "Graduate University of Science and Technology"
-    ],
-    "works": 51
-   }
-  ]
  },
  {
   "name": "Le, Van Thao",
@@ -2306,29 +1888,6 @@
   "name": "Cong, Phamhong",
   "inst": "Vietnam Academy of Science and Technology",
   "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Truong Hoang, Vinh",
-  "inst": "Đại học Mở Thành phố Hồ Chí Minh",
-  "why": "nhiều hồ sơ khớp",
-  "candidates": [
-   {
-    "id": "A5021444959",
-    "name": "Vinh Truong Hoang",
-    "inst": [
-     "Ho Chi Minh City Open University"
-    ],
-    "works": 112
-   },
-   {
-    "id": "A5102840305",
-    "name": "Vinh Truong Hoang",
-    "inst": [
-     "Ho Chi Minh City Open University"
-    ],
-    "works": 7
-   }
-  ]
  },
  {
   "name": "Nguyen, Trung Thanh",
@@ -2900,29 +2459,6 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
-  "name": "Nguyen, Hoc Thang",
-  "inst": "Ho Chi Minh City University of Industry and Trade",
-  "why": "nhiều hồ sơ khớp",
-  "candidates": [
-   {
-    "id": "A5027988721",
-    "name": "Hoc Thang Nguyen",
-    "inst": [
-     "Ho Chi Minh City University of Industry and Trade"
-    ],
-    "works": 50
-   },
-   {
-    "id": "A5113230397",
-    "name": "Nguyễn Học Thắng",
-    "inst": [
-     "Ho Chi Minh City University of Industry and Trade"
-    ],
-    "works": 10
-   }
-  ]
- },
- {
   "name": "Tran, Thao T.D.",
   "inst": "Ton-Duc-Thang University",
   "why": "cùng tên nhưng khác đơn vị",
@@ -3058,23 +2594,6 @@
      "Viện Khoa học công nghệ Năng lượng và Môi trường"
     ],
     "works": 17
-   }
-  ]
- },
- {
-  "name": "Pham, Vu Hong Son",
-  "inst": "Ho Chi Minh City University of Technology - HCMUT",
-  "why": "cùng tên nhưng khác đơn vị",
-  "candidates": [
-   {
-    "id": "A5062984384",
-    "name": "Vu Hong Son Pham",
-    "inst": [
-     "Vietnam National University Ho Chi Minh City",
-     "VNUHCM-University of Technology",
-     "Vietnam National University, Hanoi"
-    ],
-    "works": 137
    }
   ]
  },
@@ -3380,28 +2899,5 @@
   "name": "Hai, Dao Thanh",
   "inst": "RMIT University Vietnam",
   "why": "không có hồ sơ cùng tên trong ProFind"
- },
- {
-  "name": "Ho-Van, Khuong",
-  "inst": "Ho Chi Minh City University of Industry and Trade",
-  "why": "nhiều hồ sơ khớp",
-  "candidates": [
-   {
-    "id": "A5073815942",
-    "name": "Khuong Ho-Van",
-    "inst": [
-     "Ho Chi Minh City University of Industry and Trade"
-    ],
-    "works": 101
-   },
-   {
-    "id": "A5027377548",
-    "name": "Ho Van Khuong",
-    "inst": [
-     "Ho Chi Minh City University of Technology"
-    ],
-    "works": 37
-   }
-  ]
  }
 ]
