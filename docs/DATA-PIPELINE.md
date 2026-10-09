@@ -60,3 +60,8 @@ npm run d:check                              # kiểm tra nhất quán
 - `build-index.mjs` đánh dấu `last = 1` cho công trình có từ 3 tác giả mà tác giả đứng cuối không phải đứng đầu hay liên hệ. Vai trò `lead` (dùng cho điểm công trình HĐGSNN) không đổi.
 - `pro-score.mjs` chỉ tính `last` vào chỉ báo "Chủ đạo" ở nhóm ngành có quy ước (`data/last-author-disciplines.json`: y sinh, hóa, sinh, kỹ thuật); công trình tạp chí nhiều ngành chỉ tính khi mọi ngành của tạp chí nằm trong danh sách, công trình chưa rõ ngành dùng ngành chính của tác giả. Sửa danh sách ngành ở file JSON rồi dựng lại.
 - Đo ảnh hưởng trước khi áp dụng: Spearman 0,996 với bản cũ khi áp cho mọi ngành; áp cho nhóm ngành này, hạng đổi trung vị 33 bậc (p90 160), top 100 giữ 96, top 1000 giữ 967.
+
+## Tách công trình khỏi hồ sơ gộp nhiều người
+- `corrections.assignWorks`: `{ "<mã công trình A…-W…>": "<mã tác giả đích>" }` chuyển từng công trình sang hồ sơ đúng người (hồ sơ đích phải có trong dữ liệu: ghim bằng `data/pinned-orcids.json`). Vai trò tác giả vẫn tra theo mã gốc. Kết hợp `rename`, `setInstitutions` và `data/scholar.json` để hoàn thiện hồ sơ mới.
+- `data/namesakes.json`: ghi lại các người trùng tên đã được quản trị viên xác nhận là khác người (kèm mã Google Scholar), để không gộp nhầm về sau.
+- Ví dụ: Nguyễn Hoàng Anh (Đại học Đồng Tháp, Scholar 6V_gx5cAAAAJ) tách khỏi hồ sơ gộp A5101797172.

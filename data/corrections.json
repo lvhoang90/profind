@@ -10,7 +10,8 @@
   "rename": {
     "A5066728998": "Võ Tòng Xuân",
     "A5082293275": "Triệu Anh Trung",
-    "A5061727008": "Nguyễn Đình Đức"
+    "A5061727008": "Nguyễn Đình Đức",
+    "A5150047125": "Nguyễn Hoàng Anh"
   },
   "excludeWorks": [
     "A5108957051-W7141923280",
@@ -3654,6 +3655,14 @@
         "utt",
         "vien-cong-nghe-thong-tin"
       ]
+    },
+    "A5101797172": {
+      "now": [
+        "hup"
+      ],
+      "past": [
+        "nttu"
+      ]
     }
   },
   "setDisciplines": {
@@ -3686,5 +3695,9 @@
       "date": "2026-10-08",
       "reason": "ORCID 0000-0002-3803-0569 (KU Leuven); Scopus 796 bài, OpenAlex 892: nhất quán một người (1976–2026), cờ \"từ 500 công trình\" không phản ánh gộp nhầm"
     }
-  ]
+  ],
+  "assignWorks": {
+    "A5101797172-W7151082923": "A5150047125",
+    "A5101797172-W7171621217": "A5150047125"
+  }
 }
