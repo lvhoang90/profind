@@ -40,3 +40,6 @@ npm run d:check                              # kiểm tra nhất quán
 - Tab quản trị "Nghi gộp nhiều người" lấy danh sách từ API `admin-mrisk` (API nhúng `data/merge-risk.json` khi triển khai, chỉ quản trị viên đọc được; file không để ở `public/`); quyết định "Một người/Nhiều người" lưu ở Redis (`profind:mr`, op `admin-mrisk`).
 - `node scripts/build-merge-risk.mjs` (chạy sau `build-index.mjs`) chấm điểm rủi ro từ số hồ sơ cùng tên, số đơn vị, entropy lĩnh vực và tỉ trọng lĩnh vực thứ ba (từ `data/author-topics.json`); ghi `data/merge-risk.json`.
 - Kiểm định trên mẫu 180 hồ sơ gán nhãn: AUC 0,78; nhóm 11% cao nhất chính xác ~76%, bắt ~30% hồ sơ nghi gộp. Vì vậy chỉ dùng làm danh sách rà cho quản trị viên, không tự ẩn hay đổi hạng. Đính chính qua `corrections.json` (`suspect`, `notSuspect`, `setInstitutions`).
+
+## Top 2% (Việt Nam) chưa gắn hồ sơ
+- `find-top2.mjs` dò OpenAlex theo tên + đơn vị (ghi `found.json`, ghim vào `pinned-orcids.json`); `match-top2.mjs` gắn nhãn; `build-top2-review.mjs` ghi `data/top2/admin-review.json` (người chưa gắn kèm ứng viên) cho tab quản trị "Top 2% chưa gắn" (API `admin-t2`, chỉ quản trị viên; quyết định ở Redis `profind:t2`). Quyết định được chép ra JSON `{overrides, pins}` để đưa vào `data/top2/overrides.json` và `pinned-orcids.json`.

@@ -1,7 +1,7 @@
 // Tài khoản ProFind: đăng ký/đăng nhập không mật khẩu bằng mã 6 số gửi qua email, kèm số điện thoại liên hệ (bắt buộc khi đăng ký),
 // lưu tác giả, lưu tìm kiếm, công trình đã xem, thống kê dùng và trang quản trị. Một hàm Edge, chọn thao tác bằng ?op=
 //   GET  verified (công khai: mã hồ sơ đã xác thực + hạn tick) | claim-status | admin-claims
-//   POST claim-submit {authorId, authorName, name, orcid, scholar, note} (cần đăng nhập) | admin-claim-decide | admin-claim-manual | admin-claim-allow | admin-claim-revoke | admin-claim-renew | admin-mrisk {authorId, decision: one|multi|clear}
+//   POST claim-submit {authorId, authorName, name, orcid, scholar, note} (cần đăng nhập) | admin-claim-decide | admin-claim-manual | admin-claim-allow | admin-claim-revoke | admin-claim-renew | admin-mrisk {authorId, decision: one|multi|clear} | admin-t2 {name, decision: mã hồ sơ|none|clear}
 //   GET  config | me | history | favs | ss | rv | export | admin-summary | admin-users | admin-traffic | admin-content | admin-csv | unsub
 //   POST request {email, phone, name, consent, lang} → gửi mã | verify {email, code} → đăng nhập, tạo tài khoản nếu chưa có
 //        logout | profile | delete | track | hop {to, place} | fav | ssave | rvput | rvdel
@@ -17,6 +17,7 @@
 //   Quản trị   ADMIN_EMAILS=email1,email2
 // Thiếu một trong các mục trên thì tính năng tự tắt (config.enabled=false), mọi chức năng khác của ProFind vẫn chạy bình thường.
 import { makeStore } from "./_store.js";
+import T2R from "../data/top2/admin-review.json"; // người trong Top 2% (Việt Nam) chưa gắn hồ sơ, kèm ứng viên: chỉ trả cho quản trị viên (op admin-t2)
 import MRISK from "../data/merge-risk.json"; // danh sách rà hồ sơ gộp nhiều người: chỉ trả cho quản trị viên (op admin-mrisk), không để ở public/
 import { mailProvider, sendMail, codeMail, welcomeMail } from "./_mail.js";
 import { runChecks, claimMail, adminMail, isFreeMail, normOrcid, orcidValid, normDoi, lookupWork, nameCompat, VERIFY_YEARS } from "./_claim.js";
@@ -362,6 +363,10 @@ export default async function handler(request) {
       }
     }
     // Quyết định của quản trị viên về hồ sơ nghi gộp nhiều người (tab "Nghi gộp"): { authorId: "one" (một người) | "multi" (nhiều người, cần tách) }
+    if (op === "admin-t2" && request.method === "GET") {
+      const bad = needAdmin(); if (bad) return bad;
+      return json({ map: pairs(await one(["HGETALL", "profind:t2"])), items: T2R.items });
+    }
     if (op === "admin-mrisk" && request.method === "GET") {
       const bad = needAdmin(); if (bad) return bad;
       return json({ map: pairs(await one(["HGETALL", "profind:mr"])), profiles: MRISK.profiles });
@@ -406,6 +411,13 @@ export default async function handler(request) {
         const ok = (l) => (Array.isArray(l) ? l : []).map((x) => String(x)).filter((x) => /^[a-z0-9-]{2,80}$/.test(x)).slice(0, 12);
         const now = ok(body.now), past = ok(body.past).filter((u) => !now.includes(u)); if (!now.length) return json({ error: "Cần ít nhất một đơn vị hiện tại." }, 400);
         await one(["HSET", "profind:ins", id, JSON.stringify({ now, past, by: me.email, src: "admin", at: Date.now() })]); return json({ ok: true });
+      }
+      if (op === "admin-t2") { // quyết định gắn một người Top 2% vào hồ sơ: mã hồ sơ OpenAlex | "none" (không có hồ sơ/không gắn) | "clear"
+        const name = String(body.name || ""), d = String(body.decision || ""); if (!T2R.items.some((i) => i.name === name)) return json({ error: "Tên không có trong danh sách." }, 400);
+        if (d === "clear") await one(["HDEL", "profind:t2", name]);
+        else if (d === "none" || /^A\d{5,12}$/.test(d)) await one(["HSET", "profind:t2", name, d]);
+        else return json({ error: "Quyết định không hợp lệ." }, 400);
+        return json({ ok: true });
       }
       if (op === "admin-mrisk") {
         const id = String(body.authorId || ""); if (!/^A\d{5,12}$/.test(id)) return json({ error: "Mã hồ sơ không hợp lệ." }, 400);

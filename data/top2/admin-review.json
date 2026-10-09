@@ -1,0 +1,3971 @@
+{
+ "built": "2026-10-09",
+ "items": [
+  {
+   "name": "Nam, Nguyenhai",
+   "inst": "Hanoi College of Pharmacy",
+   "field": "Chemistry",
+   "subfield": "Medicinal & Biomolecular Chemistry",
+   "rank": 154609,
+   "np": 99,
+   "firstyr": 1999,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5051137028",
+     "name": "Nguyen-Hai Nam",
+     "works": 90,
+     "units": [
+      "Trường Đại học Dược Hà Nội"
+     ],
+     "firstYear": 1999,
+     "citations": 3161,
+     "inProfind": true,
+     "rank": 436
+    },
+    {
+     "id": "A5104147275",
+     "name": "Anh Mai Nguyen",
+     "works": 5,
+     "units": [
+      "Trường Đại học Y tế Công cộng"
+     ],
+     "firstYear": 2015,
+     "citations": 1786,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5101915639",
+     "name": "Mai Ánh Nguyễn",
+     "works": 58,
+     "units": [
+      "Đại học Y Dược Thành phố Hồ Chí Minh"
+     ],
+     "firstYear": 1986,
+     "citations": 1568,
+     "inProfind": true,
+     "rank": 2185
+    },
+    {
+     "id": "A5155357404",
+     "name": "Nguyen Nam Hai",
+     "works": 1,
+     "units": [
+      "Trường Đại học Gia Định"
+     ],
+     "firstYear": 2026,
+     "citations": 0,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5002568523",
+     "name": "Hai Nguyen Nam",
+     "works": 0,
+     "units": [
+      "Academy of Cryptography Techniques"
+     ],
+     "firstYear": null,
+     "citations": 30,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5003842799",
+     "name": "Hai Nam Nguyen",
+     "works": 12,
+     "units": [
+      "Viện Bảo vệ thực vật"
+     ],
+     "firstYear": 2019,
+     "citations": 33,
+     "inProfind": true,
+     "rank": 6378
+    },
+    {
+     "id": "A5085959778",
+     "name": "Nguyen Hai Nam",
+     "works": 90,
+     "units": [
+      "Đại học Quốc gia TP. Hồ Chí Minh"
+     ],
+     "firstYear": 2010,
+     "citations": 4053,
+     "inProfind": true,
+     "rank": 943
+    },
+    {
+     "id": "A5061212817",
+     "name": "Nam NguyenHai",
+     "works": 1,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Nguyen, Hoang Long",
+   "inst": "Hanoi University of Mining and Geology",
+   "field": "Earth & Environmental Sciences",
+   "subfield": "Geological & Geomatics Engineering",
+   "rank": 159675,
+   "np": 66,
+   "firstyr": 2016,
+   "lastyr": 2025,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5060213605",
+     "name": "Nguyễn Hoàng Long",
+     "works": 34,
+     "units": [
+      "Trường Đại học Quy Nhơn"
+     ],
+     "firstYear": 1981,
+     "citations": 467,
+     "inProfind": true,
+     "rank": 2112
+    },
+    {
+     "id": "A5065021757",
+     "name": "Hoàng Long Nguyễn",
+     "works": 61,
+     "units": [
+      "Trường Đại học Công nghệ Giao thông Vận tải"
+     ],
+     "firstYear": 2007,
+     "citations": 435,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5104086735",
+     "name": "Nguyễn Hoàng Long",
+     "works": 53,
+     "units": [
+      "Trường Đại học VinUni",
+      "Trường Đại học Công nghệ Giao thông Vận tải",
+      "Trường Đại học Tôn Đức Thắng"
+     ],
+     "firstYear": 2009,
+     "citations": 69,
+     "inProfind": true,
+     "rank": 3702
+    },
+    {
+     "id": "A5039222358",
+     "name": "Hoang-Long Nguyen",
+     "works": 19,
+     "units": [
+      "Trường Đại học Công nghệ Giao thông Vận tải",
+      "Trường Đại học Hồng Đức"
+     ],
+     "firstYear": 2021,
+     "citations": 287,
+     "inProfind": true,
+     "rank": 4540
+    },
+    {
+     "id": "A5057530879",
+     "name": "Long Hoang Nguyen",
+     "works": 31,
+     "units": [
+      "Trường Đại học Tôn Đức Thắng"
+     ],
+     "firstYear": 2016,
+     "citations": 6326,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5100623041",
+     "name": "Long Hoang Nguyen",
+     "works": 131,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5100623040",
+     "name": "Long Hoang Nguyen",
+     "works": 322,
+     "units": [
+      "Broad Institute",
+      "Harvard University",
+      "University of California, Los Angeles"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5101810362",
+     "name": "Nguyễn Hoàng Long",
+     "works": 19,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Nguyen, Huong Lan Thi",
+   "inst": "Duy Tan University",
+   "field": "Clinical Medicine",
+   "subfield": "General & Internal Medicine",
+   "rank": 568471,
+   "np": 93,
+   "firstyr": 2017,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5088067338",
+     "name": "Huong Lan Thi Nguyen",
+     "works": 89,
+     "units": [
+      "Trường Đại học Duy Tân"
+     ],
+     "firstYear": 2000,
+     "citations": 91111,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5112042878",
+     "name": "Nguyễn Thị Lan Hương",
+     "works": 132,
+     "units": [
+      "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+      "Đại học Bách khoa Hà Nội",
+      "Trường Đại học Luật Thành phố Hồ Chí Minh"
+     ],
+     "firstYear": 2007,
+     "citations": 1304,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5083484389",
+     "name": "Lan Nguyễn Thị Hương",
+     "works": 7,
+     "units": [
+      "Trường Đại học Luật Hà Nội",
+      "Viện Khoa học Giáo dục Việt Nam"
+     ],
+     "firstYear": 2021,
+     "citations": 3,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5103948865",
+     "name": "Huong Thi Lan Nguyen",
+     "works": 6,
+     "units": [
+      "Trường Đại học Khoa học"
+     ],
+     "firstYear": 2017,
+     "citations": 164,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5047219449",
+     "name": "Huong Nguyen Thi Lan",
+     "works": 5,
+     "units": [
+      "Trường Đại học Luật Thành phố Hồ Chí Minh"
+     ],
+     "firstYear": 2022,
+     "citations": 20,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5100717750",
+     "name": "Thi Lan Huong Nguyen",
+     "works": 29,
+     "units": [
+      "Trường Đại học Sài Gòn"
+     ],
+     "firstYear": 2014,
+     "citations": 416,
+     "inProfind": true,
+     "rank": 4718
+    },
+    {
+     "id": "A5052084100",
+     "name": "Nguyễn Thị Hương Lan",
+     "works": 18,
+     "units": [
+      "Trường Đại học Tân Trào"
+     ],
+     "firstYear": 2021,
+     "citations": 48,
+     "inProfind": true,
+     "rank": 3762
+    },
+    {
+     "id": "A5052778502",
+     "name": "Thi Lan-Huong Nguyen",
+     "works": 7,
+     "units": [
+      "Viện Công nghệ Sinh học và Thực phẩm"
+     ],
+     "firstYear": 2019,
+     "citations": 307,
+     "inProfind": true,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Nguyen, Minh Hieu",
+   "inst": "Trường Đại học Giao thông vận tải",
+   "field": "Economics & Business",
+   "subfield": "Logistics & Transportation",
+   "rank": 74898,
+   "np": 47,
+   "firstyr": 2018,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5101530425",
+     "name": "Hieu Nguyen Minh",
+     "works": 22,
+     "units": [
+      "Trường Quốc tế (ĐHQGHN)"
+     ],
+     "firstYear": 2016,
+     "citations": 206,
+     "inProfind": true,
+     "rank": 4322
+    },
+    {
+     "id": "A5052925867",
+     "name": "Minh Hieu Nguyen",
+     "works": 55,
+     "units": [
+      "Trường Đại học Giao thông Vận tải",
+      "Trường Đại học Giao thông vận tải Thành phố Hồ Chí Minh",
+      "Trường Đại học FPT"
+     ],
+     "firstYear": 2018,
+     "citations": 1571,
+     "inProfind": true,
+     "rank": 203
+    },
+    {
+     "id": "A5111951454",
+     "name": "Hieu Minh Nguyen",
+     "works": 17,
+     "units": [
+      "National Institute of Veterinary Research"
+     ],
+     "firstYear": 2013,
+     "citations": 245,
+     "inProfind": true,
+     "rank": 4854
+    },
+    {
+     "id": "A5103283489",
+     "name": "Nguyễn Hiếu Minh",
+     "works": 6,
+     "units": [
+      "Academy of Cryptography Techniques"
+     ],
+     "firstYear": 2010,
+     "citations": 62,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5044936759",
+     "name": "Minh Hiệu Nguyễn",
+     "works": 14,
+     "units": [
+      "Academy of Cryptography Techniques"
+     ],
+     "firstYear": 2020,
+     "citations": 101,
+     "inProfind": true,
+     "rank": 4832
+    },
+    {
+     "id": "A5112363554",
+     "name": "Minh Nguyen Hieu",
+     "works": 5,
+     "units": [
+      "Academy of Cryptography Techniques"
+     ],
+     "firstYear": 2012,
+     "citations": 60,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5065228550",
+     "name": "Nguyễn Minh Hiếu",
+     "works": 64,
+     "units": [
+      "Le Quy Don Technical University",
+      "Phenikaa University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5081622130",
+     "name": "Nguyen Van Hoang",
+     "works": 31,
+     "units": [
+      "Le Quy Don Technical University"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Nguyen, Trung Kien",
+   "inst": "Ho Chi Minh City University of Technology - HUTECH",
+   "field": "Engineering",
+   "subfield": "Materials",
+   "rank": 212067,
+   "np": 77,
+   "firstyr": 2007,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5100702854",
+     "name": "Trung-Kien Nguyen",
+     "works": 111,
+     "units": [
+      "Đại học Quốc gia TP. Hồ Chí Minh",
+      "Trường Đại học Bách khoa (ĐHQG-HCM)",
+      "Đại học Bách khoa Hà Nội"
+     ],
+     "firstYear": 2007,
+     "citations": 4871,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5081592766",
+     "name": "Kien Trung Nguyen",
+     "works": 43,
+     "units": [
+      "Đại học Cần Thơ"
+     ],
+     "firstYear": 2016,
+     "citations": 382,
+     "inProfind": true,
+     "rank": 2884
+    },
+    {
+     "id": "A5077043884",
+     "name": "Kien Trung Nguyen",
+     "works": 145,
+     "units": [
+      "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+      "Trường Đại học FPT",
+      "Trường Đại học Khoa học và Công nghệ Hà Nội"
+     ],
+     "firstYear": 2008,
+     "citations": 2451,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5103292197",
+     "name": "Nguyen Trung Kien",
+     "works": 14,
+     "units": [
+      "Trường Đại học Khoa học Xã hội và Nhân văn (ĐHQGHN)"
+     ],
+     "firstYear": 2005,
+     "citations": 14,
+     "inProfind": true,
+     "rank": 6507
+    },
+    {
+     "id": "A5084097260",
+     "name": "Trung Kiên Nguyễn",
+     "works": 87,
+     "units": [
+      "Trường Đại học Y Dược Cần Thơ",
+      "Viện Khoa học Công nghệ Xây dựng",
+      "Trường Đại học Y Dược Thái Bình"
+     ],
+     "firstYear": 2022,
+     "citations": 15,
+     "inProfind": true,
+     "rank": 4418
+    },
+    {
+     "id": "A5101605576",
+     "name": "Nguyễn Trung Kiên",
+     "works": 63,
+     "units": [
+      "Trường Đại học Giao thông Vận tải"
+     ],
+     "firstYear": 2000,
+     "citations": 181,
+     "inProfind": true,
+     "rank": 1480
+    },
+    {
+     "id": "A5108053381",
+     "name": "Trung Kiên Nguyen",
+     "works": 4,
+     "units": [
+      "Trường Đại học Xây dựng Hà Nội"
+     ],
+     "firstYear": 2017,
+     "citations": 271,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5009813851",
+     "name": "Kien Trung Nguyen",
+     "works": 22,
+     "units": [
+      "Trường Đại học Y Dược Thái Bình",
+      "Trường Đại học Sư phạm Kỹ thuật Hưng Yên"
+     ],
+     "firstYear": 2022,
+     "citations": 78,
+     "inProfind": true,
+     "rank": 4082
+    }
+   ]
+  },
+  {
+   "name": "Nguyen, Tuan Anh",
+   "inst": "Thuyloi University",
+   "field": "Engineering",
+   "subfield": "Industrial Engineering & Automation",
+   "rank": 31971,
+   "np": 73,
+   "firstyr": 2019,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": true,
+   "cands": [
+    {
+     "id": "A5046483870",
+     "name": "Tuan-Anh Nguyen",
+     "works": 85,
+     "units": [
+      "Đại học Quốc gia Hà Nội",
+      "Đại học Quốc gia TP. Hồ Chí Minh",
+      "Đại học Huế"
+     ],
+     "firstYear": 2002,
+     "citations": 1452,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5107961094",
+     "name": "Tuan Anh Nguyen",
+     "works": 87,
+     "units": [
+      "Trường Đại học Giao thông vận tải Thành phố Hồ Chí Minh",
+      "Đại học Quốc gia Hà Nội",
+      "Trường Đại học Khoa học Tự nhiên (ĐHQGHN)"
+     ],
+     "firstYear": 2006,
+     "citations": 225,
+     "inProfind": true,
+     "rank": 3222
+    },
+    {
+     "id": "A5100632426",
+     "name": "Nguyen Anh Tuan",
+     "works": 107,
+     "units": [
+      "Đại học Đà Nẵng",
+      "Trường Đại học Thủ đô Hà Nội",
+      "Trường Đại học Đại Nam"
+     ],
+     "firstYear": 1993,
+     "citations": 501,
+     "inProfind": true,
+     "rank": 3069
+    },
+    {
+     "id": "A5027031916",
+     "name": "Anh-Tuan Nguyen",
+     "works": 23,
+     "units": [
+      "Trường Đại học Phenikaa",
+      "Trường Đại học Thủ đô Hà Nội"
+     ],
+     "firstYear": 2016,
+     "citations": 208,
+     "inProfind": true,
+     "rank": 4978
+    },
+    {
+     "id": "A5100759391",
+     "name": "Tuan Anh Nguyen",
+     "works": 189,
+     "units": [
+      "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+      "Đại học Công nghiệp Hà Nội",
+      "Trường Đại học Y Hà Nội"
+     ],
+     "firstYear": 1973,
+     "citations": 6210,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5002468050",
+     "name": "Tuan Nguyen-Anh",
+     "works": 32,
+     "units": [
+      "Trường Đại học Kinh tế (ĐHQGHN)"
+     ],
+     "firstYear": 2020,
+     "citations": 344,
+     "inProfind": true,
+     "rank": 331
+    },
+    {
+     "id": "A5064162808",
+     "name": "Tuan Anh Nguyen",
+     "works": 15,
+     "units": [
+      "Trường Đại học Khoa học Xã hội và Nhân văn (ĐHQGHN)"
+     ],
+     "firstYear": 2007,
+     "citations": 115,
+     "inProfind": true,
+     "rank": 5435
+    },
+    {
+     "id": "A5121189548",
+     "name": "Nguyen Anh Tuan",
+     "works": 6,
+     "units": [
+      "Trường Đại học Ngoại ngữ (ĐHQGHN)"
+     ],
+     "firstYear": 2025,
+     "citations": 0,
+     "inProfind": true,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Tran, Oanh Thi",
+   "inst": "University of Finance - Marketing",
+   "field": "Economics & Business",
+   "subfield": "Economics",
+   "rank": 71982,
+   "np": 30,
+   "firstyr": 2018,
+   "lastyr": 2025,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5082157389",
+     "name": "Oanh Thi Tran",
+     "works": 14,
+     "units": [
+      "Trường Quốc tế (ĐHQGHN)"
+     ],
+     "firstYear": 2018,
+     "citations": 67,
+     "inProfind": true,
+     "rank": 6019
+    },
+    {
+     "id": "A5110732388",
+     "name": "Tran Thi Oanh",
+     "works": 1,
+     "units": [
+      "Trường Đại học Dầu khí Việt Nam"
+     ],
+     "firstYear": 2025,
+     "citations": 0,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5101220817",
+     "name": "Thị Oanh Trần",
+     "works": 5,
+     "units": [
+      "Trường Đại học Y khoa Vinh"
+     ],
+     "firstYear": 2023,
+     "citations": 1,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5005323032",
+     "name": "Oanh Tran",
+     "works": 60,
+     "units": [
+      "Madigan Army Medical Center",
+      "Children's Hospital of Philadelphia",
+      "The Geneva Foundation"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5081835298",
+     "name": "Tran Thi Kim Oanh",
+     "works": 35,
+     "units": [
+      "University of Finance - Marketing"
+     ],
+     "inProfind": true,
+     "rank": 502
+    },
+    {
+     "id": "A5054260359",
+     "name": "Thi-Oanh Tran",
+     "works": 9,
+     "units": [
+      "Bạch Mai Hospital",
+      "Taipei Medical University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5061533358",
+     "name": "Tran Thi Mai Oanh",
+     "works": 26,
+     "units": [
+      "Health Strategy and Policy Institute"
+     ],
+     "inProfind": true,
+     "rank": 3454
+    },
+    {
+     "id": "A5101958751",
+     "name": "Oanh Tran Thi Kim",
+     "works": 17,
+     "units": [
+      "Kyung Hee University"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Tuan, Le Anh",
+   "inst": "Vietnam Maritime University",
+   "field": "Engineering",
+   "subfield": "Industrial Engineering & Automation",
+   "rank": 304874,
+   "np": 43,
+   "firstyr": 2011,
+   "lastyr": 2025,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5088189409",
+     "name": "Lê Tuấn Anh",
+     "works": 111,
+     "units": [
+      "Đại học Quốc gia Hà Nội",
+      "Trường Đại học Khoa học Tự nhiên (ĐHQGHN)",
+      "Trường Đại học Công Thương Thành phố Hồ Chí Minh"
+     ],
+     "firstYear": 2004,
+     "citations": 565,
+     "inProfind": true,
+     "rank": 3524
+    },
+    {
+     "id": "A5061680998",
+     "name": "Lê Anh Tuấn",
+     "works": 108,
+     "units": [
+      "Đại học Quốc gia TP. Hồ Chí Minh",
+      "Trường Đại học Bách khoa (ĐHQG-HCM)",
+      "Đại học Bách khoa Hà Nội"
+     ],
+     "firstYear": 1996,
+     "citations": 2417,
+     "inProfind": true,
+     "rank": 261
+    },
+    {
+     "id": "A5100753114",
+     "name": "Anh-Tuan Le",
+     "works": 186,
+     "units": [
+      "Trường Đại học Phenikaa"
+     ],
+     "firstYear": 2006,
+     "citations": 4662,
+     "inProfind": true,
+     "rank": 125
+    },
+    {
+     "id": "A5100753115",
+     "name": "Anh Tuấn Lê",
+     "works": 127,
+     "units": [
+      "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+      "Đại học Bách khoa Hà Nội"
+     ],
+     "firstYear": 2013,
+     "citations": 8653,
+     "inProfind": true,
+     "rank": 1156
+    },
+    {
+     "id": "A5100668497",
+     "name": "Lê Tuấn Anh",
+     "works": 29,
+     "units": [
+      "Trường Đại học Y Dược (ĐHQGHN)"
+     ],
+     "firstYear": 2019,
+     "citations": 38,
+     "inProfind": true,
+     "rank": 5530
+    },
+    {
+     "id": "A5100458408",
+     "name": "Anh Tuấn Lê",
+     "works": 66,
+     "units": [
+      "Trường Đại học Bách khoa (ĐHQG-HCM)"
+     ],
+     "firstYear": 2016,
+     "citations": 1307,
+     "inProfind": true,
+     "rank": 2389
+    },
+    {
+     "id": "A5100458413",
+     "name": "Tuan Anh Lê",
+     "works": 55,
+     "units": [
+      "Trường Đại học Bách khoa (ĐHQG-HCM)",
+      "Institute for Nuclear Science and Technology",
+      "Viện Năng lượng nguyên tử Việt Nam"
+     ],
+     "firstYear": 2014,
+     "citations": 368,
+     "inProfind": true,
+     "rank": 3859
+    },
+    {
+     "id": "A5054482402",
+     "name": "Tuan Anh Le",
+     "works": 33,
+     "units": [
+      "Trường Đại học Kinh tế",
+      "Trường Đại học FPT",
+      "Trường Đại học Công nghệ Đông Á"
+     ],
+     "firstYear": 2014,
+     "citations": 154,
+     "inProfind": true,
+     "rank": 3107
+    }
+   ]
+  },
+  {
+   "name": "van Nguyen, Minh",
+   "inst": "HCMC University of Technology and Engineering (HCM-UTE)",
+   "field": "Built Environment & Design",
+   "subfield": "Building & Construction",
+   "rank": 88065,
+   "np": 34,
+   "firstyr": 2020,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5100642512",
+     "name": "Nguyễn Văn Minh",
+     "works": 19,
+     "units": [
+      "Trường Khoa học liên ngành và Nghệ thuật (ĐHQGHN)"
+     ],
+     "firstYear": 2009,
+     "citations": 64,
+     "inProfind": true,
+     "rank": 7441
+    },
+    {
+     "id": "A5100642508",
+     "name": "Nguyễn Văn Minh",
+     "works": 15,
+     "units": [
+      "Trường Đại học Nông Lâm"
+     ],
+     "firstYear": 1994,
+     "citations": 156,
+     "inProfind": true,
+     "rank": 6611
+    },
+    {
+     "id": "A5101942376",
+     "name": "Minh Nguyen Van",
+     "works": 23,
+     "units": [
+      "Trường Đại học Y Dược"
+     ],
+     "firstYear": 2018,
+     "citations": 42,
+     "inProfind": true,
+     "rank": 4384
+    },
+    {
+     "id": "A5100777903",
+     "name": "Van Minh Nguyen",
+     "works": 34,
+     "units": [
+      "Trường Đại học Công nghệ Giao thông Vận tải",
+      "Trường Đại học Sư phạm Hà Nội"
+     ],
+     "firstYear": 1999,
+     "citations": 287,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5103908424",
+     "name": "Văn Minh Nguyễn",
+     "works": 29,
+     "units": [
+      "Trường Đại học Sư phạm Hà Nội",
+      "Trường Đại học Y tế Công cộng",
+      "Trường Đại học Công nghệ Giao thông Vận tải"
+     ],
+     "firstYear": 2011,
+     "citations": 377,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5100642516",
+     "name": "Nguyen Van Minh",
+     "works": 11,
+     "units": [
+      "Trường Đại học Sư phạm Hà Nội 2",
+      "Trường Đại học Tây Nguyên",
+      "Trường Đại học Thành Đông"
+     ],
+     "firstYear": 1999,
+     "citations": 94,
+     "inProfind": true,
+     "rank": 5826
+    },
+    {
+     "id": "A5101541497",
+     "name": "Minh Van Nguyen",
+     "works": 57,
+     "units": [
+      "Trường Đại học Nha Trang"
+     ],
+     "firstYear": 2010,
+     "citations": 751,
+     "inProfind": true,
+     "rank": 2743
+    },
+    {
+     "id": "A5100642515",
+     "name": "Nguyễn Văn Minh",
+     "works": 158,
+     "units": [
+      "Trường Đại học Sư phạm Kỹ thuật Vĩnh Long"
+     ],
+     "firstYear": 1973,
+     "citations": 2026,
+     "inProfind": true,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Vu, Anh Tuan",
+   "inst": "Hanoi University of Science and Technology",
+   "field": "Enabling & Strategic Technologies",
+   "subfield": "Optoelectronics & Photonics",
+   "rank": 757053,
+   "np": 75,
+   "firstyr": 2005,
+   "lastyr": 2021,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5112036272",
+     "name": "Vu Tuan Anh",
+     "works": 43,
+     "units": [
+      "Trường Khoa học liên ngành và Nghệ thuật (ĐHQGHN)"
+     ],
+     "firstYear": 1994,
+     "citations": 206,
+     "inProfind": true,
+     "rank": 3676
+    },
+    {
+     "id": "A5101783752",
+     "name": "Tuấn Anh Vũ",
+     "works": 57,
+     "units": [
+      "Đại học Kinh tế Quốc dân",
+      "Trường Đại học Hàng hải Việt Nam",
+      "Viện Dinh dưỡng"
+     ],
+     "firstYear": 1986,
+     "citations": 479,
+     "inProfind": true,
+     "rank": 3384
+    },
+    {
+     "id": "A5082714549",
+     "name": "Anh-Tuan Vu",
+     "works": 16,
+     "units": [
+      "Trường Đại học Xây dựng Hà Nội"
+     ],
+     "firstYear": 2019,
+     "citations": 80,
+     "inProfind": true,
+     "rank": 6299
+    },
+    {
+     "id": "A5101519611",
+     "name": "Anh Tuan Vu",
+     "works": 26,
+     "units": [
+      "Trường Đại học Việt Đức"
+     ],
+     "firstYear": 2005,
+     "citations": 439,
+     "inProfind": true,
+     "rank": 3368
+    },
+    {
+     "id": "A5047941744",
+     "name": "Tuan Anh Vu",
+     "works": 6,
+     "units": [
+      "Học viện Ngoại giao"
+     ],
+     "firstYear": 2016,
+     "citations": 13,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5103860711",
+     "name": "Vu Anh Tuan",
+     "works": 25,
+     "units": [
+      "Trường Đại học Khoa học Tự nhiên (ĐHQGHN)"
+     ],
+     "firstYear": 1991,
+     "citations": 1244,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5100671645",
+     "name": "Anh V. Nguyen",
+     "works": 539,
+     "units": [
+      "The University of Queensland",
+      "ARC Centre of Excellence for Enabling Eco-Efficient Beneficiation of Minerals",
+      "Vietnam Academy of Science and Technology"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5036869152",
+     "name": "Anh‐Tuan Vu",
+     "works": 56,
+     "units": [
+      "Trường Đại học Khoa học và Công nghệ Hà Nội",
+      "Hanoi University of Science and Technology"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Ha, Lethanh",
+   "inst": "National Economics University",
+   "field": "Economics & Business",
+   "subfield": "Environmental Sciences",
+   "rank": 193244,
+   "np": 154,
+   "firstyr": 2020,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5102018716",
+     "name": "Le Thanh Ha",
+     "works": 31,
+     "units": [
+      "Trường Đại học Công nghệ (ĐHQGHN)"
+     ],
+     "firstYear": 2019,
+     "citations": 207,
+     "inProfind": true,
+     "rank": 5596
+    },
+    {
+     "id": "A5113788877",
+     "name": "Thanh-Ha Le",
+     "works": 24,
+     "units": [
+      "Trường Đại học Công nghệ (ĐHQGHN)",
+      "Trường Đại học Giao thông Vận tải",
+      "Trường Đại học Ngoại thương"
+     ],
+     "firstYear": 2007,
+     "citations": 633,
+     "inProfind": true,
+     "rank": 4666
+    },
+    {
+     "id": "A5006943571",
+     "name": "Lê Thanh Hà",
+     "works": 232,
+     "units": [
+      "Đại học Kinh tế Quốc dân",
+      "Học viện Tài chính"
+     ],
+     "firstYear": 2013,
+     "citations": 3174,
+     "inProfind": true,
+     "rank": 111
+    },
+    {
+     "id": "A5070502195",
+     "name": "Hà Lê Thanh",
+     "works": 9,
+     "units": [
+      "Trường Đại học Văn hóa, Thể thao và Du lịch Thanh Hóa"
+     ],
+     "firstYear": 2022,
+     "citations": 2,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5078678082",
+     "name": "Ha Thanh Le",
+     "works": 7,
+     "units": [
+      "Trường Đại học Giao thông Vận tải"
+     ],
+     "firstYear": 2014,
+     "citations": 583,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5072093859",
+     "name": "LeThanh HA",
+     "works": 2,
+     "units": [
+      "Korea University",
+      "Korea University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5057811819",
+     "name": "Thanh Ha Le",
+     "works": 19,
+     "units": [
+      "University of Transport and Communications",
+      "VNU University of Engineering and Technology"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Nguyen, Ngoc Hieu",
+   "inst": "Duy Tan University",
+   "field": "Physics & Astronomy",
+   "subfield": "Applied Physics",
+   "rank": 167853,
+   "np": 266,
+   "firstyr": 2007,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5061934686",
+     "name": "Hieu Nguyen-Ngoc",
+     "works": 42,
+     "units": [
+      "Trường Đại học Phenikaa"
+     ],
+     "firstYear": 2016,
+     "citations": 776,
+     "inProfind": true,
+     "rank": 918
+    },
+    {
+     "id": "A5102840657",
+     "name": "Nguyễn Ngọc Hiếu",
+     "works": 27,
+     "units": [
+      "Trường Đại học Kinh tế – Luật (ĐHQG-HCM)",
+      "Trường Đại học Vinh",
+      "Trường Đại học Kinh tế Nghệ An"
+     ],
+     "firstYear": 2019,
+     "citations": 191,
+     "inProfind": true,
+     "rank": 5423
+    },
+    {
+     "id": "A5001514819",
+     "name": "Hieu Ngoc Nguyen",
+     "works": 12,
+     "units": [
+      "Trường Đại học Kinh tế Nghệ An",
+      "Viện Vệ sinh Dịch tễ Trung ương"
+     ],
+     "firstYear": 2019,
+     "citations": 72,
+     "inProfind": true,
+     "rank": 4909
+    },
+    {
+     "id": "A5021501825",
+     "name": "Nguyen N. Hieu",
+     "works": 313,
+     "units": [
+      "Duy Tan University"
+     ],
+     "inProfind": true,
+     "rank": 217
+    },
+    {
+     "id": "A5047517734",
+     "name": "Ngoc Thanh Nguyên",
+     "works": 543,
+     "units": [
+      "Wrocław University of Science and Technology",
+      "Thuyloi University",
+      "Trường ĐH Nguyễn Tất Thành"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5000620813",
+     "name": "Chu Thai Hoanh",
+     "works": 216,
+     "units": [
+      "International Water Management Institute (IWMI)"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5104351126",
+     "name": "Ngoc Hieu Nguyen",
+     "works": 16,
+     "units": [
+      "Vinh University",
+      "Duy Tan University",
+      "University of Medicine and Pharmacy at Ho Chi Minh City"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Nguyen, Thuy Trang",
+   "inst": "Ho Chi Minh City University of Technology - HUTECH",
+   "field": "Clinical Medicine",
+   "subfield": "Pharmacology & Pharmacy",
+   "rank": 253732,
+   "np": 44,
+   "firstyr": 2016,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5013745213",
+     "name": "Nguyễn Thùy Trang",
+     "works": 57,
+     "units": [
+      "Đại học Cần Thơ"
+     ],
+     "firstYear": 2016,
+     "citations": 267,
+     "inProfind": true,
+     "rank": 1598
+    },
+    {
+     "id": "A5003720656",
+     "name": "Thuy Trang Nguyen",
+     "works": 45,
+     "units": [
+      "Trường Đại học Hà Nội"
+     ],
+     "firstYear": 2010,
+     "citations": 1642,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5102728427",
+     "name": "Thuy Trang Nguyen",
+     "works": 53,
+     "units": [
+      "Trường Đại học Y Hà Nội"
+     ],
+     "firstYear": 2005,
+     "citations": 4021,
+     "inProfind": true,
+     "rank": 1476
+    },
+    {
+     "id": "A5070200057",
+     "name": "Trang Nguyễn Thùy",
+     "works": 1,
+     "units": [
+      "Trường Đại học Y tế Công cộng"
+     ],
+     "firstYear": 2026,
+     "citations": 20,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5081913484",
+     "name": "Thùy Trang Nguyễn",
+     "works": 15,
+     "units": [
+      "Trường Đại học Thành Đô"
+     ],
+     "firstYear": 2022,
+     "citations": 7,
+     "inProfind": true,
+     "rank": 5583
+    },
+    {
+     "id": "A5103072720",
+     "name": "Thuy N Nguyen",
+     "works": 63,
+     "units": [
+      "University of North Texas",
+      "East Asia University of Technology",
+      "VNU University of Economics and Business"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5059644538",
+     "name": "Trang Thi Thuy Nguyen",
+     "works": 62,
+     "units": [
+      "The University of Melbourne"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Nguyen, Dai H.",
+   "inst": "Vietnam Academy of Science and Technology",
+   "field": "Chemistry",
+   "subfield": "Polymers",
+   "rank": 212255,
+   "np": 155,
+   "firstyr": 2011,
+   "lastyr": 2025,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5101845313",
+     "name": "Hai D. Nguyen",
+     "works": 36,
+     "units": [
+      "Trường Đại học Xây dựng Hà Nội"
+     ],
+     "firstYear": 2004,
+     "citations": 406,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5105657014",
+     "name": "H. D. N. Nguyen",
+     "works": 446,
+     "units": [
+      "South Australia Pathology",
+      "Commissariat à l'Énergie Atomique et aux Énergies Alternatives",
+      "CEA Paris-Saclay - Etablissement de Saclay"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5080003296",
+     "name": "Dai H. Nguyen",
+     "works": 6,
+     "units": [
+      "Queensland University of Technology"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5108143734",
+     "name": "Hoang Dai Nghia Nguyen",
+     "works": 63,
+     "units": [
+      "University of Illinois Urbana-Champaign",
+      "Commissariat à l'Énergie Atomique et aux Énergies Alternatives",
+      "CEA Paris-Saclay - Etablissement de Saclay"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5141524815",
+     "name": "Hoang Dai Nghia Nguyen",
+     "works": 188,
+     "units": [
+      "University of Illinois Urbana-Champaign",
+      "Université de Montréal"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5047422016",
+     "name": "H T Nguyen",
+     "works": 10,
+     "units": [
+      "Université de Montréal"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Nguyen, Van Truong",
+   "inst": "Phuong Dong University",
+   "field": "Information & Communication Technologies",
+   "subfield": "Artificial Intelligence & Image Processing",
+   "rank": 216190,
+   "np": 62,
+   "firstyr": 2010,
+   "lastyr": 2027,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5046386361",
+     "name": "Nguyễn Văn Trưởng",
+     "works": 83,
+     "units": [
+      "Trường Đại học Kỹ thuật Công nghiệp",
+      "Trường Đại học Hàng hải Việt Nam"
+     ],
+     "firstYear": 1974,
+     "citations": 1068,
+     "inProfind": true,
+     "rank": 2628
+    },
+    {
+     "id": "A5052113946",
+     "name": "Van-Truong Nguyen",
+     "works": 64,
+     "units": [
+      "Đại học Công nghiệp Hà Nội"
+     ],
+     "firstYear": 2011,
+     "citations": 1175,
+     "inProfind": true,
+     "rank": 506
+    },
+    {
+     "id": "A5109396315",
+     "name": "Trường Nguyễn Văn",
+     "works": 5,
+     "units": [
+      "Học viện Báo chí và Tuyên truyền"
+     ],
+     "firstYear": 2010,
+     "citations": 16,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5002282875",
+     "name": "Truong Quang Nguyen",
+     "works": 468,
+     "units": [
+      "Vietnam National University, Hanoi",
+      "Vietnam National University of Forestry",
+      "Graduate University of Science and Technology"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5026404081",
+     "name": "Trinh Duy Nguyen",
+     "works": 253,
+     "units": [
+      "Vietnam National University Ho Chi Minh City",
+      "Ho Chi Minh City University of Science",
+      "Trường ĐH Nguyễn Tất Thành"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5075381376",
+     "name": "Truong Van Nguyen",
+     "works": 15,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Trung, Ngo Viet",
+   "inst": "Hanoi Institute of Mathematics",
+   "field": "Mathematics & Statistics",
+   "subfield": "General Mathematics",
+   "rank": 221389,
+   "np": 92,
+   "firstyr": 1978,
+   "lastyr": 2024,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5109943154",
+     "name": "NgôViêt Trung",
+     "works": 0,
+     "units": [
+      "Institute of Mathematics"
+     ],
+     "firstYear": null,
+     "citations": 196,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5102888341",
+     "name": "Ngô Viêt Trung",
+     "works": 135,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5064998963",
+     "name": "Trung Ngo Viet",
+     "works": 1,
+     "units": [
+      "Institute of Mathematics"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5045047819",
+     "name": "Viêt Trung Ngô",
+     "works": 2,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5024325226",
+     "name": "Ngo Trung Viet",
+     "works": 6,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5153963886",
+     "name": "ThS.Nguyễn Thị Mỹ Dung",
+     "works": 29,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Anh, Pham K.",
+   "inst": "Vietnam National University, Hanoi",
+   "field": "Mathematics & Statistics",
+   "subfield": "General Mathematics",
+   "rank": 138067,
+   "np": 108,
+   "firstyr": 2002,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5037239372",
+     "name": "K. A. Pham",
+     "works": 71,
+     "units": [
+      "University of Minnesota"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5068615374",
+     "name": "Pham Ky Anh",
+     "works": 56,
+     "units": [
+      "Vietnam National University, Hanoi",
+      "Quy Nhon University"
+     ],
+     "inProfind": true,
+     "rank": 1716
+    },
+    {
+     "id": "A5101483284",
+     "name": "Anh Khoa Pham",
+     "works": 21,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5109145563",
+     "name": "Kim Anh Pham",
+     "works": 8,
+     "units": [
+      "Georgia Institute of Technology"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5005724853",
+     "name": "Anh K. Pham",
+     "works": 3,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Asadi, Amin",
+   "inst": "Ton-Duc-Thang University",
+   "field": "Engineering",
+   "subfield": "Mechanical Engineering & Transports",
+   "rank": 134762,
+   "np": 55,
+   "firstyr": 2015,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5026701353",
+     "name": "Amin Asadi",
+     "works": 66,
+     "units": [
+      "University of Nevada, Las Vegas"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5033417164",
+     "name": "Mohammad Amin Asadi Zarch",
+     "works": 12,
+     "units": [
+      "Yazd University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5034542634",
+     "name": "Amin Asadi",
+     "works": 17,
+     "units": [
+      "University of Twente"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5108331123",
+     "name": "Maryam asadi Amin",
+     "works": 2,
+     "units": [
+      "University of Birjand"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5039832943",
+     "name": "Amin Asadi",
+     "works": 4,
+     "units": [
+      "Shahid Sadoughi University of Medical Sciences and Health Services"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Bui, Hung Hai",
+   "inst": "VinAI Research",
+   "field": "Information & Communication Technologies",
+   "subfield": "Artificial Intelligence & Image Processing",
+   "rank": 214604,
+   "np": 112,
+   "firstyr": 1995,
+   "lastyr": 2023,
+   "topCntry": "USA",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5101391750",
+     "name": "Hung Bui",
+     "works": 129,
+     "units": [
+      "Stanford University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5059111695",
+     "name": "Hai-Hung Bui",
+     "works": 1,
+     "units": [
+      "Trường Đại học Khoa học và Công nghệ Hà Nội",
+      "Hanoi University of Science and Technology"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5156463479",
+     "name": "Lưu Mạnh Hùng*, Bùi Văn Nhân, Nguyễn Hải Dương",
+     "works": 1,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5155715285",
+     "name": "Phạm Văn Quyến, Giang Vi Sal, Bùi Ngọc Hùng,  Nguyễn Văn Tiến, Nguyễn Ngọc Hải, Trần Văn Phong,  Huỳnh Văn Thảo và Trầm Thanh Hải",
+     "works": 1,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5155074710",
+     "name": "Phạm Sỹ Tiệp, Hoàng Thị Phi Phượng, Phạm Duy Phẩm, Phạm Hải Ninh, Nguyễn Văn Trung, Ngô Mậu Dũng, Phùng Thăng Long, Thái Khắc Thanh,  Bùi Duy Hùng và Chu Mạnh Thắng",
+     "works": 2,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Dinh Long, Nguyen Dinh",
+   "inst": "Duy Tan University",
+   "field": "Information & Communication Technologies",
+   "subfield": "Networking & Telecommunications",
+   "rank": 417658,
+   "np": 74,
+   "firstyr": 2016,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5055510228",
+     "name": "Long Dinh Nguyen",
+     "works": 93,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5074237417",
+     "name": "Long-Van Nguyen-Dinh",
+     "works": 12,
+     "units": [
+      "ETH Zurich"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5101608867",
+     "name": "Nguyen Viet Long",
+     "works": 21,
+     "units": [
+      "FPT University",
+      "Vietnam National University of Agriculture"
+     ],
+     "inProfind": true,
+     "rank": 1604
+    },
+    {
+     "id": "A5017444157",
+     "name": "Vu Nguyen",
+     "works": 21,
+     "units": [
+      "University of Da Nang",
+      "Trường Đại học Công nghệ Thông tin và Truyền thông Việt Hàn",
+      "Technische Universität Dresden"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5063165651",
+     "name": "Dinh-Long Nguyen",
+     "works": 1,
+     "units": [
+      "Queen's University Belfast",
+      "Duy Tan University",
+      "Hanoi Open University"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Do, Minh N.",
+   "inst": "VinUniversity",
+   "field": "Information & Communication Technologies",
+   "subfield": "Artificial Intelligence & Image Processing",
+   "rank": 22640,
+   "np": 284,
+   "firstyr": 1999,
+   "lastyr": 2026,
+   "topCntry": "USA",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5005908865",
+     "name": "Minh N. Do",
+     "works": 409,
+     "units": [
+      "University of Illinois Urbana-Champaign"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5072983548",
+     "name": "Nguyen Nguyet Minh",
+     "works": 6,
+     "units": [
+      "Van Lang University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5039884528",
+     "name": "Minh N. Do",
+     "works": 14,
+     "units": [
+      "University of Illinois Urbana-Champaign",
+      "VinUniversity"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5061923120",
+     "name": "Duc Nguyen Minh",
+     "works": 40,
+     "units": [
+      "The University of Sydney"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5152853085",
+     "name": "Minh N. Do",
+     "works": 1,
+     "units": [
+      "Ivanovo State University of Chemistry and Technology"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Hoang, Khanh",
+   "inst": "VNUHCM-University of Economics and Law",
+   "field": "Economics & Business",
+   "subfield": "Finance",
+   "rank": 98955,
+   "np": 47,
+   "firstyr": 2019,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5101601514",
+     "name": "Nguyen Hoang Khanh Linh",
+     "works": 68,
+     "units": [
+      "Vietnam National University Ho Chi Minh City",
+      "Vietnam National University, Hanoi",
+      "Hue University"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5064782058",
+     "name": "Khanh-Dung Hoang Nguyen",
+     "works": 18,
+     "units": [
+      "Biogen (United States)"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5047715377",
+     "name": "Khanh Cong Gia Hoang",
+     "works": 74,
+     "units": [
+      "University of Economics Ho Chi Minh City",
+      "Lincoln University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5050267995",
+     "name": "Minh‐Hoang Nguyen",
+     "works": 611,
+     "units": [
+      "Phenikaa University",
+      "Trường Đại học Khoa học và Công nghệ Hà Nội",
+      "Hanoi University of Science and Technology"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5025847533",
+     "name": "Khanh Hoang Nguyen",
+     "works": 32,
+     "units": [
+      "Technical University of Denmark"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Huynh, Dang Van",
+   "inst": "VNUHCM - University of Information Technology",
+   "field": "Information & Communication Technologies",
+   "subfield": "Networking & Telecommunications",
+   "rank": 329358,
+   "np": 44,
+   "firstyr": 2018,
+   "lastyr": 2026,
+   "topCntry": "GBR",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5112959160",
+     "name": "Dang Van Huynh",
+     "works": 45,
+     "units": [
+      "Memorial University of Newfoundland"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5031665633",
+     "name": "Dang Huynh-Van",
+     "works": 8,
+     "units": [
+      "Vietnam National University Ho Chi Minh City",
+      "University of Information Technology"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5135923618",
+     "name": "Dang Huynh",
+     "works": 6,
+     "units": [
+      "Vietnam National University Ho Chi Minh City",
+      "Memorial University of Newfoundland",
+      "Fulbright University Vietnam"
+     ],
+     "inProfind": true,
+     "rank": 4379
+    },
+    {
+     "id": "A5110877271",
+     "name": "Dang Huynh Cuu Quan",
+     "works": 4,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5157581117",
+     "name": "Huynh Thi Lan Huong, Koos Neefjes, Nguyen Xuan Hien, Tran Van Tra, Dang Linh Chi, Duong Hong Nhung",
+     "works": 1,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Long, Hoang Ngoc",
+   "inst": "Van Lang University",
+   "field": "Physics & Astronomy",
+   "subfield": "Nuclear & Particle Physics",
+   "rank": 134974,
+   "np": 117,
+   "firstyr": 1992,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5069934465",
+     "name": "H. N. Long",
+     "works": 169,
+     "units": [
+      "Van Lang University"
+     ],
+     "inProfind": true,
+     "rank": 483
+    },
+    {
+     "id": "A5110739325",
+     "name": "Ngoc Hoang Long Nguyen",
+     "works": 4,
+     "units": [
+      "SingHealth"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5092215659",
+     "name": "Hoàng Ngọc Long Hoàng Ngọc Long",
+     "works": 4,
+     "units": [
+      "Hong Bang International University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5100771613",
+     "name": "Nguyễn Thị Thu Hương",
+     "works": 159,
+     "units": [
+      "Hanoi Medical University",
+      "University of Medicine and Pharmacy at Ho Chi Minh City",
+      "Vinmec Times City International Hospital"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5124893580",
+     "name": "T D K Nguyen",
+     "works": 148,
+     "units": [
+      "Université Paris-Sud",
+      "Institut polytechnique de Grenoble",
+      "FPT University"
+     ],
+     "inProfind": true,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Nguyen, Chuong V.",
+   "inst": "Le Quy Don Technical University",
+   "field": "Physics & Astronomy",
+   "subfield": "Applied Physics",
+   "rank": 76065,
+   "np": 130,
+   "firstyr": 2015,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5100623711",
+     "name": "Chuong V. Nguyen",
+     "works": 144,
+     "units": [
+      "Trường Đại học Duy Tân"
+     ],
+     "firstYear": 2013,
+     "citations": 5290,
+     "inProfind": true,
+     "rank": 553
+    },
+    {
+     "id": "A5046133873",
+     "name": "Chuong Vinh Nguyen",
+     "works": 67,
+     "units": [
+      "Commonwealth Scientific and Industrial Research Organisation",
+      "Data61"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5100623707",
+     "name": "Chương V. Nguyen",
+     "works": 69,
+     "units": [
+      "Le Quy Don Technical University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5103888052",
+     "name": "Minh Vu Chuong Nguyen",
+     "works": 36,
+     "units": [
+      "Translational Innovation in Medicine and Complexity",
+      "Université Grenoble Alpes"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5153550373",
+     "name": "Nguyen, Chuong, V",
+     "works": 1,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Nguyen, Hoang Chinh",
+   "inst": "Ton-Duc-Thang University",
+   "field": "Enabling & Strategic Technologies",
+   "subfield": "Biotechnology",
+   "rank": 185498,
+   "np": 64,
+   "firstyr": 2016,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5035406180",
+     "name": "Hoang Chinh Nguyen",
+     "works": 90,
+     "units": [
+      "Deakin University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5010017514",
+     "name": "Hoa Q. Nguyen",
+     "works": 49,
+     "units": [
+      "National Economics University"
+     ],
+     "inProfind": true,
+     "rank": 1758
+    },
+    {
+     "id": "A5124893580",
+     "name": "T D K Nguyen",
+     "works": 148,
+     "units": [
+      "Université Paris-Sud",
+      "Institut polytechnique de Grenoble",
+      "FPT University"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5145190275",
+     "name": "Hoang-Chinh Nguyen",
+     "works": 1,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5117694406",
+     "name": "Nguyễn Hoàng Chính",
+     "works": 2,
+     "units": [
+      "Deakin University"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Nguyen, Quang Khai",
+   "inst": "Đại học Mở Thành phố Hồ Chí Minh",
+   "field": "Economics & Business",
+   "subfield": "Finance",
+   "rank": 62176,
+   "np": 30,
+   "firstyr": 2020,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5040904063",
+     "name": "Quang Nguyen",
+     "works": 86,
+     "units": [
+      "Ho Chi Minh City Open University"
+     ],
+     "inProfind": true,
+     "rank": 61
+    },
+    {
+     "id": "A5006287655",
+     "name": "Tran Quang Khai Nguyen",
+     "works": 26,
+     "units": [
+      "Thales (France)"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5059918526",
+     "name": "Nguyen Quang Khai",
+     "works": 4,
+     "units": [
+      "Vietnam National University Ho Chi Minh City",
+      "VNU University of Economics and Business",
+      "Trường Đại học Khoa học và Công nghệ Hà Nội"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5065284521",
+     "name": "Quang Khai Nguyen",
+     "works": 7,
+     "units": [
+      "Pusan National University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5103809389",
+     "name": "Kien Gia To",
+     "works": 44,
+     "units": [
+      "University of Medicine and Pharmacy at Ho Chi Minh City",
+      "Bệnh viện Nhân dân Gia Định"
+     ],
+     "inProfind": true,
+     "rank": 4025
+    }
+   ]
+  },
+  {
+   "name": "Nguyen, Thi Hong Hue",
+   "inst": "Can Tho University",
+   "field": "Engineering",
+   "subfield": "Mining & Metallurgy",
+   "rank": 715805,
+   "np": 52,
+   "firstyr": 2013,
+   "lastyr": 2025,
+   "topCntry": "KOR",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5020301543",
+     "name": "Nguyễn Thị Hồng Huế",
+     "works": 6,
+     "units": [
+      "Jeonbuk National University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5043524211",
+     "name": "Thuy Nguyen",
+     "works": 221,
+     "units": [
+      "Université Paris-Sud",
+      "FPT University",
+      "Electric Power University"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5128700301",
+     "name": "T N P Nguyen",
+     "works": 216,
+     "units": [
+      "Vietnam National University Ho Chi Minh City",
+      "Arkansas State University",
+      "Hung Yen University of Technology and Education"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5091000551",
+     "name": "Hong-Hue Thi Nguyen",
+     "works": 14,
+     "units": [
+      "Jeonbuk National University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5064048695",
+     "name": "Thi Hong Hue Nguyen",
+     "works": 3,
+     "units": [
+      "Can Tho University"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Nguyen, V. T.",
+   "inst": "Dại học Nguyen Tat Thanh",
+   "field": "Agriculture, Fisheries & Forestry",
+   "subfield": "Fisheries",
+   "rank": 296785,
+   "np": 57,
+   "firstyr": 2017,
+   "lastyr": 2026,
+   "topCntry": "NZL",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5068483265",
+     "name": "Tuan V. Nguyen",
+     "works": 399,
+     "units": [
+      "University of Technology Sydney",
+      "Garvan Institute of Medical Research",
+      "UNSW Sydney"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5105514023",
+     "name": "V. Nguyen",
+     "works": 297,
+     "units": [
+      "Northeastern University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5027797818",
+     "name": "Vicky V. T. Doan‐Nguyen",
+     "works": 69,
+     "units": [
+      "The Ohio State University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5100634151",
+     "name": "Văn Thành Nguyễn",
+     "works": 175,
+     "units": [
+      "Industrial University of Ho Chi Minh City",
+      "Ho Chi Minh City University of Technology and Engineering"
+     ],
+     "inProfind": true,
+     "rank": 501
+    },
+    {
+     "id": "A5100754036",
+     "name": "Van Thanh Nguyen",
+     "works": 17,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Nguyen, Xuan Cuong",
+   "inst": "Duy Tan University",
+   "field": "Earth & Environmental Sciences",
+   "subfield": "Environmental Sciences",
+   "rank": 110777,
+   "np": 86,
+   "firstyr": 2017,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5035101973",
+     "name": "Nguyễn Xuân Cường",
+     "works": 271,
+     "units": [
+      "Viện Hàn lâm Khoa học và Công nghệ Việt Nam",
+      "Viện Hóa học",
+      "Trường Đại học Duy Tân"
+     ],
+     "firstYear": 1987,
+     "citations": 3615,
+     "inProfind": true,
+     "rank": 1294
+    },
+    {
+     "id": "A5022231076",
+     "name": "Xuan Cuong Nguyen",
+     "works": 97,
+     "units": [
+      "Trường Đại học Duy Tân"
+     ],
+     "firstYear": 2017,
+     "citations": 4261,
+     "inProfind": true,
+     "rank": 136
+    },
+    {
+     "id": "A5018346389",
+     "name": "Cuong Xuan Nguyen",
+     "works": 19,
+     "units": [
+      "Viện Sinh học"
+     ],
+     "firstYear": 2012,
+     "citations": 701,
+     "inProfind": true,
+     "rank": 2224
+    },
+    {
+     "id": "A5101918597",
+     "name": "Thành Tâm Nguyên",
+     "works": 239,
+     "units": [
+      "Griffith University",
+      "Hanoi University of Science and Technology"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5070720996",
+     "name": "Xuan Cuong Nguyen",
+     "works": 7,
+     "units": [
+      "Hanoi University of Civil Engineering"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Pham, Viet–Thanh",
+   "inst": "Industrial University of Ho Chi Minh City",
+   "field": "Physics & Astronomy",
+   "subfield": "Fluids & Plasmas",
+   "rank": 139819,
+   "np": 395,
+   "firstyr": 2011,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5029973339",
+     "name": "Viet-Thanh Pham",
+     "works": 105,
+     "units": [
+      "Trường Đại học Công nghiệp Thành phố Hồ Chí Minh"
+     ],
+     "firstYear": 2011,
+     "citations": 7353,
+     "inProfind": true,
+     "rank": 267
+    },
+    {
+     "id": "A5058754932",
+     "name": "Viet-Thanh Pham",
+     "works": 61,
+     "units": [
+      "Trường Đại học Công nghiệp Thành phố Hồ Chí Minh"
+     ],
+     "firstYear": 2012,
+     "citations": 5197,
+     "inProfind": true,
+     "rank": 870
+    },
+    {
+     "id": "A5036929225",
+     "name": "Thanh Nguyen",
+     "works": 66,
+     "units": [
+      "Vinh University",
+      "Industrial University of Ho Chi Minh City",
+      "Viện Công nghệ Sinh học và Thực phẩm"
+     ],
+     "inProfind": true,
+     "rank": 1089
+    },
+    {
+     "id": "A5108296873",
+     "name": "Pham Viet Thanh",
+     "works": 16,
+     "units": [
+      "Hanoi University of Industry"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5114083769",
+     "name": "Viet Thanh Pham",
+     "works": 9,
+     "units": [
+      "Vietnam National University, Hanoi",
+      "VNU University of Science"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Phung-Van, P.",
+   "inst": "Ho Chi Minh City University of Technology - HUTECH",
+   "field": "Engineering",
+   "subfield": "Materials",
+   "rank": 295057,
+   "np": 90,
+   "firstyr": 2012,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5025349017",
+     "name": "Phuc Phung-Van",
+     "works": 107,
+     "units": [
+      "HUTECH University"
+     ],
+     "inProfind": true,
+     "rank": 80
+    },
+    {
+     "id": "A5004095167",
+     "name": "P. Dong",
+     "works": 81,
+     "units": [
+      "Phenikaa University"
+     ],
+     "inProfind": true,
+     "rank": 159
+    },
+    {
+     "id": "A5008437473",
+     "name": "Phùng Văn Phách",
+     "works": 34,
+     "units": [
+      "Institute of Marine Geology and Geophysics",
+      "Vietnam Academy of Science and Technology"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5081048168",
+     "name": "Phung Van Manh",
+     "works": 31,
+     "units": [
+      "Hanoi National University of Education"
+     ],
+     "inProfind": true,
+     "rank": 5321
+    },
+    {
+     "id": "A5109329791",
+     "name": "Phuc Phung Van",
+     "works": 9,
+     "units": [
+      "HUTECH University"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Thanh, Dang Ngoc Hoang",
+   "inst": "University of Economics Ho Chi Minh City",
+   "field": "Information & Communication Technologies",
+   "subfield": "Artificial Intelligence & Image Processing",
+   "rank": 255029,
+   "np": 104,
+   "firstyr": 2015,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5088674960",
+     "name": "Dang N. H. Thanh",
+     "works": 110,
+     "units": [
+      "University of Economics Ho Chi Minh City"
+     ],
+     "inProfind": true,
+     "rank": 172
+    },
+    {
+     "id": "A5109582797",
+     "name": "Huy Thanh Dang",
+     "works": 9,
+     "units": [
+      "Can Tho University of Medicine and Pharmacy",
+      "Dalat Nuclear Research Institute",
+      "International University of Health and Welfare"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5157478671",
+     "name": "Bui Thi Thu Trang, Mai Van Trinh, Dinh Thai Hung, Quang Thi Thuong Thuong, Phan Thu Tiep, Hoang Thi Trang, Dang Ngoc Tu",
+     "works": 4,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5002862060",
+     "name": "Đặng Ngọc Hoàng Thành",
+     "works": 1,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5079522726",
+     "name": "Đặng Văn Thắng",
+     "works": 3,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Thao, Nguyen Xuan",
+   "inst": "Banking Academy of Vietnam",
+   "field": "Information & Communication Technologies",
+   "subfield": "Artificial Intelligence & Image Processing",
+   "rank": 205487,
+   "np": 30,
+   "firstyr": 2010,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5016374952",
+     "name": "Nguyễn Xuân Thảo",
+     "works": 45,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5022231076",
+     "name": "Xuan Cuong Nguyen",
+     "works": 99,
+     "units": [
+      "Chungbuk National University",
+      "Duy Tan University"
+     ],
+     "inProfind": true,
+     "rank": 136
+    },
+    {
+     "id": "A5051115805",
+     "name": "Xuan-Thao Nguyen",
+     "works": 7,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5000837628",
+     "name": "Tri Nguyen",
+     "works": 99,
+     "units": [
+      "Ho Chi Minh City Open University",
+      "Institute of Advanced Technology",
+      "Vietnam Academy of Science and Technology"
+     ],
+     "inProfind": true,
+     "rank": 875
+    },
+    {
+     "id": "A5022069329",
+     "name": "Huu‐Thanh Nguyen",
+     "works": 54,
+     "units": [
+      "Vietnam National University, Hanoi",
+      "An Giang University"
+     ],
+     "inProfind": true,
+     "rank": 1603
+    }
+   ]
+  },
+  {
+   "name": "van Hieu, Dang",
+   "inst": "College of Air Force",
+   "field": "Mathematics & Statistics",
+   "subfield": "Operations Research",
+   "rank": 109848,
+   "np": 89,
+   "firstyr": 2014,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5008917272",
+     "name": "Dang Van Hieu",
+     "works": 36,
+     "units": [
+      "Trường Đại học Phenikaa"
+     ],
+     "firstYear": 2017,
+     "citations": 368,
+     "inProfind": true,
+     "rank": 1620
+    },
+    {
+     "id": "A5002646790",
+     "name": "Dang Van Hieu",
+     "works": 92,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5100638743",
+     "name": "Van Hung Nguyen",
+     "works": 104,
+     "units": [
+      "Beth Israel Deaconess Medical Center",
+      "Colorado Department of Public Health and Environment",
+      "Harvard University"
+     ],
+     "inProfind": true,
+     "rank": 1115
+    },
+    {
+     "id": "A5000620813",
+     "name": "Chu Thai Hoanh",
+     "works": 216,
+     "units": [
+      "International Water Management Institute (IWMI)"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5063664155",
+     "name": "Van Hieu Dang",
+     "works": 4,
+     "units": [
+      "VNU University of Engineering and Technology"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "van Minh, Hoang V.",
+   "inst": "Ha Noi Medical University",
+   "field": "Public Health & Health Services",
+   "subfield": "Public Health",
+   "rank": 95296,
+   "np": 206,
+   "firstyr": 2003,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5059651488",
+     "name": "Hoàng Văn Minh",
+     "works": 337,
+     "units": [
+      "Hanoi School Of Public Health"
+     ],
+     "inProfind": true,
+     "rank": 423
+    },
+    {
+     "id": "A5107998643",
+     "name": "Nguyễn Văn Minh Hoàng",
+     "works": 50,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5100766543",
+     "name": "Van Hoang Nguyen",
+     "works": 112,
+     "units": [
+      "Vietnam National University Ho Chi Minh City",
+      "Le Quy Don Technical University",
+      "Ho Chi Minh City University of Science"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5101541497",
+     "name": "Minh Van Nguyen",
+     "works": 77,
+     "units": [
+      "Nha Trang University"
+     ],
+     "inProfind": true,
+     "rank": 2743
+    },
+    {
+     "id": "A5081622130",
+     "name": "Nguyen Van Hoang",
+     "works": 31,
+     "units": [
+      "Le Quy Don Technical University"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Vuong, Lan Ngoc",
+   "inst": "University of Medicine and Pharmacy at HCMC",
+   "field": "Clinical Medicine",
+   "subfield": "Obstetrics & Reproductive Medicine",
+   "rank": 107848,
+   "np": 109,
+   "firstyr": 2008,
+   "lastyr": 2025,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5000738203",
+     "name": "Lan N. Vuong",
+     "works": 207,
+     "units": [
+      "University of Medicine and Pharmacy at Ho Chi Minh City",
+      "My Duc Hospital"
+     ],
+     "inProfind": true,
+     "rank": 520
+    },
+    {
+     "id": "A5000360756",
+     "name": "Vương Thị Ngọc Lan",
+     "works": 1,
+     "units": [
+      "University of Medicine and Pharmacy at Ho Chi Minh City"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5124217004",
+     "name": "Vuong LN",
+     "works": 3,
+     "units": [
+      "University of Medicine and Pharmacy at Ho Chi Minh City"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5155039812",
+     "name": "Nguyen Van Duy, Vuong Thi Lan Anh, Van Thi Chieu, Le Thi Mai Hoa,Nguyen Thi Thu Phuong, Dao Anh Tien, Nguyen Ngoc Giap and Tran Thanh Van",
+     "works": 2,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5121658859",
+     "name": "Vương Thị Ngọc Lan",
+     "works": 1,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Do Van, Thom",
+   "inst": "Le Quy Don Technical University",
+   "field": "Engineering",
+   "subfield": "Mechanical Engineering & Transports",
+   "rank": 249752,
+   "np": 62,
+   "firstyr": 2016,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5080080089",
+     "name": "Do Van Thom",
+     "works": 44,
+     "units": [
+      "Le Quy Don Technical University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5103210639",
+     "name": "Do Van Thom",
+     "works": 27,
+     "units": [
+      "Le Quy Don Technical University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5088734924",
+     "name": "Thơm Đỗ Văn",
+     "works": 1,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5156362357",
+     "name": "Đặng Thị Thơm Đỗ Văn Mạnh*",
+     "works": 1,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Dúc, Nguyenhuu",
+   "inst": "Vietnam National University, Hanoi",
+   "field": "Physics & Astronomy",
+   "subfield": "Applied Physics",
+   "rank": 219232,
+   "np": 134,
+   "firstyr": 1982,
+   "lastyr": 2025,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5091776374",
+     "name": "Nguyễn Hữu Đức",
+     "works": 59,
+     "units": [
+      "Trường Đại học Khoa học Tự nhiên (ĐHQGHN)"
+     ],
+     "firstYear": 1982,
+     "citations": 648,
+     "inProfind": true,
+     "rank": 2858
+    },
+    {
+     "id": "A5029319435",
+     "name": "Duc Nguyen Huu",
+     "works": 29,
+     "units": [
+      "Trường Đại học Điện lực"
+     ],
+     "firstYear": 2014,
+     "citations": 558,
+     "inProfind": true,
+     "rank": 3918
+    },
+    {
+     "id": "A5110681630",
+     "name": "Huu Duc Nguyen",
+     "works": 14,
+     "units": [
+      "Trường Đại học Điện lực"
+     ],
+     "firstYear": 1994,
+     "citations": 103,
+     "inProfind": true,
+     "rank": 7364
+    },
+    {
+     "id": "A5025665567",
+     "name": "Nguyễn Đức Hữu",
+     "works": 16,
+     "units": [
+      "Trường Đại học Công đoàn"
+     ],
+     "firstYear": 2010,
+     "citations": 68,
+     "inProfind": true,
+     "rank": 4959
+    }
+   ]
+  },
+  {
+   "name": "Khang, Alex",
+   "inst": "Global Research Institute of Technology and Engineering",
+   "field": "Information & Communication Technologies",
+   "subfield": "Artificial Intelligence & Image Processing",
+   "rank": 67799,
+   "np": 305,
+   "firstyr": 2021,
+   "lastyr": 2026,
+   "topCntry": "USA",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5056613300",
+     "name": "Alex Khang",
+     "works": 303,
+     "units": [
+      "University of Dundee",
+      "Maharshi Dayanand University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5083813712",
+     "name": "Alex Khang",
+     "works": 33,
+     "units": [
+      "University of Colorado Boulder",
+      "Allen Institute for Cell Science"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5121330834",
+     "name": "P. H. Alex Khang",
+     "works": 1,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5122330837",
+     "name": "Alex  Khang PH",
+     "works": 1,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Long, H. V.",
+   "inst": "University of Technology - Logistics of Public Security",
+   "field": "Information & Communication Technologies",
+   "subfield": "Artificial Intelligence & Image Processing",
+   "rank": 322545,
+   "np": 95,
+   "firstyr": 2008,
+   "lastyr": 2025,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5071356090",
+     "name": "M.G. Mazarakis",
+     "works": 273,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5004726013",
+     "name": "Valencia Long",
+     "works": 66,
+     "units": [
+      "National Skin Centre",
+      "National University of Singapore",
+      "National University Hospital"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5016977907",
+     "name": "Van Hong Hoang",
+     "works": 4,
+     "units": [
+      "Centre National de la Recherche Scientifique",
+      "Université Paris Sciences et Lettres",
+      "Observatoire de Paris"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5135985502",
+     "name": "K H V Long",
+     "works": 1,
+     "units": [
+      "Ton Duc Thang University"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Phat, Vu Ngoc",
+   "inst": "Hanoi Institute of Mathematics",
+   "field": "Engineering",
+   "subfield": "Industrial Engineering & Automation",
+   "rank": 144792,
+   "np": 139,
+   "firstyr": 1988,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5064061692",
+     "name": "Vu N. Phat",
+     "works": 155,
+     "units": [
+      "Institute of Mathematics",
+      "International Centre of Research and Postgraduate Training in Mathematics",
+      "Vietnam Academy of Science and Technology"
+     ],
+     "inProfind": true,
+     "rank": 292
+    },
+    {
+     "id": "A5009681080",
+     "name": "Hoang-Nguyen Vu",
+     "works": 10,
+     "units": [
+      "Posts and Telecommunications Institute of Technology - Ho Chi Minh City",
+      "Health Strategy and Policy Institute",
+      "Ministry of Health"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5073853421",
+     "name": "Phat Vu Ngoc",
+     "works": 1,
+     "units": [
+      "Institute of Mathematics",
+      "Institute of Mathematics"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5044377588",
+     "name": "Ngoc Phat Vu",
+     "works": 2,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Hien, L. V.",
+   "inst": "Trường Đại học Sư phạm Hà Nội",
+   "field": "Engineering",
+   "subfield": "Industrial Engineering & Automation",
+   "rank": 240825,
+   "np": 75,
+   "firstyr": 2005,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5064063674",
+     "name": "Le Van Hien",
+     "works": 116,
+     "units": [
+      "Hanoi National University of Education",
+      "VNU University of Education"
+     ],
+     "inProfind": true,
+     "rank": 132
+    },
+    {
+     "id": "A5076464330",
+     "name": "Robert Lawrence Ives",
+     "works": 279,
+     "units": [
+      "Calabazas Creek Research (United States)"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5111512730",
+     "name": "Le V. Hien",
+     "works": 4,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Khoa, Dao Tien",
+   "inst": "Vietnam Atomic Energy Institute",
+   "field": "Physics & Astronomy",
+   "subfield": "Nuclear & Particle Physics",
+   "rank": 125936,
+   "np": 100,
+   "firstyr": 1985,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5091424745",
+     "name": "Dao T. Khoa",
+     "works": 134,
+     "units": [
+      "Institute for Nuclear Science and Technology",
+      "Vietnam Atomic Energy Instiute"
+     ],
+     "inProfind": true,
+     "rank": 555
+    },
+    {
+     "id": "A5094127295",
+     "name": "Dao Thi Bich Ngoc",
+     "works": 2,
+     "units": [
+      "Duy Tan University"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5054677212",
+     "name": "Khoa Tien Dao",
+     "works": 1,
+     "units": [
+      "Institute for Nuclear Science and Technology"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Le, Tu D.Q.",
+   "inst": "Viet Nam National University Ho Chi Minh City",
+   "field": "Economics & Business",
+   "subfield": "Finance",
+   "rank": 66496,
+   "np": 53,
+   "firstyr": 2017,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5062560716",
+     "name": "Tu Le",
+     "works": 91,
+     "units": [
+      "Vietnam National University, Hanoi",
+      "University of Economics and Law"
+     ],
+     "inProfind": true,
+     "rank": 244
+    },
+    {
+     "id": "A5136656060",
+     "name": "T D Le",
+     "works": 22,
+     "units": [
+      "Vietnam National University Ho Chi Minh City",
+      "University of Economics Ho Chi Minh City",
+      "Academy Of Finance"
+     ],
+     "inProfind": true,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Moayedi, Hossien",
+   "inst": "Duy Tan University",
+   "field": "Engineering",
+   "subfield": "Geological & Geomatics Engineering",
+   "rank": 82266,
+   "np": 313,
+   "firstyr": 2009,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5080655046",
+     "name": "Hossein Moayedi",
+     "works": 198,
+     "units": [
+      "Trường Đại học Duy Tân"
+     ],
+     "firstYear": 2009,
+     "citations": 14442,
+     "inProfind": true,
+     "rank": 28
+    },
+    {
+     "id": "A5010417006",
+     "name": "Moayedi Hossien",
+     "works": 1,
+     "units": [
+      "Kermanshah University of Technology"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Tuan, Nguyenhuy",
+   "inst": "Banking University of Ho Chi Minh City",
+   "field": "Mathematics & Statistics",
+   "subfield": "General Mathematics",
+   "rank": 179160,
+   "np": 198,
+   "firstyr": 2006,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5046033495",
+     "name": "Nguyen Huy Tuan",
+     "works": 214,
+     "units": [
+      "Trường Đại học Ngân hàng Thành phố Hồ Chí Minh",
+      "Trường Đại học Văn Lang",
+      "Đại học Quốc gia TP. Hồ Chí Minh"
+     ],
+     "firstYear": 2007,
+     "citations": 3761,
+     "inProfind": true,
+     "rank": 35
+    },
+    {
+     "id": "A5088233362",
+     "name": "Tuan Huy Nguyen",
+     "works": 62,
+     "units": [
+      "Trường Đại học Y khoa Phạm Ngọc Thạch"
+     ],
+     "firstYear": 1993,
+     "citations": 2547,
+     "inProfind": true,
+     "rank": 1309
+    }
+   ]
+  },
+  {
+   "name": "Vu, Danh C.",
+   "inst": "Thu Dau Mot University",
+   "field": "Chemistry",
+   "subfield": "Medicinal & Biomolecular Chemistry",
+   "rank": 384603,
+   "np": 63,
+   "firstyr": 2015,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5022245617",
+     "name": "Danh Cong Vu",
+     "works": 68,
+     "units": [
+      "University of Pittsburgh at Titusville",
+      "University of Pittsburgh at Greensburg"
+     ],
+     "inProfind": false,
+     "rank": null
+    },
+    {
+     "id": "A5149979086",
+     "name": "Danh C. Vu",
+     "works": 4,
+     "units": [],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Walker, Timothy M.",
+   "inst": "Oxford University Clinical Research Unit",
+   "field": "Biomedical Research",
+   "subfield": "Microbiology",
+   "rank": 195158,
+   "np": 101,
+   "firstyr": 2009,
+   "lastyr": 2026,
+   "topCntry": "GBR",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5046626888",
+     "name": "A Sarah Walker",
+     "works": 334,
+     "units": [
+      "University of Oxford",
+      "Oxford University Clinical Research Unit"
+     ],
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5136876413",
+     "name": "Timothy Walker",
+     "works": 2,
+     "units": [
+      "University of Oxford",
+      "Oxford University Clinical Research Unit"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Abdolrasol, Maher",
+   "inst": "Duy Tan University",
+   "field": "Enabling & Strategic Technologies",
+   "subfield": "Energy",
+   "rank": 128998,
+   "np": 49,
+   "firstyr": 2009,
+   "lastyr": 2026,
+   "topCntry": "MYS",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5037819210",
+     "name": "Maher G. M. Abdolrasol",
+     "works": 53,
+     "units": [
+      "Duy Tan University"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "An, Nguyenba",
+   "inst": "Vietnamese Academy of Science and Technology Institute of Physics and Electronics",
+   "field": "Physics & Astronomy",
+   "subfield": "General Physics",
+   "rank": 157111,
+   "np": 111,
+   "firstyr": 1988,
+   "lastyr": 2024,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5060070534",
+     "name": "Nguyen Ba An",
+     "works": 196,
+     "units": [
+      "Trường Đại học Thăng Long"
+     ],
+     "firstYear": 1979,
+     "citations": 4141,
+     "inProfind": true,
+     "rank": 361
+    }
+   ]
+  },
+  {
+   "name": "Baird, John Kevin",
+   "inst": "Oxford University Clinical Research Unit",
+   "field": "Clinical Medicine",
+   "subfield": "Tropical Medicine",
+   "rank": 11759,
+   "np": 296,
+   "firstyr": 1984,
+   "lastyr": 2026,
+   "topCntry": "GBR",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5076750976",
+     "name": "John Kevin Baird",
+     "works": 170,
+     "units": [
+      "University of Indonesia",
+      "University of Oxford",
+      "Oxford University Clinical Research Unit Indonesia"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Carrique-Mas, Juan J.",
+   "inst": "Food and Agriculture Organization of the United Nations (FAO)",
+   "field": "Agriculture, Fisheries & Forestry",
+   "subfield": "Veterinary Sciences",
+   "rank": 298390,
+   "np": 127,
+   "firstyr": 2000,
+   "lastyr": 2025,
+   "topCntry": "GBR",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5083649958",
+     "name": "Juan J. Carrique-Mas",
+     "works": 148,
+     "units": [
+      "Food and Agriculture Organization of the United Nations"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Dang, Lienminh",
+   "inst": "Duy Tan University",
+   "field": "Information & Communication Technologies",
+   "subfield": "Artificial Intelligence & Image Processing",
+   "rank": 305658,
+   "np": 82,
+   "firstyr": 2016,
+   "lastyr": 2026,
+   "topCntry": "KOR",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5113850369",
+     "name": "Dang Lien Minh",
+     "works": 4,
+     "units": [
+      "Trường Đại học Kiến trúc Thành phố Hồ Chí Minh"
+     ],
+     "firstYear": 2018,
+     "citations": 1253,
+     "inProfind": true,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Dang, Tranngoc",
+   "inst": "University of Medicine and Pharmacy at HCMC",
+   "field": "Clinical Medicine",
+   "subfield": "Toxicology",
+   "rank": 316005,
+   "np": 105,
+   "firstyr": 2014,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5025952021",
+     "name": "Trần Ngọc Đăng",
+     "works": 128,
+     "units": [
+      "Đại học Y Dược Thành phố Hồ Chí Minh"
+     ],
+     "firstYear": 2010,
+     "citations": 8856,
+     "inProfind": true,
+     "rank": 648
+    }
+   ]
+  },
+  {
+   "name": "Doan, Dinhquan",
+   "inst": "Hung Yen University of Technology and Education",
+   "field": "Physics & Astronomy",
+   "subfield": "Applied Physics",
+   "rank": 68585,
+   "np": 38,
+   "firstyr": 2019,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5025508752",
+     "name": "Dinh-Quan Doan",
+     "works": 38,
+     "units": [
+      "Trường Đại học Sư phạm Kỹ thuật Hưng Yên"
+     ],
+     "firstYear": 2021,
+     "citations": 1151,
+     "inProfind": true,
+     "rank": 232
+    }
+   ]
+  },
+  {
+   "name": "Mondal, Subhra Rani",
+   "inst": "Duy Tan University",
+   "field": "Information & Communication Technologies",
+   "subfield": "Energy",
+   "rank": 97221,
+   "np": 49,
+   "firstyr": 2017,
+   "lastyr": 2025,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5015027626",
+     "name": "Subhra R. Mondal",
+     "works": 57,
+     "units": [
+      "Duy Tan University"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Nogami, Massayuki",
+   "inst": "Hanoi University of Science and Technology",
+   "field": "Enabling & Strategic Technologies",
+   "subfield": "Materials",
+   "rank": 215906,
+   "np": 182,
+   "firstyr": 2006,
+   "lastyr": 2024,
+   "topCntry": "JPN",
+   "scope": "career",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5009838353",
+     "name": "Masayuki Nogami",
+     "works": 641,
+     "units": [
+      "Nagoya Institute of Technology"
+     ],
+     "inProfind": false,
+     "rank": null
+    }
+   ]
+  },
+  {
+   "name": "Thong, Duongviet",
+   "inst": "National Economics University",
+   "field": "Mathematics & Statistics",
+   "subfield": "Numerical & Computational Mathematics",
+   "rank": 87872,
+   "np": 93,
+   "firstyr": 2011,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5006593053",
+     "name": "Duong Viet Thong",
+     "works": 58,
+     "units": [
+      "Đại học Kinh tế Quốc dân"
+     ],
+     "firstYear": 2011,
+     "citations": 2553,
+     "inProfind": true,
+     "rank": 313
+    }
+   ]
+  },
+  {
+   "name": "Tu, Tranminh",
+   "inst": "Hanoi University of Civil Engineering",
+   "field": "Engineering",
+   "subfield": "Mechanical Engineering & Transports",
+   "rank": 351272,
+   "np": 62,
+   "firstyr": 2010,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5035735962",
+     "name": "Trần Minh Tú",
+     "works": 96,
+     "units": [
+      "Trường Đại học Xây dựng Hà Nội"
+     ],
+     "firstYear": 2010,
+     "citations": 1709,
+     "inProfind": true,
+     "rank": 776
+    }
+   ]
+  },
+  {
+   "name": "Cong, Phamhong",
+   "inst": "Vietnam Academy of Science and Technology",
+   "field": "Engineering",
+   "subfield": "Mechanical Engineering & Transports",
+   "rank": 234114,
+   "np": 37,
+   "firstyr": 2013,
+   "lastyr": 2025,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": []
+  },
+  {
+   "name": "El-Ghaoui, Laurent E.I.",
+   "inst": "VinUniversity",
+   "field": "Engineering",
+   "subfield": "Industrial Engineering & Automation",
+   "rank": 39168,
+   "np": 151,
+   "firstyr": 1990,
+   "lastyr": 2026,
+   "topCntry": "USA",
+   "scope": "career",
+   "dup": false,
+   "cands": []
+  },
+  {
+   "name": "Ghalambaz, Mohammad G.",
+   "inst": "Ton-Duc-Thang University",
+   "field": "Engineering",
+   "subfield": "Mechanical Engineering & Transports",
+   "rank": 156015,
+   "np": 248,
+   "firstyr": 2011,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "career",
+   "dup": false,
+   "cands": []
+  },
+  {
+   "name": "Le-Minh, Hoangle",
+   "inst": "Đại học Mở Thành phố Hồ Chí Minh",
+   "field": "Engineering",
+   "subfield": "Mechanical Engineering & Transports",
+   "rank": 195377,
+   "np": 34,
+   "firstyr": 2021,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": []
+  },
+  {
+   "name": "Lefeuvre, Pierre F.",
+   "inst": "Can Tho University",
+   "field": "Biomedical Research",
+   "subfield": "Virology",
+   "rank": 378975,
+   "np": 128,
+   "firstyr": 2006,
+   "lastyr": 2026,
+   "topCntry": "FRA",
+   "scope": "y2025",
+   "dup": false,
+   "cands": []
+  }
+ ]
+}
