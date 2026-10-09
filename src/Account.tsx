@@ -98,7 +98,7 @@ function Dashboard({ user, tab }: { user: User; tab: string }) {
     <article className="dash">
       <header className="dash-head">
         <div className="av" aria-hidden="true">{initials(user.name || user.email)}</div>
-        <div className="dh-main"><h1>{hello}</h1><p className="meta">{user.email} · {t("memberSince", { d: ago(user.createdAt, lang) })}</p><StarStrip user={user} verified={mine?.length ?? 0} saved={favs.size + searches.length} />
+        <div className="dh-main"><h1>{hello}</h1><p className="meta">{user.email} · {t("memberSince", { d: ago(user.createdAt, lang) })}</p><StarStrip user={user} mine={mine} saved={favs.size + searches.length} />
           <div className="pct" role="img" aria-label={t("pDone", { n: user.profilePct })}><i><u style={{ width: `${user.profilePct}%` }} /></i><span>{t("pDone", { n: user.profilePct })}</span></div></div>
         <div className="dh-act">{user.isAdmin && <a className="btn-admin" href="#/quan-tri"><Icon n="grid" size={18} />Quản trị</a>}<button className="ghost light" onClick={() => void logout().then(() => { location.hash = "#/"; })}><Icon n="logout" size={16} />{t("logout")}</button></div>
       </header>
