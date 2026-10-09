@@ -21,6 +21,7 @@ const STOPI = new Set(["university", "of", "and", "the", "institute", "national"
 const itoks = (s) => new Set(fold(s).split(/[^a-z]+/).filter((x) => x.length > 2 && !STOPI.has(x)));
 const T = [...JSON.parse(readFileSync("data/top2/top2-vn-career-2025.json", "utf8")).authors, ...JSON.parse(readFileSync("data/top2/top2-vn-singleyr-2025.json", "utf8")).authors];
 const matched = new Set(Object.values(JSON.parse(readFileSync("data/top2/matches.json", "utf8"))).map((t) => t.name));
+const REJ = existsSync("data/top2/find-reject.json") ? JSON.parse(readFileSync("data/top2/find-reject.json", "utf8")) : {};
 const rev = T.filter((t) => !matched.has(t.name)).map((t) => ({ name: t.name, inst: t.inst })).filter((r, i, a) => a.findIndex((x) => x.name === r.name) === i);
 const OV = existsSync("data/top2/overrides.json") ? JSON.parse(readFileSync("data/top2/overrides.json", "utf8")) : {};
 const get = async (u) => { for (let t = 0; t < 5; t++) { const r = await fetch(u + `&mailto=${encodeURIComponent(mailto)}&api_key=${KEY}`); if (r.ok) return r.json(); if (r.status === 429 || r.status >= 500) await new Promise((s) => setTimeout(s, 2000 * 2 ** t)); else throw new Error(String(r.status)); } throw new Error("retry"); };
@@ -35,7 +36,7 @@ for (const r of rev) {
     const np = t.np ?? 0, wanted = itoks(t.inst ?? "");
     const instHit = (a) => (a.last_known_institutions ?? []).some((i) => [...itoks(i.display_name ?? "")].some((x) => wanted.has(x)));
     if (new Set(T.filter((x) => x.name === r.name).map((x) => x.inst)).size > 1) { report.push({ name: r.name, inst: r.inst, np, why: "tên trùng nhau trong danh sách Top 2% (nhiều người)" }); continue; }
-    let c = j.results.filter((a) => nameOk(r.name, a.display_name) && (exact(r.name, a.display_name) || instHit(a)) && (a.last_known_institutions ?? []).some((i) => i.country_code === "VN") && a.works_count >= 0.4 * np && a.works_count <= 4 * np);
+    let c = j.results.filter((a) => !(REJ[r.name] ?? []).includes(a.id.replace("https://openalex.org/", "")) && nameOk(r.name, a.display_name) && (exact(r.name, a.display_name) || instHit(a)) && (a.last_known_institutions ?? []).some((i) => i.country_code === "VN") && a.works_count >= 0.4 * np && a.works_count <= 4 * np);
     if (c.length > 1) { const withInst = c.filter(instHit); if (withInst.length === 1) c = withInst; }
     if (c.length === 1) found[r.name] = { oaId: c[0].id.replace("https://openalex.org/", ""), display: c[0].display_name, works: c[0].works_count, np: t.np, inst: t.inst };
     else report.push({ name: r.name, inst: r.inst, np: t.np, why: c.length ? "nhiều ứng viên" : "không có ứng viên đạt", cands: j.results.slice(0, 5).map((a) => ({ id: a.id, name: a.display_name, works: a.works_count, inst: (a.last_known_institutions ?? []).map((i) => i.display_name).join("; ") })) });

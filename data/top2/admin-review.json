@@ -131,7 +131,7 @@
      "firstYear": 1981,
      "citations": 467,
      "inProfind": true,
-     "rank": 1843
+     "rank": 1842
     },
     {
      "id": "A5065021757",
@@ -1349,7 +1349,7 @@
      "firstYear": 2016,
      "citations": 267,
      "inProfind": true,
-     "rank": 1648
+     "rank": 1647
     },
     {
      "id": "A5003720656",
@@ -1690,7 +1690,7 @@
       "Quy Nhon University"
      ],
      "inProfind": true,
-     "rank": 1697
+     "rank": 1696
     },
     {
      "id": "A5101483284",
@@ -1885,7 +1885,7 @@
       "Vietnam National University of Agriculture"
      ],
      "inProfind": true,
-     "rank": 1825
+     "rank": 1824
     },
     {
      "id": "A5017444157",
@@ -2280,7 +2280,7 @@
       "National Economics University"
      ],
      "inProfind": true,
-     "rank": 1918
+     "rank": 1917
     },
     {
      "id": "A5124893580",
@@ -2315,6 +2315,84 @@
    ]
   },
   {
+   "name": "Nguyen, Long Hoang",
+   "inst": "Ton-Duc-Thang University",
+   "field": "Biomedical Research",
+   "subfield": "Toxicology",
+   "rank": 148653,
+   "np": 162,
+   "firstyr": 2015,
+   "lastyr": 2026,
+   "topCntry": "VNM",
+   "scope": "y2025",
+   "dup": false,
+   "cands": [
+    {
+     "id": "A5060213605",
+     "name": "Nguyễn Hoàng Long",
+     "works": 34,
+     "units": [
+      "Trường Đại học Quy Nhơn"
+     ],
+     "firstYear": 1981,
+     "citations": 467,
+     "inProfind": true,
+     "rank": 1842
+    },
+    {
+     "id": "A5065021757",
+     "name": "Hoàng Long Nguyễn",
+     "works": 61,
+     "units": [
+      "Trường Đại học Công nghệ Giao thông Vận tải"
+     ],
+     "firstYear": 2007,
+     "citations": 435,
+     "inProfind": true,
+     "rank": null
+    },
+    {
+     "id": "A5104086735",
+     "name": "Nguyễn Hoàng Long",
+     "works": 53,
+     "units": [
+      "Trường Đại học VinUni",
+      "Trường Đại học Công nghệ Giao thông Vận tải",
+      "Trường Đại học Tôn Đức Thắng"
+     ],
+     "firstYear": 2009,
+     "citations": 69,
+     "inProfind": true,
+     "rank": 3169
+    },
+    {
+     "id": "A5039222358",
+     "name": "Hoang-Long Nguyen",
+     "works": 19,
+     "units": [
+      "Trường Đại học Công nghệ Giao thông Vận tải",
+      "Trường Đại học Hồng Đức"
+     ],
+     "firstYear": 2021,
+     "citations": 287,
+     "inProfind": true,
+     "rank": 4642
+    },
+    {
+     "id": "A5057530879",
+     "name": "Long Hoang Nguyen",
+     "works": 31,
+     "units": [
+      "Trường Đại học Tôn Đức Thắng"
+     ],
+     "firstYear": 2016,
+     "citations": 6326,
+     "inProfind": true,
+     "rank": null
+    }
+   ]
+  },
+  {
    "name": "Nguyen, Quang Khai",
    "inst": "Đại học Mở Thành phố Hồ Chí Minh",
    "field": "Economics & Business",
@@ -2335,7 +2413,7 @@
       "Ho Chi Minh City Open University"
      ],
      "inProfind": true,
-     "rank": 68
+     "rank": 69
     },
     {
      "id": "A5006287655",
@@ -2566,7 +2644,7 @@
      "firstYear": 2012,
      "citations": 701,
      "inProfind": true,
-     "rank": 1794
+     "rank": 1793
     },
     {
      "id": "A5101918597",
@@ -2684,7 +2762,7 @@
       "HUTECH University"
      ],
      "inProfind": true,
-     "rank": 91
+     "rank": 92
     },
     {
      "id": "A5004095167",
@@ -2878,7 +2956,7 @@
      "firstYear": 2017,
      "citations": 368,
      "inProfind": true,
-     "rank": 1700
+     "rank": 1699
     },
     {
      "id": "A5002646790",

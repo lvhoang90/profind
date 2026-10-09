@@ -765,7 +765,7 @@
   "scope": "career",
   "y25": true
  },
- "A5101467256": {
+ "A5107501208": {
   "rank": 250760,
   "rankNs": 237201,
   "field": "Clinical Medicine",
@@ -1857,19 +1857,6 @@
   "inNs": true,
   "topCntry": "VNM",
   "topShare": 0.9639,
-  "scope": "y2025"
- },
- "A5065021757": {
-  "rank": 148653,
-  "rankNs": 134404,
-  "field": "Biomedical Research",
-  "subfield": "Toxicology",
-  "name": "Nguyen, Long Hoang",
-  "inst": "Ton-Duc-Thang University",
-  "selfPct": 0.0419,
-  "inNs": true,
-  "topCntry": "VNM",
-  "topShare": 0.7756,
   "scope": "y2025"
  },
  "A5022549493": {

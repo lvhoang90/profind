@@ -1345,6 +1345,56 @@
   "why": "không có hồ sơ cùng tên trong ProFind"
  },
  {
+  "name": "Nguyen, Long Hoang",
+  "inst": "Ton-Duc-Thang University",
+  "why": "nhiều hồ sơ khớp",
+  "candidates": [
+   {
+    "id": "A5060213605",
+    "name": "Nguyễn Hoàng Long",
+    "inst": [
+     "Quy Nhon University"
+    ],
+    "works": 34
+   },
+   {
+    "id": "A5065021757",
+    "name": "Hoàng Long Nguyễn",
+    "inst": [
+     "University of Transport Technology"
+    ],
+    "works": 61
+   },
+   {
+    "id": "A5104086735",
+    "name": "Nguyễn Hoàng Long",
+    "inst": [
+     "VinUniversity",
+     "University of Transport Technology",
+     "Ton Duc Thang University"
+    ],
+    "works": 53
+   },
+   {
+    "id": "A5039222358",
+    "name": "Hoang-Long Nguyen",
+    "inst": [
+     "University of Transport Technology",
+     "Hong Duc University"
+    ],
+    "works": 19
+   },
+   {
+    "id": "A5057530879",
+    "name": "Long Hoang Nguyen",
+    "inst": [
+     "Ton Duc Thang University"
+    ],
+    "works": 31
+   }
+  ]
+ },
+ {
   "name": "Vuong, Lan Ngoc",
   "inst": "University of Medicine and Pharmacy at HCMC",
   "why": "không có hồ sơ cùng tên trong ProFind"
