@@ -3,7 +3,9 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Icon, type IconName } from "./icons";
 import { useAccount, api } from "./accountStore";
 
-const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["noi-dung", "Nội dung", "book"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["nghi-gop", "Nghi gộp nhiều người", "check"], ["top2", "Top 2% chưa gắn", "check"], ["don-vi-tg", "Đơn vị tác giả", "building"]];
+const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["noi-dung", "Nội dung", "book"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["nghi-gop", "Nghi gộp nhiều người", "check"], ["top2", "Top 2% chưa gắn", "check"], ["don-vi-tg", "Đơn vị tác giả", "building"]];
+/** Nhóm điều hướng: hàng trên là nhóm, hàng dưới là mục trong nhóm đang chọn (đường dẫn cũ vẫn dùng được). */
+const GROUPS: [string, IconName, string[]][] = [["Tổng quan", "grid", [""]], ["Phân tích", "chart", ["truy-cap", "noi-dung", "he-sinh-thai"]], ["Người dùng", "users", ["nguoi-dung"]], ["Xác thực", "check", ["xac-thuc", "thu"]], ["Rà soát dữ liệu", "scroll", ["gop", "nghi-gop", "top2", "don-vi-tg"]]];
 const n0 = (n: number) => new Intl.NumberFormat("vi-VN").format(Math.round(n));
 const pct = (a: number, b: number) => (b > 0 ? `${Math.round((a / b) * 100)}%` : "–");
 const delta = (a: number, b: number) => (b > 0 ? `${a >= b ? "▲" : "▼"} ${Math.abs(Math.round(((a - b) / b) * 100))}% so với 7 ngày trước` : a > 0 ? "mới có dữ liệu" : "");
@@ -33,7 +35,8 @@ export function AdminPage({ tab }: { tab: string }) {
   return (
     <article className="dash adm-page">
       <header className="dash-head"><div className="av" aria-hidden="true"><Icon n="grid" size={36} /></div><div className="dh-main"><h1>Quản trị ProFind</h1><p className="meta">{user.email} · số liệu theo giờ Việt Nam, khoảng 14 ngày gần nhất</p></div><div className="dh-act"><a className="ghost-link light" href="#/tai-khoan">← Không gian của tôi</a></div></header>
-      <nav className="tabs adm-tabs" aria-label="Quản trị">{TABS.map(([k, l, ic]) => <a key={k} href={`#/quan-tri${k ? "/" + k : ""}`} aria-current={cur === k ? "page" : undefined}><Icon n={ic} size={16} />{l}</a>)}</nav>
+      <nav className="tabs adm-tabs" aria-label="Quản trị">{GROUPS.map(([l, ic, keys]) => <a key={l} href={`#/quan-tri${keys[0] ? "/" + keys[0] : ""}`} aria-current={keys.includes(cur) ? "page" : undefined}><Icon n={ic} size={16} />{l}</a>)}</nav>
+      {(() => { const g = GROUPS.find(([, , keys]) => keys.includes(cur)); return g && g[2].length > 1 ? <nav className="subtabs" aria-label={g[0]}>{g[2].map((k) => <a key={k} href={`#/quan-tri/${k}`} aria-current={cur === k ? "page" : undefined}>{TABS.find((x) => x[0] === k)![1]}</a>)}</nav> : null; })()}
       {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}{cur === "nghi-gop" && <MergeRisk />}{cur === "top2" && <Top2Review />}{cur === "don-vi-tg" && <AuthorUnits />}
     </article>
   );
@@ -41,24 +44,21 @@ export function AdminPage({ tab }: { tab: string }) {
 
 function Summary() {
   const { d, err } = useGet<any>("admin-summary");
+  const cl = useGet<any>("admin-claims").d, t2 = useGet<{ map: Record<string, string>; items: { name: string }[] }>("admin-t2").d, mr = useGet<{ map: Record<string, string>; profiles: { id: string }[] }>("admin-mrisk").d;
   if (err) return <p className="banner demo">{err}</p>; if (!d) return <p className="empty">Đang tải…</p>;
-  const rg = Object.entries(d.byReason as Record<string, number>).map(([name, n]) => ({ name: ({ reg: "Nút đăng ký", banner: "Lời mời", fav: "Khi lưu tác giả", ss: "Khi lưu tìm kiếm", csv: "Khi tải CSV", view: "Khi xem hồ sơ", eco: "Từ hệ sinh thái" } as any)[name] || name, n }));
+  const pending = cl ? (cl.claims as any[]).filter((c) => c.status === "review" || c.status === "info").length : null;
+  const queue: [string, number | null, string, string][] = [["Yêu cầu xác thực chờ duyệt", pending, "#/quan-tri/xac-thuc", "Duyệt hoặc từ chối"], ["Người Top 2% chưa gắn hồ sơ", t2 ? t2.items.filter((i) => !t2.map[i.name]).length : null, "#/quan-tri/top2", "Chọn đúng hồ sơ"], ["Hồ sơ nghi gộp nhiều người", mr ? mr.profiles.filter((p) => !mr.map[p.id]).length : null, "#/quan-tri/nghi-gop", "Xác nhận một người hay nhiều"], ["Xác thực sắp hết hạn (60 ngày)", cl ? cl.expiring : null, "#/quan-tri/xac-thuc", "Gia hạn"]];
   return (
     <>
-      <div className="kpis">
+      <section className="queue" aria-label="Việc cần làm"><h2>Việc cần làm</h2>
+        <ul>{queue.map(([l, n, h, a]) => <li key={l} className={n ? "has" : ""}><a href={h}><b>{n === null ? "…" : n}</b><span>{l}</span><em>{n ? a : "Không còn việc"}</em></a></li>)}</ul></section>
+      <div className="kpis four">
         <Kpi icon="users" label="Người dùng đã đăng ký" value={n0(d.users)} sub={`${n0(d.new7)} mới trong 7 ngày · ${delta(d.new7, d.newPrev7)}`} />
         <Kpi icon="clock" label="Hoạt động 7 ngày" value={n0(d.active7)} sub={pct(d.active7, d.users) + " tổng số người dùng"} />
+        <Kpi icon="check" label="Hồ sơ khoa học đã xác thực" value={cl ? n0((cl.verified as any[]).length) : "…"} sub={cl ? `${n0(pending ?? 0)} yêu cầu đang chờ` : ""} />
         <Kpi icon="eye" label="Quay lại (từ 2 ngày)" value={pct(d.returning, d.users)} sub={`${n0(d.returning)} người`} />
-        <Kpi icon="star" label="Đã lưu tác giả" value={n0(d.savers)} sub={`${pct(d.savers, d.users)} người dùng · ${n0(d.favTotal)} lượt lưu`} />
-        <Kpi icon="user" label="Hồ sơ trung bình" value={`${d.profile.avg}%`} sub={`${d.profile.full} người khai đủ`} />
       </div>
       <div className="insights"><Bars data={d.signups} title="Đăng ký mới theo ngày" /><Bars data={d.activeDaily} title="Người dùng hoạt động theo ngày" color="dom" /></div>
-      <div className="insights">
-        <section className="card"><h2>Giữ chân</h2><ul className="hbars wide"><li><span>Sau 1 ngày</span><i className="hb"><u className="c1" style={{ width: pct(d.ret1.back, d.ret1.n) }} /></i><b>{pct(d.ret1.back, d.ret1.n)}</b></li><li><span>Sau 7 ngày</span><i className="hb"><u className="c1" style={{ width: pct(d.ret7.back, d.ret7.n) }} /></i><b>{pct(d.ret7.back, d.ret7.n)}</b></li></ul><p className="meta">Tỷ lệ người đã đăng ký ít nhất 1 hoặc 7 ngày và đã quay lại dùng ở ngày khác.</p></section>
-        <HList title="Đăng ký từ đâu" rows={rg} />
-      </div>
-      <div className="insights"><HList title="Nghề nghiệp" rows={d.byJob} /><HList title="Đơn vị công tác" rows={d.byOrg} /></div>
-      <section className="card"><h2>Người dùng tích cực nhất</h2><table className="adm-t"><thead><tr><th>Email</th><th>Họ tên</th><th className="num">Ngày dùng</th><th className="num">Đã lưu</th><th className="num">Sang ISA</th></tr></thead><tbody>{d.top.map((u: any) => <tr key={u.email}><td>{u.email}</td><td>{u.name}</td><td className="num">{u.counts.days}</td><td className="num">{u.favs}</td><td className="num">{u.eco}</td></tr>)}</tbody></table></section>
       {!d.persistent && <p className="banner demo">Đang dùng kho tạm trong bộ nhớ: dữ liệu mất khi máy chủ khởi động lại. Cấu hình Upstash Redis (KV_REST_API_URL, KV_REST_API_TOKEN) để lưu bền.</p>}
     </>
   );
@@ -118,19 +118,57 @@ function Eco() {
   );
 }
 
+/** Mã công trình có dạng "<mã tác giả>-W…": mở trang tác giả trong ProFind; không có mã tác giả thì mở OpenAlex. */
+const workHref = (k: string) => { const m = /^(A\d+)-(W\d+)$/.exec(k); return m ? `#/tac-gia/${m[1]}` : /^W\d+$/.test(k) ? `https://openalex.org/${k}` : undefined; };
 function Content() {
   const { d, err } = useGet<any>("admin-content");
   if (err) return <p className="banner demo">{err}</p>; if (!d) return <p className="empty">Đang tải…</p>;
   const a = (rows: any[], pre: string) => rows.map((r) => ({ name: r.name, n: r.n, href: `#/tac-gia/${pre ? r.k.slice(pre.length) : r.k}` }));
   return <><div className="insights"><HList title="Tác giả được xem nhiều nhất" rows={a(d.authors, "")} /><HList title="Tác giả được lưu nhiều nhất" rows={d.saved.filter((r: any) => r.k.startsWith("a|")).map((r: any) => ({ name: r.name, n: r.n, href: `#/tac-gia/${r.k.slice(2)}` }))} /></div>
-    <div className="insights"><HList title="Từ khóa tìm kiếm phổ biến" rows={d.queries} /><HList title="Công trình được mở nhiều nhất" rows={d.works.map((r: any) => ({ name: r.name, n: r.n }))} /></div>
-    <div className="insights"><HList title="Công trình được lưu nhiều nhất" rows={d.saved.filter((r: any) => r.k.startsWith("w|")).map((r: any) => ({ name: r.name, n: r.n }))} /></div>
+    <div className="insights"><HList title="Từ khóa tìm kiếm phổ biến" rows={d.queries} /><HList title="Công trình được mở nhiều nhất" rows={d.works.map((r: any) => ({ name: r.name, n: r.n, href: workHref(r.k) }))} /></div>
+    <div className="insights"><HList title="Công trình được lưu nhiều nhất" rows={d.saved.filter((r: any) => r.k.startsWith("w|")).map((r: any) => ({ name: r.name, n: r.n, href: workHref(r.k.slice(2)) }))} /></div>
     <p className="meta">Từ khóa tìm kiếm được gộp chung, không gắn với người dùng hay thiết bị. Chỉ ghi từ khóa từ 3 ký tự trở lên.</p></>;
 }
 
 const SEGS: [string, string][] = [["all", "Tất cả"], ["saver", "Đã lưu tác giả"], ["noeco", "Chưa sang ISA"], ["edufind", "Đã sang EduFind"], ["ami", "Đã sang Ami"], ["may", "Đã sang Mây"], ["noprofile", "Hồ sơ dưới 40%"], ["full", "Hồ sơ đủ"], ["oneday", "Mới dùng 1 ngày"]];
+const ini = (n: string) => { const w = n.replace(/[^\p{L}\s-]/gu, " ").split(/[\s-]+/).filter(Boolean); return ((w[0]?.[0] ?? "") + (w.length > 1 ? w[w.length - 1][0] : "")).toUpperCase() || "?"; };
+const dm = (iso: unknown) => { const x = String(iso ?? "").slice(0, 10).split("-"); return x.length === 3 ? `${x[2]}/${x[1]}/${x[0]}` : "—"; };
+type UD = { user: any; saved: { k: string; t?: string; at?: number | string }[]; searches: { k: string; q?: string; d?: string; ty?: string; i?: string; sc?: string; at?: string }[]; viewed: { k: string; t?: string; at?: number }[]; verified: { authorId: string; name: string; since: number; until: number; orcid?: string }[]; claims: { id: string; authorId: string; authorName: string; kind: string; status: string; createdAt: number }[] };
+const REASON: Record<string, string> = { reg: "Nút đăng ký", banner: "Lời mời", fav: "Khi lưu tác giả", ss: "Khi lưu tìm kiếm", csv: "Khi tải CSV", view: "Khi xem hồ sơ", eco: "Từ hệ sinh thái" };
+/** Ngăn chi tiết một người dùng (chỉ quản trị viên): thông tin đăng ký, hoạt động, mục đã lưu, tìm kiếm, đã xem, xác thực. */
+function UserDetail({ email, onClose }: { email: string; onClose: () => void }) {
+  const { d, err } = useGet<UD>("admin-user", `&email=${encodeURIComponent(email)}`);
+  useEffect(() => { const k = (e: KeyboardEvent) => e.key === "Escape" && onClose(); document.addEventListener("keydown", k); return () => document.removeEventListener("keydown", k); }, [onClose]);
+  const u = d?.user, row = (l: string, v: React.ReactNode) => <div className="udr"><dt>{l}</dt><dd>{v || <span className="meta">—</span>}</dd></div>;
+  const tm = (ms: unknown) => { const t = new Date(typeof ms === "number" ? ms : String(ms)); return isNaN(+t) ? "—" : t.toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "short" }); };
+  const ref = (k: string, t?: string) => { const [ty, id] = k.split("|"); return ty === "a" && id ? <a href={`#/tac-gia/${id}`} target="_blank" rel="noopener">{t || id}</a> : <span>{t || k}</span>; };
+  return (
+    <div className="ud-back" onClick={onClose}>
+      <aside className="ud" role="dialog" aria-modal="true" aria-label="Chi tiết người dùng" onClick={(e) => e.stopPropagation()}>
+        <header><div><h2>{u?.name || (d ? "(chưa khai tên)" : "Đang tải…")}</h2><p className="meta">{email}</p></div><button className="ghost" onClick={onClose} aria-label="Đóng">✕</button></header>
+        {err ? <p className="banner demo">{err}</p> : !d ? <p className="empty">Đang tải…</p> : <>
+          <dl className="udl">
+            {row("Điện thoại", u.phone)}{row("Nghề nghiệp", u.job)}{row("Đơn vị", u.org)}{row("Địa chỉ", u.address)}
+            {row("Đăng ký", tm(u.createdAt))}{row("Lần cuối", tm(u.lastSeen))}{row("Nguồn đăng ký", [REASON[u.regReason] ?? u.regReason, u.utm].filter(Boolean).join(" · "))}
+            {row("Ngày dùng / Sang ISA", `${u.counts.days} ngày · EduFind ${u.hops.edufind}, Ami ${u.hops.ami}, Mây ${u.hops.may}`)}
+            {row("Hồ sơ khai", `${u.profilePct}%`)}{row("Đồng ý điều khoản", u.consentAt ? tm(u.consentAt) : "")}{row("Nhận thư thông tin", u.noMail ? "Không" : "Có")}{row("Ngôn ngữ", u.lang)}
+          </dl>
+          <h3>Xác thực hồ sơ khoa học ({d.verified.length})</h3>
+          {d.verified.length ? <ul>{d.verified.map((v) => <li key={v.authorId}><a href={`#/tac-gia/${v.authorId}`} target="_blank" rel="noopener">{v.name || v.authorId}</a> · đến {new Date(v.until).toLocaleDateString("vi-VN")}</li>)}</ul> : <p className="meta">Chưa có.</p>}
+          {d.claims.length > 0 && <><h3>Yêu cầu hồ sơ ({d.claims.length})</h3><ul>{d.claims.map((c) => <li key={c.id}>{c.kind === "remove" ? "Gỡ hồ sơ" : c.kind === "hide" ? "Ẩn" : "Xác thực"} · <a href={`#/tac-gia/${c.authorId}`} target="_blank" rel="noopener">{c.authorName || c.authorId}</a> · {ST[c.status] ?? c.status} · {new Date(c.createdAt).toLocaleDateString("vi-VN")}</li>)}</ul></>}
+          <h3>Đã lưu ({d.saved.length})</h3>
+          {d.saved.length ? <ul>{d.saved.map((x) => <li key={x.k}>{ref(x.k, x.t)}</li>)}</ul> : <p className="meta">Chưa lưu mục nào.</p>}
+          <h3>Tìm kiếm đã lưu ({d.searches.length})</h3>
+          {d.searches.length ? <ul>{d.searches.map((x) => <li key={x.k}><b>{x.q || "(trống)"}</b>{[x.d, x.i, x.ty].filter(Boolean).length ? <span className="meta"> · {[x.d, x.i, x.ty].filter(Boolean).join(" · ")}</span> : null}{x.at ? <span className="meta"> · {tm(x.at)}</span> : null}</li>)}</ul> : <p className="meta">Chưa có.</p>}
+          <h3>Đã xem gần đây ({d.viewed.length})</h3>
+          {d.viewed.length ? <ul>{d.viewed.map((x) => <li key={x.k}>{ref(x.k, x.t)}{x.at ? <span className="meta"> · {tm(x.at)}</span> : null}</li>)}</ul> : <p className="meta">Chưa có.</p>}
+        </>}
+      </aside>
+    </div>
+  );
+}
 function Users() {
-  const [q, setQ] = useState(""), [f, setF] = useState("all"), [sort, setSort] = useState("score"), [dir, setDir] = useState("desc"), [page, setPage] = useState(1), [dq, setDq] = useState("");
+  const [sel, setSel] = useState<string | null>(null), [q, setQ] = useState(""), [f, setF] = useState("all"), [sort, setSort] = useState("score"), [dir, setDir] = useState("desc"), [page, setPage] = useState(1), [dq, setDq] = useState("");
   useEffect(() => { const id = setTimeout(() => { setDq(q); setPage(1); }, 300); return () => clearTimeout(id); }, [q]);
   const qs = useMemo(() => `&q=${encodeURIComponent(dq)}&f=${f}&sort=${sort}&dir=${dir}&page=${page}&per=25`, [dq, f, sort, dir, page]);
   const { d, err } = useGet<any>("admin-users", qs);
@@ -141,8 +179,15 @@ function Users() {
         <a className="ghost-link" href={`/api/account?op=admin-csv${qs}`} download><Icon n="download" size={16} />Tải CSV</a></div>
       <div className="seg wrap" role="group" aria-label="Nhóm người dùng">{SEGS.map(([k, l]) => <button key={k} aria-pressed={f === k} onClick={() => { setF(k); setPage(1); }}>{l}{d?.seg ? <em>{d.seg[k] ?? 0}</em> : null}</button>)}</div>
       {err ? <p className="banner demo">{err}</p> : !d ? <p className="empty">Đang tải…</p> : (
-        <div className="table-wrap"><table className="adm-t big"><thead><tr>{th("email", "Email")}{th("name", "Họ tên")}<th>Điện thoại</th>{th("org", "Đơn vị")}{th("createdAt", "Đăng ký")}{th("lastSeen", "Lần cuối")}{th("days", "Ngày dùng", true)}{th("favs", "Đã lưu", true)}{th("eco", "Sang ISA", true)}{th("profile", "Hồ sơ", true)}</tr></thead>
-          <tbody>{d.users.map((u: any) => <tr key={u.email}><td>{u.email}</td><td>{u.name}</td><td>{u.phone}</td><td>{u.org}</td><td>{u.createdAt.slice(0, 10)}</td><td>{String(u.lastSeen).slice(0, 10)}</td><td className="num">{u.counts.days}</td><td className="num">{u.favs}</td><td className="num" title={`EduFind ${u.hops.edufind} · Ami ${u.hops.ami} · Mây ${u.hops.may}`}>{u.eco}</td><td className="num">{u.profilePct}%</td></tr>)}</tbody></table></div>)}
+        <div className="table-wrap"><table className="adm-t users"><thead><tr>{th("name", "Người dùng")}{th("org", "Đơn vị")}<th>Điện thoại</th>{th("createdAt", "Đăng ký")}{th("lastSeen", "Lần cuối")}{th("days", "Ngày dùng", true)}{th("favs", "Đã lưu", true)}{th("eco", "Sang ISA", true)}{th("profile", "Hồ sơ", true)}</tr></thead>
+          <tbody>{d.users.map((u: any) => <tr key={u.email} className="clk" onClick={() => setSel(u.email)}>
+            <td><div className="ucell"><span className="uav" aria-hidden="true">{ini(u.name || u.email)}</span><span className="utxt"><button type="button" className="ulink" onClick={(e) => { e.stopPropagation(); setSel(u.email); }} title="Xem chi tiết"><b title={u.name}>{u.name || "(chưa khai tên)"}</b></button><small title={u.email}>{u.email}</small></span></div></td>
+            <td className="uorg" title={u.org}>{u.org || <span className="meta">—</span>}</td>
+            <td className="nw">{u.phone || <span className="meta">—</span>}</td>
+            <td className="nw">{dm(u.createdAt)}</td><td className="nw">{dm(u.lastSeen)}</td>
+            <td className="num">{u.counts.days}</td><td className="num">{u.favs}</td><td className="num" title={`EduFind ${u.hops.edufind} · Ami ${u.hops.ami} · Mây ${u.hops.may}`}>{u.eco}</td>
+            <td className="num"><span className="upct" title={`${u.profilePct}%`}><i><u style={{ width: `${u.profilePct}%` }} /></i><em>{u.profilePct}%</em></span></td></tr>)}</tbody></table></div>)}
+      {sel && <UserDetail email={sel} onClose={() => setSel(null)} />}
       {d && <div className="pager"><button className="ghost" disabled={page <= 1} onClick={() => setPage(page - 1)}>‹ Trước</button><span className="meta">Trang {d.page}/{d.pages} · {n0(d.total)} người</span><button className="ghost" disabled={page >= d.pages} onClick={() => setPage(page + 1)}>Sau ›</button></div>}
     </>
   );

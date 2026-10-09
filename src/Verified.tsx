@@ -113,7 +113,7 @@ export function AvatarImg({ id, fallback }: { id: string; fallback: ReactNode })
 }
 
 // ---------- Tab "Hồ sơ khoa học" trong không gian tài khoản ----------
-type Mine = { authorId: string; name: string; until: number; hide?: string; xw?: string[]; profile: { disc?: string[]; orcid?: string; scholar?: string; site?: string; bio?: string; email?: string; phone?: string; showContact?: boolean; av?: number | boolean }; works: { doi: string; title: string; year: number; status: string; why: string; oa: string }[] };
+export type Mine = { authorId: string; name: string; until: number; hide?: string; xw?: string[]; profile: { disc?: string[]; orcid?: string; scholar?: string; site?: string; bio?: string; email?: string; phone?: string; showContact?: boolean; av?: number | boolean }; works: { doi: string; title: string; year: number; status: string; why: string; oa: string }[] };
 // Đọc tệp thành data: URL (CSP của trang chỉ cho img-src 'self' data:, không cho blob:), rồi cắt vuông 256 px.
 const shrink = (f: File) => new Promise<string>((res, rej) => {
   const fr = new FileReader();
@@ -126,12 +126,21 @@ const shrink = (f: File) => new Promise<string>((res, rej) => {
   };
   fr.readAsDataURL(f);
 });
-export function ScholarConsole() {
+export function useMine() {
   const [list, setList] = useState<Mine[] | null>(null), [v, setV] = useState(0);
   useEffect(() => { api<{ authors: Mine[] }>("author-mine").then((j) => setList(j.authors)).catch(() => setList([])); }, [v]);
+  return { list, reload: () => setV((x) => x + 1) };
+}
+export function ScholarConsole({ list, reload }: { list: Mine[] | null; reload: () => void }) {
   if (!list) return <p className="empty" role="status">Đang tải…</p>;
-  if (!list.length) return <section className="card"><h2>Hồ sơ khoa học của tôi</h2><p className="meta">Bạn chưa có hồ sơ nào được xác thực. Mở trang hồ sơ của mình trong ProFind™, chọn "Đây là tôi" và gửi yêu cầu bằng email tổ chức.</p></section>;
-  return <>{list.map((m) => <One key={m.authorId} m={m} reload={() => setV((x) => x + 1)} />)}</>;
+  if (!list.length) return (
+    <section className="card sh-empty"><h2>Hồ sơ khoa học của tôi</h2>
+      <p className="meta">Bạn chưa xác thực hồ sơ nào. Nhà khoa học đã xác thực có tick vàng, ảnh đại diện, giới thiệu, liên kết ORCID/Google Scholar và được ProFind hiển thị nổi bật.</p>
+      <ol className="sh-steps"><li>Tìm tên bạn trên ProFind™</li><li>Mở hồ sơ, chọn <b>"Đây là tôi"</b></li><li>Gửi yêu cầu bằng email của trường/viện; thường duyệt trong ít ngày</li></ol>
+      <p><a className="primary" href="#/"><Icon n="search" size={16} />Tìm hồ sơ của tôi</a></p>
+    </section>
+  );
+  return <>{list.map((m) => <One key={m.authorId} m={m} reload={reload} />)}</>;
 }
 type MatchRes = { q: string; have: boolean; hit: { doi: string; title: string; venue: string; year: number; sim: number; name: boolean } | null };
 /** Dán danh sách nhan đề từ Google Scholar (mỗi dòng một bài) -> tra DOI trong Crossref -> tick chọn rồi thêm. */
@@ -168,8 +177,36 @@ function MatchTitles({ authorId, reload }: { authorId: string; reload: () => voi
     </>
   );
 }
+const ini2 = (n: string) => { const w = n.replace(/[^\p{L}\s-]/gu, " ").split(/[\s-]+/).filter(Boolean); return ((w[0]?.[0] ?? "") + (w.length > 1 ? w[w.length - 1][0] : "")).toUpperCase() || "P"; };
+/** Thẻ hồ sơ khoa học của chủ hồ sơ đã xác thực: ảnh bìa, ảnh đại diện, tên, ngành, liên kết học thuật, giới thiệu, chia sẻ (kiểu ORCID, Google Scholar, ResearchGate). */
+function ScholarHero({ m, onEdit }: { m: Mine; onEdit: () => void }) {
+  const p = m.profile, link = `${location.origin}/#/tac-gia/${m.authorId}`, [copied, setCopied] = useState(false);
+  const copy = () => { void navigator.clipboard?.writeText(link).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); }).catch(() => {}); };
+  const share = () => { if (navigator.share) void navigator.share({ title: `${m.name} trên ProFind`, url: link }).catch(() => {}); else copy(); };
+  const orcid = p.orcid ? `https://orcid.org/${p.orcid}` : "";
+  return (
+    <header className="sh">
+      <div className="sh-cover" aria-hidden="true" />
+      <div className="sh-body">
+        <div className="sh-av">{p.av ? <img src={`/api/account?op=avatar&id=${encodeURIComponent(m.authorId)}&v=${p.av}`} alt="" width={112} height={112} /> : <span>{ini2(m.name)}</span>}<i title="Nhà khoa học đã xác thực"><Icon n="check" size={16} /></i></div>
+        <div className="sh-main">
+          <h2><a href={`#/tac-gia/${m.authorId}`}>{m.name}</a></h2>
+          <p className="sh-sub"><VerifiedTick id={m.authorId} /> Nhà khoa học đã xác thực · còn hiệu lực đến {dmy(m.until)}</p>
+          {!!p.disc?.length && <p className="sh-chips">{p.disc.map((k) => <span key={k}>{DISC[k]?.[0] ?? k}</span>)}</p>}
+          {p.bio && <p className="sh-bio">{p.bio}</p>}
+          <p className="sh-links">
+            {orcid && <a href={orcid} target="_blank" rel="noopener"><Icon n="scholar" size={14} />ORCID {p.orcid}</a>}
+            {p.scholar && <a href={p.scholar} target="_blank" rel="noopener"><Icon n="book" size={14} />Google Scholar</a>}
+            {p.site && <a href={p.site} target="_blank" rel="noopener"><Icon n="link" size={14} />Trang cá nhân</a>}
+          </p>
+          <p className="sh-act"><a className="primary" href={`#/tac-gia/${m.authorId}`}><Icon n="eye" size={16} />Xem hồ sơ công khai</a><button type="button" className="ghost" onClick={copy}><Icon n="link" size={16} />{copied ? "Đã sao chép" : "Sao chép liên kết"}</button><button type="button" className="ghost" onClick={share}><Icon n="external" size={16} />Chia sẻ</button><button type="button" className="ghost" onClick={onEdit}><Icon n="user" size={16} />Chỉnh sửa hồ sơ</button></p>
+        </div>
+      </div>
+    </header>
+  );
+}
 function One({ m, reload }: { m: Mine; reload: () => void }) {
-  const [msg, setMsg] = useState(""), [busy, setBusy] = useState(false), p = m.profile;
+  const [msg, setMsg] = useState(""), [busy, setBusy] = useState(false), [edit, setEdit] = useState(false), p = m.profile;
   const run = async (op: string, body: object, ok: string) => { setBusy(true); setMsg(""); try { await api(op, { authorId: m.authorId, ...body }); setMsg(ok); reload(); } catch (e) { setMsg((e as Error).message); } finally { setBusy(false); } };
   const save = (e: FormEvent<HTMLFormElement>) => { e.preventDefault(); const f = new FormData(e.currentTarget); void run("author-save", { orcid: f.get("orcid"), scholar: f.get("scholar"), disc: f.getAll("disc"), site: f.get("site"), bio: f.get("bio"), email: f.get("email"), phone: f.get("phone"), showContact: f.get("showContact") === "on" }, "Đã lưu."); };
   const addDoi = (e: FormEvent<HTMLFormElement>) => { e.preventDefault(); const el = e.currentTarget, f = new FormData(el); void run("author-work-add", { doi: f.get("doi") }, "Đã thêm công trình.").then(() => el.reset()); };
@@ -178,8 +215,8 @@ function One({ m, reload }: { m: Mine; reload: () => void }) {
   const upload = async () => { if (!pend) return; setBusy(true); setAvMsg(""); try { await api("author-avatar", { authorId: m.authorId, image: pend }); setPend(null); setAvMsg("Đã cập nhật ảnh đại diện. Trang hồ sơ công khai có thể mất vài phút để hiện ảnh mới."); reload(); } catch (e) { setAvMsg((e as Error).message); } finally { setBusy(false); } };
   return (
     <section className="card claimbox">
-      <h2><a href={`#/tac-gia/${m.authorId}`}>{m.name}</a> <VerifiedTick id={m.authorId} /></h2>
-      <p className="meta">Xác thực còn hiệu lực đến {dmy(m.until)}. Thông tin bên dưới hiện công khai trên hồ sơ (trừ liên hệ nếu bạn không bật chia sẻ).</p>
+      <ScholarHero m={m} onEdit={() => { setEdit(true); setTimeout(() => document.getElementById(`edit-${m.authorId}`)?.scrollIntoView({ behavior: "smooth", block: "start" }), 50); }} />
+      <details id={`edit-${m.authorId}`} className="sh-edit" open={edit} onToggle={(e) => setEdit(e.currentTarget.open)}><summary>Chỉnh sửa hồ sơ khoa học, quyền riêng tư, ảnh đại diện và công trình</summary>
       <div role="status" aria-live="polite">{msg && <p className="banner"><Icon n="check" />{msg}</p>}</div>
       <form onSubmit={save} className="form">
         <label className="sel"><span>ORCID</span><input name="orcid" defaultValue={p.orcid} maxLength={40} placeholder="0000-0000-0000-0000" /></label>
@@ -221,6 +258,7 @@ function One({ m, reload }: { m: Mine; reload: () => void }) {
       <p className="meta">DOI được đối chiếu với Crossref: tên hoặc ORCID của bạn phải có trong danh sách tác giả, nếu không sẽ chờ quản trị viên duyệt. Công trình tự bổ sung chưa tính vào PRO-SCORE cho tới khi OpenAlex ghi nhận.</p>
       <form onSubmit={addDoi} className="form"><label className="sel"><span>DOI</span><input name="doi" required placeholder="10.1234/abcd" maxLength={220} /></label><p><button className="primary" disabled={busy}>Thêm công trình</button></p></form>
       {m.works.length > 0 && <ul>{m.works.map((w) => <li key={w.doi}><a href={`https://doi.org/${w.doi}`} target="_blank" rel="noopener">{w.title || w.doi}</a>{w.year ? ` · ${w.year}` : ""} · <b>{w.status === "ok" ? "đã hiển thị" : "chờ duyệt"}</b>{w.oa ? " · đã có trong OpenAlex" : ""} <button type="button" onClick={() => void run("author-work-del", { doi: w.doi }, "Đã xóa.")}>Xóa</button></li>)}</ul>}
+      </details>
     </section>
   );
 }

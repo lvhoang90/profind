@@ -2,7 +2,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { evt } from "./analytics";
 
-export interface User { email: string; name: string; phone: string; job: string; org: string; address: string; createdAt: string; lastSeen: string; isAdmin: boolean; profilePct: number; noMail: boolean; hops: { edufind: number; ami: number; may: number }; counts: { visits: number; days: number; login: number; views: number; searches: number } }
+export interface User { email: string; name: string; phone: string; job: string; org: string; address: string; createdAt: string; lastSeen: string; isAdmin: boolean; profilePct: number; noMail: boolean; hops: { edufind: number; ami: number; may: number }; counts: { visits: number; days: number; login: number; views: number; searches: number; streak: number; best: number; invited: number; invitedVerified: number; today: boolean }; ref: string }
 export interface Fav { k: string; t: string; s?: string; sc?: number; rk?: number; u?: string; at: string }
 export interface SavedSearch { k: string; q: string; d: string; ty: string; i: string; sc: "vn" | "all"; label?: string; at: string }
 export interface Viewed { k: string; t: string; s?: string; at: number; n: number; u?: string }
