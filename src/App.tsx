@@ -4,7 +4,7 @@ import { Ctx, DICT, KEY, initialLang, useT, type Key, type Lang } from "./i18n";
 import { dName, fieldName } from "./disciplines";
 import { Icon, type IconName } from "./icons";
 import type { Author, Data, Institution, Work } from "./types";
-import { AccountProvider, useAccount } from "./accountStore";
+import { AccountProvider, useAccount, api } from "./accountStore";
 // Trang tài khoản và quản trị tách thành các tệp nạp riêng: người chỉ tra cứu không tải mã của chúng.
 const AccountPage = lazy(() => import("./Account").then((m) => ({ default: m.AccountPage })));
 const LeaderboardPage = lazy(() => import("./Leaderboard").then((m) => ({ default: m.LeaderboardPage })));
@@ -268,7 +268,17 @@ function List({ d, query }: { d: Data; query: string }) {
     return { honor: vn.filter((a) => a.proRank != null && a.proRank <= 10).sort((x, y) => (x.proRank ?? 99) - (y.proRank ?? 99)), n: vn.length, top2: vn.filter((a) => a.top2).length, fields: [...dc].sort((a, b) => b[1] - a[1]).slice(0, 10), insts: [...ic].sort((a, b) => b[1] - a[1]).slice(0, 10), nInst: ic.size };
   }, [d]);
   const [topWorks, setTopWorks] = useState<{ t: string; y: number; j: string; c: number; a: string; n: string; w: string }[]>([]);
-  useEffect(() => { if (!home || topWorks.length) return; fetch("data/top-works.json").then((r) => r.json()).then((j) => setTopWorks(j.works ?? [])).catch(() => {}); }, [home]); // eslint-disable-line react-hooks/exhaustive-deps
+  const [pool, setPool] = useState<typeof topWorks>([]), [myDisc, setMyDisc] = useState<string[]>([]);
+  useEffect(() => { if (!home || pool.length) return; fetch("data/top-works.json").then((r) => r.json()).then((j) => setPool(j.works ?? [])).catch(() => {}); }, [home]);
+  // Ngành/liên ngành người dùng đã khai ở hồ sơ khoa học (nếu có): công trình nổi bật ưu tiên đúng ngành đó
+  useEffect(() => { if (!user) { setMyDisc([]); return; } let on = true; api<{ authors: { profile: { disc?: string[] } }[] }>("author-mine").then((j) => on && setMyDisc([...new Set(j.authors.flatMap((a) => a.profile.disc ?? []))])).catch(() => {}); return () => { on = false; }; }, [user]);
+  // Bốc ngẫu nhiên mỗi lần mở trang: công trình trên 1000 trích dẫn, ưu tiên trùng ngành đã khai, thiếu thì bổ sung ngẫu nhiên từ kho chung
+  useEffect(() => {
+    if (!pool.length) return;
+    const shuffle = <T,>(a: T[]) => { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+    const hit = myDisc.length ? pool.filter((w) => (w as { f?: string[] }).f?.some((k) => myDisc.includes(k))) : [];
+    setTopWorks([...shuffle(hit), ...shuffle(pool.filter((w) => !hit.includes(w)))].slice(0, 6));
+  }, [pool, myDisc]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { if (!q.trim()) setTab("a"); else if (dq === q && works.forQ === q.trim() && rows.length === 0 && works.total > 0) setTab("w"); }, [q, dq, rows.length, works.total, works.forQ]);
   const quick = (fn: () => void) => () => { fn(); setBrowse(false); };
   const hero = (
