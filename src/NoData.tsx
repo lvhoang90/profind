@@ -34,18 +34,3 @@ export function NoDataHint({ q }: { q: string }) {
     </div>
   );
 }
-export function NoDataList() {
-  const { lang } = useT(); const vi = lang === "vi"; const nd = useNoData(); const [f, setF] = useState("");
-  const rows = useMemo(() => (nd?.rows ?? []).filter((r) => !f.trim() || fold(r.name).includes(fold(f)) || fold(r.en ?? "").includes(fold(f))), [nd, f]);
-  if (!nd) return <p className="meta">{vi ? "Đang tải…" : "Loading…"}</p>;
-  const by: Record<string, number> = {}; for (const r of nd.rows) by[r.why] = (by[r.why] ?? 0) + 1;
-  return (
-    <>
-      <p>{vi ? <>ProFind™ có <b>{nd.withData}</b> trên {nd.total} đơn vị trong danh sách đã có nhà nghiên cứu. <b>{nd.rows.length}</b> đơn vị còn lại <b>chưa có dữ liệu mở</b>: {by["no-record"] ?? 0} đơn vị OpenAlex chưa có bản ghi, {by.empty ?? 0} có bản ghi nhưng chưa có nhà nghiên cứu gắn, {by.candidate ?? 0} đang chờ duyệt, {by.pending ?? 0} chờ nạp.</> : <>ProFind™ has researchers for <b>{nd.withData}</b> of {nd.total} listed units. The other <b>{nd.rows.length}</b> have <b>no open data yet</b>: {by["no-record"] ?? 0} not recorded in OpenAlex, {by.empty ?? 0} recorded but without linked researchers, {by.candidate ?? 0} awaiting review, {by.pending ?? 0} waiting to load.</>}</p>
-      <p>{vi ? "Đây không có nghĩa là đơn vị không có nghiên cứu, chỉ là dữ liệu mở (OpenAlex, ORCID, Crossref) chưa ghi nhận. Nhà khoa học ở các đơn vị này có thể xác thực bằng email tổ chức và thêm công trình theo DOI (chưa tính vào PRO-SCORE cho tới khi OpenAlex ghi nhận). ProFind™ kiểm tra lại định kỳ khi OpenAlex cập nhật." : "This does not mean the unit has no research, only that open sources (OpenAlex, ORCID, Crossref) have not recorded it yet. Researchers at these units can verify with an organisational email and add works by DOI (not counted in PRO-SCORE until OpenAlex records them). ProFind™ re-checks periodically as OpenAlex updates."}</p>
-      <label className="sel"><span>{vi ? "Lọc theo tên đơn vị" : "Filter by unit name"}</span><input value={f} onChange={(e) => setF(e.target.value)} maxLength={80} /></label>
-      <ul className="nodata">{rows.slice(0, 300).map((r) => <li key={r.id}><b>{r.name}</b>{r.city ? <span className="meta"> · {r.city}</span> : null} <span className="meta">· {WHY[r.why][vi ? 0 : 1]}</span></li>)}</ul>
-      {rows.length > 300 && <p className="meta">{vi ? `Còn ${rows.length - 300} đơn vị, hãy lọc theo tên.` : `${rows.length - 300} more, filter by name.`}</p>}
-    </>
-  );
-}
