@@ -1,7 +1,7 @@
 // Tài khoản ProFind: đăng ký/đăng nhập không mật khẩu bằng mã 6 số gửi qua email, kèm số điện thoại liên hệ (bắt buộc khi đăng ký),
 // lưu tác giả, lưu tìm kiếm, công trình đã xem, thống kê dùng và trang quản trị. Một hàm Edge, chọn thao tác bằng ?op=
 //   GET  verified (công khai: mã hồ sơ đã xác thực + hạn tick) | claim-status | admin-claims
-//   POST claim-submit {authorId, authorName, name, orcid, scholar, note} (cần đăng nhập) | admin-claim-decide | admin-claim-manual | admin-claim-allow | admin-claim-revoke | admin-claim-renew
+//   POST claim-submit {authorId, authorName, name, orcid, scholar, note} (cần đăng nhập) | admin-claim-decide | admin-claim-manual | admin-claim-allow | admin-claim-revoke | admin-claim-renew | admin-mrisk {authorId, decision: one|multi|clear}
 //   GET  config | me | history | favs | ss | rv | export | admin-summary | admin-users | admin-traffic | admin-content | admin-csv | unsub
 //   POST request {email, phone, name, consent, lang} → gửi mã | verify {email, code} → đăng nhập, tạo tài khoản nếu chưa có
 //        logout | profile | delete | track | hop {to, place} | fav | ssave | rvput | rvdel
@@ -360,6 +360,11 @@ export default async function handler(request) {
         return rec.ok ? json({ ok: true }) : json({ error: `Gửi thất bại: ${rec.err}` }, 502);
       }
     }
+    // Quyết định của quản trị viên về hồ sơ nghi gộp nhiều người (tab "Nghi gộp"): { authorId: "one" (một người) | "multi" (nhiều người, cần tách) }
+    if (op === "admin-mrisk" && request.method === "GET") {
+      const bad = needAdmin(); if (bad) return bad;
+      return json({ map: pairs(await one(["HGETALL", "profind:mr"])) });
+    }
     if (op === "admin-claims" && request.method === "GET") {
       const bad = needAdmin(); if (bad) return bad;
       const t = Date.now(), vf = await allVf();
@@ -400,6 +405,13 @@ export default async function handler(request) {
         const ok = (l) => (Array.isArray(l) ? l : []).map((x) => String(x)).filter((x) => /^[a-z0-9-]{2,80}$/.test(x)).slice(0, 12);
         const now = ok(body.now), past = ok(body.past).filter((u) => !now.includes(u)); if (!now.length) return json({ error: "Cần ít nhất một đơn vị hiện tại." }, 400);
         await one(["HSET", "profind:ins", id, JSON.stringify({ now, past, by: me.email, src: "admin", at: Date.now() })]); return json({ ok: true });
+      }
+      if (op === "admin-mrisk") {
+        const id = String(body.authorId || ""); if (!/^A\d{5,12}$/.test(id)) return json({ error: "Mã hồ sơ không hợp lệ." }, 400);
+        if (body.decision === "clear") await one(["HDEL", "profind:mr", id]);
+        else if (body.decision === "one" || body.decision === "multi") await one(["HSET", "profind:mr", id, body.decision]);
+        else return json({ error: "Quyết định không hợp lệ." }, 400);
+        return json({ ok: true });
       }
       if (op === "admin-claim-misattr") {
         const wid = String(body.workId || ""), m = /^(A\d{5,12})-W\d{4,14}$/.exec(wid); if (!m) return json({ error: "Mã công trình không hợp lệ." }, 400);
