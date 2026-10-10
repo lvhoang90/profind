@@ -79,3 +79,9 @@ npm run d:check                              # kiểm tra nhất quán
 - Chạy ở trình duyệt (`src/Suggest.tsx`), không gọi máy chủ: điểm = tên 40 (cùng bộ chữ sau khi bỏ dấu, chấp nhận đảo thứ tự) + đơn vị theo email 30 + đơn vị tự khai 15 + công bố trong 2 năm gần nhất 10; ORCID trùng = 100. Từ 70 là "Rất có thể", 45 đến 69 là "Có thể", dưới 45 không hiện, tối đa 3 gợi ý. Chỉnh trọng số trong hàm `suggest`.
 - Người mới đăng ký được chuyển tới `#/tai-khoan/nhan-dien` ngay sau khi nhập mã; người dùng cũ vào từ nút "Gợi ý hồ sơ cho tôi" ở tab Hồ sơ khi chưa có hồ sơ xác thực.
 - Chọn gợi ý không cấp xác thực: yêu cầu đi qua `claim-submit` như cũ (kiểm tra tự động hoặc quản trị viên duyệt), `note` ghi "Nguồn: chọn từ gợi ý của hệ thống (điểm, thứ tự, lý do)". Người dùng email cá nhân (Gmail…) vẫn thấy gợi ý nhưng chưa gửi tự động được (giống luồng cũ), nên có sẵn nội dung đề nghị để gửi quản trị viên.
+
+
+### Gợi ý hồ sơ: email cá nhân và tên miền tổ chức
+- Email cá nhân (gmail…) vẫn gửi được yêu cầu xác thực nhưng luôn vào hàng chờ quản trị viên duyệt, không bao giờ tự duyệt.
+- Tên miền có nhãn `edu`, `gov` hoặc `ac` (đuôi `.vn` hay quốc tế) được coi là email tổ chức.
+- Đề xuất chính: điểm ≥ 70 và hơn đề xuất kế tiếp ≥ 15 điểm; hiển thị kèm tỉ lệ % ước tính theo quy tắc so khớp (không phải xác suất thống kê).

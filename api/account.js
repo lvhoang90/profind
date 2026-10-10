@@ -400,8 +400,7 @@ export default async function handler(request) {
       const name = tidy(body.name || me.name, 80); if (name.length < 3) return json({ error: "Hãy nhập họ tên đầy đủ của bạn." }, 400);
       const orcidRaw = tidy(body.orcid, 40), orcid = normOrcid(orcidRaw); if (orcidRaw && !orcid) return json({ error: "Mã ORCID chưa đúng định dạng." }, 400);
       const scholar = tidy(body.scholar, 300); if (scholar && !/^https:\/\/scholar\.google\.[a-z.]+\/citations\?[^\s]*user=[A-Za-z0-9_-]{8,14}/.test(scholar)) return json({ error: "Đường dẫn Google Scholar chưa đúng." }, 400);
-      const allowedFree = !isFreeMail(me.email) || (await one(["SMEMBERS", CLA]) ?? []).includes(me.email);
-      if (!allowedFree) return json({ error: "freemail" }, 403);
+      // Email cá nhân (Gmail…) vẫn được gửi yêu cầu nhưng KHÔNG bao giờ tự duyệt: kiểm tra "Email tổ chức" không đạt nên yêu cầu vào hàng chờ của quản trị viên.
       const kind = ["remove", "hide"].includes(body.kind) ? body.kind : "claim", note = tidy(body.note, 1000);
       if (kind === "remove" && note.length < 5) return json({ error: "Hãy nêu lý do đề nghị gỡ hồ sơ." }, 400);
       const claim = await newClaim({ authorId, authorName: tidy(body.authorName, 120), name, email: me.email, orcid, scholar, note, emailVerified: true, kind });
