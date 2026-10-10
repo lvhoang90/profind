@@ -2,17 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { api, useAccount, type User } from "./accountStore";
 import { evt } from "./analytics";
 
-/** Trang nhận liên kết từ Mây hoặc EduFind (ứng dụng ISA khác): #/ket-noi?t=<mã ký>&from=may|edufind. Email đã được ứng dụng gửi sang xác thực nên không gửi mã OTP nữa. */
+/** Trang nhận liên kết từ Mây hoặc EduFind (ứng dụng ISA khác): #/ket-noi?t=<mã ký>&from=may|edufind|ami. Email đã được ứng dụng gửi sang xác thực nên không gửi mã OTP nữa. */
 export function ConnectPage() {
   const { setUser, refresh } = useAccount();
   const [err, setErr] = useState(""), ran = useRef(false);
-  const [app] = useState(() => (/[?&]from=edufind\b/.test(location.hash) ? "EduFind" : "Mây"));
+  const [from] = useState(() => (/[?&]from=edufind\b/.test(location.hash) ? "edufind" : /[?&]from=ami\b/.test(location.hash) ? "ami" : "may"));
+  const app = from === "edufind" ? "EduFind" : from === "ami" ? "Ami" : "Mây";
   useEffect(() => {
     if (ran.current) return; ran.current = true;
     const full = location.hash.replace(/^#\/?/, ""), qs = new URLSearchParams(full.includes("?") ? full.slice(full.indexOf("?") + 1) : "");
     const tok = qs.get("t") || "";
     // Xóa mã khỏi thanh địa chỉ ngay để không lọt vào lịch sử hay ảnh chụp màn hình.
-    try { history.replaceState(null, "", location.pathname + location.search + (app === "EduFind" ? "#/ket-noi?from=edufind" : "#/ket-noi")); } catch { /* bỏ qua */ }
+    try { history.replaceState(null, "", location.pathname + location.search + (from === "may" ? "#/ket-noi" : `#/ket-noi?from=${from}`)); } catch { /* bỏ qua */ }
     if (!tok) { setErr(`Liên kết không đầy đủ. Hãy quay lại ${app} và bấm kết nối lại.`); return; }
     api<{ user: User; isNew: boolean; authorId: string }>("connect", { t: tok }).then(async (r) => {
       setUser(r.user); await refresh(); evt(r.isNew ? "connect_new" : "connect_old");

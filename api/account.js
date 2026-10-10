@@ -411,7 +411,7 @@ export default async function handler(request) {
         let ch = false; for (const [k, x, m] of [["name", p.n, 80], ["job", p.j, 80], ["org", p.o, 120]]) { const v = tidy(x, m); if (v && !String(user[k] || "").trim()) { user[k] = v; ch = true; } } // chỉ điền ô còn trống
         if (ch) await saveUser(user);
       }
-      const src = p.src === "edufind" ? "edufind" : "may"; // ứng dụng ISA đã ký mã (mặc định Mây, bản đầu tiên dùng chuẩn này)
+      const src = p.src === "edufind" || p.src === "ami" ? p.src : "may"; // ứng dụng ISA đã ký mã (mặc định Mây, bản đầu tiên dùng chuẩn này)
       await store.run([["HINCRBY", `profind:all:evt:${dayKey()}`, `connect_${src}`, 1], ["EXPIRE", `profind:all:evt:${dayKey()}`, 60 * 86400]]);
       if (!user.link) { user.link = { from: src, at: now }; await saveUser(user); }
       await one(["HINCRBY", K.cnt(id), "login", "1"]);
