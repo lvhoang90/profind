@@ -5,6 +5,8 @@
 export const VERIFY_YEARS = 2;
 const FREE = new Set(["gmail.com", "googlemail.com", "yahoo.com", "yahoo.com.vn", "ymail.com", "rocketmail.com", "outlook.com", "outlook.com.vn", "hotmail.com", "live.com", "msn.com", "icloud.com", "me.com", "mac.com", "proton.me", "protonmail.com", "aol.com", "zoho.com", "yandex.com", "yandex.ru", "mail.ru", "qq.com", "163.com", "126.com", "gmx.com", "gmx.net", "vnn.vn", "fpt.vn", "hn.vnn.vn", "hcm.vnn.vn", "vnpt.vn", "viettel.vn", "mail.com", "tutanota.com"]);
 export const emailDomain = (e) => String(e ?? "").split("@")[1]?.toLowerCase().trim() ?? "";
+/** Tên miền có nhãn edu hoặc gov (edu.vn, edu.au, gov.vn…) hoặc ac (ac.uk, ac.vn…) được hiểu là tên miền tổ chức giáo dục hoặc cơ quan nhà nước, ở bất kỳ quốc gia nào. */
+export const orgKind = (e) => { const l = emailDomain(e).split("."); return l.includes("edu") ? "giáo dục" : l.includes("gov") ? "cơ quan nhà nước" : l.slice(0, -1).includes("ac") ? "học thuật" : ""; };
 export const isFreeMail = (e) => { const d = emailDomain(e); return !d || FREE.has(d) || /^(yahoo|outlook|hotmail|live|gmx|yandex)\./.test(d); };
 
 const norm = (s) => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase().replace(/[^a-z\s]/g, " ").replace(/\s+/g, " ").trim();
@@ -35,7 +37,7 @@ export async function runChecks({ authorId, name, email, orcid, vf = {}, allowed
   const orc = o ? await fetchJson(`https://pub.orcid.org/v3.0/${o}/person`, { accept: "application/json" }) : null;
   const orcName = orc?.name ? `${orc.name["given-names"]?.value ?? ""} ${orc.name["family-name"]?.value ?? ""}`.trim() : "";
   const free = isFreeMail(email);
-  add("email", free ? (allowedFree ? null : false) : true, "Email tổ chức", free ? (allowedFree ? "Email miễn phí, quản trị viên đã cho phép riêng" : `Email miễn phí (${emailDomain(email)}), cần đề nghị riêng`) : emailDomain(email));
+  add("email", free ? (allowedFree ? null : false) : true, "Email tổ chức", free ? (allowedFree ? "Email miễn phí, quản trị viên đã cho phép riêng" : `Email cá nhân (${emailDomain(email)}): chờ quản trị viên xem xét, không tự duyệt`) : `${emailDomain(email)}${orgKind(email) ? ` (${orgKind(email)})` : ""}`);
   add("otp", emailVerified ? true : null, "Quyền sử dụng email", emailVerified ? "Đã nhập mã xác thực gửi tới email" : "Chưa có mã xác thực (quản trị viên nhập tay)");
   add("orcidFormat", o ? orcidValid(o) : null, "ORCID hợp lệ", o ? (orcidValid(o) ? o : "Sai mã kiểm tra") : "Chưa cung cấp ORCID");
   add("orcidMatch", !o ? null : !oaOrcid ? null : o === oaOrcid, "ORCID trùng hồ sơ OpenAlex", !oa ? "Không tra được OpenAlex" : !oaOrcid ? "Hồ sơ OpenAlex chưa ghi ORCID" : o === oaOrcid ? oaOrcid : `Hồ sơ OpenAlex ghi ${oaOrcid}`);

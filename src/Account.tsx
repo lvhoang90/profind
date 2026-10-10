@@ -5,6 +5,7 @@ import { useAccount, api, type User } from "./accountStore";
 import { EcoLink } from "./Footer";
 import { evt } from "./analytics";
 import { ScholarConsole, useMine } from "./Verified";
+import { SuggestPage, SuggestNudge } from "./Suggest";
 import { Achievements, StarStrip, InviteCard } from "./Achievements";
 
 const TABS: [string, string, IconName][] = [["", "tabProfile", "user"], ["thanh-tich", "Thành tích", "star"], ["tong-quan", "tabOverview", "grid"], ["da-luu", "tabSaved", "star"], ["tim-kiem", "tabSearches", "search"], ["da-xem", "tabViewed", "eye"]];
@@ -43,7 +44,9 @@ function AuthPanel() {
       if (r.need === "profile") { setNeed(true); return; } // email chưa có tài khoản: xin bổ sung số điện thoại
       setUser(r.user!); await refresh(); evt(r.isNew ? "reg_done" : "login_done");
       const back = sessionStorage.getItem("profind.ret"); sessionStorage.removeItem("profind.ret"); sessionStorage.removeItem("profind.reason");
-      location.hash = back && back.startsWith("#/") && !back.startsWith("#/tai-khoan") ? back : "#/tai-khoan";
+      const dest = back && back.startsWith("#/") && !back.startsWith("#/tai-khoan") ? back : "#/tai-khoan";
+      // Người mới đăng ký: hiện ngay bước "Nhà khoa học này có phải bạn?"; xong hoặc bấm "Để sau" thì quay về nơi định đến
+      if (r.isNew) { try { sessionStorage.setItem("profind.sgback", dest); } catch { /* bỏ qua */ } location.hash = "#/tai-khoan/nhan-dien"; } else location.hash = dest;
     } catch (x: any) { setErr(x.message || t("aErr")); } finally { setBusy(false); }
   };
   const emailField = <label className="sel"><span><Icon n="mail" size={14} />{t("aEmail")}</span><input type="email" required autoComplete="email" inputMode="email" value={email} onChange={(e) => setEmail(e.target.value)} maxLength={254} /></label>;
@@ -103,7 +106,8 @@ function Dashboard({ user, tab }: { user: User; tab: string }) {
         <div className="dh-act">{user.isAdmin && <a className="btn-admin" href="#/quan-tri"><Icon n="grid" size={18} />Quản trị</a>}<button className="ghost light" onClick={() => void logout().then(() => { location.hash = "#/"; })}><Icon n="logout" size={16} />{t("logout")}</button></div>
       </header>
       <nav className="tabs" aria-label={t("accTitle")}>{TABS.map(([k, l, ic]) => <a key={k} href={`#/tai-khoan${k ? "/" + k : ""}`} aria-current={cur === k ? "page" : undefined}><Icon n={ic} size={16} />{l.startsWith("tab") ? t(l as "tabSaved") : l}{k === "da-luu" && favs.size > 0 && <em>{favs.size}</em>}</a>)}</nav>
-      {cur === "" && <ProfileTab user={user} mine={mine} reload={reload} />}
+      {tab === "nhan-dien" && <SuggestPage user={user} />}
+      {cur === "" && tab !== "nhan-dien" && <ProfileTab user={user} mine={mine} reload={reload} />}
       {cur === "thanh-tich" && <Achievements user={user} mine={mine} />}
       {cur === "tong-quan" && <Overview user={user} />}
       {cur === "da-luu" && <Saved />}
@@ -185,7 +189,7 @@ function Viewed() {
 function ProfileTab({ user, mine, reload }: { user: User; mine: import("./Verified").Mine[] | null; reload: () => void }) {
   const has = !!mine?.length;
   return has ? <><ScholarConsole list={mine} reload={reload} /><h2 className="prof-sci">Tài khoản của tôi</h2><Profile user={user} /><InviteCard user={user} compact /></>
-    : <><Profile user={user} /><h2 className="prof-sci">Hồ sơ khoa học</h2><ScholarConsole list={mine} reload={reload} /><InviteCard user={user} compact /></>;
+    : <>{mine && <SuggestNudge user={user} />}<Profile user={user} /><h2 className="prof-sci">Hồ sơ khoa học</h2><ScholarConsole list={mine} reload={reload} /><InviteCard user={user} compact /></>;
 }
 function Profile({ user }: { user: User }) {
   const { t } = useT();

@@ -71,3 +71,17 @@ npm run d:check                              # kiểm tra nhất quán
 - `api/account.js` `op=xw-sweep` (Vercel Cron mỗi ngày 02:00 UTC = 09:00 giờ Việt Nam, kèm `Authorization: Bearer $CRON_SECRET`; hoặc nút "Quét ngay" và tự quét khi quản trị viên mở tab Xác thực): với từng chủ hồ sơ, mã nào không còn trong dữ liệu đang chạy là "đã xử lý". Hệ thống gửi MỘT thư gộp cho email đã xác thực (mẫu `worksRemovedMail` trong `api/_mail.js`, vi/en, kèm liên kết hủy thư thông tin), chuyển các mã sang nhật ký `profind:xwdone` (lưu 90 ngày rồi tự xóa) và bỏ khỏi danh sách chờ.
 - Lần quét đầu tiên (khi mới bật, khóa `profind:xwstart`): các công trình đã xử lý từ trước chỉ được dọn và ghi nhật ký (`backlog`), không gửi thư hàng loạt. Chủ hồ sơ không có email xác thực: dọn, không gửi (`no-email`). Gửi lỗi: thử lại ở lần quét sau, tối đa 3 lần rồi ghi `failed`.
 - Cần đặt biến môi trường `CRON_SECRET` trong Vercel (chuỗi ngẫu nhiên dài); thiếu biến này, lịch tự động bị từ chối (403), còn nút "Quét ngay" vẫn dùng được.
+
+
+## Gợi ý hồ sơ sau đăng ký ("Nhà khoa học này có phải bạn?")
+
+- `node scripts/build-suggest-index.mjs` (refresh.mjs đã gọi) tạo `public/data/suggest.json` (khoảng 1,5 MB, 450 KB nén): tên, đơn vị, số công trình, trích dẫn, năm cuối, ORCID, nhãn Top 2% của từng tác giả, kèm bảng tên miền email -> đơn vị. Tên miền lấy từ `data/email-domains.json` (ghi tay những tên miền chắc chắn) và tự thêm `<viết tắt>.edu.vn` cho mọi đơn vị có viết tắt; tên miền không biết thì chỉ bỏ qua tín hiệu đơn vị.
+- Chạy ở trình duyệt (`src/Suggest.tsx`), không gọi máy chủ: điểm = tên 40 (cùng bộ chữ sau khi bỏ dấu, chấp nhận đảo thứ tự) + đơn vị theo email 30 + đơn vị tự khai 15 + công bố trong 2 năm gần nhất 10; ORCID trùng = 100. Từ 70 là "Rất có thể", 45 đến 69 là "Có thể", dưới 45 không hiện, tối đa 3 gợi ý. Chỉnh trọng số trong hàm `suggest`.
+- Người mới đăng ký được chuyển tới `#/tai-khoan/nhan-dien` ngay sau khi nhập mã; người dùng cũ vào từ nút "Gợi ý hồ sơ cho tôi" ở tab Hồ sơ khi chưa có hồ sơ xác thực.
+- Chọn gợi ý không cấp xác thực: yêu cầu đi qua `claim-submit` như cũ (kiểm tra tự động hoặc quản trị viên duyệt), `note` ghi "Nguồn: chọn từ gợi ý của hệ thống (điểm, thứ tự, lý do)". Người dùng email cá nhân (Gmail…) vẫn thấy gợi ý nhưng chưa gửi tự động được (giống luồng cũ), nên có sẵn nội dung đề nghị để gửi quản trị viên.
+
+
+### Gợi ý hồ sơ: email cá nhân và tên miền tổ chức
+- Email cá nhân (gmail…) vẫn gửi được yêu cầu xác thực nhưng luôn vào hàng chờ quản trị viên duyệt, không bao giờ tự duyệt.
+- Tên miền có nhãn `edu`, `gov` hoặc `ac` (đuôi `.vn` hay quốc tế) được coi là email tổ chức.
+- Đề xuất chính: điểm ≥ 70 và hơn đề xuất kế tiếp ≥ 15 điểm; hiển thị kèm tỉ lệ % ước tính theo quy tắc so khớp (không phải xác suất thống kê).

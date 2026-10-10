@@ -69,7 +69,7 @@ export function ClaimBox({ authorId, authorName, mode = "claim" }: { authorId: s
   return (
     <section className="card claimbox">
       <h2>{rm ? "Đề nghị gỡ hồ sơ" : hd ? "Ẩn điểm và huy hiệu xếp hạng" : "Đây là tôi — xác thực hồ sơ"}</h2>
-      <p className="meta">{hd ? `Đăng nhập bằng email tổ chức (${user.email}). Sau khi kiểm tra danh tính, điểm PRO-SCORE1000™ và huy hiệu xếp hạng của hồ sơ này sẽ được ẩn; công trình khoa học vẫn hiển thị. Bạn có thể yêu cầu hiển thị lại bất cứ lúc nào.` : rm ? `Đăng nhập bằng email tổ chức (${user.email}). Yêu cầu gỡ được quản trị viên xem xét sau khi hệ thống kiểm tra danh tính (ORCID, tên, email). Việc gỡ chỉ áp dụng trên ProFind™, dữ liệu gốc ở OpenAlex/ORCID vẫn còn.` : `Đăng nhập bằng email tổ chức (${user.email}). Hồ sơ được xác thực khi email tổ chức, ORCID và tên khớp với hồ sơ OpenAlex; nếu chưa đủ, quản trị viên sẽ xem xét. Tick vàng có hiệu lực 2 năm.`}</p>
+      <p className="meta">{hd ? `Đăng nhập bằng email tổ chức (${user.email}). Sau khi kiểm tra danh tính, điểm PRO-SCORE1000™ và huy hiệu xếp hạng của hồ sơ này sẽ được ẩn; công trình khoa học vẫn hiển thị. Bạn có thể yêu cầu hiển thị lại bất cứ lúc nào.` : rm ? `Đăng nhập bằng email tổ chức (${user.email}). Yêu cầu gỡ được quản trị viên xem xét sau khi hệ thống kiểm tra danh tính (ORCID, tên, email). Việc gỡ chỉ áp dụng trên ProFind™, dữ liệu gốc ở OpenAlex/ORCID vẫn còn.` : `Đang đăng nhập bằng ${user.email}. Hồ sơ được xác thực tự động khi email trường/viện (đuôi edu, gov, ac…), ORCID và tên khớp với hồ sơ OpenAlex; còn lại, kể cả email cá nhân như Gmail, quản trị viên sẽ xem xét. Tick vàng có hiệu lực 2 năm.`}</p>
       {last && last.status !== "approved" && <p className="meta" role="status">Yêu cầu gần nhất: {last.status === "review" ? "đang chờ duyệt" : last.status === "rejected" ? `chưa được chấp nhận${last.reason ? " — " + last.reason : ""}` : `cần bổ sung${last.reason ? " — " + last.reason : ""}`}.</p>}
       <form onSubmit={submit} className="form">
         <label className="sel"><span>Họ tên đầy đủ</span><input name="name" required maxLength={80} defaultValue={user.name} autoComplete="name" /></label>
@@ -137,7 +137,7 @@ export function ScholarConsole({ list, reload }: { list: Mine[] | null; reload: 
     <section className="card sh-empty"><h2>Hồ sơ khoa học của tôi</h2>
       <p className="meta">Bạn chưa xác thực hồ sơ nào. Nhà khoa học đã xác thực có tick vàng, ảnh đại diện, giới thiệu, liên kết ORCID/Google Scholar và được ProFind hiển thị nổi bật.</p>
       <ol className="sh-steps"><li>Tìm tên bạn trên ProFind™</li><li>Mở hồ sơ, chọn <b>"Đây là tôi"</b></li><li>Gửi yêu cầu bằng email của trường/viện; thường duyệt trong ít ngày</li></ol>
-      <p><a className="primary" href="#/"><Icon n="search" size={16} />Tìm hồ sơ của tôi</a></p>
+      <p className="sh-act"><a className="primary" href="#/tai-khoan/nhan-dien"><Icon n="spark" size={16} />Gợi ý hồ sơ cho tôi</a><a className="ghost-link" href="#/"><Icon n="search" size={16} />Tự tìm hồ sơ</a></p>
     </section>
   );
   return <>{list.map((m) => <One key={m.authorId} m={m} reload={reload} />)}</>;
