@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Icon, type IconName } from "./icons";
 import { useAccount, api } from "./accountStore";
+import { replyTemplate, detectLang, type ReqKind, type ReqLang } from "./replyTemplates";
 
 const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["noi-dung", "Nội dung", "book"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["de-nghi", "Đề nghị từ biểu mẫu", "scroll"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["nghi-gop", "Nghi gộp nhiều người", "check"], ["top2", "Top 2% chưa gắn", "check"], ["don-vi-tg", "Đơn vị tác giả", "building"]];
 /** Nhóm điều hướng: hàng trên là nhóm, hàng dưới là mục trong nhóm đang chọn (đường dẫn cũ vẫn dùng được). */
@@ -459,25 +460,62 @@ function Evidence({ r, name }: { r: MRev; name: (id: string) => string }) {
 }
 type T2C = { id: string; name: string; works: number; units: string[]; firstYear?: number; citations?: number; inProfind: boolean; rank: number | null };
 type T2I = { name: string; inst: string; field: string; subfield: string; rank: number; np: number; firstyr: number; lastyr: number; topCntry: string; scope: string; dup: boolean; cands: T2C[] };
-type ReqRec = { id: string; kind: string; author: string; authorName: string; name: string; email: string; orcid: string; scholar: string; msg: string; at: number; status: string; doneAt?: number; doneBy?: string };
+type ReqRec = { id: string; kind: string; author: string; authorName: string; name: string; email: string; orcid: string; scholar: string; msg: string; at: number; status: string; doneAt?: number; doneBy?: string; notifiedAt?: number };
 const REQ_KIND: Record<string, string> = { claim: "Xác nhận hồ sơ (đây là tôi)", correct: "Đính chính thông tin / công trình", remove: "Gỡ hồ sơ", add: "Đề nghị bổ sung nhà nghiên cứu" };
-/** Đề nghị gửi từ biểu mẫu trên trang ProFind: lưu ở máy chủ nên không bị sót khi không xem email. Xử lý xong thì bấm "Đã xử lý". Tra cứu theo docs/XU-LY-DE-NGHI-BO-SUNG.md. */
+const orcidKey = (o: string) => o.replace(/[^0-9X]/gi, "").toUpperCase();
+let reqIdx: Promise<{ a: [string, string, unknown, unknown, unknown, unknown, string][] } | null> | null = null;
+/** Hồ sơ ProFind khớp ORCID của người gửi (từ chỉ mục gợi ý đã có sẵn), để điền sẵn mã hồ sơ trong thư báo. */
+const findByOrcid = async (orcid: string) => { if (!orcidKey(orcid)) return null; reqIdx ??= fetch("./data/suggest.json").then((r) => (r.ok ? r.json() : null)).catch(() => null); const d = await reqIdx; const r = d?.a.find((x) => orcidKey(String(x[6] ?? "")) === orcidKey(orcid)); return r ? { id: r[0], name: r[1] } : null; };
+
+/** Thư báo khi bấm "Đã xử lý": soạn sẵn theo loại đề nghị và ngôn ngữ người gửi, sửa được trước khi gửi (gửi qua admin-mail-send, ghi ở tab Thư gửi). */
+function ReplyPanel({ x, onDone, onCancel }: { x: ReqRec; onDone: (msg: string) => void; onCancel: () => void }) {
+  const already = !!x.notifiedAt, [send, setSend] = useState(!already), [lang, setLang] = useState<ReqLang>(detectLang(x.msg, x.name, x.authorName)), [pid, setPid] = useState(x.author);
+  const kind = (["add", "claim", "correct", "remove"].includes(x.kind) ? x.kind : "correct") as ReqKind, who = x.name || x.authorName;
+  const [dirty, setDirty] = useState(false), [subject, setSubject] = useState(""), [text, setText] = useState(""), [busy, setBusy] = useState(false), [err, setErr] = useState("");
+  useEffect(() => { if (!pid && x.orcid) void findByOrcid(x.orcid).then((r) => { if (r) setPid(r.id); }); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { if (dirty) return; const t = replyTemplate(kind, lang, { name: who, email: x.email, id: pid.trim() }); setSubject(t.subject); setText(t.body); }, [kind, lang, pid, dirty, who, x.email]);
+  const go = async () => {
+    setBusy(true); setErr("");
+    try {
+      if (send) await api("admin-mail-send", { to: x.email, subject, body: text, kind: `req-${x.kind}` });
+      await api("admin-req-done", { id: x.id, done: true, notified: send });
+      onDone(send ? `Đã gửi thư tới ${x.email} và ghi xử lý.` : "Đã ghi xử lý (không gửi thư).");
+    } catch (e) { setErr((e as Error).message); setBusy(false); }
+  };
+  return (
+    <div className="card" role="group" aria-label="Thư báo cho người gửi" style={{ marginTop: 10 }}>
+      <label className="chk"><input type="checkbox" checked={send} onChange={(e) => setSend(e.target.checked)} /> Gửi thư báo cho người gửi ({x.email}){already ? " · đã gửi thư lúc " + new Date(x.notifiedAt as number).toLocaleString("vi-VN") : ""}</label>
+      {send && <>
+        <p className="meta">Ngôn ngữ theo người gửi (tự nhận từ nội dung): <select value={lang} onChange={(e) => { setLang(e.target.value as ReqLang); setDirty(false); }} aria-label="Ngôn ngữ thư"><option value="vi">Tiếng Việt</option><option value="en">English</option></select> · Mã hồ sơ trong thư: <input value={pid} onChange={(e) => { setPid(e.target.value.trim()); setDirty(false); }} placeholder="A5…" maxLength={14} style={{ width: "9em" }} aria-label="Mã hồ sơ" /></p>
+        <label className="sel"><span>Tiêu đề</span><input value={subject} onChange={(e) => { setSubject(e.target.value); setDirty(true); }} maxLength={200} /></label>
+        <label className="sel"><span>Nội dung (sửa được)</span><textarea value={text} onChange={(e) => { setText(e.target.value); setDirty(true); }} rows={14} maxLength={6000} style={{ width: "100%" }} /></label>
+      </>}
+      {send && <p className="meta">Chân thư "ProFind · Viện ISA" tự thêm; người nhận trả lời về hộp thư của quản trị viên.</p>}
+      {err && <p className="banner demo" role="alert">{err}</p>}
+      <p><button type="button" className="primary" disabled={busy || (send && (subject.trim().length < 3 || text.trim().length < 5))} onClick={() => void go()}>{busy ? "Đang xử lý…" : send ? "Gửi thư và ghi đã xử lý" : "Ghi đã xử lý"}</button> <button type="button" onClick={onCancel} disabled={busy}>Hủy</button></p>
+    </div>
+  );
+}
+
+/** Đề nghị gửi từ biểu mẫu trên trang ProFind: lưu ở máy chủ nên không bị sót khi không xem email. Xử lý xong thì bấm "Đã xử lý" (có thể kèm thư báo). Tra cứu theo docs/XU-LY-DE-NGHI-BO-SUNG.md. */
 function Requests() {
-  const [ver, setVer] = useState(0), [view, setView] = useState<"new" | "done">("new"), [msg, setMsg] = useState("");
+  const [ver, setVer] = useState(0), [view, setView] = useState<"new" | "done">("new"), [msg, setMsg] = useState(""), [open, setOpen] = useState("");
   const { d, err } = useGet<{ items: ReqRec[] }>("admin-reqs", `&v=${ver}`);
   if (err) return <p className="banner demo">{err}</p>; if (!d) return <p className="empty" role="status">Đang tải…</p>;
   const todo = d.items.filter((x) => x.status === "new"), done = d.items.filter((x) => x.status !== "new"), rows = view === "new" ? todo : done;
-  const mark = async (id: string, isDone: boolean) => { try { await api("admin-req-done", { id, done: isDone }); setMsg(isDone ? "Đã ghi xử lý." : "Đã mở lại."); setVer((x) => x + 1); } catch (e) { setMsg((e as Error).message); } };
+  const reopen = async (id: string) => { try { await api("admin-req-done", { id, done: false }); setMsg("Đã mở lại."); setVer((v) => v + 1); } catch (e) { setMsg((e as Error).message); } };
   return (
     <section className="card"><h2>Đề nghị từ biểu mẫu</h2>
-      <p className="meta">Mỗi đề nghị gửi từ trang ProFind (bổ sung nhà nghiên cứu, xác nhận, đính chính, gỡ hồ sơ) được lưu ở đây, kèm email báo như trước. Hệ thống chưa tự sửa dữ liệu: xác minh người gửi rồi xử lý, sau đó bấm "Đã xử lý". Chỉ lưu các đề nghị gửi từ khi có mục này.</p>
+      <p className="meta">Mỗi đề nghị gửi từ trang ProFind (bổ sung nhà nghiên cứu, xác nhận, đính chính, gỡ hồ sơ) được lưu ở đây, kèm email báo như trước. Hệ thống chưa tự sửa dữ liệu: xác minh người gửi rồi xử lý, sau đó bấm "Đã xử lý": có thể gửi luôn thư báo cho người gửi (soạn sẵn theo loại đề nghị, ngôn ngữ của người gửi). Chỉ lưu các đề nghị gửi từ khi có mục này.</p>
       <p className="sprow2"><button type="button" className={view === "new" ? "primary" : ""} onClick={() => setView("new")}>Chưa xử lý ({todo.length})</button> <button type="button" className={view === "done" ? "primary" : ""} onClick={() => setView("done")}>Đã xử lý ({done.length})</button></p>
       <div role="status" aria-live="polite">{msg && <p className="banner"><Icon n="check" />{msg}</p>}</div>
       {rows.length === 0 ? <p className="meta">{view === "new" ? "Không còn đề nghị nào." : "Chưa có đề nghị đã xử lý."}</p> : <ul className="mxlist">{rows.map((x) => (
         <li key={x.id}><b>{REQ_KIND[x.kind] ?? x.kind}</b> <span className="meta">· {new Date(x.at).toLocaleString("vi-VN")}</span>
           <p className="meta">{x.name || "(không ghi tên)"} · {x.email}{x.orcid ? ` · ORCID ${x.orcid}` : ""}{x.author ? <> · hồ sơ <a href={`#/tac-gia/${x.author}`} target="_blank" rel="noopener">{x.authorName || x.author}</a></> : ""}{x.scholar ? <> · <a href={x.scholar} target="_blank" rel="noopener noreferrer">Google Scholar</a></> : ""}{x.orcid ? <> · <a href={`https://orcid.org/${x.orcid.replace(/^(\d{4})-?(\d{4})-?(\d{4})-?(\d{3}[\dXx])$/, "$1-$2-$3-$4")}`} target="_blank" rel="noopener noreferrer">ORCID</a></> : ""}</p>
           {x.msg && <p>{x.msg}</p>}
-          <p>{x.status === "new" ? <button type="button" className="primary" onClick={() => void mark(x.id, true)}>Đã xử lý</button> : <><span className="meta">Xử lý {x.doneAt ? new Date(x.doneAt).toLocaleDateString("vi-VN") : ""}{x.doneBy ? ` bởi ${x.doneBy}` : ""} </span><button type="button" onClick={() => void mark(x.id, false)}>Mở lại</button></>}</p></li>))}</ul>}
+          {x.status === "new"
+            ? (open === x.id ? <ReplyPanel x={x} onCancel={() => setOpen("")} onDone={(m) => { setOpen(""); setMsg(m); setVer((v) => v + 1); }} /> : <p><button type="button" className="primary" onClick={() => setOpen(x.id)}>Đã xử lý</button></p>)
+            : <p><span className="meta">Xử lý {x.doneAt ? new Date(x.doneAt).toLocaleDateString("vi-VN") : ""}{x.doneBy ? ` bởi ${x.doneBy}` : ""}{x.notifiedAt ? " · đã gửi thư báo" : " · không gửi thư"} </span><button type="button" onClick={() => void reopen(x.id)}>Mở lại</button></p>}</li>))}</ul>}
     </section>
   );
 }
