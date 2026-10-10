@@ -91,7 +91,8 @@ export function AboutPage({ section }: { section: string }) {
         <li><b>Dữ liệu do nhà khoa học đã xác thực tự khai báo</b> (giới thiệu, trang cá nhân, email/điện thoại liên hệ, ảnh đại diện): chỉ hiển thị khi bạn đồng ý; email và điện thoại chỉ hiện khi bạn bật chia sẻ.</li>
         <li><b>Tài khoản</b> (tùy chọn): email, số điện thoại, họ tên, mục đã lưu, lịch sử xem. <i>Mục đích</i>: cung cấp tài khoản, xác minh, liên hệ. Thư giới thiệu công cụ khác của hệ sinh thái ISA chỉ gửi khi bạn đồng ý riêng.</li>
         <li><b>Yêu cầu xác thực, đính chính, gỡ hồ sơ</b>: nội dung bạn gửi và kết quả kiểm tra danh tính (email, ORCID, tên) để xử lý yêu cầu.</li>
-        <li><b>Đo lường ẩn danh</b>: số liệu tổng hợp, không cookie, không lưu địa chỉ IP.</li></ul>
+        <li><b>Đo lường tổng hợp của ProFind™</b>: lượt truy cập, thiết bị, nguồn giới thiệu, quốc gia và các thao tác tiêu biểu, chỉ là bộ đếm tổng hợp theo ngày, không cookie, không lưu địa chỉ IP, không gắn với người dùng hay thiết bị.</li>
+        <li><b>Đo lường của hệ sinh thái ISA</b>: trang này nạp thêm bộ đếm nhẹ của ISA (isavn.edu.vn). Bộ đếm lưu một <b>mã khách ngẫu nhiên</b> trong bộ nhớ trình duyệt (localStorage, không phải cookie; không chứa tên hay email) và gửi về isavn.edu.vn trang đang xem, nguồn giới thiệu, thông tin chiến dịch (utm), thời gian xem và mức cuộn trang. Không lưu địa chỉ IP, không chạy khi trình duyệt bật Do Not Track. Xóa dữ liệu trang web trong trình duyệt để xóa mã này.</li></ul>
       <h3>3. Điểm PRO-SCORE1000™ là xử lý tự động</h3>
       <p>Điểm và huy hiệu do thuật toán tính trên dữ liệu công bố công khai; phân loại rủi ro: <b>thấp</b> (không có hiệu lực pháp lý, không dùng dữ liệu nhạy cảm). Đây là chỉ số tham khảo mô phỏng, không phải đánh giá chính thức, không thay thế hội đồng chuyên môn và không nên là tiêu chí duy nhất trong tuyển dụng, xét duyệt, bổ nhiệm hay phân bổ nguồn lực.</p>
       <h3>4. Quyền của bạn</h3>
@@ -116,7 +117,8 @@ export function AboutPage({ section }: { section: string }) {
         <li><b>Self-reported data of verified researchers</b> (bio, personal site, contact email/phone, avatar) is shown only with your consent; email and phone only when you switch sharing on.</li>
         <li><b>Accounts</b> (optional): email, phone, name, saved items, viewing history, to provide the account, verification and contact. Emails about other ISA tools are sent only with your separate consent.</li>
         <li><b>Verification, correction and removal requests</b>: your message and identity checks (email, ORCID, name).</li>
-        <li><b>Anonymous analytics</b>: aggregate counts, no cookies, no IP addresses stored.</li></ul>
+        <li><b>ProFind™ aggregate analytics</b>: visits, device type, referrer, country and key actions, kept only as daily aggregate counters: no cookies, no IP addresses stored, not tied to any user or device.</li>
+        <li><b>ISA ecosystem analytics</b>: this site also loads a lightweight ISA counter (isavn.edu.vn). It keeps a <b>random visitor ID</b> in your browser storage (localStorage, not a cookie; it contains no name or email) and sends isavn.edu.vn the page viewed, referrer, campaign (utm) data, time on page and scroll depth. No IP address is stored, and it does not run when your browser sends Do Not Track. Clear your site data in the browser to remove the ID.</li></ul>
       <h3>3. PRO-SCORE1000™ is automated processing</h3>
       <p>Scores and badges are computed by an algorithm on public publication data; risk class: <b>low</b> (no legal effect, no sensitive data). It is a simulated reference index, not an official assessment, does not replace expert committees and should not be the sole criterion in hiring, review, appointment or resource allocation.</p>
       <h3>4. Your rights</h3>
