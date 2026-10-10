@@ -400,6 +400,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   const xwSet = useNotMine(a.id, localXw);
   const works = useMemo(() => (worksAll && xwSet.size ? worksAll.filter((w) => !xwSet.has(w.id)) : worksAll), [worksAll, xwSet]);
   const [werr, setWerr] = useState(false), [tick, setTick] = useState(0), [wpage, setWpage] = useState(0);
+  const extra = useExtraWorks(a.id), [extraAll, setExtraAll] = useState(false);
   const [wsort, setWsort] = useState<WSort>("year"), [onlyLead, setOnlyLead] = useState(false), [allInst, setAllInst] = useState(false);
   // Hủy yêu cầu cũ khi đổi hồ sơ: không để công trình của hồ sơ trước hiện (và xuất CSV) ở hồ sơ sau.
   useEffect(() => {
@@ -546,6 +547,14 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
             </li>))}</ol>)}
         {works && <Pager page={wpage} total={shown.length} set={(p) => setWpage(p)} />}
       </section>
+      {extra && extra.length > 0 && <section className="card extra-works" aria-labelledby="xtw"><h2 id="xtw">{t("extraH")} <small>({num(extra.length)})</small></h2><p className="meta">{t("extraNote")}</p>
+        <ol className="wk-list">{(extraAll ? extra : extra.slice(0, 15)).map((w) => (
+          <li key={w.id} className="wk"><span className="wy">{w.y}</span>
+            <div className="wm"><a className="wt2" href={w.d ? `https://doi.org/${w.d}` : `https://openalex.org/${w.id}`} target="_blank" rel="noopener">{w.t}<span className="sr"> {t("newTab")}</span></a>
+              <div className="wsrc">{w.j && <span>{w.j}</span>}{w.ty && <span className="issn">{EXTRA_TYPE[w.ty]?.[lang === "vi" ? 0 : 1] ?? w.ty}</span>}</div></div>
+            <div className="wr"><span className="wc"><Icon n="chart" size={14} />{num(w.c)}<span className="sr"> {t("cit")}</span></span></div></li>))}</ol>
+        {!extraAll && extra.length > 15 && <p><button type="button" className="ghost" onClick={() => setExtraAll(true)}>{t("extraMore", { n: String(extra.length - 15) })}</button></p>}
+      </section>}
       <section className="next compact" aria-labelledby="ecoa"><h2 id="ecoa">{t("ecoHeadAuthor")}</h2>
         <div className="next-grid">
           {([["edufind", "ecoAuthorEdu", "book"], ["ami", "ecoAuthorAmi", "link"], ["may", "ecoAuthorMay", "spark"]] as const).map(([app, k, ic]) => <EcoLink key={app} app={app} place="author" className="ncard link"><span className="kic"><Icon n={ic} size={20} /></span><span>{t(k)}</span><Icon n="external" size={14} /><span className="sr"> {t("newTab")}</span></EcoLink>)}
@@ -553,6 +562,21 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
       </section>
     </article>
   );
+}
+
+/** "Công trình khác (không tính điểm)": chỉ có ở hồ sơ trong data/full-works-authors.json hoặc đã xác thực (scripts/fetch-extra-works.mjs). Chỉ mục nhỏ tải một lần; không có thì không gọi thêm. */
+const EXTRA_TYPE: Record<string, [string, string]> = { "conference-paper": ["Kỷ yếu hội nghị", "Conference paper"], "proceedings-article": ["Kỷ yếu hội nghị", "Conference paper"], article: ["Bài báo", "Article"], preprint: ["Bản thảo", "Preprint"], book: ["Sách", "Book"], "book-chapter": ["Chương sách", "Book chapter"], dissertation: ["Luận văn", "Dissertation"], report: ["Báo cáo", "Report"], review: ["Tổng quan", "Review"], letter: ["Thư", "Letter"], editorial: ["Bài xã luận", "Editorial"], dataset: ["Bộ dữ liệu", "Dataset"] };
+type ExtraWork = { id: string; t: string; y: number; j: string; ty: string; d: string; c: number };
+let extraIndex: Promise<Record<string, number>> | null = null;
+function useExtraWorks(id: string) {
+  const [rows, setRows] = useState<ExtraWork[] | null>(null);
+  useEffect(() => {
+    let on = true; setRows(null);
+    extraIndex ??= fetch("./data/extra-index.json").then((r) => (r.ok ? r.json() : { n: {} })).then((j) => (j?.n ?? {}) as Record<string, number>).catch(() => ({}));
+    void extraIndex.then((n) => { if (!on || !n[id]) return; return fetch(`./data/extra/${encodeURIComponent(id)}.json`).then((r) => (r.ok ? r.json() : [])).then((w) => { if (on && Array.isArray(w)) setRows(w as ExtraWork[]); }); }).catch(() => { /* không có thì thôi */ });
+    return () => { on = false; };
+  }, [id]);
+  return rows;
 }
 
 function Correction({ a }: { a: Author | null }) {

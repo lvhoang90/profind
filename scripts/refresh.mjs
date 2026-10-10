@@ -33,6 +33,7 @@ try {
   if (b.daily_remaining_usd < 0.05) console.log("Ngân sách gần hết, bỏ qua bước cơ quan/ORCID từng bài; chạy lại sau.");
   else { run(`node scripts/fetch-authorship.mjs --mailto ${mailto} --limit-usd 0.3`); run(`node scripts/fetch-orcid-per-work.mjs --mailto ${mailto}`); run(`node scripts/build-current-inst.mjs --mailto ${mailto}`); run("node scripts/build-index.mjs"); run("node scripts/find-misattributed.mjs"); }
 } catch (e) { console.warn("Bỏ qua bước đơn vị hiện tại/bài gán nhầm:", String(e.message).slice(0, 200)); }
+try { run(`node scripts/fetch-extra-works.mjs --mailto ${mailto}`); } catch (e) { console.warn("Bỏ qua mục Công trình khác (không tính điểm):", String(e.message).slice(0, 120)); } // đủ công trình cho hồ sơ đã xác thực và hồ sơ trong data/full-works-authors.json
 run("node scripts/build-top-works.mjs"); run("node scripts/build-suggest-index.mjs"); run("node scripts/build-wsearch.mjs"); run("node scripts/build-nodata.mjs"); try { run("node scripts/build-icons.mjs --png"); run("git checkout -- public/manifest.webmanifest"); } catch (e) { console.warn("Bỏ qua dựng lại ảnh chia sẻ (og.jpg):", String(e.message).slice(0, 120)); } // số tác giả/công trình trên ảnh xem trước theo dữ liệu mới
 run("node scripts/check-data.mjs"); run("node scripts/cache.mjs save");
 console.log(`Xong. Còn ${still.length} đơn vị chưa nạp được${still.length ? " (chạy lại ngày mai)" : ""}.`);
