@@ -400,7 +400,8 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   const xwSet = useNotMine(a.id, localXw);
   const works = useMemo(() => (worksAll && xwSet.size ? worksAll.filter((w) => !xwSet.has(w.id)) : worksAll), [worksAll, xwSet]);
   const [werr, setWerr] = useState(false), [tick, setTick] = useState(0), [wpage, setWpage] = useState(0);
-  const extra = useExtraWorks(a.id), [extraAll, setExtraAll] = useState(false);
+  const extraRaw = useExtraWorks(a.id), [extraAll, setExtraAll] = useState(false);
+  const extra = useMemo(() => (extraRaw && xwSet.size ? extraRaw.filter((w) => !xwSet.has(`${a.id}-${w.id}`)) : extraRaw), [extraRaw, xwSet, a.id]); // công trình chủ hồ sơ đã báo "không phải của tôi" ẩn ngay, như phần tính điểm
   const [wsort, setWsort] = useState<WSort>("year"), [onlyLead, setOnlyLead] = useState(false), [allInst, setAllInst] = useState(false);
   // Hủy yêu cầu cũ khi đổi hồ sơ: không để công trình của hồ sơ trước hiện (và xuất CSV) ở hồ sơ sau.
   useEffect(() => {
@@ -552,7 +553,8 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
           <li key={w.id} className="wk"><span className="wy">{w.y}</span>
             <div className="wm"><a className="wt2" href={w.d ? `https://doi.org/${w.d}` : `https://openalex.org/${w.id}`} target="_blank" rel="noopener">{w.t}<span className="sr"> {t("newTab")}</span></a>
               <div className="wsrc">{w.j && <span>{w.j}</span>}{w.ty && <span className="issn">{EXTRA_TYPE[w.ty]?.[lang === "vi" ? 0 : 1] ?? w.ty}</span>}</div></div>
-            <div className="wr"><span className="wc"><Icon n="chart" size={14} />{num(w.c)}<span className="sr"> {t("cit")}</span></span></div></li>))}</ol>
+            <div className="wr"><span className="wc"><Icon n="chart" size={14} />{num(w.c)}<span className="sr"> {t("cit")}</span></span>
+              {mine && <button type="button" className="linkbtn" onClick={() => { const wid = `${a.id}-${w.id}`; if (confirm("Bài này không phải của bạn (OpenAlex gán nhầm người trùng tên)? Bài sẽ ẩn khỏi hồ sơ.")) void reportNotMine(a.id, wid).then(() => setLocalXw((x) => [...x, wid])).catch((e) => alert((e as Error).message)); }}>Không phải bài của tôi</button>}</div></li>))}</ol>
         {!extraAll && extra.length > 15 && <p><button type="button" className="ghost" onClick={() => setExtraAll(true)}>{t("extraMore", { n: String(extra.length - 15) })}</button></p>}
       </section>}
       <section className="next compact" aria-labelledby="ecoa"><h2 id="ecoa">{t("ecoHeadAuthor")}</h2>
