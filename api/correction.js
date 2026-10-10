@@ -13,6 +13,16 @@ const memLimited = (ip) => { const now = Date.now(), k = ip || "?", a = (MEM.get
 const oneLine = (v, n) => clip(v, n).replace(/[\r\n\u2028\u2029]+/g, " ").trim();
 const KINDS = { claim: "Xác nhận hồ sơ (đây là tôi)", correct: "Đính chính thông tin / công trình", remove: "Gỡ hồ sơ", add: "Đề nghị bổ sung nhà nghiên cứu" };
 
+const kvConf = () => { const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL, token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN; return url && token ? { url: url.replace(/\/$/, ""), token } : null; };
+// Lưu đề nghị vào Redis (profind:req) để hiện ở trang Quản trị > Việc cần làm: email có thể bị bỏ sót. Lỗi lưu không làm hỏng việc gửi email.
+async function saveReq(rec) {
+  const kv = kvConf(); if (!kv) return false;
+  try {
+    const r = await fetch(`${kv.url}/pipeline`, { method: "POST", headers: { authorization: `Bearer ${kv.token}`, "content-type": "application/json" }, body: JSON.stringify([["HLEN", "profind:req"], ["HSET", "profind:req", rec.id, JSON.stringify(rec)]]) });
+    const j = await r.json(); return r.ok && !j?.[1]?.error && Number(j?.[0]?.result ?? 0) < 3000;
+  } catch { return false; }
+}
+
 async function limited(request) {
   const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL, token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
   if (!url || !token) return memLimited(request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip"));
@@ -32,7 +42,7 @@ export default async function handler(request) {
   if (origin) { try { if (new URL(origin).host !== new URL(request.url).host) return json({ ok: false, error: "origin" }, 403); } catch { return json({ ok: false, error: "origin" }, 403); } }
   if (Number(request.headers.get("content-length") || 0) > 20000) return json({ ok: false, error: "too-large" }, 413);
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return json({ ok: false, error: "not-configured" }, 503);
+  if (!apiKey && !kvConf()) return json({ ok: false, error: "not-configured" }, 503);
   let form; try { form = await request.formData(); } catch { return json({ ok: false, error: "bad-request" }, 400); }
   if (form.get("_honey")) return json({ ok: true });
   const kind = String(form.get("kind")); if (!KINDS[kind]) return json({ ok: false, error: "kind" }, 400);
@@ -45,8 +55,11 @@ export default async function handler(request) {
   const scholar = oneLine(form.get("scholar"), 300); if (scholar && !/^https:\/\/scholar\.google\.[a-z.]+\/citations\?[^\s]*user=[A-Za-z0-9_-]{8,14}/.test(scholar)) return json({ ok: false, error: "scholar" }, 400);
   const rows = [["Loại yêu cầu", KINDS[kind]], ...(scholar ? [["Google Scholar", scholar]] : []), ["Mã hồ sơ", oneLine(form.get("author"), 60)], ["Tên trong hồ sơ", oneLine(form.get("authorName"), 120)], ["Người gửi", oneLine(form.get("name"), 120)], ["Email", email], ["ORCID", orcid], ["Thời điểm (UTC)", new Date().toISOString()]];
   const html = `<h2>ProFind: ${esc(KINDS[kind])}</h2><table cellpadding="6" style="border-collapse:collapse">${rows.map(([k, v]) => `<tr><td style="border:1px solid #ddd"><b>${esc(k)}</b></td><td style="border:1px solid #ddd">${esc(v)}</td></tr>`).join("")}</table><h3>Nội dung</h3><p style="white-space:pre-wrap">${esc(msg || "(không có)")}</p>`;
+  const rec = { id: `${Date.now().toString(36)}${crypto.getRandomValues(new Uint32Array(1))[0].toString(36)}`, kind, author: oneLine(form.get("author"), 60), authorName: oneLine(form.get("authorName"), 120), name: oneLine(form.get("name"), 120), email, orcid, scholar, msg, at: Date.now(), status: "new" };
+  const stored = await saveReq(rec);
+  if (!apiKey) return stored ? json({ ok: true }) : json({ ok: false, error: "send" }, 502);
   const r = await fetch("https://api.resend.com/emails", { method: "POST", headers: { authorization: `Bearer ${apiKey}`, "content-type": "application/json" }, body: JSON.stringify({
     from: process.env.CORRECTION_FROM || "ProFind <onboarding@resend.dev>", to: [process.env.CORRECTION_TO || "vienisavietnam@gmail.com"], reply_to: email,
     subject: `[ProFind] ${KINDS[kind]} - ${oneLine(form.get("authorName"), 60) || oneLine(form.get("author"), 40)}`, html, text: `${rows.map(([k, v]) => `${k}: ${v}`).join("\n")}\n\n${msg}` }) });
-  return r.ok ? json({ ok: true }) : json({ ok: false, error: "send" }, 502);
+  return r.ok || stored ? json({ ok: true }) : json({ ok: false, error: "send" }, 502);
 }

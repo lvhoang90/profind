@@ -3,9 +3,9 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Icon, type IconName } from "./icons";
 import { useAccount, api } from "./accountStore";
 
-const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["noi-dung", "Nội dung", "book"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["nghi-gop", "Nghi gộp nhiều người", "check"], ["top2", "Top 2% chưa gắn", "check"], ["don-vi-tg", "Đơn vị tác giả", "building"]];
+const TABS: [string, string, IconName][] = [["", "Tổng quan", "grid"], ["truy-cap", "Truy cập", "chart"], ["noi-dung", "Nội dung", "book"], ["he-sinh-thai", "Hệ sinh thái ISA", "link"], ["nguoi-dung", "Người dùng", "users"], ["xac-thuc", "Xác thực", "check"], ["de-nghi", "Đề nghị từ biểu mẫu", "scroll"], ["thu", "Thư gửi", "link"], ["gop", "Gộp hồ sơ", "users"], ["nghi-gop", "Nghi gộp nhiều người", "check"], ["top2", "Top 2% chưa gắn", "check"], ["don-vi-tg", "Đơn vị tác giả", "building"]];
 /** Nhóm điều hướng: hàng trên là nhóm, hàng dưới là mục trong nhóm đang chọn (đường dẫn cũ vẫn dùng được). */
-const GROUPS: [string, IconName, string[]][] = [["Tổng quan", "grid", [""]], ["Phân tích", "chart", ["truy-cap", "noi-dung", "he-sinh-thai"]], ["Người dùng", "users", ["nguoi-dung"]], ["Xác thực", "check", ["xac-thuc", "thu"]], ["Rà soát dữ liệu", "scroll", ["gop", "nghi-gop", "top2", "don-vi-tg"]]];
+const GROUPS: [string, IconName, string[]][] = [["Tổng quan", "grid", [""]], ["Phân tích", "chart", ["truy-cap", "noi-dung", "he-sinh-thai"]], ["Người dùng", "users", ["nguoi-dung"]], ["Xác thực", "check", ["xac-thuc", "de-nghi", "thu"]], ["Rà soát dữ liệu", "scroll", ["gop", "nghi-gop", "top2", "don-vi-tg"]]];
 const n0 = (n: number) => new Intl.NumberFormat("vi-VN").format(Math.round(n));
 const pct = (a: number, b: number) => (b > 0 ? `${Math.round((a / b) * 100)}%` : "–");
 const delta = (a: number, b: number) => (b > 0 ? `${a >= b ? "▲" : "▼"} ${Math.abs(Math.round(((a - b) / b) * 100))}% so với 7 ngày trước` : a > 0 ? "mới có dữ liệu" : "");
@@ -37,17 +37,17 @@ export function AdminPage({ tab }: { tab: string }) {
       <header className="dash-head"><div className="av" aria-hidden="true"><Icon n="grid" size={36} /></div><div className="dh-main"><h1>Quản trị ProFind</h1><p className="meta">{user.email} · số liệu theo giờ Việt Nam, khoảng 14 ngày gần nhất</p></div><div className="dh-act"><a className="ghost-link light" href="#/tai-khoan">← Không gian của tôi</a></div></header>
       <nav className="tabs adm-tabs" aria-label="Quản trị">{GROUPS.map(([l, ic, keys]) => <a key={l} href={`#/quan-tri${keys[0] ? "/" + keys[0] : ""}`} aria-current={keys.includes(cur) ? "page" : undefined}><Icon n={ic} size={16} />{l}</a>)}</nav>
       {(() => { const g = GROUPS.find(([, , keys]) => keys.includes(cur)); return g && g[2].length > 1 ? <nav className="subtabs" aria-label={g[0]}>{g[2].map((k) => <a key={k} href={`#/quan-tri/${k}`} aria-current={cur === k ? "page" : undefined}>{TABS.find((x) => x[0] === k)![1]}</a>)}</nav> : null; })()}
-      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}{cur === "nghi-gop" && <MergeRisk />}{cur === "top2" && <Top2Review />}{cur === "don-vi-tg" && <AuthorUnits />}
+      {cur === "" && <Summary />}{cur === "truy-cap" && <Traffic />}{cur === "he-sinh-thai" && <Eco />}{cur === "noi-dung" && <Content />}{cur === "nguoi-dung" && <Users />}{cur === "xac-thuc" && <Claims />}{cur === "de-nghi" && <Requests />}{cur === "thu" && <Mailer />}{cur === "gop" && <Merger />}{cur === "nghi-gop" && <MergeRisk />}{cur === "top2" && <Top2Review />}{cur === "don-vi-tg" && <AuthorUnits />}
     </article>
   );
 }
 
 function Summary() {
   const { d, err } = useGet<any>("admin-summary");
-  const cl = useGet<any>("admin-claims").d, t2 = useGet<{ map: Record<string, string>; items: { name: string }[] }>("admin-t2").d, mr = useGet<{ map: Record<string, string>; profiles: { id: string }[] }>("admin-mrisk").d;
+  const cl = useGet<any>("admin-claims").d, t2 = useGet<{ map: Record<string, string>; items: { name: string }[] }>("admin-t2").d, mr = useGet<{ map: Record<string, string>; profiles: { id: string }[] }>("admin-mrisk").d, rq = useGet<{ items: { status: string }[] }>("admin-reqs").d;
   if (err) return <p className="banner demo">{err}</p>; if (!d) return <p className="empty">Đang tải…</p>;
   const pending = cl ? (cl.claims as any[]).filter((c) => c.status === "review" || c.status === "info").length : null;
-  const queue: [string, number | null, string, string][] = [["Yêu cầu xác thực chờ duyệt", pending, "#/quan-tri/xac-thuc", "Duyệt hoặc từ chối"], ["Người Top 2% chưa gắn hồ sơ", t2 ? t2.items.filter((i) => !t2.map[i.name]).length : null, "#/quan-tri/top2", "Chọn đúng hồ sơ"], ["Hồ sơ nghi gộp nhiều người", mr ? mr.profiles.filter((p) => !mr.map[p.id]).length : null, "#/quan-tri/nghi-gop", "Xác nhận một người hay nhiều"], ["Xác thực sắp hết hạn (60 ngày)", cl ? cl.expiring : null, "#/quan-tri/xac-thuc", "Gia hạn"]];
+  const queue: [string, number | null, string, string][] = [["Yêu cầu xác thực chờ duyệt", pending, "#/quan-tri/xac-thuc", "Duyệt hoặc từ chối"], ["Đề nghị từ biểu mẫu (bổ sung, đính chính, gỡ hồ sơ)", rq ? rq.items.filter((x) => x.status === "new").length : null, "#/quan-tri/de-nghi", "Xem và xử lý"], ["Người Top 2% chưa gắn hồ sơ", t2 ? t2.items.filter((i) => !t2.map[i.name]).length : null, "#/quan-tri/top2", "Chọn đúng hồ sơ"], ["Hồ sơ nghi gộp nhiều người", mr ? mr.profiles.filter((p) => !mr.map[p.id]).length : null, "#/quan-tri/nghi-gop", "Xác nhận một người hay nhiều"], ["Xác thực sắp hết hạn (60 ngày)", cl ? cl.expiring : null, "#/quan-tri/xac-thuc", "Gia hạn"]];
   return (
     <>
       <section className="queue" aria-label="Việc cần làm"><h2>Việc cần làm</h2>
@@ -459,6 +459,29 @@ function Evidence({ r, name }: { r: MRev; name: (id: string) => string }) {
 }
 type T2C = { id: string; name: string; works: number; units: string[]; firstYear?: number; citations?: number; inProfind: boolean; rank: number | null };
 type T2I = { name: string; inst: string; field: string; subfield: string; rank: number; np: number; firstyr: number; lastyr: number; topCntry: string; scope: string; dup: boolean; cands: T2C[] };
+type ReqRec = { id: string; kind: string; author: string; authorName: string; name: string; email: string; orcid: string; scholar: string; msg: string; at: number; status: string; doneAt?: number; doneBy?: string };
+const REQ_KIND: Record<string, string> = { claim: "Xác nhận hồ sơ (đây là tôi)", correct: "Đính chính thông tin / công trình", remove: "Gỡ hồ sơ", add: "Đề nghị bổ sung nhà nghiên cứu" };
+/** Đề nghị gửi từ biểu mẫu trên trang ProFind: lưu ở máy chủ nên không bị sót khi không xem email. Xử lý xong thì bấm "Đã xử lý". Tra cứu theo docs/XU-LY-DE-NGHI-BO-SUNG.md. */
+function Requests() {
+  const [ver, setVer] = useState(0), [view, setView] = useState<"new" | "done">("new"), [msg, setMsg] = useState("");
+  const { d, err } = useGet<{ items: ReqRec[] }>("admin-reqs", `&v=${ver}`);
+  if (err) return <p className="banner demo">{err}</p>; if (!d) return <p className="empty" role="status">Đang tải…</p>;
+  const todo = d.items.filter((x) => x.status === "new"), done = d.items.filter((x) => x.status !== "new"), rows = view === "new" ? todo : done;
+  const mark = async (id: string, isDone: boolean) => { try { await api("admin-req-done", { id, done: isDone }); setMsg(isDone ? "Đã ghi xử lý." : "Đã mở lại."); setVer((x) => x + 1); } catch (e) { setMsg((e as Error).message); } };
+  return (
+    <section className="card"><h2>Đề nghị từ biểu mẫu</h2>
+      <p className="meta">Mỗi đề nghị gửi từ trang ProFind (bổ sung nhà nghiên cứu, xác nhận, đính chính, gỡ hồ sơ) được lưu ở đây, kèm email báo như trước. Hệ thống chưa tự sửa dữ liệu: xác minh người gửi rồi xử lý, sau đó bấm "Đã xử lý". Chỉ lưu các đề nghị gửi từ khi có mục này.</p>
+      <p className="sprow2"><button type="button" className={view === "new" ? "primary" : ""} onClick={() => setView("new")}>Chưa xử lý ({todo.length})</button> <button type="button" className={view === "done" ? "primary" : ""} onClick={() => setView("done")}>Đã xử lý ({done.length})</button></p>
+      <div role="status" aria-live="polite">{msg && <p className="banner"><Icon n="check" />{msg}</p>}</div>
+      {rows.length === 0 ? <p className="meta">{view === "new" ? "Không còn đề nghị nào." : "Chưa có đề nghị đã xử lý."}</p> : <ul className="mxlist">{rows.map((x) => (
+        <li key={x.id}><b>{REQ_KIND[x.kind] ?? x.kind}</b> <span className="meta">· {new Date(x.at).toLocaleString("vi-VN")}</span>
+          <p className="meta">{x.name || "(không ghi tên)"} · {x.email}{x.orcid ? ` · ORCID ${x.orcid}` : ""}{x.author ? <> · hồ sơ <a href={`#/tac-gia/${x.author}`} target="_blank" rel="noopener">{x.authorName || x.author}</a></> : ""}{x.scholar ? <> · <a href={x.scholar} target="_blank" rel="noopener noreferrer">Google Scholar</a></> : ""}{x.orcid ? <> · <a href={`https://orcid.org/${x.orcid.replace(/^(\d{4})-?(\d{4})-?(\d{4})-?(\d{3}[\dXx])$/, "$1-$2-$3-$4")}`} target="_blank" rel="noopener noreferrer">ORCID</a></> : ""}</p>
+          {x.msg && <p>{x.msg}</p>}
+          <p>{x.status === "new" ? <button type="button" className="primary" onClick={() => void mark(x.id, true)}>Đã xử lý</button> : <><span className="meta">Xử lý {x.doneAt ? new Date(x.doneAt).toLocaleDateString("vi-VN") : ""}{x.doneBy ? ` bởi ${x.doneBy}` : ""} </span><button type="button" onClick={() => void mark(x.id, false)}>Mở lại</button></>}</p></li>))}</ul>}
+    </section>
+  );
+}
+
 /** Người trong danh sách Top 2% (Việt Nam) chưa gắn được hồ sơ ProFind: chọn đúng hồ sơ trong các ứng viên hoặc ghi "không có/không gắn". Xuất JSON để đưa vào data/top2/overrides.json. */
 function Top2Review() {
   const [ver, setVer] = useState(0), [view, setView] = useState<"todo" | "done">("todo"), [msg, setMsg] = useState(""), [loc, setLoc] = useState<Record<string, string>>({});
