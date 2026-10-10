@@ -73,13 +73,35 @@ function CandCard({ c, idx, sel, gone, onPick, onNo, onUndo }: { c: Cand; idx: I
   );
 }
 
+let idxCache: Promise<Idx> | null = null;
+const loadIdx = () => (idxCache ??= fetch("./data/suggest.json").then((r) => r.json()).catch((e) => { idxCache = null; throw e; }));
+const SNOOZE = "profind.sgsnooze", DAYS7 = 7 * 864e5;
+
+/** Thẻ nhắc ở đầu tab Hồ sơ cho người chưa có hồ sơ xác thực (kể cả người đăng ký từ trước khi có tính năng): bấm vào để xem gợi ý lúc nào cũng được. */
+export function SuggestNudge({ user }: { user: User }) {
+  const hid = useHidden(), [idx, setIdx] = useState<Idx | null>(null), [hide, setHide] = useState(() => { try { return Date.now() - Number(localStorage.getItem(SNOOZE)) < DAYS7; } catch { return false; } });
+  useEffect(() => { if (!hide) loadIdx().then(setIdx).catch(() => {}); }, [hide]);
+  const vis = useMemo(() => (idx ? suggest(idx, user, hid.profile).filter((c) => c.score >= 45).slice(0, 3) : []), [idx, user, hid]);
+  if (hide || !idx) return null;
+  const snooze = () => { try { localStorage.setItem(SNOOZE, String(Date.now())); } catch { /* bỏ qua */ } setHide(true); };
+  return (
+    <section className="card sg-nudge" aria-label="Gợi ý hồ sơ">
+      <div className="sg-nudge-top"><span className="kic" aria-hidden="true"><Icon n="scholar" size={20} /></span>
+        <div><h2>{vis.length ? "Có phải bạn trong ProFind?" : "Nhận tick xác thực cho hồ sơ của bạn"}</h2>
+          <p className="meta">{vis.length ? `ProFind tìm thấy ${vis.length} hồ sơ có thể là bạn. Chọn đúng hồ sơ để xác thực, mất chưa tới một phút.` : "Tìm hồ sơ của bạn trong hơn 17.000 nhà khoa học, rồi gửi yêu cầu xác thực."}</p></div></div>
+      {vis.length > 0 && <ul className="sg-nudge-list">{vis.map((c) => <li key={c.id}><span className="sg-av" style={{ background: HUES[c.id.length % HUES.length], width: 34, height: 34, fontSize: ".8rem" }}>{ini(c.name)}</span><span><b>{c.name}</b><small>{c.units.map((u) => idx.i[u]?.[0] ?? u).slice(0, 1).join("") || "Chưa rõ đơn vị"} · {band(c.score)[0].toLowerCase()}</small></span></li>)}</ul>}
+      <div className="sg-btns"><a className="primary" href="#/tai-khoan/nhan-dien" onClick={() => evt("sg_nudge_open")}>{vis.length ? "Xem gợi ý" : "Tìm hồ sơ của tôi"}</a><button type="button" className="ghost" onClick={snooze}>Nhắc sau</button></div>
+    </section>
+  );
+}
+
 export function SuggestPage({ user }: { user: User }) {
   const hid = useHidden(), { list: mine } = useMine();
   const [idx, setIdx] = useState<Idx | null>(null), [err, setErr] = useState(false);
   const [step, setStep] = useState(0), [sel, setSel] = useState<string | null>(null), [gone, setGone] = useState<Set<string>>(new Set());
   const [manual, setManual] = useState(false), [q, setQ] = useState(""), [orcid, setOrcid] = useState(""), [busy, setBusy] = useState(false), [msg, setMsg] = useState(""), [res, setRes] = useState<{ status: string; until: number | null } | null>(null);
   const back = () => { let b = "#/tai-khoan"; try { b = sessionStorage.getItem("profind.sgback") || b; sessionStorage.removeItem("profind.sgback"); } catch { /* bỏ qua */ } location.hash = b; };
-  useEffect(() => { fetch("./data/suggest.json").then((r) => r.json()).then(setIdx).catch(() => setErr(true)); }, []);
+  useEffect(() => { loadIdx().then(setIdx).catch(() => setErr(true)); }, []);
   const cands = useMemo(() => (idx ? suggest(idx, user, hid.profile, orcid) : []), [idx, user, hid, orcid]);
   const vis = cands.filter((c) => c.score >= 45).slice(0, 3);
   const found = useMemo(() => { const t = fold(q); if (!idx || t.length < 3) return []; const oc = q.replace(/[^0-9X]/gi, ""); return idx.a.filter((r) => !hid.profile.has(r[0]) && (fold(r[1]).includes(t) || (oc.length >= 8 && r[6].replace(/[^0-9X]/gi, "").includes(oc)))).sort((a, b) => b[3] - a[3]).slice(0, 6); }, [idx, q, hid]);

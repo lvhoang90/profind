@@ -5,7 +5,7 @@ import { useAccount, api, type User } from "./accountStore";
 import { EcoLink } from "./Footer";
 import { evt } from "./analytics";
 import { ScholarConsole, useMine } from "./Verified";
-import { SuggestPage } from "./Suggest";
+import { SuggestPage, SuggestNudge } from "./Suggest";
 import { Achievements, StarStrip, InviteCard } from "./Achievements";
 
 const TABS: [string, string, IconName][] = [["", "tabProfile", "user"], ["thanh-tich", "Thành tích", "star"], ["tong-quan", "tabOverview", "grid"], ["da-luu", "tabSaved", "star"], ["tim-kiem", "tabSearches", "search"], ["da-xem", "tabViewed", "eye"]];
@@ -189,7 +189,7 @@ function Viewed() {
 function ProfileTab({ user, mine, reload }: { user: User; mine: import("./Verified").Mine[] | null; reload: () => void }) {
   const has = !!mine?.length;
   return has ? <><ScholarConsole list={mine} reload={reload} /><h2 className="prof-sci">Tài khoản của tôi</h2><Profile user={user} /><InviteCard user={user} compact /></>
-    : <><Profile user={user} /><h2 className="prof-sci">Hồ sơ khoa học</h2><ScholarConsole list={mine} reload={reload} /><InviteCard user={user} compact /></>;
+    : <>{mine && <SuggestNudge user={user} />}<Profile user={user} /><h2 className="prof-sci">Hồ sơ khoa học</h2><ScholarConsole list={mine} reload={reload} /><InviteCard user={user} compact /></>;
 }
 function Profile({ user }: { user: User }) {
   const { t } = useT();
