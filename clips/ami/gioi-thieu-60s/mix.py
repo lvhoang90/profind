@@ -1,7 +1,7 @@
-import json, numpy as np, soundfile as sf
+import sys, json, numpy as np, soundfile as sf
 from scipy.signal import resample_poly, butter, lfilter
 SR=44100; T=60.0; n=int(SR*T); t=np.arange(n)/SR
-tl=json.load(open('tl.json'))['scenes']
+tl=json.load(open('tl.en.json' if len(sys.argv)>1 else 'tl.json'))['scenes']
 rng=np.random.default_rng(7)
 def put(buf,x,t0,g=1.0):
     i=int(round(t0*SR)); 
@@ -9,7 +9,7 @@ def put(buf,x,t0,g=1.0):
     x=x[:len(buf)-i]; buf[i:i+len(x)]+=x*g
 vo=np.zeros(n)
 for i,s in enumerate(tl):
-    a=np.load(f's{i+1}.npy'); a=a.astype(np.float64)
+    a=np.load(f"{'en_' if len(sys.argv)>1 else ''}s{i+1}.npy"); a=a.astype(np.float64)
     a/= max(1e-6,np.max(np.abs(a))); put(vo,a,s['v'],0.95)
 # giọng: lọc cao nhẹ + nén mềm
 b,a_=butter(2,90/(SR/2),'high'); vo=lfilter(b,a_,vo); vo=np.tanh(vo*1.6)/1.25
@@ -41,4 +41,4 @@ env=np.abs(vo); w=int(SR*.3); env=np.convolve(env,np.ones(w)/w,'same'); duck=1-.
 mus*=duck*np.minimum(1,np.minimum(t/1.5,(T-t)/2.5))*.75
 mix=vo*1.0+mus+sfx*.8
 pk=np.max(np.abs(mix)); mix=mix/max(1,pk/.9)
-sf.write('mix.wav',mix.astype(np.float32),SR); print('ok',pk)
+sf.write('mix.en.wav' if len(sys.argv)>1 else 'mix.wav',mix.astype(np.float32),SR); print('ok',pk)

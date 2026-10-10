@@ -34,3 +34,11 @@ python3 eleven.py gioi-thieu-60s            # tạo vo/s*.mp3, s*.npy, cập nh�
 python3 eleven.py gioi-thieu-60s --only 6   # chỉ tạo lại câu 6 (xóa vo/s6.mp3 trước nếu đổi lời)
 ```
 Từ tiếng Anh được viết lại cách đọc trong `eleven.py` (bảng `RESPELL`); chỉnh bảng đó nếu nghe chưa đúng. Sau đó: `python3 build.py` → `node render.mjs` → `python3 mix.py` → ghép bằng lệnh ffmpeg ở trên. `tts.py` (Piper) chỉ còn để thử.
+
+## Bản tiếng Anh (giọng Việt Hoàng nói tiếng Anh)
+Lời tiếng Anh nằm ở trường `en` của từng cảnh trong `tl.json` (hình giữ nguyên tiếng Việt, không phụ đề).
+```
+python3 eleven.py gioi-thieu-60s --lang en   # ra vo-en/, en_s*.npy, tl.en.json
+python3 mix.py en                            # ra mix.en.wav
+ffmpeg -framerate 30 -i frames/f%04d.jpg -i mix.en.wav -c:v libx264 -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -t 60 clip.en.mp4
+```

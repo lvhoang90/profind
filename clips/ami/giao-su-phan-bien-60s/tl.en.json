@@ -2,7 +2,7 @@
  "scenes": [
   {
    "v": 0.3,
-   "dur": 4.17,
+   "dur": 4.52,
    "text": "Ngày bảo vệ, hội đồng đối diện. Giá như được bảo vệ thử trước?",
    "start": 0,
    "end": 6.32,
@@ -10,7 +10,7 @@
   },
   {
    "v": 6.62,
-   "dur": 1.79,
+   "dur": 1.26,
    "text": "Giáo sư phản biện của Ami!",
    "start": 6.32,
    "end": 9.1,
@@ -18,7 +18,7 @@
   },
   {
    "v": 9.4,
-   "dur": 4.29,
+   "dur": 4.23,
    "text": "Chọn loại văn bản, tải mẫu phiếu nhận xét. Ami làm theo mẫu.",
    "start": 9.1,
    "end": 14.16,
@@ -26,7 +26,7 @@
   },
   {
    "v": 14.46,
-   "dur": 3.85,
+   "dur": 3.99,
    "text": "Ami đọc toàn văn, nhận xét như giáo sư khó tính.",
    "start": 14.16,
    "end": 18.78,
@@ -34,7 +34,7 @@
   },
   {
    "v": 19.08,
-   "dur": 3.89,
+   "dur": 3.18,
    "text": "Mỗi nhận xét kèm trích dẫn nguyên văn, đối chiếu với bản gốc.",
    "start": 18.78,
    "end": 23.99,
@@ -42,7 +42,7 @@
   },
   {
    "v": 24.29,
-   "dur": 5.49,
+   "dur": 4.89,
    "text": "Điểm do mã lệnh cộng. Lỗi nghiêm trọng thì kết luận tối đa là sửa lớn.",
    "start": 23.99,
    "end": 29.93,
@@ -50,7 +50,7 @@
   },
   {
    "v": 30.23,
-   "dur": 3.84,
+   "dur": 3.22,
    "text": "Kèm câu hỏi cho tác giả. Tập trả lời trước, bớt bất ngờ.",
    "start": 29.93,
    "end": 34.89,
@@ -58,7 +58,7 @@
   },
   {
    "v": 35.19,
-   "dur": 3.82,
+   "dur": 2.95,
    "text": "Sửa trên màn hình, điểm tự tính lại. Xuất ra Word.",
    "start": 34.89,
    "end": 39.15,
@@ -74,7 +74,7 @@
   },
   {
    "v": 43.25,
-   "dur": 5.99,
+   "dur": 5.2,
    "text": "Ami chỉ hỗ trợ soạn thảo, không thay hội đồng, không kiểm tra đạo văn.",
    "start": 42.95,
    "end": 49.39,
@@ -82,7 +82,7 @@
   },
   {
    "v": 49.69,
-   "dur": 4.64,
+   "dur": 3.52,
    "text": "Dành cho nhà nghiên cứu đã xác thực. Gửi yêu cầu kèm minh chứng ngay!",
    "start": 49.39,
    "end": 55.11,
@@ -90,7 +90,7 @@
   },
   {
    "v": 55.41,
-   "dur": 4.39,
+   "dur": 2.96,
    "text": "Giáo sư phản biện của Ami. Đến trước hội đồng một bước.",
    "start": 55.11,
    "end": 60,

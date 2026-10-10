@@ -1,7 +1,7 @@
-import json, numpy as np, soundfile as sf
+import sys, json, numpy as np, soundfile as sf
 from scipy.signal import resample_poly, butter, lfilter
 SR=44100; T=60.0; n=int(SR*T); t=np.arange(n)/SR
-tl=json.load(open('tl.json'))['scenes']; S=lambda i:tl[i]['start']
+tl=json.load(open('tl.en.json' if len(sys.argv)>1 else 'tl.json'))['scenes']; S=lambda i:tl[i]['start']
 rng=np.random.default_rng(11)
 def put(buf,x,t0,g=1.0):
     i=int(round(t0*SR))
@@ -13,7 +13,7 @@ def hp(x,fc): b,a=butter(2,fc/(SR/2),'high'); return lfilter(b,a,x)
 def lp(x,fc): b,a=butter(2,fc/(SR/2),'low'); return lfilter(b,a,x)
 vo=np.zeros(n)
 for i,s in enumerate(tl):
-    a=np.load(f's{i+1}.npy'); a=a.astype(np.float64); a/=max(1e-6,np.max(np.abs(a))); put(vo,a,s['v'],.95)
+    a=np.load(f"{'en_' if len(sys.argv)>1 else ''}s{i+1}.npy"); a=a.astype(np.float64); a/=max(1e-6,np.max(np.abs(a))); put(vo,a,s['v'],.95)
 b,a_=butter(2,90/(SR/2),'high'); vo=lfilter(b,a_,vo); vo=np.tanh(vo*1.6)/1.25
 M=lambda m:440*2**((m-69)/12)
 def whoosh(d=.5,g=.35): x=tt(d); nz=rng.standard_normal(len(x)); f=300*(7000/300)**(x/d); return bp(nz,300,9000)*np.sin(np.pi*x/d)**2*(.6+.4*np.sin(2*np.pi*np.cumsum(f)/SR))*g
@@ -70,4 +70,4 @@ mus*=duck*fade*.8; sfx*=(1-.35*np.clip(env*7,0,1))
 mix=vo+mus+sfx*.85
 mix=np.tanh(mix*1.15)/1.0
 pk=np.max(np.abs(mix)); mix=mix/max(1,pk/.92)
-sf.write('mix.wav',mix.astype(np.float32),SR); print('ok',pk)
+sf.write('mix.en.wav' if len(sys.argv)>1 else 'mix.wav',mix.astype(np.float32),SR); print('ok',pk)

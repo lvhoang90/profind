@@ -4,3 +4,6 @@ scene.built.html
 mix.wav
 clip.mp4
 vo/*.wav
+mix.en.wav
+clip.en.mp4
+vo-en/*.wav
