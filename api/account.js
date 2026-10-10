@@ -384,6 +384,45 @@ export default async function handler(request) {
       const m = {}; for (const [k, v] of Object.entries(pairs(await one(["HGETALL", "profind:ins"])))) { const o = jparse(v); if (o) m[k] = o; }
       return json({ map: m }, 200, { "cache-control": "public, max-age=0, s-maxage=30, stale-while-revalidate=60" });
     }
+    // ---- Kết nối ISA: Mây (hoặc ứng dụng ISA khác) đã xác thực email nên ProFind không gửi mã lần nữa ----
+    // Mã kết nối: v1.<payload base64url>.<HMAC-SHA256 hex>, ký bằng ISA_CONNECT_SECRET (cùng giá trị ở hai máy chủ), sống 10 phút, dùng một lần.
+    const CONNECT_SECRET = process.env.ISA_CONNECT_SECRET || "";
+    const csign = async (s) => { const key = await crypto.subtle.importKey("raw", enc.encode(CONNECT_SECRET), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]); return hex(await crypto.subtle.sign("HMAC", key, enc.encode(s))); };
+    if (op === "connect" && request.method === "POST") {
+      if (CONNECT_SECRET.length < 16) return json({ error: "Liên kết ISA chưa được bật." }, 503);
+      if (!(await limit(`conn:${await sha((request.headers.get("x-forwarded-for") || "?").split(",")[0].trim(), 16)}`, 20, 3600))) return json({ error: "Bạn thử quá nhiều lần, hãy thử lại sau." }, 429);
+      const [ver, pl, sig] = String(body.t || "").split(".");
+      let p = null; try { if (ver === "v1" && pl && sig && safeEq(sig, await csign(`v1.${pl}`))) p = JSON.parse(unb64url(pl)); } catch { p = null; }
+      if (!p || !(Number(p.exp) > Date.now()) || Number(p.exp) - Date.now() > 15 * 60e3 || !/^[a-f0-9]{16,64}$/.test(String(p.jti || ""))) return json({ error: "Liên kết đã hết hạn. Hãy quay lại Mây và bấm kết nối lại." }, 400);
+      const email = String(p.e || "").trim().toLowerCase(); if (!EMAIL_RE.test(email)) return json({ error: "Email không hợp lệ." }, 400);
+      if ((await one(["SET", `profind:cj:${p.jti}`, "1", "EX", "1200", "NX"])) !== "OK") return json({ error: "Liên kết này đã được dùng. Hãy quay lại Mây và bấm kết nối lại." }, 400);
+      const id = await sha(email); let user = await loadUser(id), isNew = false; const now = new Date().toISOString();
+      if (!user) {
+        const phone = normPhone(p.ph); if (!PHONE_RE.test(phone)) return json({ error: "Cần số điện thoại di động Việt Nam để tạo tài khoản ProFind." }, 400);
+        if (p.cs !== true) return json({ error: "Thiếu sự đồng ý của người dùng." }, 400);
+        isNew = true;
+        user = { id, email, lang: p.lg === "en" ? "en" : "vi", name: tidy(p.n, 80), phone, job: "", org: "", address: "", createdAt: now, verifiedAt: now, consentAt: now, regVisits: 0, regReason: "eco", via: "isa-connect", noMail: true };
+        await store.run([["SET", K.user(id), JSON.stringify(user)], ["SADD", K.users, id], ["HINCRBY", `profind:all:evt:${dayKey()}`, "reg_done", 1], ["HINCRBY", `profind:all:evt:${dayKey()}`, "connect_new", 1], ["EXPIRE", `profind:all:evt:${dayKey()}`, 60 * 86400]]);
+        await ensureRef(user);
+      } else {
+        await store.run([["HINCRBY", `profind:all:evt:${dayKey()}`, "connect_old", 1], ["EXPIRE", `profind:all:evt:${dayKey()}`, 60 * 86400]]);
+      }
+      if (!user.link) { user.link = { from: "may", at: now }; await saveUser(user); }
+      await one(["HINCRBY", K.cnt(id), "login", "1"]);
+      const aid = /^A\d{5,12}$/.test(String(p.a || "")) ? String(p.a) : "";
+      return json({ user: pub(user, pairs(await one(["HGETALL", K.cnt(id)]))), isNew, authorId: aid }, 200, cookie(await signToken(id), SESSION_DAYS * 86400));
+    }
+    // Mây hỏi trạng thái để hiện đúng ở bên Mây (máy chủ tới máy chủ): GET ?op=link-status&e=<email>&ts=<ms>&sig=<HMAC("ls:"+email+":"+ts)>
+    if (op === "link-status" && request.method === "GET") {
+      if (CONNECT_SECRET.length < 16) return json({ error: "Liên kết ISA chưa được bật." }, 503);
+      const e = String(url.searchParams.get("e") || "").trim().toLowerCase(), ts = Number(url.searchParams.get("ts")), sg = String(url.searchParams.get("sig") || "");
+      if (!EMAIL_RE.test(e) || !(Math.abs(Date.now() - ts) < 5 * 60e3) || !safeEq(sg, await csign(`ls:${e}:${ts}`))) return json({ error: "Chữ ký không hợp lệ." }, 403);
+      const u = await loadUser(await sha(e)), t = Date.now();
+      if (!u) return json({ registered: false });
+      const vf = (await allVf()).filter((v) => v.email === e && v.until > t).sort((a, b) => b.until - a.until)[0];
+      const cl = (await allClaims()).filter((c) => c.email === e && (c.kind ?? "claim") === "claim").sort((a, b) => b.createdAt - a.createdAt)[0];
+      return json({ registered: true, verified: !!vf, authorId: vf?.authorId || cl?.authorId || "", pending: !vf && !!cl && (cl.status === "review" || cl.status === "info") });
+    }
     if (op === "verified" && request.method === "GET") {
       const t = Date.now(); const items = (await allVf()).filter((v) => v.until > t).map((v) => [v.authorId, v.until]);
       return json({ items }, 200, { "cache-control": "public, s-maxage=300, stale-while-revalidate=600" });
