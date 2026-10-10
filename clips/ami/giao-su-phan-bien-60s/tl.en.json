@@ -2,95 +2,95 @@
  "scenes": [
   {
    "v": 0.3,
-   "dur": 3.82,
-   "text": "Ngày bảo vệ, hội đồng đối diện. Giá như được bảo vệ thử trước?",
+   "dur": 5.86,
+   "text": "Ngày bảo vệ đến. Hội đồng ngồi đối diện. Nếu bạn được bảo vệ trước một lần, ngay trên bản thảo của mình?",
    "start": 0,
    "end": 6.32,
-   "en": "Defense day. The committee faces you. What if you could rehearse first?"
+   "en": "Defense day arrives. The committee sits across from you. What if you could defend once beforehand, right on your own draft?"
   },
   {
    "v": 6.62,
-   "dur": 1.26,
-   "text": "Giáo sư phản biện của Ami!",
+   "dur": 2.31,
+   "text": "Giáo sư phản biện. Tính năng cao cấp của Ami!",
    "start": 6.32,
    "end": 9.1,
-   "en": "Ami's Reviewer Professor!"
+   "en": "Reviewer Professor. A premium feature of Ami!"
   },
   {
    "v": 9.4,
-   "dur": 3.24,
-   "text": "Chọn loại văn bản, tải mẫu phiếu nhận xét. Ami làm theo mẫu.",
+   "dur": 4.08,
+   "text": "Chọn loại văn bản, tải mẫu phiếu nhận xét của đơn vị bạn. Ami làm theo từng mục của mẫu.",
    "start": 9.1,
    "end": 14.16,
-   "en": "Choose a document type, upload your review form. Ami follows it."
+   "en": "Choose the document type, upload your unit's review form. Ami follows it."
   },
   {
    "v": 14.46,
-   "dur": 2.96,
-   "text": "Ami đọc toàn văn, nhận xét như giáo sư khó tính.",
+   "dur": 4.03,
+   "text": "Ami đọc toàn văn, rồi nhận xét từng phần như một giáo sư khó tính nhưng công bằng.",
    "start": 14.16,
    "end": 18.78,
-   "en": "Ami reads everything, then reviews like a tough but fair professor."
+   "en": "Ami reads the full text, then reviews each part like a strict but fair professor."
   },
   {
    "v": 19.08,
-   "dur": 2.92,
-   "text": "Mỗi nhận xét kèm trích dẫn nguyên văn, đối chiếu với bản gốc.",
+   "dur": 4.76,
+   "text": "Mỗi nhận xét kèm trích dẫn nguyên văn, và được máy đối chiếu với bản gốc. Không bịa, không đoán!",
    "start": 18.78,
    "end": 23.99,
-   "en": "Every comment quotes the text, checked against your original."
+   "en": "Every comment quotes the text verbatim, machine-checked against the original. No guessing!"
   },
   {
    "v": 24.29,
-   "dur": 4.63,
-   "text": "Điểm do mã lệnh cộng. Lỗi nghiêm trọng thì kết luận tối đa là sửa lớn.",
+   "dur": 5.36,
+   "text": "Điểm đề xuất do mã lệnh cộng lên, kèm kết luận. Gặp lỗi nghiêm trọng, kết luận không thể tốt hơn sửa lớn.",
    "start": 23.99,
    "end": 29.93,
-   "en": "Code adds up the proposed score. Serious flaws cap the verdict at major revision."
+   "en": "Code adds up the suggested score, with a verdict. A serious flaw caps it at major revision."
   },
   {
    "v": 30.23,
-   "dur": 2.63,
-   "text": "Kèm câu hỏi cho tác giả. Tập trả lời trước, bớt bất ngờ.",
+   "dur": 4.52,
+   "text": "Kèm câu hỏi dành cho tác giả. Tập trả lời trước, để ngày bảo vệ không còn bất ngờ.",
    "start": 29.93,
    "end": 34.89,
-   "en": "Questions for the author, so you can practice answering."
+   "en": "Questions for the author. Practice answering first, so defense day holds no surprises."
   },
   {
    "v": 35.19,
-   "dur": 2.71,
-   "text": "Sửa trên màn hình, điểm tự tính lại. Xuất ra Word.",
+   "dur": 3.71,
+   "text": "Sửa ngay trên màn hình, tổng điểm tự tính lại. Một chạm, xuất ra Word.",
    "start": 34.89,
    "end": 39.15,
-   "en": "Edit on screen, the total recalculates. Export to Word."
+   "en": "Edit right on screen, the total recalculates. One tap, export to Word."
   },
   {
    "v": 39.45,
-   "dur": 1.92,
-   "text": "Là giảng viên? Chấm ba mươi bài một lúc.",
+   "dur": 3.37,
+   "text": "Là giảng viên? Chấm một lúc ba mươi bài, mỗi bài một tệp Word.",
    "start": 39.15,
    "end": 42.95,
-   "en": "A lecturer? Grade thirty papers at once."
+   "en": "A lecturer? Grade thirty papers at once, one Word file per paper."
   },
   {
    "v": 43.25,
-   "dur": 4.36,
-   "text": "Ami chỉ hỗ trợ soạn thảo, không thay hội đồng, không kiểm tra đạo văn.",
+   "dur": 5.99,
+   "text": "Ami chỉ là trợ thủ soạn thảo: không thay hội đồng thật, không kiểm tra đạo văn. Người phản biện vẫn chịu trách nhiệm cuối cùng.",
    "start": 42.95,
    "end": 49.39,
-   "en": "Ami only assists drafting. It never replaces a real committee or checks plagiarism."
+   "en": "Ami only assists drafting: it doesn't replace a real committee or check plagiarism. The reviewer stays responsible."
   },
   {
    "v": 49.69,
-   "dur": 3.43,
-   "text": "Dành cho nhà nghiên cứu đã xác thực. Gửi yêu cầu kèm minh chứng ngay!",
+   "dur": 5.07,
+   "text": "Dành cho nhà nghiên cứu đã xác thực và được quản trị viên phê duyệt. Gửi yêu cầu kèm minh chứng ngay hôm nay!",
    "start": 49.39,
    "end": 55.11,
-   "en": "For verified researchers. Send a request with your evidence today!"
+   "en": "For researchers who are verified and approved by an administrator. Send a request with evidence today!"
   },
   {
    "v": 55.41,
-   "dur": 2.57,
+   "dur": 2.69,
    "text": "Giáo sư phản biện của Ami. Đến trước hội đồng một bước.",
    "start": 55.11,
    "end": 60,
