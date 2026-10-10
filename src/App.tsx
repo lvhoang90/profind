@@ -586,6 +586,19 @@ function Correction({ a }: { a: Author | null }) {
   const [state, setState] = useState<"idle" | "sending" | "ok" | "err">("idle");
   const [code, setCode] = useState("send");
   const [kind, setKind] = useState(a ? "claim" : "add");
+  const [ref, setRef] = useState(""), [orc, setOrc] = useState(""), [known, setKnown] = useState<{ id: string; name: string } | null>(null);
+  // Đề nghị bổ sung nhưng người dùng dán đường dẫn/mã hồ sơ hoặc ORCID đã có: báo ngay để họ chuyển sang xác nhận.
+  useEffect(() => {
+    if (a || kind !== "add") { setKnown(null); return; }
+    const id = /\bA\d{6,12}\b/.exec(ref)?.[0], ok = (/\d{4}-?\d{4}-?\d{4}-?\d{3}[\dXx]/.exec(ref + " " + orc)?.[0] ?? "").replace(/-/g, "").toUpperCase();
+    if (!id && !ok) { setKnown(null); return; }
+    let live = true;
+    fetch("./data/suggest.json").then((r) => r.json()).then((d: { a: (string | number)[][] }) => {
+      const r = d.a.find((x) => (id && x[0] === id) || (ok && String(x[6] ?? "").replace(/-/g, "").toUpperCase() === ok));
+      if (live) setKnown(r ? { id: String(r[0]), name: String(r[1]) } : null);
+    }).catch(() => live && setKnown(null));
+    return () => { live = false; };
+  }, [a, kind, ref, orc]);
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); setState("sending");
     const f = new FormData(e.currentTarget);
@@ -612,11 +625,12 @@ function Correction({ a }: { a: Author | null }) {
           <fieldset><legend className="sr">{t("corrTitle")}</legend>
             {([...(a ? [] : [["add", "kAdd"]]), ["claim", "kClaim"], ["correct", "kCorrect"], ...(a ? [["hide", "kHide"]] : []), ["remove", "kRemove"]] as [string, string][]).map(([k, l]) => <label key={k} className="radio"><input type="radio" name="kind" value={k} checked={kind === k} onChange={() => setKind(k)} />{t(l as "kClaim")}</label>)}
           </fieldset>
-          {!a && <label className="sel"><span>{t("fRef")}</span><input name="ref" required maxLength={160} /></label>}
+          {!a && <label className="sel"><span>{t("fRef")}</span><input name="ref" required maxLength={160} value={ref} onChange={(e) => setRef(e.target.value)} /></label>}
+          {known && <p className="banner" role="status"><Icon n="check" />{t("knownA")} <a href={`#/tac-gia/${encodeURIComponent(known.id)}`}>{known.name}</a>. {t("knownB")}</p>}
           <label className="sel"><span>{t("fName")}</span><input name="name" required maxLength={120} autoComplete="name" /></label>
           <label className="sel"><span>{t("fEmail")}</span><input name="email" type="email" required maxLength={160} autoComplete="email" /></label>
           <label className="sel"><span>{t("fScholar")}</span><input name="scholar" type="url" maxLength={300} placeholder="https://scholar.google.com/citations?user=…" /></label>
-          <label className="sel"><span>{t("fOrcid")}</span><input name="orcid" maxLength={40} defaultValue={a?.orcid ?? ""} placeholder="0000-0000-0000-0000" pattern="\d{4}-?\d{4}-?\d{4}-?\d{3}[\dXx]|" title="0000-0000-0000-0000" /></label>
+          <label className="sel"><span>{t("fOrcid")}</span><input name="orcid" maxLength={40} defaultValue={a?.orcid ?? ""} onChange={(e) => setOrc(e.target.value)} placeholder="0000-0000-0000-0000" pattern="\d{4}-?\d{4}-?\d{4}-?\d{3}[\dXx]|" title="0000-0000-0000-0000" /></label>
           <label className="sel"><span>{t("fMsg")}</span><textarea name="msg" rows={5} maxLength={4000} required={kind === "correct"} /></label>
           <input name="_honey" className="honey" tabIndex={-1} autoComplete="off" aria-hidden="true" />
           <p><button className="primary" disabled={state === "sending"}>{state === "sending" ? t("sending") : t("send")}</button></p>
