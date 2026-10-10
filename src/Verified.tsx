@@ -137,7 +137,7 @@ export function ScholarConsole({ list, reload }: { list: Mine[] | null; reload: 
     <section className="card sh-empty"><h2>Hồ sơ khoa học của tôi</h2>
       <p className="meta">Bạn chưa xác thực hồ sơ nào. Nhà khoa học đã xác thực có tick vàng, ảnh đại diện, giới thiệu, liên kết ORCID/Google Scholar và được ProFind hiển thị nổi bật.</p>
       <ol className="sh-steps"><li>Tìm tên bạn trên ProFind™</li><li>Mở hồ sơ, chọn <b>"Đây là tôi"</b></li><li>Gửi yêu cầu bằng email của trường/viện; thường duyệt trong ít ngày</li></ol>
-      <p><a className="primary" href="#/"><Icon n="search" size={16} />Tìm hồ sơ của tôi</a></p>
+      <p className="sh-act"><a className="primary" href="#/tai-khoan/nhan-dien"><Icon n="spark" size={16} />Gợi ý hồ sơ cho tôi</a><a className="ghost-link" href="#/"><Icon n="search" size={16} />Tự tìm hồ sơ</a></p>
     </section>
   );
   return <>{list.map((m) => <One key={m.authorId} m={m} reload={reload} />)}</>;
