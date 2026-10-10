@@ -1,0 +1,6 @@
+frames/
+scene.built.html
+*.npy
+mix.wav
+clip.mp4
+vo/*.wav

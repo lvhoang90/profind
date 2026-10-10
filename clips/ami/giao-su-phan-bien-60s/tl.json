@@ -1,88 +1,89 @@
 {
  "scenes": [
   {
-   "v": 1.2,
-   "dur": 4.67,
-   "text": "Ngày bảo vệ đến. Hội đồng ngồi đối diện. Nếu bạn được bảo vệ trước một lần, ngay trên bản thảo của mình?",
+   "v": 0.3,
+   "dur": 4.17,
+   "text": "Ngày bảo vệ, hội đồng đối diện. Giá như được bảo vệ thử trước?",
    "start": 0,
    "end": 6.32
   },
   {
    "v": 6.62,
-   "dur": 2.03,
-   "text": "Giáo sư phản biện. Tính năng cao cấp của Ami!",
+   "dur": 1.79,
+   "text": "Giáo sư phản biện của Ami!",
    "start": 6.32,
    "end": 9.1
   },
   {
    "v": 9.4,
-   "dur": 4.31,
-   "text": "Chọn loại văn bản, tải mẫu phiếu nhận xét của đơn vị bạn. Ami làm theo từng mục của mẫu.",
+   "dur": 4.29,
+   "text": "Chọn loại văn bản, tải mẫu phiếu nhận xét. Ami làm theo mẫu.",
    "start": 9.1,
    "end": 14.16
   },
   {
    "v": 14.46,
-   "dur": 3.87,
-   "text": "Ami đọc toàn văn, rồi nhận xét từng phần như một giáo sư khó tính nhưng công bằng.",
+   "dur": 3.85,
+   "text": "Ami đọc toàn văn, nhận xét như giáo sư khó tính.",
    "start": 14.16,
    "end": 18.78
   },
   {
    "v": 19.08,
-   "dur": 4.46,
-   "text": "Mỗi nhận xét kèm trích dẫn nguyên văn, và được máy đối chiếu với bản gốc. Không bịa, không đoán!",
+   "dur": 3.89,
+   "text": "Mỗi nhận xét kèm trích dẫn nguyên văn, đối chiếu với bản gốc.",
    "start": 18.78,
    "end": 23.99
   },
   {
    "v": 24.29,
-   "dur": 5.19,
-   "text": "Điểm đề xuất do mã lệnh cộng lên, kèm kết luận. Gặp lỗi nghiêm trọng, kết luận không thể tốt hơn sửa lớn.",
+   "dur": 5.49,
+   "text": "Điểm do mã lệnh cộng. Lỗi nghiêm trọng thì kết luận tối đa là sửa lớn.",
    "start": 23.99,
    "end": 29.93
   },
   {
    "v": 30.23,
-   "dur": 4.21,
-   "text": "Kèm câu hỏi dành cho tác giả. Tập trả lời trước, để ngày bảo vệ không còn bất ngờ.",
+   "dur": 3.84,
+   "text": "Kèm câu hỏi cho tác giả. Tập trả lời trước, bớt bất ngờ.",
    "start": 29.93,
    "end": 34.89
   },
   {
    "v": 35.19,
-   "dur": 3.51,
-   "text": "Sửa ngay trên màn hình, tổng điểm tự tính lại. Một chạm, xuất ra Word.",
+   "dur": 3.82,
+   "text": "Sửa trên màn hình, điểm tự tính lại. Xuất ra Word.",
    "start": 34.89,
    "end": 39.15
   },
   {
    "v": 39.45,
-   "dur": 3.05,
-   "text": "Là giảng viên? Chấm một lúc ba mươi bài, mỗi bài một tệp Word.",
+   "dur": 2.23,
+   "text": "Là giảng viên? Chấm ba mươi bài một lúc.",
    "start": 39.15,
    "end": 42.95
   },
   {
    "v": 43.25,
-   "dur": 5.69,
-   "text": "Ami chỉ là trợ thủ soạn thảo: không thay hội đồng thật, không kiểm tra đạo văn. Người phản biện vẫn chịu trách nhiệm cuối cùng.",
+   "dur": 5.99,
+   "text": "Ami chỉ hỗ trợ soạn thảo, không thay hội đồng, không kiểm tra đạo văn.",
    "start": 42.95,
    "end": 49.39
   },
   {
    "v": 49.69,
-   "dur": 4.97,
-   "text": "Dành cho nhà nghiên cứu đã xác thực và được quản trị viên phê duyệt. Gửi yêu cầu kèm minh chứng ngay hôm nay!",
+   "dur": 4.64,
+   "text": "Dành cho nhà nghiên cứu đã xác thực. Gửi yêu cầu kèm minh chứng ngay!",
    "start": 49.39,
    "end": 55.11
   },
   {
    "v": 55.41,
-   "dur": 2.4,
+   "dur": 4.39,
    "text": "Giáo sư phản biện của Ami. Đến trước hội đồng một bước.",
    "start": 55.11,
    "end": 60
   }
- ]
+ ],
+ "sr": 44100
 }

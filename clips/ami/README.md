@@ -25,6 +25,12 @@ Các tập lệnh đang trỏ vào `/tmp/ami/{v,a}` (clip giới thiệu) và `/
 ffmpeg -framerate 30 -i frames/f%04d.jpg -i mix.wav -c:v libx264 -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -t 60 clip.mp4
 ```
 
-## Việc còn lại: giọng ElevenLabs
-Dùng giọng "Trâm" (như clip EduFind 2.0), mô hình Multilingual v2, Stability 40%, Similarity 80%, Style 40%, bật Speaker boost; khóa trong biến `ELEVENLABS_API_KEY` (đặt ở cài đặt môi trường, không dán vào chat hay kho mã).
-Các từ tiếng Anh viết theo cách đọc tiếng Việt khi gửi lên, ví dụ: Ami → "A mi", AI → "ây ai", PDF → "pi đi ép", Word → "Quớt", EduFind → "E đu phai", ProFind → "Pờ rô phai", APA → "ây pi ây". Thử từng từ với giọng thật rồi chốt. Sau khi có tệp giọng, đặt vào `mix.py` thay cho `s*.npy` và ghép lại; mốc `v` trong `tl.json` tính lại theo độ dài thật của từng câu.
+## Giọng ElevenLabs (đã làm)
+Giọng **Việt Hoàng** (Sài Gòn, `aBSlddZX2jwWE6N7Tr5X`), Multilingual v2, Stability 40%, Similarity 80%, Style 40%, speed 1.15, Speaker boost; khóa trong biến `ELEVENLABS_API_KEY`.
+Giọng này đọc chậm hơn giọng máy nên lời dẫn đã rút gọn cho vừa từng cảnh (xem `loi-dan.md`).
+
+```
+python3 eleven.py gioi-thieu-60s            # tạo vo/s*.mp3, s*.npy, cập nhật v và dur trong tl.json
+python3 eleven.py gioi-thieu-60s --only 6   # chỉ tạo lại câu 6 (xóa vo/s6.mp3 trước nếu đổi lời)
+```
+Từ tiếng Anh được viết lại cách đọc trong `eleven.py` (bảng `RESPELL`); chỉnh bảng đó nếu nghe chưa đúng. Sau đó: `python3 build.py` → `node render.mjs` → `python3 mix.py` → ghép bằng lệnh ffmpeg ở trên. `tts.py` (Piper) chỉ còn để thử.

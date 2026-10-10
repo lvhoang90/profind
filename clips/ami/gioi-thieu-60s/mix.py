@@ -1,7 +1,7 @@
 import json, numpy as np, soundfile as sf
 from scipy.signal import resample_poly, butter, lfilter
 SR=44100; T=60.0; n=int(SR*T); t=np.arange(n)/SR
-tl=json.load(open('/tmp/ami/v/tl.json'))['scenes']
+tl=json.load(open('tl.json'))['scenes']
 rng=np.random.default_rng(7)
 def put(buf,x,t0,g=1.0):
     i=int(round(t0*SR)); 
@@ -9,7 +9,7 @@ def put(buf,x,t0,g=1.0):
     x=x[:len(buf)-i]; buf[i:i+len(x)]+=x*g
 vo=np.zeros(n)
 for i,s in enumerate(tl):
-    a=np.load(f's{i+1}.npy'); a=resample_poly(a,2,1).astype(np.float64)   # 22050 -> 44100
+    a=np.load(f's{i+1}.npy'); a=a.astype(np.float64)
     a/= max(1e-6,np.max(np.abs(a))); put(vo,a,s['v'],0.95)
 # giọng: lọc cao nhẹ + nén mềm
 b,a_=butter(2,90/(SR/2),'high'); vo=lfilter(b,a_,vo); vo=np.tanh(vo*1.6)/1.25
