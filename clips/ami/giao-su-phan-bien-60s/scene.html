@@ -1,0 +1,134 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#07060f;font-family:Inter,"Inter Display",sans-serif;color:#ece8f7}
+#bg{position:absolute;inset:0}
+#fx{position:absolute;inset:0}
+.abs{position:absolute}
+#cam{position:absolute;inset:0;transform-origin:50% 45%}
+.scn{position:absolute;inset:0}
+.top{left:60px;top:64px;display:flex;align-items:center;gap:18px;font:800 46px Inter;letter-spacing:-1px}
+.top img{width:66px;height:66px}
+.prem{right:60px;top:72px;font:800 28px Inter;letter-spacing:4px;color:#1a1100;background:linear-gradient(90deg,#fde68a,#f59e0b);padding:12px 26px;border-radius:99px;box-shadow:0 0 40px rgba(245,158,11,.5)}
+.h{left:70px;right:70px;font:800 94px/1.04 Inter;letter-spacing:-3px}
+.gold{background:linear-gradient(90deg,#fde68a,#fbbf24 45%,#f59e0b);-webkit-background-clip:text;color:transparent}
+.vio{background:linear-gradient(90deg,#c4b5fd,#a78bfa 50%,#38bdf8);-webkit-background-clip:text;color:transparent}
+.card{background:rgba(22,18,40,.86);border:1.5px solid rgba(167,139,250,.28);border-radius:38px;box-shadow:0 30px 90px rgba(0,0,0,.55)}
+.mut{color:#a59cc4}
+.chip{display:inline-flex;align-items:center;gap:10px;padding:12px 28px;border-radius:99px;font:700 34px Inter;background:rgba(167,139,250,.16);color:#c4b5fd;border:1.5px solid rgba(167,139,250,.38)}
+.chip.on{background:linear-gradient(90deg,#fde68a,#f59e0b);color:#1a1100;border-color:#f59e0b;box-shadow:0 0 36px rgba(245,158,11,.45)}
+.foot{left:60px;right:60px;bottom:44px;text-align:center;font:500 26px Inter;color:#6d6590}
+.bar{height:22px;border-radius:11px;background:rgba(167,139,250,.18);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:11px;background:linear-gradient(90deg,#fbbf24,#f59e0b)}
+</style></head><body>
+<canvas id="bg" width="1080" height="1920"></canvas><canvas id="fx" width="1080" height="1920"></canvas>
+<div id="cam"><div class="abs top" id="top"></div><div class="abs prem" id="prem" style="display:none">★ PREMIUM</div><div id="sc"></div></div>
+<div class="abs foot" id="foot">Dữ liệu và tên trong clip chỉ để minh họa</div>
+<script id="tl" type="application/json">__TL__</script>
+<script>
+const TL=JSON.parse(document.getElementById("tl").textContent).scenes;
+const ST=TL.map(s=>s.start),VS=TL.map(s=>s.v);
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),ease=x=>1-Math.pow(1-clamp(x),3),back=x=>{x=clamp(x);const c=1.70158;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)},seg=(t,a,b)=>clamp((t-a)/(b-a));
+const typed=(s,p)=>s.slice(0,Math.floor(s.length*clamp(p)));
+const pop=(u,a)=>{const p=back(seg(u,a,a+.5));return `opacity:${clamp(seg(u,a,a+.2))};transform:scale(${.6+.4*p}) translateY(${(1-p)*40}px)`};
+const rise=(u,a,d=44)=>{const p=ease(seg(u,a,a+.55));return `opacity:${p};transform:translateY(${(1-p)*d}px)`};
+const rnd=(i,k=1)=>((Math.sin(i*127.1*k+311.7)*43758.5453)%1+1)%1;
+// nền: tia sáng sân khấu + hạt vàng
+const bg=document.getElementById("bg").getContext("2d"),fx=document.getElementById("fx").getContext("2d");
+function drawBg(t,i){bg.clearRect(0,0,1080,1920);let g=bg.createLinearGradient(0,0,0,1920);g.addColorStop(0,"#0c0820");g.addColorStop(.55,"#07060f");g.addColorStop(1,"#0a0716");bg.fillStyle=g;bg.fillRect(0,0,1080,1920);
+ const warm=i>=1?1:0;
+ [[200,.0,"167,139,250"],[880,.5,"245,158,11"]].forEach(([x,ph,c],k)=>{const sw=Math.sin(t*.35+ph*6)*90;bg.save();bg.translate(x+sw,-60);bg.rotate((k?.22:-.22)+Math.sin(t*.3+k)*.04);const gr=bg.createLinearGradient(0,0,0,1900);gr.addColorStop(0,`rgba(${c},${.34*(k?warm:1)})`);gr.addColorStop(1,`rgba(${c},0)`);bg.fillStyle=gr;bg.beginPath();bg.moveTo(-40,0);bg.lineTo(40,0);bg.lineTo(300,1900);bg.lineTo(-300,1900);bg.fill();bg.restore()});
+ const r=bg.createRadialGradient(540,1000,100,540,1000,1100);r.addColorStop(0,"rgba(0,0,0,0)");r.addColorStop(1,"rgba(0,0,0,.65)");bg.fillStyle=r;bg.fillRect(0,0,1080,1920)}
+function drawFx(t,amt){fx.clearRect(0,0,1080,1920);for(let i=0;i<70;i++){const sp=.25+rnd(i,2)*.6,y=((1-((t*sp*60+rnd(i,3)*1920)%1920)/1920))*1920,x=rnd(i)*1080+Math.sin(t*.8+i)*30,a=(.15+.5*rnd(i,4))*amt*Math.min(1,y/300,(1920-y)/300);fx.fillStyle=`rgba(253,224,138,${a})`;fx.beginPath();fx.arc(x,y,1.5+rnd(i,5)*3.5,0,7);fx.fill()}}
+const LOGO=`<img src="ami-logo.svg">`;
+const star=(s,c="url(#sg)")=>`<svg width="${s}" height="${s}" viewBox="0 0 100 100"><defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#f59e0b"/></linearGradient></defs><path d="M50 6l13 28 31 4-23 21 6 31-27-15-27 15 6-31L6 38l31-4z" fill="${c}" stroke="#fff3c4" stroke-width="2" stroke-linejoin="round"/></svg>`;
+const judge=(c,glow)=>`<svg width="250" height="330" viewBox="0 0 250 330"><defs><linearGradient id="jb${c}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2150"/><stop offset="1" stop-color="#0d0a1f"/></linearGradient></defs><path d="M20 330c0-90 40-130 105-130s105 40 105 130z" fill="url(#jb${c})" stroke="rgba(167,139,250,${.35+glow*.6})" stroke-width="3"/><circle cx="125" cy="115" r="70" fill="url(#jb${c})" stroke="rgba(167,139,250,${.35+glow*.6})" stroke-width="3"/><rect x="85" y="105" width="30" height="8" rx="4" fill="rgba(251,191,36,${.2+glow*.8})"/><rect x="135" y="105" width="30" height="8" rx="4" fill="rgba(251,191,36,${.2+glow*.8})"/></svg>`;
+const page=(w,h,n,rot=0,extra="")=>`<div style="width:${w}px;height:${h}px;border-radius:16px;background:linear-gradient(160deg,#faf7ff,#e4def5);padding:${w*.1}px;transform:rotate(${rot}deg);box-shadow:0 30px 80px rgba(0,0,0,.6);${extra}"><div style="height:${h*.035}px;width:55%;border-radius:8px;background:#9a8fcf;margin-bottom:${h*.04}px"></div>${Array.from({length:n},(_,k)=>`<div style="height:${h*.018}px;width:${[100,94,98,88,96,70,100,92][k%8]}%;border-radius:6px;background:#cfc7ea;margin-bottom:${h*.025}px"></div>`).join("")}</div>`;
+const SECT=[["I. Tính cấp thiết","#a78bfa"],["II. Tổng quan","#38bdf8"],["III. Phương pháp","#fbbf24"],["IV. Kết quả","#34d399"],["V. Kết luận","#f472b6"]];
+
+function s0(u){ // hook
+ const v1=seg(u,.2,1.2),glow=ease(seg(u,3.2,5.5));
+ const J=[0,1,2].map(i=>`<div class="abs" style="left:${70+i*320}px;top:${760-(i==1?60:0)}px;opacity:${ease(seg(u,.1+i*.25,.9+i*.25))};transform:translateY(${(1-ease(seg(u,.1+i*.25,.9+i*.25)))*120}px) scale(${i==1?1.2:1})">${judge(i,glow)}</div>`).join("");
+ const table=`<div class="abs" style="left:0;right:0;top:1130px;height:420px;background:linear-gradient(180deg,#1b1438,#0a0716);border-top:3px solid rgba(251,191,36,${.2+glow*.7});opacity:${ease(seg(u,.4,1.2))}"></div>`;
+ const t1=u<3.6;
+ return J+table+`<div class="abs h" style="top:250px;text-align:center;font-size:118px;${rise(u,.5)}">${t1?`Ngày bảo vệ.<br><span class="vio">Hội đồng đối diện.</span>`:`<span style="font-size:96px">Nếu được<br><span class="gold">bảo vệ trước</span><br>một lần?</span>`}</div>
+ <div class="abs" style="left:0;right:0;top:1230px;text-align:center;${rise(u,4.1)}">${u>3.6?`<span class="chip on" style="font-size:42px;padding:18px 44px">ngay trên bản thảo của bạn</span>`:""}</div>`}
+function s1(u){ // tiêu đề
+ const w="Giáo sư",w2="phản biện",st=(s,a)=>s.split("").map((c,i)=>{const p=ease(seg(u,a+i*.045,a+i*.045+.5));return `<span style="display:inline-block;opacity:${p};transform:translateY(${(1-p)*60}px) scale(${1+(1-p)*.5});filter:blur(${(1-p)*14}px)">${c==" "?"&nbsp;":c}</span>`}).join("");
+ const burst=seg(u,.2,1.6);
+ return `<div class="abs" style="left:290px;top:260px;transform:scale(${.2+.8*back(seg(u,0,.7))}) rotate(${(1-ease(seg(u,0,1.2)))*160}deg);filter:drop-shadow(0 0 ${40+60*(1-burst)}px rgba(251,191,36,.9))">${star(500)}</div>
+ <div class="abs" style="left:540px;top:510px;width:0;height:0">${Array.from({length:16},(_,i)=>{const a=i/16*6.283,r=200+burst*520;return `<div style="position:absolute;left:${Math.cos(a)*r-4}px;top:${Math.sin(a)*r-4}px;width:${8+rnd(i)*10}px;height:${8+rnd(i)*10}px;border-radius:50%;background:#fde68a;opacity:${(1-burst)*.9};box-shadow:0 0 20px #fbbf24"></div>`}).join("")}</div>
+ <div class="abs h gold" style="top:880px;text-align:center;font-size:150px;letter-spacing:-6px;line-height:1.05">${st(w,.5)}<br>${st(w2,.9)}</div>
+ <div class="abs" style="left:0;right:0;top:1290px;text-align:center;${rise(u,1.6)}"><span class="chip on" style="font-size:40px;padding:16px 40px">★ TÍNH NĂNG CAO CẤP CỦA AMI</span></div>
+ <div class="abs" style="left:0;right:0;top:1440px;text-align:center;font:600 46px/1.35 Inter;color:#c9c0e8;${rise(u,2)}">Hội đồng giả lập<br>cho đề cương · luận văn · luận án</div>`}
+function s2(u){ // thiết lập
+ const types=["Đề cương","Bài báo","Luận văn","Luận án"],sel=2,secs=["I. Tính cấp thiết","II. Tổng quan","III. Phương pháp","IV. Kết quả"];
+ return `<div class="abs" style="left:70px;right:70px;top:290px;${rise(u,.05)}"><div class="mut" style="font:700 30px Inter;letter-spacing:3px;margin-bottom:22px">LOẠI VĂN BẢN</div><div style="display:flex;gap:16px;flex-wrap:wrap">${types.map((t,i)=>`<span class="chip ${i==sel&&u>1.2?'on':''}">${t}</span>`).join("")}</div></div>
+ <div class="abs" style="left:70px;right:70px;top:540px;${rise(u,.5)}"><div class="mut" style="font:700 30px Inter;letter-spacing:3px;margin-bottom:22px">VAI TRÒ</div><div style="display:flex;gap:16px"><span class="chip ${u>1.8?'on':''}">Phản biện 1</span><span class="chip">Ủy viên</span></div></div>
+ <div class="abs card" style="left:70px;right:70px;top:790px;height:860px;padding:48px 56px;${rise(u,1)}"><div style="display:flex;align-items:center;gap:26px;padding:24px 30px;border-radius:26px;background:rgba(251,191,36,.1);border:2px dashed rgba(251,191,36,.6);transform:translateY(${(1-ease(seg(u,1.4,2.1)))*-90}px);opacity:${seg(u,1.4,1.8)}"><span style="font:800 30px Inter;padding:8px 18px;border-radius:12px;background:#fbbf2433;color:#fbbf24">DOCX</span><span style="font:700 40px Inter">Mau-phieu-nhan-xet.docx</span></div>
+ <div class="mut" style="font:700 30px Inter;letter-spacing:3px;margin:38px 0 18px">AMI THEO TỪNG MỤC CỦA MẪU</div>${secs.map((s,i)=>`<div style="display:flex;align-items:center;gap:20px;padding:20px 28px;margin-bottom:16px;border-radius:22px;background:rgba(167,139,250,.1);font:600 42px Inter;${pop(u,2.4+i*.45)}"><span style="color:#fbbf24">✓</span>${s}</div>`).join("")}</div>`}
+function s3(u){ // đọc toàn văn
+ const prog=Math.round(100*ease(seg(u,.4,3.9))),laser=(seg(u,.4,3.9)),pages=[0,1,2,3,4];
+ const stack=pages.map(i=>`<div class="abs" style="left:${230+i*18}px;top:${330+i*26}px;transform:perspective(1400px) rotateX(18deg) rotateZ(${-5+i*2}deg);opacity:${ease(seg(u,i*.1,.6+i*.1))}">${page(560,760,8)}</div>`).join("");
+ const ly=400+laser*620;
+ return stack+`<div class="abs" style="left:150px;width:780px;top:${ly}px;height:6px;background:linear-gradient(90deg,transparent,#fbbf24,transparent);box-shadow:0 0 40px 10px rgba(251,191,36,.7)"></div>
+ ${SECT.map((s,i)=>{const a=seg(u,.9+i*.6,1.5+i*.6);return `<div class="abs" style="left:${i%2?420:60}px;top:${1300+i*78}px;padding:10px 26px;border-radius:99px;background:${s[1]}26;border:2px solid ${s[1]}99;color:${s[1]};font:700 32px Inter;${pop(u,.9+i*.6)}">${s[0]} · đã nhận xét</div>`}).join("")}
+ <div class="abs card" style="left:70px;right:70px;top:1700px;height:110px;border-radius:30px;padding:0 40px;display:flex;align-items:center;gap:30px"><span style="font:700 34px Inter;white-space:nowrap">Đọc toàn văn</span><div class="bar" style="flex:1"><i style="width:${prog}%"></i></div><span style="font:800 40px Inter;color:#fbbf24;width:100px;text-align:right">${prog}%</span></div>`}
+function s4(u){ // bằng chứng
+ const q="“Kết quả cho thấy 85% sinh viên dùng công cụ mỗi tuần…”",cm="Số liệu 85% chưa nêu cỡ mẫu và cách chọn mẫu, cần bổ sung ở mục III.";
+ return `<div class="abs" style="left:110px;top:290px;transform:rotate(-2deg);${rise(u,.05)}">${page(860,640,6)}
+ <div class="abs" style="left:120px;top:${640*.34}px;width:620px;height:70px;border-radius:12px;background:rgba(251,191,36,${.15+.6*ease(seg(u,.8,1.4))});box-shadow:0 0 ${30*ease(seg(u,.8,1.4))}px rgba(251,191,36,.7);outline:3px solid rgba(251,191,36,${ease(seg(u,.8,1.4))})"></div></div>
+ <div class="abs card" style="left:70px;right:70px;top:1010px;height:700px;padding:52px 60px;${rise(u,1.3)}"><div style="display:flex;gap:14px;align-items:center"><span class="chip" style="font-size:28px;padding:8px 22px">Mục III · Phương pháp</span></div>
+ <div style="font:600 46px/1.35 Inter;margin-top:30px;min-height:130px">${typed(cm,seg(u,1.9,3.2))}</div>
+ <div style="margin-top:26px;padding:26px 32px;border-left:8px solid #fbbf24;background:rgba(251,191,36,.08);border-radius:0 24px 24px 0;font:500 italic 44px/1.35 Inter;color:#fde68a;opacity:${seg(u,3.2,3.6)}">${q}</div>
+ <div class="abs" style="right:50px;bottom:44px;padding:18px 34px;border-radius:99px;background:linear-gradient(90deg,#34d399,#10b981);color:#04201a;font:800 38px Inter;transform:scale(${1+.5*(1-back(seg(u,4,4.4)))}) rotate(-4deg);opacity:${seg(u,4,4.15)};box-shadow:0 0 50px rgba(52,211,153,.6)">✓ Đối chiếu nguyên văn · tr. 42</div></div>`}
+function s5(u){ // điểm
+ const comp=[["Cơ sở lý luận",17,20],["Phương pháp",14,20],["Tính khả thi",11,15],["Kết quả & đóng góp",18,25],["Hình thức",12,20]],tot=Math.round(72*ease(seg(u,.5,3.2)));
+ const segs=[["<40","Bác bỏ","#fb7185",0],["40–54","Sửa lớn","#fb923c",40],["55–59","Sửa trước duyệt","#fbbf24",55],["60–74","Chấp nhận có ĐK","#a3e635",60],["75+","Chấp nhận","#34d399",75]];
+ const fatal=u>6.2,capT=ease(seg(u,6.4,7.2)),show=Math.round(72-(72-50)*capT);
+ return `<div class="abs card" style="left:70px;right:70px;top:290px;height:520px;display:flex;align-items:center;gap:56px;padding:0 64px;${rise(u,.05)}"><div style="font:800 250px Inter;letter-spacing:-12px;line-height:1" class="gold">${fatal?show:tot}</div><div><div class="mut" style="font:700 30px Inter;letter-spacing:3px">ĐỀ XUẤT ĐIỂM</div><div style="font:800 60px/1.1 Inter;margin-top:10px">/ 100</div><div style="margin-top:22px;font:700 38px Inter;color:${fatal&&capT>.5?'#fb923c':'#a3e635'}">${fatal&&capT>.5?'Sửa lớn':tot>=60?'Chấp nhận có điều kiện':''}</div></div></div>
+ <div class="abs card" style="left:70px;right:70px;top:860px;height:520px;padding:44px 56px;${rise(u,.6)}">${comp.map((c,i)=>{const w=ease(seg(u,.9+i*.3,1.7+i*.3));return `<div style="margin-bottom:${i<4?26:0}px"><div style="display:flex;justify-content:space-between;font:700 34px Inter;margin-bottom:10px"><span>${c[0]}</span><span style="color:#fbbf24">${Math.round(c[1]*w)}/${c[2]}</span></div><div class="bar" style="height:16px"><i style="width:${c[1]/c[2]*100*w}%"></i></div></div>`}).join("")}</div>
+ <div class="abs" style="left:70px;right:70px;top:1450px;display:flex;gap:8px;${rise(u,3.4)}">${segs.map(s=>`<div style="flex:1;text-align:center"><div style="height:26px;border-radius:13px;background:${s[2]};opacity:${(fatal&&capT>.5?s[0]=='40–54':s[0]=='60–74')?1:.35}"></div><div style="font:700 26px Inter;margin-top:12px">${s[0]}</div></div>`).join("")}</div>
+ <div class="abs card" style="left:70px;right:70px;top:1640px;height:150px;border-radius:30px;display:flex;align-items:center;gap:30px;padding:0 44px;border-color:rgba(251,113,133,.6);${rise(u,5.6)}"><span style="font-size:64px">⚠</span><span style="font:700 38px/1.25 Inter">Gặp lỗi nghiêm trọng:<br><span style="color:#fb923c">kết luận không thể tốt hơn "Sửa lớn"</span></span></div>`}
+function s6(u){ // câu hỏi
+ const Q=["Vì sao chọn cỡ mẫu 120 sinh viên?","Biến nhiễu nào chưa được kiểm soát?","Đóng góp mới so với nghiên cứu trước là gì?"];
+ return `<div class="abs h" style="top:290px;${rise(u,.05)}">Câu hỏi<br><span class="gold">dành cho tác giả</span></div>`+Q.map((q,i)=>`<div class="abs card" style="left:${70+i*0}px;right:70px;top:${700+i*250}px;height:210px;display:flex;align-items:center;gap:34px;padding:0 50px;transform-origin:left center;${pop(u,.7+i*.8)}"><div style="min-width:100px;height:100px;border-radius:50%;display:grid;place-items:center;font:800 56px Inter;background:linear-gradient(135deg,#fde68a,#f59e0b);color:#1a1100">?</div><div style="font:700 44px/1.25 Inter">${q}</div></div>`).join("")+`<div class="abs" style="left:70px;right:70px;top:1500px;${rise(u,3.2)}"><div class="mut" style="font:700 30px Inter;letter-spacing:3px;margin-bottom:18px">ĐIỂM CẦN KIỂM TRA</div><div style="display:flex;gap:14px;flex-wrap:wrap"><span class="chip" style="color:#fda4af;border-color:rgba(251,113,133,.5);background:rgba(251,113,133,.12)">Trích dẫn ở tr. 18</span><span class="chip" style="color:#fda4af;border-color:rgba(251,113,133,.5);background:rgba(251,113,133,.12)">Số liệu bảng 3</span></div></div>`}
+function s7(u){ // sửa & xuất
+ const pts=u<2.1?14:16,tot=u<2.1?72:74,tt=seg(u,2,2.5);
+ return `<div class="abs card" style="left:70px;right:70px;top:300px;height:700px;padding:52px 60px;${rise(u,.05)}"><div style="display:flex;justify-content:space-between;align-items:center"><span class="chip">III. Phương pháp</span><span class="mut" style="font:700 30px Inter">Sửa trực tiếp</span></div>
+ <div style="display:flex;align-items:center;justify-content:space-between;margin-top:46px"><div style="font:700 52px Inter">Điểm mục</div><div style="display:flex;align-items:center;gap:30px"><div style="width:100px;height:100px;border-radius:50%;border:3px solid #a78bfa;display:grid;place-items:center;font:800 60px Inter">−</div><div style="font:800 120px Inter;width:200px;text-align:center" class="gold">${pts}</div><div style="width:100px;height:100px;border-radius:50%;display:grid;place-items:center;font:800 60px Inter;background:linear-gradient(135deg,#fde68a,#f59e0b);color:#1a1100;transform:scale(${1-.2*Math.sin(Math.PI*seg(u,1.9,2.2))})">+</div></div></div>
+ <div style="margin-top:46px;padding:34px 40px;border-radius:28px;background:rgba(167,139,250,.1);font:500 42px/1.4 Inter;color:#d8d0f5">${typed("Bổ sung cỡ mẫu và cách chọn mẫu đã đáp ứng yêu cầu.",seg(u,.5,2))}</div></div>
+ <div class="abs card" style="left:70px;right:70px;top:1060px;height:230px;display:flex;align-items:center;justify-content:space-between;padding:0 64px;${rise(u,.4)}"><div><div class="mut" style="font:700 30px Inter;letter-spacing:3px">TỔNG ĐIỂM · TỰ TÍNH LẠI</div><div style="font:600 38px Inter;margin-top:10px;color:#a3e635">Chấp nhận có điều kiện</div></div><div style="font:800 130px Inter;letter-spacing:-5px;transform:scale(${1+.18*Math.sin(Math.PI*tt)})" class="gold">${tot}</div></div>
+ <div class="abs" style="left:200px;right:200px;top:1420px;height:150px;border-radius:75px;display:grid;place-items:center;font:800 54px Inter;background:linear-gradient(90deg,#38bdf8,#818cf8);color:#04101f;box-shadow:0 20px 60px rgba(56,189,248,.45);transform:scale(${1-.06*Math.sin(Math.PI*seg(u,3.1,3.4))});${rise(u,2.6)}">Tải xuống .docx</div>
+ <div class="abs" style="left:420px;top:${1420-ease(seg(u,3.4,4.2))*0}px;opacity:0"></div>
+ <div class="abs" style="left:400px;top:${1640-ease(seg(u,3.4,4.1))*70}px;opacity:${seg(u,3.4,3.7)};transform:scale(${.6+.4*ease(seg(u,3.4,4))})"><div style="width:280px;height:200px;border-radius:24px;background:#2563eb;display:grid;place-items:center;font:800 90px Inter;color:#fff;box-shadow:0 0 60px rgba(37,99,235,.7)">W</div></div>`}
+function s8(u){ // 30 bài
+ const done=Math.min(30,Math.floor(30*ease(seg(u,.5,3.2))));
+ let g="";for(let i=0;i<30;i++){const c=i%5,r=Math.floor(i/5),ok=i<done,sc=[72,64,81,58,69,77][i%6]+((i*7)%9);g+=`<div class="abs" style="left:${70+c*192}px;top:${600+r*150}px;width:172px;height:128px;border-radius:22px;background:${ok?'rgba(52,211,153,.14)':'rgba(167,139,250,.12)'};border:2px solid ${ok?'rgba(52,211,153,.55)':'rgba(167,139,250,.3)'};display:grid;place-items:center;opacity:${ease(seg(u,r*.06+c*.02,.4+r*.06))};transform:scale(${.7+.3*ease(seg(u,r*.06+c*.02,.4+r*.06))})"><div style="text-align:center"><div style="font:700 24px Inter;color:#a59cc4">Bài ${i+1}</div><div style="font:800 46px Inter;color:${ok?'#34d399':'#6d6590'}">${ok?sc:'…'}</div></div></div>`}
+ return `<div class="abs h" style="top:290px;${rise(u,.05)}">Một lúc<br><span class="gold">ba mươi bài</span></div><div class="abs" style="right:70px;top:340px;font:800 120px Inter;letter-spacing:-4px;text-align:right" class="gold"><span class="gold">${done}</span><span class="mut" style="font-size:60px">/30</span></div>`+g+`<div class="abs" style="left:150px;right:150px;top:1540px;height:140px;border-radius:70px;display:grid;place-items:center;font:800 50px Inter;background:linear-gradient(90deg,#fde68a,#f59e0b);color:#1a1100;box-shadow:0 20px 60px rgba(245,158,11,.5);${rise(u,3.4)}">Tải tất cả (.zip) · mỗi bài một Word</div>`}
+function s9(u){ // ranh giới
+ const R=[["🧰","Trợ thủ soạn thảo"],["⚖️","Không thay hội đồng thật"],["🚫","Không kiểm tra đạo văn"],["✍️","Người phản biện chịu trách nhiệm cuối"],["💻","Tệp đọc ngay trên máy bạn"]];
+ return `<div class="abs h" style="top:290px;${rise(u,.05)}">Trung thực<br><span class="vio">về giới hạn</span></div>`+R.map((r,i)=>`<div class="abs card" style="left:70px;right:70px;top:${700+i*190}px;height:160px;border-radius:32px;display:flex;align-items:center;gap:34px;padding:0 48px;font:700 44px/1.2 Inter;${pop(u,.6+i*.75)}"><span style="font-size:64px">${r[0]}</span>${r[1]}</div>`).join("")}
+function s10(u){ // truy cập
+ const S=[["1","Xác thực tài khoản","Họ tên · đơn vị · ORCID"],["2","Gửi yêu cầu","Lý do và minh chứng khoa học"],["3","Được phê duyệt","Hạn mức theo tuần"]],lp=ease(seg(u,.4,4.8));
+ return `<div class="abs h" style="top:290px;${rise(u,.05)}">Dành cho nhà<br><span class="gold">nghiên cứu xác thực</span></div>
+ <div class="abs" style="left:130px;top:760px;width:8px;height:${620*lp}px;background:linear-gradient(180deg,#fbbf24,#f59e0b);box-shadow:0 0 30px rgba(251,191,36,.7);border-radius:4px"></div><div class="abs" style="left:130px;top:760px;width:8px;height:620px;background:rgba(167,139,250,.2);border-radius:4px;z-index:-1"></div>`+S.map((s,i)=>`<div class="abs" style="left:70px;right:70px;top:${720+i*310}px;display:flex;align-items:center;gap:42px;${pop(u,.6+i*1.4)}"><div style="min-width:180px;height:180px;margin-left:-26px;border-radius:50%;display:grid;place-items:center;font:800 90px Inter;background:${seg(u,.6+i*1.4,1.3+i*1.4)>.9?'linear-gradient(135deg,#fde68a,#f59e0b)':'#1d1738'};color:${seg(u,.6+i*1.4,1.3+i*1.4)>.9?'#1a1100':'#a59cc4'};border:3px solid #fbbf24;box-shadow:0 0 50px rgba(245,158,11,${.5*seg(u,.6+i*1.4,1.3+i*1.4)})">${s[0]}</div><div><div style="font:800 54px/1.1 Inter">${s[1]}</div><div class="mut" style="font:600 36px Inter;margin-top:10px">${s[2]}</div></div></div>`).join("")+`<div class="abs" style="left:0;right:0;top:1660px;text-align:center;font:700 40px Inter;color:#fbbf24;${rise(u,4.8)}">★ Mỗi người một yêu cầu đang chờ duyệt</div>`}
+function s11(u){ // CTA
+ const p=back(seg(u,.1,.9));
+ return `<div class="abs" style="left:300px;top:200px;transform:scale(${.3+.7*p}) rotate(${(1-ease(seg(u,.1,1))) *-90}deg);filter:drop-shadow(0 0 80px rgba(251,191,36,.85))">${star(480)}</div>
+ <div class="abs" style="left:440px;top:370px;width:200px;height:200px;transform:scale(${.3+.7*p});filter:drop-shadow(0 20px 50px rgba(124,92,240,.8))"><img src="ami-logo.svg" style="width:200px;height:200px"></div>
+ <div class="abs h" style="top:760px;text-align:center;font-size:104px;${rise(u,.5)}">Đến trước<br><span class="gold">hội đồng</span><br>một bước.</div>
+ <div class="abs" style="left:150px;right:150px;top:1180px;height:140px;border-radius:70px;display:grid;place-items:center;font:800 50px Inter;background:linear-gradient(90deg,#fde68a,#f59e0b);color:#1a1100;box-shadow:0 20px 60px rgba(245,158,11,.5);transform:scale(${1+.03*Math.sin(u*6)});${rise(u,1.1)}">Xin dùng Giáo sư phản biện</div>
+ <div class="abs" style="left:390px;top:1380px;width:300px;height:300px;border-radius:28px;background:#fff;padding:16px;${pop(u,1.6)}">__QR__</div>
+ <div class="abs" style="left:0;right:0;top:1710px;text-align:center;font:700 40px Inter;color:#c4b5fd;${rise(u,2)}">isavn.edu.vn/go/ami</div>`}
+const SC=[s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11];
+window.draw=t=>{
+ let i=ST.findIndex((s,k)=>t>=s&&(k==ST.length-1||t<ST[k+1]));if(i<0)i=0;
+ const su=t-ST[i],end=i==ST.length-1?61:ST[i+1],fo=1-seg(t,end-.22,end),fi=seg(su,0,.22);
+ drawBg(t,i);drawFx(t,i==0?.5:1);
+ const zoom=1+.045*seg(su,0,end-ST[i]);document.getElementById("cam").style.transform=`scale(${zoom})`;
+ document.getElementById("top").innerHTML=i>=2?`<img src="ami-logo.svg">Ami`:"";
+ document.getElementById("prem").style.display=(i>=2&&i<11)?"block":"none";
+ document.getElementById("sc").innerHTML=`<div class="scn" style="opacity:${Math.min(fo,i==0?1:fi)}">${SC[i](su)}</div>`;
+ document.getElementById("foot").style.opacity=(i==11||i==0||i==1)?0:1;
+};
+</script></body></html>

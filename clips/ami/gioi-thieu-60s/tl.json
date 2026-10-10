@@ -1,0 +1,88 @@
+{
+ "scenes": [
+  {
+   "v": 1.0,
+   "dur": 2.31,
+   "text": "Năm mươi bài báo cần đọc, mà chỉ còn ba ngày?",
+   "start": 0,
+   "end": 4.11
+  },
+  {
+   "v": 4.41,
+   "dur": 3.05,
+   "text": "Đừng đọc hết. Hãy để Ami đọc trước, bạn chỉ đọc đúng chỗ cần.",
+   "start": 4.11,
+   "end": 8.26
+  },
+  {
+   "v": 8.56,
+   "dur": 2.76,
+   "text": "Gặp Ami, trợ lý học thuật A I, đọc tài liệu thay bạn!",
+   "start": 8.26,
+   "end": 12.12
+  },
+  {
+   "v": 12.42,
+   "dur": 3.67,
+   "text": "Nhập tóm tắt đề tài. Tải lên tài liệu: P D F, Word, cả bản scan.",
+   "start": 12.12,
+   "end": 16.89
+  },
+  {
+   "v": 17.19,
+   "dur": 3.8,
+   "text": "Chỉ vài giây, Ami chấm độ phù hợp trên thang một trăm điểm, theo năm tiêu chí.",
+   "start": 16.89,
+   "end": 21.79
+  },
+  {
+   "v": 22.09,
+   "dur": 4.02,
+   "text": "Gợi ý đoạn đáng trích dẫn, và đối chiếu nguyên văn với tài liệu. Không bịa, không đoán!",
+   "start": 21.79,
+   "end": 26.91
+  },
+  {
+   "v": 27.21,
+   "dur": 5.53,
+   "text": "Một chạm, có ngay trích dẫn: A P A, Harvard, I triple E, Vancouver, và hơn mười nghìn kiểu tạp chí.",
+   "start": 26.91,
+   "end": 33.54
+  },
+  {
+   "v": 33.84,
+   "dur": 3.69,
+   "text": "Chín định dạng, tiếng Việt hoặc tiếng Anh. Dán vào Word vẫn giữ nguyên chữ nghiêng.",
+   "start": 33.54,
+   "end": 38.33
+  },
+  {
+   "v": 38.63,
+   "dur": 3.0,
+   "text": "Tài liệu của bạn không bị lưu trữ. Ami đọc ngay trên máy của bạn.",
+   "start": 38.33,
+   "end": 42.43
+  },
+  {
+   "v": 42.73,
+   "dur": 5.19,
+   "text": "Sắp bảo vệ? Giáo sư phản biện giả lập hội đồng, nhận xét từng phần cho đề cương, luận văn, luận án.",
+   "start": 42.43,
+   "end": 48.72
+  },
+  {
+   "v": 49.02,
+   "dur": 3.2,
+   "text": "Cùng EduFind, ProFind và Mây: bốn công cụ, một tài khoản.",
+   "start": 48.72,
+   "end": 53.02
+  },
+  {
+   "v": 53.32,
+   "dur": 3.22,
+   "text": "Ami. Đọc nhanh, trích đúng. Miễn phí một lượt mỗi tuần. Thử ngay hôm nay!",
+   "start": 53.02,
+   "end": 60
+  }
+ ]
+}

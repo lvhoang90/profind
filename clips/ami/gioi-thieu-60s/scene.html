@@ -1,0 +1,125 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0a0f1e;font-family:Inter,"Inter Display",sans-serif;color:#e6ecf8}
+#bg{position:absolute;inset:0;background:radial-gradient(900px 800px at 15% 8%,rgba(56,189,248,.28),transparent 60%),radial-gradient(900px 900px at 95% 70%,rgba(167,139,250,.26),transparent 60%),radial-gradient(700px 600px at 30% 100%,rgba(52,211,153,.14),transparent 60%),#0a0f1e}
+#net{position:absolute;inset:0}
+.abs{position:absolute}
+.scn{position:absolute;inset:0}
+.top{left:60px;top:64px;display:flex;align-items:center;gap:18px;font:800 48px Inter;letter-spacing:-1px}
+.top img{width:70px;height:70px}
+.step{right:60px;top:78px;font:700 30px Inter;letter-spacing:4px;color:#9aa8c4}
+.step b{color:#38bdf8}
+.h{left:70px;right:70px;font:800 92px/1.05 Inter;letter-spacing:-3px}
+.g{background:linear-gradient(90deg,#38bdf8,#b3a0fb 60%,#34d399);-webkit-background-clip:text;color:transparent}
+.card{background:rgba(18,26,52,.86);border:1.5px solid rgba(148,163,184,.22);border-radius:40px;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.mut{color:#9aa8c4}
+.chip{display:inline-flex;align-items:center;gap:10px;padding:12px 28px;border-radius:99px;font:700 34px Inter;background:rgba(56,189,248,.16);color:#7dd3fc;border:1.5px solid rgba(56,189,248,.35)}
+.foot{left:60px;right:60px;bottom:44px;text-align:center;font:500 26px Inter;color:#6f7d9c}
+.bar{height:22px;border-radius:11px;background:rgba(148,163,184,.2);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:11px;background:linear-gradient(90deg,#38bdf8,#b3a0fb)}
+</style></head><body>
+<div id="bg"></div><svg id="net" width="1080" height="1920"></svg>
+<div class="abs top" id="top"></div><div class="abs step" id="step"></div>
+<div id="sc"></div>
+<div class="abs foot" id="foot">Dữ liệu và tên trong clip chỉ để minh họa</div>
+<script id="tl" type="application/json">__TL__</script>
+<script>
+const TL=JSON.parse(document.getElementById("tl").textContent).scenes;
+const ST=TL.map(s=>s.start),VS=TL.map(s=>s.v);
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),ease=x=>1-Math.pow(1-clamp(x),3),back=x=>{x=clamp(x);const c=1.70158;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)},seg=(t,a,b)=>clamp((t-a)/(b-a)),io=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const typed=(s,p)=>s.slice(0,Math.floor(s.length*clamp(p)));
+const pop=(u,a)=>{const p=back(seg(u,a,a+.5));return `opacity:${clamp(seg(u,a,a+.25))};transform:scale(${.6+.4*p}) translateY(${(1-p)*40}px)`};
+const rise=(u,a,d=44)=>{const p=ease(seg(u,a,a+.55));return `opacity:${p};transform:translateY(${(1-p)*d}px)`};
+const dots=Array.from({length:42},(_,i)=>({x:(Math.sin(i*12.9898)*43758.5453%1+1)%1*1080,y:(Math.sin(i*78.233)*12345.678%1+1)%1*1920,v:.3+((i*37)%10)/10}));
+function net(t,amt){let s="";dots.forEach((d,i)=>{d.cx=d.x+Math.sin(t*.6+i)*18;d.cy=d.y+Math.cos(t*.5+i*1.3)*18});
+ dots.forEach((a,i)=>dots.forEach((b,j)=>{if(j>i){const dd=Math.hypot(a.cx-b.cx,a.cy-b.cy);if(dd<250)s+=`<line x1="${a.cx}" y1="${a.cy}" x2="${b.cx}" y2="${b.cy}" stroke="#8fb0ff" stroke-opacity="${(1-dd/250)*.22*amt}"/>`}}));
+ dots.forEach(d=>{s+=`<circle cx="${d.cx}" cy="${d.cy}" r="${3+d.v*4}" fill="#cfe0ff" fill-opacity="${.3*amt*d.v}"/>`});return s}
+const LOGO=n=>`<img src="${n}-logo.svg">`;
+const STEPS=["","","","01 · NHẬP","02 · CHẤM ĐIỂM","03 · ĐOẠN TRÍCH","04 · TRÍCH DẪN","05 · ĐỊNH DẠNG","","06 · PHẢN BIỆN","",""];
+const ICON={doc:c=>`<svg width="120" height="150" viewBox="0 0 120 150"><path d="M10 6h68l32 32v104H10z" fill="#1b2650" stroke="${c}" stroke-width="5" stroke-linejoin="round"/><path d="M78 6v32h32" fill="none" stroke="${c}" stroke-width="5" stroke-linejoin="round"/><path d="M28 70h64M28 88h64M28 106h40" stroke="${c}" stroke-width="6" stroke-linecap="round"/></svg>`};
+const paper=(w,h,rot,tone=0)=>`<div style="width:${w}px;height:${h}px;border-radius:26px;background:linear-gradient(160deg,#f4f7fc,#dbe4f5);transform:rotate(${rot}deg);box-shadow:0 24px 60px rgba(0,0,0,.5);padding:40px 44px;display:flex;flex-direction:column;gap:20px"><div style="height:26px;width:70%;border-radius:13px;background:#9fb0d4"></div>${Array.from({length:7},(_,k)=>`<div style="height:14px;width:${[100,92,96,84,98,70,88][k]}%;border-radius:7px;background:#c3cfe8"></div>`).join("")}</div>`;
+
+function s0(u){ // hook: chồng bài báo
+ const n=Math.floor(50*ease(seg(u,.9,2.9)));
+ let p="";for(let i=0;i<14;i++){const a=seg(u,.05+i*.07,.05+i*.07+.7),y=-900*(1-ease(a)),rot=[-9,7,-4,10,-12,5,-7,12,-3,8,-10,4,-6,9][i];p+=`<div class="abs" style="left:${130+(i%3)*26}px;top:${700+(i%5)*22+y}px;opacity:${clamp(a*3)}">${paper(600,720,rot)}</div>`}
+ const r=Math.max(0,seg(u,2.4,3.3)),pulse=1+.04*Math.sin(u*9);
+ return p+`<div class="abs h" style="top:130px;text-align:center"><span class="g" style="font-size:230px;letter-spacing:-8px">${n}</span><div style="font:800 64px Inter;margin-top:-6px">bài báo cần đọc</div></div>
+ <div class="abs" style="left:0;right:0;top:1420px;text-align:center;${pop(u,2.3)}"><span class="chip" style="font-size:60px;padding:22px 56px;background:rgba(251,113,133,.18);color:#fda4af;border-color:rgba(251,113,133,.5);transform:scale(${pulse});display:inline-flex">⏳ Còn 3 ngày</span></div>`}
+function s1(u){ // đừng đọc hết
+ let g="";for(let i=0;i<20;i++){const c=i%4,r=Math.floor(i/4),on=[1,6,10,13,18].includes(i),k=seg(u,1.7+[1,6,10,13,18].indexOf(i)*.25,2.3+[1,6,10,13,18].indexOf(i)*.25),a=ease(seg(u,r*.1+c*.04,.5+r*.1)),sc=on?1+.12*back(k):1;
+  g+=`<div class="abs" style="left:${105+c*220}px;top:${760+r*230}px;opacity:${a*(on?1:1-.62*ease(seg(u,1.5,2.2)))};transform:scale(${(.5+.5*ease(seg(u,r*.1,.5+r*.1)))*sc});filter:${on&&k>0?'drop-shadow(0 0 28px rgba(56,189,248,.9))':'none'}">${ICON.doc(on&&k>0?'#38bdf8':'#52618c')}</div>`}
+ return `<div class="abs h" style="top:240px;${rise(u,.2)}">Đừng đọc hết.</div><div class="abs h g" style="top:470px;${rise(u,1.3)}">Đọc đúng chỗ cần.</div>`+g}
+function s2(u){ // logo
+ const p=back(seg(u,.1,.9)),rings=[0,1,2].map(i=>{const k=seg(u,.5+i*.25,1.8+i*.25);return `<div class="abs" style="left:${540-260-i*70}px;top:${560-i*70}px;width:${520+i*140}px;height:${520+i*140}px;border-radius:50%;border:3px solid rgba(124,92,240,${.45*(1-k)});transform:scale(${.7+.5*k});opacity:${k>0?1:0}"></div>`}).join("");
+ return rings+`<div class="abs" style="left:290px;top:610px;width:500px;height:500px;transform:scale(${.3+.7*p}) rotate(${(1-ease(seg(u,.1,.9)))*-25}deg);filter:drop-shadow(0 30px 80px rgba(124,92,240,.7))"><img src="ami-logo.svg" style="width:500px;height:500px"></div>
+ <div class="abs h g" style="top:1190px;text-align:center;font-size:230px;letter-spacing:-8px;${rise(u,.8)}">Ami</div>
+ <div class="abs" style="left:0;right:0;top:1470px;text-align:center;font:700 56px Inter;${rise(u,1.2)}">Trợ lý học thuật AI</div>
+ <div class="abs" style="left:0;right:0;top:1590px;text-align:center;${rise(u,1.6)}"><span class="chip">Đọc</span> <span class="chip" style="background:rgba(167,139,250,.16);color:#c4b5fd;border-color:rgba(167,139,250,.4)">Chấm</span> <span class="chip" style="background:rgba(52,211,153,.16);color:#6ee7b7;border-color:rgba(52,211,153,.4)">Trích dẫn</span></div>`}
+function s3(u){ // nhập + tải
+ const q="Ảnh hưởng của học tập trực tuyến đến động lực học tập của sinh viên đại học",files=[["bai-bao-01.pdf","PDF","#fb7185"],["luan-van.docx","DOCX","#38bdf8"],["ban-scan.pdf","OCR","#fbbf24"]];
+ return `<div class="abs card" style="left:70px;right:70px;top:300px;height:520px;padding:44px 52px;${rise(u,.1)}"><div class="mut" style="font:700 32px Inter;letter-spacing:3px">1 · TÓM TẮT ĐỀ TÀI CỦA BẠN</div><div style="font:600 52px/1.3 Inter;margin-top:30px;min-height:240px">${typed(q,seg(u,.5,2.1))}<span style="opacity:${Math.sin(u*10)>0?1:0};color:#38bdf8">|</span></div></div>
+ <div class="abs card" style="left:70px;right:70px;top:880px;height:760px;padding:44px 52px;${rise(u,.4)}"><div class="mut" style="font:700 32px Inter;letter-spacing:3px">2 · TẢI TÀI LIỆU</div>
+ <div style="margin-top:34px;border:4px dashed rgba(56,189,248,.5);border-radius:32px;height:170px;display:grid;place-items:center;font:600 40px Inter;color:#7dd3fc">Kéo thả PDF · DOC · DOCX</div>
+ ${files.map((f,i)=>{const a=seg(u,2+i*.55,2.6+i*.55);return `<div style="margin-top:22px;display:flex;align-items:center;gap:26px;padding:20px 28px;border-radius:24px;background:rgba(255,255,255,.06);${pop(u,2+i*.55)}"><span style="font:800 28px Inter;padding:8px 18px;border-radius:12px;background:${f[2]}33;color:${f[2]}">${f[1]}</span><span style="font:600 42px Inter;flex:1">${f[0]}</span><span style="color:#34d399;font:800 46px Inter">${a>.8?'✓':''}</span></div>`}).join("")}</div>`}
+function s4(u){ // điểm
+ const v=Math.round(87*ease(seg(u,.4,2.4))),C=2*Math.PI*150,cr=[["Chủ đề",92],["Khái niệm",85],["Phương pháp",78],["Bằng chứng",90],["Tính cập nhật",88]];
+ return `<div class="abs card" style="left:70px;right:70px;top:290px;height:560px;display:flex;align-items:center;gap:60px;padding:0 70px;${rise(u,.05)}"><div style="position:relative;width:340px;height:340px"><svg width="340" height="340" viewBox="0 0 340 340"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#b3a0fb"/></linearGradient></defs><circle cx="170" cy="170" r="150" fill="none" stroke="rgba(148,163,184,.22)" stroke-width="26"/><circle cx="170" cy="170" r="150" fill="none" stroke="url(#rg)" stroke-width="26" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-v/100)}" transform="rotate(-90 170 170)"/></svg><div style="position:absolute;inset:0;display:grid;place-items:center;font:800 130px Inter;letter-spacing:-5px">${v}</div></div><div><div class="mut" style="font:700 32px Inter;letter-spacing:3px">ĐỘ PHÙ HỢP</div><div style="font:800 68px/1.1 Inter;margin-top:14px">trên thang<br><span class="g">100 điểm</span></div></div></div>
+ <div class="abs card" style="left:70px;right:70px;top:910px;height:760px;padding:50px 60px;${rise(u,.5)}">${cr.map((c,i)=>{const w=ease(seg(u,1.2+i*.35,2.2+i*.35))*c[1];return `<div style="margin-bottom:${i<4?44:0}px"><div style="display:flex;justify-content:space-between;font:700 42px Inter;margin-bottom:14px"><span>${c[0]}</span><span style="color:#7dd3fc">${Math.round(w)}</span></div><div class="bar"><i style="width:${w}%"></i></div></div>`}).join("")}</div>`}
+function s5(u){ // đoạn trích
+ const hl=[0,1,2],lines=[100,94,98,88,96,92,70,100,90,96,84,98,76,94,88];
+ let d=lines.map((w,i)=>{const h=[3,7,11].indexOf(i),on=h>=0,k=ease(seg(u,.8+h*.7,1.3+h*.7));return `<div style="height:22px;width:${w}%;border-radius:11px;margin-bottom:22px;background:${on?`linear-gradient(90deg,rgba(251,191,36,${.25+.55*k}),rgba(251,191,36,${.1+.3*k}))`:'rgba(148,163,184,.28)'};outline:${on&&k>0?'3px solid rgba(251,191,36,.7)':'none'};outline-offset:6px"></div>`}).join("");
+ const q=typed("“…động lực học tập tăng rõ rệt ở nhóm học kết hợp trực tuyến và trực tiếp…”",seg(u,2.4,3.8));
+ return `<div class="abs card" style="left:70px;right:70px;top:290px;height:640px;padding:60px 70px;${rise(u,.1)}"><div class="mut" style="font:700 30px Inter;letter-spacing:3px;margin-bottom:34px">TÀI LIỆU · 12 TRANG</div>${d}${[0,1,2].map(i=>`<div class="abs" style="left:-22px;top:${140+[3,7,11][i]*44-10}px;width:48px;height:48px;border-radius:50%;background:#fbbf24;color:#3a2a00;font:800 28px Inter;display:grid;place-items:center;${pop(u,.8+i*.7)}">${i+1}</div>`).join("")}</div>
+ <div class="abs card" style="left:70px;right:70px;top:1010px;height:640px;padding:54px 60px;${rise(u,2.2)}"><div style="display:flex;gap:16px;flex-wrap:wrap"><span class="chip" style="background:rgba(251,191,36,.16);color:#fcd34d;border-color:rgba(251,191,36,.45)">Đoạn ưu tiên 1</span><span class="chip" style="background:rgba(52,211,153,.16);color:#6ee7b7;border-color:rgba(52,211,153,.45);${pop(u,4.1)}">✓ Khớp nguyên văn · tr. 7</span></div><div style="font:600 50px/1.35 Inter;margin-top:36px;min-height:300px">${q}</div></div>`}
+function s6(u){ // trích dẫn
+ const st=["APA","Harvard","IEEE","Vancouver","Chicago","MLA","AMA","BibTeX","RIS"],cit=["Nguyen, A., & Tran, B. (2023). Online learning and student motivation. ","Journal of Learning Studies","", ", 12(3), 45–62."],full=cit.join("");
+ const act=Math.min(st.length-1,Math.floor(seg(u,.5,3.2)*st.length)),ty=seg(u,1.2,3.8),n=Math.floor(full.length*ty),a=cit[0].length,b=a+cit[1].length;
+ const out=full.slice(0,n),h=out.slice(0,Math.min(n,a))+(n>a?`<em style="color:#bae6fd">${out.slice(a,Math.min(n,b))}</em>`:"")+(n>b?out.slice(b):"");
+ const press=seg(u,4.1,4.4),done=u>4.4;
+ return `<div class="abs" style="left:70px;right:70px;top:290px;display:flex;flex-wrap:wrap;gap:18px;${rise(u,.05)}">${st.map((s,i)=>`<span class="chip" style="${i==act?'background:#38bdf8;color:#04101f;border-color:#38bdf8':''}">${s}</span>`).join("")}<span class="chip" style="background:rgba(167,139,250,.16);color:#c4b5fd;border-color:rgba(167,139,250,.4)">+10.000 kiểu tạp chí</span></div>
+ <div class="abs card" style="left:70px;right:70px;top:640px;height:560px;padding:60px 64px;${rise(u,.6)}"><div class="mut" style="font:700 30px Inter;letter-spacing:3px">${st[act].toUpperCase()}</div><div style="font:500 52px/1.45 Inter;margin-top:28px">${h}<span style="opacity:${ty<1&&Math.sin(u*10)>0?1:0};color:#38bdf8">|</span></div></div>
+ <div class="abs" style="left:240px;right:240px;top:1290px;height:140px;border-radius:70px;display:grid;place-items:center;font:800 52px Inter;background:${done?'linear-gradient(90deg,#34d399,#10b981)':'linear-gradient(90deg,#38bdf8,#818cf8)'};color:#04101f;transform:scale(${1-.06*Math.sin(Math.PI*press)});box-shadow:0 20px 60px ${done?'rgba(52,211,153,.45)':'rgba(56,189,248,.4)'};${rise(u,3.6)}">${done?'Đã sao chép ✓':'Sao chép'}</div>`}
+function s7(u){ // vi/en + Word
+ const vi=u%6<3,k=Math.sin(Math.PI*seg(u%3,0,.3));
+ return `<div class="abs" style="left:70px;right:70px;top:290px;display:flex;gap:20px;${rise(u,.05)}"><span class="chip" style="${vi?'background:#38bdf8;color:#04101f;border-color:#38bdf8':''}">Tiếng Việt</span><span class="chip" style="${!vi?'background:#38bdf8;color:#04101f;border-color:#38bdf8':''}">English</span></div>
+ <div class="abs" style="left:110px;right:110px;top:470px;height:1050px;border-radius:24px;background:#f8fafc;color:#1e293b;padding:90px 90px;box-shadow:0 40px 100px rgba(0,0,0,.55);${rise(u,.3,80)}"><div style="font:700 28px Inter;color:#2563eb;margin:-50px 0 40px">W · Bản thảo.docx</div>
+ <div style="height:20px;width:60%;border-radius:10px;background:#cbd5e1;margin-bottom:26px"></div>${[100,96,92,98,70].map(w=>`<div style="height:14px;width:${w}%;border-radius:7px;background:#e2e8f0;margin-bottom:18px"></div>`).join("")}
+ <div style="font:700 28px Inter;color:#64748b;letter-spacing:3px;margin:46px 0 22px">TÀI LIỆU THAM KHẢO</div>
+ <div style="font:500 44px/1.5 Inter;padding-left:50px;text-indent:-50px;opacity:${seg(u,1,1.5)}">${vi?'Nguyen, A., & Tran, B. (2023). Học trực tuyến và động lực học tập. ':'Nguyen, A., & Tran, B. (2023). Online learning and student motivation. '}<em style="background:rgba(56,189,248,.28);padding:0 6px;border-radius:6px">${vi?'Tạp chí Nghiên cứu Học tập':'Journal of Learning Studies'}</em>, 12(3), 45–62.</div>
+ <div style="margin-top:46px;font:700 34px Inter;color:#0ea5e9;opacity:${seg(u,2,2.6)}">↑ Chữ nghiêng được giữ nguyên khi dán</div></div>`}
+function s8(u){ // riêng tư
+ const lock=back(seg(u,.1,.9));
+ return `<div class="abs" style="left:0;right:0;top:330px;display:grid;place-items:center;transform:scale(${.4+.6*lock});opacity:${seg(u,.05,.4)}"><svg width="420" height="420" viewBox="0 0 120 120"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#38bdf8"/></linearGradient></defs><path d="M60 8l42 16v30c0 28-18 48-42 58C36 102 18 82 18 54V24z" fill="rgba(52,211,153,.15)" stroke="url(#lg)" stroke-width="5" stroke-linejoin="round"/><rect x="40" y="52" width="40" height="32" rx="7" fill="url(#lg)"/><path d="M47 52v-8a13 13 0 0 1 26 0v8" fill="none" stroke="url(#lg)" stroke-width="6" stroke-linecap="round"/></svg></div>
+ <div class="abs h" style="top:820px;text-align:center;${rise(u,.8)}">Tài liệu<br><span class="g">không bị lưu trữ</span></div>
+ ${[["💻","Đọc ngay trên máy của bạn"],["🗑️","Không giữ lại tệp tải lên"],["📋","Chỉ lưu trích dẫn bạn đã sao chép"]].map((r,i)=>`<div class="abs card" style="left:110px;right:110px;top:${1130+i*160}px;height:130px;border-radius:30px;display:flex;align-items:center;gap:30px;padding:0 44px;font:700 38px Inter;${rise(u,1.4+i*.45,50)}"><span style="font-size:56px">${r[0]}</span>${r[1]}</div>`).join("")}`}
+function s9(u){ // giáo sư phản biện
+ const cm=[["Mục 2","Câu hỏi nghiên cứu chưa đủ cụ thể."],["Mục 4","Cỡ mẫu cần được giải thích rõ hơn."],["Mục 6","Tài liệu tham khảo nên cập nhật."]];
+ return `<div class="abs" style="left:70px;top:290px;${rise(u,.05)}"><span class="chip" style="background:rgba(251,191,36,.16);color:#fcd34d;border-color:rgba(251,191,36,.45)">★ Tính năng cao cấp · cần phê duyệt</span></div>
+ <div class="abs h" style="top:420px;${rise(u,.3)}">Giáo sư<br><span class="g">phản biện</span></div>
+ <div class="abs" style="left:70px;top:760px;display:flex;gap:26px;${rise(u,.7)}">${["GS","PGS","TS"].map((s,i)=>`<div style="width:130px;height:130px;border-radius:50%;display:grid;place-items:center;font:800 40px Inter;background:linear-gradient(135deg,${['#38bdf8','#b3a0fb','#34d399'][i]},#1e293b);${pop(u,.8+i*.2)}">${s}</div>`).join("")}<div style="align-self:center;font:600 38px/1.3 Inter;color:#9aa8c4;margin-left:14px">Hội đồng giả lập</div></div>
+ ${cm.map((c,i)=>`<div class="abs card" style="left:70px;right:70px;top:960px;margin-top:${i*150}px;height:130px;border-radius:30px;display:flex;align-items:center;gap:28px;padding:0 44px;${rise(u,1.5+i*.6,50)}"><span class="chip" style="font-size:28px;padding:8px 20px">${c[0]}</span><span style="font:600 40px/1.25 Inter">${c[1]}</span></div>`).join("")}
+ <div class="abs card" style="left:70px;right:70px;top:1450px;height:200px;display:flex;align-items:center;justify-content:space-between;padding:0 64px;${rise(u,3.3)}"><div><div class="mut" style="font:700 28px Inter;letter-spacing:3px">ĐỀ XUẤT ĐIỂM</div><div style="font:600 36px Inter;margin-top:8px;color:#fcd34d">Cần chỉnh sửa trước khi bảo vệ</div></div><div style="font:800 120px Inter;letter-spacing:-4px" class="g">${Math.round(82*ease(seg(u,3.4,4.4)))}</div></div>
+ <div class="abs" style="left:70px;right:70px;top:1700px;font:500 28px/1.4 Inter;color:#6f7d9c;${rise(u,4.2,20)}">Công cụ hỗ trợ soạn thảo, không thay thế hội đồng thật.</div>`}
+function s10(u){ // hệ sinh thái
+ const A=[["edufind","EduFind","Chọn tạp chí"],["profind","ProFind","Tìm nhà nghiên cứu"],["ami","Ami","Đọc và trích dẫn"],["may","Mây","Soạn văn bản"]];
+ return `<div class="abs h" style="top:290px;text-align:center;${rise(u,.05)}">Bốn công cụ<br><span class="g">một tài khoản</span></div>`+A.map((a,i)=>{const on=i==2,gl=on?`filter:drop-shadow(0 0 40px rgba(124,92,240,.9))`:"";return `<div class="abs card" style="left:${i%2?560:70}px;width:450px;top:${690+Math.floor(i/2)*560}px;height:500px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;border-color:${on?'#b3a0fb':'rgba(148,163,184,.22)'};${pop(u,.5+i*.35)}"><div style="width:190px;height:190px;${gl}"><img src="${a[0]}-logo.svg" style="width:190px;height:190px"></div><div style="font:800 62px Inter">${a[1]}</div><div class="mut" style="font:600 36px Inter">${a[2]}</div></div>`}).join("")}
+function s11(u){ // CTA
+ const p=back(seg(u,.1,.8));
+ return `<div class="abs" style="left:390px;top:200px;width:300px;height:300px;transform:scale(${.4+.6*p});filter:drop-shadow(0 20px 60px rgba(124,92,240,.7))"><img src="ami-logo.svg" style="width:300px;height:300px"></div>
+ <div class="abs h" style="top:560px;text-align:center;font-size:120px;${rise(u,.5)}">Đọc nhanh.<br><span class="g">Trích đúng.</span></div>
+ <div class="abs" style="left:200px;right:200px;top:990px;height:140px;border-radius:70px;display:grid;place-items:center;font:800 56px Inter;background:linear-gradient(90deg,#38bdf8,#818cf8);color:#04101f;box-shadow:0 20px 60px rgba(56,189,248,.45);transform:scale(${1+.03*Math.sin(u*6)});${rise(u,1.2)}">Thử Ami ngay</div>
+ <div class="abs" style="left:0;right:0;top:1190px;text-align:center;font:700 38px Inter;color:#9aa8c4;${rise(u,1.6)}">Miễn phí 1 lượt phân tích mỗi tuần</div>
+ <div class="abs" style="left:390px;top:1300px;width:300px;height:300px;border-radius:28px;background:#fff;padding:16px;${pop(u,2)}">__QR__</div>
+ <div class="abs" style="left:0;right:0;top:1630px;text-align:center;font:700 40px Inter;color:#7dd3fc;${rise(u,2.4)}">isavn.edu.vn/go/ami</div>`}
+const SC=[s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11];
+window.draw=t=>{
+ let i=ST.findIndex((s,k)=>t>=s&&(k==ST.length-1||t<ST[k+1]));if(i<0)i=0;
+ const u=t-VS[i]+0.3+ (i==0?0:0); const su=t-ST[i];
+ document.getElementById("net").innerHTML=net(t,1);
+ document.getElementById("top").innerHTML=i>=2?`<img src="ami-logo.svg">Ami`:"";
+ const sp=STEPS[i];document.getElementById("step").innerHTML=sp?`<b>${sp.slice(0,2)}</b>${sp.slice(2)}`:"";
+ const end=i==ST.length-1?61:ST[i+1],fo=1-seg(t,end-.22,end),fi=seg(su,0,.22);
+ document.getElementById("sc").innerHTML=`<div class="scn" style="opacity:${Math.min(fo,i==0?1:fi)}">${SC[i](su)}</div>`;
+ document.getElementById("foot").style.opacity=i==11||i==0?0:1;
+};
+</script></body></html>
