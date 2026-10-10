@@ -27,4 +27,4 @@ export function startSession() {
 export type App = "edufind" | "ami" | "may";
 export const ecoUrl = (app: App, place: string, to = "") => app === "edufind"
   ? `https://edufind.isavn.edu.vn/${to}?utm_source=profind&utm_medium=${place}&utm_campaign=ecosystem` // EduFind đọc utm_source để đo lượt vào từ ProFind™
-  : `https://isavn.edu.vn/go/${app}?from=profind&utm_source=profind&utm_medium=${place}&utm_campaign=ecosystem`;
+  : `https://isavn.edu.vn/go/${app}?from=profind&to=${encodeURIComponent(`/?utm_source=profind&utm_medium=${place}&utm_campaign=ecosystem`)}`; // cổng /go chỉ giữ tham số utm khi nằm trong `to`; để ngoài thì Ami và Mây nhận utm_source=isavn.edu.vn
