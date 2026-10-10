@@ -5,6 +5,8 @@ import { UP, provinceOf } from "./lib/province.mjs";
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 const SITE = "https://profind.isavn.edu.vn", MIN_INDEX = 3, TOPN = 10;
 const P = JSON.parse(readFileSync("public/data/profind.json", "utf8")), M = P.meta, built = M.built ?? new Date().toISOString().slice(0, 10);
+// Google (ProfilePage) chỉ chấp nhận ngày giờ ISO 8601 đầy đủ kèm múi giờ; ngày trần "2026-10-10" bị báo "Giá trị ngày giờ của dateModified không hợp lệ". Dữ liệu dựng theo ngày, nên lấy 00:00 giờ Việt Nam.
+const builtIso = `${built}T00:00:00+07:00`;
 const DISC = Object.fromEntries([...readFileSync("src/disciplines.ts", "utf8").matchAll(/"([a-z-]+)":\s*\["([^"]+)",\s*"([^"]+)"\]/g)].map((m) => [m[1], { vi: m[2], en: m[3] }]));
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const vn = (n, d = 0) => Number(n).toLocaleString("vi-VN", { maximumFractionDigits: d });
@@ -135,7 +137,7 @@ ${abroadSection()}
 <h2>Cách trích dẫn</h2><pre class="f" style="white-space:pre-wrap">Lương Việt Hoàng và Viện Khoa học Giáo dục và Kinh tế Đông Nam Á (ISA Việt Nam) (2026). PRO-SCORE1000™ phiên bản 2.0 (mô phỏng 1000 cấu hình trọng số): chỉ số tham khảo đa chiều về tác động và đóng góp của nhà khoa học. ProFind™, profind.isavn.edu.vn.</pre>
 <a class="cta" href="/#/pro-score">Xem bản đầy đủ trong ứng dụng (kèm bảng hội đồng và huy hiệu)</a>`;
   put(path, page({ path, title: "PRO-SCORE1000™: phương pháp, công thức và giới hạn | ProFind™", desc, h1: "PRO-SCORE1000™: phương pháp và công thức", sub: "Chỉ số tham khảo của ProFind™ · phiên bản 2.0", crumbs: [["ProFind™", "/"], ["PRO-SCORE1000™", path]], body,
-    ld: [{ "@type": "Article", headline: "PRO-SCORE1000™: phương pháp, công thức và giới hạn", description: desc, inLanguage: "vi", dateModified: built, author: { "@type": "Person", name: "Lương Việt Hoàng" }, publisher: { "@type": "Organization", name: "ISA Vietnam", url: "https://isavn.edu.vn/" }, mainEntityOfPage: SITE + path }] }));
+    ld: [{ "@type": "Article", headline: "PRO-SCORE1000™: phương pháp, công thức và giới hạn", description: desc, inLanguage: "vi", dateModified: builtIso, author: { "@type": "Person", name: "Lương Việt Hoàng" }, publisher: { "@type": "Organization", name: "ISA Vietnam", url: "https://isavn.edu.vn/" }, mainEntityOfPage: SITE + path }] }));
   sm.push([SITE + path, 0.8]);
 }
 
@@ -181,7 +183,7 @@ ${pages.length ? `<h2>Hồ sơ nhà khoa học có tên trong Top 2% (${vn(pages
 <p>Ioannidis J.P.A., Baas J., Klavans R., Boyack K.W. (2026). Updated science-wide author databases of standardized citation indicators, phiên bản ${ver}. Elsevier BV, Mendeley Data. <a href="https://doi.org/10.17632/btchxktzyw.${ver}">doi:10.17632/btchxktzyw.${ver}</a>. Giấy phép CC BY-NC 3.0 (phi thương mại). ${vn(ranked)} trong ${vn(tagged.length)} hồ sơ gắn nhãn đang có hạng PRO-SCORE1000™; hồ sơ có liên kết chính ở nước ngoài không được xếp hạng.</p>
 <p><a href="/pro-score/">Phương pháp PRO-SCORE1000™</a> · <a href="/don-vi/">Nhà khoa học theo trường, viện</a> · <a href="/nganh/">Theo ngành</a></p>`;
   put(path, page({ path, title, desc, h1: "Top 2% nhà khoa học thế giới 2026: nhà khoa học Việt Nam", sub: `Stanford/Elsevier, bản ${ver} · ${vn(nCar)} người, ${vn(nInst)} đơn vị (bảng sự nghiệp)`, crumbs: [["ProFind™", "/"], ["Top 2% thế giới", path]], body,
-    ld: [{ "@type": "Article", headline: title, description: desc, inLanguage: "vi", datePublished: "2026-10-09", dateModified: built, author: { "@type": "Person", name: "Lương Việt Hoàng" }, publisher: { "@type": "Organization", name: "ISA Vietnam", url: "https://isavn.edu.vn/" }, mainEntityOfPage: SITE + path },
+    ld: [{ "@type": "Article", headline: title, description: desc, inLanguage: "vi", datePublished: "2026-10-09", dateModified: builtIso, author: { "@type": "Person", name: "Lương Việt Hoàng" }, publisher: { "@type": "Organization", name: "ISA Vietnam", url: "https://isavn.edu.vn/" }, mainEntityOfPage: SITE + path },
       { "@type": "FAQPage", mainEntity: faq.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) }] }));
 
   // danh sách người Top 2% trên trang đơn vị (liên kết nội bộ tới trang hồ sơ)
@@ -204,7 +206,7 @@ ${top.length ? `<h2>Công trình được trích dẫn nhiều</h2><ol class="s"
 <a class="cta" href="/#/tac-gia/${a.id}">Xem hồ sơ đầy đủ trên ProFind™</a>
 <p class="sub">Mã định danh: ${a.orcid ? `<a href="https://orcid.org/${esc(a.orcid)}" rel="noopener">ORCID ${esc(a.orcid)}</a> · ` : ""}<a href="https://openalex.org/${a.id}" rel="noopener">OpenAlex ${a.id}</a>. Dữ liệu tổng hợp từ nguồn công khai (OpenAlex, ORCID, Crossref và danh sách Top 2%); có thể thiếu hoặc sai sót. Nếu cần đính chính hoặc đề nghị gỡ trang này, xem <a href="/#/dinh-chinh">đính chính</a> hoặc liên hệ <a href="mailto:vienisavietnam@gmail.com">vienisavietnam@gmail.com</a>. <a href="/top-2-phan-tram/">Top 2% nhà khoa học thế giới</a>.</p>`;
     put(ap, page({ path: ap, title: ttl, desc: ds, h1: a.name, sub: [unit, `Top 2% thế giới · ${fld}`].filter(Boolean).join(" · "), crumbs: [["ProFind™", "/"], ["Top 2% thế giới", "/top-2-phan-tram/"], [a.name, ap]], body: bd,
-      ld: [{ "@type": "ProfilePage", mainEntity: { "@type": "Person", name: a.name, ...(uns[0] ? { affiliation: uns.slice(0, 3).map((u) => ({ "@type": "Organization", name: u.name })) } : {}), ...(dn.length ? { knowsAbout: dn.map((d) => d.vi) } : {}), sameAs: [a.orcid ? `https://orcid.org/${a.orcid}` : null, `https://openalex.org/${a.id}`].filter(Boolean), url: SITE + ap }, dateModified: built }] }));
+      ld: [{ "@type": "ProfilePage", mainEntity: { "@type": "Person", name: a.name, ...(uns[0] ? { affiliation: uns.slice(0, 3).map((u) => ({ "@type": "Organization", name: u.name })) } : {}), ...(dn.length ? { knowsAbout: dn.map((d) => d.vi) } : {}), sameAs: [a.orcid ? `https://orcid.org/${a.orcid}` : null, `https://openalex.org/${a.id}`].filter(Boolean), url: SITE + ap }, dateModified: builtIso }] }));
     sm.push([SITE + ap, 0.5]);
   }
   sm.push([SITE + path, 0.9]);
