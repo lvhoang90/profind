@@ -23,6 +23,10 @@ eq((await ls(base.e, ts, "00")).status, 403, "sai chữ ký link-status");
 const eb = { e: "edu.user@dhqghn.edu.vn", n: "Lê Hoàng Sơn", ph: "0987654321", cs: true, a: "A5008082871", o: "ĐHQGHN", j: "Giảng viên", src: "edufind" };
 r = await post(mk(eb)); j = await r.json(); eq(r.status, 200, "EduFind tạo mới"); eq(j.user.org, "ĐHQGHN", "đơn vị từ EduFind"); eq(j.user.job, "Giảng viên", "công việc từ EduFind");
 r = await post(mk({ ...base, o: "Trường X", n: "Tên Khác", src: "edufind" })); j = await r.json(); eq(j.user.org, "Trường X", "điền đơn vị còn trống"); eq(j.user.name, "Nguyễn Văn A", "không ghi đè họ tên đã có");
+// Nguồn Ami (và nguồn lạ): vào được, điền đơn vị/công việc như EduFind; nguồn ghi nhận ở thống kê connect_ami, connect_may
+const ab = { e: "ami.user@truong.edu.vn", n: "Trần Thị Bình", ph: "0933445566", cs: true, a: "A5008082871", o: "ĐH A", j: "Nghiên cứu viên", src: "ami" };
+r = await post(mk(ab)); j = await r.json(); eq(r.status, 200, "Ami tạo mới"); eq(j.user.org, "ĐH A", "đơn vị từ Ami");
+r = await post(mk({ ...ab, e: "la.user@truong.edu.vn", src: "khac" })); j = await r.json(); eq(r.status, 200, "nguồn lạ vẫn vào");
 // Quản trị viên không đăng nhập được bằng mã kết nối (dù chữ ký đúng), người khác vẫn vào bình thường
 process.env.ADMIN_EMAILS = "quan.tri@isavn.test";
 r = await post(mk({ ...base, e: "quan.tri@isavn.test" })); eq(r.status, 403, "chặn email quản trị"); eq(!!r.headers.get("set-cookie"), false, "không cấp phiên cho quản trị");
