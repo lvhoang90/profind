@@ -12,7 +12,7 @@ function memRun(cmds) {
     switch (op) {
       case "GET": return e ? e.v : null;
       case "MGET": return [k, ...a].map((x) => live(x)?.v ?? null);
-      case "SET": mem.set(k, { v: a[0], exp: a[1] === "EX" ? Date.now() + Number(a[2]) * 1000 : 0 }); return "OK";
+      case "SET": if (a.includes("NX") && e) return null; mem.set(k, { v: a[0], exp: a[1] === "EX" ? Date.now() + Number(a[2]) * 1000 : 0 }); return "OK";
       case "DEL": mem.delete(k); return 1;
       case "INCR": { const n = Number(e?.v ?? 0) + 1; put(k, String(n), e); return n; }
       case "EXPIRE": if (e) e.exp = Date.now() + Number(a[0]) * 1000; return 1;

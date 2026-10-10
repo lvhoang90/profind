@@ -6,6 +6,7 @@ import { Icon, type IconName } from "./icons";
 import type { Author, Data, Institution, Work } from "./types";
 import { AccountProvider, useAccount, api } from "./accountStore";
 // Trang tài khoản và quản trị tách thành các tệp nạp riêng: người chỉ tra cứu không tải mã của chúng.
+const ConnectPage = lazy(() => import("./Connect").then((m) => ({ default: m.ConnectPage })));
 const AccountPage = lazy(() => import("./Account").then((m) => ({ default: m.AccountPage })));
 const LeaderboardPage = lazy(() => import("./Leaderboard").then((m) => ({ default: m.LeaderboardPage })));
 const ProScorePage = lazy(() => import("./ProScore").then((m) => ({ default: m.ProScorePage })));
@@ -91,14 +92,14 @@ function AppInner() {
     }).catch(() => setErr(true));
   };
   // Bộ dữ liệu tác giả (~5 MB) chỉ tải khi cần: trang tài khoản và quản trị không dùng nên mở nhanh hơn.
-  const needData = !/^(tai-khoan|quan-tri|gioi-thieu|pro-score)/.test(location.hash.replace(/^#\/?/, ""));
+  const needData = !/^(tai-khoan|ket-noi|quan-tri|gioi-thieu|pro-score)/.test(location.hash.replace(/^#\/?/, ""));
   useEffect(() => { if (needData && !data) load(); }, [needData, route.kind]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { startSession(); }, []);
   useEffect(() => { document.documentElement.lang = lang; try { localStorage.setItem(KEY, lang); } catch { /* bỏ qua */ } }, [lang]);
   useEffect(() => { const f = () => setRoute(parseRoute()); addEventListener("hashchange", f); return () => removeEventListener("hashchange", f); }, []);
   const { kind, id } = route;
   const author = data && id ? data.authors.find((a) => a.id === id) ?? null : null;
-  const view: "list" | "author" | "corr" | "nf" | "acc" | "adm" | "about" | "pro" | "lb" = kind === "bang-xep-hang" ? "lb" : kind === "pro-score" ? "pro" : kind === "gioi-thieu" ? "about" : kind === "tai-khoan" ? "acc" : kind === "quan-tri" ? "adm" : kind === "dinh-chinh" ? "corr" : kind === "tac-gia" ? (data && !author ? "nf" : "author") : "list";
+  const view: "list" | "author" | "corr" | "nf" | "acc" | "conn" | "adm" | "about" | "pro" | "lb" = kind === "ket-noi" ? "conn" : kind === "bang-xep-hang" ? "lb" : kind === "pro-score" ? "pro" : kind === "gioi-thieu" ? "about" : kind === "tai-khoan" ? "acc" : kind === "quan-tri" ? "adm" : kind === "dinh-chinh" ? "corr" : kind === "tac-gia" ? (data && !author ? "nf" : "author") : "list";
 
   // Tiêu đề tab, mô tả và đưa tiêu điểm về nội dung chính khi đổi trang (trình đọc màn hình biết đã chuyển trang).
   useEffect(() => {
@@ -134,6 +135,7 @@ function AppInner() {
           {view === "lb" ? (data ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><LeaderboardPage data={data} lang={lang} num={num} /></Suspense> : err ? <div className="empty" role="alert"><p>{t("err")}</p><button className="ghost" onClick={load}>{t("retry")}</button></div> : <p className="empty" role="status">{t("loading")}</p>)
             : view === "pro" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><ProScorePage /></Suspense>
             : view === "about" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><AboutPage section={new URLSearchParams(route.query).get("m") ?? ""} /></Suspense>
+            : view === "conn" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><ConnectPage /></Suspense>
             : view === "acc" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><AccountPage tab={id} /></Suspense>
             : view === "adm" ? <Suspense fallback={<p className="empty" role="status">Đang tải…</p>}><AdminPage tab={id} /></Suspense>
             : err ? <div className="empty" role="alert"><p>{t("err")}</p><button className="ghost" onClick={load}>{t("retry")}</button></div>

@@ -1,6 +1,7 @@
 # Changelog
 
 ## Chưa phát hành
+- **Kết nối ISA**: người đã có tài khoản Mây tạo tài khoản ProFind và vào thẳng bước "Nhà khoa học này có phải bạn?" với hồ sơ Mây gợi ý, không phải nhập mã email lần nữa (Mây đã xác thực). Mã ký HMAC dùng một lần, mười phút (`op=connect`, trang `#/ket-noi`), kèm `op=link-status` cho Mây hỏi trạng thái. Cần biến `ISA_CONNECT_SECRET` (xem `docs/ISA-CONNECT.md`).
 - Tài khoản người dùng (email + số điện thoại, mã xác thực), Không gian của tôi (tác giả đã lưu, tìm kiếm đã lưu, đã xem, hồ sơ), trang quản trị với đo lường truy cập, hệ sinh thái ISA, nội dung và người dùng; điểm chạm sang EduFind, Ami, Mây.
 - Nút giao diện sáng/tối/theo hệ thống; chân trang mới; bộ lọc lưu trong đường dẫn.
 - Số trích dẫn là số của hồ sơ OpenAlex toàn thời gian (trước đây chỉ cộng các công trình từ 2016); thêm chỉ số h.

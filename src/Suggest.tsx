@@ -107,7 +107,8 @@ export function SuggestNudge({ user }: { user: User }) {
 export function SuggestPage({ user }: { user: User }) {
   const hid = useHidden(), { list: mine } = useMine();
   const [idx, setIdx] = useState<Idx | null>(null), [err, setErr] = useState(false);
-  const [step, setStep] = useState(0), [sel, setSel] = useState<string | null>(null), [gone, setGone] = useState<Set<string>>(new Set());
+  const pick0 = (() => { try { const v = sessionStorage.getItem("profind.sgpick") || ""; sessionStorage.removeItem("profind.sgpick"); return /^A\d{5,12}$/.test(v) ? v : null; } catch { return null; } })(); // hồ sơ Mây đã gợi ý và người dùng đã đồng ý
+  const [step, setStep] = useState(pick0 ? 1 : 0), [sel, setSel] = useState<string | null>(pick0), [gone, setGone] = useState<Set<string>>(new Set());
   const [manual, setManual] = useState(false), [q, setQ] = useState(""), [orcid, setOrcid] = useState(""), [busy, setBusy] = useState(false), [msg, setMsg] = useState(""), [res, setRes] = useState<{ status: string; until: number | null } | null>(null);
   const back = () => { let b = "#/tai-khoan"; try { b = sessionStorage.getItem("profind.sgback") || b; sessionStorage.removeItem("profind.sgback"); } catch { /* bỏ qua */ } location.hash = b; };
   useEffect(() => { loadIdx().then(setIdx).catch(() => setErr(true)); }, []);

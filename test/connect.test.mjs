@@ -1,0 +1,22 @@
+// Thử op=connect và op=link-status với kho bộ nhớ: node test/connect.test.mjs
+import crypto from "node:crypto";
+process.env.MAIL_PROVIDER = "console"; process.env.ISA_CONNECT_SECRET = "test-secret-0123456789abcdef";
+const { default: h } = await import(process.env.HANDLER || "../api/account.js");
+const SEC = process.env.ISA_CONNECT_SECRET, b64 = (s) => Buffer.from(s).toString("base64url");
+const mk = (o, secret = SEC) => { const pl = b64(JSON.stringify({ exp: Date.now() + 600e3, jti: crypto.randomBytes(16).toString("hex"), ...o })); return `v1.${pl}.${crypto.createHmac("sha256", secret).update(`v1.${pl}`).digest("hex")}`; };
+const post = (t) => h(new Request("https://profind.test/api/account?op=connect", { method: "POST", body: JSON.stringify({ t }) }));
+let ok = 0; const eq = (a, b, m) => { if (a !== b) { console.error("FAIL", m, a, b); process.exit(1); } ok++; };
+const base = { e: "ket.noi@truong.edu.vn", n: "Nguyễn Văn A", ph: "0912345678", cs: true, a: "A5012345678" };
+const t1 = mk(base); let r = await post(t1); eq(r.status, 200, "tạo mới"); let j = await r.json(); eq(j.isNew, true, "isNew"); eq(j.authorId, "A5012345678", "authorId"); eq(!!r.headers.get("set-cookie"), true, "cookie");
+r = await post(t1); eq(r.status, 400, "dùng lại mã bị từ chối");
+r = await post(mk(base)); j = await r.json(); eq(r.status, 200, "đăng nhập lại"); eq(j.isNew, false, "không tạo trùng");
+eq((await post(mk(base, "sai-khoa-sai-khoa-sai"))).status, 400, "sai chữ ký");
+eq((await post(mk({ ...base, exp: Date.now() - 1 }))).status, 400, "hết hạn");
+eq((await post(mk({ ...base, e: "moi@x.vn", ph: "123" }))).status, 400, "thiếu SĐT hợp lệ");
+eq((await post(mk({ ...base, e: "moi2@x.vn", cs: false }))).status, 400, "thiếu đồng ý");
+const ts = Date.now(), sig = (e, t) => crypto.createHmac("sha256", SEC).update(`ls:${e}:${t}`).digest("hex");
+const ls = (e, t, s) => h(new Request(`https://profind.test/api/account?op=link-status&e=${encodeURIComponent(e)}&ts=${t}&sig=${s}`));
+j = await (await ls(base.e, ts, sig(base.e, ts))).json(); eq(j.registered, true, "link-status có tài khoản"); eq(j.verified, false, "chưa xác thực");
+j = await (await ls("khong.co@x.vn", ts, sig("khong.co@x.vn", ts))).json(); eq(j.registered, false, "chưa đăng ký");
+eq((await ls(base.e, ts, "00")).status, 403, "sai chữ ký link-status");
+console.log(`OK ${ok} kiểm tra`);
