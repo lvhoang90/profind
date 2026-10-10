@@ -85,3 +85,11 @@ npm run d:check                              # kiểm tra nhất quán
 - Email cá nhân (gmail…) vẫn gửi được yêu cầu xác thực nhưng luôn vào hàng chờ quản trị viên duyệt, không bao giờ tự duyệt.
 - Tên miền có nhãn `edu`, `gov` hoặc `ac` (đuôi `.vn` hay quốc tế) được coi là email tổ chức.
 - Đề xuất chính: điểm ≥ 70 và hơn đề xuất kế tiếp ≥ 15 điểm; hiển thị kèm tỉ lệ % ước tính theo quy tắc so khớp (không phải xác suất thống kê).
+
+
+## Công trình khác (không tính điểm)
+- ProFind chỉ **tính điểm** bài tạp chí có ISSN (khớp danh mục tạp chí), chủ yếu từ 2021; công trình không ISSN (kỷ yếu, sách, bản thảo) và công trình ngoài phạm vi nạp không nằm trong `public/data/works/<mã>.json`.
+- `node scripts/fetch-extra-works.mjs --mailto <email>` (cần `OPENALEX_API_KEY`; `refresh.mjs` chạy sau `build-index.mjs`) tải **đủ công trình** của một nhóm nhỏ hồ sơ từ OpenAlex (mọi năm, mọi loại) và ghi phần chưa có trong danh sách tính điểm vào `public/data/extra/<mã>.json` cùng chỉ mục `public/data/extra-index.json`. Trang hồ sơ hiện mục "Công trình khác (không tính điểm)"; điểm và hạng không đổi.
+- Nhóm hồ sơ: `data/full-works-authors.json` (ghi tay, ví dụ người gửi đề nghị bổ sung) cộng hồ sơ đã xác thực (API công khai `/api/account?op=verified`, bỏ qua nếu không gọi được) và tùy chọn `--ids`. Bỏ qua hồ sơ đã gỡ (`corrections.remove`) và công trình đã loại (`corrections.excludeWorks`). Hồ sơ rời khỏi nhóm thì tệp bị xóa ở lần chạy sau.
+- Chưa áp dụng cho cả 17.000 hồ sơ (tốn hạn mức OpenAlex và dung lượng); mở rộng bằng cách thêm mã vào `data/full-works-authors.json`.
+- Chủ hồ sơ đã xác thực có nút "Không phải bài của tôi" ở từng công trình trong mục này như phần tính điểm: bài ẩn ngay, mã `A…-W…` vào danh sách báo của quản trị viên; sau khi đưa vào `corrections.excludeWorks` và dựng lại, `fetch-extra-works.mjs` bỏ bài đó. `xw-sweep` coi bài là "đã xử lý" chỉ khi không còn ở cả `works/<mã>.json` lẫn `extra/<mã>.json`.

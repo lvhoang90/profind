@@ -332,7 +332,9 @@ export default async function handler(request) {
         if (!ids.length) { await one(["HDEL", XWK, authorId]); continue; }
         let shard; try { const r = await fetch(`${url.origin}/data/works/${encodeURIComponent(authorId)}.json?s=${now}`); if (!r.ok) continue; shard = await r.json(); } catch { continue; }
         if (!Array.isArray(shard)) continue;
-        const present = new Set(shard.map((w) => w.id)), done = ids.filter((w) => !present.has(w)); if (!done.length) continue;
+        // Mục "Công trình khác (không tính điểm)" (public/data/extra/<mã>.json, chỉ có mã W…) cũng tính là còn trên hồ sơ: chưa loại khỏi đó thì chưa phải "đã xử lý".
+        let extraIds = []; try { const r = await fetch(`${url.origin}/data/extra/${encodeURIComponent(authorId)}.json?s=${now}`); if (r.ok) { const x = await r.json(); if (Array.isArray(x)) extraIds = x.map((w) => `${authorId}-${w.id}`); } else if (r.status !== 404) continue; } catch { continue; }
+        const present = new Set([...shard.map((w) => w.id), ...extraIds]), done = ids.filter((w) => !present.has(w)); if (!done.length) continue;
         const info = {}; try { const r = await fetch(`https://api.openalex.org/works?filter=openalex:${done.slice(0, 50).map((w) => w.split("-").pop()).join("|")}&select=id,title,publication_year&per-page=50&mailto=${encodeURIComponent(adminEmails[0] || "profind@isavn.edu.vn")}`); if (r.ok) for (const x of (await r.json()).results ?? []) info[String(x.id).replace("https://openalex.org/", "")] = { t: tidy(x.title, 200), y: x.publication_year }; } catch { /* không có tiêu đề thì ghi mã */ }
         const works = done.map((w) => ({ w, t: info[w.split("-").pop()]?.t || "", y: info[w.split("-").pop()]?.y || null }));
         const vf = await getVf(authorId), email = vf?.email && EMAIL_RE.test(vf.email) ? String(vf.email).toLowerCase() : "";
