@@ -1,6 +1,6 @@
 # Xử lý đề nghị bổ sung nhà nghiên cứu
 
-Người dùng gửi "Đề nghị bổ sung nhà nghiên cứu" từ trang ProFind (`api/correction.js`, `kind=add`). Hệ thống chỉ gửi email báo cho quản trị viên (tiêu đề `[ProFind] Đề nghị bổ sung nhà nghiên cứu - ...`); **không tự sửa dữ liệu**. Người quản trị quyết định và xử lý. Tài liệu này là quy trình tra cứu nhanh để đưa ra đề xuất.
+Người dùng gửi "Đề nghị bổ sung nhà nghiên cứu" từ trang ProFind (`api/correction.js`, `kind=add`). Mỗi đề nghị được **lưu ở Redis (`profind:req`) và hiện ở Quản trị > Việc cần làm** (mục "Đề nghị từ biểu mẫu", tab Xác thực > Đề nghị từ biểu mẫu), đồng thời gửi email báo như trước (tiêu đề `[ProFind] Đề nghị bổ sung nhà nghiên cứu - ...`), nên không bị sót khi không xem email. Xử lý xong thì bấm "Đã xử lý". Hệ thống **không tự sửa dữ liệu**; chỉ lưu các đề nghị gửi từ khi có mục này. Người quản trị quyết định và xử lý. Tài liệu này là quy trình tra cứu nhanh để đưa ra đề xuất.
 
 Khi quản trị viên gửi ảnh chụp email đề nghị cho trợ lý AI và nhờ "tra đề nghị này", trợ lý làm đúng các bước dưới đây rồi báo kết quả. Trợ lý **không** tự thêm hồ sơ, không gửi thư cho người gửi và không sửa dữ liệu; chỉ đề xuất.
 
