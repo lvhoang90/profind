@@ -34,3 +34,9 @@ Khóa miễn phí, tạo tại <https://openalex.org/settings/api>. Tên biến 
 4. **Không dán khóa vào khung chat, email hay lưu vào kho mã.**
 
 Các script nạp dữ liệu (`scripts/ingest-openalex.mjs`, `scripts/extend-authors.mjs`, ...) cũng đọc biến này khi chạy trên máy.
+
+## Thư báo khi bấm "Đã xử lý"
+- Bấm "Đã xử lý" mở khung thư báo cho người gửi, **mặc định bật** (tắt khi không cần, ví dụ đề nghị trùng hoặc spam; đã gửi thư thì lần sau mặc định tắt để không gửi trùng).
+- Thư soạn sẵn theo loại đề nghị (bổ sung, xác nhận, đính chính, gỡ hồ sơ) trong `src/replyTemplates.ts`, **theo ngôn ngữ người gửi** (có chữ tiếng Việt có dấu thì tiếng Việt, ngược lại tiếng Anh; đổi được ở khung), điền sẵn tên và mã hồ sơ (tra theo ORCID trong chỉ mục gợi ý). Quản trị viên sửa tiêu đề và nội dung trước khi gửi.
+- Gửi qua `admin-mail-send` (người nhận trả lời về hộp thư quản trị viên, ghi ở tab Thư gửi), rồi `admin-req-done` ghi `notifiedAt`. Gửi lỗi thì không ghi đã xử lý.
+- Người xử lý đề nghị (kể cả trợ lý AI chuẩn bị đề xuất) không tự gửi thư: thư chỉ đi khi quản trị viên bấm nút.

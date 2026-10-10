@@ -46,4 +46,14 @@ eq((await call("admin-req-done", { id, done: true }, admin)).status, 200, "đán
 j = await (await call("admin-reqs", null, admin, "GET")).json(); eq(j.items[0].status, "done", "đã xử lý"); eq(j.items[0].doneBy, "quan.tri@isavn.test", "ghi người xử lý");
 eq((await call("admin-req-done", { id, done: false }, admin)).status, 200, "mở lại");
 j = await (await call("admin-reqs", null, admin, "GET")).json(); eq(j.items[0].status, "new", "mở lại thành chưa xử lý");
+// 4. Thư báo khi bấm "Đã xử lý": gửi qua admin-mail-send (trả lời về hộp thư quản trị viên) rồi ghi notified
+const outbox = []; const ol = console.log; console.log = (...x) => outbox.push(x.join(" "));
+r = await call("admin-mail-send", { to: "nguoi.thu@example.vn", subject: "ProFind: hồ sơ của bạn đã được bổ sung", body: "Chào bạn,\n\nĐã thêm hồ sơ.", kind: "req-add" }, admin); console.log = ol;
+eq(r.status, 200, "gửi thư báo"); eq(outbox.join("\n").includes("nguoi.thu@example.vn"), true, "thư tới đúng người gửi đề nghị");
+eq((await call("admin-mail-send", { to: "nguoi.thu@example.vn", subject: "ProFind: x", body: "Chào" }, user)).status, 403, "người thường không gửi thư được");
+eq((await call("admin-req-done", { id, done: true, notified: true }, admin)).status, 200, "đã xử lý kèm thư");
+j = await (await call("admin-reqs", null, admin, "GET")).json(); eq(typeof j.items[0].notifiedAt, "number", "ghi thời điểm gửi thư báo");
+eq((await call("admin-req-done", { id, done: false }, admin)).status, 200, "mở lại");
+eq((await call("admin-req-done", { id, done: true }, admin)).status, 200, "đã xử lý không gửi thư");
+j = await (await call("admin-reqs", null, admin, "GET")).json(); eq(typeof j.items[0].notifiedAt, "number", "giữ dấu đã gửi thư từ lần trước (tránh gửi trùng)");
 console.log(`OK ${ok} kiểm tra`);

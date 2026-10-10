@@ -504,7 +504,7 @@ export default async function handler(request) {
       const bad = needAdmin(); if (bad) return bad;
       const id = tidy(body.id, 40), rec = jparse(await one(["HGET", "profind:req", id]));
       if (!rec) return json({ error: "Không tìm thấy đề nghị." }, 404);
-      if (body.done === false) { rec.status = "new"; delete rec.doneAt; delete rec.doneBy; } else { rec.status = "done"; rec.doneAt = Date.now(); rec.doneBy = me.email; }
+      if (body.done === false) { rec.status = "new"; delete rec.doneAt; delete rec.doneBy; } else { rec.status = "done"; rec.doneAt = Date.now(); rec.doneBy = me.email; if (body.notified === true) rec.notifiedAt = Date.now(); } // notified: giao diện đã gửi thư báo (admin-mail-send) cho người gửi trước khi gọi
       await one(["HSET", "profind:req", id, JSON.stringify(rec)]);
       return json({ ok: true });
     }
