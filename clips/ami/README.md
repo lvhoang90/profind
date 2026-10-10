@@ -26,14 +26,14 @@ ffmpeg -framerate 30 -i frames/f%04d.jpg -i mix.wav -c:v libx264 -crf 18 -pix_fm
 ```
 
 ## Giọng ElevenLabs (đã làm)
-Giọng **Việt Hoàng** (Sài Gòn, `aBSlddZX2jwWE6N7Tr5X`), Multilingual v2, Stability 40%, Similarity 80%, Style 40%, speed 1.15, Speaker boost; khóa trong biến `ELEVENLABS_API_KEY`.
-Giọng này đọc chậm hơn giọng máy nên lời dẫn đã rút gọn cho vừa từng cảnh (xem `loi-dan.md`).
+Giọng **Việt Hoàng** (Sài Gòn, `aBSlddZX2jwWE6N7Tr5X`), model **Flash v2.5** có ép `language_code` (`vi` hoặc `en`), thiết lập mặc định của giọng (Stability 0.5, Similarity 0.75, Style 0, speed 1.0, Speaker boost); khóa trong biến `ELEVENLABS_API_KEY`.
+Lời gửi nguyên văn, không viết lại cách đọc (AI, PDF, APA, EduFind… giữ nguyên). Giọng đọc nhanh nên mỗi câu kết thúc sớm hơn cảnh; nếu muốn đầy lời hơn, có thể nới lại `loi-dan.md`.
 
 ```
 python3 eleven.py gioi-thieu-60s            # tạo vo/s*.mp3, s*.npy, cập nhật v và dur trong tl.json
 python3 eleven.py gioi-thieu-60s --only 6   # chỉ tạo lại câu 6 (xóa vo/s6.mp3 trước nếu đổi lời)
 ```
-Từ tiếng Anh được viết lại cách đọc trong `eleven.py` (bảng `RESPELL`); chỉnh bảng đó nếu nghe chưa đúng. Sau đó: `python3 build.py` → `node render.mjs` → `python3 mix.py` → ghép bằng lệnh ffmpeg ở trên. `tts.py` (Piper) chỉ còn để thử.
+Sau đó: `python3 build.py` → `node render.mjs` → `python3 mix.py` → ghép bằng lệnh ffmpeg ở trên. `tts.py` (Piper) chỉ còn để thử.
 
 ## Bản tiếng Anh (giọng Việt Hoàng nói tiếng Anh)
 Lời tiếng Anh nằm ở trường `en` của từng cảnh trong `tl.json` (hình giữ nguyên tiếng Việt, không phụ đề).

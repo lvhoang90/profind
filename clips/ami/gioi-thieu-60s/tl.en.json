@@ -2,7 +2,7 @@
  "scenes": [
   {
    "v": 0.3,
-   "dur": 2.38,
+   "dur": 1.75,
    "text": "Năm mươi bài báo, chỉ còn ba ngày?",
    "start": 0,
    "end": 4.11,
@@ -10,7 +10,7 @@
   },
   {
    "v": 4.41,
-   "dur": 2.08,
+   "dur": 2.03,
    "text": "Để Ami đọc trước, bạn chỉ đọc chỗ cần.",
    "start": 4.11,
    "end": 8.26,
@@ -18,7 +18,7 @@
   },
   {
    "v": 8.56,
-   "dur": 2.22,
+   "dur": 2.1,
    "text": "Gặp Ami, trợ lý học thuật A I!",
    "start": 8.26,
    "end": 12.12,
@@ -26,7 +26,7 @@
   },
   {
    "v": 12.42,
-   "dur": 3.35,
+   "dur": 2.89,
    "text": "Nhập tóm tắt, tải lên P D F, Word hay bản scan.",
    "start": 12.12,
    "end": 16.89,
@@ -34,7 +34,7 @@
   },
   {
    "v": 17.19,
-   "dur": 3.22,
+   "dur": 2.97,
    "text": "Vài giây, Ami chấm điểm phù hợp theo năm tiêu chí.",
    "start": 16.89,
    "end": 21.79,
@@ -42,7 +42,7 @@
   },
   {
    "v": 22.09,
-   "dur": 4.67,
+   "dur": 3.71,
    "text": "Gợi ý đoạn đáng trích, đối chiếu nguyên văn. Không bịa, không đoán!",
    "start": 21.79,
    "end": 26.91,
@@ -50,7 +50,7 @@
   },
   {
    "v": 27.21,
-   "dur": 4.83,
+   "dur": 4.58,
    "text": "Một chạm có trích dẫn: A P A, Harvard, và hơn mười nghìn kiểu tạp chí.",
    "start": 26.91,
    "end": 33.54,
@@ -58,7 +58,7 @@
   },
   {
    "v": 33.84,
-   "dur": 3.29,
+   "dur": 2.39,
    "text": "Chín định dạng, dán vào Word vẫn giữ chữ nghiêng.",
    "start": 33.54,
    "end": 38.33,
@@ -66,7 +66,7 @@
   },
   {
    "v": 38.63,
-   "dur": 2.5,
+   "dur": 2.14,
    "text": "Không lưu tài liệu. Ami đọc ngay trên máy bạn.",
    "start": 38.33,
    "end": 42.43,
@@ -74,7 +74,7 @@
   },
   {
    "v": 42.73,
-   "dur": 4.08,
+   "dur": 4.22,
    "text": "Sắp bảo vệ? Giáo sư phản biện giả lập hội đồng, nhận xét từng phần.",
    "start": 42.43,
    "end": 48.72,
@@ -82,7 +82,7 @@
   },
   {
    "v": 49.02,
-   "dur": 2.93,
+   "dur": 3.25,
    "text": "Cùng EduFind, ProFind, Mây: một tài khoản.",
    "start": 48.72,
    "end": 53.02,
@@ -90,7 +90,7 @@
   },
   {
    "v": 53.32,
-   "dur": 3.69,
+   "dur": 3.54,
    "text": "Ami. Đọc nhanh, trích đúng. Miễn phí mỗi tuần một lượt. Thử ngay!",
    "start": 53.02,
    "end": 60,

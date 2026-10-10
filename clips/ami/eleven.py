@@ -1,19 +1,13 @@
 """Tạo lời đọc ElevenLabs (giọng Việt Hoàng, Sài Gòn) cho một clip Ami.
 Dùng: python3 eleven.py <thư mục clip> [--only 1,2,3] [--lang en]   (--lang en: đọc trường "en", ra vo-en/, en_s*.npy, tl.en.json)
-Đọc <thư mục>/tl.json, gửi từng câu (đã viết lại cách đọc), cắt khoảng lặng, ép nhanh tối đa 1.15 nếu câu dài hơn cảnh,
+Đọc <thư mục>/tl.json, gửi từng câu (nguyên văn), cắt khoảng lặng, ép nhanh tối đa 1.15 nếu câu dài hơn cảnh,
 ghi <thư mục>/s1.npy… (44,1 kHz), <thư mục>/vo/s*.mp3 và cập nhật `v`, `dur` trong tl.json. Khóa: biến ELEVENLABS_API_KEY."""
-import sys, os, json, re, subprocess, urllib.request, numpy as np, soundfile as sf
+import sys, os, json, subprocess, urllib.request, numpy as np, soundfile as sf
 VOICE = "aBSlddZX2jwWE6N7Tr5X"   # Việt Hoàng (vi-southern)
-SETTINGS = {"stability": 0.40, "similarity_boost": 0.80, "style": 0.40, "use_speaker_boost": True, "speed": 1.15}
+MODEL = "eleven_flash_v2_5"   # ép language_code, đã nghe chọn
+SETTINGS = {"stability": 0.5, "similarity_boost": 0.75, "style": 0.0, "use_speaker_boost": True, "speed": 1.0}   # mặc định của giọng
 SR = 44100; LEAD = 0.3; MAXSPEED = 1.15
-RESPELL = [  # thử và chỉnh theo tai nghe
-    (r"\bA I\b", "ây ai"), (r"\bP D F\b", "pi đi ép"), (r"\bA P A\b", "ây pi ây"), (r"\bI triple E\b", "ai tờ ri pồ i"),
-    (r"\bAmi\b", "A mi"), (r"\bEduFind\b", "E đu phai"), (r"\bProFind\b", "Pờ rô phai"), (r"\bWord\b", "Quớt"),
-    (r"\bHarvard\b", "Ha vớt"), (r"\bVancouver\b", "Van cu vờ"),
-]
-def spoken(t):
-    for p, r in RESPELL: t = re.sub(p, r, t)
-    return t
+def spoken(t): return t   # gửi nguyên văn, không viết lại cách đọc
 d = sys.argv[1]; only = None
 LANG = sys.argv[sys.argv.index("--lang") + 1] if "--lang" in sys.argv else "vi"
 SUF = "" if LANG == "vi" else "." + LANG; VO = "vo" if LANG == "vi" else "vo-" + LANG; PFX = "" if LANG == "vi" else LANG + "_"
@@ -30,7 +24,7 @@ for i, sc in enumerate(tl["scenes"], 1):
     if only and i not in only: continue
     mp3 = os.path.join(d, VO, f"s{i}.mp3")
     if not (os.path.exists(mp3) and os.path.getsize(mp3) > 1000):
-        body = json.dumps({"text": spoken(sc["text"]) if LANG == "vi" else sc[LANG], "model_id": "eleven_multilingual_v2", "voice_settings": SETTINGS}).encode()
+        body = json.dumps({"text": spoken(sc["text"]) if LANG == "vi" else sc[LANG], "model_id": MODEL, "language_code": LANG, "voice_settings": SETTINGS}).encode()
         req = urllib.request.Request(f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE}?output_format=mp3_44100_128", body, {"Content-Type": "application/json", "xi-api-key": key})
         open(mp3, "wb").write(urllib.request.urlopen(req).read())
     wav = os.path.join(d, VO, f"s{i}.wav")
