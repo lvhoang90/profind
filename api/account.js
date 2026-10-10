@@ -385,7 +385,7 @@ export default async function handler(request) {
       return json({ map: m }, 200, { "cache-control": "public, max-age=0, s-maxage=30, stale-while-revalidate=60" });
     }
     // ---- Kết nối ISA: Mây (hoặc ứng dụng ISA khác) đã xác thực email nên ProFind không gửi mã lần nữa ----
-    // Mã kết nối: v1.<payload base64url>.<HMAC-SHA256 hex>, ký bằng ISA_CONNECT_SECRET (cùng giá trị ở hai máy chủ), sống 10 phút, dùng một lần.
+    // Mã kết nối: v1.<payload base64url>.<HMAC-SHA256 hex>, ký bằng ISA_CONNECT_SECRET (cùng giá trị ở các máy chủ), bên ký đặt hạn 10 phút (ProFind chấp nhận tới 15 phút để chịu lệch đồng hồ), dùng một lần.
     const CONNECT_SECRET = process.env.ISA_CONNECT_SECRET || "";
     const csign = async (s) => { const key = await crypto.subtle.importKey("raw", enc.encode(CONNECT_SECRET), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]); return hex(await crypto.subtle.sign("HMAC", key, enc.encode(s))); };
     if (op === "connect" && request.method === "POST") {
@@ -395,6 +395,8 @@ export default async function handler(request) {
       let p = null; try { if (ver === "v1" && pl && sig && safeEq(sig, await csign(`v1.${pl}`))) p = JSON.parse(unb64url(pl)); } catch { p = null; }
       if (!p || !(Number(p.exp) > Date.now()) || Number(p.exp) - Date.now() > 15 * 60e3 || !/^[a-f0-9]{16,64}$/.test(String(p.jti || ""))) return json({ error: "Liên kết đã hết hạn. Hãy quay lại trang đã chuyển bạn sang (Mây hoặc EduFind) và bấm kết nối lại." }, 400);
       const email = String(p.e || "").trim().toLowerCase(); if (!EMAIL_RE.test(email)) return json({ error: "Email không hợp lệ." }, 400);
+      // Tài khoản quản trị luôn đăng nhập bằng mã gửi qua email: khoá dùng chung nằm ở nhiều ứng dụng, lộ một nơi không được mở trang quản trị ProFind.
+      if (adminEmails.includes(email)) return json({ error: "Tài khoản quản trị đăng nhập bằng mã gửi qua email, không dùng liên kết từ ứng dụng khác." }, 403);
       if ((await one(["SET", `profind:cj:${p.jti}`, "1", "EX", "1200", "NX"])) !== "OK") return json({ error: "Liên kết này đã được dùng. Hãy quay lại trang đã chuyển bạn sang (Mây hoặc EduFind) và bấm kết nối lại." }, 400);
       const id = await sha(email); let user = await loadUser(id), isNew = false; const now = new Date().toISOString();
       if (!user) {
