@@ -393,21 +393,25 @@ export default async function handler(request) {
       if (!(await limit(`conn:${await sha((request.headers.get("x-forwarded-for") || "?").split(",")[0].trim(), 16)}`, 20, 3600))) return json({ error: "Bạn thử quá nhiều lần, hãy thử lại sau." }, 429);
       const [ver, pl, sig] = String(body.t || "").split(".");
       let p = null; try { if (ver === "v1" && pl && sig && safeEq(sig, await csign(`v1.${pl}`))) p = JSON.parse(unb64url(pl)); } catch { p = null; }
-      if (!p || !(Number(p.exp) > Date.now()) || Number(p.exp) - Date.now() > 15 * 60e3 || !/^[a-f0-9]{16,64}$/.test(String(p.jti || ""))) return json({ error: "Liên kết đã hết hạn. Hãy quay lại Mây và bấm kết nối lại." }, 400);
+      if (!p || !(Number(p.exp) > Date.now()) || Number(p.exp) - Date.now() > 15 * 60e3 || !/^[a-f0-9]{16,64}$/.test(String(p.jti || ""))) return json({ error: "Liên kết đã hết hạn. Hãy quay lại trang đã chuyển bạn sang (Mây hoặc EduFind) và bấm kết nối lại." }, 400);
       const email = String(p.e || "").trim().toLowerCase(); if (!EMAIL_RE.test(email)) return json({ error: "Email không hợp lệ." }, 400);
-      if ((await one(["SET", `profind:cj:${p.jti}`, "1", "EX", "1200", "NX"])) !== "OK") return json({ error: "Liên kết này đã được dùng. Hãy quay lại Mây và bấm kết nối lại." }, 400);
+      if ((await one(["SET", `profind:cj:${p.jti}`, "1", "EX", "1200", "NX"])) !== "OK") return json({ error: "Liên kết này đã được dùng. Hãy quay lại trang đã chuyển bạn sang (Mây hoặc EduFind) và bấm kết nối lại." }, 400);
       const id = await sha(email); let user = await loadUser(id), isNew = false; const now = new Date().toISOString();
       if (!user) {
         const phone = normPhone(p.ph); if (!PHONE_RE.test(phone)) return json({ error: "Cần số điện thoại di động Việt Nam để tạo tài khoản ProFind." }, 400);
         if (p.cs !== true) return json({ error: "Thiếu sự đồng ý của người dùng." }, 400);
         isNew = true;
-        user = { id, email, lang: p.lg === "en" ? "en" : "vi", name: tidy(p.n, 80), phone, job: "", org: "", address: "", createdAt: now, verifiedAt: now, consentAt: now, regVisits: 0, regReason: "eco", via: "isa-connect", noMail: true };
+        user = { id, email, lang: p.lg === "en" ? "en" : "vi", name: tidy(p.n, 80), phone, job: tidy(p.j, 80), org: tidy(p.o, 120), address: "", createdAt: now, verifiedAt: now, consentAt: now, regVisits: 0, regReason: "eco", via: "isa-connect", noMail: true };
         await store.run([["SET", K.user(id), JSON.stringify(user)], ["SADD", K.users, id], ["HINCRBY", `profind:all:evt:${dayKey()}`, "reg_done", 1], ["HINCRBY", `profind:all:evt:${dayKey()}`, "connect_new", 1], ["EXPIRE", `profind:all:evt:${dayKey()}`, 60 * 86400]]);
         await ensureRef(user);
       } else {
         await store.run([["HINCRBY", `profind:all:evt:${dayKey()}`, "connect_old", 1], ["EXPIRE", `profind:all:evt:${dayKey()}`, 60 * 86400]]);
+        let ch = false; for (const [k, x, m] of [["name", p.n, 80], ["job", p.j, 80], ["org", p.o, 120]]) { const v = tidy(x, m); if (v && !String(user[k] || "").trim()) { user[k] = v; ch = true; } } // chỉ điền ô còn trống
+        if (ch) await saveUser(user);
       }
-      if (!user.link) { user.link = { from: "may", at: now }; await saveUser(user); }
+      const src = p.src === "edufind" ? "edufind" : "may"; // ứng dụng ISA đã ký mã (mặc định Mây, bản đầu tiên dùng chuẩn này)
+      await store.run([["HINCRBY", `profind:all:evt:${dayKey()}`, `connect_${src}`, 1], ["EXPIRE", `profind:all:evt:${dayKey()}`, 60 * 86400]]);
+      if (!user.link) { user.link = { from: src, at: now }; await saveUser(user); }
       await one(["HINCRBY", K.cnt(id), "login", "1"]);
       const aid = /^A\d{5,12}$/.test(String(p.a || "")) ? String(p.a) : "";
       return json({ user: pub(user, pairs(await one(["HGETALL", K.cnt(id)]))), isNew, authorId: aid }, 200, cookie(await signToken(id), SESSION_DAYS * 86400));

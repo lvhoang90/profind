@@ -19,4 +19,8 @@ const ls = (e, t, s) => h(new Request(`https://profind.test/api/account?op=link-
 j = await (await ls(base.e, ts, sig(base.e, ts))).json(); eq(j.registered, true, "link-status có tài khoản"); eq(j.verified, false, "chưa xác thực");
 j = await (await ls("khong.co@x.vn", ts, sig("khong.co@x.vn", ts))).json(); eq(j.registered, false, "chưa đăng ký");
 eq((await ls(base.e, ts, "00")).status, 403, "sai chữ ký link-status");
+// Nguồn EduFind: có đơn vị, công việc; tài khoản đã có chỉ được điền ô còn trống
+const eb = { e: "edu.user@dhqghn.edu.vn", n: "Lê Hoàng Sơn", ph: "0987654321", cs: true, a: "A5008082871", o: "ĐHQGHN", j: "Giảng viên", src: "edufind" };
+r = await post(mk(eb)); j = await r.json(); eq(r.status, 200, "EduFind tạo mới"); eq(j.user.org, "ĐHQGHN", "đơn vị từ EduFind"); eq(j.user.job, "Giảng viên", "công việc từ EduFind");
+r = await post(mk({ ...base, o: "Trường X", n: "Tên Khác", src: "edufind" })); j = await r.json(); eq(j.user.org, "Trường X", "điền đơn vị còn trống"); eq(j.user.name, "Nguyễn Văn A", "không ghi đè họ tên đã có");
 console.log(`OK ${ok} kiểm tra`);
