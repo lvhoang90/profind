@@ -43,7 +43,7 @@ python3 mix.py en                            # ra mix.en.wav
 ffmpeg -framerate 30 -i frames/f%04d.jpg -i mix.en.wav -c:v libx264 -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -t 60 clip.en.mp4
 ```
 
-## Giọng khác (ví dụ Việt Hoàng - BĐS)
+## Giọng khác (Việt Hoàng - BĐS `Q41cVOX7gNI7pCt6A3QP`, MC `QmaUyIgRDGUtoCDXqZWY`)
 ```
 python3 eleven.py giao-su-phan-bien-60s --voice Q41cVOX7gNI7pCt6A3QP --tag bds   # ra vo-bds/, bds_s*.npy, tl.bds.json
 python3 mix.py bds                                                                 # ra mix.bds.wav → ghép thành clip.bds.mp4
