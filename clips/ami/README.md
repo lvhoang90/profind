@@ -48,3 +48,12 @@ ffmpeg -framerate 30 -i frames/f%04d.jpg -i mix.en.wav -c:v libx264 -crf 18 -pix
 python3 eleven.py giao-su-phan-bien-60s --voice Q41cVOX7gNI7pCt6A3QP --tag bds   # ra vo-bds/, bds_s*.npy, tl.bds.json
 python3 mix.py bds                                                                 # ra mix.bds.wav → ghép thành clip.bds.mp4
 ```
+
+## Giáo sư phản biện v2 (`giao-su-phan-bien-v2-60s/`)
+Dựng theo `giao-su-phan-bien-60s/storyboard-v2.md`: kể một đêm trước ngày bảo vệ (lạnh → ấm → sáng), 11 cảnh. `scene.html` dựng thuần DOM/canvas theo `window.draw(t)`; `mix.py <tag>` có nhạc và hiệu ứng khớp từng khoảnh khắc (nhịp tim, tia quét, đếm điểm, vỗ tay…). Lời trong `tl.json` có trường `speed` để đọc chậm các câu cảm xúc.
+```
+python3 build.py && node render.mjs                                  # 1800 khung
+python3 ../eleven.py giao-su-phan-bien-v2-60s --voice QmaUyIgRDGUtoCDXqZWY --tag mc   # (chạy từ clips/ami)
+python3 mix.py mc
+ffmpeg -framerate 30 -i frames/f%04d.jpg -i mix.mc.wav -c:v libx264 -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -t 60 clip.mc.mp4
+```

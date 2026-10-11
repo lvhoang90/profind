@@ -1,0 +1,86 @@
+{
+ "scenes": [
+  {
+   "v": 0.3,
+   "dur": 0,
+   "text": "Hai giờ sáng. Sáng mai, bạn bảo vệ.",
+   "start": 0,
+   "end": 5,
+   "speed": 0.82
+  },
+  {
+   "v": 5.3,
+   "dur": 0,
+   "text": "Và sẽ có một câu hỏi bạn chưa nghĩ tới.",
+   "start": 5,
+   "end": 10,
+   "speed": 0.85
+  },
+  {
+   "v": 10.3,
+   "dur": 0,
+   "text": "Nếu được bảo vệ thử trước một lần?",
+   "start": 10,
+   "end": 14,
+   "speed": 0.82
+  },
+  {
+   "v": 14.3,
+   "dur": 0,
+   "text": "Giáo sư phản biện của Ami đọc toàn văn, khó tính mà công bằng.",
+   "start": 14,
+   "end": 20
+  },
+  {
+   "v": 20.3,
+   "dur": 0,
+   "text": "Mỗi nhận xét kèm trích dẫn nguyên văn, và máy đối chiếu với bản gốc. Không bịa.",
+   "start": 20,
+   "end": 27
+  },
+  {
+   "v": 27.3,
+   "dur": 0,
+   "text": "Điểm do mã lệnh cộng. Lỗi nghiêm trọng, kết luận không thể tốt hơn sửa lớn.",
+   "start": 27,
+   "end": 34
+  },
+  {
+   "v": 34.3,
+   "dur": 0,
+   "text": "Kèm câu hỏi dành cho tác giả. Tập trả lời trước, để ngày bảo vệ không còn bất ngờ.",
+   "start": 34,
+   "end": 42
+  },
+  {
+   "v": 42.3,
+   "dur": 0,
+   "text": "Sáng hôm sau, hội đồng hỏi đúng câu bạn đã tập. Bạn mỉm cười.",
+   "start": 42,
+   "end": 48,
+   "speed": 0.9
+  },
+  {
+   "v": 48.3,
+   "dur": 0,
+   "text": "Sửa ngay trên màn hình, xuất Word một chạm. Chấm ba mươi bài một lúc.",
+   "start": 48,
+   "end": 53
+  },
+  {
+   "v": 53.3,
+   "dur": 0,
+   "text": "Ami chỉ hỗ trợ soạn thảo, không thay hội đồng, không kiểm tra đạo văn.",
+   "start": 53,
+   "end": 57
+  },
+  {
+   "v": 57.3,
+   "dur": 0,
+   "text": "Đến trước hội đồng một bước.",
+   "start": 57,
+   "end": 60,
+   "speed": 0.88
+  }
+ ]
+}

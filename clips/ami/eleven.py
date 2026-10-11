@@ -26,7 +26,7 @@ for i, sc in enumerate(tl["scenes"], 1):
     if only and i not in only: continue
     mp3 = os.path.join(d, VO, f"s{i}.mp3")
     if not (os.path.exists(mp3) and os.path.getsize(mp3) > 1000):
-        body = json.dumps({"text": spoken(sc["text"]) if LANG == "vi" else sc[LANG], "model_id": MODEL, "language_code": LANG, "voice_settings": SETTINGS}).encode()
+        body = json.dumps({"text": spoken(sc["text"]) if LANG == "vi" else sc[LANG], "model_id": MODEL, "language_code": LANG, "voice_settings": {**SETTINGS, **({"speed": sc["speed"]} if "speed" in sc else {})}}).encode()
         req = urllib.request.Request(f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE}?output_format=mp3_44100_128", body, {"Content-Type": "application/json", "xi-api-key": key})
         open(mp3, "wb").write(urllib.request.urlopen(req).read())
     wav = os.path.join(d, VO, f"s{i}.wav")
