@@ -1,0 +1,78 @@
+{
+ "scenes": [
+  {
+   "v": 0.3,
+   "dur": 0,
+   "text": "Giá như tôi nghe được những câu hỏi ấy sớm hơn.",
+   "start": 0,
+   "end": 6,
+   "speed": 0.9
+  },
+  {
+   "v": 6.3,
+   "dur": 0,
+   "text": "Nguồn ở đâu? Cỡ mẫu vì sao? Tôi chưa nghĩ tới.",
+   "start": 6,
+   "end": 11
+  },
+  {
+   "v": 11.3,
+   "dur": 0,
+   "text": "Nếu được quay lại một đêm trước ngày bảo vệ?",
+   "start": 11,
+   "end": 17,
+   "speed": 0.9
+  },
+  {
+   "v": 17.3,
+   "dur": 0,
+   "text": "Giáo sư phản biện của Ami hỏi trước những câu bạn có thể gặp.",
+   "start": 17,
+   "end": 23
+  },
+  {
+   "v": 23.3,
+   "dur": 0,
+   "text": "Mỗi nhận xét kèm trích dẫn nguyên văn, được máy đối chiếu. Không bịa.",
+   "start": 23,
+   "end": 29
+  },
+  {
+   "v": 29.3,
+   "dur": 0,
+   "text": "Điểm do mã lệnh cộng. Lỗi nghiêm trọng, kết luận không thể tốt hơn sửa lớn.",
+   "start": 29,
+   "end": 35
+  },
+  {
+   "v": 35.3,
+   "dur": 0,
+   "text": "Kèm câu hỏi dành cho tác giả. Tập trả lời trước, để ngày bảo vệ không còn bất ngờ.",
+   "start": 35,
+   "end": 42
+  },
+  {
+   "v": 42.3,
+   "dur": 0,
+   "text": "Và lần này, bạn bước ra với nụ cười.",
+   "start": 42,
+   "end": 48,
+   "speed": 0.9
+  },
+  {
+   "v": 48.3,
+   "dur": 0,
+   "text": "Xuất ra Word. Ami chỉ hỗ trợ soạn thảo, không thay hội đồng, không kiểm tra đạo văn.",
+   "start": 48,
+   "end": 54
+  },
+  {
+   "v": 54.3,
+   "dur": 0,
+   "text": "Đến trước hội đồng một bước.",
+   "start": 54,
+   "end": 60,
+   "speed": 0.92
+  }
+ ]
+}

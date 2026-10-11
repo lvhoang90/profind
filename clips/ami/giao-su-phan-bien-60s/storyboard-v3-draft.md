@@ -1,6 +1,6 @@
 # Storyboard v3 (bản nháp ~60%): "Quay ngược một đêm"
 
-Trạng thái: **ý tưởng, mạch cảnh và lời dẫn nháp đã có. Chưa dựng hình, chưa thu giọng, chưa kiểm độ dài lời.**
+Trạng thái: **đã dựng thành clip tại `../giao-su-phan-bien-v3-60s/`** (giọng Việt Hoàng - MC, đọc một lần cho đồng nhất). Ba điểm còn mở đã chọn hướng nhẹ: cảnh mở chỉ bị hỏi dồn, câu "những câu bạn có thể gặp", chú thích "Minh họa".
 
 So với v2 (kể thẳng một đêm trước ngày bảo vệ): v3 mở bằng **hối tiếc**, rồi dùng hiệu ứng **tua ngược thời gian** làm điểm "wow". Người xem biết kết quả xấu trước, nên cảm giác "giá như" mạnh hơn, và khoảnh khắc Ami xuất hiện giống một cơ hội thứ hai.
 Màu: xám mưa lạnh → (tua ngược) → xanh đêm → vàng ấm → nắng.

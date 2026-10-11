@@ -57,3 +57,12 @@ python3 ../eleven.py giao-su-phan-bien-v2-60s --voice QmaUyIgRDGUtoCDXqZWY --tag
 python3 mix.py mc
 ffmpeg -framerate 30 -i frames/f%04d.jpg -i mix.mc.wav -c:v libx264 -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -t 60 clip.mc.mp4
 ```
+
+## Giáo sư phản biện v3 (`giao-su-phan-bien-v3-60s/`) và giọng đồng nhất
+Dựng theo `giao-su-phan-bien-60s/storyboard-v3-draft.md` ("Quay ngược một đêm"). Chạy từ `clips/ami`:
+```
+python3 eleven.py giao-su-phan-bien-v3-60s --voice QmaUyIgRDGUtoCDXqZWY --tag mc --onetake
+cd giao-su-phan-bien-v3-60s && python3 build.py && node render.mjs && python3 mix.py mc
+ffmpeg -framerate 30 -i frames/f%04d.jpg -i mix.mc.wav -c:v libx264 -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -t 60 clip.mc.mp4
+```
+`--onetake`: gửi cả bài trong **một lần đọc** (các câu cách nhau `<break time="1.5s"/>`), rồi cắt theo khoảng lặng (tự thử nhiều ngưỡng, dừng nếu không ra đủ số câu). Một lần đọc giữ giọng và ngữ điệu đồng nhất từ đầu tới cuối; đọc từng câu riêng thì mỗi lần gọi có thể lệch giọng (lúc Nam, lúc Bắc). Trường `speed` < 1 trong `tl.json` làm chậm câu cảm xúc (giữ cao độ).
