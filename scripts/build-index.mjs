@@ -8,6 +8,9 @@ import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from "node
 import { computePro } from "./pro-score.mjs";
 const rd = (f) => JSON.parse(readFileSync(f, "utf8"));
 const J = rd("data/journals.json"), S = rd("data/sjr-rules.json"), I = rd("data/institutions.json"), R = rd("data/raw-authors.json"), C = rd("data/corrections.json");
+// Công trình bổ sung theo danh sách tác giả cung cấp (data/manual-works.json, scripts/fetch-manual-works.mjs): có ISSN thì vào danh sách tính điểm như công trình nạp từ OpenAlex;
+// không có ISSN thì hiện ở "Công trình khác" (fetch-extra-works.mjs). Công trình đã có sẵn (cùng mã) không thêm lại.
+if (existsSync("data/manual-works.json")) { const have = new Set(R.works.map((w) => w.id)); for (const w of rd("data/manual-works.json").works) if (w.issn && !have.has(w.id)) R.works.push({ ...w }); }
 // Đơn vị hiện tại (scripts/build-current-inst.mjs): đơn vị có điểm gần đây < 50% đơn vị cao nhất của tác giả là đơn vị cũ (instPast), xếp sau.
 const CUR = existsSync("data/current-inst.json") ? rd("data/current-inst.json") : {};
 const instSplit = (id, list) => { const sc = CUR[id]; if (!sc || list.length < 2) return { institutions: list, instPast: [] }; const mx = Math.max(...list.map((u) => sc[u] ?? 0)); if (!(mx > 0)) return { institutions: list, instPast: [] }; const now = list.filter((u) => sc[u] === undefined || sc[u] >= 0.5 * mx).sort((x, y) => (sc[y] ?? mx) - (sc[x] ?? mx)), past = list.filter((u) => !now.includes(u)).sort((x, y) => sc[y] - sc[x]); return { institutions: [...now, ...past], instPast: past }; };
@@ -34,8 +37,26 @@ for (const a of R.authors) { const k = byAuthorId.get(a.id); if (!k) byAuthorId.
 let authors = [...byAuthorId.values()].filter((a) => { const drop = removeIds.has(a.id) || (a.orcid && removeOrcid.has(a.orcid)); if (drop) log.push(`gỡ ${a.id}`); return !drop; });
 const alias = new Map(); // id bị gộp -> id đích
 for (const m of C.merge) for (const f of m.from) alias.set(f, m.into);
-const byOrcid = new Map();
-for (const a of authors) if (a.orcid) { const k = byOrcid.get(a.orcid); if (!k) byOrcid.set(a.orcid, a); else { alias.set(a.id, k.id); k.institutions = [...new Set([...k.institutions, ...a.institutions])]; log.push(`gộp ${a.id} -> ${k.id} (ORCID)`); } }
+// Gộp theo ORCID CHỈ khi tên tương thích: OpenAlex đôi khi gắn nhầm ORCID của người này vào hồ sơ người khác (khác tên), gộp vào sẽ kéo theo đơn vị và công trình lạ.
+// Tên tương thích = (sau khi bỏ dấu, bỏ chữ lẻ/viết tắt) tập từ giống nhau, hoặc một tên là tập con của tên kia, hoặc chung từ 2 từ trở lên (đảo thứ tự họ tên, viết liền gạch nối đều qua).
+// Hồ sơ lệch tên không bị gộp và mất ORCID trên hồ sơ (ORCID thuộc cụm có nhiều công trình nhất); danh sách ghi trong log để quản trị viên xem.
+const nameToks = (s) => new Set(String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/gi, "d").toLowerCase().replace(/[^a-z\s]/g, " ").split(/\s+/).filter((t) => t.length > 1));
+const nameCompat = (x, y) => { const A = nameToks(x), B = nameToks(y); if (!A.size || !B.size) return true; let k = 0; for (const t of A) if (B.has(t)) k++; return k >= Math.min(A.size, B.size) || k >= 2; };
+const wcount = new Map(); for (const w of R.works) wcount.set(w.authorId, (wcount.get(w.authorId) ?? 0) + 1);
+const orcidGroups = new Map();
+for (const a of authors) if (a.orcid) (orcidGroups.get(a.orcid) ?? orcidGroups.set(a.orcid, []).get(a.orcid)).push(a);
+for (const [orcid, list] of orcidGroups) {
+  if (list.length < 2) continue;
+  const par = list.map((_, i) => i), find = (i) => (par[i] === i ? i : (par[i] = find(par[i])));
+  for (let i = 0; i < list.length; i++) for (let j = i + 1; j < list.length; j++) if (nameCompat(list[i].name, list[j].name)) par[find(j)] = find(i);
+  const cl = new Map(); list.forEach((a, i) => (cl.get(find(i)) ?? cl.set(find(i), []).get(find(i))).push(a));
+  const owner = [...cl.values()].sort((x, y) => y.reduce((n, a) => n + (wcount.get(a.id) ?? 0), 0) - x.reduce((n, a) => n + (wcount.get(a.id) ?? 0), 0))[0];
+  for (const members of cl.values()) {
+    const head = members[0];
+    for (const a of members.slice(1)) { alias.set(a.id, head.id); head.institutions = [...new Set([...head.institutions, ...a.institutions])]; log.push(`gộp ${a.id} -> ${head.id} (ORCID)`); }
+    if (members !== owner) { head.orcid = null; log.push(`ORCID ${orcid} gắn nhầm: ${head.id} (${head.name}) lệch tên với ${owner[0].name}, không gộp`); }
+  }
+}
 authors = authors.filter((a) => !alias.has(a.id));
 // Hồ sơ bị gộp vào hồ sơ khác: cộng số trích dẫn toàn thời gian của hồ sơ gốc vào hồ sơ đích.
 const SCH = existsSync("data/scholar.json") ? rd("data/scholar.json") : {};

@@ -31,6 +31,7 @@ const get = async (url) => {
   throw new Error("Hết lượt thử");
 };
 
+const manual = existsSync("data/manual-works.json") ? JSON.parse(readFileSync("data/manual-works.json", "utf8")).works : []; // công trình bổ sung theo danh sách tác giả (fetch-manual-works.mjs)
 mkdirSync("public/data/extra", { recursive: true });
 const counts = {};
 for (const id of targets) {
@@ -46,6 +47,11 @@ for (const id of targets) {
         rows.push({ id: wid, t: String(x.title).replace(/\s+/g, " ").trim().slice(0, 300), y: x.publication_year, j: x.primary_location?.source?.display_name?.slice(0, 160) ?? "", ty: x.type ?? "", d: doi ?? "", c: x.cited_by_count ?? 0 });
       }
       cur = r.meta?.next_cursor;
+    }
+    for (const m of manual) { // công trình bổ sung thủ công không có trong danh sách tính điểm (không ISSN, hoặc ISSN nhưng chưa vào chỉ mục)
+      const wid = String(m.id).split("-").pop(), doi = cleanDoi(m.doi);
+      if (m.authorId !== id || scored.has(wid) || (doi && dois.has(doi)) || xw.has(`${id}-${wid}`) || rows.some((r) => r.id === wid) || !m.title || !m.year) continue;
+      rows.push({ id: wid, t: String(m.title).replace(/\s+/g, " ").trim().slice(0, 300), y: m.year, j: String(m.journal ?? "").slice(0, 160), ty: m.type ?? "", d: doi ?? "", c: m.citations ?? 0, ...(m.url && !doi ? { u: m.url } : {}) });
     }
     rows.sort((a, b) => b.y - a.y || b.c - a.c);
     if (rows.length) { writeFileSync(`public/data/extra/${id}.json`, JSON.stringify(rows)); counts[id] = rows.length; } else if (existsSync(`public/data/extra/${id}.json`)) rmSync(`public/data/extra/${id}.json`);

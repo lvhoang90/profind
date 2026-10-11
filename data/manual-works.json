@@ -1,0 +1,169 @@
+{
+ "built": "2026-10-11",
+ "works": [
+  {
+   "id": "A5018278358-W2211086091",
+   "authorId": "A5018278358",
+   "doi": "10.1016/j.engappai.2015.11.010",
+   "title": "A combination of user-guide scheme and kernel descriptor on RGB-D data for robust and realtime hand posture recognition",
+   "year": 2015,
+   "journal": "Engineering Applications of Artificial Intelligence",
+   "issn": "0952-1976",
+   "issns": [
+    "0952-1976",
+    "1873-6769"
+   ],
+   "type": "article",
+   "citations": 17,
+   "role": "lead",
+   "corr": 1,
+   "demo": false,
+   "manual": true
+  },
+  {
+   "id": "A5018278358-W2587776863",
+   "authorId": "A5018278358",
+   "doi": "10.15625/vap.2015.000158",
+   "title": "DYNAMIC HAND GESTURE RECOGNITION USING SPATIAL-REMPORAL FETURES",
+   "year": 2016,
+   "journal": "Nghiên cứu cơ bản và ứng dụng Công nghệ thông tin (FAIR)",
+   "type": "conference-paper",
+   "citations": 0,
+   "role": "lead",
+   "corr": 0,
+   "demo": false,
+   "manual": true
+  },
+  {
+   "id": "A5018278358-W2955923544",
+   "authorId": "A5018278358",
+   "doi": "10.1109/mapr.2019.8743544",
+   "title": "Steerable Features for Resilient Image Watermark",
+   "year": 2019,
+   "journal": "International Conference on Multimedia Analysis and Pattern Recognition (MAPR)",
+   "type": "conference-paper",
+   "citations": 1,
+   "role": "co",
+   "corr": 0,
+   "demo": false,
+   "manual": true
+  },
+  {
+   "id": "A5018278358-W4241240857",
+   "authorId": "A5018278358",
+   "doi": "10.30534/ijeter/2020/54892020",
+   "title": "Realtime Face Recognition for Intelligent Door System",
+   "year": 2020,
+   "journal": "International Journal of Emerging Trends in Engineering Research",
+   "issn": "2347-3983",
+   "issns": [
+    "2347-3983"
+   ],
+   "type": "article",
+   "citations": 0,
+   "role": "lead",
+   "corr": 0,
+   "demo": false,
+   "manual": true
+  },
+  {
+   "id": "A5018278358-W4406591287",
+   "authorId": "A5018278358",
+   "doi": "10.11591/ijeecs.v37.i3.pp1797-1803",
+   "title": "Quantitation of new arbitrary view dynamic human action recognition framework",
+   "year": 2025,
+   "journal": "Indonesian Journal of Electrical Engineering and Computer Science",
+   "issn": "2502-4752",
+   "issns": [
+    "2502-4752",
+    "2502-4760"
+   ],
+   "type": "article",
+   "citations": 0,
+   "role": "co",
+   "corr": 0,
+   "demo": false,
+   "manual": true
+  },
+  {
+   "id": "A5018278358-W7131656138",
+   "authorId": "A5018278358",
+   "doi": "10.54939/1859-1043.j.mst.109.2026.137-145",
+   "title": "Privacy-aware smart camera for abnormal event detection in home environments",
+   "year": 2026,
+   "journal": "Journal of Military Science and Technology",
+   "issn": "1859-1043",
+   "issns": [
+    "1859-1043"
+   ],
+   "type": "article",
+   "citations": 0,
+   "role": "lead",
+   "corr": 0,
+   "demo": false,
+   "manual": true
+  },
+  {
+   "id": "A5018278358-W7166652605",
+   "authorId": "A5018278358",
+   "doi": "10.54939/1859-1043.j.mst.112.2026.167-175",
+   "title": "A frame-level video annotation tool for dynamic gestures and apply in Vietnamese sign language",
+   "year": 2026,
+   "journal": "Journal of Military Science and Technology",
+   "issn": "1859-1043",
+   "issns": [
+    "1859-1043"
+   ],
+   "type": "article",
+   "citations": 0,
+   "role": "co",
+   "corr": 0,
+   "demo": false,
+   "manual": true
+  },
+  {
+   "id": "A5018278358-W7213431180",
+   "authorId": "A5018278358",
+   "doi": "10.1109/mapr72750.2026.11685821",
+   "title": "Multiview Consistency Learning with Synthetic Camera Views for Hand-in-the-Wild Gesture Recognition",
+   "year": 2026,
+   "journal": "International Conference on Multimedia Analysis and Pattern Recognition (MAPR)",
+   "type": "conference-paper",
+   "citations": 0,
+   "role": "co",
+   "corr": 0,
+   "demo": false,
+   "manual": true
+  },
+  {
+   "id": "A5018278358-W9934034972",
+   "authorId": "A5018278358",
+   "doi": null,
+   "title": "Ultilizing Depth Image from Kinect sensor: Error Analysis and Its Application",
+   "year": 2014,
+   "journal": "Proceedings of the 7th Vietnamese Conference on FAIR 2014",
+   "type": "proceedings-article",
+   "citations": 0,
+   "role": "co",
+   "corr": 0,
+   "demo": false,
+   "manual": true,
+   "url": "https://scholar.google.com/citations?view_op=view_citation&hl=vi&user=6cMbcLcAAAAJ&citation_for_view=6cMbcLcAAAAJ:ns9cj8rnVeAC"
+  },
+  {
+   "id": "A5018278358-W9935748830",
+   "authorId": "A5018278358",
+   "doi": null,
+   "title": "Dynamic Hand Gesture Recognition using cyclical patterns of hand movement and its applications",
+   "year": 2017,
+   "journal": "Journal of Science and Technology (JST2017) 120 (120C), 134-139",
+   "type": "article",
+   "citations": 0,
+   "role": "co",
+   "corr": 0,
+   "demo": false,
+   "manual": true,
+   "url": "https://scholar.google.com/citations?view_op=view_citation&hl=vi&user=6cMbcLcAAAAJ&citation_for_view=6cMbcLcAAAAJ:NaGl4SEjCO4C"
+  }
+ ]
+}

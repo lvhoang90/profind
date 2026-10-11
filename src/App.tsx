@@ -551,7 +551,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
       {extra && extra.length > 0 && <section className="card extra-works" aria-labelledby="xtw"><h2 id="xtw">{t("extraH")} <small>({num(extra.length)})</small></h2><p className="meta">{t("extraNote")}</p>
         <ol className="wk-list">{(extraAll ? extra : extra.slice(0, 15)).map((w) => (
           <li key={w.id} className="wk"><span className="wy">{w.y}</span>
-            <div className="wm"><a className="wt2" href={w.d ? `https://doi.org/${w.d}` : `https://openalex.org/${w.id}`} target="_blank" rel="noopener">{w.t}<span className="sr"> {t("newTab")}</span></a>
+            <div className="wm"><a className="wt2" href={w.d ? `https://doi.org/${w.d}` : w.u ?? `https://openalex.org/${w.id}`} target="_blank" rel="noopener">{w.t}<span className="sr"> {t("newTab")}</span></a>
               <div className="wsrc">{w.j && <span>{w.j}</span>}{w.ty && <span className="issn">{EXTRA_TYPE[w.ty]?.[lang === "vi" ? 0 : 1] ?? w.ty}</span>}</div></div>
             <div className="wr"><span className="wc"><Icon n="chart" size={14} />{num(w.c)}<span className="sr"> {t("cit")}</span></span>
               {mine && <button type="button" className="linkbtn" onClick={() => { const wid = `${a.id}-${w.id}`; if (confirm("Bài này không phải của bạn (OpenAlex gán nhầm người trùng tên)? Bài sẽ ẩn khỏi hồ sơ.")) void reportNotMine(a.id, wid).then(() => setLocalXw((x) => [...x, wid])).catch((e) => alert((e as Error).message)); }}>Không phải bài của tôi</button>}</div></li>))}</ol>
@@ -568,7 +568,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
 
 /** "Công trình khác (không tính điểm)": chỉ có ở hồ sơ trong data/full-works-authors.json hoặc đã xác thực (scripts/fetch-extra-works.mjs). Chỉ mục nhỏ tải một lần; không có thì không gọi thêm. */
 const EXTRA_TYPE: Record<string, [string, string]> = { "conference-paper": ["Kỷ yếu hội nghị", "Conference paper"], "proceedings-article": ["Kỷ yếu hội nghị", "Conference paper"], article: ["Bài báo", "Article"], preprint: ["Bản thảo", "Preprint"], book: ["Sách", "Book"], "book-chapter": ["Chương sách", "Book chapter"], dissertation: ["Luận văn", "Dissertation"], report: ["Báo cáo", "Report"], review: ["Tổng quan", "Review"], letter: ["Thư", "Letter"], editorial: ["Bài xã luận", "Editorial"], dataset: ["Bộ dữ liệu", "Dataset"] };
-type ExtraWork = { id: string; t: string; y: number; j: string; ty: string; d: string; c: number };
+type ExtraWork = { id: string; t: string; y: number; j: string; ty: string; d: string; c: number; u?: string }; // u: đường dẫn công khai khi bài không có DOI/OpenAlex (công trình bổ sung theo danh sách tác giả)
 let extraIndex: Promise<Record<string, number>> | null = null;
 function useExtraWorks(id: string) {
   const [rows, setRows] = useState<ExtraWork[] | null>(null);

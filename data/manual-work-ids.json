@@ -1,0 +1,27 @@
+{
+ "_note": "Công trình bổ sung theo danh sách tác giả cung cấp (Google Scholar...): { \"<mã tác giả>\": [\"W…\"] } là mã công trình OpenAlex. Chạy scripts/fetch-manual-works.mjs để tải; xem docs/DATA-PIPELINE.md.",
+ "A5018278358": [
+  "W2211086091",
+  "W4241240857:lead",
+  "W2955923544",
+  "W7213431180",
+  "W7166652605",
+  "W7131656138",
+  "W4406591287",
+  "W2587776863",
+  {
+   "title": "Dynamic Hand Gesture Recognition using cyclical patterns of hand movement and its applications",
+   "year": 2017,
+   "venue": "Journal of Science and Technology (JST2017) 120 (120C), 134-139",
+   "type": "article",
+   "url": "https://scholar.google.com/citations?view_op=view_citation&hl=vi&user=6cMbcLcAAAAJ&citation_for_view=6cMbcLcAAAAJ:NaGl4SEjCO4C"
+  },
+  {
+   "title": "Ultilizing Depth Image from Kinect sensor: Error Analysis and Its Application",
+   "year": 2014,
+   "venue": "Proceedings of the 7th Vietnamese Conference on FAIR 2014",
+   "type": "proceedings-article",
+   "url": "https://scholar.google.com/citations?view_op=view_citation&hl=vi&user=6cMbcLcAAAAJ&citation_for_view=6cMbcLcAAAAJ:ns9cj8rnVeAC"
+  }
+ ]
+}

@@ -93,3 +93,14 @@ npm run d:check                              # kiểm tra nhất quán
 - Nhóm hồ sơ: `data/full-works-authors.json` (ghi tay, ví dụ người gửi đề nghị bổ sung) cộng hồ sơ đã xác thực (API công khai `/api/account?op=verified`, bỏ qua nếu không gọi được) và tùy chọn `--ids`. Bỏ qua hồ sơ đã gỡ (`corrections.remove`) và công trình đã loại (`corrections.excludeWorks`). Hồ sơ rời khỏi nhóm thì tệp bị xóa ở lần chạy sau.
 - Chưa áp dụng cho cả 17.000 hồ sơ (tốn hạn mức OpenAlex và dung lượng); mở rộng bằng cách thêm mã vào `data/full-works-authors.json`.
 - Chủ hồ sơ đã xác thực có nút "Không phải bài của tôi" ở từng công trình trong mục này như phần tính điểm: bài ẩn ngay, mã `A…-W…` vào danh sách báo của quản trị viên; sau khi đưa vào `corrections.excludeWorks` và dựng lại, `fetch-extra-works.mjs` bỏ bài đó. `xw-sweep` coi bài là "đã xử lý" chỉ khi không còn ở cả `works/<mã>.json` lẫn `extra/<mã>.json`.
+
+## Gộp theo ORCID chỉ khi tên tương thích (từ 11/10/2026)
+- `build-index.mjs` gộp các hồ sơ OpenAlex cùng ORCID **chỉ khi tên tương thích** (sau khi bỏ dấu và chữ lẻ/viết tắt: tập từ giống nhau, một tên là tập con của tên kia, hoặc chung từ 2 từ trở lên; đảo họ tên và gạch nối đều qua). OpenAlex đôi khi gắn nhầm ORCID người này vào hồ sơ người khác; trước đây hồ sơ đó bị gộp và kéo theo đơn vị, công trình lạ (ví dụ Cao đẳng Đồng Tháp vào một hồ sơ Top 2%).
+- Hồ sơ lệch tên **không bị gộp** và mất ORCID trên hồ sơ (ORCID thuộc cụm có nhiều công trình nhất); mỗi ca ghi một dòng `ORCID … gắn nhầm` trong log dựng. Muốn ẩn hẳn hồ sơ nhầm: thêm vào `corrections.remove`.
+- Hồ sơ OpenAlex gộp nhiều người (cùng tên) không tách được bằng quy tắc này: dùng `corrections.excludeWorks` (ẩn công trình của người khác) và `corrections.setInstitutions` (đơn vị đúng; `[]` nếu đơn vị chưa có trong ProFind).
+
+## Công trình bổ sung theo danh sách tác giả (Google Scholar)
+- `data/manual-work-ids.json`: `{ "<mã tác giả>": ["W…", "W…:lead"] }` là mã công trình OpenAlex tìm theo nhan đề/DOI trong danh sách tác giả gửi (OpenAlex tách một người thành nhiều hồ sơ hoặc không gắn tác giả vào bài). Hậu tố `:lead` / `:co` ghi đè vai trò khi OpenAlex không có danh sách tác giả.
+- `OPENALEX_API_KEY=... NODE_USE_ENV_PROXY=1 node scripts/fetch-manual-works.mjs --mailto <email>` ghi `data/manual-works.json`. Có ISSN thì `build-index.mjs` đưa vào danh sách tính điểm; không ISSN (kỷ yếu, sách) thì `fetch-extra-works.mjs` hiện ở "Công trình khác". Chạy lại `build-index.mjs` và `fetch-extra-works.mjs` sau khi sửa.
+- Bài không có DOI và không có trong OpenAlex nhưng có đường dẫn công khai (ví dụ trang Google Scholar của bài): ghi đối tượng `{ "title", "year", "venue", "type", "url" }` (https, cần năm) thay cho mã W…; bài vào "Công trình khác" và mở bằng đường dẫn đó (mã nội bộ `W99…` sinh từ đường dẫn). Thiếu năm hoặc đường dẫn thì không thêm: nhờ tác giả bổ sung.
+

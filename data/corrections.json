@@ -5,6 +5,11 @@
       "author": "A5032223071",
       "date": "2026-10-08",
       "reason": "Chủ thể dữ liệu đề nghị gỡ hồ sơ (ORCID và tên khớp; ngoại lệ email Gmail do quản trị viên chấp nhận). Đã ẩn ngay trên website; gỡ hẳn ở lần dựng dữ liệu kế tiếp."
+    },
+    {
+      "author": "A5136148006",
+      "date": "2026-10-11",
+      "reason": "Hồ sơ OpenAlex 'Thị Phúc Nguyên Nguyễn' gắn nhầm ORCID 0000-0001-6534-9041 của Thi Mong Diep Nguyen; tên khác, 4 công trình năm 2026 khác lĩnh vực. Bị gộp theo ORCID nên đưa nhầm Cao đẳng Cộng đồng Đồng Tháp và 4 công trình vào hồ sơ Top 2%. Gỡ hồ sơ nhầm, không gỡ hồ sơ chính."
     }
   ],
   "rename": {
@@ -991,7 +996,23 @@
     "A5034312242-W2913938408",
     "A5039972142-W3004330958",
     "A5045819762-W2786719570",
-    "A5053998535-W3015865934"
+    "A5053998535-W3015865934",
+    "A5100675789-W1586573313",
+    "A5100675789-W3017003321",
+    "A5100675789-W2014504724",
+    "A5100675789-W2243926695",
+    "A5100675789-W2769972411",
+    "A5100675789-W2974832674",
+    "A5100675789-W3213731975",
+    "A5100675789-W4205101713",
+    "A5100675789-W4317382438",
+    "A5100675789-W4389406009",
+    "A5100675789-W4400126807",
+    "A5100675789-W4402089857",
+    "A5100675789-W4411744051",
+    "A5100675789-W4409253518",
+    "A5100675789-W4416367833",
+    "A5100675789-W7204890709"
   ],
   "merge": [
     {
@@ -3723,7 +3744,32 @@
       "past": [
         "nttu"
       ]
-    }
+    },
+    "A5064939188": [
+      "dhqghn",
+      "vnu-university-medicine-and-pharmacy"
+    ],
+    "A5053403067": {
+      "now": [
+        "hutech"
+      ],
+      "past": [
+        "vnuhcm-university-technology"
+      ]
+    },
+    "A5053495766": {
+      "now": [
+        "dhqg-hcm"
+      ],
+      "past": [
+        "vien-john-von-neumann"
+      ]
+    },
+    "A5017843121": [
+      "hust",
+      "usth"
+    ],
+    "A5100675789": []
   },
   "setDisciplines": {
     "A5011212770": [
