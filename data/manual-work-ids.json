@@ -1,0 +1,13 @@
+{
+ "_note": "Công trình bổ sung theo danh sách tác giả cung cấp (Google Scholar...): { \"<mã tác giả>\": [\"W…\"] } là mã công trình OpenAlex. Chạy scripts/fetch-manual-works.mjs để tải; xem docs/DATA-PIPELINE.md.",
+ "A5018278358": [
+  "W2211086091",
+  "W4241240857:lead",
+  "W2955923544",
+  "W7213431180",
+  "W7166652605",
+  "W7131656138",
+  "W4406591287",
+  "W2587776863"
+ ]
+}
