@@ -306,7 +306,8 @@ export default async function handler(request) {
     // ---------------- Xác thực hồ sơ nhà khoa học ("Đây là tôi") ----------------
     // Chính sách: chỉ email tổ chức (đã nhập mã 6 số); email miễn phí chỉ khi quản trị viên cho phép riêng; tick vàng hiệu lực 2 năm.
     // Tự động duyệt khi email tổ chức + ORCID trùng hồ sơ OpenAlex + tên tương thích + không xung đột; còn lại chuyển quản trị viên duyệt.
-    const XWK = "profind:xw", getXw = async (id) => { const l = jparse(await one(["HGET", XWK, id])); return Array.isArray(l) ? l : []; }; // công trình chủ hồ sơ báo "không phải của tôi"
+    const CFK = "profind:cf", getCf = async (id) => { const l = jparse(await one(["HGET", CFK, id])); return Array.isArray(l) ? l.filter((x) => x && typeof x.w === "string") : []; }; // kỷ yếu quốc tế có ISBN và phản biện do chủ hồ sơ khai (hiện điểm ngay): [{ w: mã công trình, at }]
+const XWK = "profind:xw", getXw = async (id) => { const l = jparse(await one(["HGET", XWK, id])); return Array.isArray(l) ? l : []; }; // công trình chủ hồ sơ báo "không phải của tôi"
     // Tự động báo chủ hồ sơ khi công trình họ báo "không phải của tôi" đã được loại khỏi dữ liệu (đã dựng lại): thư + chuyển sang nhật ký 90 ngày.
     // "Đã xử lý" = mã công trình không còn trong public/data/works/<mã tác giả>.json đang chạy. Gọi bởi Vercel Cron (GET, Authorization: Bearer CRON_SECRET) hoặc nút "Quét ngay" (POST, quản trị viên).
     const XDK = "profind:xwdone", XTK = "profind:xwtry", XW_KEEP = 90 * 864e5, XW_AUTHORS = 25;
@@ -492,7 +493,7 @@ export default async function handler(request) {
     if (op === "admin-claims" && request.method === "GET") {
       const bad = needAdmin(); if (bad) return bad;
       const t = Date.now(), vf = await allVf();
-      return json({ xwdone: Object.entries(pairs(await one(["HGETALL", XDK]))).flatMap(([a, v]) => (jparse(v) ?? []).map((x) => ({ authorId: a, ...x }))).sort((p, q) => q.at - p.at).slice(0, 400), mx: pairs(await one(["HGETALL", "profind:mx"])), xw: Object.entries(pairs(await one(["HGETALL", XWK]))).flatMap(([a, v]) => (jparse(v) ?? []).map((w) => ({ authorId: a, workId: w }))), claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [], recheck: Object.values(pairs(await one(["HGETALL", "profind:rk"]))).map(jparse).filter(Boolean), units: Object.values(pairs(await one(["HGETALL", "profind:un"]))).map(jparse).filter(Boolean), split: Object.values(pairs(await one(["HGETALL", "profind:sp"]))).map(jparse).filter(Boolean), hidden: { score: (await one(["SMEMBERS", HSK])) ?? [], profile: (await one(["SMEMBERS", HPK])) ?? [] }, works: await (async () => { const o = []; for (const [id, raw] of Object.entries(pairs(await one(["HGETALL", "profind:aw"])))) for (const w of jparse(raw) ?? []) if (w.status === "review") o.push({ authorId: id, ...w }); return o; })() });
+      return json({ xwdone: Object.entries(pairs(await one(["HGETALL", XDK]))).flatMap(([a, v]) => (jparse(v) ?? []).map((x) => ({ authorId: a, ...x }))).sort((p, q) => q.at - p.at).slice(0, 400), mx: pairs(await one(["HGETALL", "profind:mx"])), cf: Object.entries(pairs(await one(["HGETALL", CFK]))).flatMap(([a, v]) => (jparse(v) ?? []).map((x) => ({ authorId: a, workId: x.w, at: x.at }))).sort((p, q) => q.at - p.at).slice(0, 400), xw: Object.entries(pairs(await one(["HGETALL", XWK]))).flatMap(([a, v]) => (jparse(v) ?? []).map((w) => ({ authorId: a, workId: w }))), claims: (await allClaims()).sort((a, b) => b.createdAt - a.createdAt).slice(0, 200), verified: vf.sort((a, b) => a.until - b.until), expiring: vf.filter((v) => v.until - t < 60 * 864e5).length, allow: (await one(["SMEMBERS", CLA])) ?? [], recheck: Object.values(pairs(await one(["HGETALL", "profind:rk"]))).map(jparse).filter(Boolean), units: Object.values(pairs(await one(["HGETALL", "profind:un"]))).map(jparse).filter(Boolean), split: Object.values(pairs(await one(["HGETALL", "profind:sp"]))).map(jparse).filter(Boolean), hidden: { score: (await one(["SMEMBERS", HSK])) ?? [], profile: (await one(["SMEMBERS", HPK])) ?? [] }, works: await (async () => { const o = []; for (const [id, raw] of Object.entries(pairs(await one(["HGETALL", "profind:aw"])))) for (const w of jparse(raw) ?? []) if (w.status === "review") o.push({ authorId: id, ...w }); return o; })() });
     }
     // Đề nghị gửi từ biểu mẫu "Đây là tôi / đính chính / gỡ / bổ sung nhà nghiên cứu" (api/correction.js lưu ở profind:req): hiện ở Quản trị > Việc cần làm, không phụ thuộc email.
     if (op === "admin-reqs" && request.method === "GET") {
@@ -567,6 +568,11 @@ export default async function handler(request) {
         if (next.length !== cur.length) await one(["HSET", XWK, m[1], JSON.stringify(next)]);
         return json({ ok: true });
       }
+      if (op === "admin-claim-conf") { // quản trị viên gỡ một khai báo kỷ yếu (không đúng sự thật)
+        const id = String(body.authorId || ""), wid = String(body.workId || ""), cur = await getCf(id), next = cur.filter((x) => x.w !== wid);
+        if (next.length === cur.length) return json({ error: "Không có khai báo này." }, 404);
+        await one(next.length ? ["HSET", CFK, id, JSON.stringify(next)] : ["HDEL", CFK, id]); return json({ ok: true });
+      }
       if (op === "admin-claim-work") {
         const id = String(body.authorId || ""), doi = normDoi(body.doi), ws = jparse(await one(["HGET", "profind:aw", id])) ?? [], w = ws.find((x) => x.doi === doi);
         if (!w) return json({ error: "Không tìm thấy công trình." }, 404);
@@ -625,7 +631,7 @@ export default async function handler(request) {
       const id = url.searchParams.get("id") || "", v = await getVf(id);
       if (!v || v.until <= Date.now()) return json({ verified: false }, 200, { "cache-control": "public, s-maxage=120, stale-while-revalidate=300" });
       const p = await getProf(id), pub = { disc: Array.isArray(p.disc) ? p.disc : [], orcid: p.orcid || v.orcid || "", scholar: p.scholar || v.scholar || "", site: p.site || "", bio: p.bio || "", hasAvatar: p.av ? Number(p.av) || true : false, email: p.showContact ? p.email || "" : "", phone: p.showContact ? p.phone || "" : "" };
-      return json({ verified: true, profile: pub, xw: await getXw(id), works: (await getWorks(id)).filter((w) => w.status === "ok") }, 200, { "cache-control": "public, s-maxage=120, stale-while-revalidate=300" });
+      return json({ verified: true, profile: pub, xw: await getXw(id), cf: (await getCf(id)).map((x) => x.w), works: (await getWorks(id)).filter((w) => w.status === "ok") }, 200, { "cache-control": "public, s-maxage=120, stale-while-revalidate=300" });
     }
     if (op === "avatar" && request.method === "GET") {
       const id = url.searchParams.get("id") || "", p = await getProf(id), v = await getVf(id), raw = p.av && v && v.until > Date.now() ? await one(["HGET", AVK, id]) : null;
@@ -637,7 +643,7 @@ export default async function handler(request) {
     if (op === "author-mine" && request.method === "GET") {
       const bad = needUser(); if (bad) return bad;
       const t = Date.now(), out = [], hs = (await one(["SMEMBERS", HSK])) ?? [], hp = (await one(["SMEMBERS", HPK])) ?? [];
-      for (const v of (await allVf()).filter((x) => x.email === me.email && x.until > t)) out.push({ authorId: v.authorId, name: v.name, until: v.until, profile: await getProf(v.authorId), works: await getWorks(v.authorId), xw: await getXw(v.authorId), hide: hp.includes(v.authorId) ? "profile" : hs.includes(v.authorId) ? "score" : "" });
+      for (const v of (await allVf()).filter((x) => x.email === me.email && x.until > t)) out.push({ authorId: v.authorId, name: v.name, until: v.until, profile: await getProf(v.authorId), works: await getWorks(v.authorId), xw: await getXw(v.authorId), cf: (await getCf(v.authorId)).map((x) => x.w), hide: hp.includes(v.authorId) ? "profile" : hs.includes(v.authorId) ? "score" : "" });
       return json({ authors: out });
     }
     if (op.startsWith("author-") && op !== "author-public" && op !== "author-mine" && request.method === "POST") {
@@ -660,6 +666,13 @@ export default async function handler(request) {
         const wid = String(body.workId || ""); if (!new RegExp(`^${authorId}-W\\d{4,14}$`).test(wid)) return json({ error: "Mã công trình không hợp lệ." }, 400);
         const cur = await getXw(authorId), next = body.undo === true ? cur.filter((x) => x !== wid) : [...new Set([...cur, wid])].slice(0, 100);
         await one(["HSET", XWK, authorId, JSON.stringify(next)]); return json({ ok: true, xw: next });
+      }
+      if (op === "author-work-conf") { // chủ hồ sơ khai: kỷ yếu hội nghị quốc tế có ISBN và phản biện, mình là tác giả đứng đầu/liên hệ -> hiện điểm "kỷ yếu" ngay (không kiểm chứng được tự động)
+        const wid = String(body.workId || ""); if (!new RegExp(`^${authorId}-W\\d{4,14}$`).test(wid)) return json({ error: "Mã công trình không hợp lệ." }, 400);
+        const cur = await getCf(authorId), on = body.undo !== true;
+        if (on && body.confirm !== true) return json({ error: "Cần xác nhận khai báo." }, 400);
+        const next = on ? [...cur.filter((x) => x.w !== wid), { w: wid, at: Date.now() }].slice(-200) : cur.filter((x) => x.w !== wid);
+        await one(next.length ? ["HSET", CFK, authorId, JSON.stringify(next)] : ["HDEL", CFK, authorId]); return json({ ok: true, cf: next.map((x) => x.w) });
       }
       if (op === "author-avatar") {
         const p = await getProf(authorId);
