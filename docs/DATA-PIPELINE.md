@@ -102,5 +102,5 @@ npm run d:check                              # kiểm tra nhất quán
 ## Công trình bổ sung theo danh sách tác giả (Google Scholar)
 - `data/manual-work-ids.json`: `{ "<mã tác giả>": ["W…", "W…:lead"] }` là mã công trình OpenAlex tìm theo nhan đề/DOI trong danh sách tác giả gửi (OpenAlex tách một người thành nhiều hồ sơ hoặc không gắn tác giả vào bài). Hậu tố `:lead` / `:co` ghi đè vai trò khi OpenAlex không có danh sách tác giả.
 - `OPENALEX_API_KEY=... NODE_USE_ENV_PROXY=1 node scripts/fetch-manual-works.mjs --mailto <email>` ghi `data/manual-works.json`. Có ISSN thì `build-index.mjs` đưa vào danh sách tính điểm; không ISSN (kỷ yếu, sách) thì `fetch-extra-works.mjs` hiện ở "Công trình khác". Chạy lại `build-index.mjs` và `fetch-extra-works.mjs` sau khi sửa.
-- Bài chỉ có trên Google Scholar (không có trong OpenAlex) không được thêm: không truy vết được bằng DOI. Báo cho tác giả bổ sung DOI hoặc đăng ký ORCID.
+- Bài không có DOI và không có trong OpenAlex nhưng có đường dẫn công khai (ví dụ trang Google Scholar của bài): ghi đối tượng `{ "title", "year", "venue", "type", "url" }` (https, cần năm) thay cho mã W…; bài vào "Công trình khác" và mở bằng đường dẫn đó (mã nội bộ `W99…` sinh từ đường dẫn). Thiếu năm hoặc đường dẫn thì không thêm: nhờ tác giả bổ sung.
 

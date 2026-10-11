@@ -134,6 +134,36 @@
    "corr": 0,
    "demo": false,
    "manual": true
+  },
+  {
+   "id": "A5018278358-W9934034972",
+   "authorId": "A5018278358",
+   "doi": null,
+   "title": "Ultilizing Depth Image from Kinect sensor: Error Analysis and Its Application",
+   "year": 2014,
+   "journal": "Proceedings of the 7th Vietnamese Conference on FAIR 2014",
+   "type": "proceedings-article",
+   "citations": 0,
+   "role": "co",
+   "corr": 0,
+   "demo": false,
+   "manual": true,
+   "url": "https://scholar.google.com/citations?view_op=view_citation&hl=vi&user=6cMbcLcAAAAJ&citation_for_view=6cMbcLcAAAAJ:ns9cj8rnVeAC"
+  },
+  {
+   "id": "A5018278358-W9935748830",
+   "authorId": "A5018278358",
+   "doi": null,
+   "title": "Dynamic Hand Gesture Recognition using cyclical patterns of hand movement and its applications",
+   "year": 2017,
+   "journal": "Journal of Science and Technology (JST2017) 120 (120C), 134-139",
+   "type": "article",
+   "citations": 0,
+   "role": "co",
+   "corr": 0,
+   "demo": false,
+   "manual": true,
+   "url": "https://scholar.google.com/citations?view_op=view_citation&hl=vi&user=6cMbcLcAAAAJ&citation_for_view=6cMbcLcAAAAJ:NaGl4SEjCO4C"
   }
  ]
 }

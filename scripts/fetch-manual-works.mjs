@@ -1,9 +1,13 @@
 // Công trình bổ sung theo danh sách do tác giả cung cấp (ví dụ trang Google Scholar): OpenAlex tách một người thành nhiều hồ sơ hoặc không gắn tác giả vào công trình, nên
 // hồ sơ thiếu bài. Quản trị viên ghi MÃ CÔNG TRÌNH OPENALEX (W…) vào data/manual-work-ids.json, script này tải từng công trình và ghi data/manual-works.json.
 //   OPENALEX_API_KEY=... node scripts/fetch-manual-works.mjs --mailto <email>
+// Công trình không có trong OpenAlex nhưng có đường dẫn công khai (ví dụ trang Google Scholar của bài, khi bài không có DOI): ghi đối tượng
+// { "title": "...", "year": 2017, "venue": "...", "url": "https://...", "type": "article" | "proceedings-article" | ... } thay cho mã W…; không có ISSN nên vào "Công trình khác", mở bằng
+// đường dẫn đó, mã nội bộ W99… sinh từ đường dẫn (khớp định dạng mã công trình). Cần có năm và đường dẫn https; không có thì không thêm.
 // data/manual-work-ids.json: { "<mã tác giả A…>": ["W…", ...] }; thêm ":lead" hoặc ":co" sau mã ("W…:lead") để ghi đè vai trò khi OpenAlex không có danh sách tác giả (dựa vào thứ tự tác giả tác giả cung cấp). Chạy lại được. Công trình có ISSN vào danh sách tính điểm (build-index.mjs); không có ISSN (kỷ yếu, sách) vào
 // "Công trình khác" (fetch-extra-works.mjs). Chỉ nhận công trình có trong OpenAlex (có thể truy vết bằng DOI); bài chỉ có trên Google Scholar thì không thêm.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { createHash } from "node:crypto";
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
 const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY;
 if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
@@ -21,8 +25,14 @@ const get = async (url) => {
 const works = [];
 for (const [aid, list] of Object.entries(ids)) {
   if (!name.has(aid)) { console.warn(`${aid}: không có trong profind.json, bỏ qua`); continue; }
+  for (const e of list) {
+    if (!e || typeof e !== "object") continue;
+    if (!e.title || !Number.isInteger(e.year) || !/^https:\/\//.test(e.url ?? "")) { console.warn(`${aid}: bỏ qua mục thiếu nhan đề/năm/đường dẫn: ${JSON.stringify(e).slice(0, 80)}`); continue; }
+    const n = String(parseInt(createHash("sha1").update(e.url).digest("hex").slice(0, 8), 16) % 1e8).padStart(8, "0");
+    works.push({ id: `${aid}-W99${n}`, authorId: aid, doi: null, title: e.title, year: e.year, journal: e.venue ?? "", type: e.type ?? "article", citations: 0, role: "co", corr: 0, demo: false, manual: true, url: e.url });
+  }
   for (let i = 0; i < list.length; i += 40) {
-    const forced = new Map(list.slice(i, i + 40).map((e) => String(e).split(":")).filter(([w]) => /^W\d+$/.test(w)).map(([w, r]) => [w, r]));
+    const forced = new Map(list.slice(i, i + 40).filter((e) => typeof e === "string").map((e) => String(e).split(":")).filter(([w]) => /^W\d+$/.test(w)).map(([w, r]) => [w, r]));
     const chunk = [...forced.keys()];
     const r = await get(`https://api.openalex.org/works?filter=openalex:${chunk.join("|")}&per-page=50&select=id,doi,title,publication_year,type,cited_by_count,primary_location,authorships`);
     for (const x of r.results) {
