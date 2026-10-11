@@ -3,3 +3,4 @@ dist
 *.tsbuildinfo
 data/raw
 data/raw-authors.json
+data/scimago
