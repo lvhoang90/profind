@@ -1,5 +1,5 @@
 """Tạo lời đọc ElevenLabs (giọng Việt Hoàng, Sài Gòn) cho một clip Ami.
-Dùng: python3 eleven.py <thư mục clip> [--only 1,2,3] [--lang en]   (--lang en: đọc trường "en", ra vo-en/, en_s*.npy, tl.en.json)
+Dùng: python3 eleven.py <thư mục clip> [--only 1,2,3] [--lang en] [--voice <id> --tag <tên>]   (--lang en: đọc trường "en", ra vo-en/, en_s*.npy, tl.en.json)
 Đọc <thư mục>/tl.json, gửi từng câu (nguyên văn), cắt khoảng lặng, ép nhanh tối đa 1.15 nếu câu dài hơn cảnh,
 ghi <thư mục>/s1.npy… (44,1 kHz), <thư mục>/vo/s*.mp3 và cập nhật `v`, `dur` trong tl.json. Khóa: biến ELEVENLABS_API_KEY."""
 import sys, os, json, subprocess, urllib.request, numpy as np, soundfile as sf
@@ -10,7 +10,9 @@ SR = 44100; LEAD = 0.3; MAXSPEED = 1.15
 def spoken(t): return t   # gửi nguyên văn, không viết lại cách đọc
 d = sys.argv[1]; only = None
 LANG = sys.argv[sys.argv.index("--lang") + 1] if "--lang" in sys.argv else "vi"
-SUF = "" if LANG == "vi" else "." + LANG; VO = "vo" if LANG == "vi" else "vo-" + LANG; PFX = "" if LANG == "vi" else LANG + "_"
+if "--voice" in sys.argv: VOICE = sys.argv[sys.argv.index("--voice") + 1]   # giọng khác, kèm --tag để ra tệp riêng
+TAG = sys.argv[sys.argv.index("--tag") + 1] if "--tag" in sys.argv else ("" if LANG == "vi" else LANG)
+SUF = "." + TAG if TAG else ""; VO = "vo-" + TAG if TAG else "vo"; PFX = TAG + "_" if TAG else ""
 if "--only" in sys.argv: only = {int(x) for x in sys.argv[sys.argv.index("--only") + 1].split(",")}
 key = os.environ["ELEVENLABS_API_KEY"]
 tlp = os.path.join(d, "tl" + SUF + ".json"); tl = json.load(open(tlp if os.path.exists(tlp) else os.path.join(d, "tl.json"), encoding="utf-8"))

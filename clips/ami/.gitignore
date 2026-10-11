@@ -2,8 +2,8 @@ frames/
 scene.built.html
 *.npy
 mix.wav
-mix.en.wav
+mix.*.wav
 clip.mp4
-clip.en.mp4
+clip.*.mp4
 **/vo/*.wav
-**/vo-en/*.wav
+**/vo-*/*.wav
