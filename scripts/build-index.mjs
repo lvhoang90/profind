@@ -8,6 +8,9 @@ import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from "node
 import { computePro } from "./pro-score.mjs";
 const rd = (f) => JSON.parse(readFileSync(f, "utf8"));
 const J = rd("data/journals.json"), S = rd("data/sjr-rules.json"), I = rd("data/institutions.json"), R = rd("data/raw-authors.json"), C = rd("data/corrections.json");
+// Hạng SJR dự phòng (scripts/build-sjr-fallback.mjs): tạp chí Scopus đa ngành / đã ngừng / thiếu dòng theo ngành; chỉ dùng khi công trình chưa có điểm từ danh mục trong nước và SJR theo ngành.
+const FB = new Map(); if (existsSync("data/sjr-fallback.json")) for (const j of rd("data/sjr-fallback.json").journals) for (const i of j.i) FB.set(i, j);
+const inCoverage = (cov, y) => !!y && String(cov ?? "").split(";").some((p) => { const m = /^(\d{4})(?:-(\d{4}))?$/.exec(p); return m && y >= +m[1] && y <= +(m[2] ?? m[1]); });
 // Công trình bổ sung theo danh sách tác giả cung cấp (data/manual-works.json, scripts/fetch-manual-works.mjs): có ISSN thì vào danh sách tính điểm như công trình nạp từ OpenAlex;
 // không có ISSN thì hiện ở "Công trình khác" (fetch-extra-works.mjs). Công trình đã có sẵn (cùng mã) không thêm lại.
 if (existsSync("data/manual-works.json")) { const have = new Set(R.works.map((w) => w.id)); for (const w of rd("data/manual-works.json").works) if (w.issn && !have.has(w.id)) R.works.push({ ...w }); }
@@ -174,6 +177,11 @@ const works = prepared.map(({ w, js, sj, disc }) => {
     for (const j of js) { const s2 = tierScore(j.scoreTiers, w.year); if (s2 !== null) cands.push({ s: s2, d: j.discipline, k: "domestic", q: null }); }
     for (const [d, qq, h] of sj) cands.push({ s: intlScore(d, qq, h), d, k: "scopus", q: qq });
   }
+  let fb = null;
+  if (!cands.length && w.role === "lead") { // dự phòng: hạng SJR của tạp chí Scopus ngoài bảng theo ngành (đa ngành: hạng Q trong danh mục đa ngành; đã ngừng: hạng SJR năm cuối), chỉ khi năm công bố nằm trong Coverage; tính theo ngành chính của tác giả
+    const d0 = (authorDisc.get(w.authorId) ?? [])[0], rec = [w.issn, ...(w.issns ?? [])].map((i) => FB.get(String(i ?? "").replace("-", "").toUpperCase())).find(Boolean);
+    if (d0 && rec && inCoverage(rec.c, w.year)) { cands.push({ s: intlScore(d0, rec.q, rec.h), d: d0, k: "scopus", q: rec.q }); fb = rec.k; }
+  }
   let pick = null;
   if (cands.length) {
     const mine = authorDisc.get(w.authorId) ?? [], inMine = cands.filter((c) => mine.includes(c.d));
@@ -186,7 +194,7 @@ const works = prepared.map(({ w, js, sj, disc }) => {
   if (w.doi && OC[w.doi] !== undefined && OC[w.doi] >= 0) { oc.n++; oc.oa += cOA; oc.cr += cCR; oc.s2 += cS2; oc.oc += OC[w.doi]; if (OC[w.doi] <= cOA) oc.ocLeOA++; }
   if (w.doi && CR[w.doi] !== undefined) { xs.n++; if (cCR > cOA) xs.crHigher++; if (cS2 > cOA) xs.s2Higher++; if (cOA >= cS2 && cOA >= cCR) xs.oaHighest++; }
   const score = pick ? pick.s : null;
-  return { ...rest, cOA, title: w.title && w.title.trim() ? w.title : "(không có tiêu đề)", score, scoreDiscipline: pick?.d ?? null, scoreKind: pick?.k ?? null, quartile: pick?.q ?? null, matched: js.length > 0 || sj.length > 0, counted: w.role === "lead" && score !== null && score > 0,
+  return { ...rest, cOA, title: w.title && w.title.trim() ? w.title : "(không có tiêu đề)", score, scoreDiscipline: pick?.d ?? null, scoreKind: pick?.k ?? null, quartile: pick?.q ?? null, ...(fb && pick ? { fb } : {}), matched: js.length > 0 || sj.length > 0, counted: w.role === "lead" && score !== null && score > 0,
     // ru: tác giả không phải đứng đầu và OpenAlex không ghi tác giả liên hệ nào (corr = 0) => vai trò chưa xác định, không phải "chắc chắn không phải tác giả chính".
     ...(w.role === "co" && (corr ?? 0) === 0 ? { ru: 1 } : {}), disc };
 });
