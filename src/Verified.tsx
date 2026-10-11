@@ -84,7 +84,7 @@ export function ClaimBox({ authorId, authorName, mode = "claim" }: { authorId: s
 }
 
 // ---------- Dữ liệu công khai do chủ hồ sơ đã xác thực khai báo ----------
-export interface AuthorPub { verified: boolean; xw?: string[]; profile?: { disc?: string[]; orcid: string; scholar: string; site: string; bio: string; hasAvatar: boolean | number; email: string; phone: string }; works?: { doi: string; title: string; venue: string; year: number; oa: string; status: string }[] }
+export interface AuthorPub { verified: boolean; xw?: string[]; cf?: string[]; profile?: { disc?: string[]; orcid: string; scholar: string; site: string; bio: string; hasAvatar: boolean | number; email: string; phone: string }; works?: { doi: string; title: string; venue: string; year: number; oa: string; status: string }[] }
 export function useAuthorPub(id: string): AuthorPub | null {
   const ok = useVerified(id); const [d, setD] = useState<AuthorPub | null>(null);
   useEffect(() => { setD(null); if (ok) api<AuthorPub>("author-public", undefined, `&id=${encodeURIComponent(id)}`).then(setD).catch(() => {}); }, [id, ok]);
@@ -269,6 +269,20 @@ export function useOwnDisc(id: string): string[] | null { const d = useAuthorPub
 /** Công trình chủ hồ sơ đã báo "không phải của tôi" (ẩn khỏi danh sách; điểm tính lại ở lần dựng dữ liệu sau). */
 export function useNotMine(id: string, local: string[]): Set<string> { const d = useAuthorPub(id); return new Set([...(d?.xw ?? []), ...local]); }
 export function reportNotMine(authorId: string, workId: string): Promise<unknown> { return api("author-work-not", { authorId, workId }); }
+/** Kỷ yếu quốc tế có ISBN và phản biện do chủ hồ sơ khai (hiện điểm "kỷ yếu" ngay, chưa vào PRO-SCORE và hạng). Mã công trình dạng A…-W…. */
+export function useConf(id: string): { ids: Set<string>; mark: (w: string, on: boolean) => Promise<void> } {
+  const d = useAuthorPub(id), [over, setOver] = useState<Record<string, boolean>>({});
+  useEffect(() => { setOver({}); }, [id]);
+  const ids = new Set([...(d?.cf ?? []), ...Object.keys(over).filter((w) => over[w])].filter((w) => over[w] !== false));
+  return { ids, mark: (w, on) => (on ? api("author-work-conf", { authorId: id, workId: w, confirm: true }) : api("author-work-conf", { authorId: id, workId: w, undo: true })).then(() => setOver((o) => ({ ...o, [w]: on }))) };
+}
+let confPts: Promise<{ default: number; points: Record<string, number> }> | null = null;
+/** Điểm một kỷ yếu theo ngành (quy tắc HĐGSNN, public/data/conf-points.json do build-index.mjs ghi); chưa biết ngành thì mức mặc định 0,5. */
+export function useConfPoints(disc: string | undefined): number {
+  const [p, setP] = useState(0.5);
+  useEffect(() => { let on = true; confPts ??= fetch("./data/conf-points.json").then((r) => r.json()).catch(() => ({ default: 0.5, points: {} })); void confPts.then((c) => { if (on) setP((disc && c.points[disc]) || c.default); }); return () => { on = false; }; }, [disc]);
+  return p;
+}
 
 // ---------- Chủ hồ sơ tự chọn đơn vị hiện tại / trước đây ----------
 type UD = { units: { id: string; name: string; en: string }[]; mine: string[]; past: string[] };

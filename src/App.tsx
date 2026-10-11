@@ -18,7 +18,7 @@ import { StarBtn } from "./StarBtn";
 import { ProBadge, ProBadgeTag } from "./Badge";
 import { AvatarFrame } from "./Frame";
 import { VisitChip } from "./VisitChip";
-import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg, useVerified, useIsMine, useOwnDisc, useNotMine, reportNotMine } from "./Verified";
+import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg, useVerified, useIsMine, useOwnDisc, useNotMine, reportNotMine, useConf, useConfPoints } from "./Verified";
 import { useHidden } from "./hidden";
 import { NoDataHint } from "./NoData";
 import { Footer, EcoLink } from "./Footer";
@@ -401,7 +401,9 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   const works = useMemo(() => (worksAll && xwSet.size ? worksAll.filter((w) => !xwSet.has(w.id)) : worksAll), [worksAll, xwSet]);
   const [werr, setWerr] = useState(false), [tick, setTick] = useState(0), [wpage, setWpage] = useState(0);
   const extraRaw = useExtraWorks(a.id), [extraAll, setExtraAll] = useState(false);
+  const conf = useConf(a.id), confPt = useConfPoints((ownDisc ?? a.disciplines)[0]), pts = (x: number) => num(x, Math.round(x * 100) % 100 === 0 ? 0 : Math.round(x * 100) % 10 === 0 ? 1 : 2);
   const extra = useMemo(() => (extraRaw && xwSet.size ? extraRaw.filter((w) => !xwSet.has(`${a.id}-${w.id}`)) : extraRaw), [extraRaw, xwSet, a.id]); // công trình chủ hồ sơ đã báo "không phải của tôi" ẩn ngay, như phần tính điểm
+  const confN = (extra ?? []).filter((w) => conf.ids.has(`${a.id}-${w.id}`)).length; // kỷ yếu chủ hồ sơ khai: hiện điểm ngay, chưa tính vào PRO-SCORE và hạng
   const [wsort, setWsort] = useState<WSort>("year"), [onlyLead, setOnlyLead] = useState(false), [allInst, setAllInst] = useState(false);
   // Hủy yêu cầu cũ khi đổi hồ sơ: không để công trình của hồ sơ trước hiện (và xuất CSV) ở hồ sơ sau.
   useEffect(() => {
@@ -494,7 +496,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
       <div className="kpis">
         <div className="kpi k-rank"><span className="kic"><Icon n="trophy" size={20} /></span><b>{rk(a.proRank)}</b><span>{t("rank")} · PRO-SCORE1000™</span><small>{a.proRank ? t("rankOf", { n: num(pool) }) : t("rankNone")}{a.proR10 != null && a.proR90 != null && a.proR10 !== a.proR90 ? ` · ${num(a.proR10)}–${num(a.proR90)}` : ""}</small></div>
         <div className="kpi k-score"><span className="kic"><Icon n="check" size={20} /></span><b>{a.pro == null ? "-" : num(a.pro, 1)}<em>/100</em></b><span>PRO-SCORE1000™</span></div>
-        <div className="kpi"><span className="kic"><Icon n="book" size={20} /></span><b>{num(a.worksCount)}</b><span>{t("counted")}</span>{a.oaWorks != null && a.oaWorks > a.worksCount && <small title={t("oaWorksNote", { n: num(a.oaWorks) })}>{t("oaWorksShort", { n: num(a.oaWorks) })}</small>}</div>
+        <div className="kpi"><span className="kic"><Icon n="book" size={20} /></span><b>{num(a.worksCount)}</b><span>{t("counted")}</span>{a.oaWorks != null && a.oaWorks > a.worksCount && <small title={t("oaWorksNote", { n: num(a.oaWorks) })}>{t("oaWorksShort", { n: num(a.oaWorks) })}</small>}{confN > 0 && <small>{t("confKpi", { n: num(confN), p: pts(confN * confPt) })}</small>}</div>
         <div className="kpi"><span className="kic"><Icon n="chart" size={20} /></span><b>{num(a.citations)}</b><span title={t("citTip")}>{t("cit")}</span><small title={t("citTip")}>{a.scholarCit ? `Google Scholar ${num(a.scholarCit)} (${t("selfDecl")}) · ` : ""}{t("citNote")}{a.hIndex ? ` · ${t("hIdx")} ${a.hIndex}` : ""} · {t("rank")} {rk(a.rankCit)}</small></div>
         <div className="kpi"><span className="kic"><Icon n="link" size={20} /></span><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span><i className="bar" role="presentation"><u style={{ width: `${Math.round(a.matchedRate * 100)}%` }} /></i></div>
       </div>
@@ -548,12 +550,13 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
             </li>))}</ol>)}
         {works && <Pager page={wpage} total={shown.length} set={(p) => setWpage(p)} />}
       </section>
-      {extra && extra.length > 0 && <section className="card extra-works" aria-labelledby="xtw"><h2 id="xtw">{t("extraH")} <small>({num(extra.length)})</small></h2><p className="meta">{t("extraNote")}</p>
+      {extra && extra.length > 0 && <section className="card extra-works" aria-labelledby="xtw"><h2 id="xtw">{t("extraH")} <small>({num(extra.length)})</small></h2><p className="meta">{t("extraNote")}</p>{confN > 0 && <p className="banner"><Icon n="check" />{t("confSum", { n: num(confN), p: pts(confN * confPt) })}</p>}
         <ol className="wk-list">{(extraAll ? extra : extra.slice(0, 15)).map((w) => (
           <li key={w.id} className="wk"><span className="wy">{w.y}</span>
             <div className="wm"><a className="wt2" href={w.d ? `https://doi.org/${w.d}` : w.u ?? `https://openalex.org/${w.id}`} target="_blank" rel="noopener">{w.t}<span className="sr"> {t("newTab")}</span></a>
-              <div className="wsrc">{w.j && <span>{w.j}</span>}{w.ty && <span className="issn">{EXTRA_TYPE[w.ty]?.[lang === "vi" ? 0 : 1] ?? w.ty}</span>}</div></div>
+              <div className="wsrc">{w.j && <span>{w.j}</span>}{w.ty && <span className="issn">{EXTRA_TYPE[w.ty]?.[lang === "vi" ? 0 : 1] ?? w.ty}</span>}{conf.ids.has(`${a.id}-${w.id}`) && <span className="issn" title={t("confTip")}>{t("confBadge", { p: pts(confPt) })}</span>}</div></div>
             <div className="wr"><span className="wc"><Icon n="chart" size={14} />{num(w.c)}<span className="sr"> {t("cit")}</span></span>
+              {mine && ["conference-paper", "proceedings-article", "article"].includes(w.ty) && (() => { const wid = `${a.id}-${w.id}`, on = conf.ids.has(wid); return <button type="button" className="linkbtn" onClick={() => { if (on || confirm(t("confAsk"))) void conf.mark(wid, !on).catch((e) => alert((e as Error).message)); }}>{on ? t("confOff") : t("confOn")}</button>; })()}
               {mine && <button type="button" className="linkbtn" onClick={() => { const wid = `${a.id}-${w.id}`; if (confirm("Bài này không phải của bạn (OpenAlex gán nhầm người trùng tên)? Bài sẽ ẩn khỏi hồ sơ.")) void reportNotMine(a.id, wid).then(() => setLocalXw((x) => [...x, wid])).catch((e) => alert((e as Error).message)); }}>Không phải bài của tôi</button>}</div></li>))}</ol>
         {!extraAll && extra.length > 15 && <p><button type="button" className="ghost" onClick={() => setExtraAll(true)}>{t("extraMore", { n: String(extra.length - 15) })}</button></p>}
       </section>}
