@@ -34,17 +34,24 @@ export async function runChecks({ authorId, name, email, orcid, vf = {}, allowed
   const o = normOrcid(orcid);
   const oa = await fetchJson(`https://api.openalex.org/authors/${encodeURIComponent(authorId)}?select=id,display_name,orcid,last_known_institutions,works_count,cited_by_count&mailto=luongviethoang.hcm@gmail.com`);
   const oaOrcid = normOrcid(oa?.orcid);
-  const orc = o ? await fetchJson(`https://pub.orcid.org/v3.0/${o}/person`, { accept: "application/json" }) : null;
+  // Người gửi chưa khai ORCID thì dùng ORCID đang ghi trên hồ sơ OpenAlex (nếu có) để so tên: chỉ là tín hiệu tham khảo cho quản trị viên, không dùng để tự duyệt.
+  const nameOrcid = o || oaOrcid;
+  const orc = nameOrcid ? await fetchJson(`https://pub.orcid.org/v3.0/${nameOrcid}/person`, { accept: "application/json" }) : null;
   const orcName = orc?.name ? `${orc.name["given-names"]?.value ?? ""} ${orc.name["family-name"]?.value ?? ""}`.trim() : "";
   const free = isFreeMail(email);
   add("email", free ? (allowedFree ? null : false) : true, "Email tổ chức", free ? (allowedFree ? "Email miễn phí, quản trị viên đã cho phép riêng" : `Email cá nhân (${emailDomain(email)}): chờ quản trị viên xem xét, không tự duyệt`) : `${emailDomain(email)}${orgKind(email) ? ` (${orgKind(email)})` : ""}`);
   add("otp", emailVerified ? true : null, "Quyền sử dụng email", emailVerified ? "Đã nhập mã xác thực gửi tới email" : "Chưa có mã xác thực (quản trị viên nhập tay)");
   add("orcidFormat", o ? orcidValid(o) : null, "ORCID hợp lệ", o ? (orcidValid(o) ? o : "Sai mã kiểm tra") : "Chưa cung cấp ORCID");
   add("orcidMatch", !o ? null : !oaOrcid ? null : o === oaOrcid, "ORCID trùng hồ sơ OpenAlex", !oa ? "Không tra được OpenAlex" : !oaOrcid ? "Hồ sơ OpenAlex chưa ghi ORCID" : o === oaOrcid ? oaOrcid : `Hồ sơ OpenAlex ghi ${oaOrcid}`);
-  add("orcidName", orcName ? nameCompat(orcName, name) : null, "Tên trong ORCID khớp tên người gửi", orcName ? `ORCID: ${orcName}` : "Không đọc được bản ghi ORCID công khai");
+  if (o) add("orcidName", orcName ? nameCompat(orcName, name) : null, "Tên trong ORCID khớp tên người gửi", orcName ? `ORCID: ${orcName}` : "Không đọc được bản ghi ORCID công khai");
+  else if (oaOrcid) { const ok = orcName ? nameCompat(orcName, name) : null; add("orcidName", ok ? true : null, "Tên trong ORCID của hồ sơ khớp tên người gửi", orcName ? `Người gửi chưa khai ORCID; ORCID ${oaOrcid} ghi trên hồ sơ có tên "${orcName}"${ok ? "" : ", không khớp"}` : `Người gửi chưa khai ORCID; không đọc được bản ghi ORCID ${oaOrcid}`); }
+  else add("orcidName", null, "Tên trong ORCID khớp tên người gửi", "Không có ORCID để đối chiếu");
   add("nameMatch", oa?.display_name ? nameCompat(oa.display_name, name) : null, "Tên người gửi khớp tên hồ sơ", oa?.display_name ? `Hồ sơ: ${oa.display_name}` : "Không tra được tên hồ sơ");
   const inst = (oa?.last_known_institutions ?? []).map((i) => i.display_name).filter(Boolean);
-  add("domain", null, "Tên miền email và đơn vị trong hồ sơ", `${emailDomain(email)} · hồ sơ: ${inst.join("; ") || "chưa ghi đơn vị"}`);
+  // Tên miền email so với website của các đơn vị ghi trên hồ sơ (OpenAlex homepage_url): khớp là tín hiệu tốt; không khớp chỉ cảnh báo (nhiều đơn vị dùng nhiều tên miền).
+  const d = emailDomain(email), hosts = (await Promise.all((oa?.last_known_institutions ?? []).slice(0, 3).map((i) => fetchJson(`https://api.openalex.org/institutions/${encodeURIComponent(String(i.id ?? "").split("/").pop())}?select=homepage_url&mailto=luongviethoang.hcm@gmail.com`)))).map((x) => { try { return new URL(x?.homepage_url).hostname.replace(/^www\./, "").toLowerCase(); } catch { return ""; } }).filter(Boolean);
+  const domOk = !!d && hosts.some((h) => d === h || d.endsWith(`.${h}`) || h.endsWith(`.${d}`));
+  add("domain", domOk ? true : null, "Tên miền email và đơn vị trong hồ sơ", `${d} · hồ sơ: ${inst.join("; ") || "chưa ghi đơn vị"}${domOk ? " · khớp website đơn vị" : hosts.length ? ` · website đơn vị: ${hosts.join(", ")}` : ""}`);
   const conflict = (vf.byAuthor && vf.byAuthor.email !== email) || (vf.byOrcid && vf.byOrcid.authorId !== authorId);
   add("conflict", !conflict, "Chưa có xác thực khác trùng hồ sơ hoặc ORCID", conflict ? "Đã có người xác thực hồ sơ hoặc ORCID này" : "Không xung đột");
   const ok = (k) => checks.find((c) => c.k === k)?.ok;

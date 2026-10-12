@@ -622,7 +622,7 @@ function Correction({ a }: { a: Author | null }) {
       <p className="meta">{t("corrLead")}</p>
       <p className="meta">{t("corrPrivacy")}</p>
       <div role="status" aria-live="polite">{state === "ok" && <p className="banner"><Icon n="check" />{t("sent")}</p>}</div>
-      {a && (kind === "claim" || kind === "remove" || kind === "hide") && <ClaimBox key={kind} authorId={a.id} authorName={a.name} mode={kind === "remove" ? "remove" : kind === "hide" ? "hide" : "claim"} />}
+      {a && (kind === "claim" || kind === "remove" || kind === "hide") && <ClaimBox key={kind} authorId={a.id} authorName={a.name} knownOrcid={a.orcid ?? ""} mode={kind === "remove" ? "remove" : kind === "hide" ? "hide" : "claim"} />}
       {state !== "ok" && !(a && (kind === "claim" || kind === "remove" || kind === "hide")) && (
         <form onSubmit={submit} className="form">
           <fieldset><legend className="sr">{t("corrTitle")}</legend>
