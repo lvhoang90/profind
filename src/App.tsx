@@ -18,6 +18,7 @@ import { StarBtn } from "./StarBtn";
 import { ProBadge, ProBadgeTag } from "./Badge";
 import { AvatarFrame } from "./Frame";
 import { VisitChip } from "./VisitChip";
+import { fetchWorks } from "./worksShard";
 import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg, useVerified, useIsMine, useOwnDisc, useNotMine, reportNotMine, useConf, useConfPoints } from "./Verified";
 import { useHidden } from "./hidden";
 import { NoDataHint } from "./NoData";
@@ -413,9 +414,8 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
     setWorks(null); setWerr(false); setWpage(0); setWsort("year"); setOnlyLead(false); setAllInst(false);
     if (a.worksCount === 0) { setWorks([]); return; }
     const ac = new AbortController();
-    fetch(`./data/works/${encodeURIComponent(a.id)}.json`, { signal: ac.signal }).then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }).then((w) => {
-      if (!Array.isArray(w)) throw new Error("shape");
-      setWorks([...(w as Work[])].sort((x, y) => y.year - x.year));
+    fetchWorks(a.id, ac.signal).then((w) => {
+      setWorks([...w].sort((x, y) => y.year - x.year));
     }).catch(() => { if (ac.signal.aborted) return; setWerr(true); setWorks([]); });
     return () => ac.abort();
   }, [a.id, a.worksCount, tick]);
@@ -545,7 +545,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
               </div>
               <div className="wr">
                 <StarBtn k={`w|${w.id}`} meta={{ t: w.title, s: [a.name, w.journal, w.year].filter(Boolean).join(" · "), u: w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${w.id.split("-").pop()}` }} />
-                {w.quartile ? <span className={`pill sc ${w.quartile.toLowerCase()}`} title={`Scopus ${w.quartile}`}>{w.quartile}<small>Scopus</small></span> : <span className="pill none">{t("noQ")}</span>}
+                {w.quartile ? <span className={`pill sc ${w.quartile.toLowerCase()}`} title={`Scopus ${w.quartile}`}>{w.quartile}<small>Scopus</small></span> : w.jq ? <span className={`pill sc ${w.jq.toLowerCase()} ref`} title={t("jqTip", { q: w.jq })}>{w.jq}<small>SJR</small></span> : <span className="pill none">{t("noQ")}</span>}
                 <span className="wc"><Icon n="chart" size={14} />{num(w.citations)}<span className="sr"> {t("cit")}</span></span>
                 <span className={`role ${w.role}`}>{roleCell(w)}</span>
                 {mine && <button type="button" className="linkbtn" onClick={() => { if (confirm("Bài này không phải của bạn (OpenAlex gán nhầm người trùng tên)? Bài sẽ ẩn khỏi hồ sơ.")) void reportNotMine(a.id, w.id).then(() => setLocalXw((x) => [...x, w.id])).catch((e) => alert((e as Error).message)); }}>Không phải bài của tôi</button>}

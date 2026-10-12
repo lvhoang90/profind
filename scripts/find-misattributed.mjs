@@ -3,6 +3,7 @@
 //   B (cần xem)  = công trình không có ORCID, nhưng cơ quan trùng với nhóm công trình của "người kia" và/hoặc tiêu đề/tạp chí giống nhóm đó hơn nhóm của chủ hồ sơ.
 // Chỉ xét hồ sơ có ít nhất một công trình loại A. Ghi public/data/_misattributed.json cho quản trị viên duyệt (gợi ý, không tự loại).
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readWorks } from "./_works-io.mjs";
 const fold = (x) => String(x ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase();
 const STOP = new Set("the and for with from that this are was were into using based study analysis effect effects its their between among via use new one two case review nghien cuu cac cua cho trong voi mot nhung duoc tai theo den tren nam".split(" "));
 const tok = (t) => { const w = fold(t).replace(/[^a-z0-9 ]+/g, " ").split(" ").filter((x) => x.length > 3 && !STOP.has(x)); return [...new Set([...w, ...w.slice(1).map((x, i) => `${w[i]}_${x}`)])]; };
@@ -11,7 +12,7 @@ const AU = existsSync("data/raw/_authorship.json") ? JSON.parse(readFileSync("da
 const byA = new Map(); for (const k of Object.keys(OW)) { const a = k.split("-")[0]; byA.set(a, true); }
 const out = [], prof = [];
 for (const a of P.authors) {
-  if (!byA.has(a.id) || !a.orcid) continue; let w; try { w = JSON.parse(readFileSync(`public/data/works/${a.id}.json`, "utf8")); } catch { continue; } w = w.works ?? w;
+  if (!byA.has(a.id) || !a.orcid) continue; const w = readWorks(a.id); if (!w.length) continue;
   const items = w.map((x) => ({ x, o: OW[x.id] ?? "", keys: AU[x.id]?.[0] ?? [], t: tok(`${x.title} ${x.journal ?? ""}`) }));
   const F = items.filter((i) => i.o && i.o !== a.orcid); if (!F.length) continue;
   const O = items.filter((i) => !F.includes(i) && i.o === a.orcid), U = items.filter((i) => !F.includes(i) && i.o !== a.orcid);

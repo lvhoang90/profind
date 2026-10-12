@@ -309,7 +309,7 @@ export default async function handler(request) {
     const CFK = "profind:cf", getCf = async (id) => { const l = jparse(await one(["HGET", CFK, id])); return Array.isArray(l) ? l.filter((x) => x && typeof x.w === "string") : []; }; // kỷ yếu quốc tế có ISBN và phản biện do chủ hồ sơ khai (hiện điểm ngay): [{ w: mã công trình, at }]
 const XWK = "profind:xw", getXw = async (id) => { const l = jparse(await one(["HGET", XWK, id])); return Array.isArray(l) ? l : []; }; // công trình chủ hồ sơ báo "không phải của tôi"
     // Tự động báo chủ hồ sơ khi công trình họ báo "không phải của tôi" đã được loại khỏi dữ liệu (đã dựng lại): thư + chuyển sang nhật ký 90 ngày.
-    // "Đã xử lý" = mã công trình không còn trong public/data/works/<mã tác giả>.json đang chạy. Gọi bởi Vercel Cron (GET, Authorization: Bearer CRON_SECRET) hoặc nút "Quét ngay" (POST, quản trị viên).
+    // "Đã xử lý" = mã công trình không còn trong public/data/works/wNNNN.json (khối chứa mã tác giả) đang chạy. Gọi bởi Vercel Cron (GET, Authorization: Bearer CRON_SECRET) hoặc nút "Quét ngay" (POST, quản trị viên).
     const XDK = "profind:xwdone", XTK = "profind:xwtry", XW_KEEP = 90 * 864e5, XW_AUTHORS = 25;
     const CLK = "profind:cl", VFK = "profind:vf", VFO = "profind:vfo", CLA = "profind:cla";
     const HSK = "profind:hs", HPK = "profind:hp"; // tập mã hồ sơ: ẩn điểm + xếp hạng; ẩn cả hồ sơ
@@ -328,10 +328,11 @@ const XWK = "profind:xw", getXw = async (id) => { const l = jparse(await one(["H
       const pubO = (process.env.PUBLIC_ORIGIN || "https://profind.isavn.edu.vn").replace(/\/$/, "");
       // Lần quét đầu tiên (khi mới bật tính năng): các công trình ĐÃ xử lý từ trước chỉ được dọn và ghi nhật ký, KHÔNG gửi thư hàng loạt; từ lần sau mới gửi.
       const backlog = !(await one(["GET", "profind:xwstart"])); if (backlog) await one(["SET", "profind:xwstart", String(now)]);
+      const shardCache = new Map();
       for (const [authorId, raw] of Object.entries(pairs(await one(["HGETALL", XWK]))).slice(0, XW_AUTHORS)) {
         const re = new RegExp(`^${authorId.replace(/[^A-Za-z0-9]/g, "")}-W\\d{4,14}$`), ids = (jparse(raw) ?? []).filter((w) => re.test(w));
         if (!ids.length) { await one(["HDEL", XWK, authorId]); continue; }
-        let shard; try { const r = await fetch(`${url.origin}/data/works/${encodeURIComponent(authorId)}.json?s=${now}`); if (!r.ok) continue; shard = await r.json(); } catch { continue; }
+        let shard; try { const sn = `w${String(Number(authorId.replace(/\D/g, "")) % 1024).padStart(4, "0")}`; if (!shardCache.has(sn)) { const r = await fetch(`${url.origin}/data/works/${sn}.json?s=${now}`); if (!r.ok) continue; shardCache.set(sn, await r.json()); } shard = shardCache.get(sn)[authorId]; } catch { continue; } // khối 1024 tệp (scripts/_works-io.mjs)
         if (!Array.isArray(shard)) continue;
         // Mục "Công trình khác (không tính điểm)" (public/data/extra/<mã>.json, chỉ có mã W…) cũng tính là còn trên hồ sơ: chưa loại khỏi đó thì chưa phải "đã xử lý".
         let extraIds = []; try { const r = await fetch(`${url.origin}/data/extra/${encodeURIComponent(authorId)}.json?s=${now}`); if (r.ok) { const x = await r.json(); if (Array.isArray(x)) extraIds = x.map((w) => `${authorId}-${w.id}`); } else if (r.status !== 404) continue; } catch { continue; }

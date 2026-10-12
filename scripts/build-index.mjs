@@ -1,10 +1,11 @@
 // data/raw-authors.json + journals.json + sjr-rules.json + institutions.json + corrections.json
-//   -> public/data/profind.json (tác giả, đơn vị, thống kê; nhẹ) + public/data/works/<id>.json (công trình của từng tác giả; tải khi mở hồ sơ)
+//   -> public/data/profind.json (tác giả, đơn vị, thống kê; nhẹ) + public/data/works/wNNNN.json (công trình của các tác giả theo 1024 khối, xem scripts/_works-io.mjs; tải khối khi mở hồ sơ)
 // Điểm công trình = max(điểm tạp chí trong nước theo năm, điểm Scopus theo quy tắc ngành), chỉ khi là tác giả chính theo HĐGSNN (role = "lead").
 // Web of Science (SCIE/SSCI) và kỷ yếu hội nghị không suy ra được từ dữ liệu công khai nên không tính (điểm là mức tham khảo thấp hơn thực tế).
 import { cityOut } from "./lib/province.mjs";
 import { loadRule, buildStats, features, verdict, windowYears, mainCountry } from "./lib/abroad.mjs";
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from "node:fs";
+import { writeAllWorks } from "./_works-io.mjs";
 import { computePro } from "./pro-score.mjs";
 const rd = (f) => JSON.parse(readFileSync(f, "utf8"));
 const J = rd("data/journals.json"), S = rd("data/sjr-rules.json"), I = rd("data/institutions.json"), R = rd("data/raw-authors.json"), C = rd("data/corrections.json");
@@ -186,13 +187,15 @@ const works = prepared.map(({ w, js, sj, disc }) => {
   let fb = null;
   if (!cands.length && w.role === "lead") { // dự phòng: hạng SJR của tạp chí Scopus ngoài bảng theo ngành (đa ngành: hạng Q trong danh mục đa ngành; đã ngừng: hạng SJR năm cuối), chỉ khi năm công bố nằm trong Coverage; tính theo ngành chính của tác giả
     const d0 = (authorDisc.get(w.authorId) ?? [])[0], rec = [w.issn, ...(w.issns ?? [])].map((i) => FB.get(String(i ?? "").replace("-", "").toUpperCase())).find(Boolean);
-    if (d0 && rec && inCoverage(rec.c, w.year)) { cands.push({ s: intlScore(d0, rec.q, rec.h), d: d0, k: "scopus", q: rec.q }); fb = rec.k; }
+    if (d0 && rec && rec.k !== "b" && inCoverage(rec.c, w.year)) { cands.push({ s: intlScore(d0, rec.q, rec.h), d: d0, k: "scopus", q: rec.q }); fb = rec.k; }
   }
   let pick = null;
   if (cands.length) {
     const mine = authorDisc.get(w.authorId) ?? [], inMine = cands.filter((c) => mine.includes(c.d));
     pick = inMine.length ? inMine.reduce((x, y) => (y.s > x.s ? y : x)) : cands.reduce((x, y) => (y.s < x.s ? y : x));
   }
+  // jq: hạng Q của tạp chí chỉ để HIỂN THỊ (không tính điểm): bài đồng tác giả, sách theo tập, hoặc tạp chí không thuộc ngành của tác giả.
+  const jq = pick?.q ? null : (() => { const o = { Q1: 1, Q2: 2, Q3: 3, Q4: 4 }, b = sj.map((x) => x[1]).filter((q) => o[q]).sort((x, y) => o[x] - o[y])[0]; if (b) return b; const rec = [w.issn, ...(w.issns ?? [])].map((i) => FB.get(String(i ?? "").replace("-", "").toUpperCase())).find(Boolean); return rec?.q && (rec.k === "b" || inCoverage(rec.c, w.year)) ? rec.q : null; })();
   const { issns: _i, corr, ...rest } = w;
   // Trích dẫn công trình = max(OpenAlex, Semantic Scholar) theo DOI; cOA giữ số OpenAlex để tính phần bổ sung ở cấp tác giả.
   const cOA = w.citations ?? 0, cS2 = w.doi ? (S2[w.doi] ?? 0) : 0, cCR = w.doi ? Math.max(0, CR[w.doi] ?? 0) : 0; rest.citations = Math.max(cOA, cS2, cCR);
@@ -200,7 +203,7 @@ const works = prepared.map(({ w, js, sj, disc }) => {
   if (w.doi && OC[w.doi] !== undefined && OC[w.doi] >= 0) { oc.n++; oc.oa += cOA; oc.cr += cCR; oc.s2 += cS2; oc.oc += OC[w.doi]; if (OC[w.doi] <= cOA) oc.ocLeOA++; }
   if (w.doi && CR[w.doi] !== undefined) { xs.n++; if (cCR > cOA) xs.crHigher++; if (cS2 > cOA) xs.s2Higher++; if (cOA >= cS2 && cOA >= cCR) xs.oaHighest++; }
   const score = pick ? pick.s : null;
-  return { ...rest, cOA, title: w.title && w.title.trim() ? w.title : "(không có tiêu đề)", score, scoreDiscipline: pick?.d ?? null, scoreKind: pick?.k ?? null, quartile: pick?.q ?? null, ...(fb && pick ? { fb } : {}), matched: js.length > 0 || sj.length > 0, counted: w.role === "lead" && score !== null && score > 0,
+  return { ...rest, cOA, title: w.title && w.title.trim() ? w.title : "(không có tiêu đề)", score, scoreDiscipline: pick?.d ?? null, scoreKind: pick?.k ?? null, quartile: pick?.q ?? null, ...(fb && pick ? { fb } : {}), ...(!pick?.q && jq ? { jq } : {}), matched: js.length > 0 || sj.length > 0, counted: w.role === "lead" && score !== null && score > 0,
     // ru: tác giả không phải đứng đầu và OpenAlex không ghi tác giả liên hệ nào (corr = 0) => vai trò chưa xác định, không phải "chắc chắn không phải tác giả chính".
     ...(w.role === "co" && (corr ?? 0) === 0 ? { ru: 1 } : {}), disc };
 });
@@ -253,8 +256,7 @@ for (const a of outAuthors) { if (a.pro === undefined) { a.pro = a.proLo = a.pro
 writeFileSync("public/data/pro-panel.json", JSON.stringify(PRO.panel));
 
 // ---- 5. Ghi tệp ----
-rmSync("public/data/works", { recursive: true, force: true }); mkdirSync("public/data/works", { recursive: true });
-for (const [id, ws] of per) writeFileSync(`public/data/works/${id}.json`, JSON.stringify(ws.map(({ authorId, demo, disc, counted, matched, cOA, ...w }) => w)));
+writeAllWorks(new Map([...per].map(([id, ws]) => [id, ws.map(({ authorId, demo, disc, counted, matched, cOA, ...w }) => w)]))); // 1024 tệp khối (scripts/_works-io.mjs)
 // Chuỗi tìm theo tên tạp chí/ISSN tách riêng (tải khi người dùng bắt đầu gõ), để tệp danh sách nhẹ hơn ~45%.
 const jn = {};
 for (const a of outAuthors) { const ws = per.get(a.id) ?? [], jc = new Map(); for (const w of ws) { if (!w.issn) continue; jc.set(`${w.journal}|${w.issn}`, (jc.get(`${w.journal}|${w.issn}`) ?? 0) + 1); } jn[a.id] = [...jc.entries()].sort((x, y) => y[1] - x[1]).slice(0, 15).map(([k]) => foldS(k)).join(" ; "); }
