@@ -75,7 +75,8 @@ const CR = existsSync("data/raw/_crossref.json") ? rd("data/raw/_crossref.json")
 const OC = existsSync("data/raw/_opencitations.json") ? rd("data/raw/_opencitations.json") : {}; // OpenCitations: chỉ một mẫu DOI, dùng kiểm toán, không vào điểm
 const xs = { n: 0, crHigher: 0, s2Higher: 0, oaHighest: 0 }, oc = { n: 0, oa: 0, cr: 0, s2: 0, oc: 0, ocLeOA: 0 };
 const metaAll = existsSync("data/author-meta.json") ? rd("data/author-meta.json") : {}, extraCited = new Map();
-for (const [f, into] of alias) extraCited.set(into, (extraCited.get(into) ?? 0) + (metaAll[f]?.cited ?? 0));
+const extraH = new Map(); // hồ sơ gộp theo ORCID: h-index lấy giá trị lớn nhất của các hồ sơ gốc (hồ sơ đích có thể chỉ là mảnh nhỏ, h = 0)
+for (const [f, into] of alias) { extraCited.set(into, (extraCited.get(into) ?? 0) + (metaAll[f]?.cited ?? 0)); if (metaAll[f]?.h != null) extraH.set(into, Math.max(extraH.get(into) ?? 0, metaAll[f].h)); if (SCH[f] && !SCH[into]) SCH[into] = SCH[f]; } // Google Scholar khai theo mã hồ sơ gốc thì chuyển sang hồ sơ đích
 const live = new Map(authors.map((a) => [a.id, a]));
 const NAME_ORDER = existsSync("data/name-order.json") ? rd("data/name-order.json") : {}; // scripts/normalize-names.mjs: tên Việt đưa về thứ tự Họ + tên đệm + tên (corrections.rename vẫn thắng)
 for (const a of authors) { if (C.rename[a.id]) a.name = C.rename[a.id]; else if (NAME_ORDER[a.id]) a.name = NAME_ORDER[a.id].to; if (C.setInstitutions?.[a.id]) { const v = C.setInstitutions[a.id], now = Array.isArray(v) ? v : v.now ?? [], past = Array.isArray(v) ? [] : v.past ?? []; a.institutions = [...now, ...past.filter((u) => !now.includes(u))]; a.fixedPast = past.filter((u) => !now.includes(u)); } /* đơn vị do quản trị viên xác nhận thay cho đơn vị OpenAlex (hồ sơ gộp nhiều người) */ a.institutions = [...new Set(a.institutions.map(ua))]; if (a.fixedPast) a.fixedPast = [...new Set(a.fixedPast.map(ua))].filter((u, _, ar) => a.institutions.includes(u)); a.claimed = C.claimed[a.id]?.date ?? null; }
@@ -245,7 +246,7 @@ const outAuthors = authors.map((a) => {
     suspect: !NOT_SUSPECT.has(a.id) && (ws.length >= 500 || ws.length / span > 150 || a.institutions.length >= 5 || (C.suspect ?? []).includes(a.id)),
     oaWorks: meta?.worksTotal ?? null, ...bigStats(ws), worksCount: ws.length, countedWorks: ws.filter((w) => w.counted).length, totalScore: Math.round(ws.reduce((s, w) => s + (w.score ?? 0), 0) * 100) / 100,
     // citations: số trích dẫn TOÀN THỜI GIAN của hồ sơ OpenAlex (khớp với cách các hệ thống khác tính); citations2016: riêng các công trình trong ProFind (từ 2016).
-    citations: (meta?.cited ?? ws.reduce((s, w) => s + (w.cOA ?? 0), 0)) + (extraCited.get(a.id) ?? 0) + ws.reduce((s, w) => s + Math.max(0, (w.citations ?? 0) - (w.cOA ?? 0)), 0), citations2016: ws.reduce((s, w) => s + (w.citations ?? 0), 0), hIndex: meta?.h ?? null, matchedRate: ws.length ? Math.round((matched / ws.length) * 100) / 100 : 0,
+    citations: (meta?.cited ?? ws.reduce((s, w) => s + (w.cOA ?? 0), 0)) + (extraCited.get(a.id) ?? 0) + ws.reduce((s, w) => s + Math.max(0, (w.citations ?? 0) - (w.cOA ?? 0)), 0), citations2016: ws.reduce((s, w) => s + (w.citations ?? 0), 0), hIndex: meta?.h == null && !extraH.has(a.id) ? null : Math.max(meta?.h ?? 0, extraH.get(a.id) ?? 0), matchedRate: ws.length ? Math.round((matched / ws.length) * 100) / 100 : 0,
     firstYear: years.length ? Math.min(...years) : null, lastYear: years.length ? Math.max(...years) : null };
 });
 // Thứ hạng chỉ tính trong tập đủ điều kiện (đơn vị tại Việt Nam, không nghi gộp nhầm) = đúng tập danh sách mặc định; đồng hạng cùng số (hạng thi đấu: 1,2,2,4).
