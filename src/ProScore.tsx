@@ -86,7 +86,7 @@ export function ProScorePage() {
       <section className="psp-sec"><h2>{vi ? "Công thức" : "The formula"}</h2>
         <pre className="formula big">{vi ? "PRO-SCORE1000™ = trung bình của 1000 điểm, mỗi điểm do một cấu hình trọng số chấm:\nĐiểm(cấu hình k) = 100 × Σ  wₖᵢ × chỉ báoᵢ   (7 chỉ báo, Σ wₖᵢ = 1)" : "PRO-SCORE1000™ = mean of 1000 scores, each given by one simulated configuration:\nScore(configuration k) = 100 × Σ  wₖᵢ × indicatorᵢ   (7 indicators, Σ wₖᵢ = 1)"}</pre>
         <div className="psp-stack" role="img" aria-label={pl.map((p) => `${P[p.k][0]} ${p.w}%`).join(", ")}>{pl.map((p) => <i key={p.k} style={{ width: `${p.w}%`, background: p.color }} title={`${P[p.k][0]} ${p.w.toFixed(1)}%`}><span>{p.w >= 8 ? Math.round(p.w) : ""}</span></i>)}</div>
-        <p className="psp-legend">{pl.map((p) => <span key={p.k}><i style={{ background: p.color }} />{P[p.k][0]} {p.w.toFixed(1).replace(".", ",")}%</span>)}</p>
+        <p className="psp-legend">{pl.map((p) => <span key={p.k}><i style={{ background: p.color }} />{P[p.k][0]} {p.w.toFixed(1).replace(".", vi ? "," : ".")}%</span>)}</p>
         <p className="meta">{vi ? "Thanh màu và các thẻ bên dưới là trọng số trung bình của hội đồng (kèm độ lệch chuẩn). Mỗi chỉ báo nằm trong khoảng 0 đến 1 (bách phân vị trong ngành, hoặc tỉ lệ đã làm trơn); điểm cuối nhân 100." : "The bar and cards below show the panel’s mean weights (with standard deviation). Each indicator lies between 0 and 1 (field percentile, or a smoothed ratio); the final score is multiplied by 100."}</p></section>
 
       <section className="psp-sec"><h2>{vi ? "Cách vận hành 1000 cấu hình trọng số mô phỏng" : "How the 1000 simulated weighting configurations work"}</h2>
@@ -97,13 +97,13 @@ export function ProScorePage() {
           <li>{vi ? <><b>Đo độ vững.</b> Từ 1000 cách xếp hạng, ProFind™ báo <b>khoảng điểm</b> (P10 đến P90), <b>khoảng hạng</b> và <b>độ vững của huy hiệu</b>: tỉ lệ cấu hình mô phỏng xếp hồ sơ vào đúng nhóm Top đó.</> : <><b>Measure robustness.</b> From the 1000 rankings, ProFind™ reports a <b>score range</b> (P10 to P90), a <b>rank range</b> and <b>badge robustness</b>: the share of simulated configurations placing the profile in that Top group.</>}</li></ol>
         {panel && <><h3>{vi ? "Cơ cấu hội đồng và trọng số trung bình (%)" : "Panel composition and mean weights (%)"}</h3>
           <div className="psp-tw"><table className="psp-t"><thead><tr><th>{vi ? "Nhóm" : "Group"}</th><th>n</th>{COLS.map((c) => <th key={c}>{P[c][0]}</th>)}</tr></thead>
-            <tbody>{Object.entries(panel.by).map(([dim, g]) => [<tr key={dim} className="dim"><th colSpan={9}>{DIM_LABEL[dim][vi ? 0 : 1]}</th></tr>, ...Object.entries(g).map(([k, v]) => <tr key={dim + k}><td>{v.label}</td><td>{v.n}</td>{v.w.map((x, i) => <td key={i}>{x.toFixed(1).replace(".", ",")}</td>)}</tr>)])}
-              <tr className="all"><td><b>{vi ? "Toàn hội đồng" : "Whole panel"}</b></td><td>{panel.n}</td>{panel.mean.map((x, i) => <td key={i}><b>{x.toFixed(1).replace(".", ",")}</b></td>)}</tr></tbody></table></div>
+            <tbody>{Object.entries(panel.by).map(([dim, g]) => [<tr key={dim} className="dim"><th colSpan={9}>{DIM_LABEL[dim][vi ? 0 : 1]}</th></tr>, ...Object.entries(g).map(([k, v]) => <tr key={dim + k}><td>{v.label}</td><td>{v.n}</td>{v.w.map((x, i) => <td key={i}>{x.toFixed(1).replace(".", vi ? "," : ".")}</td>)}</tr>)])}
+              <tr className="all"><td><b>{vi ? "Toàn hội đồng" : "Whole panel"}</b></td><td>{panel.n}</td>{panel.mean.map((x, i) => <td key={i}><b>{x.toFixed(1).replace(".", vi ? "," : ".")}</b></td>)}</tr></tbody></table></div>
           <p className="meta">{vi ? `Hạt giống ngẫu nhiên: ${panel.seed}. Các hệ số điều chỉnh nằm trong mã nguồn (scripts/pro-panel.mjs) và là giả định của mô hình.` : `Random seed: ${panel.seed}. The adjustment factors are in the source code (scripts/pro-panel.mjs) and are model assumptions.`}</p></>}</section>
 
       <section className="psp-sec"><h2>{vi ? "Bảy chỉ báo" : "The seven indicators"}</h2>
         <ol className="psp-cards">{pl.map((p, i) => <li key={p.k} style={{ "--c": p.color } as React.CSSProperties}>
-          <div className="psp-ch"><span className="kic"><Icon n={p.icon} size={20} /></span><b>{P[p.k][0]}</b><em>{p.w.toFixed(1).replace(".", ",")}%{panel ? <small> ±{panel.sd[i].toFixed(1).replace(".", ",")}</small> : null}</em></div>
+          <div className="psp-ch"><span className="kic"><Icon n={p.icon} size={20} /></span><b>{P[p.k][0]}</b><em>{p.w.toFixed(1).replace(".", vi ? "," : ".")}%{panel ? <small> ±{panel.sd[i].toFixed(1).replace(".", vi ? "," : ".")}</small> : null}</em></div>
           <p className="psp-what">{P[p.k][1]}</p><p className="psp-how">{P[p.k][2]}</p></li>)}</ol></section>
 
       <section className="psp-sec"><h2>{vi ? "Chuẩn hóa và làm trơn" : "Normalisation and smoothing"}</h2>
@@ -113,7 +113,7 @@ export function ProScorePage() {
           <li>{vi ? <><b>Trần chống thổi phồng.</b> Trích dẫn mỗi công trình bị cắt ở P99 của ngành; sản lượng có trần P95; hồ sơ nghi gộp nhầm nhiều người bị loại khỏi xếp hạng.</> : <><b>Anti-inflation caps.</b> Per-work citations are capped at the field’s P99; output is capped at P95; profiles suspected of merging several people are excluded from ranking.</>}</li></ul>
         <div className="psp-ex"><b>{vi ? "Ví dụ minh họa (số giả định)" : "Illustrative example (hypothetical numbers)"}</b>
           <p>{vi ? "Một nhà khoa học có bách phân vị tác động 0,90; sản lượng 0,80; chủ đạo 0,70; chất lượng 0,60; đà phát triển 0,85; đều đặn 0,90; chưa thuộc Top 2%:" : "A scientist with impact percentile 0.90; output 0.80; leadership 0.70; quality 0.60; momentum 0.85; consistency 0.90; not in the Top 2%:"}</p>
-          <code>{vi ? "Với trọng số trung bình của hội đồng" : "With the panel’s mean weights"}: {pl.map((p) => `${(p.w / 100).toFixed(3).replace(".", ",")}×${(ex[p.k as keyof typeof ex] / 100).toFixed(2).replace(".", ",")}`).join(" + ")} = <b>{(exScore / 100).toFixed(4).replace(".", ",")}</b> → PRO-SCORE1000™ <b>{exScore.toFixed(1).replace(".", ",")}</b></code></div></section>
+          <code>{vi ? "Với trọng số trung bình của hội đồng" : "With the panel’s mean weights"}: {pl.map((p) => `${(p.w / 100).toFixed(3).replace(".", vi ? "," : ".")}×${(ex[p.k as keyof typeof ex] / 100).toFixed(2).replace(".", vi ? "," : ".")}`).join(" + ")} = <b>{(exScore / 100).toFixed(4).replace(".", vi ? "," : ".")}</b> → PRO-SCORE1000™ <b>{exScore.toFixed(1).replace(".", vi ? "," : ".")}</b></code></div></section>
 
       <AbroadRule lang={lang} num={num} />
 

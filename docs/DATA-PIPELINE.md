@@ -12,7 +12,7 @@ npm run d:check                              # kiểm tra nhất quán
 
 - `data/raw-authors.json` và `data/raw/` là dữ liệu trung gian (không đưa vào kho). `public/data/` là sản phẩm dựng, được đưa vào kho để triển khai tĩnh.
 - **Ngân sách OpenAlex**: khóa miễn phí có hạn mức ~1 USD/ngày, đặt lại lúc 00:00 UTC (07:00 giờ Việt Nam). Nạp thêm đơn vị: `data/ingest-pending.json` liệt kê các đơn vị chưa nạp được; chạy lại `ingest-openalex.mjs` (có cache, chạy tiếp được) rồi `enrich-authors.mjs` (tác giả chưa có quốc gia đơn vị có `foreign: null`, tạm không hiện ở chế độ mặc định "đơn vị tại Việt Nam").
-- Bản dựng hiện tại (trước khi bổ sung đợt MOET):  212 đơn vị (39 đơn vị lớn + trường tư thục + viện nghiên cứu có mã ROR), từ 2021, tối đa 50 tác giả/đơn vị -> 6.571 tác giả, 117.906 công trình. Sau khi sửa lỗi mã ROR (xem docs/DESIGN.md) và nhập MOET: 6.876 tác giả, 124.120 công trình, 28.208 công trình có điểm, 212 đơn vị.
+- Bản dựng hiện tại (trước khi bổ sung đợt MOET):  212 đơn vị (39 đơn vị lớn + trường tư thục + viện nghiên cứu có mã ROR), từ 2021, tối đa 50 tác giả/đơn vị -> 6.571 tác giả, 117.906 công trình. Sau khi sửa lỗi mã ROR (xem docs/DESIGN.md) và nhập MOET: 45.459 tác giả, 568.733 công trình (tháng 10/2026), 28.208 công trình có điểm, 212 đơn vị.
 - Danh sách chính thức của Bộ GD&ĐT: lưu từng trang của moet.gov.vn/co-so-giao-duc/danh-sach-cac-co-so-giao-duc thành HTML, rồi `node scripts/import-moet.mjs trang1.html trang2.html ...` (gắn `moetCode`, `official`; chưa khớp ghi ở data/moet.unmatched.json). Mới có trang STT 201-300.
 - Đừng chạy lại `d:inst` khi đã nạp tác giả: ROR trả kết quả khác nhau giữa các lần nên mã đơn vị có thể đổi và làm đứt liên kết tác giả - đơn vị.
 - Giới hạn đã biết: OpenAlex thường không đánh dấu tác giả liên hệ (nên điểm có thể thấp hơn thực tế); chưa phân biệt được SCIE/SSCI và kỷ yếu hội nghị; tên tác giả có thể viết tắt; ngành suy từ tạp chí là gần đúng; mỗi đơn vị chỉ lấy 50 tác giả nhiều công trình nhất nên thứ hạng chỉ so sánh trong tập đã nạp.
@@ -124,3 +124,10 @@ npm run d:check                              # kiểm tra nhất quán
 - `build-index.mjs` gán `jq` cho công trình chưa có `quartile` (bài đồng tác giả, sách theo tập, tạp chí ngoài ngành của tác giả): hạng Q tốt nhất của tạp chí từ bảng theo ngành hoặc `data/sjr-fallback.json`. `jq` **không** làm đổi điểm công trình HĐGSNN (`score`, `quartile` giữ nguyên, chỉ bài tác giả chính được tính).
 - `build-sjr-fallback.mjs` có thêm "book series" (`k = "b"`), chỉ để hiển thị; điểm dự phòng bỏ qua `k = "b"`.
 - `pro-score.mjs`: chỉ báo "Chất lượng" dùng `quartile ?? jq`, tức tính cả bài đồng tác giả (theo quyết định của quản trị viên). Đo khi đổi: 42.645 hồ sơ, đổi điểm trung bình tuyệt đối 0,37; tối đa 3,2; 130 hồ sơ đổi bậc.
+
+## Kiểm thử và dựng (cập nhật 12/10/2026)
+- `npm test`: gói `api/account.js` bằng esbuild rồi chạy 6 tệp trong `test/` (scripts/run-tests.mjs).
+- `npm run build` thêm bước `scripts/prune-dist.mjs`: bỏ `dist/data/_*.json` không trang nào đọc (giữ `_split-review.json`, `_multi-review.json` của trang quản trị).
+- Chuỗi dựng đủ sau khi đổi `data/corrections.json`: build-index → build-current-inst (cần OPENALEX_API_KEY, có thể bỏ khi dùng bộ nhớ đệm) → build-index → build-top-works → build-wsearch → check-data → `npm run build`.
+- Trang tĩnh `/don-vi/<id>/` cộng người ở đơn vị con (`parent`), khớp trang chủ.
+- Hạng dự phòng SCImago: Coverage tách theo `;` hoặc `,`.

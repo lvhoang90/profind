@@ -11,7 +11,7 @@ const rd = (f) => JSON.parse(readFileSync(f, "utf8"));
 const J = rd("data/journals.json"), S = rd("data/sjr-rules.json"), I = rd("data/institutions.json"), R = rd("data/raw-authors.json"), C = rd("data/corrections.json");
 // Hạng SJR dự phòng (scripts/build-sjr-fallback.mjs): tạp chí Scopus đa ngành / đã ngừng / thiếu dòng theo ngành; chỉ dùng khi công trình chưa có điểm từ danh mục trong nước và SJR theo ngành.
 const FB = new Map(); if (existsSync("data/sjr-fallback.json")) for (const j of rd("data/sjr-fallback.json").journals) for (const i of j.i) FB.set(i, j);
-const inCoverage = (cov, y) => !!y && String(cov ?? "").split(";").some((p) => { const m = /^(\d{4})(?:-(\d{4}))?$/.exec(p); return m && y >= +m[1] && y <= +(m[2] ?? m[1]); });
+const inCoverage = (cov, y) => !!y && String(cov ?? "").split(/[;,]/).some((p) => { const m = /^(\d{4})(?:-(\d{4}))?$/.exec(p); return m && y >= +m[1] && y <= +(m[2] ?? m[1]); });
 // Công trình bổ sung theo danh sách tác giả cung cấp (data/manual-works.json, scripts/fetch-manual-works.mjs): có ISSN thì vào danh sách tính điểm như công trình nạp từ OpenAlex;
 // không có ISSN thì hiện ở "Công trình khác" (fetch-extra-works.mjs). Công trình đã có sẵn (cùng mã) không thêm lại.
 if (existsSync("data/manual-works.json")) { const have = new Set(R.works.map((w) => w.id)); for (const w of rd("data/manual-works.json").works) if (w.issn && !have.has(w.id)) R.works.push({ ...w }); }

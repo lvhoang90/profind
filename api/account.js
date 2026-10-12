@@ -329,10 +329,11 @@ const XWK = "profind:xw", getXw = async (id) => { const l = jparse(await one(["H
       // Lần quét đầu tiên (khi mới bật tính năng): các công trình ĐÃ xử lý từ trước chỉ được dọn và ghi nhật ký, KHÔNG gửi thư hàng loạt; từ lần sau mới gửi.
       const backlog = !(await one(["GET", "profind:xwstart"])); if (backlog) await one(["SET", "profind:xwstart", String(now)]);
       const shardCache = new Map();
-      for (const [authorId, raw] of Object.entries(pairs(await one(["HGETALL", XWK]))).slice(0, XW_AUTHORS)) {
-        const re = new RegExp(`^${authorId.replace(/[^A-Za-z0-9]/g, "")}-W\\d{4,14}$`), ids = (jparse(raw) ?? []).filter((w) => re.test(w));
+      const xwAll = Object.entries(pairs(await one(["HGETALL", XWK]))).sort((a, b) => (a[0] < b[0] ? -1 : 1)), xwOff = xwAll.length ? Math.floor(now / 864e5) % xwAll.length : 0; // xoay vòng theo ngày để mục không xử lý được không chiếm chỗ mãi
+      for (const [authorId, raw] of [...xwAll.slice(xwOff), ...xwAll.slice(0, xwOff)].slice(0, XW_AUTHORS)) {
+        const re = /^A\d{4,12}-W\d{4,14}$/, ids = (jparse(raw) ?? []).filter((w) => re.test(w)); // gồm công trình mang tiền tố mã khác (hồ sơ gộp hoặc assignWorks)
         if (!ids.length) { await one(["HDEL", XWK, authorId]); continue; }
-        let shard; try { const sn = `w${String(Number(authorId.replace(/\D/g, "")) % 1024).padStart(4, "0")}`; if (!shardCache.has(sn)) { const r = await fetch(`${url.origin}/data/works/${sn}.json?s=${now}`); if (!r.ok) continue; shardCache.set(sn, await r.json()); } shard = shardCache.get(sn)[authorId]; } catch { continue; } // khối 1024 tệp (scripts/_works-io.mjs)
+        let shard; try { const sn = `w${String(Number(authorId.replace(/\D/g, "")) % 1024).padStart(4, "0")}`; if (!shardCache.has(sn)) { const r = await fetch(`${url.origin}/data/works/${sn}.json?s=${now}`); if (!r.ok) continue; shardCache.set(sn, await r.json()); } shard = shardCache.get(sn)[authorId] ?? []; } catch { continue; } // khối 1024 tệp (scripts/_works-io.mjs)
         if (!Array.isArray(shard)) continue;
         // Mục "Công trình khác (không tính điểm)" (public/data/extra/<mã>.json, chỉ có mã W…) cũng tính là còn trên hồ sơ: chưa loại khỏi đó thì chưa phải "đã xử lý".
         let extraIds = []; try { const r = await fetch(`${url.origin}/data/extra/${encodeURIComponent(authorId)}.json?s=${now}`); if (r.ok) { const x = await r.json(); if (Array.isArray(x)) extraIds = x.map((w) => `${authorId}-${w.id}`); } else if (r.status !== 404) continue; } catch { continue; }
@@ -664,7 +665,11 @@ const XWK = "profind:xw", getXw = async (id) => { const l = jparse(await one(["H
         await one(["HSET", APK, authorId, JSON.stringify(p)]); return json({ ok: true, profile: p });
       }
       if (op === "author-work-not") {
-        const wid = String(body.workId || ""); if (!new RegExp(`^${authorId}-W\\d{4,14}$`).test(wid)) return json({ error: "Mã công trình không hợp lệ." }, 400);
+        const wid = String(body.workId || ""); if (!/^A\d{4,12}-W\d{4,14}$/.test(wid)) return json({ error: "Mã công trình không hợp lệ." }, 400);
+        if (!wid.startsWith(`${authorId}-`)) { // công trình mang tiền tố mã khác (hồ sơ gộp hoặc assignWorks): chỉ nhận nếu đúng là đang có trên hồ sơ này
+          let on = false; try { const sn = `w${String(Number(authorId.replace(/\D/g, "")) % 1024).padStart(4, "0")}`, r = await fetch(`${url.origin}/data/works/${sn}.json`); on = r.ok && ((await r.json())[authorId] ?? []).some((w) => w.id === wid); } catch { /* không xác minh được thì từ chối */ }
+          if (!on) return json({ error: "Mã công trình không hợp lệ." }, 400);
+        }
         const cur = await getXw(authorId), next = body.undo === true ? cur.filter((x) => x !== wid) : [...new Set([...cur, wid])].slice(0, 100);
         await one(["HSET", XWK, authorId, JSON.stringify(next)]); return json({ ok: true, xw: next });
       }

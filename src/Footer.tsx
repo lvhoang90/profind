@@ -13,7 +13,7 @@ export function EcoLink({ app, place, to, className, children }: { app: App; pla
 
 export function Footer({ data: _data }: { data: Data | null }) {
   const { t } = useT();
-  const apps: [App, string, string][] = [["edufind", "EduFind", t("eEduDesc")], ["ami", "Ami", t("eAmiDesc")], ["may", "Mây", t("eMayDesc")]];
+  const apps: [App, string, string][] = [["edufind", t("appEdu"), t("eEduDesc")], ["ami", "Ami", t("eAmiDesc")], ["may", t("appMay"), t("eMayDesc")]];
   const info: [string, string][] = [["gioi-thieu", "fAbout2"], ["nguon", "fSrc"], ["bang-xep-hang", "fRank"], ["don-vi", "fUnits"], ["nganh", "fFields"], ["tinh-thanh", "fCities"], ["pro-score", "fProScore"], ["top-2-phan-tram", "fTop2"], ["giay-phep", "fLic"], ["rieng-tu", "fPriv"], ["lien-he", "fContact"]];
   return (
     <footer className="sf">
@@ -49,7 +49,7 @@ export function Footer({ data: _data }: { data: Data | null }) {
           </ul>
         </nav>
         <div className="sf-bottom">
-          <div><p>© 2026 Lương Việt Hoàng (ISA Vietnam). {t("sfCopy")}</p><p className="sf-disc">Đơn vị chịu trách nhiệm dữ liệu: Viện Khoa học Giáo dục và Kinh tế Đông Nam Á (Viện ISA). <a href="#/gioi-thieu?m=rieng-tu">Chính sách dữ liệu cá nhân</a></p><p className="sf-disc">{t("sfDisc")} {t("notRankShort")}</p></div>
+          <div><p>© 2026 Lương Việt Hoàng (ISA Vietnam). {t("sfCopy")}</p><p className="sf-disc">{t("sfOwner")} <a href="#/gioi-thieu?m=rieng-tu">{t("sfPriv")}</a></p><p className="sf-disc">{t("sfDisc")} {t("notRankShort")}</p></div>
           <a href="#main" className="sf-top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>{t("fTop")} ↑</a>
         </div>
       </div>

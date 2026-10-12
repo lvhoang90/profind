@@ -55,7 +55,8 @@ export async function runChecks({ authorId, name, email, orcid, vf = {}, allowed
   const conflict = (vf.byAuthor && vf.byAuthor.email !== email) || (vf.byOrcid && vf.byOrcid.authorId !== authorId);
   add("conflict", !conflict, "Chưa có xác thực khác trùng hồ sơ hoặc ORCID", conflict ? "Đã có người xác thực hồ sơ hoặc ORCID này" : "Không xung đột");
   const ok = (k) => checks.find((c) => c.k === k)?.ok;
-  const auto = ok("email") === true && ok("orcidMatch") === true && ok("nameMatch") === true && ok("orcidName") !== false && ok("orcidFormat") !== false && ok("conflict") === true;
+  const orgDom = orgKind(email) !== "" || ok("domain") === true, fullName = norm(name).split(" ").filter((t) => t.length > 1).length >= 2; // email tổ chức thật (edu/gov/ac hoặc trùng website đơn vị), tên có ít nhất hai từ đầy đủ
+  const auto = orgDom && fullName && ok("email") === true && ok("orcidMatch") === true && ok("nameMatch") === true && ok("orcidName") !== false && ok("orcidFormat") !== false && ok("conflict") === true;
   return { checks, oa: oa ? { name: oa.display_name, orcid: oaOrcid, institutions: inst, works: oa.works_count, cited: oa.cited_by_count } : null, auto };
 }
 
