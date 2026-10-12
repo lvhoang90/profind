@@ -28,8 +28,8 @@ import { evt, startSession } from "./analytics";
 import { getTheme, setTheme, type Theme } from "./theme";
 
 type SortKey = "pro" | "worksCount" | "citations" | "name" | "unit" | "lastYear" | "rank";
+const SORTS: SortKey[] = ["pro", "worksCount", "citations", "name", "unit", "lastYear", "rank"];
 const TEXT_KEYS: SortKey[] = ["name", "unit"], RANK_ASC: SortKey[] = [], RANKED: SortKey[] = ["pro", "worksCount", "citations"]; // huy chương chỉ khi xếp giảm dần theo một chỉ số
-const RANK_KEY = { pro: "proRank", worksCount: "rankWorks", citations: "rankCit", name: "proRank", unit: "proRank", lastYear: "proRank", rank: "proRank" } as const;
 const EDUFIND = "https://edufind.isavn.edu.vn";
 const CONTACT = "vienisavietnam@gmail.com";
 const PAGE = 25; // mỗi trang tối đa 25 kết quả
@@ -195,7 +195,7 @@ function List({ d, query }: { d: Data; query: string }) {
   const { lang, t, num } = useT();
   const { user, cfg, saveSearch } = useAccount();
   const qp = useMemo(() => new URLSearchParams(query), []); // eslint-disable-line react-hooks/exhaustive-deps
-  const [q, setQ] = useState(qp.get("q") ?? ""), [disc, setDisc] = useState(qp.get("d") ?? ""), [type, setType] = useState(qp.get("ty") ?? ""), [prov, setProv] = useState(qp.get("pv") ?? ""), [sort, setSort] = useState<SortKey>("pro"), [dir, setDir] = useState<1 | -1>(-1);
+  const [q, setQ] = useState(qp.get("q") ?? ""), [disc, setDisc] = useState(qp.get("d") ?? ""), [type, setType] = useState(qp.get("ty") ?? ""), [prov, setProv] = useState(qp.get("pv") ?? ""), [sort, setSort] = useState<SortKey>(() => (SORTS.includes(qp.get("st") as SortKey) ? (qp.get("st") as SortKey) : "pro")), [dir, setDir] = useState<1 | -1>(qp.get("di") === "1" ? 1 : -1);
   const pick2 = (k: SortKey) => { setSort(k); setDir(TEXT_KEYS.includes(k) ? 1 : -1); };
   const pick = (k: SortKey) => { if (k === sort) setDir((dir * -1) as 1 | -1); else { setSort(k); setDir(TEXT_KEYS.includes(k) || RANK_ASC.includes(k) ? 1 : -1); } };
   const [scope, setScope] = useState(qp.get("sc") === "all" ? "all" : "vn"), [instSel, setInstSel] = useState(qp.get("i") ?? ""), [withPast, setWithPast] = useState(qp.get("pa") === "1"), [page, setPage] = useState(0), [ssMsg, setSsMsg] = useState(""), [browse, setBrowse] = useState(qp.get("b") === "1"), [top2only, setTop2only] = useState(qp.get("t2") === "1"), [slot, setSlot] = useState<HTMLElement | null>(null), [showF, setShowF] = useState(() => matchMedia("(min-width: 900px)").matches);
@@ -203,7 +203,7 @@ function List({ d, query }: { d: Data; query: string }) {
   const [jn, setJn] = useState<Record<string, { t: string; p: string }> | null>(null);
   const dq = useDeferredValue(q);
   const works = useWorks(dq);
-  const [tab, setTab] = useState<"a" | "w">("a"), autoW = useRef(false); // autoW: tab Công trình do tự chuyển (không có tác giả), tự quay về khi truy vấn mới có tác giả
+  const [tab, setTab] = useState<"a" | "w">(qp.get("tb") === "w" ? "w" : "a"), autoW = useRef(false); // autoW: tab Công trình do tự chuyển (không có tác giả), tự quay về khi truy vấn mới có tác giả
   const instById = useMemo(() => new Map(d.institutions.map((i) => [i.id, i])), [d]);
   // Đơn vị con thuộc đơn vị cha (data/unit-parent.json): lọc theo đơn vị cha gồm cả người ở đơn vị con; cột đơn vị chỉ hiện đơn vị cụ thể nhất.
   const inUnit = (u: string, root: string) => { for (let x: string | undefined = u, n = 0; x && n < 4; x = instById.get(x)?.parent, n++) if (x === root) return true; return false; };
@@ -224,9 +224,9 @@ function List({ d, query }: { d: Data; query: string }) {
   const hay = useMemo(() => new Map(d.authors.map((a) => [a.id, { n: norm(a.name).split(" "), i: [...new Set(a.institutions.flatMap((i) => { const x = instById.get(i); return x ? norm(`${x.name} ${x.en ?? ""} ${x.abbr ?? ""}`).split(" ") : []; }))] }])), [d, instById]);
   // Bộ lọc nằm trong đường dẫn (#/?q=…&d=…) để chia sẻ, mở lại và dùng nút Quay lại của trình duyệt.
   useEffect(() => {
-    const u = new URLSearchParams(Object.entries({ q: q.trim(), d: disc, ty: type, pv: prov, i: instSel, pa: instSel && withPast ? "1" : "", sc: scope === "all" ? "all" : "", t2: top2only ? "1" : "", b: browse ? "1" : "" }).filter(([, v]) => v));
+    const u = new URLSearchParams(Object.entries({ q: q.trim(), d: disc, ty: type, pv: prov, i: instSel, pa: instSel && withPast ? "1" : "", sc: scope === "all" ? "all" : "", t2: top2only ? "1" : "", b: browse ? "1" : "", st: sort !== "pro" ? sort : "", di: dir === 1 ? "1" : "", tb: tab === "w" ? "w" : "" }).filter(([, v]) => v));
     const h = `#/${u.toString() ? "?" + u : ""}`; if (h !== (location.hash || "#/")) history.replaceState(null, "", h);
-  }, [q, disc, type, instSel, withPast, scope, top2only, browse]);
+  }, [q, disc, type, prov, instSel, withPast, scope, top2only, browse, sort, dir, tab]);
   useEffect(() => { const id = window.setTimeout(() => { if (q.trim().length >= 3) evt("search", undefined, q.trim()); }, 1200); return () => window.clearTimeout(id); }, [q]);
   const hasFilter = !!(q.trim() || disc || type || prov || instSel || top2only), home = !hasFilter && !browse;
   const clearAll = () => { setQ(""); setDisc(""); setType(""); setProv(""); setInstSel(""); setWithPast(false); setTop2only(false); setBrowse(false); setPage(0); setTab("a"); };
@@ -441,7 +441,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
     evt("csv");
     // Chống chèn công thức (CSV injection): ô văn bản bắt đầu bằng = + - @ hoặc tab/xuống dòng được thêm dấu nháy đơn.
     const cell = (v: unknown) => { let s = String(v ?? ""); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return `"${s.replace(/"/g, '""')}"`; };
-    const body = [["year", "title", "doi", "journal", "issn", "quartile", "citations", "role"], ...(works ?? []).map((w) => [w.year, w.title, w.doi ?? "", w.journal, w.issn, w.quartile ?? "", w.citations, w.role])].map((r) => r.map(cell).join(",")).join("\r\n");
+    const body = [["year", "title", "doi", "journal", "issn", "quartile", "quartile_reference", "citations", "role"], ...shown.map((w) => [w.year, w.title, w.doi ?? "", w.journal, w.issn, w.quartile ?? "", w.jq ?? "", w.citations, w.role])].map((r) => r.map(cell).join(",")).join("\r\n");
     const url = URL.createObjectURL(new Blob(["\ufeff" + body], { type: "text/csv;charset=utf-8" }));
     Object.assign(document.createElement("a"), { href: url, download: `${slug(a.name)}-${a.id}.csv` }).click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
@@ -491,9 +491,8 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
     const l = (works ?? []).filter((w) => !onlyLead || w.role === "lead");
     return wsort === "year" ? l : [...l].sort((x, y) => (wsort === "cit" ? y.citations - x.citations : 0) || y.year - x.year);
   }, [works, wsort, onlyLead]);
-  const pct = a.worksCount ? Math.round((a.countedWorks / a.worksCount) * 100) : 0, hue = hueOf(a.id);
+  const hue = hueOf(a.id);
   const cats: [string, number, string][] = [["Scopus Q1", stat.cat.q1, "c1"], ["Scopus Q2", stat.cat.q2, "c2"], ["Scopus Q3", stat.cat.q3, "c3"], ["Scopus Q4", stat.cat.q4, "c4"], [t("kDomShort"), stat.cat.dom, "cd"], [t("unmatched"), stat.cat.unm, "cu"], [t("notLeadShort"), stat.cat.not, "cn"]];
-  const cmax = Math.max(1, ...cats.map((c) => c[1]));
   return (
     <article className="ap">
       <p><a className="backl" href="#/">{t("back")}</a></p>

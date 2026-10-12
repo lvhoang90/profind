@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Icon } from "./icons";
-import { api, useAccount, type User } from "./accountStore";
+import { api, type User } from "./accountStore";
 import { useHidden } from "./hidden";
 import { evt } from "./analytics";
 import { useMine } from "./Verified";

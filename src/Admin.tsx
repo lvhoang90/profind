@@ -197,7 +197,6 @@ function Users() {
 type ClaimRec = { id: string; kind?: string; authorId: string; authorName: string; name: string; email: string; orcid: string; scholar: string; note: string; status: string; auto: boolean; reason?: string; createdAt: number; until?: number; decidedBy?: string; checks: { k: string; ok: boolean | null; label: string; detail: string }[]; oa: { works: number; cited: number } | null };
 type VfRec = { authorId: string; email: string; name: string; until: number; since: number };
 const dmy = (ms: number) => new Date(ms).toLocaleDateString("vi-VN");
-const KIND: Record<string, string> = { remove: "Gỡ hồ sơ", claim: "Xác thực" };
 const ST: Record<string, string> = { review: "Chờ duyệt", approved: "Đã xác thực", rejected: "Từ chối", info: "Cần bổ sung" };
 const XMAIL: Record<string, string> = { sent: "đã gửi thư", "no-email": "không có email chủ hồ sơ", failed: "gửi thư lỗi", backlog: "xử lý trước khi bật thư tự động" };
 function Claims() {
