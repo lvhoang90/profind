@@ -51,3 +51,6 @@ Sau khi lưu hoặc sửa biến, vào **Deployments** → bản mới nhất �
 
 ## Gợi ý chống vào Spam
 Thêm bản ghi DMARC cho tên miền gửi: TXT `_dmarc` = `v=DMARC1; p=none; rua=mailto:vienisavietnam@gmail.com` (đặt trên tên miền đang gửi, hiện `isavn.edu.vn`). Dùng địa chỉ gửi cố định, không dùng Gmail làm `MAIL_FROM`.
+
+## Đề nghị hợp tác của nhà trường, doanh nghiệp (`#/hop-tac`)
+Biểu mẫu gửi qua `/api/correction` với `kind=collab`, dùng chung hộp thư nhận (`CORRECTION_TO`), giới hạn 5 yêu cầu/giờ và hàng đợi **Quản trị → Việc cần làm**. Bắt buộc có tên tổ chức, nội dung và tick đồng ý. Yêu cầu chỉ về ISA, không gửi trực tiếp tới nhà khoa học. Chính sách: hồ sơ công khai miễn phí; chỉ báo cáo riêng làm theo yêu cầu có phí, ISA báo giá trước.

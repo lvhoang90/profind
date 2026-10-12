@@ -462,8 +462,8 @@ function Evidence({ r, name }: { r: MRev; name: (id: string) => string }) {
 }
 type T2C = { id: string; name: string; works: number; units: string[]; firstYear?: number; citations?: number; inProfind: boolean; rank: number | null };
 type T2I = { name: string; inst: string; field: string; subfield: string; rank: number; np: number; firstyr: number; lastyr: number; topCntry: string; scope: string; dup: boolean; cands: T2C[] };
-type ReqRec = { id: string; kind: string; author: string; authorName: string; name: string; email: string; orcid: string; scholar: string; msg: string; at: number; status: string; doneAt?: number; doneBy?: string; notifiedAt?: number };
-const REQ_KIND: Record<string, string> = { claim: "Xác nhận hồ sơ (đây là tôi)", correct: "Đính chính thông tin / công trình", remove: "Gỡ hồ sơ", add: "Đề nghị bổ sung nhà nghiên cứu" };
+type ReqRec = { id: string; kind: string; author: string; authorName: string; name: string; email: string; orcid: string; scholar: string; msg: string; at: number; status: string; doneAt?: number; doneBy?: string; notifiedAt?: number; org?: string; orgType?: string; need?: string; field?: string };
+const REQ_KIND: Record<string, string> = { claim: "Xác nhận hồ sơ (đây là tôi)", correct: "Đính chính thông tin / công trình", remove: "Gỡ hồ sơ", add: "Đề nghị bổ sung nhà nghiên cứu", collab: "Đề nghị hợp tác (nhà trường, doanh nghiệp)" };
 const orcidKey = (o: string) => o.replace(/[^0-9X]/gi, "").toUpperCase();
 let reqIdx: Promise<{ a: [string, string, unknown, unknown, unknown, unknown, string][] } | null> | null = null;
 /** Hồ sơ ProFind khớp ORCID của người gửi (từ chỉ mục gợi ý đã có sẵn), để điền sẵn mã hồ sơ trong thư báo. */
@@ -472,7 +472,7 @@ const findByOrcid = async (orcid: string) => { if (!orcidKey(orcid)) return null
 /** Thư báo khi bấm "Đã xử lý": soạn sẵn theo loại đề nghị và ngôn ngữ người gửi, sửa được trước khi gửi (gửi qua admin-mail-send, ghi ở tab Thư gửi). */
 function ReplyPanel({ x, onDone, onCancel }: { x: ReqRec; onDone: (msg: string) => void; onCancel: () => void }) {
   const already = !!x.notifiedAt, [send, setSend] = useState(!already), [lang, setLang] = useState<ReqLang>(detectLang(x.msg, x.name, x.authorName)), [pid, setPid] = useState(x.author);
-  const kind = (["add", "claim", "correct", "remove"].includes(x.kind) ? x.kind : "correct") as ReqKind, who = x.name || x.authorName;
+  const kind = (["add", "claim", "correct", "remove", "collab"].includes(x.kind) ? x.kind : "correct") as ReqKind, who = x.name || x.authorName;
   const [dirty, setDirty] = useState(false), [subject, setSubject] = useState(""), [text, setText] = useState(""), [busy, setBusy] = useState(false), [err, setErr] = useState("");
   useEffect(() => { if (!pid && x.orcid) void findByOrcid(x.orcid).then((r) => { if (r) setPid(r.id); }); }, []); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { if (dirty) return; const t = replyTemplate(kind, lang, { name: who, email: x.email, id: pid.trim() }); setSubject(t.subject); setText(t.body); }, [kind, lang, pid, dirty, who, x.email]);
@@ -514,6 +514,7 @@ function Requests() {
       {rows.length === 0 ? <p className="meta">{view === "new" ? "Không còn đề nghị nào." : "Chưa có đề nghị đã xử lý."}</p> : <ul className="mxlist">{rows.map((x) => (
         <li key={x.id}><b>{REQ_KIND[x.kind] ?? x.kind}</b> <span className="meta">· {new Date(x.at).toLocaleString("vi-VN")}</span>
           <p className="meta">{x.name || "(không ghi tên)"} · {x.email}{x.orcid ? ` · ORCID ${x.orcid}` : ""}{x.author ? <> · hồ sơ <a href={`#/tac-gia/${x.author}`} target="_blank" rel="noopener">{x.authorName || x.author}</a></> : ""}{x.scholar ? <> · <a href={x.scholar} target="_blank" rel="noopener noreferrer">Google Scholar</a></> : ""}{x.orcid ? <> · <a href={`https://orcid.org/${x.orcid.replace(/^(\d{4})-?(\d{4})-?(\d{4})-?(\d{3}[\dXx])$/, "$1-$2-$3-$4")}`} target="_blank" rel="noopener noreferrer">ORCID</a></> : ""}</p>
+          {x.kind === "collab" && <p className="meta"><b>{x.org}</b> · {x.orgType} · {x.need}{x.field ? ` · ${x.field}` : ""}</p>}
           {x.msg && <p>{x.msg}</p>}
           {x.status === "new"
             ? (open === x.id ? <ReplyPanel x={x} onCancel={() => setOpen("")} onDone={(m) => { setOpen(""); setMsg(m); setVer((v) => v + 1); }} /> : <p><button type="button" className="primary" onClick={() => setOpen(x.id)}>Đã xử lý</button></p>)

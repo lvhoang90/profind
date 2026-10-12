@@ -6,6 +6,7 @@ import { Icon, type IconName } from "./icons";
 import type { Author, Data, Institution, Work } from "./types";
 import { AccountProvider, useAccount, api } from "./accountStore";
 // Trang tài khoản và quản trị tách thành các tệp nạp riêng: người chỉ tra cứu không tải mã của chúng.
+const CollabPage = lazy(() => import("./Collab").then((m) => ({ default: m.CollabPage })));
 const ConnectPage = lazy(() => import("./Connect").then((m) => ({ default: m.ConnectPage })));
 const AccountPage = lazy(() => import("./Account").then((m) => ({ default: m.AccountPage })));
 const LeaderboardPage = lazy(() => import("./Leaderboard").then((m) => ({ default: m.LeaderboardPage })));
@@ -105,11 +106,11 @@ function AppInner() {
   useEffect(() => { const f = () => setRoute(parseRoute()); addEventListener("hashchange", f); return () => removeEventListener("hashchange", f); }, []);
   const { kind, id } = route;
   const author = data && id ? data.authors.find((a) => a.id === id) ?? null : null;
-  const view: "list" | "author" | "corr" | "nf" | "acc" | "conn" | "adm" | "about" | "pro" | "lb" = kind === "ket-noi" ? "conn" : kind === "bang-xep-hang" ? "lb" : kind === "pro-score" ? "pro" : kind === "gioi-thieu" ? "about" : kind === "tai-khoan" ? "acc" : kind === "quan-tri" ? "adm" : kind === "dinh-chinh" ? "corr" : kind === "tac-gia" ? (data && !author ? "nf" : "author") : "list";
+  const view: "list" | "author" | "corr" | "nf" | "acc" | "conn" | "adm" | "about" | "pro" | "lb" | "collab" = kind === "hop-tac" ? "collab" : kind === "ket-noi" ? "conn" : kind === "bang-xep-hang" ? "lb" : kind === "pro-score" ? "pro" : kind === "gioi-thieu" ? "about" : kind === "tai-khoan" ? "acc" : kind === "quan-tri" ? "adm" : kind === "dinh-chinh" ? "corr" : kind === "tac-gia" ? (data && !author ? "nf" : "author") : "list";
 
   // Tiêu đề tab, mô tả và đưa tiêu điểm về nội dung chính khi đổi trang (trình đọc màn hình biết đã chuyển trang).
   useEffect(() => {
-    document.title = view === "lb" ? `${lang === "vi" ? "Bảng xếp hạng" : "Leaderboard"} | ProFind™` : view === "pro" ? "PRO-SCORE1000™ | ProFind™" : view === "about" ? `${t("fAbout2")} | ProFind™` : view === "acc" ? `${t("accTitle")} | ProFind™` : view === "adm" ? "Quản trị | ProFind™" : view === "author" && author ? `${author.name} | ProFind™` : view === "corr" ? `${t("corrTitle")} | ProFind™` : view === "nf" ? `${t("notFound").split(".")[0]} | ProFind™` : t("docTitle");
+    document.title = view === "lb" ? `${lang === "vi" ? "Bảng xếp hạng" : "Leaderboard"} | ProFind™` : view === "pro" ? "PRO-SCORE1000™ | ProFind™" : view === "collab" ? `${t("fCollab")} | ProFind™` : view === "about" ? `${t("fAbout2")} | ProFind™` : view === "acc" ? `${t("accTitle")} | ProFind™` : view === "adm" ? "Quản trị | ProFind™" : view === "author" && author ? `${author.name} | ProFind™` : view === "corr" ? `${t("corrTitle")} | ProFind™` : view === "nf" ? `${t("notFound").split(".")[0]} | ProFind™` : t("docTitle");
     const k = data?.meta?.authors ? Math.floor(data.meta.authors / 1000) * 1000 : 0; // số tác giả làm tròn xuống nghìn, luôn theo dữ liệu hiện hành
     document.querySelector('meta[name="description"]')?.setAttribute("content", t("metaDesc").replace("{k}", k.toLocaleString(lang === "vi" ? "vi-VN" : "en-US")));
     if (first.current) { first.current = false; return; }
@@ -141,6 +142,7 @@ function AppInner() {
           {view === "lb" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><LeaderboardPage lang={lang} num={num} /></Suspense>
             : view === "pro" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><ProScorePage /></Suspense>
             : view === "about" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><AboutPage section={new URLSearchParams(route.query).get("m") ?? ""} /></Suspense>
+            : view === "collab" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><CollabPage query={route.query} /></Suspense>
             : view === "conn" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><ConnectPage /></Suspense>
             : view === "acc" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><AccountPage tab={id} /></Suspense>
             : view === "adm" ? <Suspense fallback={<p className="empty" role="status">Đang tải…</p>}><AdminPage tab={id} /></Suspense>
@@ -508,7 +510,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
           {a.bigFlag && <p className="bigflag" role="note"><Icon n="users" size={18} /><span><b>{t("bigTitle")}</b> {t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}</span></p>}
           {(ownDisc ?? a.disciplines).length > 0 && <p className="hdisc" title={!ownDisc && a.discBasis ? t(("discBasis_" + a.discBasis) as "discUncertain") : undefined}>{(ownDisc ?? a.disciplines).map((s) => dName(s, lang) + (!ownDisc && a.discShares && a.disciplines.length > 1 && a.discShares[s] ? ` ${a.discShares[s]}%` : "")).join(" · ")}{!ownDisc && a.discBasis === "khac-biet" && <small className="meta"> · {t("discUncertain")}</small>}</p>}
           {(a.scholar || a.orcid) && <ul className="hlinks" aria-label="Định danh học thuật">{a.scholar && <li className="idl scholar"><a href={`https://scholar.google.com/citations?user=${a.scholar}&hl=${lang === "vi" ? "vi" : "en"}`} target="_blank" rel="noopener"><i className="idk">Google Scholar</i><span className="sr"> {t("newTab")}</span></a></li>}{a.orcid && <li className="idl orcid"><a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener"><i className="idk">ORCID</i><span className="idv">{a.orcid}</span><span className="sr"> {t("newTab")}</span></a></li>}</ul>}
-          <p className="actions-row">{cfg?.enabled !== false && <button className={`ghost light${favs.has(`a|${a.id}`) ? " on" : ""}`} aria-pressed={favs.has(`a|${a.id}`)} onClick={() => void saveAuthor()}><Icon n="star" size={16} />{!user ? t("saveGate") : favs.has(`a|${a.id}`) ? t("savedA") : t("saveA")}</button>}<button className="ghost light" onClick={() => void shareProfile()} aria-live="polite"><Icon n="external" size={16} />{shared ? (lang === "vi" ? "Đã sao chép ✓" : "Copied ✓") : (lang === "vi" ? "Chia sẻ" : "Share")}</button><button className="ghost light" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button><a className="ghost-link light" href={mine ? "#/tai-khoan" : `#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{mine ? "Quản lý hồ sơ của tôi" : isVerified ? "Đính chính / gỡ hồ sơ" : t("corrLink")}</a></p>
+          <p className="actions-row">{cfg?.enabled !== false && <button className={`ghost light${favs.has(`a|${a.id}`) ? " on" : ""}`} aria-pressed={favs.has(`a|${a.id}`)} onClick={() => void saveAuthor()}><Icon n="star" size={16} />{!user ? t("saveGate") : favs.has(`a|${a.id}`) ? t("savedA") : t("saveA")}</button>}<button className="ghost light" onClick={() => void shareProfile()} aria-live="polite"><Icon n="external" size={16} />{shared ? (lang === "vi" ? "Đã sao chép ✓" : "Copied ✓") : (lang === "vi" ? "Chia sẻ" : "Share")}</button><button className="ghost light" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button><a className="ghost-link light" href={`#/hop-tac?a=${encodeURIComponent(a.id)}&n=${encodeURIComponent(a.name)}`}><Icon n="link" size={16} />{t("collabAbout")}</a><a className="ghost-link light" href={mine ? "#/tai-khoan" : `#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{mine ? "Quản lý hồ sơ của tôi" : isVerified ? "Đính chính / gỡ hồ sơ" : t("corrLink")}</a></p>
         </div>
       </header>
       <div className="kpis">

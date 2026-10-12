@@ -1,7 +1,7 @@
 /** Thư báo cho người gửi đề nghị (bổ sung, xác nhận, đính chính, gỡ hồ sơ) khi quản trị viên bấm "Đã xử lý". Soạn sẵn, quản trị viên sửa được trước khi gửi.
  *  Ngôn ngữ theo người gửi: có chữ tiếng Việt (dấu) thì thư tiếng Việt, ngược lại tiếng Anh. Phần chân thư (ProFind · Viện ISA · địa chỉ) do trình gửi thư thêm. */
 export type ReqLang = "vi" | "en";
-export type ReqKind = "add" | "claim" | "correct" | "remove";
+export type ReqKind = "add" | "claim" | "correct" | "remove" | "collab";
 const VI_CHARS = /[àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]/i;
 
 export const detectLang = (...texts: string[]): ReqLang => (VI_CHARS.test(texts.join(" ")) ? "vi" : "en");
@@ -50,6 +50,16 @@ export function replyTemplate(kind: ReqKind, lang: ReqLang, o: { name: string; e
         "Your profile removal request has been processed. The profile will no longer be shown on ProFind after the next data update.",
         "The original data on OpenAlex and ORCID is managed by those platforms; to change it at the source, please contact them directly.",
         "If you change your mind or need more help, reply to this email." ] },
+    },
+    collab: {
+      vi: { subject: "ProFind: ISA đã nhận yêu cầu hợp tác của bạn", lines: [
+        "Cảm ơn bạn đã gửi nhu cầu hợp tác tới Viện ISA. Chúng tôi đã đọc và đối chiếu với dữ liệu ProFind.",
+        "Hồ sơ công khai trên ProFind luôn miễn phí. Nếu cần báo cáo riêng theo yêu cầu, ISA sẽ báo giá trước khi thực hiện. ISA chỉ chuyển thông tin của bạn tới nhà khoa học khi bạn đồng ý.",
+        "Trả lời thư này để trao đổi thêm về yêu cầu của bạn." ] },
+      en: { subject: "ProFind: ISA has received your partnership request", lines: [
+        "Thank you for sending your partnership request to ISA. We have read it and checked it against ProFind data.",
+        "Public profiles on ProFind stay free. If you need a custom report, ISA quotes a price before starting. ISA shares your details with a scientist only with your consent.",
+        "Reply to this email to discuss your request further." ] },
     },
   };
   const t = T[kind][lang];

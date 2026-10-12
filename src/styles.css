@@ -684,3 +684,5 @@ td.who>.meta{margin-top:3px}
 .psp-stack i{color:#0b1220}
 :root[data-theme=dark] .psp-ch em{color:#a5b4fc}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]) .psp-ch em{color:#a5b4fc}}
+
+.collab{display:flex;flex-direction:column;gap:16px;max-width:760px}.collab-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}.collab-cols h2{font-size:1rem;margin:0 0 4px}.collab-list{margin:0;padding-left:1.1rem;display:grid;gap:4px}.collab-form{display:grid;gap:12px;position:relative}

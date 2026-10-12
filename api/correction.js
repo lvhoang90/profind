@@ -26,7 +26,8 @@ const MSG = {
   scholar: ["Đường dẫn Google Scholar chưa đúng.", "The Google Scholar link is not valid."],
   send: ["Không gửi được yêu cầu. Vui lòng thử lại sau.", "The request could not be sent. Please try again later."],
 };
-const KINDS = { claim: "Xác nhận hồ sơ (đây là tôi)", correct: "Đính chính thông tin / công trình", remove: "Gỡ hồ sơ", add: "Đề nghị bổ sung nhà nghiên cứu" };
+const KINDS = { claim: "Xác nhận hồ sơ (đây là tôi)", correct: "Đính chính thông tin / công trình", remove: "Gỡ hồ sơ", add: "Đề nghị bổ sung nhà nghiên cứu", collab: "Đề nghị hợp tác (nhà trường, doanh nghiệp)" };
+const ORG = { school: "Nhà trường, viện nghiên cứu", biz: "Doanh nghiệp", other: "Tổ chức khác" }, NEED = { expert: "Tìm chuyên gia tư vấn", team: "Tìm nhóm nghiên cứu", transfer: "Tìm đối tác chuyển giao công nghệ", speaker: "Tìm diễn giả hoặc cố vấn", panel: "Tìm nhà khoa học cho đề tài hoặc hội đồng", report: "Báo cáo riêng theo yêu cầu (có phí)", other: "Khác" };
 
 const kvConf = () => { const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL, token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN; return url && token ? { url: url.replace(/\/$/, ""), token } : null; };
 // Lưu đề nghị vào Redis (profind:req) để hiện ở trang Quản trị > Việc cần làm: email có thể bị bỏ sót. Lỗi lưu không làm hỏng việc gửi email.
@@ -67,18 +68,20 @@ export default async function handler(request) {
   const email = clip(form.get("email"), 160).trim();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail("email", 400);
   const msg = clip(form.get("msg"), 4000).trim();
-  if (!msg && kind === "correct") return fail("empty", 400);
+  if (!msg && (kind === "correct" || kind === "collab")) return fail("empty", 400);
+  if (kind === "collab" && (!oneLine(form.get("org"), 160) || !form.get("consent"))) return fail("empty", 400);
   if (await limited(request)) return fail("rate", 429);
   const orcid = oneLine(form.get("orcid"), 40); if (orcid && !/^\d{4}-?\d{4}-?\d{4}-?\d{3}[\dXx]$/.test(orcid)) return fail("orcid", 400);
   const scholar = oneLine(form.get("scholar"), 300); if (scholar && !/^https:\/\/scholar\.google\.[a-z.]+\/citations\?[^\s]*user=[A-Za-z0-9_-]{8,14}/.test(scholar)) return fail("scholar", 400);
-  const rows = [["Loại yêu cầu", KINDS[kind]], ...(scholar ? [["Google Scholar", scholar]] : []), ["Mã hồ sơ", oneLine(form.get("author"), 60)], ["Tên trong hồ sơ", oneLine(form.get("authorName"), 120)], ["Người gửi", oneLine(form.get("name"), 120)], ["Email", email], ["ORCID", orcid], ["Thời điểm (UTC)", new Date().toISOString()]];
+  const collabRows = kind === "collab" ? [["Loại tổ chức", ORG[String(form.get("orgType"))] ?? "Khác"], ["Tổ chức", oneLine(form.get("org"), 160)], ["Nhu cầu", NEED[String(form.get("need"))] ?? "Khác"], ["Lĩnh vực", oneLine(form.get("field"), 40) || "(chưa chọn)"]] : [];
+  const rows = [["Loại yêu cầu", KINDS[kind]], ...collabRows, ...(scholar ? [["Google Scholar", scholar]] : []), ["Mã hồ sơ", oneLine(form.get("author"), 60)], ["Tên trong hồ sơ", oneLine(form.get("authorName"), 120)], ["Người gửi", oneLine(form.get("name"), 120)], ["Email", email], ["ORCID", orcid], ["Thời điểm (UTC)", new Date().toISOString()]];
   const html = `<h2>ProFind: ${esc(KINDS[kind])}</h2><table cellpadding="6" style="border-collapse:collapse">${rows.map(([k, v]) => `<tr><td style="border:1px solid #ddd"><b>${esc(k)}</b></td><td style="border:1px solid #ddd">${esc(v)}</td></tr>`).join("")}</table><h3>Nội dung</h3><p style="white-space:pre-wrap">${esc(msg || "(không có)")}</p>`;
-  const rec = { id: `${Date.now().toString(36)}${crypto.getRandomValues(new Uint32Array(1))[0].toString(36)}`, kind, author: oneLine(form.get("author"), 60), authorName: oneLine(form.get("authorName"), 120), name: oneLine(form.get("name"), 120), email, orcid, scholar, msg, at: Date.now(), status: "new" };
+  const rec = { ...(kind === "collab" ? { org: oneLine(form.get("org"), 160), orgType: oneLine(form.get("orgType"), 20), need: oneLine(form.get("need"), 20), field: oneLine(form.get("field"), 40) } : {}), id: `${Date.now().toString(36)}${crypto.getRandomValues(new Uint32Array(1))[0].toString(36)}`, kind, author: oneLine(form.get("author"), 60), authorName: oneLine(form.get("authorName"), 120), name: oneLine(form.get("name"), 120), email, orcid, scholar, msg, at: Date.now(), status: "new" };
   const stored = await saveReq(rec);
   if (!apiKey) return stored ? json({ ok: true }) : fail("send", 502);
   const r = await fetch("https://api.resend.com/emails", { method: "POST", headers: { authorization: `Bearer ${apiKey}`, "content-type": "application/json" }, body: JSON.stringify({
     from: process.env.CORRECTION_FROM || "ProFind <onboarding@resend.dev>", to: [process.env.CORRECTION_TO || "vienisavietnam@gmail.com"], reply_to: email,
-    subject: `[ProFind] ${KINDS[kind]} - ${oneLine(form.get("authorName"), 60) || oneLine(form.get("author"), 40)}`, html, text: `${rows.map(([k, v]) => `${k}: ${v}`).join("\n")}\n\n${msg}` }) });
+    subject: `[ProFind] ${KINDS[kind]} - ${kind === "collab" ? oneLine(form.get("org"), 60) : oneLine(form.get("authorName"), 60) || oneLine(form.get("author"), 40)}`, html, text: `${rows.map(([k, v]) => `${k}: ${v}`).join("\n")}\n\n${msg}` }) });
   if (!r.ok) console.error("[correction] resend", r.status, stored ? "(đã lưu Redis)" : "");
   return r.ok || stored ? json({ ok: true }) : fail("send", 502);
 }
