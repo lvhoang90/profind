@@ -269,12 +269,14 @@ function List({ d, query }: { d: Data; query: string }) {
     });
   }, [d, dq, disc, type, prov, instSel, withPast, sort, dir, scope, instById, jn, lang, hay, top2only]);
   useEffect(() => setPage(0), [dq, disc, type, prov, instSel, withPast, sort, dir, scope, top2only]);
+  const [honorIntl, setHonorIntl] = useState(true);
   // Số liệu cho trang chủ (phạm vi Việt Nam): ngành và đơn vị nổi bật.
   const home$ = useMemo(() => {
     const vn = d.authors.filter((a) => !a.suspect), dc = new Map<string, number>(), ic = new Map<string, number>();
     for (const a of vn) { for (const x of a.disciplines) dc.set(x, (dc.get(x) ?? 0) + 1); const seen = new Set<string>(); for (const u0 of a.institutions) { if (a.instPast?.includes(u0)) continue; for (let x: string | undefined = u0, n = 0; x && n < 4; x = instById.get(x)?.parent, n++) if (!seen.has(x)) { seen.add(x); ic.set(x, (ic.get(x) ?? 0) + 1); } } } // đếm như bộ lọc: đang công tác, gồm đơn vị con
-    return { honor: vn.filter((a) => a.proRank != null && a.proRank <= 10).sort((x, y) => (x.proRank ?? 99) - (y.proRank ?? 99)), n: vn.length, top2: vn.filter((a) => a.top2).length, fields: [...dc].sort((a, b) => b[1] - a[1]).slice(0, 10), insts: [...ic].sort((a, b) => b[1] - a[1]).slice(0, 10), nInst: ic.size };
-  }, [d, instById]);
+    const rk = (a: Author) => (honorIntl ? a.proRankAll : a.proRank) ?? null; // honorIntl: gồm cả hồ sơ liên kết quốc tế
+    return { honor: vn.filter((a) => rk(a) != null && rk(a)! <= 10).sort((x, y) => (rk(x) ?? 99) - (rk(y) ?? 99)).map((a) => ({ a, r: rk(a)! })), n: vn.length, top2: vn.filter((a) => a.top2).length, fields: [...dc].sort((a, b) => b[1] - a[1]).slice(0, 10), insts: [...ic].sort((a, b) => b[1] - a[1]).slice(0, 10), nInst: ic.size };
+  }, [d, instById, honorIntl]);
   const [topWorks, setTopWorks] = useState<{ t: string; y: number; j: string; c: number; a: string; n: string; w: string }[]>([]);
   const [pool, setPool] = useState<typeof topWorks>([]), [myDisc, setMyDisc] = useState<string[]>([]);
   useEffect(() => { if (!home || pool.length) return; fetch("data/top-works.json").then((r) => r.json()).then((j) => setPool(j.works ?? [])).catch(() => {}); }, [home]);
@@ -309,7 +311,8 @@ function List({ d, query }: { d: Data; query: string }) {
             <div><Icon n="building" size={26} /><b>{num(home$.nInst)}</b><span>{t("stInst")}</span></div>
           </div>
           {home$.honor.length > 0 && <div className="hgroup honor"><h2><Icon n="trophy" size={18} />{t("honorH")}<small>{t("honorSub")}</small><a className="hmore" href="#/bang-xep-hang">{lang === "vi" ? "Bảng xếp hạng đơn vị, ngành" : "Leaderboard"} →</a> <a className="hmore" href="#/pro-score">{t("proMore")} →</a></h2>
-            <ol className="hon">{home$.honor.map((a) => <li key={a.id}><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}><ProBadge rank={a.proRank} size={40} /><span className="hn"><b>{a.name}</b><small>{a.institutions.slice(0, 1).map((i) => instLabel(instById.get(i), lang, i)).join("")}</small></span><span className="hs">{num(a.pro ?? 0, 1)}<small>#{a.proRank}</small></span></a></li>)}</ol></div>}
+            <label className="chk"><input type="checkbox" checked={honorIntl} onChange={(e) => setHonorIntl(e.target.checked)} /> {lang === "vi" ? "Gồm cả hồ sơ liên kết quốc tế" : "Include international-link profiles"}</label>
+            <ol className="hon">{home$.honor.map(({ a, r }) => <li key={a.id}><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}><ProBadge rank={r} size={40} /><span className="hn"><b>{a.name}{a.intl && <> <span className="badge">{t("intlTag")}</span></>}</b><small>{a.institutions.slice(0, 1).map((i) => instLabel(instById.get(i), lang, i)).join("")}</small></span><span className="hs">{num(a.pro ?? 0, 1)}<small>#{r}</small></span></a></li>)}</ol></div>}
           <div className="hcols">
             <div className="hgroup"><h2><Icon n="discipline" size={18} />{t("topFields")}<small>{t("byAuthors")}</small></h2>
               <ol className="rank">{home$.fields.slice(0, 8).map(([f, n]) => <li key={f}><button type="button" onClick={quick(() => setDisc(f))} style={{ "--w": `${Math.round((n / home$.fields[0][1]) * 100)}%` } as React.CSSProperties}><span>{dName(f, lang)}</span><em>{num(n)}</em></button></li>)}</ol></div>
