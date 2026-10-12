@@ -16,17 +16,19 @@ const L = {
     title: "Gợi ý bài báo và tạp chí liên quan", open: "Xem gợi ý", close: "Thu gọn", load: "Đang tải gợi ý…", fail: "Chưa tải được gợi ý.", none: "Chưa có gợi ý cho ngành này.",
     how: "Gợi ý lấy từ các công trình của hồ sơ ProFind cùng ngành, sắp theo độ gần với tiêu đề công trình của bạn rồi theo trích dẫn mỗi năm. Đây là gợi ý tham khảo, không phải đánh giá chất lượng.",
     arts: "Bài báo nên đọc", jrs: "Tạp chí có thể cân nhắc", field: "Ngành", cites: (n: number) => `${n.toLocaleString("vi-VN")} trích dẫn`, used: "Đã đăng", inProfind: (n: number) => `${n} bài từ hồ sơ ProFind (2022 đến nay)`,
-    copy: "Sao chép DOI", copied: "Đã chép", doi: "Mở bài báo", edu: "Tra trên EduFind", ami: "Phân tích tài liệu với Ami", amiHint: "Sao chép DOI hoặc tiêu đề rồi dán vào Ami để tóm tắt và đối chiếu nguồn.", may: (m: string) => `Chuẩn hóa bản thảo với ${m}`, mayHint: "Đã chọn tạp chí? Dùng để căn chỉnh bản thảo theo mẫu trình bày.", mayJ: (m: string) => `Chuẩn hóa theo tạp chí này (${m})`,
+    copy: "Sao chép DOI", copied: "Đã chép", doi: "Mở bài báo", edu: "Tra trên EduFind", ami: "Phân tích tài liệu với Ami", amiHint: "Sao chép DOI hoặc tiêu đề rồi dán vào Ami để tóm tắt và đối chiếu nguồn.", may: (m: string) => `Chuẩn hóa bản thảo với ${m}`, mayHint: "Đã chọn tạp chí? Dùng để căn chỉnh bản thảo theo mẫu trình bày.", mayJ: (m: string) => `Chuẩn hóa theo tạp chí này (${m})`, amiJ: "Đọc và trích dẫn với Ami",
   },
   en: {
     title: "Related articles and journals", open: "Show suggestions", close: "Collapse", load: "Loading suggestions…", fail: "Could not load suggestions.", none: "No suggestions for this field yet.",
     how: "Suggestions come from works by ProFind profiles in the same field, ordered by closeness to your own titles and then by citations per year. They are a reference, not a quality rating.",
     arts: "Articles worth reading", jrs: "Journals to consider", field: "Field", cites: (n: number) => `${n.toLocaleString("en-US")} citations`, used: "Published", inProfind: (n: number) => `${n} works from ProFind profiles (2022 to date)`,
-    copy: "Copy DOI", copied: "Copied", doi: "Open article", edu: "Look up on EduFind", ami: "Analyse sources with Ami", amiHint: "Copy a DOI or title and paste it into Ami to summarise and check sources.", may: (m: string) => `Format your manuscript with ${m}`, mayHint: "Picked a journal? Use it to align your manuscript with a template.", mayJ: (m: string) => `Format for this journal (${m})`,
+    copy: "Copy DOI", copied: "Copied", doi: "Open article", edu: "Look up on EduFind", ami: "Analyse sources with Ami", amiHint: "Copy a DOI or title and paste it into Ami to summarise and check sources.", may: (m: string) => `Format your manuscript with ${m}`, mayHint: "Picked a journal? Use it to align your manuscript with a template.", mayJ: (m: string) => `Format for this journal (${m})`, amiJ: "Read and cite with Ami",
   },
 };
 const STOP = new Set("the of and for in on to a an with by from using based study analysis approach new its are is as at or into via vietnam viet nam trong cua va cho cac nhung mot ve voi theo tai".split(" "));
 const words = (s: string) => new Set(s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]+/g, " ").split(/\s+/).filter((w) => w.length > 3 && !STOP.has(w)));
+// Đường dẫn đích sang Ami: /?journal=<tên>. Mã hóa kín (cả ! ' ( ) *) để khớp biểu thức của cổng /go ([\w\-.~%=&]); Ami cắt tên ở 140 ký tự.
+export const amiJournalPath = (name: string) => `/?journal=${encodeURIComponent(name.replace(/\s+/g, " ").trim().slice(0, 120)).replace(/[!'()*]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`)}`;
 let cache: Promise<RD> | null = null;
 const load = () => (cache ??= fetch("./data/related.json").then((r) => { if (!r.ok) throw new Error("related"); return r.json() as Promise<RD>; }).catch((e) => { cache = null; throw e; }));
 
@@ -59,7 +61,7 @@ export function Related({ disciplines, works, edufind }: { disciplines: string[]
               <p className="rel-eco"><EcoLink app="ami" place="related-article" className="chip"><Icon n="link" size={14} /> {l.ami}<span className="sr"> {t("newTab")}</span></EcoLink> <span className="meta">{l.amiHint}</span></p></div>
             <div><h3>{l.jrs}</h3><ol className="rel-list">{R.jrs.map((x) => <li key={x.i}>
               <b>{x.j}</b><small>{x.q} · ISSN {x.i} · {l.inProfind(x.n)}{own.issns.has(x.i) ? ` · ${l.used}` : ""}</small>
-              <span className="rel-act"><a className="chip" href={`${edufind}/${fld}/?tab=international&q=${encodeURIComponent(x.i)}`} target="_blank" rel="noopener">{l.edu} ↗<span className="sr"> {t("newTab")}</span></a>{mayHas(x.i) && <EcoLink app="may" place="related-journal" to={`/?issn=${x.i}`} className="chip">{l.mayJ(t("appMay"))}<span className="sr"> {t("newTab")}</span></EcoLink>}</span></li>)}</ol>
+              <span className="rel-act"><EcoLink app="ami" place="related-journal" to={amiJournalPath(x.j)} className="chip">{l.amiJ} ↗<span className="sr"> {t("newTab")}</span></EcoLink><a className="chip" href={`${edufind}/${fld}/?tab=international&q=${encodeURIComponent(x.i)}`} target="_blank" rel="noopener">{l.edu} ↗<span className="sr"> {t("newTab")}</span></a>{mayHas(x.i) && <EcoLink app="may" place="related-journal" to={`/?issn=${x.i}`} className="chip">{l.mayJ(t("appMay"))}<span className="sr"> {t("newTab")}</span></EcoLink>}</span></li>)}</ol>
               <p className="rel-eco"><EcoLink app="may" place="related-journal" className="chip"><Icon n="spark" size={14} /> {l.may(t("appMay"))}<span className="sr"> {t("newTab")}</span></EcoLink> <span className="meta">{l.mayHint}</span></p></div>
           </div>}
         </>}
