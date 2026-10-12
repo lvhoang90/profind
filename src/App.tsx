@@ -310,6 +310,8 @@ function List({ d, query }: { d: Data; query: string }) {
             <div><Icon n="scroll" size={26} /><b>{num(d.meta.works)}</b><span>{t("stWorks")}</span></div>
             <div><Icon n="building" size={26} /><b>{num(home$.nInst)}</b><span>{t("stInst")}</span></div>
           </div>
+          <div className="hgroup"><h2><Icon n="star" size={18} />{t("featured")}</h2>
+            <p className="hchips">{home$.top2 > 0 && <button type="button" className="gold" onClick={quick(() => setTop2only(true))}>★ {t("top2Tag")}<em>{num(home$.top2)}</em></button>}<button type="button" className="all" onClick={() => setBrowse(true)}>{t("browseAll")} →</button></p></div>
           {home$.honor.length > 0 && <div className="hgroup honor"><h2><Icon n="trophy" size={18} />{t("honorH")}<small>{t("honorSub")}</small><a className="hmore" href="#/bang-xep-hang">{lang === "vi" ? "Bảng xếp hạng đơn vị, ngành" : "Leaderboard"} →</a> <a className="hmore" href="#/pro-score">{t("proMore")} →</a></h2>
             <label className="chk"><input type="checkbox" checked={honorIntl} onChange={(e) => setHonorIntl(e.target.checked)} /> {lang === "vi" ? "Gồm cả hồ sơ liên kết quốc tế" : "Include international-link profiles"}</label>
             <ol className="hon">{home$.honor.map(({ a, r }) => <li key={a.id}><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}><ProBadge rank={r} size={40} /><span className="hn"><b>{a.name}{a.intl && <> <span className="badge">{t("intlTag")}</span></>}</b><small>{a.institutions.slice(0, 1).map((i) => instLabel(instById.get(i), lang, i)).join("")}</small></span><span className="hs">{num(a.pro ?? 0, 1)}<small>#{r}</small></span></a></li>)}</ol></div>}
@@ -321,8 +323,6 @@ function List({ d, query }: { d: Data; query: string }) {
           </div>
           {topWorks.length > 0 && <div className="hgroup"><h2><Icon n="book" size={18} />{t("topWorks")}</h2>
             <ol className="tw">{topWorks.slice(0, 6).map((w) => <li key={w.a + w.w}><a href={`#/tac-gia/${w.a}`}><b>{num(w.c)}<small>{t("cites")}</small></b><span className="tt">{w.t}</span><span className="tm">{w.n} · {w.j ? `${w.j} · ` : ""}{w.y}</span></a></li>)}</ol></div>}
-          <div className="hgroup"><h2><Icon n="star" size={18} />{t("featured")}</h2>
-            <p className="hchips">{home$.top2 > 0 && <button type="button" className="gold" onClick={quick(() => setTop2only(true))}>★ {t("top2Tag")}<em>{num(home$.top2)}</em></button>}<button type="button" className="all" onClick={() => setBrowse(true)}>{t("browseAll")} →</button></p></div>
         </section>
       ) : (
       <>
