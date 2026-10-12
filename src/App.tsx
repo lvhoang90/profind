@@ -202,7 +202,7 @@ function List({ d, query }: { d: Data; query: string }) {
   const [jn, setJn] = useState<Record<string, { t: string; p: string }> | null>(null);
   const dq = useDeferredValue(q);
   const works = useWorks(dq);
-  const [tab, setTab] = useState<"a" | "w">("a");
+  const [tab, setTab] = useState<"a" | "w">("a"), autoW = useRef(false); // autoW: tab Công trình do tự chuyển (không có tác giả), tự quay về khi truy vấn mới có tác giả
   const instById = useMemo(() => new Map(d.institutions.map((i) => [i.id, i])), [d]);
   // Đơn vị con thuộc đơn vị cha (data/unit-parent.json): lọc theo đơn vị cha gồm cả người ở đơn vị con; cột đơn vị chỉ hiện đơn vị cụ thể nhất.
   const inUnit = (u: string, root: string) => { for (let x: string | undefined = u, n = 0; x && n < 4; x = instById.get(x)?.parent, n++) if (x === root) return true; return false; };
@@ -238,7 +238,7 @@ function List({ d, query }: { d: Data; query: string }) {
   };
   const rows = useMemo(() => {
     const toks = norm(dq).split(" ").filter(Boolean);
-    const rawId = dq.replace(/[\s-]/g, "").toLowerCase(), isId = /^[0-9x]{6,}$/.test(rawId);
+    const rawId = dq.replace(/https?:\/\/(www\.)?orcid\.org\//i, "").replace(/^\s*(issn|orcid)\s*:?/i, "").replace(/[\s-]/g, "").toLowerCase(), isId = /^[0-9x]{6,}$/.test(rawId);
     return d.authors.filter((a) => {
       if (scope === "vn" && a.suspect) return false;
       if (disc && !a.disciplines.includes(disc)) return false;
@@ -269,9 +269,9 @@ function List({ d, query }: { d: Data; query: string }) {
   // Số liệu cho trang chủ (phạm vi Việt Nam): ngành và đơn vị nổi bật.
   const home$ = useMemo(() => {
     const vn = d.authors.filter((a) => !a.suspect), dc = new Map<string, number>(), ic = new Map<string, number>();
-    for (const a of vn) { for (const x of a.disciplines) dc.set(x, (dc.get(x) ?? 0) + 1); for (const x of a.institutions) ic.set(x, (ic.get(x) ?? 0) + 1); }
+    for (const a of vn) { for (const x of a.disciplines) dc.set(x, (dc.get(x) ?? 0) + 1); const seen = new Set<string>(); for (const u0 of a.institutions) { if (a.instPast?.includes(u0)) continue; for (let x: string | undefined = u0, n = 0; x && n < 4; x = instById.get(x)?.parent, n++) if (!seen.has(x)) { seen.add(x); ic.set(x, (ic.get(x) ?? 0) + 1); } } } // đếm như bộ lọc: đang công tác, gồm đơn vị con
     return { honor: vn.filter((a) => a.proRank != null && a.proRank <= 10).sort((x, y) => (x.proRank ?? 99) - (y.proRank ?? 99)), n: vn.length, top2: vn.filter((a) => a.top2).length, fields: [...dc].sort((a, b) => b[1] - a[1]).slice(0, 10), insts: [...ic].sort((a, b) => b[1] - a[1]).slice(0, 10), nInst: ic.size };
-  }, [d]);
+  }, [d, instById]);
   const [topWorks, setTopWorks] = useState<{ t: string; y: number; j: string; c: number; a: string; n: string; w: string }[]>([]);
   const [pool, setPool] = useState<typeof topWorks>([]), [myDisc, setMyDisc] = useState<string[]>([]);
   useEffect(() => { if (!home || pool.length) return; fetch("data/top-works.json").then((r) => r.json()).then((j) => setPool(j.works ?? [])).catch(() => {}); }, [home]);
@@ -284,7 +284,7 @@ function List({ d, query }: { d: Data; query: string }) {
     const hit = myDisc.length ? pool.filter((w) => (w as { f?: string[] }).f?.some((k) => myDisc.includes(k))) : [];
     setTopWorks([...shuffle(hit), ...shuffle(pool.filter((w) => !hit.includes(w)))].slice(0, 6));
   }, [pool, myDisc]); // eslint-disable-line react-hooks/exhaustive-deps
-  useEffect(() => { if (!q.trim()) setTab("a"); else if (dq === q && works.forQ === q.trim() && rows.length === 0 && works.total > 0) setTab("w"); }, [q, dq, rows.length, works.total, works.forQ]);
+  useEffect(() => { if (!q.trim()) { setTab("a"); autoW.current = false; } else if (dq === q && works.forQ === q.trim() && rows.length === 0 && works.total > 0) { autoW.current = true; setTab("w"); } else if (autoW.current && rows.length > 0) { autoW.current = false; setTab("a"); } }, [q, dq, rows.length, works.total, works.forQ]);
   const quick = (fn: () => void) => () => { fn(); setBrowse(false); };
   const hero = (
     <div className={`hero-home${home ? " big" : ""}`}>
@@ -340,7 +340,7 @@ function List({ d, query }: { d: Data; query: string }) {
       </section>}
       {q.trim() && <div className="rtabs" role="tablist" aria-label={t("title")}>
         <button type="button" role="tab" aria-selected={tab === "a"} onClick={() => setTab("a")}><Icon n="scholar" size={16} />{t("tabAuthors")}<em>{num(rows.length)}</em></button>
-        <button type="button" role="tab" aria-selected={tab === "w"} onClick={() => setTab("w")}><Icon n="scroll" size={16} />{t("tabWorks")}<em>{works.busy ? "…" : num(works.total)}</em></button>
+        <button type="button" role="tab" aria-selected={tab === "w"} onClick={() => { autoW.current = false; setTab("w"); }}><Icon n="scroll" size={16} />{t("tabWorks")}<em>{works.busy ? "…" : num(works.total)}</em></button>
       </div>}
       {q.trim() && tab === "w" ? (
         <section className="wsrch" aria-live="polite">

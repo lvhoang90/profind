@@ -11,5 +11,5 @@ export function fetchWorks(id: string, signal?: AbortSignal): Promise<Work[]> {
     p.catch(() => cache.delete(n)); // lỗi mạng: lần sau tải lại
     cache.set(n, p);
   }
-  return p.then((o) => { if (signal?.aborted) throw new DOMException("aborted", "AbortError"); const w = o[id]; if (!Array.isArray(w)) throw new Error("shape"); return w; });
+  return p.then((o) => { if (signal?.aborted) throw new DOMException("aborted", "AbortError"); const w = o?.[id]; if (!Array.isArray(w)) { cache.delete(n); throw new Error("shape"); } return w; });
 }

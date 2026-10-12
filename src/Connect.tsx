@@ -1,3 +1,4 @@
+import { useT } from "./i18n";
 import { useEffect, useRef, useState } from "react";
 import { api, useAccount, type User } from "./accountStore";
 import { evt } from "./analytics";
@@ -5,9 +6,9 @@ import { evt } from "./analytics";
 /** Trang nhận liên kết từ Mây hoặc EduFind (ứng dụng ISA khác): #/ket-noi?t=<mã ký>&from=may|edufind|ami. Email đã được ứng dụng gửi sang xác thực nên không gửi mã OTP nữa. */
 export function ConnectPage() {
   const { setUser, refresh } = useAccount();
-  const [err, setErr] = useState(""), ran = useRef(false);
+  const { t: tr } = useT(), [err, setErr] = useState(""), ran = useRef(false);
   const [from] = useState(() => (/[?&]from=edufind\b/.test(location.hash) ? "edufind" : /[?&]from=ami\b/.test(location.hash) ? "ami" : "may"));
-  const app = from === "edufind" ? "EduFind" : from === "ami" ? "Ami" : "Mây";
+  const app = from === "edufind" ? tr("appEdu") : from === "ami" ? "Ami" : tr("appMay");
   useEffect(() => {
     if (ran.current) return; ran.current = true;
     const full = location.hash.replace(/^#\/?/, ""), qs = new URLSearchParams(full.includes("?") ? full.slice(full.indexOf("?") + 1) : "");
