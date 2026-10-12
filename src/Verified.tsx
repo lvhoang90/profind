@@ -288,7 +288,7 @@ export function useConfPoints(disc: string | undefined): number {
 // ---------- Chủ hồ sơ tự chọn đơn vị hiện tại / trước đây ----------
 type UD = { units: { id: string; name: string; en: string }[]; mine: string[]; past: string[] };
 const udCache = new Map<string, Promise<{ units: UD["units"]; byId: Map<string, { institutions: string[]; instPast?: string[] }> }>>();
-function loadUnits() { if (!udCache.has("d")) udCache.set("d", fetch("./data/profind.json").then((r) => r.json()).then((j: { institutions: UD["units"]; authors: { id: string; institutions: string[]; instPast?: string[] }[] }) => ({ units: j.institutions, byId: new Map(j.authors.map((a) => [a.id, a])) }))); return udCache.get("d")!; }
+function loadUnits() { if (!udCache.has("d")) udCache.set("d", fetch("./data/profind-lite.json").then((r) => r.json()).then((j: { institutions: UD["units"]; authors: { id: string; institutions: string[]; instPast?: string[] }[] }) => ({ units: j.institutions, byId: new Map(j.authors.map((a) => [a.id, a])) }))); return udCache.get("d")!; }
 function UnitPicker({ authorId, onSaved }: { authorId: string; onSaved: () => void }) {
   const [ud, setUd] = useState<UD | null>(null), [now, setNow] = useState<Set<string>>(new Set()), [past, setPast] = useState<Set<string>>(new Set()), [q, setQ] = useState(""), [msg, setMsg] = useState(""), [busy, setBusy] = useState(false), [locked, setLocked] = useState(false), [custom, setCustom] = useState(false);
   useEffect(() => {

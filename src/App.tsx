@@ -18,6 +18,7 @@ import { StarBtn } from "./StarBtn";
 import { ProBadge, ProBadgeTag } from "./Badge";
 import { AvatarFrame } from "./Frame";
 import { VisitChip } from "./VisitChip";
+import { fetchDetail } from "./authorDetail";
 import { fetchWorks } from "./worksShard";
 import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg, useVerified, useIsMine, useOwnDisc, useNotMine, reportNotMine, useConf, useConfPoints } from "./Verified";
 import { useHidden } from "./hidden";
@@ -87,7 +88,7 @@ function AppInner() {
     setErr(false);
     // Đơn vị do quản trị viên đặt tay (Redis) ghi đè đơn vị trong dữ liệu dựng sẵn; lỗi/thiếu thì bỏ qua.
     const ov = fetch("/api/account?op=inst").then((r) => (r.ok ? r.json() : { map: {} })).then((j: { map?: Record<string, { now: string[]; past?: string[] }> }) => j.map ?? {}).catch(() => ({}) as Record<string, { now: string[]; past?: string[] }>);
-    Promise.all([fetch("./data/profind.json").then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }), ov]).then(([d, map]: [Data, Record<string, { now: string[]; past?: string[] }>]) => {
+    Promise.all([fetch("./data/profind-lite.json").then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }), ov]).then(([d, map]: [Data, Record<string, { now: string[]; past?: string[] }>]) => {
       if (!d || !Array.isArray(d.authors) || !Array.isArray(d.institutions)) throw new Error("shape");
       setData({ ...d, types: d.types ?? {}, disciplines: d.disciplines ?? [], meta: d.meta ?? ({} as Data["meta"]), authors: d.authors.map((a) => { const o = map[a.id]; const base = { ...a, institutions: a.institutions ?? [], disciplines: a.disciplines ?? [] }; if (!o?.now?.length) return base; const past = (o.past ?? []).filter((u) => !o.now.includes(u)); return { ...base, institutions: [...o.now, ...past], instPast: past.length ? past : undefined }; }) });
     }).catch(() => setErr(true));
@@ -143,7 +144,7 @@ function AppInner() {
             : !data ? <p className="empty" role="status">{t("loading")}</p>
             : view === "corr" ? <Correction key={author?.id ?? "none"} a={author} />
             : view === "nf" ? <div className="empty" role="alert"><p>{hid.profile.has(id) ? t("hiddenProfile") : t("notFound")}</p><p><a href="#/">{t("back")}</a></p></div>
-            : view === "author" && author ? <AuthorPage a={author} d={data} />
+            : view === "author" && author ? <AuthorLoader a={author} d={data} />
             : <List d={data} query={route.query} />}
         </Boundary>
       </main>
@@ -395,6 +396,13 @@ type WSort = "year" | "cit";
 const initials = (n: string) => { const w = n.replace(/[^\p{L}\s-]/gu, " ").split(/[\s-]+/).filter(Boolean); return ((w[0]?.[0] ?? "") + (w.length > 1 ? w[w.length - 1][0] : "")).toUpperCase(); };
 const hueOf = (s: string) => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) % 360; return h; };
 
+/** Hồ sơ trong profind-lite.json không có các trường chi tiết (xem scripts/build-lite.mjs): tải khối chi tiết của hồ sơ rồi ghép lại trước khi hiển thị. */
+function AuthorLoader({ a, d }: { a: Author; d: Data }) {
+  const { t } = useT(), [det, setDet] = useState<Partial<Author> | null>(null);
+  useEffect(() => { let off = false; setDet(null); fetchDetail(a.id).then((x) => { if (!off) setDet(x); }).catch(() => { if (!off) setDet({}); }); return () => { off = true; }; }, [a.id]);
+  if (det === null) return <p className="empty" role="status">{t("loading")}</p>;
+  return <AuthorPage key={a.id} a={{ ...a, ...det }} d={d} />;
+}
 function AuthorPage({ a, d }: { a: Author; d: Data }) {
   const hid = useHidden();
   const { lang, t, num } = useT();
