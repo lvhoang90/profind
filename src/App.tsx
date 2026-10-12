@@ -6,6 +6,7 @@ import { Icon, type IconName } from "./icons";
 import type { Author, Data, Institution, Work } from "./types";
 import { AccountProvider, useAccount, api } from "./accountStore";
 // Trang tài khoản và quản trị tách thành các tệp nạp riêng: người chỉ tra cứu không tải mã của chúng.
+const SchoolPage = lazy(() => import("./School").then((m) => ({ default: m.SchoolPage })));
 const CollabPage = lazy(() => import("./Collab").then((m) => ({ default: m.CollabPage })));
 const ConnectPage = lazy(() => import("./Connect").then((m) => ({ default: m.ConnectPage })));
 const AccountPage = lazy(() => import("./Account").then((m) => ({ default: m.AccountPage })));
@@ -107,11 +108,11 @@ function AppInner() {
   useEffect(() => { const f = () => setRoute(parseRoute()); addEventListener("hashchange", f); return () => removeEventListener("hashchange", f); }, []);
   const { kind, id } = route;
   const author = data && id ? data.authors.find((a) => a.id === id) ?? null : null;
-  const view: "list" | "author" | "corr" | "nf" | "acc" | "conn" | "adm" | "about" | "pro" | "lb" | "collab" = kind === "hop-tac" ? "collab" : kind === "ket-noi" ? "conn" : kind === "bang-xep-hang" ? "lb" : kind === "pro-score" ? "pro" : kind === "gioi-thieu" ? "about" : kind === "tai-khoan" ? "acc" : kind === "quan-tri" ? "adm" : kind === "dinh-chinh" ? "corr" : kind === "tac-gia" ? (data && !author ? "nf" : "author") : "list";
+  const view: "list" | "author" | "corr" | "nf" | "acc" | "conn" | "adm" | "about" | "pro" | "lb" | "collab" | "school" = kind === "nha-truong" ? "school" : kind === "hop-tac" ? "collab" : kind === "ket-noi" ? "conn" : kind === "bang-xep-hang" ? "lb" : kind === "pro-score" ? "pro" : kind === "gioi-thieu" ? "about" : kind === "tai-khoan" ? "acc" : kind === "quan-tri" ? "adm" : kind === "dinh-chinh" ? "corr" : kind === "tac-gia" ? (data && !author ? "nf" : "author") : "list";
 
   // Tiêu đề tab, mô tả và đưa tiêu điểm về nội dung chính khi đổi trang (trình đọc màn hình biết đã chuyển trang).
   useEffect(() => {
-    document.title = view === "lb" ? `${lang === "vi" ? "Bảng xếp hạng" : "Leaderboard"} | ProFind™` : view === "pro" ? "PRO-SCORE1000™ | ProFind™" : view === "collab" ? `${t("fCollab")} | ProFind™` : view === "about" ? `${t("fAbout2")} | ProFind™` : view === "acc" ? `${t("accTitle")} | ProFind™` : view === "adm" ? "Quản trị | ProFind™" : view === "author" && author ? `${author.name} | ProFind™` : view === "corr" ? `${t("corrTitle")} | ProFind™` : view === "nf" ? `${t("notFound").split(".")[0]} | ProFind™` : t("docTitle");
+    document.title = view === "lb" ? `${lang === "vi" ? "Bảng xếp hạng" : "Leaderboard"} | ProFind™` : view === "pro" ? "PRO-SCORE1000™ | ProFind™" : view === "school" ? `${t("fSchool")} | ProFind™` : view === "collab" ? `${t("fCollab")} | ProFind™` : view === "about" ? `${t("fAbout2")} | ProFind™` : view === "acc" ? `${t("accTitle")} | ProFind™` : view === "adm" ? "Quản trị | ProFind™" : view === "author" && author ? `${author.name} | ProFind™` : view === "corr" ? `${t("corrTitle")} | ProFind™` : view === "nf" ? `${t("notFound").split(".")[0]} | ProFind™` : t("docTitle");
     const k = data?.meta?.authors ? Math.floor(data.meta.authors / 1000) * 1000 : 0; // số tác giả làm tròn xuống nghìn, luôn theo dữ liệu hiện hành
     document.querySelector('meta[name="description"]')?.setAttribute("content", t("metaDesc").replace("{k}", k.toLocaleString(lang === "vi" ? "vi-VN" : "en-US")));
     if (first.current) { first.current = false; return; }
@@ -143,6 +144,7 @@ function AppInner() {
           {view === "lb" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><LeaderboardPage lang={lang} num={num} /></Suspense>
             : view === "pro" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><ProScorePage /></Suspense>
             : view === "about" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><AboutPage section={new URLSearchParams(route.query).get("m") ?? ""} /></Suspense>
+            : view === "school" ? (!data ? <p className="empty" role="status">{t("loading")}</p> : <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><SchoolPage d={data} query={route.query} /></Suspense>)
             : view === "collab" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><CollabPage query={route.query} /></Suspense>
             : view === "conn" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><ConnectPage /></Suspense>
             : view === "acc" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><AccountPage tab={id} /></Suspense>

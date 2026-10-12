@@ -41,6 +41,7 @@ const L = {
 export function CollabPage({ query }: { query: string }) {
   const { lang } = useT(), l = L[lang as LG] ?? L.vi, q = new URLSearchParams(query);
   const aid = /^A\d{6,12}$/.test(q.get("a") ?? "") ? q.get("a")! : "", an = (q.get("n") ?? "").slice(0, 120);
+  const org0 = (q.get("org") ?? "").slice(0, 160), need0 = Object.keys(l.needs).includes(q.get("need") ?? "") ? q.get("need")! : "expert";
   const [state, setState] = useState<"idle" | "sending" | "ok" | "err" | "rate">("idle");
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); setState("sending");
@@ -68,10 +69,10 @@ export function CollabPage({ query }: { query: string }) {
           {aid && <p className="meta">{l.expertNote(an || aid)}</p>}
           <input type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: "absolute", left: "-9999px" }} />
           <label className="sel"><span>{l.orgType}</span><select id="co-type" name="orgType" defaultValue="school">{Object.entries(l.types).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select></label>
-          <label className="sel"><span>{l.org}</span><input id="co-org" name="org" type="text" maxLength={160} required /></label>
+          <label className="sel"><span>{l.org}</span><input id="co-org" name="org" type="text" maxLength={160} required defaultValue={org0} /></label>
           <label className="sel"><span>{l.name}</span><input id="co-name" name="name" type="text" maxLength={120} required autoComplete="name" /></label>
           <label className="sel"><span>{l.email}</span><input id="co-email" name="email" type="email" maxLength={160} required autoComplete="email" /></label>
-          <label className="sel"><span>{l.need}</span><select id="co-need" name="need" defaultValue="expert">{Object.entries(l.needs).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select></label>
+          <label className="sel"><span>{l.need}</span><select id="co-need" name="need" defaultValue={need0}>{Object.entries(l.needs).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select></label>
           <label className="sel"><span>{l.field}</span><select id="co-field" name="field" defaultValue=""><option value="">{l.anyField}</option>{Object.keys(DISC).map((k) => <option key={k} value={k}>{dName(k, lang as LG)}</option>)}</select></label>
           <label className="sel"><span>{l.msg}</span><textarea id="co-msg" name="msg" rows={6} maxLength={4000} required placeholder={l.msgHint} /></label>
           <label className="chk consent"><input id="co-consent" type="checkbox" name="consent" value="1" required /> {l.consent}</label>
