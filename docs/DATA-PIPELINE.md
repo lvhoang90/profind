@@ -136,3 +136,8 @@ npm run d:check                              # kiểm tra nhất quán
 - `pro-score.mjs`: điểm dùng `momEff = momentum + s·max(0, impact − momentum)`, `s = 0,75·clamp((impact − 0,70)/0,25, 0, 1)`; `proParts.momentum` vẫn là giá trị gốc. Đo: 42.645 hồ sơ, đổi điểm TB +0,26, tối đa +13,7; 204 hồ sơ đổi bậc.
 - Bảng xếp hạng đơn vị/ngành: điểm TB top 10 chỉ tính hồ sơ đủ điều kiện xếp hạng (≥10 công trình, hoạt động ≥3 năm); cột "Nhà khoa học có điểm" đếm mọi hồ sơ có điểm, người nhiều đơn vị hiện tại được đếm ở từng đơn vị.
 - Quy ước: hồ sơ nhiều đơn vị vẫn được xếp hạng; chỉ hồ sơ nghi gộp nhiều người (`suspect`) hoặc liên kết chính ở nước ngoài (`abroadMain`) không xếp hạng.
+
+## Tách profind.json (12/10/2026)
+- `scripts/build-lite.mjs` (chạy đầu `npm run build`): sinh `public/data/profind-lite.json` (≈10,8 MB, nén ≈1,6 MB; không có trường chi tiết, bỏ trường null/false) và `public/data/authors/pNNN.json` (256 khối chi tiết, NNN = số trong mã tác giả chia dư 256). Cả hai nằm trong `.gitignore`.
+- Trang chủ, danh sách, bảng xếp hạng và biểu mẫu xác thực tải bản lite; trang hồ sơ tải thêm khối chi tiết (`src/authorDetail.ts`) rồi ghép. Trang quản trị và người dùng dữ liệu vẫn dùng `profind.json` đầy đủ.
+- Chạy `node scripts/build-lite.mjs` trước `npm run dev` nếu chưa có hai đầu ra trên.
