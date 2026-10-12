@@ -2123,7 +2123,7 @@
   {
    "id": "A5003116063",
    "name": "Bùi Thanh Tùng",
-   "rank": 692,
+   "rank": 691,
    "disc": {
     "duoc": 36,
     "y-hoc": 34,
@@ -2141,7 +2141,7 @@
   {
    "id": "A5077110327",
    "name": "Nguyễn Văn Duy",
-   "rank": 696,
+   "rank": 697,
    "disc": {
     "dien-tu": 57,
     "hoa-thuc-pham": 43
@@ -2946,7 +2946,7 @@
   {
    "id": "A5062801978",
    "name": "Thi Ngoc Diep Trinh",
-   "rank": 935,
+   "rank": 936,
    "disc": {
     "y-hoc": 51,
     "hoa-thuc-pham": 49
@@ -2963,7 +2963,7 @@
   {
    "id": "A5063342955",
    "name": "Phuong Dinh Tam",
-   "rank": 936,
+   "rank": 937,
    "disc": {
     "hoa-thuc-pham": 52,
     "dien-tu": 48
@@ -3167,7 +3167,7 @@
   {
    "id": "A5020765041",
    "name": "Thi Kim Quy Ha",
-   "rank": 994,
+   "rank": 993,
    "disc": {
     "sinh-hoc": 40,
     "nong-lam": 30,
@@ -3185,7 +3185,7 @@
   {
    "id": "A5065585303",
    "name": "Phan Quang Thang",
-   "rank": 995,
+   "rank": 994,
    "disc": {
     "hoa-thuc-pham": 60,
     "trai-dat-mo": 40
@@ -4112,7 +4112,7 @@
   {
    "id": "A5054158964",
    "name": "Teron Nguyen",
-   "rank": 1330,
+   "rank": 1331,
    "disc": {
     "xay-dung": 61,
     "cntt": 39
@@ -4430,7 +4430,7 @@
   {
    "id": "A5043714964",
    "name": "Duong Tung Pham",
-   "rank": 1416,
+   "rank": 1417,
    "disc": {
     "dien-tu": 67,
     "hoa-thuc-pham": 33
@@ -4481,7 +4481,7 @@
   {
    "id": "A5034891408",
    "name": "Trinh Le Tan",
-   "rank": 1434,
+   "rank": 1435,
    "disc": {
     "cntt": 51,
     "kinh-te": 49
@@ -4514,7 +4514,7 @@
   {
    "id": "A5019901083",
    "name": "Nguyễn Quang Vịnh",
-   "rank": 1438,
+   "rank": 1437,
    "disc": {
     "kinh-te": 100
    },
@@ -4902,7 +4902,7 @@
   {
    "id": "A5084573617",
    "name": "Thu Hang Duong",
-   "rank": 1549,
+   "rank": 1550,
    "disc": {
     "xay-dung": 57,
     "nong-lam": 43
@@ -5290,26 +5290,9 @@
    ]
   },
   {
-   "id": "A5013745213",
-   "name": "Nguyễn Thùy Trang",
-   "rank": 1697,
-   "disc": {
-    "kinh-te": 67,
-    "sinh-hoc": 33
-   },
-   "j": [
-    "kinh-te",
-    70
-   ],
-   "t": [
-    "sinh-hoc",
-    35
-   ]
-  },
-  {
    "id": "A5010176420",
    "name": "Tien D. N. Ho",
-   "rank": 1698,
+   "rank": 1697,
    "disc": {
     "kinh-te": 56,
     "nong-lam": 44
@@ -5321,6 +5304,23 @@
    "t": [
     "nong-lam",
     43
+   ]
+  },
+  {
+   "id": "A5013745213",
+   "name": "Nguyễn Thùy Trang",
+   "rank": 1698,
+   "disc": {
+    "kinh-te": 67,
+    "sinh-hoc": 33
+   },
+   "j": [
+    "kinh-te",
+    70
+   ],
+   "t": [
+    "sinh-hoc",
+    35
    ]
   },
   {
@@ -6144,7 +6144,7 @@
   {
    "id": "A5101558919",
    "name": "Hien Thi Thu Le",
-   "rank": 1921,
+   "rank": 1920,
    "disc": {
     "giao-duc": 55,
     "toan-hoc": 45
@@ -6211,7 +6211,7 @@
   {
    "id": "A5043344948",
    "name": "Hai-Anh Ha",
-   "rank": 1940,
+   "rank": 1939,
    "disc": {
     "y-hoc": 54,
     "hoa-thuc-pham": 46
@@ -8268,7 +8268,7 @@
   {
    "id": "A5103006908",
    "name": "Giang Dang",
-   "rank": 2682,
+   "rank": 2681,
    "disc": {
     "kinh-te": 68,
     "giao-duc": 32
@@ -8351,7 +8351,7 @@
   {
    "id": "A5017639225",
    "name": "Huy Quang Tran",
-   "rank": 2712,
+   "rank": 2711,
    "disc": {
     "cntt": 50,
     "dien-tu": 50
@@ -8709,7 +8709,7 @@
   {
    "id": "A5017745307",
    "name": "Hoang-Minh Le",
-   "rank": 2799,
+   "rank": 2798,
    "disc": {
     "cntt": 53,
     "dien-tu": 47
@@ -8777,7 +8777,7 @@
   {
    "id": "A5088374416",
    "name": "Đinh Thị Mai Thanh",
-   "rank": 2820,
+   "rank": 2819,
    "disc": {
     "hoa-thuc-pham": 100
    },
@@ -8810,7 +8810,7 @@
   {
    "id": "A5101937289",
    "name": "Tran Thanh Long",
-   "rank": 2835,
+   "rank": 2836,
    "disc": {
     "y-hoc": 59,
     "trai-dat-mo": 41
@@ -8827,7 +8827,7 @@
   {
    "id": "A5079602425",
    "name": "Nguyen Hai Hoa",
-   "rank": 2836,
+   "rank": 2837,
    "disc": {
     "nong-lam": 100
    },
@@ -9333,7 +9333,7 @@
   {
    "id": "A5114036578",
    "name": "Linh Do",
-   "rank": 2938,
+   "rank": 2937,
    "disc": {
     "y-hoc": 100
    },
@@ -9782,7 +9782,7 @@
   {
    "id": "A5088231118",
    "name": "Thanh Trung Nguyen",
-   "rank": 3083,
+   "rank": 3082,
    "disc": {
     "y-hoc": 59,
     "chan-nuoi": 41
@@ -9915,7 +9915,7 @@
   {
    "id": "A5111252189",
    "name": "Tran Thi Hong",
-   "rank": 3125,
+   "rank": 3126,
    "disc": {
     "y-hoc": 100
    },
@@ -9931,7 +9931,7 @@
   {
    "id": "A5100702857",
    "name": "Thi Thu Trang Nguyen",
-   "rank": 3126,
+   "rank": 3127,
    "disc": {
     "trai-dat-mo": 65,
     "cntt": 35
@@ -10015,7 +10015,7 @@
   {
    "id": "A5085607636",
    "name": "Tran Viet Dung",
-   "rank": 3152,
+   "rank": 3153,
    "disc": {
     "triet-xhh": 50,
     "kinh-te": 50
@@ -10085,7 +10085,7 @@
   {
    "id": "A5113769566",
    "name": "Nguyễn Văn Hướng",
-   "rank": 3183,
+   "rank": 3182,
    "disc": {
     "kinh-te": 63,
     "y-hoc": 37
@@ -10136,7 +10136,7 @@
   {
    "id": "A5016169617",
    "name": "Dinh Thanh Khan",
-   "rank": 3195,
+   "rank": 3194,
    "disc": {
     "luyen-kim": 52,
     "vat-ly": 48
@@ -10391,7 +10391,7 @@
   {
    "id": "A5112418722",
    "name": "Yen Thi Hong Nguyen",
-   "rank": 3251,
+   "rank": 3255,
    "disc": {
     "kinh-te": 100
    },
@@ -10780,7 +10780,7 @@
   {
    "id": "A5041732582",
    "name": "Đặng Thị Hoàng Oanh",
-   "rank": 3364,
+   "rank": 3363,
    "disc": {
     "chan-nuoi": 68,
     "y-hoc": 32
@@ -10881,7 +10881,7 @@
   {
    "id": "A5050134458",
    "name": "Nguyễn Thị Hồng",
-   "rank": 3396,
+   "rank": 3395,
    "disc": {
     "vat-ly": 100
    },
@@ -11120,7 +11120,7 @@
   {
    "id": "A5100716101",
    "name": "Thai An Nguyen",
-   "rank": 3461,
+   "rank": 3460,
    "disc": {
     "dien-tu": 54,
     "y-hoc": 46
@@ -11307,7 +11307,7 @@
   {
    "id": "A5036410800",
    "name": "Thi-Phuong Nguyen",
-   "rank": 3507,
+   "rank": 3506,
    "disc": {
     "sinh-hoc": 57,
     "hoa-thuc-pham": 43
@@ -11524,7 +11524,7 @@
   {
    "id": "A5050046077",
    "name": "Thế Anh Nguyễn",
-   "rank": 3559,
+   "rank": 3558,
    "disc": {
     "triet-xhh": 100
    },
@@ -11973,7 +11973,7 @@
   {
    "id": "A5045155063",
    "name": "Le Thi Binh",
-   "rank": 3683,
+   "rank": 3682,
    "disc": {
     "giao-duc": 39,
     "kinh-te": 33,
@@ -12226,7 +12226,7 @@
   {
    "id": "A5046003095",
    "name": "Nguyen Van Hai",
-   "rank": 3730,
+   "rank": 3731,
    "disc": {
     "kinh-te": 63,
     "dien-tu": 37
@@ -12440,25 +12440,9 @@
    ]
   },
   {
-   "id": "A5040965806",
-   "name": "Duong The Duy",
-   "rank": 3796,
-   "disc": {
-    "kinh-te": 100
-   },
-   "j": [
-    "tam-ly",
-    33
-   ],
-   "t": [
-    "kinh-te",
-    47
-   ]
-  },
-  {
    "id": "A5032555349",
    "name": "Nguyen Thi Nhat Hang",
-   "rank": 3798,
+   "rank": 3797,
    "disc": {
     "hoa-thuc-pham": 56,
     "luyen-kim": 44
@@ -12470,6 +12454,22 @@
    "t": [
     "vat-ly",
     30
+   ]
+  },
+  {
+   "id": "A5040965806",
+   "name": "Duong The Duy",
+   "rank": 3798,
+   "disc": {
+    "kinh-te": 100
+   },
+   "j": [
+    "tam-ly",
+    33
+   ],
+   "t": [
+    "kinh-te",
+    47
    ]
   },
   {
@@ -13199,7 +13199,7 @@
   {
    "id": "A5055541043",
    "name": "Trần Thị Minh",
-   "rank": 3989,
+   "rank": 3987,
    "disc": {
     "sinh-hoc": 38,
     "hoa-thuc-pham": 35,
@@ -13235,7 +13235,7 @@
   {
    "id": "A5101601510",
    "name": "Nguyễn Thùy Linh",
-   "rank": 3995,
+   "rank": 3994,
    "disc": {
     "duoc": 52,
     "y-hoc": 48
@@ -13592,7 +13592,7 @@
   {
    "id": "A5076685682",
    "name": "Toan Thanh Dao",
-   "rank": 4105,
+   "rank": 4106,
    "disc": {
     "dien-tu": 100
    },
@@ -13676,7 +13676,7 @@
   {
    "id": "A5026776799",
    "name": "Minh Hung Vu",
-   "rank": 4140,
+   "rank": 4141,
    "disc": {
     "toan-hoc": 63,
     "co-khi": 37
@@ -14097,7 +14097,7 @@
   {
    "id": "A5027862708",
    "name": "Nguyễn Hồng Sơn",
-   "rank": 4287,
+   "rank": 4286,
    "disc": {
     "dien-tu": 100
    },
@@ -14549,25 +14549,9 @@
    ]
   },
   {
-   "id": "A5053430690",
-   "name": "Thi Tuyet Trinh Nguyen",
-   "rank": 4424,
-   "disc": {
-    "kinh-te": 100
-   },
-   "j": [
-    "kinh-te",
-    66
-   ],
-   "t": [
-    "cntt",
-    37
-   ]
-  },
-  {
    "id": "A5100610140",
    "name": "Thuy Nguyen Thi Thu",
-   "rank": 4425,
+   "rank": 4424,
    "disc": {
     "dien-tu": 52,
     "cntt": 48
@@ -14579,6 +14563,22 @@
    "t": [
     "cntt",
     57
+   ]
+  },
+  {
+   "id": "A5053430690",
+   "name": "Thi Tuyet Trinh Nguyen",
+   "rank": 4425,
+   "disc": {
+    "kinh-te": 100
+   },
+   "j": [
+    "kinh-te",
+    66
+   ],
+   "t": [
+    "cntt",
+    37
    ]
   },
   {
@@ -14668,7 +14668,7 @@
   {
    "id": "A5021200756",
    "name": "Lê Việt Cường",
-   "rank": 4456,
+   "rank": 4455,
    "disc": {
     "vat-ly": 38,
     "toan-hoc": 37,
@@ -14703,7 +14703,7 @@
   {
    "id": "A5112529548",
    "name": "Quang Hung Nguyen",
-   "rank": 4466,
+   "rank": 4465,
    "disc": {
     "xay-dung": 100
    },
@@ -15037,7 +15037,7 @@
   {
    "id": "A5101443248",
    "name": "Nguyen Anh Tien",
-   "rank": 4554,
+   "rank": 4553,
    "disc": {
     "vat-ly": 52,
     "luyen-kim": 48
@@ -15712,7 +15712,7 @@
   {
    "id": "A5020618667",
    "name": "Pham Van Tong",
-   "rank": 4715,
+   "rank": 4714,
    "disc": {
     "dien-tu": 36,
     "luyen-kim": 33,
@@ -16157,7 +16157,7 @@
   {
    "id": "A5100715905",
    "name": "Minh Le",
-   "rank": 4885,
+   "rank": 4884,
    "disc": {
     "kinh-te": 50,
     "cntt": 50
@@ -17202,7 +17202,7 @@
   {
    "id": "A5025699088",
    "name": "Nguyễn Thị",
-   "rank": 5217,
+   "rank": 5218,
    "disc": {
     "vat-ly": 35,
     "hoa-thuc-pham": 33,
@@ -17757,7 +17757,7 @@
   {
    "id": "A5112911020",
    "name": "Phương Nguyễn Thị",
-   "rank": 5359,
+   "rank": 5358,
    "disc": {
     "kinh-te": 100
    },
@@ -17973,7 +17973,7 @@
   {
    "id": "A5012903759",
    "name": "Phạm Thanh Tùng",
-   "rank": 5396,
+   "rank": 5397,
    "disc": {
     "duoc": 60,
     "dien-tu": 40
@@ -18274,7 +18274,7 @@
   {
    "id": "A5102770902",
    "name": "Nguyễn Thị Mỹ Linh",
-   "rank": 5484,
+   "rank": 5483,
    "disc": {
     "kinh-te": 59,
     "hoa-thuc-pham": 41
@@ -18909,7 +18909,7 @@
   {
    "id": "A5081725382",
    "name": "Nguyen Thi Mai Hoa",
-   "rank": 5648,
+   "rank": 5647,
    "disc": {
     "kinh-te": 100
    },
@@ -19708,7 +19708,7 @@
   {
    "id": "A5061586730",
    "name": "Nguyen Thi Tu Trinh",
-   "rank": 5823,
+   "rank": 5821,
    "disc": {
     "kinh-te": 51,
     "ngon-ngu": 49
@@ -19878,7 +19878,7 @@
   {
    "id": "A5041715599",
    "name": "Phạm Văn Hảo",
-   "rank": 5857,
+   "rank": 5856,
    "disc": {
     "luyen-kim": 100
    },
@@ -20296,7 +20296,7 @@
   {
    "id": "A5033677189",
    "name": "Pham Van Hong",
-   "rank": 5973,
+   "rank": 5972,
    "disc": {
     "xay-dung": 52,
     "kinh-te": 48
@@ -20787,7 +20787,7 @@
   {
    "id": "A5068908636",
    "name": "Phan Thi Thanh Huyen",
-   "rank": 6150,
+   "rank": 6151,
    "disc": {
     "kinh-te": 100
    },
@@ -21104,7 +21104,7 @@
   {
    "id": "A5039647743",
    "name": "Nguyen Minh Tien",
-   "rank": 6243,
+   "rank": 6244,
    "disc": {
     "nong-lam": 100
    },
@@ -21287,7 +21287,7 @@
   {
    "id": "A5115599397",
    "name": "Trong-Thang Nguyen",
-   "rank": 6305,
+   "rank": 6306,
    "disc": {
     "luyen-kim": 51,
     "dien-tu": 49
@@ -21304,7 +21304,7 @@
   {
    "id": "A5042809796",
    "name": "Van Thinh Nguyen",
-   "rank": 6306,
+   "rank": 6307,
    "disc": {
     "toan-hoc": 100
    },
@@ -21607,7 +21607,7 @@
   {
    "id": "A5045060478",
    "name": "Trần Thị Văn Thi",
-   "rank": 6406,
+   "rank": 6407,
    "disc": {
     "hoa-thuc-pham": 100
    },
@@ -22284,7 +22284,7 @@
   {
    "id": "A5067881872",
    "name": "Hung Thanh Dang",
-   "rank": 6633,
+   "rank": 6634,
    "disc": {
     "xay-dung": 100
    },
@@ -22604,7 +22604,7 @@
   {
    "id": "A5119370919",
    "name": "Nguyen Thu Hoai",
-   "rank": 6739,
+   "rank": 6738,
    "disc": {
     "kinh-te": 60,
     "giao-duc": 40
@@ -25386,7 +25386,7 @@
   {
    "id": "A5008566108",
    "name": "Vũ Huyền Trang",
-   "rank": 7576,
+   "rank": 7575,
    "disc": {
     "kinh-te": 100
    },
