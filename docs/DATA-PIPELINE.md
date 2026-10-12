@@ -149,3 +149,8 @@ npm run d:check                              # kiểm tra nhất quán
 
 ## Đơn vị con chưa có hồ sơ (12/10/2026)
 15 đơn vị con trong `data/unit-parent.json` (trường/phân hiệu thuộc ĐHQGHN, ĐHQG-HCM, Huế, Đà Nẵng, Thái Nguyên, Cần Thơ) không có hồ sơ vì OpenAlex không có bản ghi riêng (tra theo tên ở nước VN không ra), cơ quan ghi gộp vào đơn vị cha. Đã bỏ khỏi `unit-parent.json`; `build-unit-parent.mjs` tự bỏ đơn vị con chưa có hồ sơ khi có `public/data/profind.json`.
+
+## Liên kết quốc tế (12/10/2026)
+- Quyết định của quản trị viên: hồ sơ "liên kết chính ở nước ngoài" (`abroadMain`) nhưng có ≥ 3 công trình ghi cơ quan Việt Nam trong 5 năm gần đây (`vnWorks5`, từ `scripts/lib/abroad.mjs` `vn5`; ngưỡng `INTL_MIN` ở `build-index.mjs`) được đánh dấu `intl`, vẫn được chấm PRO-SCORE bằng cùng công thức và cùng phân bố tham chiếu của nhóm trong nước (không góp vào phân bố), và có hạng gồm cả nhóm này `proRankAll`.
+- Hạng và điểm trong nước (`proRank`, `pro` của hồ sơ trong nước) **không đổi** (đã kiểm: 0 hồ sơ đổi). 994 hồ sơ `intl`, 830 hồ sơ có `proRankAll`.
+- Bảng xếp hạng (`leaderboard.json`) có thêm `unitsAll`/`fieldsAll`; ô "Gồm cả hồ sơ liên kết quốc tế" (mặc định tắt) chuyển sang các bảng này. Trang hồ sơ có nhãn "Liên kết quốc tế" và khung giải thích kèm hạng gồm liên kết quốc tế.

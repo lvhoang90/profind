@@ -28,6 +28,8 @@ function pctMap(items, key) {
 const LASTD = new Set(JSON.parse(readFileSync(new URL("../data/last-author-disciplines.json", import.meta.url), "utf8")).disciplines);
 export function computePro(authors, per, year) {
   const pool = authors.filter((a) => a.rankable && a.worksCount > 0);
+  // Hồ sơ "liên kết quốc tế" (a.intl: liên kết chính ở nước ngoài nhưng có công trình ghi cơ quan Việt Nam trong 5 năm gần đây) được chấm điểm bằng cùng công thức và cùng phân bố tham chiếu của nhóm trong nước, nhưng KHÔNG góp vào phân bố (điểm và hạng trong nước không đổi); hạng gồm cả nhóm này là proRankAll.
+  const scored = authors.filter((a) => (a.rankable || a.intl) && a.worksCount > 0);
   const field = (a) => a.disciplines?.[0] ?? "_";
   // Liên ngành: hồ sơ có phân bố ngành (discShares, từ build-index.mjs) được so sánh với MỌI nhóm ngành của mình theo tỉ trọng, thay vì chỉ ngành đứng đầu,
   // để một phân loại ngành sai lệch hoặc một nhà khoa học liên ngành không bị dồn hẳn vào một nhóm. Nhóm so sánh (byF) vẫn lập theo ngành chính.
@@ -36,7 +38,7 @@ export function computePro(authors, per, year) {
   const byF = new Map(); for (const a of pool) { const f = field(a); if (!byF.has(f)) byF.set(f, []); byF.get(f).push(a); }
   const cap = new Map(); for (const [f, as] of byF) cap.set(f, Math.max(20, quant(as.flatMap((a) => (per.get(a.id) ?? []).map((w) => w.citations ?? 0)), 0.99)));
   const feat = new Map();
-  for (const a of pool) {
+  for (const a of scored) {
     const ws = per.get(a.id) ?? [], c = (() => { let t = 0, w = 0; for (const [d, p] of mix(a)) if (cap.has(d)) { t += p * cap.get(d); w += p; } return w ? t / w : 1e9; })(), yrs = new Set(ws.map((w) => w.year));
     const excess = ws.reduce((s, w) => s + Math.max(0, (w.citations ?? 0) - c), 0);
     const lastOk = (w) => w.last && (w.disc?.length ? w.disc.every((d) => LASTD.has(d)) : LASTD.has(a.disciplines?.[0])); // tác giả cuối chỉ tính ở ngành có quy ước
@@ -58,7 +60,7 @@ export function computePro(authors, per, year) {
     const n = as.reduce((s, a) => s + feat.get(a.id).n, 0) || 1, kn = as.reduce((s, a) => s + feat.get(a.id).known, 0) || 1, qn = as.reduce((s, a) => s + feat.get(a.id).qn, 0);
     prior.set(f, { hi: mean(as, "hi") / n, lead: Math.min(0.85, mean(as, "lead") / kn), q: qn ? mean(as, "qsum") / qn : 0.6 });
   }
-  for (const a of pool) {
+  for (const a of scored) {
     const x = feat.get(a.id), p = (() => { const o = { hi: 0, lead: 0, q: 0 }; let w = 0; for (const [d, q] of mix(a)) { const pr = prior.get(d); if (!pr) continue; o.hi += q * pr.hi; o.lead += q * pr.lead; o.q += q * pr.q; w += q; } return w ? { hi: o.hi / w, lead: o.lead / w, q: o.q / w } : prior.get(field(a)); })();
     x.hiS = (x.hi + 5 * p.hi) / (x.n + 5);
     x.leadS = Math.min(0.85, (x.lead + 8 * p.lead) / (x.known + 8));
@@ -69,7 +71,7 @@ export function computePro(authors, per, year) {
   const glob = Object.fromEntries(KEYS.map((k) => [k, pctMap(pool.map((a) => feat.get(a.id)), k)]));
   const loc = new Map(); for (const [f, as] of byF) loc.set(f, Object.fromEntries(KEYS.map((k) => [k, pctMap(as.map((a) => feat.get(a.id)), k)])));
   const out95 = quant(pool.map((a) => feat.get(a.id).out), 0.95);
-  for (const a of pool) {
+  for (const a of scored) {
     const x = feat.get(a.id), B = 50, mx = mix(a).filter(([d]) => d !== "_" && byF.has(d)); // "_" = chưa có ngành: so với toàn hệ thống, không so với nhóm "chưa phân ngành" (nhóm này toàn hồ sơ rất mỏng nên làm điểm phồng)
     const pcOne = (d, k, v) => { const n = byF.get(d).length, L = loc.get(d); return (n * L[k](v) + (n < B ? (B - n) : 0) * glob[k](v)) / (n + (n < B ? B - n : 0)); };
     const pc = (k, v = x[k]) => { if (!mx.length) return glob[k](v); const w = mx.reduce((t, [, p]) => t + p, 0); return mx.reduce((t, [d, p]) => t + p * pcOne(d, k, v), 0) / w; };
@@ -87,7 +89,7 @@ export function computePro(authors, per, year) {
   }
   // ---- Hội đồng mô phỏng 1000 chuyên gia ảo: mỗi chuyên gia chấm mọi hồ sơ theo trọng số riêng; điểm cuối là trung bình, kèm khoảng P10-P90 và độ vững của hạng.
   const SEED = 20261007, panel = makePanel(1000, SEED), E = panel.length;
-  for (const a of pool) {
+  for (const a of scored) {
     const sc = new Float32Array(E);
     for (let e = 0; e < E; e++) { const w = panel[e].w; let t = 0; for (let i = 0; i < 7; i++) t += w[i] * a._s[i]; sc[e] = 100 * t; }
     a._sc = sc; let m = 0; for (let e = 0; e < E; e++) m += sc[e]; a._m = m / E; a.pro = Math.round(a._m * 10) / 10;
@@ -96,6 +98,9 @@ export function computePro(authors, per, year) {
   // Xếp hạng toàn hệ thống (đồng hạng cùng số) chỉ trong tập đủ điều kiện: ≥ 10 công trình và hoạt động ≥ 3 năm (hồ sơ quá mỏng không được xếp hạng, tránh điểm ảo). Tự tính lại mỗi lần dữ liệu cập nhật.
   const elig = pool.filter((a) => a.worksCount >= 10 && (a.lastYear ?? 0) - (a.firstYear ?? 0) >= 2 && a.disciplines?.length > 0).sort((p, q) => q._m - p._m || q.citations - p.citations);
   elig.forEach((a, i, arr) => { a.proRank = i > 0 && arr[i - 1]._m === a._m ? arr[i - 1].proRank : i + 1; });
+  // Hạng gồm cả hồ sơ liên kết quốc tế (cùng điều kiện đủ xếp hạng): proRankAll. proRank (trong nước) không bị ảnh hưởng.
+  const eligAll = scored.filter((a) => a.worksCount >= 10 && (a.lastYear ?? 0) - (a.firstYear ?? 0) >= 2 && a.disciplines?.length > 0).sort((p, q) => q._m - p._m || q.citations - p.citations);
+  eligAll.forEach((a, i, arr) => { a.proRankAll = i > 0 && arr[i - 1]._m === a._m ? arr[i - 1].proRankAll : i + 1; });
   // Hạng của từng hồ sơ dưới góc nhìn của từng chuyên gia ảo, để đo độ vững (khoảng hạng P10-P90 và tỉ lệ chuyên gia đồng ý huy hiệu).
   const N = elig.length, rk = new Uint16Array(N * E), order = Array.from({ length: N }, (_, i) => i);
   for (let e = 0; e < E; e++) { order.sort((i, j) => elig[j]._sc[e] - elig[i]._sc[e]); for (let r = 0; r < N; r++) rk[e * N + order[r]] = r + 1; }
@@ -110,6 +115,6 @@ export function computePro(authors, per, year) {
     if (a.proRank == null) { a.proRank = null; a.proTier = null; a.proR10 = a.proR90 = a.proStab = null; if (a.pro == null) { a.pro = null; a.proLo = a.proHi = null; a.proParts = null; a.proConf = null; } continue; }
     const r = a.proRank; a.proTier = r <= 10 ? "t10" : r <= 50 ? "t50" : r <= 100 ? "t100" : r <= 500 ? "t500" : r <= 1000 ? "t1000" : null;
   }
-  for (const a of authors) { delete a._s; delete a._sc; delete a._m; }
+  for (const a of authors) { if (a.proRankAll === undefined) a.proRankAll = null; delete a._s; delete a._sc; delete a._m; }
   return { eligible: elig.length, panel: summarize(panel, SEED) };
 }
