@@ -16,6 +16,7 @@ import { HeroArt } from "./HeroArt";
 import { useWorks } from "./wsearch";
 import { StarBtn } from "./StarBtn";
 import { ProBadge, ProBadgeTag } from "./Badge";
+import { rankOf, useIntlRank } from "./intlPref";
 import { AvatarFrame } from "./Frame";
 import { VisitChip } from "./VisitChip";
 import { provName } from "./provinces";
@@ -74,7 +75,7 @@ function AppInner() {
   // Hồ sơ ẩn theo yêu cầu: bỏ khỏi danh sách; hồ sơ ẩn điểm: xóa điểm, hạng, huy hiệu (công trình vẫn giữ).
   const data = useMemo(() => {
     if (!rawData || (!hid.profile.size && !hid.score.size)) return rawData;
-    return { ...rawData, authors: rawData.authors.filter((a) => !hid.profile.has(a.id)).map((a) => (hid.score.has(a.id) ? { ...a, pro: null, proLo: null, proHi: null, proR10: null, proR90: null, proStab: null, proParts: null, proConf: null, proRank: null, proTier: null, rankable: false } : a)) };
+    return { ...rawData, authors: rawData.authors.filter((a) => !hid.profile.has(a.id)).map((a) => (hid.score.has(a.id) ? { ...a, pro: null, proLo: null, proHi: null, proR10: null, proR90: null, proStab: null, proParts: null, proConf: null, proRank: null, proRankAll: null, proTier: null, rankable: false } : a)) };
   }, [rawData, hid]);
   const [err, setErr] = useState(false);
   const [route, setRoute] = useState(parseRoute);
@@ -235,6 +236,7 @@ function List({ d, query }: { d: Data; query: string }) {
     try { await saveSearch({ q: q.trim(), d: disc, ty: type, i: instSel, sc: scope === "all" ? "all" : "vn", label }); setSsMsg(t("searchSaved")); } catch (e: any) { setSsMsg(e?.message || t("saveFail")); }
     window.setTimeout(() => setSsMsg(""), 4000);
   };
+  const [intlRank, setIntlRank] = useIntlRank();
   const rows = useMemo(() => {
     const toks = norm(dq).split(" ").filter(Boolean);
     const rawId = dq.replace(/https?:\/\/(www\.)?orcid\.org\//i, "").replace(/^\s*(issn|orcid)\s*:?/i, "").replace(/[\s-]/g, "").toLowerCase(), isId = /^[0-9x]{6,}$/.test(rawId);
@@ -263,20 +265,19 @@ function List({ d, query }: { d: Data; query: string }) {
       let c = 0;
       if (sort === "name") c = a.name.localeCompare(b.name, "vi");
       else if (sort === "unit") { const u = (x: Author) => x.institutions.map((i) => instLabel(instById.get(i), lang, i)).join(", "); c = u(a).localeCompare(u(b), "vi"); }
-      else if (sort === "rank") c = (a.proRank ?? Infinity) === (b.proRank ?? Infinity) ? 0 : (a.proRank ?? Infinity) < (b.proRank ?? Infinity) ? -1 : 1;
+      else if (sort === "rank") c = (rankOf(a, intlRank) ?? Infinity) === (rankOf(b, intlRank) ?? Infinity) ? 0 : (rankOf(a, intlRank) ?? Infinity) < (rankOf(b, intlRank) ?? Infinity) ? -1 : 1;
       else c = ((a[sort] ?? 0) as number) - ((b[sort] ?? 0) as number);
-      return c * dir || (a.proRank ?? Infinity) - (b.proRank ?? Infinity) || (b.pro ?? -1) - (a.pro ?? -1) || b.worksCount - a.worksCount || a.name.localeCompare(b.name, "vi");
+      return c * dir || (rankOf(a, intlRank) ?? Infinity) - (rankOf(b, intlRank) ?? Infinity) || (b.pro ?? -1) - (a.pro ?? -1) || b.worksCount - a.worksCount || a.name.localeCompare(b.name, "vi");
     });
-  }, [d, dq, disc, type, prov, instSel, withPast, sort, dir, scope, instById, jn, lang, hay, top2only]);
+  }, [d, dq, disc, type, prov, instSel, withPast, sort, dir, scope, instById, jn, lang, hay, top2only, intlRank]);
   useEffect(() => setPage(0), [dq, disc, type, prov, instSel, withPast, sort, dir, scope, top2only]);
-  const [honorIntl, setHonorIntl] = useState(true);
   // Số liệu cho trang chủ (phạm vi Việt Nam): ngành và đơn vị nổi bật.
   const home$ = useMemo(() => {
     const vn = d.authors.filter((a) => !a.suspect), dc = new Map<string, number>(), ic = new Map<string, number>();
     for (const a of vn) { for (const x of a.disciplines) dc.set(x, (dc.get(x) ?? 0) + 1); const seen = new Set<string>(); for (const u0 of a.institutions) { if (a.instPast?.includes(u0)) continue; for (let x: string | undefined = u0, n = 0; x && n < 4; x = instById.get(x)?.parent, n++) if (!seen.has(x)) { seen.add(x); ic.set(x, (ic.get(x) ?? 0) + 1); } } } // đếm như bộ lọc: đang công tác, gồm đơn vị con
-    const rk = (a: Author) => (honorIntl ? a.proRankAll : a.proRank) ?? null; // honorIntl: gồm cả hồ sơ liên kết quốc tế
+    const rk = (a: Author) => rankOf(a, intlRank);
     return { honor: vn.filter((a) => rk(a) != null && rk(a)! <= 10).sort((x, y) => (rk(x) ?? 99) - (rk(y) ?? 99)).map((a) => ({ a, r: rk(a)! })), n: vn.length, top2: vn.filter((a) => a.top2).length, fields: [...dc].sort((a, b) => b[1] - a[1]).slice(0, 10), insts: [...ic].sort((a, b) => b[1] - a[1]).slice(0, 10), nInst: ic.size };
-  }, [d, instById, honorIntl]);
+  }, [d, instById, intlRank]);
   const [topWorks, setTopWorks] = useState<{ t: string; y: number; j: string; c: number; a: string; n: string; w: string }[]>([]);
   const [pool, setPool] = useState<typeof topWorks>([]), [myDisc, setMyDisc] = useState<string[]>([]);
   useEffect(() => { if (!home || pool.length) return; fetch("data/top-works.json").then((r) => r.json()).then((j) => setPool(j.works ?? [])).catch(() => {}); }, [home]);
@@ -313,7 +314,7 @@ function List({ d, query }: { d: Data; query: string }) {
           <div className="hgroup"><h2><Icon n="star" size={18} />{t("featured")}</h2>
             <p className="hchips">{home$.top2 > 0 && <button type="button" className="gold" onClick={quick(() => setTop2only(true))}>★ {t("top2Tag")}<em>{num(home$.top2)}</em></button>}<button type="button" className="all" onClick={() => setBrowse(true)}>{t("browseAll")} →</button></p></div>
           {home$.honor.length > 0 && <div className="hgroup honor"><h2><Icon n="trophy" size={18} />{t("honorH")}<small>{t("honorSub")}</small><a className="hmore" href="#/bang-xep-hang">{lang === "vi" ? "Bảng xếp hạng đơn vị, ngành" : "Leaderboard"} →</a> <a className="hmore" href="#/pro-score">{t("proMore")} →</a></h2>
-            <label className="chk"><input type="checkbox" checked={honorIntl} onChange={(e) => setHonorIntl(e.target.checked)} /> {lang === "vi" ? "Gồm cả hồ sơ liên kết quốc tế" : "Include international-link profiles"}</label>
+            <label className="chk"><input type="checkbox" checked={intlRank} onChange={(e) => setIntlRank(e.target.checked)} /> {lang === "vi" ? "Gồm cả hồ sơ liên kết quốc tế" : "Include international-link profiles"}</label>
             <ol className="hon">{home$.honor.map(({ a, r }) => <li key={a.id}><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}><ProBadge rank={r} size={40} /><span className="hn"><b>{a.name}{a.intl && <> <span className="badge">{t("intlTag")}</span></>}</b><small>{a.institutions.slice(0, 1).map((i) => instLabel(instById.get(i), lang, i)).join("")}</small></span><span className="hs">{num(a.pro ?? 0, 1)}<small>#{r}</small></span></a></li>)}</ol></div>}
           <div className="hcols">
             <div className="hgroup"><h2><Icon n="discipline" size={18} />{t("topFields")}<small>{t("byAuthors")}</small></h2>
@@ -344,6 +345,7 @@ function List({ d, query }: { d: Data; query: string }) {
           </div>
         </div>
         <label className="chk top2f"><input type="checkbox" checked={top2only} onChange={(e) => setTop2only(e.target.checked)} />★ {t("top2Only")}</label>
+        <label className="chk"><input type="checkbox" checked={intlRank} onChange={(e) => setIntlRank(e.target.checked)} /> {lang === "vi" ? "Hạng gồm cả hồ sơ liên kết quốc tế" : "Rank includes international-link profiles"}</label>
       </section>}
       {q.trim() && <div className="rtabs" role="tablist" aria-label={t("title")}>
         <button type="button" role="tab" aria-selected={tab === "a"} onClick={() => setTab("a")}><Icon n="scholar" size={16} />{t("tabAuthors")}<em>{num(rows.length)}</em></button>
@@ -383,7 +385,7 @@ function List({ d, query }: { d: Data; query: string }) {
           <tbody>{rows.slice(page * PAGE, (page + 1) * PAGE).map((a, idx) => { const pos = page * PAGE + idx + 1, medal = RANKED.includes(sort) && dir === -1; return (
             <tr key={a.id}>
               <td className="num rankc" data-l={t("stt")}><span className={`rk r${medal ? Math.min(pos, 4) : 4}`}>{num(pos)}</span></td>
-              <td className="who"><StarBtn className="inrow" k={`a|${a.id}`} meta={{ t: a.name, s: a.institutions.slice(0, 2).map((i) => instLabel(instById.get(i), lang, i)).join(", "), sc: a.pro ?? undefined, rk: a.proRank ?? undefined }} /><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a><VerifiedTick id={a.id} size={15} /><ProBadge rank={a.proRank} size={24} className="inrow" />{a.bigFlag && <span className="bigtag" title={t("bigTitle") + ": " + t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}><Icon n="users" size={12} /></span>}{a.claimed && <><Icon n="check" size={14} className="ok" /><span className="sr"> {t("claimedSr")}</span></>}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}{a.abroadMain && <span className="tagf">{t("abroadTag")}</span>}<Top2Tag a={a} cls="top2" /><div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
+              <td className="who"><StarBtn className="inrow" k={`a|${a.id}`} meta={{ t: a.name, s: a.institutions.slice(0, 2).map((i) => instLabel(instById.get(i), lang, i)).join(", "), sc: a.pro ?? undefined, rk: rankOf(a, intlRank) ?? undefined }} /><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a><VerifiedTick id={a.id} size={15} /><ProBadge rank={rankOf(a, intlRank)} size={24} className="inrow" />{a.bigFlag && <span className="bigtag" title={t("bigTitle") + ": " + t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}><Icon n="users" size={12} /></span>}{a.claimed && <><Icon n="check" size={14} className="ok" /><span className="sr"> {t("claimedSr")}</span></>}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}{a.abroadMain && <span className="tagf">{t("abroadTag")}</span>}<Top2Tag a={a} cls="top2" /><div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
               <td data-l={t("unit")}>{(() => { const cur = a.institutions.filter((i) => !a.instPast?.includes(i)); return cur.filter((i) => !cur.some((j) => j !== i && inUnit(j, i))); })().map((i) => instLabel(instById.get(i), lang, i)).join(", ")}{a.instPast?.length ? <small className="past" title="Đơn vị trước đây, theo cơ quan ghi trên các công trình gần đây"> · {lang === "vi" ? "trước đây" : "formerly"}: {a.instPast.map((i) => instLabel(instById.get(i), lang, i)).join(", ")}</small> : null}</td>
               <td className={`num${a.worksCount >= 1000 ? " lg" : ""}`} data-l={t("works")}>{num(a.worksCount)}</td><td className="num" data-l={t("scoreShort")}><span className="score">{a.pro == null ? "-" : num(a.pro, 1)}</span></td><td className={`num${a.citations >= 100000 ? " lg" : ""}`} data-l={t("cit")}>{num(a.citations)}</td>
               <td className="meta yrs" data-l={t("years")}>{a.firstYear ?? "-"}–{a.lastYear ?? "-"}</td>
@@ -447,11 +449,12 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
     Object.assign(document.createElement("a"), { href: url, download: `${slug(a.name)}-${a.id}.csv` }).click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
   // Chia sẻ hồ sơ: sao chép liên kết kèm lời giới thiệu ngắn, dễ dán vào Zalo, Facebook, LinkedIn. Chỉ dùng dữ liệu công khai; hồ sơ ẩn điểm thì không nêu hạng và điểm.
+  const [intlRank] = useIntlRank(), myRank = rankOf(a, intlRank);
   const [shared, setShared] = useState(false);
   const shareText = () => {
-    const vi = lang === "vi", ranked = a.pro != null && a.proRank != null, score = a.pro?.toFixed(1) ?? "";
+    const vi = lang === "vi", ranked = a.pro != null && myRank != null, score = a.pro?.toFixed(1) ?? "";
     const link = `${location.origin}/?utm_source=share&utm_medium=profile${user?.ref ? `&ref=${user.ref}` : ""}#/tac-gia/${encodeURIComponent(a.id)}`;
-    const head = ranked ? `${a.proRank! <= 10 ? "🏆" : "⭐"} ${a.name} ${vi ? `đang đứng hạng #${a.proRank} bảng xếp hạng PRO-SCORE1000™ (${score}/100)` : `ranks #${a.proRank} on the PRO-SCORE1000™ leaderboard (${score}/100)`}`
+    const head = ranked ? `${myRank! <= 10 ? "🏆" : "⭐"} ${a.name} ${vi ? `đang đứng hạng #${myRank} bảng xếp hạng PRO-SCORE1000™ (${score}/100)` : `ranks #${myRank} on the PRO-SCORE1000™ leaderboard (${score}/100)`}`
       : `📖 ${vi ? `Hồ sơ nhà khoa học ${a.name} trên ProFind™` : `${a.name}'s researcher profile on ProFind™`}`;
     const stats = [`${num(a.worksCount)} ${vi ? "công trình" : "works"}`, a.citations > 0 ? `${num(a.citations)} ${vi ? "trích dẫn" : "citations"}` : ""].filter(Boolean);
     const top2 = vi ? "nằm trong danh sách Top 2% nhà khoa học có ảnh hưởng nhất thế giới" : "is on the global Top 2% most-influential scientists list";
@@ -467,7 +470,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   };
   const saveAuthor = async () => {
     if (!user) { try { sessionStorage.setItem("profind.ret", location.hash); sessionStorage.setItem("profind.reason", "fav"); } catch { /* bỏ qua */ } evt("save_gate"); location.hash = "#/tai-khoan"; return; }
-    try { await toggleFav(`a|${a.id}`, { t: a.name, s: inst.slice(0, 2).map((i) => instLabel(i, lang)).join(", "), sc: a.pro ?? undefined, rk: a.proRank ?? undefined }); } catch (e: any) { alert(e?.message || t("saveFail")); }
+    try { await toggleFav(`a|${a.id}`, { t: a.name, s: inst.slice(0, 2).map((i) => instLabel(i, lang)).join(", "), sc: a.pro ?? undefined, rk: myRank ?? undefined }); } catch (e: any) { alert(e?.message || t("saveFail")); }
   };
   const openWork = (w: Work) => { recordView({ k: `w|${w.id}`, t: w.title, s: [w.journal, w.year].filter(Boolean).join(" · "), u: w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${w.id.split("-").pop()}` }); evt("work_open", w.id, w.title); };
   const pool = d.meta.rankPool ?? 0;
@@ -500,7 +503,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
         <AvatarFrame a={a}><div className="av" style={{ background: `linear-gradient(135deg,hsl(${hue} 75% 52%),hsl(${(hue + 55) % 360} 80% 42%))` }} aria-hidden="true"><AvatarImg id={a.id} fallback={initials(a.name)} /></div></AvatarFrame>
         <div className="hero-main">
           <div className="hname"><h1 className="au">{a.name}</h1><VerifiedTick id={a.id} size={28} /></div>
-          <div className="hstat"><VerifiedBadge id={a.id} /><ProBadgeTag rank={a.proRank} />{a.intl && <span className="badge">{t("intlTag")}</span>}<Top2Tag a={a} cls="badge top2b" />{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}{a.abroadMain && <span className="badge warnb">{t("abroadTag")}</span>}{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</div>
+          <div className="hstat"><VerifiedBadge id={a.id} /><ProBadgeTag rank={myRank} />{a.intl && <span className="badge">{t("intlTag")}</span>}<Top2Tag a={a} cls="badge top2b" />{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}{a.abroadMain && <span className="badge warnb">{t("abroadTag")}</span>}{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</div>
           <ul className="chips">{(allInst ? inst : inst.slice(0, 4)).map((i) => { const past = a.instPast?.includes(i.id); return <li key={i.id} className={past ? "pastchip" : undefined} title={past ? "Đơn vị trước đây, theo cơ quan ghi trên các công trình gần đây" : undefined}><Icon n="building" size={14} />{past ? (lang === "vi" ? "Trước đây: " : "Formerly: ") : ""}{i.type === "other" ? instLabel(i, lang) : <a href={`/don-vi/${encodeURIComponent(i.id)}/`}>{instLabel(i, lang)}</a>}</li>; })}{inst.length > 4 && <li className="more"><button type="button" onClick={() => setAllInst(!allInst)} aria-expanded={allInst}>{allInst ? t("instLess") : t("instMore", { n: num(inst.length - 4) })}</button></li>}</ul>
           {a.bigFlag && <p className="bigflag" role="note"><Icon n="users" size={18} /><span><b>{t("bigTitle")}</b> {t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}</span></p>}
           {(ownDisc ?? a.disciplines).length > 0 && <p className="hdisc" title={!ownDisc && a.discBasis ? t(("discBasis_" + a.discBasis) as "discUncertain") : undefined}>{(ownDisc ?? a.disciplines).map((s) => dName(s, lang) + (!ownDisc && a.discShares && a.disciplines.length > 1 && a.discShares[s] ? ` ${a.discShares[s]}%` : "")).join(" · ")}{!ownDisc && a.discBasis === "khac-biet" && <small className="meta"> · {t("discUncertain")}</small>}</p>}
@@ -509,7 +512,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
         </div>
       </header>
       <div className="kpis">
-        <div className="kpi k-rank"><span className="kic"><Icon n="trophy" size={20} /></span><b>{rk(a.proRank)}</b><span>{t("rank")} · PRO-SCORE1000™</span><small>{a.proRank ? t("rankOf", { n: num(pool) }) : t("rankNone")}{a.proR10 != null && a.proR90 != null && a.proR10 !== a.proR90 ? ` · ${num(a.proR10)}–${num(a.proR90)}` : ""}</small></div>
+        <div className="kpi k-rank"><span className="kic"><Icon n="trophy" size={20} /></span><b>{rk(myRank)}</b><span>{t("rank")} · PRO-SCORE1000™</span><small>{myRank ? t("rankOf", { n: num(intlRank ? d.meta.rankPoolAll ?? pool : pool) }) : t("rankNone")}{a.proR10 != null && a.proR90 != null && a.proR10 !== a.proR90 ? ` · ${num(a.proR10)}–${num(a.proR90)}` : ""}</small></div>
         <div className="kpi k-score"><span className="kic"><Icon n="check" size={20} /></span><b>{a.pro == null ? "-" : num(a.pro, 1)}<em>/100</em></b><span>PRO-SCORE1000™</span></div>
         <div className="kpi"><span className="kic"><Icon n="book" size={20} /></span><b>{num(a.worksCount)}</b><span>{t("counted")}</span>{a.oaWorks != null && a.oaWorks > a.worksCount && <small title={t("oaWorksNote", { n: num(a.oaWorks) })}>{t("oaWorksShort", { n: num(a.oaWorks) })}</small>}{confN > 0 && <small>{t("confKpi", { n: num(confN), p: pts(confN * confPt) })}</small>}</div>
         <div className="kpi"><span className="kic"><Icon n="chart" size={20} /></span><b>{num(a.citations)}</b><span title={t("citTip")}>{t("cit")}</span><small title={t("citTip")}>{a.scholarCit ? `Google Scholar ${num(a.scholarCit)} (${t("selfDecl")}) · ` : ""}{t("citNote")}{a.hIndex ? ` · ${t("hIdx")} ${a.hIndex}` : ""} · {t("rank")} {rk(a.rankCit)}</small></div>

@@ -116,5 +116,5 @@ export function computePro(authors, per, year) {
     const r = a.proRank; a.proTier = r <= 10 ? "t10" : r <= 50 ? "t50" : r <= 100 ? "t100" : r <= 500 ? "t500" : r <= 1000 ? "t1000" : null;
   }
   for (const a of authors) { if (a.proRankAll === undefined) a.proRankAll = null; delete a._s; delete a._sc; delete a._m; }
-  return { eligible: elig.length, panel: summarize(panel, SEED) };
+  return { eligible: elig.length, eligibleAll: eligAll.length, panel: summarize(panel, SEED) };
 }

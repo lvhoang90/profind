@@ -1,3 +1,4 @@
+import { useIntlRank } from "./intlPref";
 import { provName } from "./provinces";
 import { useEffect, useMemo, useState } from "react";
 import type { Author } from "./types";
@@ -20,7 +21,7 @@ type LRow = { id: string; n: number; avg: number; p1000: number; cit: number; to
 export function LeaderboardPage({ lang, num }: { lang: Lang; num: (n: number, d?: number) => string }) {
   const t = L[lang], [tab, setTab] = useState<"u" | "f">("u"), [type, setType] = useState(""), [sort, setSort] = useState<SortK>("avg");
   // Bảng đã tính sẵn lúc dựng (scripts/build-lite.mjs → data/leaderboard.json, ~80 KB): không cần tải cả bộ hồ sơ.
-  const [lb, setLb] = useState<LB | null>(null), [err, setErr] = useState(false), [intl, setIntl] = useState(true); // intl: gồm cả hồ sơ liên kết quốc tế (xếp theo proRankAll)
+  const [lb, setLb] = useState<LB | null>(null), [err, setErr] = useState(false), [intl, setIntl] = useIntlRank(); // intl: gồm cả hồ sơ liên kết quốc tế (xếp theo proRankAll)
   useEffect(() => { fetch("./data/leaderboard.json").then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }).then(setLb).catch(() => setErr(true)); }, []);
   const rows = useMemo(() => {
     if (!lb) return [] as Row[];
