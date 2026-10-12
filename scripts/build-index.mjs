@@ -262,6 +262,7 @@ for (const a of outAuthors) a.rankable = !a.suspect && !EXCLUDED.has(a.id) && !a
 // Liên kết quốc tế (quyết định 12/10/2026): hồ sơ có liên kết chính ở nước ngoài nhưng có ≥ INTL_MIN công trình ghi cơ quan Việt Nam trong 5 năm gần đây (giảng viên thỉnh giảng, chuyên gia hợp tác, người Việt ở nước ngoài) vẫn được chấm điểm và có hạng riêng (proRankAll, gồm cả nhóm này); hạng trong nước (proRank) không đổi.
 const INTL_MIN = 3, vn5Of = new Map(outAuthors.map((a) => [a.id, features(AUS.get(a.id), ABROAD_RULE, BUILD_YEAR).vn5]));
 for (const a of outAuthors) { a.vnWorks5 = vn5Of.get(a.id) ?? 0; a.intl = !!a.abroadMain && !a.suspect && !EXCLUDED.has(a.id) && a.vnWorks5 >= INTL_MIN; }
+for (const a of outAuthors) if (a.rankable && !a.institutions.length && !(a.vnShare > 0) && !a.vnWorks5) a.rankable = false; // không có đơn vị và không có công trình nào ghi cơ quan Việt Nam: không có bằng chứng liên kết với Việt Nam nên không xếp hạng
 const pool = outAuthors.filter((a) => a.rankable && a.worksCount > 0);
 const rank = (key, out) => { const o = [...pool].sort((a, b) => b[key] - a[key]); o.forEach((a, i, arr) => { a[out] = i > 0 && arr[i - 1][key] === a[key] ? arr[i - 1][out] : i + 1; }); };
 for (const a of outAuthors) { a.rankScore = a.rankWorks = a.rankCit = null; }
