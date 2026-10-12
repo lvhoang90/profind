@@ -704,3 +704,5 @@ td.who>.meta{margin-top:3px}
 .why-h{font-size:.72rem;color:var(--ink-2)}
 .whyc{padding:1px 8px;border-radius:999px;border:1px solid var(--line);background:var(--s1);color:var(--ink-2);font-size:.72rem;font-weight:600}
 @media(forced-colors:active){.trust,.tchip,.whyc{border:1px solid CanvasText}}
+
+.school{display:flex;flex-direction:column;gap:14px;max-width:900px}.sch-name{margin:4px 0 0}.sch-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}.sch-kpis .kpi{padding:12px}.sch-kpis b{font-size:1.4rem;font-variant-numeric:tabular-nums}.sch-tw{overflow-x:auto}.sch-t{width:100%;border-collapse:collapse;font-size:.9rem}.sch-t th,.sch-t td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left}.sch-t .num{text-align:right;font-variant-numeric:tabular-nums}.sch-t tr.on{background:var(--s3)}.sch-ex{list-style:none;margin:0;padding:0;display:grid;gap:6px}.sch-ex li{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:8px}.sch-ex a{display:grid;min-width:0}.sch-ex small{color:var(--ink-2)}
