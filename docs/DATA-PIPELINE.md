@@ -162,3 +162,7 @@ npm run d:check                              # kiểm tra nhất quán
 ## Rà hồ sơ Top 2% (2026-10)
 
 240 hồ sơ có nhãn Top 2% được rà bài lạc (bài của người trùng tên) theo cách đã làm với A5008082871: nhóm bài nghi ngờ khách quan (cơ quan/ngành/ORCID khác) do bộ lọc heuristic lập, sau đó chuyên viên AI nhận định từng bài. Chỉ tách khi cả hai điều kiện cùng đúng; không động vào hồ sơ đã xác thực; không tách quá 40% số bài của một hồ sơ. Kết quả: 77 hồ sơ, 465 bài đưa vào `excludeWorks`.
+
+## Quét đơn vị gán sai theo cơ quan ghi trên bài (2026-10)
+
+Với 982 hồ sơ có điểm đơn vị hiện tại yếu (< 0,3), tải cơ quan ghi gốc trên từng bài từ OpenAlex và đối chiếu với tên đơn vị. Kết quả: lỗi dạng "cơ quan là công ty hoặc nơi khác nhưng bị gán một trường" rất hiếm (5 hồ sơ, đã sửa bằng `setInstitutions`; hồ sơ Nghia Nguyen-Trong là trường hợp đầu tiên). Phần lớn cảnh báo còn lại là đơn vị con/cha hoặc cách viết tên khác nhau, không phải lỗi.
