@@ -25,6 +25,9 @@ export function startSession() {
 }
 /** Điểm chạm sang hệ sinh thái ISA: ghi sự kiện ẩn danh và (nếu đã đăng nhập) lượt của người dùng. */
 export type App = "edufind" | "ami" | "may";
-export const ecoUrl = (app: App, place: string, to = "") => app === "edufind"
-  ? `https://edufind.isavn.edu.vn/${to}?utm_source=profind&utm_medium=${place}&utm_campaign=ecosystem` // EduFind đọc utm_source để đo lượt vào từ ProFind™
-  : `https://isavn.edu.vn/go/${app}?from=profind&to=${encodeURIComponent(`/?utm_source=profind&utm_medium=${place}&utm_campaign=ecosystem`)}`; // cổng /go chỉ giữ tham số utm khi nằm trong `to`; để ngoài thì Ami và Mây nhận utm_source=isavn.edu.vn
+export const ecoUrl = (app: App, place: string, to = "") => {
+  if (app === "edufind") return `https://edufind.isavn.edu.vn/${to}?utm_source=profind&utm_medium=${place}&utm_campaign=ecosystem`; // EduFind đọc utm_source để đo lượt vào từ ProFind™
+  // Ami và Mây: cổng /go chỉ giữ tham số utm khi nằm trong `to`; để ngoài thì Ami và Mây nhận utm_source=isavn.edu.vn. `to` có thể là đường dẫn kèm tham số của ứng dụng đích (vd. "/?issn=2734-9349": Mây mở thẳng chuẩn của tạp chí).
+  const path = to || "/", utm = `utm_source=profind&utm_medium=${place}&utm_campaign=ecosystem`;
+  return `https://isavn.edu.vn/go/${app}?from=profind&to=${encodeURIComponent(`${path}${path.includes("?") ? "&" : "?"}${utm}`)}`;
+};

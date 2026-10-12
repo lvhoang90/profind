@@ -1,0 +1,4 @@
+// ISSN của các tạp chí có chuẩn trình bày trong Mây (Trợ lý văn thư): liên kết sâu `/?issn=<ISSN>` mở thẳng chuẩn của tạp chí đó.
+// Nguồn: kho tro-ly-van-thu, server/lib/acad/profiles.js (12/10/2026). Cập nhật khi Mây thêm hoặc bỏ chuẩn; ISSN lạ chỉ đưa người dùng về bước chọn chuẩn.
+export const MAY_ISSNS = new Set(["0251-4184", "0866-7519", "0868-3166", "1013-4328", "1605-2811", "1813-9663", "1859-0020", "1859-3100", "2305-221X", "2305-2228", "2315-4144", "2354-0753", "2354-080X", "2354-1172", "2515-964X", "2525-2445", "2525-2518", "2588-1159", "2588-1418", "2615-9112", "2615-9139", "2615-9325", "2615-9821", "2632-5330", "2633-7991", "2734-9349", "2734-9616", "2734-9918", "2815-5874", "2815-5939", "2815-6142", "3093-317X"]);
+export const mayHas = (issn: string | null | undefined) => !!issn && MAY_ISSNS.has(String(issn).toUpperCase());
