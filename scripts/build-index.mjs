@@ -38,6 +38,7 @@ const removeIds = new Set(C.remove.map((x) => x.author).filter(Boolean)), remove
 const byAuthorId = new Map();
 for (const a of R.authors) { const k = byAuthorId.get(a.id); if (!k) byAuthorId.set(a.id, { ...a, institutions: [...a.institutions] }); else k.institutions = [...new Set([...k.institutions, ...a.institutions])]; }
 let authors = [...byAuthorId.values()].filter((a) => { const drop = removeIds.has(a.id) || (a.orcid && removeOrcid.has(a.orcid)); if (drop) log.push(`gỡ ${a.id}`); return !drop; });
+for (const a of authors) if (C.clearOrcid?.[a.id]) a.orcid = null; // corrections.clearOrcid: ORCID trên hồ sơ OpenAlex gộp nhiều người thuộc về người khác
 const alias = new Map(); // id bị gộp -> id đích
 for (const m of C.merge) for (const f of m.from) alias.set(f, m.into);
 // Gộp theo ORCID CHỈ khi tên tương thích: OpenAlex đôi khi gắn nhầm ORCID của người này vào hồ sơ người khác (khác tên), gộp vào sẽ kéo theo đơn vị và công trình lạ.
