@@ -10,6 +10,7 @@ for (const a of d.authors) {
   if (a.worksCount > 0 && !hasWorks(a.id)) errs.push(`${a.id}: thiếu tệp công trình`);
   if (a.countedWorks > a.worksCount) errs.push(`${a.id}: countedWorks > worksCount`);
   if (a.totalScore < 0) errs.push(`${a.id}: điểm âm`);
+  if (a.prov) { const p = a.prov, f = p.fix; if (!["works", "weak", "set", "none"].includes(p.instEv)) errs.push(`${a.id}: prov.instEv sai ${p.instEv}`); if (f && (!["excl", "assign", "merged"].every((k) => Number.isInteger(f[k]) && f[k] >= 0) || typeof f.units !== "boolean" || !(f.excl || f.assign || f.merged || f.units))) errs.push(`${a.id}: prov.fix sai`); if (p.instEv === "none" && a.institutions.length) errs.push(`${a.id}: prov.instEv none nhưng có đơn vị`); if (p.instEv === "set" && !f?.units) errs.push(`${a.id}: instEv set nhưng fix.units không đúng`); }
   if (a.orcid && !/^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(a.orcid)) errs.push(`${a.id}: ORCID sai định dạng ${a.orcid}`);
 }
 const orc = new Map(); for (const a of d.authors) if (a.orcid) { if (orc.has(a.orcid)) errs.push(`ORCID trùng: ${a.id} và ${orc.get(a.orcid)}`); orc.set(a.orcid, a.id); }

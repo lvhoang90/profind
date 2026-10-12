@@ -686,3 +686,21 @@ td.who>.meta{margin-top:3px}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]) .psp-ch em{color:#a5b4fc}}
 
 .collab{display:flex;flex-direction:column;gap:16px;max-width:760px}.collab-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}.collab-cols h2{font-size:1rem;margin:0 0 4px}.collab-list{margin:0;padding-left:1.1rem;display:grid;gap:4px}.collab-form{display:grid;gap:12px;position:relative}
+/* Độ tin cậy hồ sơ và chip "Vì sao xuất hiện" */
+.trust{margin:16px 0 0;border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--surface);border-radius:10px;font-size:.88rem;color:var(--ink)}
+.trust.has-warn{border-left-color:var(--warn)}
+.trust-sum{display:flex;gap:10px;align-items:center;padding:8px 12px;flex-wrap:wrap}
+.trust-sum>.ic{flex:none;color:var(--accent)}.trust.has-warn .trust-sum>.ic{color:var(--warn);--ic2:var(--warn)}
+.trust-sum p{margin:0;flex:1 1 220px;min-width:0;display:flex;flex-wrap:wrap;gap:6px;align-items:center}.trust-sum p b{margin-right:4px}
+.tchip{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--s1);color:var(--ink-2);font-size:.78rem;font-weight:600}
+.tchip.st-ok{background:var(--s3);color:var(--ink)}.tchip.warn{color:var(--warn);box-shadow:inset 0 0 0 1px var(--warn)}
+.trust-body{padding:2px 14px 14px;border-top:1px solid var(--line)}
+.trust-body dl{display:grid;grid-template-columns:minmax(110px,max-content) minmax(0,1fr);gap:8px 16px;margin:12px 0}
+.trust-body dt{font-size:.75rem;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-2);padding-top:2px}.trust-body dt.wdt{color:var(--warn)}
+.trust-body dd{margin:0;overflow-wrap:anywhere}.trust-body ul{margin:0;padding-left:18px}.trust-body ul.wl{color:var(--warn)}
+.trust-links{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0}.trust-links a{display:inline-flex;align-items:center;min-height:36px}
+@media(max-width:600px){.trust-body dl{grid-template-columns:minmax(0,1fr);gap:2px}.trust-body dd{margin-bottom:8px}}
+.why{display:flex;flex-wrap:wrap;gap:4px;list-style:none;margin:4px 0 0;padding:0;align-items:center}
+.why-h{font-size:.72rem;color:var(--ink-2)}
+.whyc{padding:1px 8px;border-radius:999px;border:1px solid var(--line);background:var(--s1);color:var(--ink-2);font-size:.72rem;font-weight:600}
+@media(forced-colors:active){.trust,.tchip,.whyc{border:1px solid CanvasText}}

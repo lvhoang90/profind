@@ -26,6 +26,7 @@ import { fetchWorks } from "./worksShard";
 import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg, useVerified, useIsMine, useOwnDisc, useNotMine, reportNotMine, useConf, useConfPoints } from "./Verified";
 import { useHidden } from "./hidden";
 import { NoDataHint } from "./NoData";
+import { TrustBlock, WhyChips, type WhyKey } from "./Trust";
 import { Footer, EcoLink } from "./Footer";
 import { evt, startSession } from "./analytics";
 import { getTheme, setTheme, type Theme } from "./theme";
@@ -241,7 +242,7 @@ function List({ d, query }: { d: Data; query: string }) {
   const [intlRank, setIntlRank] = useIntlRank();
   const rows = useMemo(() => {
     const toks = norm(dq).split(" ").filter(Boolean);
-    const rawId = dq.replace(/https?:\/\/(www\.)?orcid\.org\//i, "").replace(/^\s*(issn|orcid)\s*:?/i, "").replace(/[\s-]/g, "").toLowerCase(), isId = /^[0-9x]{6,}$/.test(rawId);
+    const rawId = dq.replace(/https?:\/\/(www\.)?orcid\.org\//i, "").replace(/^\s*(issn|orcid)\s*:?/i, "").replace(/[\s-]/g, "").toLowerCase(), isId = /^[0-9x]{6,}$/.test(rawId), idQ = /^a\d{6,}$/.test(rawId) ? rawId : "";
     // Khớp đủ tên (mọi từ khóa nằm trong tên người) được xếp lên trước các hồ sơ chỉ khớp nhờ đơn vị hoặc tạp chí.
     const nameFull = (x: Author) => { const w = hay.get(x.id)?.n ?? norm(x.name).split(" "); return toks.every((tk, i) => w.some((y) => (i === toks.length - 1 ? y.startsWith(tk) : y === tk))); };
     return d.authors.filter((a) => {
@@ -252,6 +253,7 @@ function List({ d, query }: { d: Data; query: string }) {
       if (prov && !a.institutions.some((i) => !a.instPast?.includes(i) && instById.get(i)?.city === prov)) return false;
       if (top2only && !a.top2) return false;
       if (!toks.length) return true;
+      if (idQ) return a.id.toLowerCase() === idQ;
       if (isId) return idPlain(a.orcid ?? "").includes(rawId) || (jn?.[a.id]?.p.includes(rawId) ?? false);
       // Tên và đơn vị: mỗi từ khóa phải trùng trọn một từ trong tên hoặc tên đơn vị (từ cuối gõ dở được khớp theo tiền tố), không khớp chuỗi con ("dat" không ra "Datta", "Sinh Cong Lam" không ra "trần văn đạt").
       // Tên: mọi từ khóa trùng trọn một từ trong tên (từ cuối gõ dở khớp theo tiền tố). Đơn vị: mọi từ khóa nằm trong tên đơn vị, hoặc tên + cụm từ đơn vị từ 2 từ trở lên
@@ -263,7 +265,7 @@ function List({ d, query }: { d: Data; query: string }) {
       // Tạp chí/ISSN: khớp cả cụm từ, không khớp từng từ rời (tránh "tran van dat" khớp "Transactions ... data").
       const j = jn?.[a.id]?.t; return !!j && j.includes(toks.join(" "));
     }).sort((a, b) => {
-      if (toks.length && !isId) { const pn = Number(!nameFull(a)) - Number(!nameFull(b)); if (pn) return pn; }
+      if (toks.length && !isId && !idQ) { const pn = Number(!nameFull(a)) - Number(!nameFull(b)); if (pn) return pn; }
       let c = 0;
       if (sort === "name") c = a.name.localeCompare(b.name, "vi");
       else if (sort === "unit") { const u = (x: Author) => x.institutions.map((i) => instLabel(instById.get(i), lang, i)).join(", "); c = u(a).localeCompare(u(b), "vi"); }
@@ -273,6 +275,30 @@ function List({ d, query }: { d: Data; query: string }) {
     });
   }, [d, dq, disc, type, prov, instSel, withPast, sort, dir, scope, instById, jn, lang, hay, top2only, intlRank]);
   useEffect(() => setPage(0), [dq, disc, type, prov, instSel, withPast, sort, dir, scope, top2only]);
+  // "Vì sao xuất hiện": chỉ tính cho các dòng của trang đang xem, từ dữ liệu sẵn có ở client.
+  const worksAuthors = useMemo(() => new Set(works.items.map((w) => w.authorId)), [works.items]);
+  const why = useMemo(() => {
+    const m = new Map<string, WhyKey[]>(), toks = norm(dq).split(" ").filter(Boolean);
+    if (!toks.length) return m;
+    const rawId = dq.replace(/https?:\/\/(www\.)?orcid\.org\//i, "").replace(/^\s*(issn|orcid)\s*:?/i, "").replace(/[\s-]/g, "").toLowerCase();
+    const isId = /^[0-9x]{6,}$/.test(rawId), isPid = /^a\d{6,}$/.test(rawId), phrase = toks.join(" ");
+    const last = toks.length - 1, hit = (ws: string[], x: string, i: number) => ws.some((w) => (i === last ? w.startsWith(x) : w === x));
+    for (const a of rows.slice(page * PAGE, (page + 1) * PAGE)) {
+      const k: WhyKey[] = [], h = hay.get(a.id);
+      if (isPid) { if (a.id.toLowerCase() === rawId) k.push("whyId"); }
+      else if (isId) { if (idPlain(a.orcid ?? "").includes(rawId)) k.push("whyOrcid"); if (jn?.[a.id]?.p.includes(rawId)) k.push("whyJn"); }
+      else {
+        const nameHit = toks.filter((x, i) => hit(h?.n ?? [], x, i)).length;
+        if (nameHit) k.push("whyName");
+        if (nameHit < toks.length && h && toks.some((x, i) => hit(h.i, x, i))) k.push("whyInst");
+        if (phrase.length >= 3 && a.disciplines.some((s) => norm(dName(s, lang)).includes(phrase))) k.push("whyDisc");
+        if (jn?.[a.id]?.t.includes(phrase)) k.push("whyJn");
+        if (worksAuthors.has(a.id)) k.push("whyWork");
+      }
+      m.set(a.id, k);
+    }
+    return m;
+  }, [rows, page, dq, hay, jn, lang, worksAuthors]);
   // Số liệu cho trang chủ (phạm vi Việt Nam): ngành và đơn vị nổi bật.
   const home$ = useMemo(() => {
     const vn = d.authors.filter((a) => !a.suspect), dc = new Map<string, number>(), ic = new Map<string, number>();
@@ -387,7 +413,7 @@ function List({ d, query }: { d: Data; query: string }) {
           <tbody>{rows.slice(page * PAGE, (page + 1) * PAGE).map((a, idx) => { const pos = page * PAGE + idx + 1, medal = RANKED.includes(sort) && dir === -1; return (
             <tr key={a.id}>
               <td className="num rankc" data-l={t("stt")}><span className={`rk r${medal ? Math.min(pos, 4) : 4}`}>{num(pos)}</span></td>
-              <td className="who"><StarBtn className="inrow" k={`a|${a.id}`} meta={{ t: a.name, s: a.institutions.slice(0, 2).map((i) => instLabel(instById.get(i), lang, i)).join(", "), sc: a.pro ?? undefined, rk: rankOf(a, intlRank) ?? undefined }} /><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a><VerifiedTick id={a.id} size={15} /><ProBadge rank={rankOf(a, intlRank)} size={24} className="inrow" />{a.bigFlag && <span className="bigtag" title={t("bigTitle") + ": " + t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}><Icon n="users" size={12} /></span>}{a.claimed && <><Icon n="check" size={14} className="ok" /><span className="sr"> {t("claimedSr")}</span></>}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}{a.abroadMain && <span className="tagf">{t("abroadTag")}</span>}<Top2Tag a={a} cls="top2" /><div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
+              <td className="who"><StarBtn className="inrow" k={`a|${a.id}`} meta={{ t: a.name, s: a.institutions.slice(0, 2).map((i) => instLabel(instById.get(i), lang, i)).join(", "), sc: a.pro ?? undefined, rk: rankOf(a, intlRank) ?? undefined }} /><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a><VerifiedTick id={a.id} size={15} /><ProBadge rank={rankOf(a, intlRank)} size={24} className="inrow" />{a.bigFlag && <span className="bigtag" title={t("bigTitle") + ": " + t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}><Icon n="users" size={12} /></span>}{a.claimed && <><Icon n="check" size={14} className="ok" /><span className="sr"> {t("claimedSr")}</span></>}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}{a.abroadMain && <span className="tagf">{t("abroadTag")}</span>}<Top2Tag a={a} cls="top2" /><div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div><WhyChips why={why.get(a.id) ?? []} /></td>
               <td data-l={t("unit")}>{(() => { const cur = a.institutions.filter((i) => !a.instPast?.includes(i)); return cur.filter((i) => !cur.some((j) => j !== i && inUnit(j, i))); })().map((i) => instLabel(instById.get(i), lang, i)).join(", ")}{a.instPast?.length ? <small className="past" title="Đơn vị trước đây, theo cơ quan ghi trên các công trình gần đây"> · {lang === "vi" ? "trước đây" : "formerly"}: {a.instPast.map((i) => instLabel(instById.get(i), lang, i)).join(", ")}</small> : null}</td>
               <td className={`num${a.worksCount >= 1000 ? " lg" : ""}`} data-l={t("works")}>{num(a.worksCount)}</td><td className="num" data-l={t("scoreShort")}><span className="score">{a.pro == null ? "-" : num(a.pro, 1)}</span></td><td className={`num${a.citations >= 100000 ? " lg" : ""}`} data-l={t("cit")}>{num(a.citations)}</td>
               <td className="meta yrs" data-l={t("years")}>{a.firstYear ?? "-"}–{a.lastYear ?? "-"}</td>
@@ -520,6 +546,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
         <div className="kpi"><span className="kic"><Icon n="chart" size={20} /></span><b>{num(a.citations)}</b><span title={t("citTip")}>{t("cit")}</span><small title={t("citTip")}>{a.scholarCit ? `Google Scholar ${num(a.scholarCit)} (${t("selfDecl")}) · ` : ""}{t("citNote")}{a.hIndex ? ` · ${t("hIdx")} ${a.hIndex}` : ""} · {t("rank")} {rk(a.rankCit)}</small></div>
         <div className="kpi"><span className="kic"><Icon n="link" size={20} /></span><b>{Math.round(a.matchedRate * 100)}%</b><span>{t("matched")}</span><i className="bar" role="presentation"><u style={{ width: `${Math.round(a.matchedRate * 100)}%` }} /></i></div>
       </div>
+      <TrustBlock a={a} verified={isVerified} built={d.meta.built} />
       {a.suspect && <p className="banner demo" role="note"><Icon n="info" />{t("suspectNote")}</p>}
       {a.intl && <p className="banner" role="note"><Icon n="info" />{t("intlNote", { n: num(a.vnWorks5 ?? 0), r: a.proRankAll != null ? `#${num(a.proRankAll)}` : "-" })}</p>}
       {a.abroadMain && !a.intl && <p className="banner demo" role="note"><Icon n="info" />{a.abroadBasis === "main" ? (a.mainCountryWorks == null ? t("abroadNoteMain2").replace("{c}", countryName(a.mainCountry, lang)) : t("abroadNoteMain").replace("{c}", countryName(a.mainCountry, lang)).replace("{w}", num(a.mainCountryWorks ?? 0)).replace("{v}", num(a.mainCountryVn ?? 0))) : a.abroadBasis === "recent" ? t("abroadNoteRecent").replace("{y}", (d.meta.abroad?.window ?? []).join(", ")).replace("{p}", num(a.vnRecent ?? 0, 1)).replace("{m}", String(d.meta.abroad?.recentMinShare ?? "")) : t("abroadNoteOverall").replace("{p}", num(a.vnShare ?? 0, 1)).replace("{m}", String(d.meta.abroad?.maxVnShare ?? ""))}</p>}

@@ -4,7 +4,7 @@
 // profind.json đầy đủ vẫn được phát cho trang quản trị và người dùng dữ liệu. Chạy trước `vite build` (xem package.json).
 import { readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
 export const SHARDS = 256, shardOf = (id) => `p${String(Number(String(id).replace(/\D/g, "")) % SHARDS).padStart(3, "0")}`;
-export const DETAIL = ["rankable", "proParts", "proLo", "proHi", "proR10", "proR90", "proStab", "proConf", "discShares", "discBasis", "vnRecentWorks", "vnRecent", "vnShare", "matchedRate", "rankScore", "rankWorks", "rankCit", "bigShare", "bigWorks", "bigFlag", "mainCountry", "mainCountryWorks", "mainCountryVn", "nCountries", "countedWorks", "totalScore", "citations2016", "oaWorks", "abroadBasis", "dual"];
+export const DETAIL = ["rankable", "proParts", "proLo", "proHi", "proR10", "proR90", "proStab", "proConf", "discShares", "discBasis", "vnRecentWorks", "vnRecent", "vnShare", "matchedRate", "rankScore", "rankWorks", "rankCit", "bigShare", "bigWorks", "bigFlag", "mainCountry", "mainCountryWorks", "mainCountryVn", "nCountries", "countedWorks", "totalScore", "citations2016", "oaWorks", "abroadBasis", "dual", "prov"];
 const d = JSON.parse(readFileSync("public/data/profind.json", "utf8")), by = new Map();
 const authors = d.authors.map((a) => {
   const lite = { ...a }, det = {};
