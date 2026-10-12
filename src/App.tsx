@@ -196,19 +196,21 @@ function List({ d, query }: { d: Data; query: string }) {
   const [q, setQ] = useState(qp.get("q") ?? ""), [disc, setDisc] = useState(qp.get("d") ?? ""), [type, setType] = useState(qp.get("ty") ?? ""), [sort, setSort] = useState<SortKey>("pro"), [dir, setDir] = useState<1 | -1>(-1);
   const pick2 = (k: SortKey) => { setSort(k); setDir(TEXT_KEYS.includes(k) ? 1 : -1); };
   const pick = (k: SortKey) => { if (k === sort) setDir((dir * -1) as 1 | -1); else { setSort(k); setDir(TEXT_KEYS.includes(k) || RANK_ASC.includes(k) ? 1 : -1); } };
-  const [scope, setScope] = useState(qp.get("sc") === "all" ? "all" : "vn"), [instSel, setInstSel] = useState(qp.get("i") ?? ""), [page, setPage] = useState(0), [ssMsg, setSsMsg] = useState(""), [browse, setBrowse] = useState(qp.get("b") === "1"), [top2only, setTop2only] = useState(qp.get("t2") === "1"), [slot, setSlot] = useState<HTMLElement | null>(null), [showF, setShowF] = useState(() => matchMedia("(min-width: 900px)").matches);
+  const [scope, setScope] = useState(qp.get("sc") === "all" ? "all" : "vn"), [instSel, setInstSel] = useState(qp.get("i") ?? ""), [withPast, setWithPast] = useState(qp.get("pa") === "1"), [page, setPage] = useState(0), [ssMsg, setSsMsg] = useState(""), [browse, setBrowse] = useState(qp.get("b") === "1"), [top2only, setTop2only] = useState(qp.get("t2") === "1"), [slot, setSlot] = useState<HTMLElement | null>(null), [showF, setShowF] = useState(() => matchMedia("(min-width: 900px)").matches);
   useEffect(() => { setSlot(document.getElementById("hero-slot")); }, []);
   const [jn, setJn] = useState<Record<string, { t: string; p: string }> | null>(null);
   const dq = useDeferredValue(q);
   const works = useWorks(dq);
   const [tab, setTab] = useState<"a" | "w">("a");
   const instById = useMemo(() => new Map(d.institutions.map((i) => [i.id, i])), [d]);
+  // Đơn vị con thuộc đơn vị cha (data/unit-parent.json): lọc theo đơn vị cha gồm cả người ở đơn vị con; cột đơn vị chỉ hiện đơn vị cụ thể nhất.
+  const inUnit = (u: string, root: string) => { for (let x: string | undefined = u, n = 0; x && n < 4; x = instById.get(x)?.parent, n++) if (x === root) return true; return false; };
   // Chỉ liệt kê đơn vị đang có tác giả (trong phạm vi đã chọn), kèm số tác giả; chọn từ danh sách, không gõ tự do.
   const instOpts = useMemo(() => {
     const c = new Map<string, number>();
-    for (const a of d.authors) { if (scope === "vn" && a.suspect) continue; for (const i of a.institutions) c.set(i, (c.get(i) ?? 0) + 1); }
+    for (const a of d.authors) { if (scope === "vn" && a.suspect) continue; const seen = new Set<string>(); for (const i of a.institutions) { if (a.instPast?.includes(i)) continue; for (let x: string | undefined = i, n = 0; x && n < 4; x = instById.get(x)?.parent, n++) seen.add(x); } for (const i of seen) c.set(i, (c.get(i) ?? 0) + 1); }
     return d.institutions.filter((i) => c.has(i.id)).sort((a, b) => a.name.localeCompare(b.name, "vi")).map((i) => [i.id, `${instLabel(i, lang)} (${num(c.get(i.id)!)})`] as string[]);
-  }, [d, scope, lang, num]);
+  }, [d, scope, lang, num, instById]);
   // Chuỗi tìm theo tên tạp chí/ISSN nằm ở tệp riêng, chỉ tải khi người dùng bắt đầu gõ.
   useEffect(() => {
     if (jn || q.trim().length < 2) return;
@@ -220,12 +222,12 @@ function List({ d, query }: { d: Data; query: string }) {
   const hay = useMemo(() => new Map(d.authors.map((a) => [a.id, { n: norm(a.name).split(" "), i: [...new Set(a.institutions.flatMap((i) => { const x = instById.get(i); return x ? norm(`${x.name} ${x.en ?? ""} ${x.abbr ?? ""}`).split(" ") : []; }))] }])), [d, instById]);
   // Bộ lọc nằm trong đường dẫn (#/?q=…&d=…) để chia sẻ, mở lại và dùng nút Quay lại của trình duyệt.
   useEffect(() => {
-    const u = new URLSearchParams(Object.entries({ q: q.trim(), d: disc, ty: type, i: instSel, sc: scope === "all" ? "all" : "", t2: top2only ? "1" : "", b: browse ? "1" : "" }).filter(([, v]) => v));
+    const u = new URLSearchParams(Object.entries({ q: q.trim(), d: disc, ty: type, i: instSel, pa: instSel && withPast ? "1" : "", sc: scope === "all" ? "all" : "", t2: top2only ? "1" : "", b: browse ? "1" : "" }).filter(([, v]) => v));
     const h = `#/${u.toString() ? "?" + u : ""}`; if (h !== (location.hash || "#/")) history.replaceState(null, "", h);
-  }, [q, disc, type, instSel, scope, top2only, browse]);
+  }, [q, disc, type, instSel, withPast, scope, top2only, browse]);
   useEffect(() => { const id = window.setTimeout(() => { if (q.trim().length >= 3) evt("search", undefined, q.trim()); }, 1200); return () => window.clearTimeout(id); }, [q]);
   const hasFilter = !!(q.trim() || disc || type || instSel || top2only), home = !hasFilter && !browse;
-  const clearAll = () => { setQ(""); setDisc(""); setType(""); setInstSel(""); setTop2only(false); setBrowse(false); setPage(0); setTab("a"); };
+  const clearAll = () => { setQ(""); setDisc(""); setType(""); setInstSel(""); setWithPast(false); setTop2only(false); setBrowse(false); setPage(0); setTab("a"); };
   useEffect(() => { const h = () => { clearAll(); window.scrollTo({ top: 0, behavior: "smooth" }); }; window.addEventListener("profind:home", h); return () => window.removeEventListener("profind:home", h); }); // eslint-disable-line react-hooks/exhaustive-deps
   const doSave = async () => {
     if (!user) { try { sessionStorage.setItem("profind.ret", location.hash || "#/"); sessionStorage.setItem("profind.reason", "ss"); } catch { /* bỏ qua */ } evt("save_gate"); location.hash = "#/tai-khoan"; return; }
@@ -239,7 +241,7 @@ function List({ d, query }: { d: Data; query: string }) {
     return d.authors.filter((a) => {
       if (scope === "vn" && a.suspect) return false;
       if (disc && !a.disciplines.includes(disc)) return false;
-      if (instSel && !a.institutions.includes(instSel)) return false;
+      if (instSel && !(withPast ? a.institutions : a.institutions.filter((i) => !a.instPast?.includes(i))).some((i) => inUnit(i, instSel))) return false;
       if (type && !a.institutions.some((i) => instById.get(i)?.type === type)) return false;
       if (top2only && !a.top2) return false;
       if (!toks.length) return true;
@@ -261,8 +263,8 @@ function List({ d, query }: { d: Data; query: string }) {
       else c = ((a[sort] ?? 0) as number) - ((b[sort] ?? 0) as number);
       return c * dir || (a.proRank ?? Infinity) - (b.proRank ?? Infinity) || (b.pro ?? -1) - (a.pro ?? -1) || b.worksCount - a.worksCount || a.name.localeCompare(b.name, "vi");
     });
-  }, [d, dq, disc, type, instSel, sort, dir, scope, instById, jn, lang, hay, top2only]);
-  useEffect(() => setPage(0), [dq, disc, type, instSel, sort, dir, scope, top2only]);
+  }, [d, dq, disc, type, instSel, withPast, sort, dir, scope, instById, jn, lang, hay, top2only]);
+  useEffect(() => setPage(0), [dq, disc, type, instSel, withPast, sort, dir, scope, top2only]);
   // Số liệu cho trang chủ (phạm vi Việt Nam): ngành và đơn vị nổi bật.
   const home$ = useMemo(() => {
     const vn = d.authors.filter((a) => !a.suspect), dc = new Map<string, number>(), ic = new Map<string, number>();
@@ -325,6 +327,7 @@ function List({ d, query }: { d: Data; query: string }) {
         <Sel icon="discipline" label={t("discipline")} v={disc} set={setDisc} all={t("all")} opts={d.disciplines.map((s) => [s, dName(s, lang)])} />
         <Sel icon="building" label={t("instType")} v={type} set={setType} all={t("all")} opts={Object.entries(d.types).filter(([k]) => d.institutions.some((i) => i.type === k)).map(([k, v]) => [k, v[lang]])} />
         <Sel icon="building" label={t("inst")} v={instSel} set={setInstSel} all={t("all")} opts={instOpts} />
+        {instSel && <label className="chk"><input type="checkbox" checked={withPast} onChange={(e) => setWithPast(e.target.checked)} /> {t("withPast")}</label>}
         <Sel icon="shield" label={t("scope")} v={scope} set={(v) => { setScope(v); setInstSel(""); }} opts={[["vn", t("scopeVn")], ["all", t("scopeAll")]]} />
         <div className="sel sortg"><span><Icon n="sort" size={14} />{t("sort")}</span>
           <div className="sortrow">
@@ -373,7 +376,7 @@ function List({ d, query }: { d: Data; query: string }) {
             <tr key={a.id}>
               <td className="num rankc" data-l={t("stt")}><span className={`rk r${medal ? Math.min(pos, 4) : 4}`}>{num(pos)}</span></td>
               <td className="who"><StarBtn className="inrow" k={`a|${a.id}`} meta={{ t: a.name, s: a.institutions.slice(0, 2).map((i) => instLabel(instById.get(i), lang, i)).join(", "), sc: a.pro ?? undefined, rk: a.proRank ?? undefined }} /><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a><VerifiedTick id={a.id} size={15} /><ProBadge rank={a.proRank} size={24} className="inrow" />{a.bigFlag && <span className="bigtag" title={t("bigTitle") + ": " + t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}><Icon n="users" size={12} /></span>}{a.claimed && <><Icon n="check" size={14} className="ok" /><span className="sr"> {t("claimedSr")}</span></>}{a.foreign && <span className="tagf">{t("foreignTag")}</span>}{a.suspect && <span className="tagf">{t("suspectTag")}</span>}{a.abroadMain && <span className="tagf">{t("abroadTag")}</span>}<Top2Tag a={a} cls="top2" /><div className="meta">{a.disciplines.map((s) => dName(s, lang)).join(" · ")}</div></td>
-              <td data-l={t("unit")}>{a.institutions.filter((i) => !a.instPast?.includes(i)).map((i) => instLabel(instById.get(i), lang, i)).join(", ")}{a.instPast?.length ? <small className="past" title="Đơn vị trước đây, theo cơ quan ghi trên các công trình gần đây"> · {lang === "vi" ? "trước đây" : "formerly"}: {a.instPast.map((i) => instLabel(instById.get(i), lang, i)).join(", ")}</small> : null}</td>
+              <td data-l={t("unit")}>{(() => { const cur = a.institutions.filter((i) => !a.instPast?.includes(i)); return cur.filter((i) => !cur.some((j) => j !== i && inUnit(j, i))); })().map((i) => instLabel(instById.get(i), lang, i)).join(", ")}{a.instPast?.length ? <small className="past" title="Đơn vị trước đây, theo cơ quan ghi trên các công trình gần đây"> · {lang === "vi" ? "trước đây" : "formerly"}: {a.instPast.map((i) => instLabel(instById.get(i), lang, i)).join(", ")}</small> : null}</td>
               <td className={`num${a.worksCount >= 1000 ? " lg" : ""}`} data-l={t("works")}>{num(a.worksCount)}</td><td className="num" data-l={t("scoreShort")}><span className="score">{a.pro == null ? "-" : num(a.pro, 1)}</span></td><td className={`num${a.citations >= 100000 ? " lg" : ""}`} data-l={t("cit")}>{num(a.citations)}</td>
               <td className="meta yrs" data-l={t("years")}>{a.firstYear ?? "-"}–{a.lastYear ?? "-"}</td>
             </tr>); })}</tbody>
