@@ -450,7 +450,7 @@ function UnitPicker({ authorId, onSaved }: { authorId: string; onSaved: () => vo
       {locked ? <p className="banner demo">{l.locked}</p> : <>
         <table className="adm-t"><thead><tr><th>{l.colUnit}</th><th>{l.colNow}</th><th>{l.colPast}</th></tr></thead><tbody>{shown.map((u) => <tr key={u}><td>{name(u)}</td><td><input type="checkbox" checked={now.has(u)} onChange={() => toggle(u, "now")} aria-label={l.nowAria(name(u))} /></td><td><input type="checkbox" checked={past.has(u)} onChange={() => toggle(u, "past")} aria-label={l.pastAria(name(u))} /></td></tr>)}</tbody></table>
         <label className="sel"><span>{l.addUnit}</span><input value={q} onChange={(e) => setQ(e.target.value)} placeholder={l.unitPh} /></label>
-        {cand.length > 0 && <ul className="mxlist">{cand.map((u) => <li key={u.id}><button type="button" className="linkbtn" onClick={() => { setNow(new Set([...now, u.id])); setQ(""); }}>{u.name}</button></li>)}</ul>}
+        {cand.length > 0 && <ul className="mxlist">{cand.map((u) => <li key={u.id}><button type="button" className="linkbtn" onClick={() => { setNow(new Set([...now, u.id])); setQ(""); }}>{lang === "en" && u.en ? u.en : u.name}</button></li>)}</ul>}
         <p><button type="button" className="primary" disabled={busy || !now.size} onClick={() => void save()}>{l.saveUnit}</button>{custom && <> <button type="button" disabled={busy} onClick={() => void clear()}>{l.clearMine}</button></>}</p></>}
       <div role="status" aria-live="polite">{msg && <p className="banner"><Icon n="check" />{msg}</p>}</div>
     </>

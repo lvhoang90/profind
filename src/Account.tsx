@@ -8,7 +8,7 @@ import { ScholarConsole, useMine } from "./Verified";
 import { SuggestPage, SuggestNudge } from "./Suggest";
 import { Achievements, StarStrip, InviteCard } from "./Achievements";
 
-const TABS: [string, string, IconName][] = [["", "tabProfile", "user"], ["thanh-tich", "Thành tích", "star"], ["tong-quan", "tabOverview", "grid"], ["da-luu", "tabSaved", "star"], ["tim-kiem", "tabSearches", "search"], ["da-xem", "tabViewed", "eye"]];
+const TABS: [string, string, IconName][] = [["", "tabProfile", "user"], ["thanh-tich", "tabAchv", "star"], ["tong-quan", "tabOverview", "grid"], ["da-luu", "tabSaved", "star"], ["tim-kiem", "tabSearches", "search"], ["da-xem", "tabViewed", "eye"]];
 const initials = (n: string) => { const w = n.replace(/[^\p{L}\s-]/gu, " ").split(/[\s-]+/).filter(Boolean); return ((w[0]?.[0] ?? "") + (w.length > 1 ? w[w.length - 1][0] : "")).toUpperCase() || "P"; };
 const ago = (iso: string | number, lang: string) => new Date(iso).toLocaleDateString(lang === "vi" ? "vi-VN" : "en-GB", { day: "2-digit", month: "2-digit", year: "numeric" });
 
@@ -118,7 +118,7 @@ function Dashboard({ user, tab }: { user: User; tab: string }) {
         <div className="av" aria-hidden="true">{initials(user.name || user.email)}</div>
         <div className="dh-main"><h1>{hello}</h1><p className="meta">{user.email} · {t("memberSince", { d: ago(user.createdAt, lang) })}</p><StarStrip user={user} mine={mine} saved={favs.size + searches.length} />
           <div className="pct" role="img" aria-label={t("pDone", { n: user.profilePct })}><i><u style={{ width: `${user.profilePct}%` }} /></i><span>{t("pDone", { n: user.profilePct })}</span></div></div>
-        <div className="dh-act">{user.isAdmin && <a className="btn-admin" href="#/quan-tri"><Icon n="grid" size={18} />Quản trị</a>}<button className="ghost light" onClick={() => void logout().then(() => { location.hash = "#/"; })}><Icon n="logout" size={16} />{t("logout")}</button></div>
+        <div className="dh-act">{user.isAdmin && <a className="btn-admin" href="#/quan-tri"><Icon n="grid" size={18} />{t("adminBtn")}</a>}<button className="ghost light" onClick={() => void logout().then(() => { location.hash = "#/"; })}><Icon n="logout" size={16} />{t("logout")}</button></div>
       </header>
       <nav className="tabs" aria-label={t("accTitle")}>{TABS.map(([k, l, ic]) => <a key={k} href={`#/tai-khoan${k ? "/" + k : ""}`} aria-current={cur === k ? "page" : undefined}><Icon n={ic} size={16} />{l.startsWith("tab") ? t(l as "tabSaved") : l}{k === "da-luu" && favs.size > 0 && <em>{favs.size}</em>}</a>)}</nav>
       {tab === "nhan-dien" && <SuggestPage user={user} />}
@@ -202,9 +202,9 @@ function Viewed() {
 
 /** Hồ sơ khoa học (nếu đã xác thực) đứng đầu, rồi thông tin tài khoản; chưa xác thực thì thông tin tài khoản trước, lời mời xác thực sau. */
 function ProfileTab({ user, mine, reload }: { user: User; mine: import("./Verified").Mine[] | null; reload: () => void }) {
-  const has = !!mine?.length;
-  return has ? <><ScholarConsole list={mine} reload={reload} /><h2 className="prof-sci">Tài khoản của tôi</h2><Profile user={user} /><InviteCard user={user} compact /></>
-    : <>{mine && <SuggestNudge user={user} />}<Profile user={user} /><h2 className="prof-sci">Hồ sơ khoa học</h2><ScholarConsole list={mine} reload={reload} /><InviteCard user={user} compact /></>;
+  const { t } = useT(), has = !!mine?.length;
+  return has ? <><ScholarConsole list={mine} reload={reload} /><h2 className="prof-sci">{t("myAccount")}</h2><Profile user={user} /><InviteCard user={user} compact /></>
+    : <>{mine && <SuggestNudge user={user} />}<Profile user={user} /><h2 className="prof-sci">{t("sciProfile")}</h2><ScholarConsole list={mine} reload={reload} /><InviteCard user={user} compact /></>;
 }
 function Profile({ user }: { user: User }) {
   const { t, lang } = useT();
