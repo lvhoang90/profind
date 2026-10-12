@@ -187,13 +187,15 @@ const works = prepared.map(({ w, js, sj, disc }) => {
   let fb = null;
   if (!cands.length && w.role === "lead") { // dự phòng: hạng SJR của tạp chí Scopus ngoài bảng theo ngành (đa ngành: hạng Q trong danh mục đa ngành; đã ngừng: hạng SJR năm cuối), chỉ khi năm công bố nằm trong Coverage; tính theo ngành chính của tác giả
     const d0 = (authorDisc.get(w.authorId) ?? [])[0], rec = [w.issn, ...(w.issns ?? [])].map((i) => FB.get(String(i ?? "").replace("-", "").toUpperCase())).find(Boolean);
-    if (d0 && rec && inCoverage(rec.c, w.year)) { cands.push({ s: intlScore(d0, rec.q, rec.h), d: d0, k: "scopus", q: rec.q }); fb = rec.k; }
+    if (d0 && rec && rec.k !== "b" && inCoverage(rec.c, w.year)) { cands.push({ s: intlScore(d0, rec.q, rec.h), d: d0, k: "scopus", q: rec.q }); fb = rec.k; }
   }
   let pick = null;
   if (cands.length) {
     const mine = authorDisc.get(w.authorId) ?? [], inMine = cands.filter((c) => mine.includes(c.d));
     pick = inMine.length ? inMine.reduce((x, y) => (y.s > x.s ? y : x)) : cands.reduce((x, y) => (y.s < x.s ? y : x));
   }
+  // jq: hạng Q của tạp chí chỉ để HIỂN THỊ (không tính điểm): bài đồng tác giả, sách theo tập, hoặc tạp chí không thuộc ngành của tác giả.
+  const jq = pick?.q ? null : (() => { const o = { Q1: 1, Q2: 2, Q3: 3, Q4: 4 }, b = sj.map((x) => x[1]).filter((q) => o[q]).sort((x, y) => o[x] - o[y])[0]; if (b) return b; const rec = [w.issn, ...(w.issns ?? [])].map((i) => FB.get(String(i ?? "").replace("-", "").toUpperCase())).find(Boolean); return rec?.q && (rec.k === "b" || inCoverage(rec.c, w.year)) ? rec.q : null; })();
   const { issns: _i, corr, ...rest } = w;
   // Trích dẫn công trình = max(OpenAlex, Semantic Scholar) theo DOI; cOA giữ số OpenAlex để tính phần bổ sung ở cấp tác giả.
   const cOA = w.citations ?? 0, cS2 = w.doi ? (S2[w.doi] ?? 0) : 0, cCR = w.doi ? Math.max(0, CR[w.doi] ?? 0) : 0; rest.citations = Math.max(cOA, cS2, cCR);
@@ -201,7 +203,7 @@ const works = prepared.map(({ w, js, sj, disc }) => {
   if (w.doi && OC[w.doi] !== undefined && OC[w.doi] >= 0) { oc.n++; oc.oa += cOA; oc.cr += cCR; oc.s2 += cS2; oc.oc += OC[w.doi]; if (OC[w.doi] <= cOA) oc.ocLeOA++; }
   if (w.doi && CR[w.doi] !== undefined) { xs.n++; if (cCR > cOA) xs.crHigher++; if (cS2 > cOA) xs.s2Higher++; if (cOA >= cS2 && cOA >= cCR) xs.oaHighest++; }
   const score = pick ? pick.s : null;
-  return { ...rest, cOA, title: w.title && w.title.trim() ? w.title : "(không có tiêu đề)", score, scoreDiscipline: pick?.d ?? null, scoreKind: pick?.k ?? null, quartile: pick?.q ?? null, ...(fb && pick ? { fb } : {}), matched: js.length > 0 || sj.length > 0, counted: w.role === "lead" && score !== null && score > 0,
+  return { ...rest, cOA, title: w.title && w.title.trim() ? w.title : "(không có tiêu đề)", score, scoreDiscipline: pick?.d ?? null, scoreKind: pick?.k ?? null, quartile: pick?.q ?? null, ...(fb && pick ? { fb } : {}), ...(!pick?.q && jq ? { jq } : {}), matched: js.length > 0 || sj.length > 0, counted: w.role === "lead" && score !== null && score > 0,
     // ru: tác giả không phải đứng đầu và OpenAlex không ghi tác giả liên hệ nào (corr = 0) => vai trò chưa xác định, không phải "chắc chắn không phải tác giả chính".
     ...(w.role === "co" && (corr ?? 0) === 0 ? { ru: 1 } : {}), disc };
 });

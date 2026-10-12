@@ -119,3 +119,8 @@ npm run d:check                              # kiểm tra nhất quán
 - `build-index.mjs` dùng bảng này **chỉ khi** công trình của tác giả chính chưa có ứng viên điểm nào (không khớp danh mục trong nước, không có dòng SJR theo ngành) **và** năm công bố nằm trong Coverage: điểm = `intlScore(ngành chính của tác giả, hạng Q, H index)`. Đa ngành: hạng Q trong danh mục đa ngành (hạng tốt nhất của tạp chí) áp cho mọi ngành; đã ngừng: hạng SJR năm cuối còn trong SCImago. Công trình có điểm theo cách này mang trường `fb` (`m`/`e`/`g`) trong `public/data/works/wNNNN.json (khối theo mã tác giả, 1024 khối)`. Không đổi cách suy ngành tác giả; công trình đã có điểm trước đây không đổi.
 - Tạp chí ngừng trước 1999 không có trong các tệp SCImago đã nạp nên chưa có điểm (nạp thêm 1999-2012 chỉ thêm 87 công trình, vì dữ liệu ProFind chủ yếu từ 2016). Cập nhật hằng năm: tải tệp năm mới, chạy lại script, rồi `npm run d:index`.
 
+
+## Hạng Q hiển thị (`jq`) và chỉ báo Chất lượng
+- `build-index.mjs` gán `jq` cho công trình chưa có `quartile` (bài đồng tác giả, sách theo tập, tạp chí ngoài ngành của tác giả): hạng Q tốt nhất của tạp chí từ bảng theo ngành hoặc `data/sjr-fallback.json`. `jq` **không** làm đổi điểm công trình HĐGSNN (`score`, `quartile` giữ nguyên, chỉ bài tác giả chính được tính).
+- `build-sjr-fallback.mjs` có thêm "book series" (`k = "b"`), chỉ để hiển thị; điểm dự phòng bỏ qua `k = "b"`.
+- `pro-score.mjs`: chỉ báo "Chất lượng" dùng `quartile ?? jq`, tức tính cả bài đồng tác giả (theo quyết định của quản trị viên). Đo khi đổi: 42.645 hồ sơ, đổi điểm trung bình tuyệt đối 0,37; tối đa 3,2; 130 hồ sơ đổi bậc.

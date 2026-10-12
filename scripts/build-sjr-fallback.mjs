@@ -29,17 +29,17 @@ for (const { f, y } of files) {
   const ix = { id: c("Sourceid"), title: c("Title"), type: c("Type"), issn: c("Issn"), best: c("SJR Best Quartile"), h: c("H index"), cov: c("Coverage"), cats: c("Categories") };
   if (Object.values(ix).some((v) => v < 0)) throw new Error(`Cột lạ ở ${f}: ${h.join(" | ")}`);
   for (const r of rows) {
-    if (r[ix.type] !== "journal") continue;
+    if (r[ix.type] !== "journal" && r[ix.type] !== "book series") continue; // sách theo tập chỉ để hiển thị hạng Q (k = "b"), không dùng để tính điểm
     const issn = (r[ix.issn] ?? "").split(",").map((s) => s.trim().toUpperCase()).filter((s) => /^[0-9]{7}[0-9X]$/.test(s));
     if (!issn.length) continue;
-    last.set(r[ix.id], { t: r[ix.title], y, q: /^Q[1-4]$/.test(r[ix.best]) ? r[ix.best] : null, h: Number(r[ix.h]) || null, cov: r[ix.cov] ?? "", cats: r[ix.cats] ?? "", issn });
+    last.set(r[ix.id], { bs: r[ix.type] === "book series", t: r[ix.title], y, q: /^Q[1-4]$/.test(r[ix.best]) ? r[ix.best] : null, h: Number(r[ix.h]) || null, cov: r[ix.cov] ?? "", cats: r[ix.cats] ?? "", issn });
   }
 }
 const lastYear = files[files.length - 1].y, out = [];
 for (const v of last.values()) {
   if (v.issn.some((i) => have.has(i))) continue; // đã có dòng theo ngành: không dùng dự phòng
   const multi = /Multidisciplinary|(^|; )General /.test(v.cats);
-  out.push({ t: v.t.slice(0, 120), i: v.issn, q: v.q, h: v.h, y: v.y, c: v.cov.replace(/\s/g, ""), k: v.y < lastYear ? "e" : multi ? "m" : "g" }); // e: đã ngừng; m: đa ngành/General; g: còn hoạt động, thiếu dòng
+  out.push({ t: v.t.slice(0, 120), i: v.issn, q: v.q, h: v.h, y: v.y, c: v.cov.replace(/\s/g, ""), k: v.bs ? "b" : v.y < lastYear ? "e" : multi ? "m" : "g" }); // e: đã ngừng; m: đa ngành/General; g: còn hoạt động, thiếu dòng
 }
 writeFileSync("data/sjr-fallback.json", JSON.stringify({ meta: { source: "SCImago Journal & Country Rank (tất cả tạp chí theo năm)", years: [files[0].y, lastYear], built: new Date().toISOString().slice(0, 10), count: out.length }, journals: out }));
 const n = (k) => out.filter((j) => j.k === k).length;
