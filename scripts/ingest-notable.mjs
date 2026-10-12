@@ -3,7 +3,7 @@
 //   node scripts/ingest-notable.mjs --mailto you@example.com [--k 30] [--mincit 300] [--from 2016] [--only id1,id2]
 // Kết quả: data/raw/_notable-<id>.json (cùng định dạng với cache đơn vị; ingest-openalex.mjs tự gộp). Chạy lại được; hết ngân sách thì dừng êm.
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"); if (!mailto) throw new Error("Cần --mailto.");
 const KEY = process.env.OPENALEX_API_KEY; if (!KEY) throw new Error("Thiếu OPENALEX_API_KEY.");
 const K = +arg("k", 30), MINCIT = +arg("mincit", 300), from = +arg("from", 2016), only = arg("only");

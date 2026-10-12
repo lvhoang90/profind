@@ -3,7 +3,7 @@
 // Đọc DOI trong data/raw/*.json, tra theo lô 500 qua /paper/batch, lưu data/raw/_s2.json ({ "<doi>": số trích dẫn }). Chạy lại được: DOI đã tra được bỏ qua.
 // build-index.mjs lấy max(OpenAlex, Semantic Scholar) cho từng công trình. Google Scholar KHÔNG có API công khai và cấm truy xuất tự động nên không lấy.
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const KEY = arg("key", process.env.S2_API_KEY);
 const out = existsSync("data/raw/_s2.json") ? JSON.parse(readFileSync("data/raw/_s2.json", "utf8")) : {};
 const dois = new Set();

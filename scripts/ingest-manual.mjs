@@ -4,7 +4,7 @@
 // Ghi data/raw/_notable-manual.json (cùng định dạng _notable-*; ingest-openalex.mjs tự gộp). refresh.mjs chạy lại mỗi kỳ để cập nhật công trình mới.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { nameMatch } from "./lib/namematch.mjs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY, FROM = arg("from", "2016");
 if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
 const short = (id) => (id ?? "").replace("https://openalex.org/", "");

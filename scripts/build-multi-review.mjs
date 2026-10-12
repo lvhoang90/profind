@@ -6,8 +6,8 @@
 //   - theo từng công trình: ORCID gắn với tác giả trên công trình đó trùng / khác ORCID hồ sơ (khác = người khác), công trình có DOI nằm trong danh sách công trình do chủ ORCID tự quản lý.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { readWorks } from "./_works-io.mjs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
-const CACHE = arg("cache", "/tmp/multi-orcid-works.json"), MAIL = "luongviethoang.safi@gmail.com";
+import { arg, MAILTO, tmpFile } from "./lib/cli.mjs";
+const CACHE = arg("cache", tmpFile("multi-orcid-works.json")), MAIL = MAILTO;
 const R = JSON.parse(readFileSync("data/multi-affiliation-review.json", "utf8")), P = JSON.parse(readFileSync("public/data/profind.json", "utf8"));
 const CUR = existsSync("data/current-inst.json") ? JSON.parse(readFileSync("data/current-inst.json", "utf8")) : {}, SCH = existsSync("data/scholar.json") ? JSON.parse(readFileSync("data/scholar.json", "utf8")) : {};
 const by = new Map(P.authors.map((a) => [a.id, a])), AU = JSON.parse(readFileSync("data/raw/_authorship.json", "utf8")), IM = JSON.parse(readFileSync("data/raw/_instmap.json", "utf8"));

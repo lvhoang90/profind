@@ -2,7 +2,7 @@
 //   node scripts/extend-authors.mjs --mailto <email> [--top 60] [--target 150] [--from 2016]
 // Chọn --top đơn vị có nhiều công trình nhất trong cache (những nơi chắc chắn bị chặn ở mức 50). Chạy lại được; dừng sớm khi ngân sách OpenAlex còn dưới 0,05 USD.
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"), top = +arg("top", 60), target = +arg("target", 150), from = +arg("from", 2016), KEY = process.env.OPENALEX_API_KEY;
 if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
 const short = (id) => (id ?? "").replace("https://openalex.org/", "");

@@ -4,7 +4,7 @@
 // Mỗi lượt gọi lấy tối đa 200 công trình của một nhóm tác giả (author.id:A1|A2|...). Ghi data/raw/_authorship.json
 //   { "<authorId>-<workId>": [khóa cơ quan[], mã quốc gia[], ORCID quan sát được[]] } — chạy lại được (bỏ qua nhóm đã xong), dừng êm khi gần hết ngân sách.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY, BATCH = +arg("batch", 25), LIMIT = +arg("limit-usd", 0.5);
 if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
 const fold = (x) => String(x ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();

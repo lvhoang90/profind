@@ -3,7 +3,7 @@
 // Không có --ids-file: tự chọn hồ sơ có >= 2 ORCID quan sát được (từ data/raw/_authorship.json) và chỉ nạp lại hồ sơ đổi số công trình (data/raw/_orcidwork-done.json).
 // Ghi data/raw/_orcidwork.json = { "<authorId>-<workId>": "<ORCID ghi trên bài hoặc rỗng>" }.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY, idsFile = arg("ids-file");
 const P = JSON.parse(readFileSync("public/data/profind.json", "utf8")), wc = new Map(P.authors.map((a) => [a.id, a.worksCount]));
 const DF = "data/raw/_orcidwork-done.json", done = existsSync(DF) ? JSON.parse(readFileSync(DF, "utf8")) : {};

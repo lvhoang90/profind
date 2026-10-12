@@ -1,7 +1,7 @@
 // Dò mã ROR cho các đơn vị chưa có bằng cách tìm theo tên trong OpenAlex (chỉ nhận đơn vị ở VN, tên khớp CHẶT như audit-ror.mjs, mã chưa thuộc đơn vị khác).
 //   node scripts/map-ror-oa.mjs --mailto <email> [--apply]    (không --apply: chỉ báo cáo -> data/ror-map.json)
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY, apply = process.argv.includes("--apply");
 if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
 const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase().replace(/\btp\.? ?hcm\b|\btp\.? ho chi minh\b|\bho chi minh city\b/g, "thanh pho ho chi minh").replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").replace(/\b(truong|the|of|and|dai hoc|university)\b/g, (m) => (m === "dai hoc" || m === "university" ? "univ" : "")).replace(/\s+/g, " ").trim();

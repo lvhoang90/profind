@@ -3,8 +3,8 @@
 // Đọc DOI trong data/raw/*.json, tra theo lô 40 DOI qua /works?filter=doi:...,doi:..., lưu data/raw/_crossref.json ({ "<doi>": số trích dẫn, -1 nếu Crossref không có DOI này }).
 // Chạy lại được: DOI đã tra được bỏ qua. build-index.mjs lấy max(OpenAlex, Semantic Scholar, Crossref) cho từng công trình và in thống kê chênh lệch.
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
-const MAILTO = arg("mailto", process.env.CROSSREF_MAILTO ?? "luongviethoang.hcm@gmail.com");
+import { arg, MAILTO as DEFAULT_MAILTO } from "./lib/cli.mjs";
+const MAILTO = arg("mailto", process.env.CROSSREF_MAILTO ?? DEFAULT_MAILTO);
 const OUT = "data/raw/_crossref.json", out = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : {};
 const dois = new Set();
 for (const f of readdirSync("data/raw").filter((f) => f.endsWith(".json") && !f.startsWith("_"))) for (const w of JSON.parse(readFileSync(`data/raw/${f}`, "utf8")).works ?? []) if (w.doi && out[w.doi] === undefined) dois.add(w.doi);

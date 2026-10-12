@@ -5,7 +5,7 @@
 // ghi trong danh sách. Nhận khi đúng MỘT ứng viên đạt, hoặc khi chỉ một ứng viên có đơn vị trùng từ khóa với đơn vị ghi trong danh sách. Ca còn lại ghi vào data/top2/find-report.json.
 // Chỉ xét tên chưa khớp hồ sơ ProFind nào (data/top2/matches.json) và chưa có quyết định tay (overrides.json).
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-const arg = (k) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : undefined; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"); if (!mailto) throw new Error("Cần --mailto.");
 const KEY = process.env.OPENALEX_API_KEY; if (!KEY) throw new Error("Thiếu OPENALEX_API_KEY.");
 const fold = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase();

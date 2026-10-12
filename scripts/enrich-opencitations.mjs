@@ -4,8 +4,8 @@
 // Lưu data/raw/_opencitations.json ({ "<doi>": số trích dẫn }). Số liệu này CHỈ dùng đối chiếu/kiểm toán (build-index in thống kê), không đưa vào điểm,
 // vì chỉ phủ một mẫu: đưa vào điểm sẽ đối xử không đồng đều giữa các hồ sơ.
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
-const N = Number(arg("sample", 4000)), MAILTO = arg("mailto", process.env.CROSSREF_MAILTO ?? "luongviethoang.hcm@gmail.com");
+import { arg, MAILTO as DEFAULT_MAILTO } from "./lib/cli.mjs";
+const N = Number(arg("sample", 4000)), MAILTO = arg("mailto", process.env.CROSSREF_MAILTO ?? DEFAULT_MAILTO);
 const OUT = "data/raw/_opencitations.json", out = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : {};
 const all = new Set();
 for (const f of readdirSync("data/raw").filter((f) => f.endsWith(".json") && !f.startsWith("_"))) for (const w of JSON.parse(readFileSync(`data/raw/${f}`, "utf8")).works ?? []) if (w.doi && !w.doi.includes(",")) all.add(w.doi);

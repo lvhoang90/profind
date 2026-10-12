@@ -680,3 +680,7 @@ td.who>.meta{margin-top:3px}
 /* Chip hạng (huy hiệu cấp) trên trang PRO-SCORE ở chế độ tối: chữ tối trên nền sáng thay cho chữ trắng */
 :root[data-theme=dark] .psp-tiers li b,:root[data-theme=dark] .psp-tiers li span{color:var(--ink)}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]) .psp-tiers li b,:root:not([data-theme=light]) .psp-tiers li span{color:var(--ink)}}
+/* PRO-SCORE: nhãn trên thanh trọng số dùng chữ tối (nền màu sáng); số ± ở chế độ tối dùng màu sáng hơn */
+.psp-stack i{color:#0b1220}
+:root[data-theme=dark] .psp-ch em{color:#a5b4fc}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .psp-ch em{color:#a5b4fc}}

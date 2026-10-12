@@ -7,7 +7,7 @@
 // ĐÂY LÀ MÔ PHỎNG hội đồng, không phải ý kiến chuyên gia thật; phần giả định là cơ cấu lập trường và mức đánh đổi giữa hai loại sai sót (hạt giống cố định, tái lập được).
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const FIELDS = process.argv.includes("--fields"), RUN = +arg("run", 1), SEED = +arg("seed", 20261021), N = +arg("n", 1000), FACTOR = arg("factor", "recent"), ROUNDS = 3;
 const OUT = arg("out", `public/data/abroad/${FACTOR}-${RUN}.json`);
 const P = JSON.parse(readFileSync("public/data/profind.json", "utf8")), SAMPLE = JSON.parse(readFileSync("data/abroad-orcid-sample.json", "utf8")).rows.filter((r) => r.factor === FACTOR && (r.label === "vn" || r.label === "foreign"));

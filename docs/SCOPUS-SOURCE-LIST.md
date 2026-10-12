@@ -36,3 +36,10 @@ Tệp xuất 1.000 tạp chí đầu theo CiteScore (`1000-source-results.xlsx`)
 ### Kết quả sau khi áp dụng bảng dự phòng (11/10/2026)
 Quyết định của quản trị viên: nhóm A (đa ngành/General) tính theo hạng Q trong danh mục đa ngành cho mọi ngành; nhóm B (đã ngừng) tính theo hạng SJR năm cuối còn lập chỉ mục; nhóm C (thiếu dòng) kiểm tra ISSN và tạp chí mới (SCImago 1999-2025 đã nạp). Kết quả dựng lại: **2.383 hồ sơ đổi điểm, 5.213 công trình mới được tính (đa ngành 1.081, đã ngừng 2.370, còn hoạt động thiếu dòng 1.899, chỉ tính tác giả chính), +8.770 điểm; không hồ sơ nào bị giảm điểm**; PRO-SCORE1000™ đổi ở 3.009 hồ sơ (trung vị 0,1 điểm), 7 hồ sơ vào và 7 hồ sơ ra khỏi Top 1000; 125 hồ sơ Top 2% đổi số công trình tính điểm. Nhiều công trình ở tạp chí đã ngừng không có hạng Q ở năm cuối nên điểm bằng 0 theo quy tắc "Scopus chưa xếp hạng" của ngành.
 
+
+### Cập nhật 12/10/2026: hạng Q hiển thị (`jq`), sách theo tập, sửa Coverage
+- `scripts/build-sjr-fallback.mjs` nay có thêm loại "book series" (`k = "b"`, 1.946 nguồn; tổng 11.803 nguồn). Nguồn `k = "b"` **không** dùng để tính điểm HĐGSNN (`build-index.mjs` bỏ qua), chỉ để hiển thị hạng.
+- `build-index.mjs` gán `jq` (hạng Q tốt nhất của tạp chí/sách theo tập, chỉ để hiển thị) cho công trình chưa có `quartile`: bài đồng tác giả, sách theo tập, tạp chí ngoài ngành của tác giả. Trang hồ sơ hiện chip "SJR" nét đứt; điểm HĐGSNN không đổi.
+- Chỉ báo "Chất lượng" của PRO-SCORE1000™ dùng `quartile ?? jq` (tính cả bài đồng tác giả), theo quyết định của quản trị viên.
+- Sửa lỗi `inCoverage`: trường Coverage trong `sjr-fallback.json` phân cách bằng dấu phẩy, mã cũ chỉ tách theo `;` nên 5.107 tạp chí có khoảng hở coverage không bao giờ khớp (1.919 công trình thiếu hạng, 713 bài tác giả chính mất điểm dự phòng). Nay tách theo `;` hoặc `,`.
+- Hạng `jq` là hạng mới nhất của nguồn trong SCImago, không phải hạng đúng năm công bố (so cùng năm khớp khoảng 81%; so hạng mới nhất khớp 98,6%).

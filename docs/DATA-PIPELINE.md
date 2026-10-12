@@ -141,3 +141,8 @@ npm run d:check                              # kiểm tra nhất quán
 - `scripts/build-lite.mjs` (chạy đầu `npm run build`): sinh `public/data/profind-lite.json` (≈10,8 MB, nén ≈1,6 MB; không có trường chi tiết, bỏ trường null/false) và `public/data/authors/pNNN.json` (256 khối chi tiết, NNN = số trong mã tác giả chia dư 256). Cả hai nằm trong `.gitignore`.
 - Trang chủ, danh sách, bảng xếp hạng và biểu mẫu xác thực tải bản lite; trang hồ sơ tải thêm khối chi tiết (`src/authorDetail.ts`) rồi ghép. Trang quản trị và người dùng dữ liệu vẫn dùng `profind.json` đầy đủ.
 - Chạy `node scripts/build-lite.mjs` trước `npm run dev` nếu chưa có hai đầu ra trên.
+
+## Tiện ích dùng chung cho script (12/10/2026)
+- `scripts/lib/cli.mjs`: `arg(khóa, mặc định)` (đọc `--khóa giá trị`), `MAILTO` (địa chỉ liên hệ cho OpenAlex/Crossref; đổi bằng biến `CONTACT_MAILTO`), `tmpFile(tên)` (đường dẫn tạm theo hệ điều hành thay cho `/tmp` cứng). 30 script đã dùng chung `arg`.
+- Hàm `norm` ở các script có công thức khác nhau (một số gộp "TP.HCM", bỏ "trường/the/of", giữ chữ số…) nên **không** gộp chung; khi sửa cần đối chiếu từng nơi dùng.
+- `api/_claim.js` đọc địa chỉ liên hệ từ biến môi trường `CONTACT_MAILTO` (mặc định như cũ).
