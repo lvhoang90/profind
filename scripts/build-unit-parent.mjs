@@ -30,5 +30,7 @@ if (KEY) for (let i = 0; i < withRor.length; i += 40) {
     for (const [p, hosts] of Object.entries(SITE)) if (u !== p && !(u in parent) && !(u in AL) && hosts.some((x) => h.endsWith(`.${x}`))) parent[u] = p; }
 }
 for (const [c, p] of Object.entries(parent)) if (c in AL || p in AL || parent[p] === c) delete parent[c];
+// Bỏ đơn vị con chưa có hồ sơ nào (OpenAlex không có bản ghi riêng cho các phân hiệu/trường thành viên này, cơ quan ghi gộp vào đơn vị cha): tránh mục chết.
+try { const have = new Set(JSON.parse(readFileSync("public/data/profind.json", "utf8")).institutions.map((i) => i.id)); for (const c of Object.keys(parent)) if (!have.has(c)) delete parent[c]; } catch { /* chưa có profind.json: giữ nguyên */ }
 writeFileSync("data/unit-parent.json", JSON.stringify({ _note: "Đơn vị con -> đơn vị cha; sinh bởi scripts/build-unit-parent.mjs (ROR + quy tắc đã kiểm chứng cho 6 hệ thống đại học và Học viện KH&CN). Chỉ một cấp.", parent }, null, 1) + "\n");
 console.log(`Ghi ${Object.keys(parent).length} quan hệ cha - con.`);

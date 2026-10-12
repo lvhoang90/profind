@@ -1,40 +1,34 @@
 import { provName } from "./provinces";
-import { useMemo, useState } from "react";
-import type { Author, Data } from "./types";
+import { useEffect, useMemo, useState } from "react";
+import type { Author } from "./types";
 import type { Lang } from "./i18n";
 import { dName } from "./disciplines";
 
 // Bảng xếp hạng ĐƠN VỊ và NGÀNH. Một nhóm được xếp theo điểm trung bình của tối đa 10 nhà khoa học có PRO-SCORE cao nhất trong nhóm
 // (không thiên vị nhóm đông người), kèm số người thuộc PRO-SCORE1000™, số người có điểm, tổng trích dẫn và 3 người đứng đầu.
 // Chỉ tính hồ sơ có điểm và không bị đánh dấu nghi gộp nhầm; nhóm có dưới MIN người có điểm không được xếp hạng.
-const MIN = 5, TOPN = 10;
+const MIN = 5;
 type Row = { id: string; name: string; sub: string; n: number; avg: number; p1000: number; cit: number; top: Author[] };
 type SortK = "avg" | "p1000" | "n" | "cit";
 const L = {
   vi: { title: "Bảng xếp hạng", lead: "Xếp hạng đơn vị và ngành theo điểm trung bình của tối đa 10 nhà khoa học có PRO-SCORE cao nhất trong nhóm. Đây là chỉ số tham khảo mô phỏng, không phải xếp hạng chính thức.", units: "Đơn vị", fields: "Ngành", type: "Loại đơn vị", all: "Tất cả", rank: "Hạng", name: "Tên", avg: "Điểm TB top 10", p1000: "Trong PRO-SCORE1000™", n: "Nhà khoa học có điểm", cit: "Tổng trích dẫn", top: "Đứng đầu", note: `Chỉ xét nhóm có từ ${MIN} nhà khoa học đủ điều kiện xếp hạng (từ 10 công trình, hoạt động từ 3 năm); điểm trung bình top 10 chỉ tính các hồ sơ đủ điều kiện; cột "Nhà khoa học có điểm" đếm mọi hồ sơ có điểm, và người có nhiều đơn vị hiện tại được đếm ở từng đơn vị; hồ sơ nghi gộp nhầm nhiều người không được tính; chỉ tính đơn vị hiện tại của tác giả; không xếp hạng cơ sở tôn giáo.`, view: "Xem danh sách", sort: "Sắp xếp theo", none: "Chưa có nhóm đủ điều kiện." },
   en: { title: "Leaderboard", lead: "Institutions and fields ranked by the average PRO-SCORE of their top 10 scientists. A simulated reference index, not an official ranking.", units: "Institutions", fields: "Fields", type: "Institution type", all: "All", rank: "Rank", name: "Name", avg: "Top-10 avg score", p1000: "In PRO-SCORE1000™", n: "Scored scientists", cit: "Total citations", top: "Top scientists", note: `Only groups with at least ${MIN} rank-eligible scientists (10+ works, active 3+ years) are ranked; the top-10 average counts eligible profiles only; the "Scored scientists" column counts every scored profile, and a person with several current institutions is counted at each one; profiles suspected of merging several people are excluded; only each author's current institution counts; religious institutions are not ranked.`, view: "View list", sort: "Sort by", none: "No eligible groups yet." },
 };
-export function LeaderboardPage({ data, lang, num }: { data: Data; lang: Lang; num: (n: number, d?: number) => string }) {
+type LB = { types: Record<string, { vi: string; en: string }>; units: LRow[]; fields: LRow[] };
+type LRow = { id: string; n: number; avg: number; p1000: number; cit: number; top: [string, string, number][]; name?: string; en?: string; city?: string; type?: string };
+export function LeaderboardPage({ lang, num }: { lang: Lang; num: (n: number, d?: number) => string }) {
   const t = L[lang], [tab, setTab] = useState<"u" | "f">("u"), [type, setType] = useState(""), [sort, setSort] = useState<SortK>("avg");
-  const unitBy = useMemo(() => new Map(data.institutions.map((i) => [i.id, i])), [data]);
+  // Bảng đã tính sẵn lúc dựng (scripts/build-lite.mjs → data/leaderboard.json, ~80 KB): không cần tải cả bộ hồ sơ.
+  const [lb, setLb] = useState<LB | null>(null), [err, setErr] = useState(false);
+  useEffect(() => { fetch("./data/leaderboard.json").then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }).then(setLb).catch(() => setErr(true)); }, []);
   const rows = useMemo(() => {
-    const g = new Map<string, Author[]>();
-    for (const a of data.authors) {
-      if (a.suspect || a.pro == null) continue;
-      const keys = tab === "u" ? a.institutions.filter((i) => !a.instPast?.includes(i)) : a.disciplines;
-      for (const k of keys) { if (tab === "u" && (unitBy.get(k)?.type === "other" || (type && unitBy.get(k)?.type !== type))) continue; /* bỏ cơ sở tôn giáo */ (g.get(k) ?? g.set(k, []).get(k)!).push(a); }
-    }
-    const out: Row[] = [];
-    for (const [k, list] of g) {
-      const el = list.filter((a) => a.proRank != null); // điểm top 10 chỉ tính hồ sơ đủ điều kiện xếp hạng (từ 10 công trình, hoạt động từ 3 năm)
-      if (el.length < MIN) continue;
-      const top = [...el].sort((x, y) => (y.pro ?? 0) - (x.pro ?? 0) || (x.proRank ?? 1e9) - (y.proRank ?? 1e9)), t10 = top.slice(0, TOPN);
-      const u = unitBy.get(k);
-      out.push({ id: k, name: tab === "u" ? (lang === "vi" ? u?.name : u?.en || u?.name) ?? k : dName(k, lang), sub: tab === "u" ? provName(u?.city, lang) : "", n: list.length, avg: t10.reduce((s, a) => s + (a.pro ?? 0), 0) / t10.length, p1000: list.filter((a) => (a.proRank ?? 1e9) <= 1000).length, cit: list.reduce((s, a) => s + (a.citations ?? 0), 0), top: top.slice(0, 3) });
-    }
-    return out.sort((a, b) => b[sort] - a[sort] || b.avg - a.avg);
-  }, [data, tab, type, sort, lang, unitBy]);
-  const types = Object.entries(data.types ?? {}).filter(([k]) => k !== "other");
+    if (!lb) return [] as Row[];
+    const src = tab === "u" ? lb.units.filter((r) => !type || r.type === type) : lb.fields;
+    return src.map((r): Row => ({ id: r.id, name: tab === "u" ? (lang === "vi" ? r.name : r.en || r.name) ?? r.id : dName(r.id, lang), sub: tab === "u" ? provName(r.city, lang) : "", n: r.n, avg: r.avg, p1000: r.p1000, cit: r.cit, top: r.top.map(([id, name, pro]) => ({ id, name, pro }) as unknown as Author) })).sort((a, b) => b[sort] - a[sort] || b.avg - a.avg);
+  }, [lb, tab, type, sort, lang]);
+  if (err) return <p className="empty" role="alert">{t.none}</p>;
+  if (!lb) return <p className="empty" role="status">…</p>;
+  const types = Object.entries(lb.types ?? {}).filter(([k]) => k !== "other");
   const SORTS: [SortK, string][] = [["avg", t.avg], ["p1000", t.p1000], ["n", t.n], ["cit", t.cit]];
   return (
     <article className="lb">

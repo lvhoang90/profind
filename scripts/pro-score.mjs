@@ -70,7 +70,7 @@ export function computePro(authors, per, year) {
   const loc = new Map(); for (const [f, as] of byF) loc.set(f, Object.fromEntries(KEYS.map((k) => [k, pctMap(as.map((a) => feat.get(a.id)), k)])));
   const out95 = quant(pool.map((a) => feat.get(a.id).out), 0.95);
   for (const a of pool) {
-    const x = feat.get(a.id), B = 50, mx = mix(a).filter(([d]) => byF.has(d));
+    const x = feat.get(a.id), B = 50, mx = mix(a).filter(([d]) => d !== "_" && byF.has(d)); // "_" = chưa có ngành: so với toàn hệ thống, không so với nhóm "chưa phân ngành" (nhóm này toàn hồ sơ rất mỏng nên làm điểm phồng)
     const pcOne = (d, k, v) => { const n = byF.get(d).length, L = loc.get(d); return (n * L[k](v) + (n < B ? (B - n) : 0) * glob[k](v)) / (n + (n < B ? B - n : 0)); };
     const pc = (k, v = x[k]) => { if (!mx.length) return glob[k](v); const w = mx.reduce((t, [, p]) => t + p, 0); return mx.reduce((t, [d, p]) => t + p * pcOne(d, k, v), 0) / w; };
     const impact = 0.4 * pc("cites") + 0.3 * pc("h") + 0.3 * pc("hiS");
@@ -94,7 +94,7 @@ export function computePro(authors, per, year) {
     const so = Float32Array.from(sc).sort(); a.proLo = Math.round(so[Math.floor(0.1 * E)] * 10) / 10; a.proHi = Math.round(so[Math.floor(0.9 * E)] * 10) / 10;
   }
   // Xếp hạng toàn hệ thống (đồng hạng cùng số) chỉ trong tập đủ điều kiện: ≥ 10 công trình và hoạt động ≥ 3 năm (hồ sơ quá mỏng không được xếp hạng, tránh điểm ảo). Tự tính lại mỗi lần dữ liệu cập nhật.
-  const elig = pool.filter((a) => a.worksCount >= 10 && (a.lastYear ?? 0) - (a.firstYear ?? 0) >= 2).sort((p, q) => q._m - p._m || q.citations - p.citations);
+  const elig = pool.filter((a) => a.worksCount >= 10 && (a.lastYear ?? 0) - (a.firstYear ?? 0) >= 2 && a.disciplines?.length > 0).sort((p, q) => q._m - p._m || q.citations - p.citations);
   elig.forEach((a, i, arr) => { a.proRank = i > 0 && arr[i - 1]._m === a._m ? arr[i - 1].proRank : i + 1; });
   // Hạng của từng hồ sơ dưới góc nhìn của từng chuyên gia ảo, để đo độ vững (khoảng hạng P10-P90 và tỉ lệ chuyên gia đồng ý huy hiệu).
   const N = elig.length, rk = new Uint16Array(N * E), order = Array.from({ length: N }, (_, i) => i);
