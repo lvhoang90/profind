@@ -513,7 +513,7 @@ function Requests() {
       <div role="status" aria-live="polite">{msg && <p className="banner"><Icon n="check" />{msg}</p>}</div>
       {rows.length === 0 ? <p className="meta">{view === "new" ? "Không còn đề nghị nào." : "Chưa có đề nghị đã xử lý."}</p> : <ul className="mxlist">{rows.map((x) => (
         <li key={x.id}><b>{REQ_KIND[x.kind] ?? x.kind}</b> <span className="meta">· {new Date(x.at).toLocaleString("vi-VN")}</span>
-          <p className="meta">{x.name || "(không ghi tên)"} · {x.email}{x.orcid ? ` · ORCID ${x.orcid}` : ""}{x.author ? <> · hồ sơ <a href={`#/tac-gia/${x.author}`} target="_blank" rel="noopener">{x.authorName || x.author}</a></> : ""}{x.scholar ? <> · <a href={x.scholar} target="_blank" rel="noopener noreferrer">Google Scholar</a></> : ""}{x.orcid ? <> · <a href={`https://orcid.org/${x.orcid.replace(/^(\d{4})-?(\d{4})-?(\d{4})-?(\d{3}[\dXx])$/, "$1-$2-$3-$4")}`} target="_blank" rel="noopener noreferrer">ORCID</a></> : ""}</p>
+          <p className="meta">{x.name || "(không ghi tên)"} · {x.email}{x.orcid ? ` · ORCID ${x.orcid}` : ""}{x.author ? <> · {x.kind === "collab" ? "quan tâm hồ sơ (chưa báo cho nhà khoa học)" : "hồ sơ"} <a href={`#/tac-gia/${x.author}`} target="_blank" rel="noopener">{x.authorName || x.author}</a></> : ""}{x.scholar ? <> · <a href={x.scholar} target="_blank" rel="noopener noreferrer">Google Scholar</a></> : ""}{x.orcid ? <> · <a href={`https://orcid.org/${x.orcid.replace(/^(\d{4})-?(\d{4})-?(\d{4})-?(\d{3}[\dXx])$/, "$1-$2-$3-$4")}`} target="_blank" rel="noopener noreferrer">ORCID</a></> : ""}</p>
           {x.kind === "collab" && <p className="meta"><b>{x.org}</b> · {x.orgType} · {x.need}{x.field ? ` · ${x.field}` : ""}</p>}
           {x.msg && <p>{x.msg}</p>}
           {x.status === "new"

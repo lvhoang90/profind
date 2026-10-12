@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { useT } from "./i18n";
 import { DISC, dName } from "./disciplines";
 import { evt } from "./analytics";
+import { Icon } from "./icons";
 
 type LG = "vi" | "en";
 const L = {
@@ -18,7 +19,7 @@ const L = {
     field: "Lĩnh vực (không bắt buộc)", anyField: "Chưa xác định", msg: "Mô tả nhu cầu", msgHint: "Mục tiêu, thời gian dự kiến, quy mô. Không gửi thông tin bí mật.",
     consent: "Tôi đồng ý để ISA lưu và dùng thông tin này để liên hệ về yêu cầu của tôi.", send: "Gửi yêu cầu", sending: "Đang gửi…",
     ok: "Đã gửi yêu cầu tới ISA. Chúng tôi sẽ phản hồi qua email của bạn.", okAgain: "Gửi yêu cầu khác", err: "Chưa gửi được yêu cầu. Hãy kiểm tra thông tin rồi thử lại, hoặc viết trực tiếp tới vienisavietnam@gmail.com.", rate: "Bạn gửi quá nhiều yêu cầu. Hãy thử lại sau một giờ.",
-    expertNote: (n: string) => `Yêu cầu liên quan tới nhà khoa học: ${n}`,
+    interest: "Bạn đang quan tâm tới nhà khoa học", viewProfile: "Xem hồ sơ", interestNote: "Nhà khoa học này không nhận được yêu cầu của bạn. Yêu cầu chỉ gửi tới ISA; ISA xem xét và chỉ chuyển thông tin cho nhà khoa học khi phù hợp và sau khi bạn đồng ý.", secOrg: "Về tổ chức của bạn", secNeed: "Nhu cầu của bạn", okNote: "ISA là nơi nhận yêu cầu này. Nhà khoa học chưa nhận được gì.",
   },
   en: {
     title: "Partner with ISA", lead: "Schools and companies can send their needs to ISA. ISA reads each request, checks it against ProFind data and replies by email.",
@@ -33,7 +34,7 @@ const L = {
     field: "Field (optional)", anyField: "Not decided", msg: "Describe your need", msgHint: "Goal, expected timing, scale. Do not send confidential information.",
     consent: "I agree that ISA stores and uses this information to contact me about my request.", send: "Send request", sending: "Sending…",
     ok: "Your request has been sent to ISA. We will reply by email.", okAgain: "Send another request", err: "The request could not be sent. Check the details and try again, or write directly to vienisavietnam@gmail.com.", rate: "Too many requests. Please try again in an hour.",
-    expertNote: (n: string) => `Request related to scientist: ${n}`,
+    interest: "You are interested in the scientist", viewProfile: "View profile", interestNote: "This scientist does not receive your request. It goes to ISA only; ISA reviews it and passes your details to the scientist only when appropriate and with your consent.", secOrg: "About your organisation", secNeed: "What you need", okNote: "ISA receives this request. The scientist has not been contacted.",
   },
 };
 
@@ -57,27 +58,31 @@ export function CollabPage({ query }: { query: string }) {
   const li = (a: string[]) => <ul className="collab-list">{a.map((x) => <li key={x}>{x}</li>)}</ul>;
   return (
     <section className="collab" aria-labelledby="collab-h">
-      <h1 id="collab-h">{l.title}</h1>
-      <p className="meta">{l.lead}</p>
+      <header className="collab-head"><h1 id="collab-h">{l.title}</h1><p>{l.lead}</p></header>
       <div className="collab-cols">
-        <div><h2>{l.forSchool}</h2>{li(l.schoolItems)}</div>
-        <div><h2>{l.forBiz}</h2>{li(l.bizItems)}</div>
+        <div className="collab-card"><h2>{l.forSchool}</h2>{li(l.schoolItems)}</div>
+        <div className="collab-card"><h2>{l.forBiz}</h2>{li(l.bizItems)}</div>
       </div>
       <p className="banner" role="note">{l.free}</p>
-      {state === "ok" ? <div role="status" className="banner"><p>{l.ok}</p><button type="button" className="ghost" onClick={() => setState("idle")}>{l.okAgain}</button></div> : (
+      {aid && <div className="collab-interest" role="note"><Icon n="user" size={20} /><div><small>{l.interest}</small><b>{an || aid}</b> <a href={`#/tac-gia/${encodeURIComponent(aid)}`}>{l.viewProfile} →</a><p>{l.interestNote}</p></div></div>}
+      {state === "ok" ? <div role="status" className="banner collab-ok"><p><b>{l.ok}</b></p>{aid && <p>{l.okNote}</p>}<button type="button" className="ghost" onClick={() => setState("idle")}>{l.okAgain}</button></div> : (
         <form onSubmit={submit} className="collab-form">
-          {aid && <p className="meta">{l.expertNote(an || aid)}</p>}
           <input type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: "absolute", left: "-9999px" }} />
-          <label className="sel"><span>{l.orgType}</span><select id="co-type" name="orgType" defaultValue="school">{Object.entries(l.types).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select></label>
-          <label className="sel"><span>{l.org}</span><input id="co-org" name="org" type="text" maxLength={160} required defaultValue={org0} /></label>
-          <label className="sel"><span>{l.name}</span><input id="co-name" name="name" type="text" maxLength={120} required autoComplete="name" /></label>
-          <label className="sel"><span>{l.email}</span><input id="co-email" name="email" type="email" maxLength={160} required autoComplete="email" /></label>
-          <label className="sel"><span>{l.need}</span><select id="co-need" name="need" defaultValue={need0}>{Object.entries(l.needs).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select></label>
-          <label className="sel"><span>{l.field}</span><select id="co-field" name="field" defaultValue=""><option value="">{l.anyField}</option>{Object.keys(DISC).map((k) => <option key={k} value={k}>{dName(k, lang as LG)}</option>)}</select></label>
-          <label className="sel"><span>{l.msg}</span><textarea id="co-msg" name="msg" rows={6} maxLength={4000} required placeholder={l.msgHint} /></label>
+          <h2 className="collab-sec">{l.secOrg}</h2>
+          <div className="collab-grid">
+            <label className="sel"><span>{l.orgType}</span><select id="co-type" name="orgType" defaultValue="school">{Object.entries(l.types).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select></label>
+            <label className="sel"><span>{l.org}</span><input id="co-org" name="org" type="text" maxLength={160} required defaultValue={org0} /></label>
+            <label className="sel"><span>{l.name}</span><input id="co-name" name="name" type="text" maxLength={120} required autoComplete="name" /></label>
+            <label className="sel"><span>{l.email}</span><input id="co-email" name="email" type="email" maxLength={160} required autoComplete="email" /></label>
+          </div>
+          <h2 className="collab-sec">{l.secNeed}</h2>
+          <div className="collab-grid">
+            <label className="sel"><span>{l.need}</span><select id="co-need" name="need" defaultValue={need0}>{Object.entries(l.needs).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select></label>
+            <label className="sel"><span>{l.field}</span><select id="co-field" name="field" defaultValue=""><option value="">{l.anyField}</option>{Object.keys(DISC).map((k) => <option key={k} value={k}>{dName(k, lang as LG)}</option>)}</select></label>
+            <label className="sel wide"><span>{l.msg}</span><textarea id="co-msg" name="msg" rows={5} maxLength={4000} required placeholder={l.msgHint} /></label>
+          </div>
           <label className="chk consent"><input id="co-consent" type="checkbox" name="consent" value="1" required /> {l.consent}</label>
-          <p className="meta">{l.privacy}</p>
-          <button className="btn" type="submit" disabled={state === "sending"}>{state === "sending" ? l.sending : l.send}</button>
+          <div className="collab-act"><button className="btn" type="submit" disabled={state === "sending"}>{state === "sending" ? l.sending : l.send}</button><p className="meta">{l.privacy}</p></div>
           {(state === "err" || state === "rate") && <p className="banner demo" role="alert">{state === "rate" ? l.rate : l.err}</p>}
         </form>
       )}
