@@ -12,10 +12,24 @@ const TABS: [string, string, IconName][] = [["", "tabProfile", "user"], ["thanh-
 const initials = (n: string) => { const w = n.replace(/[^\p{L}\s-]/gu, " ").split(/[\s-]+/).filter(Boolean); return ((w[0]?.[0] ?? "") + (w.length > 1 ? w[w.length - 1][0] : "")).toUpperCase() || "P"; };
 const ago = (iso: string | number, lang: string) => new Date(iso).toLocaleDateString(lang === "vi" ? "vi-VN" : "en-GB", { day: "2-digit", month: "2-digit", year: "numeric" });
 
+const A = {
+  vi: { errNet: "Không kết nối được máy chủ, vui lòng thử lại.", errGen: "Có lỗi xảy ra, vui lòng thử lại.", offNet: "Không kết nối được máy chủ, vui lòng thử lại", retry: "Thử lại", h1Login: "Đăng nhập", h1Reg: "Đăng ký miễn phí" },
+  en: { errNet: "Could not reach the server. Please try again.", errGen: "Something went wrong. Please try again.", offNet: "Could not reach the server. Please try again", retry: "Try again", h1Login: "Sign in", h1Reg: "Sign up free" },
+};
+/** Ẩn chi tiết kỹ thuật (HTTP 502, [resend 403], Failed to fetch…) khỏi người dùng. */
+const friendly = (x: any, lang: string, fallback?: string) => {
+  const L = A[lang === "vi" ? "vi" : "en"], m = String(x?.message ?? "").trim();
+  if (/failed to fetch|networkerror|load failed|network request|abort/i.test(m) || x instanceof TypeError) return L.errNet;
+  if (!m || /\bHTTP\s*\d{3}\b|\[[^\]]*\]|^\w+\s+\d{3}$|SyntaxError|Unexpected token/i.test(m)) return fallback || L.errGen;
+  return m;
+};
+
 export function AccountPage({ tab }: { tab: string }) {
-  const { t } = useT();
-  const { cfg, user } = useAccount();
+  const { t, lang } = useT();
+  const { cfg, cfgError, user, refresh } = useAccount();
+  const L = A[lang === "vi" ? "vi" : "en"];
   if (cfg === null || user === undefined) return <p className="empty" role="status">{t("loading")}</p>;
+  if (cfgError) return <article className="auth-off"><h1>{t("accTitle")}</h1><p className="empty" role="alert">{L.offNet}</p><p><button type="button" className="primary" onClick={() => void refresh()}>{L.retry}</button></p></article>;
   if (!cfg.enabled) return <article className="auth-off"><h1>{t("accTitle")}</h1><p className="empty" role="alert">{t("aOff")}</p></article>;
   return user ? <Dashboard user={user} tab={tab} /> : <AuthPanel />;
 }
@@ -23,6 +37,7 @@ export function AccountPage({ tab }: { tab: string }) {
 function AuthPanel() {
   const { t, lang } = useT();
   const { cfg, setUser, refresh } = useAccount();
+  const L = A[lang === "vi" ? "vi" : "en"];
   const [mode, setMode] = useState<"login" | "reg">("login"), [step, setStep] = useState<"form" | "code">("form"), [email, setEmail] = useState(""), [phone, setPhone] = useState(""), [name, setName] = useState(""), [consent, setConsent] = useState(false), [marketing, setMarketing] = useState(false), [code, setCode] = useState("");
   const [need, setNeed] = useState(false), [busy, setBusy] = useState(false), [err, setErr] = useState(""), [wait, setWait] = useState(0);
   useEffect(() => { evt("reg_open"); }, []);
@@ -33,7 +48,7 @@ function AuthPanel() {
       // Đăng nhập: chỉ gửi email. Đăng ký: kèm số điện thoại, tên và đồng ý.
       const r = await api<{ retry?: number }>("request", mode === "reg" ? { email, phone, name, consent, lang } : { email, lang });
       setStep("code"); setWait(r.retry ?? 45); evt("reg_start");
-    } catch (x: any) { setErr(x.message || t("aErr")); if (x.retry) setWait(x.retry); } finally { setBusy(false); }
+    } catch (x: any) { setErr(friendly(x, lang, t("aErr"))); if (x.retry) setWait(x.retry); } finally { setBusy(false); }
   };
   const verify = async (e: FormEvent) => {
     e.preventDefault(); setBusy(true); setErr("");
@@ -47,7 +62,7 @@ function AuthPanel() {
       const dest = back && back.startsWith("#/") && !back.startsWith("#/tai-khoan") ? back : "#/tai-khoan";
       // Người mới đăng ký: hiện ngay bước "Nhà khoa học này có phải bạn?"; xong hoặc bấm "Để sau" thì quay về nơi định đến
       if (r.isNew) { try { sessionStorage.setItem("profind.sgback", dest); } catch { /* bỏ qua */ } location.hash = "#/tai-khoan/nhan-dien"; } else location.hash = dest;
-    } catch (x: any) { setErr(x.message || t("aErr")); } finally { setBusy(false); }
+    } catch (x: any) { setErr(friendly(x, lang, t("aErr"))); } finally { setBusy(false); }
   };
   const emailField = <label className="sel"><span><Icon n="mail" size={14} />{t("aEmail")}</span><input type="email" required autoComplete="email" inputMode="email" value={email} onChange={(e) => setEmail(e.target.value)} maxLength={254} /></label>;
   const profileFields = <>
@@ -60,15 +75,15 @@ function AuthPanel() {
     <article className="auth">
       <div className="auth-side">
         <span className="kic big"><Icon n="spark" size={26} /></span>
-        <h1>{t("regTitle")}</h1>
+        <h1>{mode === "login" ? L.h1Login : L.h1Reg}</h1>
         <p>{t("regLead")}</p>
         <ul className="perks">{(["perk1", "perk2", "perk3", "perk4"] as const).map((k) => <li key={k}><Icon n="check" size={18} />{t(k)}</li>)}</ul>
         <p className="pledge"><Icon n="shield" size={16} /> {cfg?.pledge?.[lang]}</p>
       </div>
       <div className="auth-box">
-        {step === "form" && <div className="seg auth-tabs" role="tablist" aria-label={t("accTitle")}>{(["login", "reg"] as const).map((m) => <button key={m} role="tab" aria-selected={mode === m} aria-pressed={mode === m} onClick={() => { setMode(m); setErr(""); }}>{t(m === "login" ? "loginTab" : "regTab")}</button>)}</div>}
+        {step === "form" && <div className="seg auth-tabs" role="tablist" aria-label={t("accTitle")}>{(["login", "reg"] as const).map((m) => <button key={m} role="tab" id={`auth-tab-${m}`} aria-controls="auth-panel" aria-selected={mode === m} tabIndex={mode === m ? 0 : -1} onClick={() => { setMode(m); setErr(""); }}>{t(m === "login" ? "loginTab" : "regTab")}</button>)}</div>}
         {step === "form" ? (
-          <form className="auth-form card" onSubmit={send}>
+          <form className="auth-form card" onSubmit={send} id="auth-panel" role="tabpanel" aria-labelledby={`auth-tab-${mode}`}>
             {mode === "login" && <p className="meta">{t("loginLead")}</p>}
             {emailField}
             {mode === "reg" && profileFields}
@@ -79,7 +94,7 @@ function AuthPanel() {
         ) : (
           <form className="auth-form card" onSubmit={verify}>
             <p className="banner"><Icon n="mail" />{t("aCodeSent", { e: email })}</p>
-            <label className="sel"><span>{t("aCode")}</span><input className="otp" inputMode="numeric" autoComplete="one-time-code" pattern="\d{6}" maxLength={6} required autoFocus value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} /></label>
+            <label className="sel"><span>{t("aCode")}</span><input className="otp" inputMode="numeric" autoComplete="one-time-code" pattern="\d{6}" required autoFocus value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))} /></label>
             {need && mode === "login" && <><p className="banner demo" role="note">{t("needProfile")}</p>{profileFields}</>}
             <div role="alert">{err && <p className="banner demo">{err}</p>}</div>
             <button className="primary" disabled={busy || code.length !== 6}>{busy ? t("aSending") : t("aVerify")}</button>
@@ -192,10 +207,10 @@ function ProfileTab({ user, mine, reload }: { user: User; mine: import("./Verifi
     : <>{mine && <SuggestNudge user={user} />}<Profile user={user} /><h2 className="prof-sci">Hồ sơ khoa học</h2><ScholarConsole list={mine} reload={reload} /><InviteCard user={user} compact /></>;
 }
 function Profile({ user }: { user: User }) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const { setUser, logout } = useAccount();
   const [f, setF] = useState({ name: user.name, phone: user.phone, job: user.job, org: user.org, address: user.address, noMail: !user.noMail }), [msg, setMsg] = useState(""), [err, setErr] = useState("");
-  const save = async (e: FormEvent) => { e.preventDefault(); setErr(""); setMsg(""); try { const r = await api<{ user: User }>("profile", { ...f, noMail: !f.noMail }); setUser(r.user); setMsg(t("pSaved")); } catch (x: any) { setErr(x.message); } };
+  const save = async (e: FormEvent) => { e.preventDefault(); setErr(""); setMsg(""); try { const r = await api<{ user: User }>("profile", { ...f, noMail: !f.noMail }); setUser(r.user); setMsg(t("pSaved")); } catch (x: any) { setErr(friendly(x, lang)); } };
   const set = (k: keyof typeof f) => (e: { target: { value: string } }) => setF({ ...f, [k]: e.target.value });
   return (
     <div className="prof">

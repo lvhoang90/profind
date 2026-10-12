@@ -195,7 +195,7 @@ function List({ d, query }: { d: Data; query: string }) {
   const { lang, t, num } = useT();
   const { user, cfg, saveSearch } = useAccount();
   const qp = useMemo(() => new URLSearchParams(query), []); // eslint-disable-line react-hooks/exhaustive-deps
-  const [q, setQ] = useState(qp.get("q") ?? ""), [disc, setDisc] = useState(qp.get("d") ?? ""), [type, setType] = useState(qp.get("ty") ?? ""), [sort, setSort] = useState<SortKey>("pro"), [dir, setDir] = useState<1 | -1>(-1);
+  const [q, setQ] = useState(qp.get("q") ?? ""), [disc, setDisc] = useState(qp.get("d") ?? ""), [type, setType] = useState(qp.get("ty") ?? ""), [prov, setProv] = useState(qp.get("pv") ?? ""), [sort, setSort] = useState<SortKey>("pro"), [dir, setDir] = useState<1 | -1>(-1);
   const pick2 = (k: SortKey) => { setSort(k); setDir(TEXT_KEYS.includes(k) ? 1 : -1); };
   const pick = (k: SortKey) => { if (k === sort) setDir((dir * -1) as 1 | -1); else { setSort(k); setDir(TEXT_KEYS.includes(k) || RANK_ASC.includes(k) ? 1 : -1); } };
   const [scope, setScope] = useState(qp.get("sc") === "all" ? "all" : "vn"), [instSel, setInstSel] = useState(qp.get("i") ?? ""), [withPast, setWithPast] = useState(qp.get("pa") === "1"), [page, setPage] = useState(0), [ssMsg, setSsMsg] = useState(""), [browse, setBrowse] = useState(qp.get("b") === "1"), [top2only, setTop2only] = useState(qp.get("t2") === "1"), [slot, setSlot] = useState<HTMLElement | null>(null), [showF, setShowF] = useState(() => matchMedia("(min-width: 900px)").matches);
@@ -224,12 +224,12 @@ function List({ d, query }: { d: Data; query: string }) {
   const hay = useMemo(() => new Map(d.authors.map((a) => [a.id, { n: norm(a.name).split(" "), i: [...new Set(a.institutions.flatMap((i) => { const x = instById.get(i); return x ? norm(`${x.name} ${x.en ?? ""} ${x.abbr ?? ""}`).split(" ") : []; }))] }])), [d, instById]);
   // Bộ lọc nằm trong đường dẫn (#/?q=…&d=…) để chia sẻ, mở lại và dùng nút Quay lại của trình duyệt.
   useEffect(() => {
-    const u = new URLSearchParams(Object.entries({ q: q.trim(), d: disc, ty: type, i: instSel, pa: instSel && withPast ? "1" : "", sc: scope === "all" ? "all" : "", t2: top2only ? "1" : "", b: browse ? "1" : "" }).filter(([, v]) => v));
+    const u = new URLSearchParams(Object.entries({ q: q.trim(), d: disc, ty: type, pv: prov, i: instSel, pa: instSel && withPast ? "1" : "", sc: scope === "all" ? "all" : "", t2: top2only ? "1" : "", b: browse ? "1" : "" }).filter(([, v]) => v));
     const h = `#/${u.toString() ? "?" + u : ""}`; if (h !== (location.hash || "#/")) history.replaceState(null, "", h);
   }, [q, disc, type, instSel, withPast, scope, top2only, browse]);
   useEffect(() => { const id = window.setTimeout(() => { if (q.trim().length >= 3) evt("search", undefined, q.trim()); }, 1200); return () => window.clearTimeout(id); }, [q]);
-  const hasFilter = !!(q.trim() || disc || type || instSel || top2only), home = !hasFilter && !browse;
-  const clearAll = () => { setQ(""); setDisc(""); setType(""); setInstSel(""); setWithPast(false); setTop2only(false); setBrowse(false); setPage(0); setTab("a"); };
+  const hasFilter = !!(q.trim() || disc || type || prov || instSel || top2only), home = !hasFilter && !browse;
+  const clearAll = () => { setQ(""); setDisc(""); setType(""); setProv(""); setInstSel(""); setWithPast(false); setTop2only(false); setBrowse(false); setPage(0); setTab("a"); };
   useEffect(() => { const h = () => { clearAll(); window.scrollTo({ top: 0, behavior: "smooth" }); }; window.addEventListener("profind:home", h); return () => window.removeEventListener("profind:home", h); }); // eslint-disable-line react-hooks/exhaustive-deps
   const doSave = async () => {
     if (!user) { try { sessionStorage.setItem("profind.ret", location.hash || "#/"); sessionStorage.setItem("profind.reason", "ss"); } catch { /* bỏ qua */ } evt("save_gate"); location.hash = "#/tai-khoan"; return; }
@@ -240,11 +240,14 @@ function List({ d, query }: { d: Data; query: string }) {
   const rows = useMemo(() => {
     const toks = norm(dq).split(" ").filter(Boolean);
     const rawId = dq.replace(/https?:\/\/(www\.)?orcid\.org\//i, "").replace(/^\s*(issn|orcid)\s*:?/i, "").replace(/[\s-]/g, "").toLowerCase(), isId = /^[0-9x]{6,}$/.test(rawId);
+    // Khớp đủ tên (mọi từ khóa nằm trong tên người) được xếp lên trước các hồ sơ chỉ khớp nhờ đơn vị hoặc tạp chí.
+    const nameFull = (x: Author) => { const w = hay.get(x.id)?.n ?? norm(x.name).split(" "); return toks.every((tk, i) => w.some((y) => (i === toks.length - 1 ? y.startsWith(tk) : y === tk))); };
     return d.authors.filter((a) => {
       if (scope === "vn" && a.suspect) return false;
       if (disc && !a.disciplines.includes(disc)) return false;
       if (instSel && !(withPast ? a.institutions : a.institutions.filter((i) => !a.instPast?.includes(i))).some((i) => inUnit(i, instSel))) return false;
       if (type && !a.institutions.some((i) => instById.get(i)?.type === type)) return false;
+      if (prov && !a.institutions.some((i) => !a.instPast?.includes(i) && instById.get(i)?.city === prov)) return false;
       if (top2only && !a.top2) return false;
       if (!toks.length) return true;
       if (isId) return idPlain(a.orcid ?? "").includes(rawId) || (jn?.[a.id]?.p.includes(rawId) ?? false);
@@ -258,6 +261,7 @@ function List({ d, query }: { d: Data; query: string }) {
       // Tạp chí/ISSN: khớp cả cụm từ, không khớp từng từ rời (tránh "tran van dat" khớp "Transactions ... data").
       const j = jn?.[a.id]?.t; return !!j && j.includes(toks.join(" "));
     }).sort((a, b) => {
+      if (toks.length && !isId) { const pn = Number(!nameFull(a)) - Number(!nameFull(b)); if (pn) return pn; }
       let c = 0;
       if (sort === "name") c = a.name.localeCompare(b.name, "vi");
       else if (sort === "unit") { const u = (x: Author) => x.institutions.map((i) => instLabel(instById.get(i), lang, i)).join(", "); c = u(a).localeCompare(u(b), "vi"); }
@@ -265,8 +269,8 @@ function List({ d, query }: { d: Data; query: string }) {
       else c = ((a[sort] ?? 0) as number) - ((b[sort] ?? 0) as number);
       return c * dir || (a.proRank ?? Infinity) - (b.proRank ?? Infinity) || (b.pro ?? -1) - (a.pro ?? -1) || b.worksCount - a.worksCount || a.name.localeCompare(b.name, "vi");
     });
-  }, [d, dq, disc, type, instSel, withPast, sort, dir, scope, instById, jn, lang, hay, top2only]);
-  useEffect(() => setPage(0), [dq, disc, type, instSel, withPast, sort, dir, scope, top2only]);
+  }, [d, dq, disc, type, prov, instSel, withPast, sort, dir, scope, instById, jn, lang, hay, top2only]);
+  useEffect(() => setPage(0), [dq, disc, type, prov, instSel, withPast, sort, dir, scope, top2only]);
   // Số liệu cho trang chủ (phạm vi Việt Nam): ngành và đơn vị nổi bật.
   const home$ = useMemo(() => {
     const vn = d.authors.filter((a) => !a.suspect), dc = new Map<string, number>(), ic = new Map<string, number>();
@@ -328,6 +332,7 @@ function List({ d, query }: { d: Data; query: string }) {
       {showF && <section className="filters" aria-label={t("filters")}>
         <Sel icon="discipline" label={t("discipline")} v={disc} set={setDisc} all={t("all")} opts={d.disciplines.map((s) => [s, dName(s, lang)])} />
         <Sel icon="building" label={t("instType")} v={type} set={setType} all={t("all")} opts={Object.entries(d.types).filter(([k]) => d.institutions.some((i) => i.type === k)).map(([k, v]) => [k, v[lang]])} />
+        <Sel icon="building" label={t("province")} v={prov} set={setProv} all={t("all")} opts={[...new Set(d.institutions.map((i) => i.city).filter((c): c is string => !!c))].sort((x, y) => x.localeCompare(y, lang)).map((c) => [c, c] as [string, string])} />
         <Sel icon="building" label={t("inst")} v={instSel} set={setInstSel} all={t("all")} opts={instOpts} />
         {instSel && <label className="chk"><input type="checkbox" checked={withPast} onChange={(e) => setWithPast(e.target.checked)} /> {t("withPast")}</label>}
         <Sel icon="shield" label={t("scope")} v={scope} set={(v) => { setScope(v); setInstSel(""); }} opts={[["vn", t("scopeVn")], ["all", t("scopeAll")]]} />

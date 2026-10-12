@@ -11,6 +11,23 @@ const clip = (v, n) => String(v ?? "").slice(0, n);
 const MEM = new Map();
 const memLimited = (ip) => { const now = Date.now(), k = ip || "?", a = (MEM.get(k) ?? []).filter((t) => now - t < 3600e3); a.push(now); MEM.set(k, a); if (MEM.size > 5000) MEM.clear(); return a.length > 5; };
 const oneLine = (v, n) => clip(v, n).replace(/[\r\n\u2028\u2029]+/g, " ").trim();
+// Thông báo lỗi hai ngôn ngữ: `code` ổn định, `error` theo ngôn ngữ yêu cầu (form `lang` hoặc ?lang=; "en" thì tiếng Anh, còn lại tiếng Việt).
+const MSG = {
+  method: ["Phương thức không được hỗ trợ.", "Method not allowed."],
+  origin: ["Yêu cầu không đến từ trang ProFind.", "The request did not come from the ProFind site."],
+  "too-large": ["Nội dung gửi quá lớn.", "The submission is too large."],
+  "not-configured": ["Dịch vụ nhận yêu cầu chưa sẵn sàng.", "The request service is not ready."],
+  "bad-request": ["Dữ liệu gửi lên không đọc được.", "The submitted data could not be read."],
+  kind: ["Loại yêu cầu chưa hợp lệ.", "Invalid request type."],
+  email: ["Email chưa đúng định dạng.", "Invalid email."],
+  empty: ["Hãy nhập nội dung đính chính.", "Please enter the correction details."],
+  rate: ["Bạn đã gửi quá nhiều yêu cầu, vui lòng thử lại sau một giờ.", "Too many requests; please try again in an hour."],
+  orcid: ["Mã ORCID chưa đúng định dạng.", "The ORCID format is not valid."],
+  scholar: ["Đường dẫn Google Scholar chưa đúng.", "The Google Scholar link is not valid."],
+  send: ["Không gửi được yêu cầu. Vui lòng thử lại sau.", "The request could not be sent. Please try again later."],
+};
+let LANG = "vi";
+const fail = (code, status) => json({ ok: false, code, error: MSG[code][LANG === "en" ? 1 : 0] }, status);
 const KINDS = { claim: "Xác nhận hồ sơ (đây là tôi)", correct: "Đính chính thông tin / công trình", remove: "Gỡ hồ sơ", add: "Đề nghị bổ sung nhà nghiên cứu" };
 
 const kvConf = () => { const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL, token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN; return url && token ? { url: url.replace(/\/$/, ""), token } : null; };
@@ -36,30 +53,33 @@ async function limited(request) {
 }
 
 export default async function handler(request) {
-  if (request.method !== "POST") return json({ ok: false, error: "method" }, 405);
+  LANG = "vi"; try { if (new URL(request.url).searchParams.get("lang") === "en") LANG = "en"; } catch { /* giữ vi */ }
+  if (request.method !== "POST") return fail("method", 405);
   // Chỉ nhận yêu cầu từ chính trang này (chặn gửi chéo từ trang khác) và nội dung nhỏ.
   const origin = request.headers.get("origin");
-  if (origin) { try { if (new URL(origin).host !== new URL(request.url).host) return json({ ok: false, error: "origin" }, 403); } catch { return json({ ok: false, error: "origin" }, 403); } }
-  if (Number(request.headers.get("content-length") || 0) > 20000) return json({ ok: false, error: "too-large" }, 413);
+  if (origin) { try { if (new URL(origin).host !== new URL(request.url).host) return fail("origin", 403); } catch { return fail("origin", 403); } }
+  if (Number(request.headers.get("content-length") || 0) > 20000) return fail("too-large", 413);
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey && !kvConf()) return json({ ok: false, error: "not-configured" }, 503);
-  let form; try { form = await request.formData(); } catch { return json({ ok: false, error: "bad-request" }, 400); }
+  if (!apiKey && !kvConf()) return fail("not-configured", 503);
+  let form; try { form = await request.formData(); } catch { return fail("bad-request", 400); }
+  if (String(form.get("lang")) === "en") LANG = "en";
   if (form.get("_honey")) return json({ ok: true });
-  const kind = String(form.get("kind")); if (!KINDS[kind]) return json({ ok: false, error: "kind" }, 400);
+  const kind = String(form.get("kind")); if (!KINDS[kind]) return fail("kind", 400);
   const email = clip(form.get("email"), 160).trim();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ ok: false, error: "email" }, 400);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail("email", 400);
   const msg = clip(form.get("msg"), 4000).trim();
-  if (!msg && kind === "correct") return json({ ok: false, error: "empty" }, 400);
-  if (await limited(request)) return json({ ok: false, error: "rate" }, 429);
-  const orcid = oneLine(form.get("orcid"), 40); if (orcid && !/^\d{4}-?\d{4}-?\d{4}-?\d{3}[\dXx]$/.test(orcid)) return json({ ok: false, error: "orcid" }, 400);
-  const scholar = oneLine(form.get("scholar"), 300); if (scholar && !/^https:\/\/scholar\.google\.[a-z.]+\/citations\?[^\s]*user=[A-Za-z0-9_-]{8,14}/.test(scholar)) return json({ ok: false, error: "scholar" }, 400);
+  if (!msg && kind === "correct") return fail("empty", 400);
+  if (await limited(request)) return fail("rate", 429);
+  const orcid = oneLine(form.get("orcid"), 40); if (orcid && !/^\d{4}-?\d{4}-?\d{4}-?\d{3}[\dXx]$/.test(orcid)) return fail("orcid", 400);
+  const scholar = oneLine(form.get("scholar"), 300); if (scholar && !/^https:\/\/scholar\.google\.[a-z.]+\/citations\?[^\s]*user=[A-Za-z0-9_-]{8,14}/.test(scholar)) return fail("scholar", 400);
   const rows = [["Loại yêu cầu", KINDS[kind]], ...(scholar ? [["Google Scholar", scholar]] : []), ["Mã hồ sơ", oneLine(form.get("author"), 60)], ["Tên trong hồ sơ", oneLine(form.get("authorName"), 120)], ["Người gửi", oneLine(form.get("name"), 120)], ["Email", email], ["ORCID", orcid], ["Thời điểm (UTC)", new Date().toISOString()]];
   const html = `<h2>ProFind: ${esc(KINDS[kind])}</h2><table cellpadding="6" style="border-collapse:collapse">${rows.map(([k, v]) => `<tr><td style="border:1px solid #ddd"><b>${esc(k)}</b></td><td style="border:1px solid #ddd">${esc(v)}</td></tr>`).join("")}</table><h3>Nội dung</h3><p style="white-space:pre-wrap">${esc(msg || "(không có)")}</p>`;
   const rec = { id: `${Date.now().toString(36)}${crypto.getRandomValues(new Uint32Array(1))[0].toString(36)}`, kind, author: oneLine(form.get("author"), 60), authorName: oneLine(form.get("authorName"), 120), name: oneLine(form.get("name"), 120), email, orcid, scholar, msg, at: Date.now(), status: "new" };
   const stored = await saveReq(rec);
-  if (!apiKey) return stored ? json({ ok: true }) : json({ ok: false, error: "send" }, 502);
+  if (!apiKey) return stored ? json({ ok: true }) : fail("send", 502);
   const r = await fetch("https://api.resend.com/emails", { method: "POST", headers: { authorization: `Bearer ${apiKey}`, "content-type": "application/json" }, body: JSON.stringify({
     from: process.env.CORRECTION_FROM || "ProFind <onboarding@resend.dev>", to: [process.env.CORRECTION_TO || "vienisavietnam@gmail.com"], reply_to: email,
     subject: `[ProFind] ${KINDS[kind]} - ${oneLine(form.get("authorName"), 60) || oneLine(form.get("author"), 40)}`, html, text: `${rows.map(([k, v]) => `${k}: ${v}`).join("\n")}\n\n${msg}` }) });
-  return r.ok || stored ? json({ ok: true }) : json({ ok: false, error: "send" }, 502);
+  if (!r.ok) console.error("[correction] resend", r.status, stored ? "(đã lưu Redis)" : "");
+  return r.ok || stored ? json({ ok: true }) : fail("send", 502);
 }
