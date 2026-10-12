@@ -49,7 +49,7 @@ export function VerifiedBadge({ id }: { id: string }) {
 }
 
 type Row = { id: string; authorId: string; status: string; until: number | null; reason: string };
-export function ClaimBox({ authorId, authorName, mode = "claim" }: { authorId: string; authorName: string; mode?: "claim" | "remove" | "hide" }) {
+export function ClaimBox({ authorId, authorName, mode = "claim", knownOrcid = "" }: { authorId: string; authorName: string; mode?: "claim" | "remove" | "hide"; knownOrcid?: string }) {
   const rm = mode === "remove", hd = mode === "hide";
   const { user } = useAccount();
   const until = useVerified(authorId);
@@ -73,7 +73,8 @@ export function ClaimBox({ authorId, authorName, mode = "claim" }: { authorId: s
       {last && last.status !== "approved" && <p className="meta" role="status">Yêu cầu gần nhất: {last.status === "review" ? "đang chờ duyệt" : last.status === "rejected" ? `chưa được chấp nhận${last.reason ? " — " + last.reason : ""}` : `cần bổ sung${last.reason ? " — " + last.reason : ""}`}.</p>}
       <form onSubmit={submit} className="form">
         <label className="sel"><span>Họ tên đầy đủ</span><input name="name" required maxLength={80} defaultValue={user.name} autoComplete="name" /></label>
-        <label className="sel"><span>ORCID</span><input name="orcid" maxLength={40} placeholder="0000-0000-0000-0000" /></label>
+        <label className="sel"><span>ORCID {!rm && <small>(nên điền để được duyệt nhanh hơn)</small>}</span><input name="orcid" maxLength={40} defaultValue={knownOrcid} placeholder="0000-0000-0000-0000" /></label>
+        {!rm && <p className="meta">{knownOrcid ? `Hồ sơ này đang ghi ORCID ${knownOrcid} (lấy từ OpenAlex). Nếu đúng là của bạn, giữ nguyên; nếu không phải, hãy sửa hoặc xoá. ` : "Hồ sơ này chưa ghi ORCID. "}ORCID là mã định danh nhà nghiên cứu, giúp ProFind đối chiếu tên và công trình của bạn. Chưa có thì đăng ký miễn phí tại orcid.org, hoặc để trống và quản trị viên sẽ xét thủ công.</p>}
         <label className="sel"><span>Google Scholar</span><input name="scholar" type="url" maxLength={300} placeholder="https://scholar.google.com/citations?user=…" /></label>
         <label className="sel"><span>{rm ? "Lý do đề nghị gỡ (bắt buộc)" : "Ghi chú (tuỳ chọn)"}</span><textarea name="note" rows={3} maxLength={1000} required={rm} /></label>
         <p><button className="primary" disabled={st === "sending"}>{st === "sending" ? "Đang gửi…" : rm ? "Gửi đề nghị gỡ hồ sơ" : hd ? "Gửi đề nghị ẩn điểm" : "Gửi yêu cầu xác thực"}</button></p>
