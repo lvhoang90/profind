@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useT } from "./i18n";
 import { dName } from "./disciplines";
 import { rankOf, useIntlRank } from "./intlPref";
+import { UnitTrend } from "./UnitTrend";
 import type { Author, Data, Institution } from "./types";
 
 type LG = "vi" | "en";
@@ -60,6 +61,7 @@ export function SchoolPage({ d, query }: { d: Data; query: string }) {
         <div className="sch-kpis">
           {([[l.people, num(S.n)], [l.ranked, num(S.ranked)], [l.top2, num(S.top2)], [l.cites, num(S.cites)], [l.works, num(S.works)], [l.avg, S.avg == null ? "-" : num(S.avg, 1)]] as [string, string][]).map(([k, v]) => <div key={k} className="kpi"><b>{v}</b><span>{k}</span></div>)}
         </div>
+        <UnitTrend unit={u} name={label(unit)} />
         <h2>{l.byField}</h2>
         <div className="sch-tw"><table className="sch-t"><thead><tr><th>{l.field}</th><th className="num">{l.count}</th><th className="num">{l.top2}</th><th>{l.best}</th></tr></thead><tbody>
           <tr className={f === "" ? "on" : ""}><td><a href={`#/nha-truong?u=${encodeURIComponent(u)}`}>{l.all}</a></td><td className="num">{num(S.n)}</td><td className="num">{num(S.top2)}</td><td>{S.scored[0] ? <a href={`#/tac-gia/${encodeURIComponent(S.scored[0].id)}`}>{S.scored[0].name}</a> : "-"}</td></tr>
