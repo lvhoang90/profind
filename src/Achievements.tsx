@@ -3,6 +3,123 @@ import { Icon } from "./icons";
 import { useAccount, type User } from "./accountStore";
 import { type Mine } from "./Verified";
 import { evt } from "./analytics";
+import { useT, type Lang } from "./i18n";
+
+const vi = {
+  tier: { bronze: "Đồng", silver: "Bạc", gold: "Vàng", diamond: "Kim cương", legend: "Huyền thoại" } as Record<string, string>,
+  levels: ["Hạt mầm", "Chồi non", "Nụ hoa", "Đóa hoa", "Bách hoa"],
+  days: ["T2", "T3", "T4", "T5", "T6", "T7", "CN"],
+  week: "7 ngày gần nhất",
+  share: "Mình đang dùng ProFind để tra cứu, xếp hạng nhà khoa học Việt Nam và quản lý hồ sơ khoa học. Bạn thử tìm hồ sơ của mình và xác thực miễn phí nhé:",
+  mailSubject: "Mời bạn dùng ProFind",
+  invTitle: "Mời đồng nghiệp cùng dùng ProFind",
+  inv1: "Mỗi bạn đăng ký qua liên kết của bạn: ",
+  inv2: ". Bạn đó xác thực hồ sơ khoa học thành công: ",
+  inv3: " nữa. Chỉ ghi nhận thành tích; ProFind vẫn miễn phí vĩnh viễn cho tất cả.",
+  linkAria: "Liên kết mời của bạn",
+  copied: "Đã sao chép ✓",
+  copy: "Sao chép lời mời",
+  shareBtn: "Chia sẻ…",
+  stReg: "bạn đã đăng ký",
+  stVer: "bạn đã xác thực",
+  stStars: "★ nhờ lan tỏa",
+  strip: "Thành tích",
+  streakTip: "Chuỗi ngày liên tiếp",
+  dayUnit: (_n: number) => "ngày",
+  starTip: "Tổng số sao",
+  topLevel: "Cấp cao nhất",
+  toNext: (n: string, name: string) => `Còn ${n} ★ nữa lên "${name}"`,
+  newBadge: "Huy hiệu mới",
+  close: "Đóng",
+  more: (n: string) => `Và ${n} huy hiệu mới khác trong bộ sưu tập bên dưới.`,
+  startStreak: "Bắt đầu chuỗi ngày của bạn",
+  streakN: (n: string) => `${n} ngày liên tiếp`,
+  todayDone: "Hôm nay bạn đã điểm danh rồi (mở ProFind khi đã đăng nhập là tính một ngày). Hẹn gặp lại ngày mai!",
+  todayNot: "Mở ProFind khi đã đăng nhập là tự điểm danh một ngày.",
+  record: " Kỷ lục: ",
+  stars: "sao",
+  topLevelLong: "Bạn đã đạt cấp cao nhất",
+  lvInfo: (names: string) => `Cấp độ theo sao: ${names}. Sao: 1 mỗi ngày có mặt · 5 mỗi bạn mời đăng ký · 20 mỗi bạn mời xác thực thành công · 20 mỗi hồ sơ khoa học đã xác thực · 10 khi khai đủ hồ sơ.`,
+  goal: " Mục tiêu gần nhất: ",
+  gardenCount: (a: string, b: string) => `${a}/${b} huy hiệu`,
+  logo1: (names: string) => `Logo ProFind là một bông hoa năm cánh. Mỗi cánh là một con đường: ${names}. Nhận huy hiệu ở cánh nào, cánh ấy sáng lên; sáng đủ cả năm cánh, bạn nhận danh hiệu `,
+  reached: "Đã đạt",
+  lit: (n: string) => `Đã sáng ${n}/5 cánh.`,
+  petalOf: (name: string) => `Cánh ${name}`,
+  earned: (tier: string) => `${tier} · đã đạt`,
+  crownName: "Bách hoa tri thức",
+  crownHint: "Có ít nhất một huy hiệu ở cả 5 cánh: Khám phá, Dung mạo, Lan tỏa, Bền bỉ, Uy tín",
+  crownMeaning: "Trăm hoa đua nở: bạn đã làm cả năm cánh của khu vườn tri thức cùng nở rộ.",
+};
+const en: typeof vi = {
+  tier: { bronze: "Bronze", silver: "Silver", gold: "Gold", diamond: "Diamond", legend: "Legend" },
+  levels: ["Seed", "Sprout", "Bud", "Blossom", "Full Bloom"],
+  days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  week: "Last 7 days",
+  share: "I use ProFind to look up and rank Vietnamese scientists and manage scientific profiles. Try finding your profile and verify it for free:",
+  mailSubject: "Try ProFind",
+  invTitle: "Invite colleagues to ProFind",
+  inv1: "Each colleague who signs up through your link: ",
+  inv2: ". When they verify a scientist profile: ",
+  inv3: " more. This only records achievements; ProFind stays free forever for everyone.",
+  linkAria: "Your invitation link",
+  copied: "Copied ✓",
+  copy: "Copy invitation",
+  shareBtn: "Share…",
+  stReg: "friends signed up",
+  stVer: "friends verified",
+  stStars: "★ from inviting",
+  strip: "Achievements",
+  streakTip: "Daily streak",
+  dayUnit: (n) => (n === 1 ? "day" : "days"),
+  starTip: "Total stars",
+  topLevel: "Top level",
+  toNext: (n, name) => `${n} ★ to go to "${name}"`,
+  newBadge: "New badge",
+  close: "Close",
+  more: (n) => `And ${n} more new ${n === "1" ? "badge" : "badges"} in the collection below.`,
+  startStreak: "Start your daily streak",
+  streakN: (n) => `${n}-day streak`,
+  todayDone: "You have checked in today (opening ProFind while signed in counts as one day). See you tomorrow!",
+  todayNot: "Opening ProFind while signed in checks you in for the day.",
+  record: " Record: ",
+  stars: "stars",
+  topLevelLong: "You have reached the top level",
+  lvInfo: (names) => `Levels by stars: ${names}. Stars: 1 per day you show up · 5 per friend you invite who signs up · 20 per invited friend who verifies · 20 per verified scientist profile · 10 for completing your account details.`,
+  goal: " Next goal: ",
+  gardenCount: (a, b) => `${a}/${b} badges`,
+  logo1: (names) => `The ProFind logo is a flower with five petals. Each petal is a path: ${names}. Earn a badge on a petal and it lights up; light all five and you earn the title `,
+  reached: "Earned",
+  lit: (n) => `${n}/5 petals lit.`,
+  petalOf: (name) => `${name} petal`,
+  earned: (tier) => `${tier} · earned`,
+  crownName: "Hundred Blooms of Knowledge",
+  crownHint: "Hold at least one badge on all 5 petals: Explore, Profile, Spread, Persistence, Credibility",
+  crownMeaning: "A hundred flowers in bloom: you have made all five petals of the knowledge garden blossom.",
+};
+const L: Record<Lang, typeof vi> = { vi, en };
+const PETALS_EN = [["Explore", "Search, browse and curate knowledge"], ["Profile", "Tell your own academic story"], ["Spread", "Bring more colleagues into the garden"], ["Persistence", "Come back regularly and tend the garden daily"], ["Credibility", "Tie your name to a real academic identity"]];
+// Bản tiếng Anh của huy hiệu theo id: [tên, gợi ý, ý nghĩa].
+const BADGE_EN: Record<string, [string, string, string]> = {
+  d1: ["First Seed", "Show up for the first time", "Every knowledge garden starts with a seed: you have just planted your first."],
+  s3: ["Budding", "Check in 3 days in a row", "Three days of steady care and the bud begins to open."],
+  s7: ["Week in Bloom", "Check in 7 days in a row", "Seven days without a break: consistency makes the blooming season."],
+  s30: ["Endless Spring", "Check in 30 days in a row", "Thirty days without rest: for you, every season is spring."],
+  d30: ["Garden Keeper", "Show up on 30 different days", "You keep coming back through many seasons to tend the garden: you are now a garden keeper."],
+  e1: ["Curious Traveler", "View 10 scientist profiles", "Curiosity is the first step of anyone searching for knowledge."],
+  e2: ["Flower Picker", "Save 5 authors or searches", "Knowing which blooms are worth keeping in the whole garden."],
+  e3: ["Knowledge Navigator", "View 50 scientist profiles", "You have browsed so many profiles that you can point others the way."],
+  p100: ["Complete Portrait", "Fill in all account details", "A portrait detailed enough for colleagues to recognize and trust."],
+  av: ["Scholar's Face", "Set a photo for your scientist profile", "Behind every work is a person: your face brings the profile to life."],
+  bio: ["In Your Own Words", "Write a short bio for your scientist profile", "You tell your own research story instead of letting numbers speak for you."],
+  i1: ["Seed Sower", "Invite 1 friend to sign up", "You have handed the first seed to a colleague."],
+  iv1: ["Sponsor", "1 friend you invited verified a profile", "The friend you invited has had their name confirmed: you are their sponsor."],
+  i5: ["Garden Nurturer", "Invite 5 friends to sign up", "Five seedlings raised by you: the garden is turning into a forest of flowers."],
+  i10: ["Hundred Blooms Envoy", "Invite 10 friends to sign up", "Ten colleagues follow your lead: you carry the Hundred Blooms of Knowledge down many paths."],
+  orcid: ["ORCID Passport", "Add your ORCID iD to your scientist profile", "An international identifier carries your name across every scientific database."],
+  gs: ["Scholar Bridge", "Add a Google Scholar link to your profile", "Connect your ProFind profile to where your work is cited."],
+  v1: ["Scholar's Seal", "Successfully verify a scientist profile", "ProFind confirms this profile is really yours: the first seal of a scholar with a name and a standing."],
+};
 
 // Cơ chế điểm danh, sao và huy hiệu (học từ Mây/EduFind): chỉ ghi nhận, không có quyền lợi hay hạn mức đi kèm; mọi người vẫn miễn phí.
 // Sao: 1 mỗi ngày có mặt, 5 mỗi bạn đăng ký qua mã của bạn, 20 mỗi bạn được mời xác thực thành công, 20 mỗi hồ sơ khoa học đã xác thực của chính bạn, 10 khi khai đủ hồ sơ.
@@ -10,7 +127,7 @@ export type Stats = { days: number; streak: number; best: number; invited: numbe
 export const statsOf = (u: User, mine: Mine[] | null, saved: number, views: number): Stats => ({ days: u.counts.days, streak: u.counts.streak, best: u.counts.best, invited: u.counts.invited, invitedVerified: u.counts.invitedVerified, verified: mine?.length ?? 0, profilePct: u.profilePct, saved, views, avatar: mine?.some((m) => m.profile.av) ? 1 : 0, bio: mine?.some((m) => m.profile.bio) ? 1 : 0, orcid: mine?.some((m) => m.profile.orcid) ? 1 : 0, scholar: mine?.some((m) => m.profile.scholar) ? 1 : 0 });
 export const starsOf = (c: Stats) => c.days + c.invited * 5 + c.invitedVerified * 20 + c.verified * 20 + (c.profilePct >= 100 ? 10 : 0);
 export const LEVELS: [number, string][] = [[0, "Hạt mầm"], [10, "Chồi non"], [30, "Nụ hoa"], [80, "Đóa hoa"], [200, "Bách hoa"]];
-export const levelOf = (stars: number) => { let i = 0; LEVELS.forEach(([n], k) => { if (stars >= n) i = k; }); return { i, name: LEVELS[i][1], from: LEVELS[i][0], next: LEVELS[i + 1] ?? null }; };
+export const levelOf = (stars: number, lang: Lang = "vi") => { let i = 0; LEVELS.forEach(([n], k) => { if (stars >= n) i = k; }); const nm = (k: number) => L[lang].levels[k]; const nx = LEVELS[i + 1]; return { i, name: nm(i), from: LEVELS[i][0], next: nx ? ([nx[0], nm(i + 1)] as [number, string]) : null }; };
 
 type Tier = "bronze" | "silver" | "gold" | "diamond" | "legend";
 /** Năm cánh của logo Bách hoa tri thức, mỗi cánh một màu và một ý nghĩa; huy hiệu thắp sáng đúng cánh của mình. */
@@ -42,8 +159,8 @@ const BADGES: Badge[] = [
   { id: "gs", petal: 4, tier: "silver", mark: "G", name: "Cầu nối Scholar", hint: "Gắn liên kết Google Scholar vào hồ sơ", meaning: "Nối hồ sơ ProFind với nơi công trình của bạn được trích dẫn.", need: (c) => [c.scholar, 1] },
   { id: "v1", petal: 4, tier: "gold", mark: "✓", name: "Dấu ấn học giả", hint: "Xác thực thành công một hồ sơ khoa học", meaning: "ProFind xác nhận hồ sơ này đúng là của bạn: dấu ấn đầu tiên của một học giả có tên có tuổi.", need: (c) => [c.verified, 1] },
 ];
-const CROWN = { id: "bach-hoa", name: "Bách hoa tri thức", hint: "Có ít nhất một huy hiệu ở cả 5 cánh: Khám phá, Dung mạo, Lan tỏa, Bền bỉ, Uy tín", meaning: "Trăm hoa đua nở: bạn đã làm cả năm cánh của khu vườn tri thức cùng nở rộ." };
-const TIER: Record<Tier, string> = { bronze: "Đồng", silver: "Bạc", gold: "Vàng", diamond: "Kim cương", legend: "Huyền thoại" };
+const CROWN_ID = "bach-hoa";
+const petalsOf = (lang: Lang) => PETALS.map((p, i) => lang === "en" ? { ...p, name: PETALS_EN[i][0], sub: PETALS_EN[i][1] } : p);
 const TIER_COL: Record<Tier, [string, string]> = { bronze: ["#e0a36a", "#a55f26"], silver: ["#f1f5fb", "#8c9bb3"], gold: ["#ffe27a", "#d99a00"], diamond: ["#b6ecff", "#3fa9f5"], legend: ["#fff3b0", "#ff8a1f"] };
 const PETAL_PATH = "M256 172C326 160 336 84 256 40C176 84 186 160 256 172Z";
 const GRAD: [string, string][] = [["#35e0ff", "#0a8cff"], ["#5b7bff", "#7a3cff"], ["#ff5fb8", "#ff2f7a"], ["#ffb52e", "#ff8a1f"], ["#7bf0b0", "#17c5a0"]];
@@ -65,51 +182,53 @@ function BadgeArt({ petal, tier, mark, done }: { petal: number | "all"; tier: Ti
     </svg>
   );
 }
-const status = (c: Stats) => {
-  const base = BADGES.map((b) => { const [have, want] = b.need(c); return { ...b, have: Math.min(have, want), want, done: have >= want, pct: Math.min(1, have / want) }; });
+const status = (c: Stats, lang: Lang) => {
+  const base = BADGES.map((b) => { const [have, want] = b.need(c); const en = lang === "en" ? BADGE_EN[b.id] : null; return { ...b, ...(en ? { name: en[0], hint: en[1], meaning: en[2] } : {}), have: Math.min(have, want), want, done: have >= want, pct: Math.min(1, have / want) }; });
   const bloomed = new Set(base.filter((b) => b.done).map((b) => b.petal));
   return { base, bloomed, crown: bloomed.size === 5 };
 };
 
-const dayLabels = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
 function Week({ streak, today }: { streak: number; today: boolean }) {
+  const { lang } = useT(), dayLabels = L[lang].days;
   // 7 ô gần nhất (cũ -> mới), suy ra từ chuỗi hiện tại; ô cuối là hôm nay.
   const on = Array(7).fill(false); for (let i = 0; i < Math.min(7, streak); i++) on[(today ? 6 : 5) - i] = true;
   const dow = (new Date().getDay() + 6) % 7; // 0 = T2
-  return <ol className="dweek" aria-label="7 ngày gần nhất">{on.map((v, i) => <li key={i} className={`${v ? "on" : ""}${i === 6 ? " now" : ""}`}><i>{v ? "★" : ""}</i><span>{dayLabels[(dow - (6 - i) + 7 * 2) % 7]}</span></li>)}</ol>;
+  return <ol className="dweek" aria-label={L[lang].week}>{on.map((v, i) => <li key={i} className={`${v ? "on" : ""}${i === 6 ? " now" : ""}`}><i>{v ? "★" : ""}</i><span>{dayLabels[(dow - (6 - i) + 7 * 2) % 7]}</span></li>)}</ol>;
 }
 
-const SHARE_TEXT = "Mình đang dùng ProFind để tra cứu, xếp hạng nhà khoa học Việt Nam và quản lý hồ sơ khoa học. Bạn thử tìm hồ sơ của mình và xác thực miễn phí nhé:";
 export function InviteCard({ user, compact = false }: { user: User; compact?: boolean }) {
+  const { lang, num } = useT(), x = L[lang], SHARE_TEXT = x.share;
   const [copied, setCopied] = useState(false);
   const link = user.ref ? `${location.origin}/?ref=${user.ref}&utm_source=ref&utm_medium=invite&utm_campaign=referral` : "";
   if (!link) return null;
   const u = encodeURIComponent(link), t = encodeURIComponent(SHARE_TEXT);
   const copy = () => { void navigator.clipboard?.writeText(`${SHARE_TEXT} ${link}`).then(() => { setCopied(true); evt("invite_copy"); setTimeout(() => setCopied(false), 2000); }).catch(() => {}); };
   const native = () => { evt("invite_share"); void navigator.share?.({ title: "ProFind", text: SHARE_TEXT, url: link }).catch(() => {}); };
-  const nets: [string, string][] = [["Facebook", `https://www.facebook.com/sharer/sharer.php?u=${u}`], ["LinkedIn", `https://www.linkedin.com/sharing/share-offsite/?url=${u}`], ["WhatsApp", `https://wa.me/?text=${t}%20${u}`], ["Telegram", `https://t.me/share/url?url=${u}&text=${t}`], ["Email", `mailto:?subject=${encodeURIComponent("Mời bạn dùng ProFind")}&body=${t}%20${u}`]];
+  const nets: [string, string][] = [["Facebook", `https://www.facebook.com/sharer/sharer.php?u=${u}`], ["LinkedIn", `https://www.linkedin.com/sharing/share-offsite/?url=${u}`], ["WhatsApp", `https://wa.me/?text=${t}%20${u}`], ["Telegram", `https://t.me/share/url?url=${u}&text=${t}`], ["Email", `mailto:?subject=${encodeURIComponent(x.mailSubject)}&body=${t}%20${u}`]];
   return (
     <section className={`card invite${compact ? " compact" : ""}`}>
-      <h2><Icon n="users" size={20} />Mời đồng nghiệp cùng dùng ProFind</h2>
-      <p className="meta">Mỗi bạn đăng ký qua liên kết của bạn: <b>+5 ★</b>. Bạn đó xác thực hồ sơ khoa học thành công: <b>+20 ★</b> nữa. Chỉ ghi nhận thành tích; ProFind vẫn miễn phí vĩnh viễn cho tất cả.</p>
-      <div className="inv-box"><input readOnly value={link} aria-label="Liên kết mời của bạn" onFocus={(e) => e.currentTarget.select()} /><button type="button" className="primary" onClick={copy}>{copied ? "Đã sao chép ✓" : "Sao chép lời mời"}</button></div>
-      <p className="inv-nets">{typeof navigator !== "undefined" && "share" in navigator && <button type="button" className="ghost" onClick={native}><Icon n="external" size={14} />Chia sẻ…</button>}{nets.map(([n, h]) => <a key={n} className="ghost-link" href={h} target="_blank" rel="noopener" onClick={() => evt("invite_" + n.toLowerCase())}>{n}</a>)}</p>
-      <ul className="inv-stats"><li><b>{user.counts.invited}</b><span>bạn đã đăng ký</span></li><li><b>{user.counts.invitedVerified}</b><span>bạn đã xác thực</span></li><li><b>{user.counts.invited * 5 + user.counts.invitedVerified * 20}</b><span>★ nhờ lan tỏa</span></li></ul>
+      <h2><Icon n="users" size={20} />{x.invTitle}</h2>
+      <p className="meta">{x.inv1}<b>+5 ★</b>{x.inv2}<b>+20 ★</b>{x.inv3}</p>
+      <div className="inv-box"><input readOnly value={link} aria-label={x.linkAria} onFocus={(e) => e.currentTarget.select()} /><button type="button" className="primary" onClick={copy}>{copied ? x.copied : x.copy}</button></div>
+      <p className="inv-nets">{typeof navigator !== "undefined" && "share" in navigator && <button type="button" className="ghost" onClick={native}><Icon n="external" size={14} />{x.shareBtn}</button>}{nets.map(([n, h]) => <a key={n} className="ghost-link" href={h} target="_blank" rel="noopener" onClick={() => evt("invite_" + n.toLowerCase())}>{n}</a>)}</p>
+      <ul className="inv-stats"><li><b>{num(user.counts.invited)}</b><span>{x.stReg}</span></li><li><b>{num(user.counts.invitedVerified)}</b><span>{x.stVer}</span></li><li><b>{num(user.counts.invited * 5 + user.counts.invitedVerified * 20)}</b><span>{x.stStars}</span></li></ul>
     </section>
   );
 }
 
 /** Dải điểm danh, sao và cấp độ gọn ở đầu tài khoản. */
 export function StarStrip({ user, mine, saved }: { user: User; mine: Mine[] | null; saved: number }) {
-  const c = statsOf(user, mine, saved, 0), stars = starsOf(c), lv = levelOf(stars);
-  return <div className="strip" role="group" aria-label="Thành tích"><span className="chip fire" title="Chuỗi ngày liên tiếp">🔥 <b>{c.streak}</b> ngày</span><span className="chip star" title="Tổng số sao">★ <b>{stars}</b></span><span className="chip lv" title={lv.next ? `Còn ${lv.next[0] - stars} ★ nữa lên "${lv.next[1]}"` : "Cấp cao nhất"}>{lv.name}</span></div>;
+  const { lang, num } = useT(), x = L[lang];
+  const c = statsOf(user, mine, saved, 0), stars = starsOf(c), lv = levelOf(stars, lang);
+  return <div className="strip" role="group" aria-label={x.strip}><span className="chip fire" title={x.streakTip}>🔥 <b>{num(c.streak)}</b> {x.dayUnit(c.streak)}</span><span className="chip star" title={x.starTip}>★ <b>{num(stars)}</b></span><span className="chip lv" title={lv.next ? x.toNext(num(lv.next[0] - stars), lv.next[1]) : x.topLevel}>{lv.name}</span></div>;
 }
 
 type Earned = { id: string; name: string; meaning: string; petal: number | "all"; tier: Tier; mark: string };
 export function Achievements({ user, mine }: { user: User; mine: Mine[] | null }) {
+  const { lang, num } = useT(), x = L[lang], PET = petalsOf(lang), TIER = x.tier, CROWN = { id: CROWN_ID, name: x.crownName, hint: x.crownHint, meaning: x.crownMeaning };
   const { favs, searches, views } = useAccount();
   const c = useMemo(() => statsOf(user, mine, favs.size + searches.length, views.length), [user, mine, favs, searches, views]);
-  const stars = starsOf(c), lv = levelOf(stars), st = status(c), all = st.base, got = all.filter((b) => b.done).length + (st.crown ? 1 : 0);
+  const stars = starsOf(c), lv = levelOf(stars, lang), st = status(c, lang), all = st.base, got = all.filter((b) => b.done).length + (st.crown ? 1 : 0);
   const next = all.filter((b) => !b.done).sort((a, b) => b.pct - a.pct)[0];
   const [fresh, setFresh] = useState<Earned[]>([]);
   useEffect(() => { // trao huy hiệu mới nhận kể từ lần xem trước (lần đầu chỉ ghi nhận, không trao hàng loạt)
@@ -124,24 +243,24 @@ export function Achievements({ user, mine }: { user: User; mine: Mine[] | null }
   return (
     <>
       <BadgeDefs />
-      {fresh.slice(0, 3).map((b) => <section key={b.id} className="award" role="status"><BadgeArt petal={b.petal} tier={b.tier} mark={b.mark} done /><div><p className="aw-k">Huy hiệu mới · {TIER[b.tier]}</p><h2>{b.name}</h2><p>{b.meaning}</p></div><button type="button" className="ghost" onClick={() => setFresh((f) => f.filter((x) => x.id !== b.id))} aria-label="Đóng">✕</button></section>)}
-      {fresh.length > 3 && <p className="banner" role="status"><Icon n="star" />Và {fresh.length - 3} huy hiệu mới khác trong bộ sưu tập bên dưới.</p>}
+      {fresh.slice(0, 3).map((b) => <section key={b.id} className="award" role="status"><BadgeArt petal={b.petal} tier={b.tier} mark={b.mark} done /><div><p className="aw-k">{x.newBadge} · {TIER[b.tier]}</p><h2>{b.name}</h2><p>{b.meaning}</p></div><button type="button" className="ghost" onClick={() => setFresh((f) => f.filter((x) => x.id !== b.id))} aria-label={x.close}>✕</button></section>)}
+      {fresh.length > 3 && <p className="banner" role="status"><Icon n="star" />{x.more(num(fresh.length - 3))}</p>}
       <section className="card streak">
         <div className="flame" aria-hidden="true">🔥</div>
-        <div className="sinfo"><h2>{c.streak ? `${c.streak} ngày liên tiếp` : "Bắt đầu chuỗi ngày của bạn"}</h2>
-          <p className="meta">{user.counts.today ? "Hôm nay bạn đã điểm danh rồi (mở ProFind khi đã đăng nhập là tính một ngày). Hẹn gặp lại ngày mai!" : "Mở ProFind khi đã đăng nhập là tự điểm danh một ngày."} Kỷ lục: <b>{Math.max(c.best, c.streak)} ngày</b>.</p>
+        <div className="sinfo"><h2>{c.streak ? x.streakN(num(c.streak)) : x.startStreak}</h2>
+          <p className="meta">{user.counts.today ? x.todayDone : x.todayNot}{x.record}<b>{num(Math.max(c.best, c.streak))} {x.dayUnit(Math.max(c.best, c.streak))}</b>.</p>
           <Week streak={c.streak} today={user.counts.today} /></div>
-        <div className="starbox"><b>★ {stars}</b><span>sao</span></div>
+        <div className="starbox"><b>★ {num(stars)}</b><span>{x.stars}</span></div>
       </section>
-      <section className="card lvl"><div className="lvl-top"><h2>{lv.name}</h2><span className="meta">{lv.next ? `Còn ${lv.next[0] - stars} ★ nữa lên "${lv.next[1]}"` : "Bạn đã đạt cấp cao nhất"}</span></div><div className="lbar" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}><i style={{ width: `${pct}%` }} /></div>
-        <p className="meta">Cấp độ theo sao: Hạt mầm, Chồi non, Nụ hoa, Đóa hoa, Bách hoa. Sao: 1 mỗi ngày có mặt · 5 mỗi bạn mời đăng ký · 20 mỗi bạn mời xác thực thành công · 20 mỗi hồ sơ khoa học đã xác thực · 10 khi khai đủ hồ sơ.{next && <> Mục tiêu gần nhất: <b>{next.name}</b> ({next.have}/{next.want}).</>}</p></section>
+      <section className="card lvl"><div className="lvl-top"><h2>{lv.name}</h2><span className="meta">{lv.next ? x.toNext(num(lv.next[0] - stars), lv.next[1]) : x.topLevelLong}</span></div><div className="lbar" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}><i style={{ width: `${pct}%` }} /></div>
+        <p className="meta">{x.lvInfo(x.levels.join(", "))}{next && <>{x.goal}<b>{next.name}</b> ({num(next.have)}/{num(next.want)}).</>}</p></section>
       <InviteCard user={user} />
-      <section className="card"><h2>Bách hoa tri thức <span className="meta">{got}/{all.length + 1} huy hiệu</span></h2>
-        <p className="meta">Logo ProFind là một bông hoa năm cánh. Mỗi cánh là một con đường: {PETALS.map((p) => p.name).join(", ")}. Nhận huy hiệu ở cánh nào, cánh ấy sáng lên; sáng đủ cả năm cánh, bạn nhận danh hiệu <b>Bách hoa tri thức</b>.</p>
-        <ul className="bloom">{PETALS.map((p, i) => <li key={p.name} className={st.bloomed.has(i) ? "on" : ""} style={{ ["--pc" as string]: p.color }}><i aria-hidden="true" /><b>{p.name}</b></li>)}</ul>
-        <div className="crown"><BadgeArt petal="all" tier="legend" mark="✿" done={st.crown} /><div><h3>{CROWN.name}{st.crown && <span className="tag">Đã đạt</span>}</h3><p className="meta">{CROWN.hint}</p><p>{st.crown ? CROWN.meaning : `Đã sáng ${st.bloomed.size}/5 cánh.`}</p></div></div>
-        {PETALS.map((p, i) => <div key={p.name} className="bgroup" style={{ ["--pc" as string]: p.color }}><h3><i className="pdot" aria-hidden="true" />Cánh {p.name}<small>{p.sub}</small></h3>
-          <ul className="bdg-grid">{all.filter((b) => b.petal === i).map((b) => <li key={b.id} className={`${b.tier}${b.done ? " done" : ""}`}><BadgeArt petal={b.petal} tier={b.tier} mark={b.mark} done={b.done} /><b>{b.name}</b><small>{b.done ? `${TIER[b.tier]} · đã đạt` : `${b.have}/${b.want} · ${b.hint}`}</small>{b.done ? <em>{b.meaning}</em> : <i className="pg"><u style={{ width: `${b.pct * 100}%` }} /></i>}</li>)}</ul></div>)}
+      <section className="card"><h2>{CROWN.name} <span className="meta">{x.gardenCount(num(got), num(all.length + 1))}</span></h2>
+        <p className="meta">{x.logo1(PET.map((p) => p.name).join(", "))}<b>{CROWN.name}</b>.</p>
+        <ul className="bloom">{PET.map((p, i) => <li key={p.name} className={st.bloomed.has(i) ? "on" : ""} style={{ ["--pc" as string]: p.color }}><i aria-hidden="true" /><b>{p.name}</b></li>)}</ul>
+        <div className="crown"><BadgeArt petal="all" tier="legend" mark="✿" done={st.crown} /><div><h3>{CROWN.name}{st.crown && <span className="tag">{x.reached}</span>}</h3><p className="meta">{CROWN.hint}</p><p>{st.crown ? CROWN.meaning : x.lit(num(st.bloomed.size))}</p></div></div>
+        {PET.map((p, i) => <div key={p.name} className="bgroup" style={{ ["--pc" as string]: p.color }}><h3><i className="pdot" aria-hidden="true" />{x.petalOf(p.name)}<small>{p.sub}</small></h3>
+          <ul className="bdg-grid">{all.filter((b) => b.petal === i).map((b) => <li key={b.id} className={`${b.tier}${b.done ? " done" : ""}`}><BadgeArt petal={b.petal} tier={b.tier} mark={b.mark} done={b.done} /><b>{b.name}</b><small>{b.done ? x.earned(TIER[b.tier]) : `${num(b.have)}/${num(b.want)} · ${b.hint}`}</small>{b.done ? <em>{b.meaning}</em> : <i className="pg"><u style={{ width: `${b.pct * 100}%` }} /></i>}</li>)}</ul></div>)}
       </section>
     </>
   );

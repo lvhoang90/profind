@@ -13,14 +13,15 @@ const readViews = (): Viewed[] => { try { const a = JSON.parse(localStorage.getI
 const writeViews = (v: Viewed[]) => { try { localStorage.setItem(LV, JSON.stringify(v.slice(0, MAXV))); } catch { /* bỏ qua */ } };
 
 export async function api<T = any>(op: string, body?: unknown, qs = ""): Promise<T> {
-  const r = await fetch(`/api/account?op=${op}${qs}`, body === undefined ? { credentials: "same-origin" } : { method: "POST", credentials: "same-origin", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+  const lg = (() => { try { return localStorage.getItem("edufind.lang") === "en" ? "&lang=en" : ""; } catch { return ""; } })(); // máy chủ trả lỗi theo ngôn ngữ giao diện
+  const r = await fetch(`/api/account?op=${op}${qs}${lg}`, body === undefined ? { credentials: "same-origin" } : { method: "POST", credentials: "same-origin", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
   const j = await r.json().catch(() => ({}));
-  if (!r.ok) throw Object.assign(new Error((j.error || `HTTP ${r.status}`) + (j.detail ? ` [${j.detail}]` : "")), { status: r.status, retry: j.retry as number | undefined });
+  if (!r.ok) throw Object.assign(new Error((j.error || `HTTP ${r.status}`)), { status: r.status, retry: j.retry as number | undefined });
   return j as T;
 }
 
 interface Ctx {
-  cfg: Cfg | null; user: User | null | undefined; favs: Map<string, Fav>; searches: SavedSearch[]; views: Viewed[];
+  cfg: Cfg | null; cfgError: boolean; user: User | null | undefined; favs: Map<string, Fav>; searches: SavedSearch[]; views: Viewed[];
   refresh: () => Promise<void>; setUser: (u: User | null) => void;
   toggleFav: (k: string, meta: { t: string; s?: string; sc?: number; rk?: number; u?: string }) => Promise<boolean>;
   saveSearch: (f: Omit<SavedSearch, "k" | "at">) => Promise<void>; removeSearch: (k: string) => Promise<void>;
@@ -31,7 +32,7 @@ const AccCtx = createContext<Ctx | null>(null);
 export const useAccount = () => { const c = useContext(AccCtx); if (!c) throw new Error("AccountProvider thiếu"); return c; };
 
 export function AccountProvider({ children }: { children: ReactNode }) {
-  const [cfg, setCfg] = useState<Cfg | null>(null), [user, setUser] = useState<User | null | undefined>(undefined);
+  const [cfg, setCfg] = useState<Cfg | null>(null), [cfgError, setCfgError] = useState(false), [user, setUser] = useState<User | null | undefined>(undefined);
   const [favs, setFavs] = useState<Map<string, Fav>>(new Map()), [searches, setSearches] = useState<SavedSearch[]>([]), [views, setViews] = useState<Viewed[]>(readViews);
   const pending = useRef<Viewed[]>([]), timer = useRef<number>(0);
   const load = useCallback(async () => {
@@ -44,8 +45,8 @@ export function AccountProvider({ children }: { children: ReactNode }) {
   }, []);
   const refresh = useCallback(async () => {
     try { // cấu hình và thông tin người dùng gọi song song (trước đây nối tiếp: thêm một vòng chờ mạng)
-      const [c, me] = await Promise.all([api<Cfg>("config"), api<{ user: User | null }>("me").catch(() => ({ user: null }))]); setCfg(c); if (!c.enabled) { setUser(null); return; } const u = me.user; setUser(u); if (u) { await load(); if (!sessionStorage.getItem("profind.tracked")) { sessionStorage.setItem("profind.tracked", "1"); api("track", {}).catch(() => {}); } } else { setFavs(new Map()); setSearches([]); } }
-    catch { setCfg({ enabled: false }); setUser(null); }
+      const [c, me] = await Promise.all([api<Cfg>("config"), api<{ user: User | null }>("me").catch(() => ({ user: null }))]); setCfg(c); setCfgError(false); if (!c.enabled) { setUser(null); return; } const u = me.user; setUser(u); if (u) { await load(); if (!sessionStorage.getItem("profind.tracked")) { sessionStorage.setItem("profind.tracked", "1"); api("track", {}).catch(() => {}); } } else { setFavs(new Map()); setSearches([]); } }
+    catch { setCfg({ enabled: false }); setCfgError(true); setUser(null); }
   }, [load]);
   useEffect(() => { void refresh(); }, [refresh]);
 
@@ -63,6 +64,6 @@ export function AccountProvider({ children }: { children: ReactNode }) {
   const saveSearch = useCallback(async (f: Omit<SavedSearch, "k" | "at">) => { await api("ssave", f); evt("save_search"); setSearches((await api<{ items: SavedSearch[] }>("ss")).items); }, []);
   const removeSearch = useCallback(async (k: string) => { const s = searches.find((x) => x.k === k); setSearches((c) => c.filter((x) => x.k !== k)); if (s) await api("ssave", { ...s, on: false }).catch(() => {}); }, [searches]);
   const logout = useCallback(async () => { await api("logout", {}).catch(() => {}); setUser(null); setFavs(new Map()); setSearches([]); sessionStorage.removeItem("profind.tracked"); }, []);
-  const value = useMemo(() => ({ cfg, user, favs, searches, views, refresh, setUser, toggleFav, saveSearch, removeSearch, recordView, clearViews, logout }), [cfg, user, favs, searches, views, refresh, toggleFav, saveSearch, removeSearch, recordView, clearViews, logout]);
+  const value = useMemo(() => ({ cfg, cfgError, user, favs, searches, views, refresh, setUser, toggleFav, saveSearch, removeSearch, recordView, clearViews, logout }), [cfg, cfgError, user, favs, searches, views, refresh, toggleFav, saveSearch, removeSearch, recordView, clearViews, logout]);
   return <AccCtx.Provider value={value}>{children}</AccCtx.Provider>;
 }

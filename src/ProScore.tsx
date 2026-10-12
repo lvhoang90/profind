@@ -16,6 +16,7 @@ type Panel = { n: number; seed: number; mean: number[]; sd: number[]; by: Record
 const DIM_LABEL: Record<string, [string, string]> = { field: ["Lĩnh vực", "Field"], stage: ["Giai đoạn sự nghiệp", "Career stage"], region: ["Khu vực", "Region"], stance: ["Lập trường đánh giá", "Evaluation stance"] };
 const COLS = ["impact", "output", "lead", "quality", "momentum", "steady", "recog"] as const;
 
+const PANEL_EN: Record<string, string> = { "Khoa học sự sống": "Life sciences", "Kỹ thuật, công nghệ": "Engineering and technology", "Khoa học tự nhiên": "Natural sciences", "Xã hội, giáo dục": "Social sciences, education", "Nhân văn, nghệ thuật": "Humanities and arts", "Y dược": "Medicine and pharmacy", "Mới vào nghề": "Early career", "Giữa sự nghiệp": "Mid career", "Cao niên": "Senior", "Châu Á": "Asia", "Châu Âu": "Europe", "Châu Mỹ": "Americas", "Châu Phi, Châu Đại Dương": "Africa, Oceania", "Thư mục học": "Bibliometric", "Đánh giá có trách nhiệm (DORA)": "Responsible assessment (DORA)", "Quản lý nghiên cứu": "Research management" };
 export function ProScorePage() {
   const { lang, t, num } = useT();
   const vi = lang === "vi";
@@ -97,7 +98,7 @@ export function ProScorePage() {
           <li>{vi ? <><b>Đo độ vững.</b> Từ 1000 cách xếp hạng, ProFind™ báo <b>khoảng điểm</b> (P10 đến P90), <b>khoảng hạng</b> và <b>độ vững của huy hiệu</b>: tỉ lệ cấu hình mô phỏng xếp hồ sơ vào đúng nhóm Top đó.</> : <><b>Measure robustness.</b> From the 1000 rankings, ProFind™ reports a <b>score range</b> (P10 to P90), a <b>rank range</b> and <b>badge robustness</b>: the share of simulated configurations placing the profile in that Top group.</>}</li></ol>
         {panel && <><h3>{vi ? "Cơ cấu hội đồng và trọng số trung bình (%)" : "Panel composition and mean weights (%)"}</h3>
           <div className="psp-tw"><table className="psp-t"><thead><tr><th>{vi ? "Nhóm" : "Group"}</th><th>n</th>{COLS.map((c) => <th key={c}>{P[c][0]}</th>)}</tr></thead>
-            <tbody>{Object.entries(panel.by).map(([dim, g]) => [<tr key={dim} className="dim"><th colSpan={9}>{DIM_LABEL[dim][vi ? 0 : 1]}</th></tr>, ...Object.entries(g).map(([k, v]) => <tr key={dim + k}><td>{v.label}</td><td>{v.n}</td>{v.w.map((x, i) => <td key={i}>{x.toFixed(1).replace(".", vi ? "," : ".")}</td>)}</tr>)])}
+            <tbody>{Object.entries(panel.by).map(([dim, g]) => [<tr key={dim} className="dim"><th colSpan={9}>{DIM_LABEL[dim][vi ? 0 : 1]}</th></tr>, ...Object.entries(g).map(([k, v]) => <tr key={dim + k}><td>{vi ? v.label : (PANEL_EN[v.label] ?? v.label)}</td><td>{v.n}</td>{v.w.map((x, i) => <td key={i}>{x.toFixed(1).replace(".", vi ? "," : ".")}</td>)}</tr>)])}
               <tr className="all"><td><b>{vi ? "Toàn hội đồng" : "Whole panel"}</b></td><td>{panel.n}</td>{panel.mean.map((x, i) => <td key={i}><b>{x.toFixed(1).replace(".", vi ? "," : ".")}</b></td>)}</tr></tbody></table></div>
           <p className="meta">{vi ? `Hạt giống ngẫu nhiên: ${panel.seed}. Các hệ số điều chỉnh nằm trong mã nguồn (scripts/pro-panel.mjs) và là giả định của mô hình.` : `Random seed: ${panel.seed}. The adjustment factors are in the source code (scripts/pro-panel.mjs) and are model assumptions.`}</p></>}</section>
 

@@ -49,7 +49,7 @@ const normPhone = (p) => String(p ?? "").replace(/[\s.()-]/g, "").replace(/^\+/,
 /** Điểm tích cực: số ngày quay lại quan trọng nhất, rồi số lượt, số tác giả lưu. */
 const activityScore = (c = {}, favs = 0) => Number(c.days || 0) * 3 + Number(c.visits || 0) + Number(favs || 0) * 2;
 
-export default async function handler(request) {
+async function handle(request) {
   const url = new URL(request.url), op = url.searchParams.get("op") || "config";
   const store = makeStore();
   const secret = process.env.SESSION_SECRET || (store?.kind === "memory" ? "profind-dev-secret" : "");
@@ -123,7 +123,7 @@ export default async function handler(request) {
       const ip = (request.headers.get("x-forwarded-for") || "?").split(",")[0].trim();
       if (!(await limit(`e:${id}`, 5, 3600)) || !(await limit(`ip:${await sha(ip, 16)}`, 30, 3600))) return json({ error: "Bạn yêu cầu mã quá nhiều lần. Vui lòng thử lại sau một giờ." }, 429);
       const code = String(crypto.getRandomValues(new Uint32Array(1))[0] % 1000000).padStart(6, "0");
-      try { await sendMail(email, codeMail(code, lang)); } catch (e) { console.error("[mail]", e.message); return json({ error: "Chưa gửi được email xác thực. Vui lòng thử lại sau ít phút.", detail: String(e.message).slice(0, 220) }, 502); }
+      try { await sendMail(email, codeMail(code, lang)); } catch (e) { console.error("[mail]", String(e?.message ?? e)); return json({ error: "Chưa gửi được email xác thực. Vui lòng thử lại sau ít phút." }, 502); }
       await one(["SET", K.otp(id), JSON.stringify({ h: await hmac(`${email}:${code}`), sent: Date.now(), tries: 0, consentAt: phone ? new Date().toISOString() : "", phone, name: tidy(body.name, 80) }), "EX", String(OTP_TTL)]);
       return json({ ok: true, retry: COOLDOWN });
     }
@@ -475,7 +475,8 @@ const XWK = "profind:xw", getXw = async (id) => { const l = jparse(await one(["H
         const rec = { id: await sha(`${to}|${Date.now()}`, 12), at: Date.now(), by: me.email, to, subject, ok: true, err: "", kind: tidy(body.kind, 30) };
         try { await sendMail(to, { subject, text, html, replyTo: me.email }); } catch (e) { rec.ok = false; rec.err = String(e.message).slice(0, 220); }
         await one(["HSET", "profind:mlog", rec.id, JSON.stringify(rec)]);
-        return rec.ok ? json({ ok: true }) : json({ error: `Gửi thất bại: ${rec.err}` }, 502);
+        if (!rec.ok) console.error("[admin-mail]", rec.err);
+        return rec.ok ? json({ ok: true }) : json({ error: "Gửi thất bại." }, 502);
       }
     }
     // Quyết định của quản trị viên về hồ sơ nghi gộp nhiều người (tab "Nghi gộp"): { authorId: "one" (một người) | "multi" (nhiều người, cần tách) }
@@ -814,4 +815,106 @@ const XWK = "profind:xw", getXw = async (id) => { const l = jparse(await one(["H
     console.error("[account]", e.message);
     return json({ error: "Có lỗi xảy ra, vui lòng thử lại." }, 500);
   }
+}
+
+// ---- Thông báo lỗi hai ngôn ngữ ----
+// Mọi phản hồi lỗi có thêm `code` (mã ngắn ổn định) và `error` theo ngôn ngữ yêu cầu (body.lang hoặc ?lang=; "en" thì tiếng Anh, còn lại tiếng Việt).
+// Bản tiếng Việt giữ nguyên chuỗi gốc; chi tiết kỹ thuật chỉ ghi console.error ở máy chủ.
+const ERR = [
+  ["Chức năng đăng ký chưa được bật.", "disabled", "Registration is not enabled."],
+  ["Bạn chưa đăng nhập.", "not-signed-in", "You are not signed in."],
+  ["Chỉ dành cho quản trị viên.", "admin-only", "Administrators only."],
+  ["Yêu cầu không hợp lệ.", "bad-origin", "Invalid request."],
+  ["Dữ liệu không hợp lệ.", "bad-data", "Invalid data."],
+  ["Email chưa đúng định dạng.", "email-invalid", "Invalid email."],
+  ["Nhập số điện thoại di động Việt Nam, ví dụ 0912345678.", "phone-required", "Enter a Vietnamese mobile number, e.g. 0912345678."],
+  ["Vui lòng đồng ý với cách chúng tôi xử lý thông tin để tiếp tục.", "consent-required", "Please agree to how we handle your information."],
+  [/^Vui lòng đợi (\d+) giây rồi gửi lại mã\.$/, "cooldown", (m) => `Please wait ${m[1]} seconds before requesting a new code.`],
+  ["Bạn yêu cầu mã quá nhiều lần. Vui lòng thử lại sau một giờ.", "otp-rate", "Too many code requests. Please try again in an hour."],
+  ["Chưa gửi được email xác thực. Vui lòng thử lại sau ít phút.", "mail-failed", "We could not send the verification email. Please try again in a few minutes."],
+  ["Mã đã hết hạn hoặc chưa được gửi. Hãy gửi lại mã mới.", "code-expired", "The code has expired or was never sent. Please request a new one."],
+  ["Nhập sai quá nhiều lần. Hãy gửi lại mã mới.", "code-locked", "Too many wrong attempts. Please request a new code."],
+  [/^Mã chưa đúng\. Bạn còn (\d+) lần thử\.$/, "code-wrong", (m) => `Incorrect code. ${m[1]} ${m[1] === "1" ? "attempt" : "attempts"} left.`],
+  ["Không hợp lệ.", "invalid", "Invalid."],
+  ["Số điện thoại di động chưa đúng định dạng.", "phone-invalid", "The mobile number format is not valid."],
+  ["Mã không hợp lệ.", "key-invalid", "Invalid code."],
+  [/^Bạn đã lưu tối đa (\d+) mục\.$/, "fav-max", (m) => `You can save up to ${m[1]} items.`],
+  ["Hãy nhập từ khóa hoặc chọn bộ lọc trước khi lưu.", "search-empty", "Enter a keyword or choose a filter before saving."],
+  [/^Bạn đã lưu tối đa (\d+) tìm kiếm\.$/, "search-max", (m) => `You can save up to ${m[1]} searches.`],
+  ["Liên kết ISA chưa được bật.", "connect-disabled", "The ISA link is not enabled."],
+  ["Bạn thử quá nhiều lần, hãy thử lại sau.", "connect-rate", "Too many attempts, please try again later."],
+  [/^Liên kết đã hết hạn\./, "link-expired", "The link has expired. Please go back to the app that sent you here (Mary or EduFind) and connect again."],
+  ["Email không hợp lệ.", "email-invalid", "Invalid email."],
+  ["Tài khoản quản trị đăng nhập bằng mã gửi qua email, không dùng liên kết từ ứng dụng khác.", "admin-link", "Administrator accounts sign in with an emailed code, not with links from other apps."],
+  [/^Liên kết này đã được dùng\./, "link-used", "This link has already been used. Please go back to the app that sent you here (Mary or EduFind) and connect again."],
+  ["Cần số điện thoại di động Việt Nam để tạo tài khoản ProFind.", "phone-required", "A Vietnamese mobile number is required to create a ProFind account."],
+  ["Thiếu sự đồng ý của người dùng.", "consent-required", "The user's consent is missing."],
+  ["Chữ ký không hợp lệ.", "bad-signature", "Invalid signature."],
+  ["Bạn gửi quá nhiều yêu cầu, hãy thử lại sau.", "rate", "Too many requests, please try again later."],
+  ["Mã hồ sơ không hợp lệ.", "author-invalid", "Invalid profile ID."],
+  ["Hãy nhập họ tên đầy đủ của bạn.", "name-required", "Please enter your full name."],
+  ["Mã ORCID chưa đúng định dạng.", "orcid-invalid", "The ORCID format is not valid."],
+  ["Đường dẫn Google Scholar chưa đúng.", "scholar-invalid", "The Google Scholar link is not valid."],
+  ["Hãy nêu lý do đề nghị gỡ hồ sơ.", "reason-required", "Please give the reason for the removal request."],
+  ["Email người nhận chưa đúng.", "email-invalid", "The recipient email is not valid."],
+  ["Thiếu tiêu đề hoặc nội dung.", "mail-empty", "The subject or message is missing."],
+  ["Gửi quá nhiều thư trong một giờ.", "mail-rate", "Too many emails sent within an hour."],
+  ["Gửi thất bại.", "send-failed", "Sending failed."],
+  ["Không có quyền.", "forbidden", "Not permitted."],
+  ["Không tìm thấy đề nghị.", "not-found", "Request not found."],
+  ["Không tìm thấy yêu cầu.", "not-found", "Request not found."],
+  ["Quyết định không hợp lệ.", "decision-invalid", "Invalid decision."],
+  ["Cần ít nhất một đơn vị hiện tại.", "unit-required", "At least one current affiliation is required."],
+  ["Tên không có trong danh sách.", "name-not-listed", "The name is not in the list."],
+  ["Mã công trình không hợp lệ.", "work-invalid", "Invalid work ID."],
+  ["Không có khai báo này.", "not-found", "No such declaration."],
+  ["Không tìm thấy công trình.", "not-found", "Work not found."],
+  ["Mã đơn vị không hợp lệ.", "unit-invalid", "Invalid affiliation ID."],
+  ["Email chưa đúng.", "email-invalid", "The email is not valid."],
+  ["Không có xác thực.", "not-found", "No verification found."],
+  ["Bạn chưa có xác thực còn hiệu lực cho hồ sơ này.", "not-verified", "You do not have a valid verification for this profile."],
+  ["Thao tác quá nhiều, hãy thử lại sau.", "rate", "Too many actions, please try again later."],
+  ["Mã ORCID chưa đúng.", "orcid-invalid", "The ORCID is not valid."],
+  [/^Trang web cá nhân phải bắt đầu/, "site-invalid", "The personal website must start with http(s)://"],
+  ["Email liên hệ chưa đúng.", "email-invalid", "The contact email is not valid."],
+  ["Số điện thoại chưa đúng.", "phone-invalid", "The phone number is not valid."],
+  ["Cần xác nhận khai báo.", "confirm-required", "Please confirm the declaration."],
+  [/^Ảnh không hợp lệ/, "image-invalid", "The image is invalid or too large (about 90 KB at most)."],
+  [/^Đơn vị của hồ sơ này do quản trị viên/, "unit-locked", "This profile's affiliation was set by an administrator. Please contact ProFind if it needs to change."],
+  [/^Hãy chọn ít nhất một đơn vị/, "unit-required", "Please choose at least one current affiliation."],
+  [/^DOI chưa đúng/, "doi-invalid", "The DOI is not valid (format 10.xxxx/yyyy)."],
+  ["Công trình này đã được thêm.", "work-exists", "This work has already been added."],
+  [/^Tối đa (\d+) công trình tự bổ sung\.$/, "work-max", (m) => `At most ${m[1]} self-added works.`],
+  [/^Không tra được DOI này/, "doi-not-found", "This DOI was not found in Crossref. Please check it, or send a separate request to the administrators."],
+  [/^Hãy dán ít nhất một nhan đề/, "titles-required", "Paste at least one title (one per line)."],
+  ["Tra nhan đề quá nhiều lần, hãy thử lại sau.", "rate", "Too many title lookups, please try again later."],
+  ["Không tìm thấy người dùng.", "not-found", "User not found."],
+  ["Thao tác không hợp lệ.", "bad-op", "Invalid operation."],
+  ["Có lỗi xảy ra, vui lòng thử lại.", "server", "Something went wrong, please try again."],
+];
+function localize(body, status, lang) {
+  if (!body || typeof body.error !== "string") return body;
+  for (const [pat, code, en] of ERR) {
+    const m = typeof pat === "string" ? (body.error === pat ? [pat] : null) : pat.exec(body.error);
+    if (!m) continue;
+    const { detail, ...rest } = body; // không để lộ chi tiết kỹ thuật
+    return { ...rest, code, error: lang === "en" ? (typeof en === "function" ? en(m) : en) : body.error };
+  }
+  const { detail, ...rest } = body;
+  return { ...rest, code: status >= 500 ? "server" : "error", error: lang === "en" && status >= 500 ? "Something went wrong, please try again." : body.error };
+}
+
+export default async function handler(request) {
+  let lang = "vi";
+  try {
+    if (new URL(request.url).searchParams.get("lang") === "en") lang = "en";
+    else if (request.method === "POST") { const t = await request.clone().text(); if (t.length < 30000 && t && JSON.parse(t)?.lang === "en") lang = "en"; }
+  } catch { /* giữ vi */ }
+  const res = await handle(request);
+  if (res.status < 400 || !(res.headers.get("content-type") || "").includes("application/json")) return res;
+  try {
+    const out = localize(await res.clone().json(), res.status, lang);
+    const h = new Headers(res.headers); h.delete("content-length");
+    return new Response(JSON.stringify(out), { status: res.status, headers: h });
+  } catch { return res; }
 }

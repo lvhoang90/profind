@@ -40,7 +40,7 @@ export function AboutPage({ section }: { section: string }) {
       <li><b>OpenAlex</b> (CC0): author profiles, works, DOI, citations, affiliations.</li>
       <li><b>Semantic Scholar</b>: extra citation counts by DOI (the larger value of the two sources is used per work).</li>
       <li><b>ORCID</b> and <b>ROR</b> (public data, CC0): author and institution identifiers.</li>
-      <li><b>HĐGSNN journal catalogue and scores</b>, Q quartiles from SJR/Scopus: via EduFind.</li>
+      <li><b>State Professorship Council (HĐGSNN) journal catalogue and scores</b>, Q quartiles from SJR/Scopus: via EduFind.</li>
       <li><b>List of education institutions</b> published by the Ministry of Education and Training.</li>
       <li><b>Top 2% scientists list</b> (Elsevier), see the Licences section.</li>
       <li><b>Google Scholar links</b> provided by the authors. ProFind™ does not scrape Google Scholar.</li></ul> },

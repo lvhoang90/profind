@@ -663,3 +663,14 @@ td.who>.meta{margin-top:3px}
 .sg-pct{margin-left:auto;text-align:right;display:grid;line-height:1.05;color:#0e8a5f}.sg-pct b{font:800 1.5rem var(--font-head,inherit);font-variant-numeric:tabular-nums}.sg-pct small{font-size:.68rem;color:var(--ink-2)}.sg-pct.mid{color:#a86800}.sg-pct.low{color:var(--ink-2)}
 .sg-card.main .sg-pct b{font-size:2.3rem}.sg-card.main .sg-who b{font-size:1.12rem}.sg-conf{display:block}.sg-card.main .sg-conf i{height:9px}
 .pill.ref{opacity:.8;outline:1px dashed currentColor;outline-offset:-3px}
+/* Đợt kiểm thử 12/10/2026: tương phản, vùng chạm, chữ nhỏ trên di động */
+.lb-top.t1 .lb-rk{color:#3d2b00}.lb-top.t2 .lb-rk{color:#0f172a}.lb-top.t3 .lb-rk{color:#1f1300}
+.pager .cur{color:var(--accent-ink)}
+.psp-t th,.psp-t td{font-size:.82rem}
+@media(max-width:640px){
+  .wk .wsrc span,.wk .chip,.wk .issn,.wk .wc{font-size:.875rem}
+  .tbl td,.tbl th,.lb-tops,.lb-avg small{font-size:.875rem}
+  .lb-tops a,.lb-main h2 a,.tbl td a,footer a,.sf a{display:inline-block;padding:11px 3px;min-height:44px;box-sizing:border-box}
+  .psp-t th,.psp-t td{font-size:.875rem}
+}
+@media(pointer:coarse){button.linkbtn,.ghost-link,.wlinks a.chip{min-height:44px;display:inline-flex;align-items:center}}
