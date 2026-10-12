@@ -260,7 +260,8 @@ const jn = {};
 for (const a of outAuthors) { const ws = per.get(a.id) ?? [], jc = new Map(); for (const w of ws) { if (!w.issn) continue; jc.set(`${w.journal}|${w.issn}`, (jc.get(`${w.journal}|${w.issn}`) ?? 0) + 1); } jn[a.id] = [...jc.entries()].sort((x, y) => y[1] - x[1]).slice(0, 15).map(([k]) => foldS(k)).join(" ; "); }
 writeFileSync("public/data/jn.json", JSON.stringify(jn));
 const usedInst = new Set(outAuthors.flatMap((a) => a.institutions));
-const insts = I.institutions.filter((i) => usedInst.has(i.id)).map(({ id, name, en, abbr, type, city, official, moetCode }) => ({ id, name, en, abbr, type, city: cityOut({ id, city }), ...(official ? { official, moetCode } : {}) }));
+const PARENT = existsSync("data/unit-parent.json") ? rd("data/unit-parent.json").parent : {}; // scripts/build-unit-parent.mjs
+const insts = I.institutions.filter((i) => usedInst.has(i.id)).map(({ id, name, en, abbr, type, city, official, moetCode }) => ({ id, name, en, abbr, type, city: cityOut({ id, city }), ...(official ? { official, moetCode } : {}), ...(PARENT[id] && usedInst.has(PARENT[id]) ? { parent: PARENT[id] } : {}) }));
 const disciplines = [...new Set(outAuthors.flatMap((a) => a.disciplines))].sort();
 // Danh sách hồ sơ cần xem lại ngành (hai nguồn bất đồng), ưu tiên theo hạng, để quản trị viên đính chính bằng corrections.setDisciplines.
 writeFileSync("data/discipline-review.json", JSON.stringify({ built: new Date().toISOString().slice(0, 10), note: "Hồ sơ có hạng mà ngành xác định từ danh mục tạp chí (j) và chủ đề công trình (t) khác nhau. j/t = [ngành đứng đầu, tỉ trọng %]. Đính chính ngành bằng corrections.setDisciplines.", profiles: outAuthors.filter((a) => a.discBasis === "khac-biet" && a.proRank).sort((x, y) => x.proRank - y.proRank).map((a) => ({ id: a.id, name: a.name, rank: a.proRank, disc: a.discShares, j: discSrc.get(a.id)?.j ?? null, t: discSrc.get(a.id)?.t ?? null })) }, null, 1));
