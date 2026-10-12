@@ -55,7 +55,7 @@ function Summary() {
         <ul>{queue.map(([l, n, h, a]) => <li key={l} className={n ? "has" : ""}><a href={h}><b>{n === null ? "…" : n}</b><span>{l}</span><em>{n ? a : "Không còn việc"}</em></a></li>)}</ul></section>
       <div className="kpis four">
         <Kpi icon="users" label="Người dùng đã đăng ký" value={n0(d.users)} sub={`${n0(d.new7)} mới trong 7 ngày · ${delta(d.new7, d.newPrev7)}`} />
-        <Kpi icon="clock" label="Hoạt động 7 ngày" value={n0(d.active7)} sub={pct(d.active7, d.users) + " tổng số người dùng"} />
+        <Kpi icon="clock" label="Hoạt động trở lại 7 ngày" value={n0(d.active7)} sub={pct(d.active7, d.users) + " tổng số người dùng · không tính ngày đăng ký"} />
         <Kpi icon="check" label="Hồ sơ khoa học đã xác thực" value={cl ? n0((cl.verified as any[]).length) : "…"} sub={cl ? `${n0(pending ?? 0)} yêu cầu đang chờ` : ""} />
         <Kpi icon="eye" label="Quay lại (từ 2 ngày)" value={pct(d.returning, d.users)} sub={`${n0(d.returning)} người`} />
       </div>
