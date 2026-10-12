@@ -178,8 +178,20 @@ for (const a of authors) {
 // ---- 3. Chấm điểm từng công trình ----
 // Điểm phụ thuộc ngành của người được xét. Một tạp chí thuộc nhiều ngành: chỉ lấy các ngành thuộc ngành của tác giả (lấy cao nhất trong đó);
 // nếu không trùng ngành nào thì lấy mức THẤP nhất (thận trọng), không lấy max mọi ngành (làm điểm phồng ~18%).
-const works = prepared.map(({ w, js, sj, disc }) => {
-  const cands = [];
+// Danh mục nguồn Scopus (Elsevier, tháng 9/2026; data/scopus-sources.json, nhập bằng scripts/import-scopus-list.py): bài tạp chí chỉ được tính điểm theo Scopus khi năm công bố nằm trong Coverage của đúng nguồn đó.
+// Chỉ loại khi chắc chắn: có bản ghi cùng ISSN VÀ cùng tên nguồn (tên cũ/mới của một ISSN có thể là nguồn khác), và năm ≤ 2025 (năm 2026 chưa ổn định). Không đủ căn cứ thì giữ nguyên như trước.
+const SCS = existsSync("data/scopus-sources.json") ? rd("data/scopus-sources.json").sources : {};
+const wordsOf = (t) => new Set(String(t ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/&/g, " and ").split(/[^a-z0-9]+/).filter((x) => x.length > 1 && !["the", "of", "and", "journal"].includes(x)));
+const sameTitle = (a, b) => { const x = wordsOf(a), y = wordsOf(b); if (!x.size || !y.size) return false; const k = [...x].filter((t) => y.has(t)).length; return k / Math.min(x.size, y.size) >= 0.7 && k / Math.max(x.size, y.size) >= 0.5; };
+const inScopusCoverage = (w) => {
+  if (!w.year || w.year >= 2026) return true;
+  const recs = [w.issn, ...(w.issns ?? [])].flatMap((i) => SCS[String(i ?? "").replace("-", "").toUpperCase().padStart(8, "0")] ?? []).filter((r) => sameTitle(r[0], w.journal));
+  if (!recs.length) return true;
+  return recs.some((r) => inCoverage(r[2], w.year));
+};
+let nScopusOut = 0;
+const works = prepared.map(({ w, js, sj: sj0, disc }) => {
+  const cands = [], covOk = inScopusCoverage(w), sj = covOk ? sj0 : (nScopusOut++, []);
   if (w.role === "lead") {
     for (const j of js) { const s2 = tierScore(j.scoreTiers, w.year); if (s2 !== null) cands.push({ s: s2, d: j.discipline, k: "domestic", q: null }); }
     for (const [d, qq, h] of sj) cands.push({ s: intlScore(d, qq, h), d, k: "scopus", q: qq });
@@ -187,7 +199,7 @@ const works = prepared.map(({ w, js, sj, disc }) => {
   let fb = null;
   if (!cands.length && w.role === "lead") { // dự phòng: hạng SJR của tạp chí Scopus ngoài bảng theo ngành (đa ngành: hạng Q trong danh mục đa ngành; đã ngừng: hạng SJR năm cuối), chỉ khi năm công bố nằm trong Coverage; tính theo ngành chính của tác giả
     const d0 = (authorDisc.get(w.authorId) ?? [])[0], rec = [w.issn, ...(w.issns ?? [])].map((i) => FB.get(String(i ?? "").replace("-", "").toUpperCase())).find(Boolean);
-    if (d0 && rec && rec.k !== "b" && inCoverage(rec.c, w.year)) { cands.push({ s: intlScore(d0, rec.q, rec.h), d: d0, k: "scopus", q: rec.q }); fb = rec.k; }
+    if (d0 && rec && rec.k !== "b" && covOk && inCoverage(rec.c, w.year)) { cands.push({ s: intlScore(d0, rec.q, rec.h), d: d0, k: "scopus", q: rec.q }); fb = rec.k; }
   }
   let pick = null;
   if (cands.length) {
@@ -195,7 +207,7 @@ const works = prepared.map(({ w, js, sj, disc }) => {
     pick = inMine.length ? inMine.reduce((x, y) => (y.s > x.s ? y : x)) : cands.reduce((x, y) => (y.s < x.s ? y : x));
   }
   // jq: hạng Q của tạp chí chỉ để HIỂN THỊ (không tính điểm): bài đồng tác giả, sách theo tập, hoặc tạp chí không thuộc ngành của tác giả.
-  const jq = pick?.q ? null : (() => { const o = { Q1: 1, Q2: 2, Q3: 3, Q4: 4 }, b = sj.map((x) => x[1]).filter((q) => o[q]).sort((x, y) => o[x] - o[y])[0]; if (b) return b; const rec = [w.issn, ...(w.issns ?? [])].map((i) => FB.get(String(i ?? "").replace("-", "").toUpperCase())).find(Boolean); return rec?.q && (rec.k === "b" || inCoverage(rec.c, w.year)) ? rec.q : null; })();
+  const jq = pick?.q ? null : (() => { const o = { Q1: 1, Q2: 2, Q3: 3, Q4: 4 }, b = sj0.map((x) => x[1]).filter((q) => o[q]).sort((x, y) => o[x] - o[y])[0]; if (b) return b; const rec = [w.issn, ...(w.issns ?? [])].map((i) => FB.get(String(i ?? "").replace("-", "").toUpperCase())).find(Boolean); return rec?.q && (rec.k === "b" || inCoverage(rec.c, w.year)) ? rec.q : null; })();
   const { issns: _i, corr, ...rest } = w;
   // Trích dẫn công trình = max(OpenAlex, Semantic Scholar) theo DOI; cOA giữ số OpenAlex để tính phần bổ sung ở cấp tác giả.
   const cOA = w.citations ?? 0, cS2 = w.doi ? (S2[w.doi] ?? 0) : 0, cCR = w.doi ? Math.max(0, CR[w.doi] ?? 0) : 0; rest.citations = Math.max(cOA, cS2, cCR);
@@ -203,7 +215,7 @@ const works = prepared.map(({ w, js, sj, disc }) => {
   if (w.doi && OC[w.doi] !== undefined && OC[w.doi] >= 0) { oc.n++; oc.oa += cOA; oc.cr += cCR; oc.s2 += cS2; oc.oc += OC[w.doi]; if (OC[w.doi] <= cOA) oc.ocLeOA++; }
   if (w.doi && CR[w.doi] !== undefined) { xs.n++; if (cCR > cOA) xs.crHigher++; if (cS2 > cOA) xs.s2Higher++; if (cOA >= cS2 && cOA >= cCR) xs.oaHighest++; }
   const score = pick ? pick.s : null;
-  return { ...rest, cOA, title: w.title && w.title.trim() ? w.title : "(không có tiêu đề)", score, scoreDiscipline: pick?.d ?? null, scoreKind: pick?.k ?? null, quartile: pick?.q ?? null, ...(fb && pick ? { fb } : {}), ...(!pick?.q && jq ? { jq } : {}), matched: js.length > 0 || sj.length > 0, counted: w.role === "lead" && score !== null && score > 0,
+  return { ...rest, cOA, title: w.title && w.title.trim() ? w.title : "(không có tiêu đề)", score, scoreDiscipline: pick?.d ?? null, scoreKind: pick?.k ?? null, quartile: pick?.q ?? null, ...(fb && pick ? { fb } : {}), ...(!pick?.q && jq ? { jq } : {}), matched: js.length > 0 || sj0.length > 0, counted: w.role === "lead" && score !== null && score > 0,
     // ru: tác giả không phải đứng đầu và OpenAlex không ghi tác giả liên hệ nào (corr = 0) => vai trò chưa xác định, không phải "chắc chắn không phải tác giả chính".
     ...(w.role === "co" && (corr ?? 0) === 0 ? { ru: 1 } : {}), disc };
 });
@@ -275,4 +287,5 @@ writeFileSync("public/data/conf-points.json", JSON.stringify({ default: 0.5, poi
 writeFileSync("public/data/profind.json", JSON.stringify({ meta: { demo: !!R.meta?.demo, built: new Date().toISOString().slice(0, 10), authors: outAuthors.length, works: works.length, rankPool: PRO.eligible, abroad: { window: windowYears(ABROAD_RULE, BUILD_YEAR), recentMinShare: Math.round(ABROAD_RULE.recentMinShare * 100), recentMinWorks: ABROAD_RULE.recentMinWorks, maxVnShare: Math.round(ABROAD_RULE.maxVnShare * 100), minWorks: ABROAD_RULE.minWorks }, source: R.meta?.source ?? null, fetched: R.meta?.fetched ?? null }, institutions: insts, types: I.types, disciplines, authors: outAuthors }));
 if (xs.n) console.log(`Đối chiếu trích dẫn trên ${xs.n} công trình có DOI trong Crossref: Crossref cao hơn OpenAlex ở ${xs.crHigher}, Semantic Scholar cao hơn OpenAlex ở ${xs.s2Higher}, OpenAlex cao nhất hoặc bằng ở ${xs.oaHighest}.`);
 if (oc.n) console.log(`Kiểm toán OpenCitations trên mẫu ${oc.n} DOI: tổng trích dẫn OpenAlex ${oc.oa}, Crossref ${oc.cr}, Semantic Scholar ${oc.s2}, OpenCitations ${oc.oc}; OpenCitations <= OpenAlex ở ${Math.round(100 * oc.ocLeOA / oc.n)}% công trình.`);
+console.log(`Scopus 9/2026: ${nScopusOut} công trình có ISSN+tên khớp nhưng năm ngoài Coverage, không tính điểm Scopus.`);
 console.log(`profind.json: ${outAuthors.length} tác giả (${log.length} thay đổi đính chính/gộp), ${works.length} công trình (bỏ ${nDupWorks} trùng), ${works.filter((w) => w.counted).length} có điểm, ${works.filter((w) => w.matched).length} khớp tạp chí, nhóm xếp hạng ${pool.length}`);
