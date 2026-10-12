@@ -174,3 +174,7 @@ Quy tắc xếp hạng bổ sung (2026-10): hồ sơ không có đơn vị nào 
 ## Độ tin cậy hồ sơ `prov` (2026-10)
 
 `build-index.mjs` gắn `prov` cho mỗi hồ sơ (sau khi áp dụng `corrections.json` và `current-inst.json`). `prov.fix` = `{ excl, assign, merged, units }`: số mã trong `excludeWorks` có tiền tố `<id>-`, số mục `assignWorks` có đích là hồ sơ, số hồ sơ đã gộp vào hồ sơ (`merge[].from`), và `units` = có `setInstitutions[id]`; bỏ `fix` khi mọi số bằng 0 và `units` sai. `prov.instEv`: `set` (có `setInstitutions`, kể cả rỗng), `none` (không có đơn vị), `works` (điểm cao nhất của đơn vị đang công tác trong `current-inst.json` ≥ 0,3), `weak` (còn lại). `prov` nằm trong DETAIL của `build-lite.mjs` (chỉ có ở khối `authors/pNNN.json`, không phình tệp lite). Kiểm bởi `check-data.mjs` và `test/prov.test.mjs`.
+
+## Công bố theo năm của đơn vị (2026-10)
+
+`node scripts/build-unit-years.mjs` (chạy sau `build-index.mjs`; không nằm trong `npm run build`) đọc `public/data/profind.json` và các khối `public/data/works/wNNNN.json`, ghi `public/data/unit-years.json` = `{ meta:{built,from,to}, units:{ <đơn vị>:{ t:[tổng/năm], s:[số tính điểm/năm] } } }`, năm 2010..năm hiện tại. Mỗi công trình đếm một lần cho mỗi đơn vị (khử trùng theo phần mã sau dấu "-" trong id), gồm đơn vị con; hồ sơ và đơn vị "đang công tác" theo định nghĩa của `src/School.tsx`; tính điểm = `score` hoặc `quartile` khác null. Chỉ giữ đơn vị có từ 20 công trình. Dùng bởi `src/UnitTrend.tsx` (trang Nhà trường); kiểm bởi `test/unit-years.test.mjs`.

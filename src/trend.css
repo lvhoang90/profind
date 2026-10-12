@@ -1,0 +1,18 @@
+.ut{margin:20px 0;position:relative}
+.ut h2{margin-bottom:4px}
+.ut-box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 8px 10px;min-width:0;overflow:hidden}
+.ut svg{display:block;width:100%;height:auto;max-width:100%}
+.ut .ax{stroke:var(--line);stroke-width:1}
+.ut .gl{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3}
+.ut text{fill:var(--ink-2);font:11px system-ui,sans-serif}
+.ut .pk{fill:var(--ink);font-weight:700}
+.ut .b-s{fill:var(--accent)}
+.ut .b-o{fill:var(--field)}
+.ut .cur{opacity:.55}
+.ut .tl{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-dasharray:4 3}
+.ut-lg{display:flex;flex-wrap:wrap;gap:6px 16px;margin:8px 8px 0;font-size:.82rem;color:var(--ink)}
+.ut-lg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.ut-lg i.l{height:0;border-top:2px dashed var(--ink);border-radius:0;vertical-align:3px}
+.ut-lg i.s{background:var(--accent)}.ut-lg i.o{background:var(--field)}
+.ut .note{margin:6px 8px 0;font-size:.78rem}
+.ut-sr{position:absolute;left:0;top:0;max-width:1px;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
