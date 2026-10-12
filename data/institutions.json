@@ -5777,8 +5777,8 @@
   },
   {
    "id": "vien-cong-nghe-thong-tin",
-   "name": "Viện Công nghệ Thông tin",
-   "en": "Viện Công nghệ Thông tin",
+   "name": "Viện Công nghệ Thông tin (ĐHQGHN)",
+   "en": "VNU Information Technology Institute",
    "abbr": "ITI",
    "type": "institute",
    "managedBy": null,
@@ -6004,8 +6004,8 @@
   },
   {
    "id": "vien-cong-nghe-thong-tin-2",
-   "name": "Viện Công nghệ thông tin",
-   "en": "Viện Công nghệ thông tin",
+   "name": "Viện Công nghệ thông tin (Viện Hàn lâm KH&CN Việt Nam)",
+   "en": "Institute of Information Technology (VAST)",
    "abbr": "IOIT",
    "type": "institute",
    "managedBy": null,

@@ -16,6 +16,10 @@ const inCoverage = (cov, y) => !!y && String(cov ?? "").split(";").some((p) => {
 if (existsSync("data/manual-works.json")) { const have = new Set(R.works.map((w) => w.id)); for (const w of rd("data/manual-works.json").works) if (w.issn && !have.has(w.id)) R.works.push({ ...w }); }
 // Đơn vị hiện tại (scripts/build-current-inst.mjs): đơn vị có điểm gần đây < 50% đơn vị cao nhất của tác giả là đơn vị cũ (instPast), xếp sau.
 const CUR = existsSync("data/current-inst.json") ? rd("data/current-inst.json") : {};
+// data/unit-alias.json: đơn vị trùng (cùng một trường/viện có hai bản ghi). Mọi tham chiếu đơn vị của tác giả đều quy về bản ghi chính.
+const UA = existsSync("data/unit-alias.json") ? rd("data/unit-alias.json").alias : {};
+const ua = (u) => UA[u] ?? u;
+for (const sc of Object.values(CUR)) for (const [k, v] of Object.entries(sc)) if (UA[k]) { sc[UA[k]] = Math.max(sc[UA[k]] ?? 0, v); delete sc[k]; }
 const instSplit = (id, list) => { const sc = CUR[id]; if (!sc || list.length < 2) return { institutions: list, instPast: [] }; const mx = Math.max(...list.map((u) => sc[u] ?? 0)); if (!(mx > 0)) return { institutions: list, instPast: [] }; const now = list.filter((u) => sc[u] === undefined || sc[u] >= 0.5 * mx).sort((x, y) => (sc[y] ?? mx) - (sc[x] ?? mx)), past = list.filter((u) => !now.includes(u)).sort((x, y) => sc[y] - sc[x]); return { institutions: [...now, ...past], instPast: past }; };
 // corrections.notSuspect: hồ sơ đã được kiểm chứng là MỘT người (ORCID, số bài Scopus/ORCID/OpenAlex nhất quán) nên bỏ cờ nghi gộp nhầm do số công trình/đơn vị lớn.
 const NOT_SUSPECT = new Set((C.notSuspect ?? []).map((x) => x.id));
@@ -73,7 +77,7 @@ const metaAll = existsSync("data/author-meta.json") ? rd("data/author-meta.json"
 for (const [f, into] of alias) extraCited.set(into, (extraCited.get(into) ?? 0) + (metaAll[f]?.cited ?? 0));
 const live = new Map(authors.map((a) => [a.id, a]));
 const NAME_ORDER = existsSync("data/name-order.json") ? rd("data/name-order.json") : {}; // scripts/normalize-names.mjs: tên Việt đưa về thứ tự Họ + tên đệm + tên (corrections.rename vẫn thắng)
-for (const a of authors) { if (C.rename[a.id]) a.name = C.rename[a.id]; else if (NAME_ORDER[a.id]) a.name = NAME_ORDER[a.id].to; if (C.setInstitutions?.[a.id]) { const v = C.setInstitutions[a.id], now = Array.isArray(v) ? v : v.now ?? [], past = Array.isArray(v) ? [] : v.past ?? []; a.institutions = [...now, ...past.filter((u) => !now.includes(u))]; a.fixedPast = past.filter((u) => !now.includes(u)); } /* đơn vị do quản trị viên xác nhận thay cho đơn vị OpenAlex (hồ sơ gộp nhiều người) */ a.claimed = C.claimed[a.id]?.date ?? null; }
+for (const a of authors) { if (C.rename[a.id]) a.name = C.rename[a.id]; else if (NAME_ORDER[a.id]) a.name = NAME_ORDER[a.id].to; if (C.setInstitutions?.[a.id]) { const v = C.setInstitutions[a.id], now = Array.isArray(v) ? v : v.now ?? [], past = Array.isArray(v) ? [] : v.past ?? []; a.institutions = [...now, ...past.filter((u) => !now.includes(u))]; a.fixedPast = past.filter((u) => !now.includes(u)); } /* đơn vị do quản trị viên xác nhận thay cho đơn vị OpenAlex (hồ sơ gộp nhiều người) */ a.institutions = [...new Set(a.institutions.map(ua))]; if (a.fixedPast) a.fixedPast = [...new Set(a.fixedPast.map(ua))].filter((u, _, ar) => a.institutions.includes(u)); a.claimed = C.claimed[a.id]?.date ?? null; }
 const excl = new Set(C.excludeWorks), seen = new Set();
 // Vai trò theo vị trí tác giả tải lại từ OpenAlex (scripts/fetch-positions.mjs): tác giả chính (HĐGSNN) = tác giả đứng đầu HOẶC tác giả liên hệ (một hay nhiều người);
 // trước đây chỉ tính tác giả liên hệ khi là người duy nhất nên bỏ sót các bài đồng liên hệ. Không có dữ liệu vị trí thì giữ vai trò cũ.
