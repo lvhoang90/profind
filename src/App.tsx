@@ -35,7 +35,6 @@ const EDUFIND = "https://edufind.isavn.edu.vn";
 const CONTACT = "vienisavietnam@gmail.com";
 const PAGE = 25; // mỗi trang tối đa 25 kết quả
 const TOP2_DOI = "https://doi.org/10.17632/btchxktzyw.9";
-const TOP2_LIC = "https://creativecommons.org/licenses/by-nc/3.0/";
 
 /** Giải mã đường dẫn băm an toàn: chuỗi % sai (vd. %E0%A4%A) không được làm sập trang. */
 function parseRoute(): { kind: string; id: string; query: string } {
@@ -89,13 +88,16 @@ function AppInner() {
     setErr(false);
     // Đơn vị do quản trị viên đặt tay (Redis) ghi đè đơn vị trong dữ liệu dựng sẵn; lỗi/thiếu thì bỏ qua.
     const ov = fetch("/api/account?op=inst").then((r) => (r.ok ? r.json() : { map: {} })).then((j: { map?: Record<string, { now: string[]; past?: string[] }> }) => j.map ?? {}).catch(() => ({}) as Record<string, { now: string[]; past?: string[] }>);
-    Promise.all([fetch("./data/profind-lite.json").then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }), ov]).then(([d, map]: [Data, Record<string, { now: string[]; past?: string[] }>]) => {
+    // Không chờ API đơn vị đặt tay: hiện dữ liệu dựng sẵn ngay khi tải xong tệp lite, rồi áp dụng đơn vị đặt tay khi có (nếu có).
+    const apply = (d: Data, map: Record<string, { now: string[]; past?: string[] }>): Data => ({ ...d, types: d.types ?? {}, disciplines: d.disciplines ?? [], meta: d.meta ?? ({} as Data["meta"]), authors: d.authors.map((a) => { const o = map[a.id]; const base = { ...a, institutions: a.institutions ?? [], disciplines: a.disciplines ?? [] }; if (!o?.now?.length) return base; const past = (o.past ?? []).filter((u) => !o.now.includes(u)); return { ...base, institutions: [...o.now, ...past], instPast: past.length ? past : undefined }; }) });
+    fetch("./data/profind-lite.json").then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }).then((d: Data) => {
       if (!d || !Array.isArray(d.authors) || !Array.isArray(d.institutions)) throw new Error("shape");
-      setData({ ...d, types: d.types ?? {}, disciplines: d.disciplines ?? [], meta: d.meta ?? ({} as Data["meta"]), authors: d.authors.map((a) => { const o = map[a.id]; const base = { ...a, institutions: a.institutions ?? [], disciplines: a.disciplines ?? [] }; if (!o?.now?.length) return base; const past = (o.past ?? []).filter((u) => !o.now.includes(u)); return { ...base, institutions: [...o.now, ...past], instPast: past.length ? past : undefined }; }) });
+      setData(apply(d, {}));
+      void ov.then((map) => { if (Object.keys(map).length) setData(apply(d, map)); });
     }).catch(() => setErr(true));
   };
   // Bộ dữ liệu tác giả (~5 MB) chỉ tải khi cần: trang tài khoản và quản trị không dùng nên mở nhanh hơn.
-  const needData = !/^(tai-khoan|ket-noi|quan-tri|gioi-thieu|pro-score)/.test(location.hash.replace(/^#\/?/, ""));
+  const needData = !/^(tai-khoan|ket-noi|quan-tri|gioi-thieu|pro-score|bang-xep-hang)/.test(location.hash.replace(/^#\/?/, ""));
   useEffect(() => { if (needData && !data) load(); }, [needData, route.kind]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { startSession(); }, []);
   useEffect(() => { document.documentElement.lang = lang; try { localStorage.setItem(KEY, lang); } catch { /* bỏ qua */ } }, [lang]);
@@ -135,7 +137,7 @@ function AppInner() {
       <main className="wrap" id="main" tabIndex={-1} ref={mainRef}>
         {data?.meta.demo && <p className="banner demo" role="note"><Icon n="info" />{t("demo")}</p>}
         <Boundary key={`${view}/${author?.id ?? ""}`}>
-          {view === "lb" ? (data ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><LeaderboardPage data={data} lang={lang} num={num} /></Suspense> : err ? <div className="empty" role="alert"><p>{t("err")}</p><button className="ghost" onClick={load}>{t("retry")}</button></div> : <p className="empty" role="status">{t("loading")}</p>)
+          {view === "lb" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><LeaderboardPage lang={lang} num={num} /></Suspense>
             : view === "pro" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><ProScorePage /></Suspense>
             : view === "about" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><AboutPage section={new URLSearchParams(route.query).get("m") ?? ""} /></Suspense>
             : view === "conn" ? <Suspense fallback={<p className="empty" role="status">{t("loading")}</p>}><ConnectPage /></Suspense>
@@ -154,11 +156,6 @@ function AppInner() {
     </Ctx.Provider>
   );
 }
-
-const workLink = (w: Work, t: (k: any) => string) => {
-  const doi = w.doi, href = doi ? `https://doi.org/${doi}` : `https://openalex.org/${w.id.split("-").pop()}`;
-  return <><a href={href} target="_blank" rel="noopener">{w.title}<span className="sr"> {t("newTab")}</span></a><div className="meta">{doi ? <>DOI: {doi}</> : t("noDoi")}</div></>;
-};
 
 const range = (page: number, total: number, num: (n: number) => string) => total === 0 ? "0" : `${num(Math.min(page * PAGE + 1, total))}–${num(Math.min((page + 1) * PAGE, total))}`;
 
@@ -493,7 +490,6 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
     return wsort === "year" ? l : [...l].sort((x, y) => (wsort === "cit" ? y.citations - x.citations : 0) || y.year - x.year);
   }, [works, wsort, onlyLead]);
   const hue = hueOf(a.id);
-  const cats: [string, number, string][] = [["Scopus Q1", stat.cat.q1, "c1"], ["Scopus Q2", stat.cat.q2, "c2"], ["Scopus Q3", stat.cat.q3, "c3"], ["Scopus Q4", stat.cat.q4, "c4"], [t("kDomShort"), stat.cat.dom, "cd"], [t("unmatched"), stat.cat.unm, "cu"], [t("notLeadShort"), stat.cat.not, "cn"]];
   return (
     <article className="ap">
       <p><a className="backl" href="#/">{t("back")}</a></p>

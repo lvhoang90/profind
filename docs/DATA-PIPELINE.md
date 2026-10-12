@@ -146,3 +146,6 @@ npm run d:check                              # kiểm tra nhất quán
 - `scripts/lib/cli.mjs`: `arg(khóa, mặc định)` (đọc `--khóa giá trị`), `MAILTO` (địa chỉ liên hệ cho OpenAlex/Crossref; đổi bằng biến `CONTACT_MAILTO`), `tmpFile(tên)` (đường dẫn tạm theo hệ điều hành thay cho `/tmp` cứng). 30 script đã dùng chung `arg`.
 - Hàm `norm` ở các script có công thức khác nhau (một số gộp "TP.HCM", bỏ "trường/the/of", giữ chữ số…) nên **không** gộp chung; khi sửa cần đối chiếu từng nơi dùng.
 - `api/_claim.js` đọc địa chỉ liên hệ từ biến môi trường `CONTACT_MAILTO` (mặc định như cũ).
+
+## Đơn vị con chưa có hồ sơ (12/10/2026)
+15 đơn vị con trong `data/unit-parent.json` (trường/phân hiệu thuộc ĐHQGHN, ĐHQG-HCM, Huế, Đà Nẵng, Thái Nguyên, Cần Thơ) không có hồ sơ vì OpenAlex không có bản ghi riêng (tra theo tên ở nước VN không ra), cơ quan ghi gộp vào đơn vị cha. Đã bỏ khỏi `unit-parent.json`; `build-unit-parent.mjs` tự bỏ đơn vị con chưa có hồ sơ khi có `public/data/profind.json`.
