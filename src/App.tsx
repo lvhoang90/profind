@@ -20,6 +20,7 @@ import { useWorks } from "./wsearch";
 import { StarBtn } from "./StarBtn";
 import { ProBadge, ProBadgeTag } from "./Badge";
 import { rankOf, useIntlRank } from "./intlPref";
+import { Related } from "./Related";
 import { AvatarFrame } from "./Frame";
 import { VisitChip } from "./VisitChip";
 import { provName } from "./provinces";
@@ -612,6 +613,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
               {mine && <button type="button" className="linkbtn" onClick={() => { const wid = `${a.id}-${w.id}`; if (confirm("Bài này không phải của bạn (OpenAlex gán nhầm người trùng tên)? Bài sẽ ẩn khỏi hồ sơ.")) void reportNotMine(a.id, wid).then(() => setLocalXw((x) => [...x, wid])).catch((e) => alert((e as Error).message)); }}>Không phải bài của tôi</button>}</div></li>))}</ol>
         {!extraAll && extra.length > 15 && <p><button type="button" className="ghost" onClick={() => setExtraAll(true)}>{t("extraMore", { n: String(extra.length - 15) })}</button></p>}
       </section>}
+      <Related disciplines={a.disciplines} works={works} edufind={EDUFIND} />
       <section className="next compact" aria-labelledby="ecoa"><h2 id="ecoa">{t("ecoHeadAuthor")}</h2>
         <div className="next-grid">
           {([["edufind", "ecoAuthorEdu", "book"], ["ami", "ecoAuthorAmi", "link"], ["may", "ecoAuthorMay", "spark"]] as const).map(([app, k, ic]) => <EcoLink key={app} app={app} place="author" className="ncard link"><span className="kic"><Icon n={ic} size={20} /></span><span>{t(k)}</span><Icon n="external" size={14} /><span className="sr"> {t("newTab")}</span></EcoLink>)}
