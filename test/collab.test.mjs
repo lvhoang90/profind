@@ -10,6 +10,8 @@ const ok = { kind: "collab", org: "ĐH Mẫu", orgType: "school", name: "A", ema
 let r = await h(mk(ok)); eq(r.status, 200, "gửi hợp lệ"); eq((await r.json()).ok, true, "ok");
 eq(sent[0][1].to[0], "isa@example.test", "thư về hộp thư ISA"); eq(sent[0][1].reply_to, "a@b.vn", "trả lời tới người gửi");
 eq(/ĐH Mẫu/.test(sent[0][1].subject), true, "tiêu đề có tên tổ chức"); eq(/Tìm nhà khoa học cho đề tài/.test(sent[0][1].html), true, "thư có nhu cầu");
+const a2 = await h(mk({ ...ok, author: "A5011212770", authorName: "Duy Quy" })); eq(a2.status, 200, "gửi kèm hồ sơ"); const m2 = sent[sent.length - 1][1];
+eq(/KHÔNG phải nhà khoa học/.test(m2.html + m2.text), true, "thư ghi rõ người gửi không phải nhà khoa học"); eq(/quan tâm: Duy Quy/.test(m2.subject), true, "tiêu đề ghi nhà khoa học được quan tâm"); eq(/Nhà khoa học được quan tâm/.test(m2.text), true, "dòng nhà khoa học được quan tâm");
 eq((await h(mk({ ...ok, consent: "" }))).status, 400, "thiếu đồng ý"); eq((await h(mk({ ...ok, org: "" }))).status, 400, "thiếu tổ chức");
-eq((await h(mk({ ...ok, msg: "" }))).status, 400, "thiếu nội dung"); eq(sent.length, 1, "không gửi thư khi dữ liệu sai");
+eq((await h(mk({ ...ok, msg: "" }))).status, 400, "thiếu nội dung"); eq(sent.length, 2, "không gửi thư khi dữ liệu sai");
 console.log("collab: ok");
