@@ -181,3 +181,6 @@ Quy tắc xếp hạng bổ sung (2026-10): hồ sơ không có đơn vị nào 
 
 ## Gợi ý bài báo và tạp chí liên quan (`related.json`)
 `node scripts/build-related.mjs` (nằm trong `npm run build`, khoảng 8 giây) ghi `public/data/related.json` (khoảng 270 KB, 28 ngành): 40 bài nhiều trích dẫn mỗi năm và 20 tạp chí Q1/Q2 có nhiều bài của hồ sơ ProFind nhất từ 2022. Trang hồ sơ chỉ tải tệp này khi người dùng bấm "Xem gợi ý", chọn 5 bài gần tiêu đề công trình của hồ sơ nhất và tối đa 8 tạp chí (tạp chí hồ sơ đã đăng xếp sau). Liên kết sang EduFind theo `/<ngành>/?tab=international&q=<ISSN>`, sang Ami và Mây theo cổng `/go` (không truyền tham số riêng).
+
+## Hồ sơ gộp theo ORCID: h-index và Google Scholar (2026-10)
+Khi nhiều mã OpenAlex cùng một ORCID được gộp vào một hồ sơ, h-index nay lấy giá trị lớn nhất trong các hồ sơ gốc (trước đây lấy của hồ sơ đích, có thể chỉ là mảnh nhỏ với h = 0 nên điểm Tác động bị thấp). Ảnh hưởng 90 hồ sơ. Hồ sơ Google Scholar khai theo mã hồ sơ gốc (data/scholar.json) cũng chuyển sang hồ sơ đích. Ví dụ: A5108957051 (Tran Van Dat): h 0 lên 11, PRO-SCORE 78,0 lên 88,8, hạng 4.229 lên 669.
