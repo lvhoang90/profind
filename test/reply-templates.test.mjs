@@ -4,7 +4,7 @@ let ok = 0; const eq = (a, b, m) => { if (a !== b) { console.error("FAIL", m, a,
 eq(detectLang("Please add my profile!", "Nguyen Le"), "en", "tiếng Anh");
 eq(detectLang("Số công trình chưa đủ", "Đoàn Thị Hương Giang"), "vi", "tiếng Việt");
 eq(detectLang("", "Nguyen Van A", ""), "en", "không dấu thì tiếng Anh");
-for (const kind of ["add", "claim", "correct", "remove"]) for (const lang of ["vi", "en"]) {
+for (const kind of ["add", "claim", "correct", "remove", "collab"]) for (const lang of ["vi", "en"]) {
   const t = replyTemplate(kind, lang, { name: "Người Mẫu", email: "mau@example.vn", id: "A5000000001" });
   eq(/undefined|null|\[object/.test(t.subject + t.body), false, `${kind}/${lang}: không có undefined`);
   eq(t.subject.startsWith("ProFind:"), true, `${kind}/${lang}: tiêu đề`);
