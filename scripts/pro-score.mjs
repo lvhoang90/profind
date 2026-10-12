@@ -77,8 +77,11 @@ export function computePro(authors, per, year) {
     const output = pc("out", Math.min(x.out, out95));
     const lead = pc("leadS");
     const quality = x.qS, momentum = 0.5 * pc("rc") + 0.5 * pc("rn"), steady = x.steady, recog = a.top2 ? 1 : 0; // có tên trong danh sách Top 2% (sự nghiệp hoặc năm 2025); tự trích dẫn chỉ được nêu ở chú giải nhãn
+    // Giảm trọng số hiệu dụng của "Đà phát triển" với hồ sơ có Tác động cao (nhiều trích dẫn, h lớn): người có sự nghiệp lớn nhưng ít công bố 5 năm gần đây không bị kéo điểm quá nhiều.
+    // momEff = momentum + s·max(0, impact − momentum), s = 0,75·clamp((impact − 0,70)/0,25, 0, 1): s = 0 khi Tác động ≤ 70 (bách phân vị), tối đa 0,75 khi Tác động ≥ 95. Phần hiển thị (proParts) vẫn là Đà phát triển gốc.
+    const sMom = 0.75 * Math.min(1, Math.max(0, (impact - 0.7) / 0.25)), momEff = momentum + sMom * Math.max(0, impact - momentum);
     const parts = { impact, output, lead, quality, momentum, steady, recog };
-    a._s = PKEYS.map((k) => parts[k]);
+    a._s = PKEYS.map((k) => (k === "momentum" ? momEff : parts[k]));
     a.proParts = Object.fromEntries(Object.entries(parts).map(([k, v]) => [k, Math.round(v * 100)]));
     a.proConf = (x.known >= 5 ? 1 : 0) + (x.qn >= 5 ? 1 : 0) + (x.n >= 10 ? 1 : 0); // 0..3: mức đủ dữ liệu của điểm
   }

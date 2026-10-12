@@ -131,3 +131,8 @@ npm run d:check                              # kiểm tra nhất quán
 - Chuỗi dựng đủ sau khi đổi `data/corrections.json`: build-index → build-current-inst (cần OPENALEX_API_KEY, có thể bỏ khi dùng bộ nhớ đệm) → build-index → build-top-works → build-wsearch → check-data → `npm run build`.
 - Trang tĩnh `/don-vi/<id>/` cộng người ở đơn vị con (`parent`), khớp trang chủ.
 - Hạng dự phòng SCImago: Coverage tách theo `;` hoặc `,`.
+
+## PRO-SCORE: Đà phát triển hiệu dụng và bảng xếp hạng đơn vị (12/10/2026)
+- `pro-score.mjs`: điểm dùng `momEff = momentum + s·max(0, impact − momentum)`, `s = 0,75·clamp((impact − 0,70)/0,25, 0, 1)`; `proParts.momentum` vẫn là giá trị gốc. Đo: 42.645 hồ sơ, đổi điểm TB +0,26, tối đa +13,7; 204 hồ sơ đổi bậc.
+- Bảng xếp hạng đơn vị/ngành: điểm TB top 10 chỉ tính hồ sơ đủ điều kiện xếp hạng (≥10 công trình, hoạt động ≥3 năm); cột "Nhà khoa học có điểm" đếm mọi hồ sơ có điểm, người nhiều đơn vị hiện tại được đếm ở từng đơn vị.
+- Quy ước: hồ sơ nhiều đơn vị vẫn được xếp hạng; chỉ hồ sơ nghi gộp nhiều người (`suspect`) hoặc liên kết chính ở nước ngoài (`abroadMain`) không xếp hạng.
