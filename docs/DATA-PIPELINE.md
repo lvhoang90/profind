@@ -166,3 +166,5 @@ npm run d:check                              # kiểm tra nhất quán
 ## Quét đơn vị gán sai theo cơ quan ghi trên bài (2026-10)
 
 Với 982 hồ sơ có điểm đơn vị hiện tại yếu (< 0,3), tải cơ quan ghi gốc trên từng bài từ OpenAlex và đối chiếu với tên đơn vị. Kết quả: lỗi dạng "cơ quan là công ty hoặc nơi khác nhưng bị gán một trường" rất hiếm (5 hồ sơ, đã sửa bằng `setInstitutions`; hồ sơ Nghia Nguyen-Trong là trường hợp đầu tiên). Phần lớn cảnh báo còn lại là đơn vị con/cha hoặc cách viết tên khác nhau, không phải lỗi.
+
+Nhóm 1.484 hồ sơ có đơn vị nhưng chưa có điểm đơn vị hiện tại cũng được quét theo cách trên (tải cơ quan ghi gốc trên bài, đối chiếu tên đơn vị và đơn vị cha). 462 hồ sơ không có đơn vị nào xuất hiện trong cơ quan ghi; trong số đó 102 hồ sơ không có bất kỳ cơ quan Việt Nam nào trên mọi bài và không phải hồ sơ đã nhận, ghi tay hay đã đính chính đơn vị. 102 hồ sơ này được xóa đơn vị bằng `setInstitutions`. 360 hồ sơ còn lại có cơ quan Việt Nam nhưng khác tên đơn vị đang gán (đa phần là khác cách viết tên); để nguyên.
