@@ -29,6 +29,7 @@ npm run d:check                              # kiểm tra nhất quán
 - Kết hợp: tỉ trọng = 0,5 × chủ đề + 0,5 × tạp chí (quân sự và an ninh chỉ theo tạp chí); giữ tối đa 3 ngành có tỉ trọng từ 20%. Kết quả trong `profind.json`: `disciplines` (ngành chính trước), `discShares` (% mỗi ngành), `discBasis` (`dong-thuan`, `lien-nganh`, `khac-biet`, `tap-chi`, `chu-de`, `hieu-chinh`). `corrections.setDisciplines` vẫn là đính chính cuối và áp dụng cả cho chấm điểm công trình.
 - `scripts/pro-score.mjs`: bách phân vị, trung bình ngành (làm trơn Bayes) và trần trích dẫn được tính theo từng ngành rồi trộn theo `discShares`.
 - `data/discipline-review.json`: hồ sơ có hạng mà hai nguồn bất đồng (xem lại, đính chính bằng `setDisciplines`).
+- `scripts/fetch-orcid-names.mjs` + `scripts/normalize-names.mjs` -> `data/name-order.json`: đưa tên Việt viết kiểu phương Tây ("Nhat Quang Minh Tran") về thứ tự Việt ("Tran Nhat Quang Minh"); chỉ đổi thứ tự các tiếng, dùng họ khai trên ORCID hoặc quy tắc bảo thủ làm bằng chứng; `build-index.mjs` áp dụng (`corrections.rename` vẫn thắng). Chạy lại khi nạp thêm hồ sơ: `node scripts/fetch-orcid-names.mjs && node scripts/normalize-names.mjs`.
 - `corrections.clearOrcid`: `{ "<mã tác giả>": "<lý do>" }` bỏ ORCID khỏi hồ sơ OpenAlex gộp nhiều người khi ORCID đó thuộc về người khác.
 - Chạy lại chủ đề: `node scripts/fetch-author-topics.mjs` (xóa `data/author-topics.json` để tải lại toàn bộ). Kiểm định nội bộ: mẫu 180 hồ sơ đọc mù (xem mô tả trong PR), ngành chính khớp 54% -> 70%.
 
