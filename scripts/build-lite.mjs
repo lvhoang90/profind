@@ -21,17 +21,19 @@ console.log(`profind-lite.json: ${authors.length} hồ sơ; ${by.size} khối ch
 // Bảng xếp hạng đơn vị/ngành tính sẵn (public/data/leaderboard.json): trang xếp hạng không cần tải cả bản lite.
 // Quy tắc như trước: bỏ hồ sơ nghi gộp nhầm và hồ sơ chưa có điểm; chỉ tính đơn vị hiện tại; bỏ cơ sở "other"; nhóm cần ≥ MIN hồ sơ đủ điều kiện xếp hạng; điểm TB top 10 chỉ tính hồ sơ đủ điều kiện.
 const MIN = 5, TOPN = 10, instBy = new Map(d.institutions.map((i) => [i.id, i]));
-const group = (keysOf) => {
+const group = (keysOf, all = false) => { // all = gồm cả hồ sơ liên kết quốc tế (xếp theo proRankAll)
+  const rk = (a) => (all ? a.proRankAll : a.proRank);
   const g = new Map();
-  for (const a of d.authors) { if (a.suspect || a.pro == null) continue; for (const k of keysOf(a)) (g.get(k) ?? g.set(k, []).get(k)).push(a); }
+  for (const a of d.authors) { if (a.suspect || a.pro == null || (!all && a.intl)) continue; for (const k of keysOf(a)) (g.get(k) ?? g.set(k, []).get(k)).push(a); }
   const out = [];
   for (const [id, list] of g) {
-    const el = list.filter((a) => a.proRank != null); if (el.length < MIN) continue;
-    const top = [...el].sort((x, y) => y.pro - x.pro || (x.proRank ?? 1e9) - (y.proRank ?? 1e9)), t10 = top.slice(0, TOPN);
-    out.push({ id, n: list.length, avg: t10.reduce((s, a) => s + a.pro, 0) / t10.length, p1000: list.filter((a) => (a.proRank ?? 1e9) <= 1000).length, cit: list.reduce((s, a) => s + (a.citations ?? 0), 0), top: top.slice(0, 3).map((a) => [a.id, a.name, a.pro]) });
+    const el = list.filter((a) => rk(a) != null); if (el.length < MIN) continue;
+    const top = [...el].sort((x, y) => y.pro - x.pro || (rk(x) ?? 1e9) - (rk(y) ?? 1e9)), t10 = top.slice(0, TOPN);
+    out.push({ id, n: list.length, avg: t10.reduce((s, a) => s + a.pro, 0) / t10.length, p1000: list.filter((a) => (rk(a) ?? 1e9) <= 1000).length, cit: list.reduce((s, a) => s + (a.citations ?? 0), 0), top: top.slice(0, 3).map((a) => [a.id, a.name, a.pro]) });
   }
   return out;
 };
-const units = group((a) => (a.institutions ?? []).filter((i) => !a.instPast?.includes(i) && instBy.get(i)?.type !== "other")).map((r) => { const u = instBy.get(r.id); return { ...r, name: u?.name ?? r.id, en: u?.en ?? "", city: u?.city ?? "", type: u?.type ?? "" }; });
-writeFileSync("public/data/leaderboard.json", JSON.stringify({ types: d.types, units, fields: group((a) => a.disciplines ?? []) }));
+const unitKeys = (a) => (a.institutions ?? []).filter((i) => !a.instPast?.includes(i) && instBy.get(i)?.type !== "other"), withMeta = (r) => { const u = instBy.get(r.id); return { ...r, name: u?.name ?? r.id, en: u?.en ?? "", city: u?.city ?? "", type: u?.type ?? "" }; };
+const units = group(unitKeys).map(withMeta);
+writeFileSync("public/data/leaderboard.json", JSON.stringify({ types: d.types, units, fields: group((a) => a.disciplines ?? []), unitsAll: group(unitKeys, true).map(withMeta), fieldsAll: group((a) => a.disciplines ?? [], true) }));
 console.log(`leaderboard.json: ${units.length} đơn vị`);

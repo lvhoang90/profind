@@ -15,15 +15,15 @@ export function buildStats(works, rule, year) {
   for (const k in AU) {
     const c = AU[k][1] ?? []; if (!c.length) continue;
     const id = k.slice(0, k.indexOf("-")), e = st.get(id) ?? st.set(id, { n: 0, vn: 0, y: {}, cn: {}, cr: {}, nr: 0 }).get(id), v = c.includes("VN"); e.n++; if (v) e.vn++; for (const x of new Set(c)) e.cn[x] = (e.cn[x] ?? 0) + 1;
-    const y = yr.get(k); if (win.has(y)) { const o = e.y[y] ?? (e.y[y] = { n: 0, vn: 0 }); o.n++; if (v) o.vn++; for (const x of new Set(c)) e.cr[x] = (e.cr[x] ?? 0) + 1; e.nr = (e.nr ?? 0) + 1; }
+    const y = yr.get(k); if (v && y >= year - 4 && y <= year) e.v5 = (e.v5 ?? 0) + 1; /* số công trình ghi cơ quan Việt Nam trong 5 năm gần nhất */ if (win.has(y)) { const o = e.y[y] ?? (e.y[y] = { n: 0, vn: 0 }); o.n++; if (v) o.vn++; for (const x of new Set(c)) e.cr[x] = (e.cr[x] ?? 0) + 1; e.nr = (e.nr ?? 0) + 1; }
   }
   return st;
 }
 /** Đặc trưng của một tác giả: overall (% toàn bộ), recent (% thấp nhất theo năm trong cửa sổ), recentWorks. null nếu chưa đủ bằng chứng. */
 export function features(e, rule, year) {
-  if (!e) return { overall: null, recent: null, recentWorks: 0 };
+  if (!e) return { overall: null, recent: null, recentWorks: 0, vn5: 0 };
   const ys = windowYears(rule, year).filter((y) => e.y[y]), rw = ys.reduce((s, y) => s + e.y[y].n, 0);
-  return { overall: e.n >= rule.minWorks ? Math.round((1000 * e.vn) / e.n) / 10 : null, recent: rw >= rule.recentMinWorks ? Math.round(1000 * Math.min(...ys.map((y) => e.y[y].vn / e.y[y].n))) / 10 : null, recentWorks: rw };
+  return { overall: e.n >= rule.minWorks ? Math.round((1000 * e.vn) / e.n) / 10 : null, recent: rw >= rule.recentMinWorks ? Math.round(1000 * Math.min(...ys.map((y) => e.y[y].vn / e.y[y].n))) / 10 : null, recentWorks: rw, vn5: e.v5 ?? 0 };
 }
 /** Phán quyết: "recent" | "overall" (yếu tố nào quyết định) và abroad (true = liên kết chính ở nước ngoài). */
 export function verdict(f, rule) {

@@ -247,6 +247,9 @@ const ABROAD_RULE = loadRule(), BUILD_YEAR = new Date().getFullYear(), AUS = bui
 for (const a of outAuthors) { const f = features(AUS.get(a.id), ABROAD_RULE, BUILD_YEAR), v = verdict(f, ABROAD_RULE); a.vnShare = f.overall; a.vnRecent = f.recent; a.vnRecentWorks = f.recentWorks; let mc = mainCountry(AUS.get(a.id), ABROAD_RULE); if (!mc && TOP2[a.id]?.topCntry) { const c2 = ISO3[String(TOP2[a.id].topCntry).toUpperCase()] ?? null; if (c2) mc = { abroad: c2 !== "VN", country: c2, works: null, vnWorks: null }; } // thiếu bằng chứng OpenAlex: dùng nước công bố chính (top_cntry_career) của bộ dữ liệu Top 2% (Scopus)
    a.mainCountry = mc?.country ?? null; a.mainCountryWorks = mc?.works ?? null; a.mainCountryVn = mc?.vnWorks ?? null; const abroad = v.abroad || !!mc?.abroad; a.abroadBasis = mc?.abroad ? "main" : v.abroad ? v.basis : null; a.abroadMain = abroad && !CONFIRMED.has(a.id); }
 for (const a of outAuthors) a.rankable = !a.suspect && !EXCLUDED.has(a.id) && !a.abroadMain;
+// Liên kết quốc tế (quyết định 12/10/2026): hồ sơ có liên kết chính ở nước ngoài nhưng có ≥ INTL_MIN công trình ghi cơ quan Việt Nam trong 5 năm gần đây (giảng viên thỉnh giảng, chuyên gia hợp tác, người Việt ở nước ngoài) vẫn được chấm điểm và có hạng riêng (proRankAll, gồm cả nhóm này); hạng trong nước (proRank) không đổi.
+const INTL_MIN = 3, vn5Of = new Map(outAuthors.map((a) => [a.id, features(AUS.get(a.id), ABROAD_RULE, BUILD_YEAR).vn5]));
+for (const a of outAuthors) { a.vnWorks5 = vn5Of.get(a.id) ?? 0; a.intl = !!a.abroadMain && !a.suspect && !EXCLUDED.has(a.id) && a.vnWorks5 >= INTL_MIN; }
 const pool = outAuthors.filter((a) => a.rankable && a.worksCount > 0);
 const rank = (key, out) => { const o = [...pool].sort((a, b) => b[key] - a[key]); o.forEach((a, i, arr) => { a[out] = i > 0 && arr[i - 1][key] === a[key] ? arr[i - 1][out] : i + 1; }); };
 for (const a of outAuthors) { a.rankScore = a.rankWorks = a.rankCit = null; }
