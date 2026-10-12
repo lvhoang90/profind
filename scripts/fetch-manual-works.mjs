@@ -8,7 +8,7 @@
 // "Công trình khác" (fetch-extra-works.mjs). Chỉ nhận công trình có trong OpenAlex (có thể truy vết bằng DOI); bài chỉ có trên Google Scholar thì không thêm.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { createHash } from "node:crypto";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY;
 if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
 const short = (id) => (id ?? "").replace("https://openalex.org/", "");

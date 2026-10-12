@@ -6,7 +6,7 @@
 // Chạy sau build-index.mjs (cần public/data/works). Chạy lại được; tệp của hồ sơ không còn trong nhóm bị xóa.
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, rmSync } from "node:fs";
 import { readWorks } from "./_works-io.mjs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY;
 if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
 const short = (id) => (id ?? "").replace("https://openalex.org/", "");

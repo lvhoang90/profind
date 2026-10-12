@@ -18,6 +18,7 @@ import { StarBtn } from "./StarBtn";
 import { ProBadge, ProBadgeTag } from "./Badge";
 import { AvatarFrame } from "./Frame";
 import { VisitChip } from "./VisitChip";
+import { provName } from "./provinces";
 import { fetchDetail } from "./authorDetail";
 import { fetchWorks } from "./worksShard";
 import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg, useVerified, useIsMine, useOwnDisc, useNotMine, reportNotMine, useConf, useConfPoints } from "./Verified";
@@ -211,7 +212,7 @@ function List({ d, query }: { d: Data; query: string }) {
   const instOpts = useMemo(() => {
     const c = new Map<string, number>();
     for (const a of d.authors) { if (scope === "vn" && a.suspect) continue; const seen = new Set<string>(); for (const i of a.institutions) { if (a.instPast?.includes(i)) continue; for (let x: string | undefined = i, n = 0; x && n < 4; x = instById.get(x)?.parent, n++) seen.add(x); } for (const i of seen) c.set(i, (c.get(i) ?? 0) + 1); }
-    return d.institutions.filter((i) => c.has(i.id)).sort((a, b) => a.name.localeCompare(b.name, "vi")).map((i) => [i.id, `${instLabel(i, lang)} (${num(c.get(i.id)!)})`] as string[]);
+    return d.institutions.filter((i) => c.has(i.id)).sort((a, b) => instLabel(a, lang).localeCompare(instLabel(b, lang), lang)).map((i) => [i.id, `${instLabel(i, lang)} (${num(c.get(i.id)!)})`] as string[]);
   }, [d, scope, lang, num, instById]);
   // Chuỗi tìm theo tên tạp chí/ISSN nằm ở tệp riêng, chỉ tải khi người dùng bắt đầu gõ.
   useEffect(() => {
@@ -332,7 +333,7 @@ function List({ d, query }: { d: Data; query: string }) {
       {showF && <section className="filters" aria-label={t("filters")}>
         <Sel icon="discipline" label={t("discipline")} v={disc} set={setDisc} all={t("all")} opts={d.disciplines.map((s) => [s, dName(s, lang)])} />
         <Sel icon="building" label={t("instType")} v={type} set={setType} all={t("all")} opts={Object.entries(d.types).filter(([k]) => d.institutions.some((i) => i.type === k)).map(([k, v]) => [k, v[lang]])} />
-        <Sel icon="building" label={t("province")} v={prov} set={setProv} all={t("all")} opts={[...new Set(d.institutions.map((i) => i.city).filter((c): c is string => !!c))].sort((x, y) => x.localeCompare(y, lang)).map((c) => [c, c] as [string, string])} />
+        <Sel icon="building" label={t("province")} v={prov} set={setProv} all={t("all")} opts={[...new Set(d.institutions.map((i) => i.city).filter((c): c is string => !!c))].sort((x, y) => provName(x, lang).localeCompare(provName(y, lang), lang)).map((c) => [c, provName(c, lang)] as [string, string])} />
         <Sel icon="building" label={t("inst")} v={instSel} set={setInstSel} all={t("all")} opts={instOpts} />
         {instSel && <label className="chk"><input type="checkbox" checked={withPast} onChange={(e) => setWithPast(e.target.checked)} /> {t("withPast")}</label>}
         <Sel icon="shield" label={t("scope")} v={scope} set={(v) => { setScope(v); setInstSel(""); }} opts={[["vn", t("scopeVn")], ["all", t("scopeAll")]]} />

@@ -3,7 +3,7 @@
 // Tra theo lô 100 mã công trình (OpenAlex, ~0,0001 USD/lượt). Chạy lại được: công trình đã có trường doi (kể cả null) bị bỏ qua.
 // Hết ngân sách (429) thì dừng êm, lần sau chạy tiếp.
 import { readFileSync, writeFileSync, readdirSync } from "node:fs";
-const arg = (k) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : undefined; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"); if (!mailto) throw new Error("Cần --mailto <email>.");
 const KEY = process.env.OPENALEX_API_KEY; if (!KEY) throw new Error("Thiếu OPENALEX_API_KEY.");
 const clean = (d) => (d ? String(d).replace(/^https?:\/\/(dx\.)?doi\.org\//i, "").trim().toLowerCase() || null : null);

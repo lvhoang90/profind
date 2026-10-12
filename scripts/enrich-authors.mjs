@@ -3,7 +3,7 @@
 // Cũng lưu số trích dẫn TOÀN THỜI GIAN và chỉ số h của hồ sơ OpenAlex (citedTotal, h), vì tổng trích dẫn các công trình từ 2016 trong ProFind thấp hơn nhiều.
 // Dùng để gắn cờ "có đơn vị ngoài Việt Nam" (nhà khoa học nước ngoài có đơn vị phụ tại Việt Nam), không loại ai khỏi dữ liệu.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-const arg = (k) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : undefined; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY; if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
 const R = JSON.parse(readFileSync("data/raw-authors.json", "utf8"));
 const out = existsSync("data/author-meta.json") ? JSON.parse(readFileSync("data/author-meta.json", "utf8")) : {};

@@ -4,7 +4,7 @@
 // Công trình thêm vào được ghi issn = "" (không tính được điểm HĐGSNN nhưng vẫn là công trình của tác giả). Chạy lại được:
 // các lô đã xong ghi trong data/raw/_noissn-done.json; công trình trùng mã không bị thêm lần hai. Hết ngân sách thì dừng êm.
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"); if (!mailto) throw new Error("Cần --mailto.");
 const KEY = process.env.OPENALEX_API_KEY; if (!KEY) throw new Error("Thiếu OPENALEX_API_KEY.");
 const from = +arg("from", 2016), BATCH = 50;

@@ -4,7 +4,7 @@
 // Ghi data/raw/_notable-orcid.json (cùng định dạng _notable-*, authors rỗng; ingest-openalex.mjs tự gộp). Tăng dần: bỏ qua hồ sơ đã xử lý trong --max-age-days ngày (data/raw/_orcid-supp-done.json).
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { nameMatch } from "./lib/namematch.mjs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY, FROM = +arg("from", 2016), CONC = +arg("conc", 6), AGE = +arg("max-age-days", 30) * 864e5;
 if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
 const short = (id) => (id ?? "").replace("https://openalex.org/", "");

@@ -2,8 +2,8 @@
 //   node scripts/fetch-author-topics.mjs [--mailto <email>]
 // Mỗi tác giả: số công trình OpenAlex và các tiểu lĩnh vực (subfield) kèm số công trình: { id: { n, s: [[subfield, field, count], ...] } }. Dùng cho scripts/classify-disciplines.mjs.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
-const MAIL = arg("mailto", "luongviethoang.safi@gmail.com"), OUT = "data/author-topics.json", P = JSON.parse(readFileSync("public/data/profind.json", "utf8"));
+import { arg, MAILTO } from "./lib/cli.mjs";
+const MAIL = arg("mailto", MAILTO), OUT = "data/author-topics.json", P = JSON.parse(readFileSync("public/data/profind.json", "utf8"));
 const have = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : {}, ids = P.authors.map((a) => a.id).filter((i) => !(i in have));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const get = async (u) => { for (let t = 0; t < 5; t++) { try { const r = await fetch(u); if (r.ok) return r.json(); await sleep(1500 * 2 ** t); } catch { await sleep(1500 * 2 ** t); } } return null; };

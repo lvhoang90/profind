@@ -4,7 +4,7 @@
 // Đơn vị "hiện tại" = điểm ≥ 50% điểm cao nhất; còn lại là đơn vị cũ/liên kết phụ. Ghi data/current-inst.json = { authorId: { unitId: điểm } }.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { readWorks } from "./_works-io.mjs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY; if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
 const short = (u) => String(u ?? "").replace("https://openalex.org/", "");
 const get = async (u) => { for (let t = 0; t < 6; t++) { try { const r = await fetch(u + `&mailto=${encodeURIComponent(mailto)}&api_key=${KEY}`); if (r.ok) return r.json(); if (r.status === 429 || r.status >= 500) await new Promise((s) => setTimeout(s, 2000 * 2 ** t)); else return null; } catch { await new Promise((s) => setTimeout(s, 2000)); } } return null; };

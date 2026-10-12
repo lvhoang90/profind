@@ -3,7 +3,7 @@
 // Tra theo lô 100 mã công trình (filter=openalex:W1|W2|...), lưu data/raw/_nauth.json ({ "W123": số tác giả }). OpenAlex cắt danh sách ở 100 tác giả:
 // công trình bị cắt (is_authors_truncated) ghi 101 (nghĩa là "hơn 100"). Chạy lại được: mã đã tra được bỏ qua; hết ngân sách thì dừng êm.
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"); if (!mailto) throw new Error("Cần --mailto.");
 const KEY = process.env.OPENALEX_API_KEY; if (!KEY) throw new Error("Thiếu OPENALEX_API_KEY.");
 const OUT = "data/raw/_nauth.json", out = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : {};

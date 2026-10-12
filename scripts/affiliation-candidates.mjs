@@ -3,7 +3,7 @@
 // Chỉ nhận đơn vị có tên đủ đặc thù và ≥ --min bài từ --from; với mỗi đơn vị, chỉ xét tác giả có CHÍNH chuỗi cơ quan của mình chứa tên đơn vị (không lấy đồng tác giả ở nơi khác).
 // Ghi data/affiliation-candidates.json (danh sách DUYỆT RIÊNG ở trang quản trị) — chưa nạp gì vào dữ liệu chính.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY, MIN = +arg("min", 20), FROM = arg("from", "2016");
 if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
 const norm = (s) => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();

@@ -3,7 +3,7 @@
 // Cặp đã gộp lấy từ data/corrections.json (mục merge). "Chủ đề lệch": thiếu công trình để so, hoặc độ giống ngành < 0,7, hoặc (độ giống từ khóa < 0,03 và độ giống ngành < 0,85).
 // Ghi public/data/_split-recheck.json cho tab "Rà soát gộp" ở trang quản trị.
 import { readFileSync, writeFileSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const cand = JSON.parse(readFileSync(arg("cand"), "utf8")), MIN = +arg("min", 60), MAX = +arg("max", 65);
 const C = new Map(cand.map((p) => [[p.a, p.b].sort().join("|"), p])), corr = JSON.parse(readFileSync("data/corrections.json", "utf8"));
 const out = [];

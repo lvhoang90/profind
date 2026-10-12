@@ -3,7 +3,7 @@
 //   node scripts/recheck-missing.mjs --mailto <email>
 import { execSync } from "node:child_process";
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"); if (!mailto || !process.env.OPENALEX_API_KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
 const run = (c) => execSync(c, { stdio: "inherit", env: { ...process.env, NODE_USE_ENV_PROXY: "1" } });
 const prev = new Set((existsSync("data/affiliation-candidates.json") ? JSON.parse(readFileSync("data/affiliation-candidates.json", "utf8")) : []).map((c) => c.id));

@@ -4,7 +4,7 @@
 // Ngoại lệ (vẫn xếp hạng): thêm mã vào data/vn-confirmed.json. Quy tắc: scripts/lib/abroad.mjs; ngưỡng do hội đồng mô phỏng quyết định.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { execSync } from "node:child_process";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const P = JSON.parse(readFileSync("public/data/profind.json", "utf8")), rule = JSON.parse(readFileSync("data/abroad-rule.json", "utf8"));
 const old = JSON.parse(arg("old") ? readFileSync(arg("old"), "utf8") : execSync("git show HEAD:public/data/profind.json", { maxBuffer: 1 << 30 }).toString()), oldRank = new Map(old.authors.map((a) => [a.id, a.proRank]));
 const snap = existsSync("data/abroad-review.json") ? JSON.parse(readFileSync("data/abroad-review.json", "utf8")) : { rows: [] }, snapRank = new Map(snap.rows.map((r) => [r.id, r.prevRank]));

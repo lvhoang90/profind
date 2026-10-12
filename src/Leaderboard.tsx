@@ -1,3 +1,4 @@
+import { provName } from "./provinces";
 import { useMemo, useState } from "react";
 import type { Author, Data } from "./types";
 import type { Lang } from "./i18n";
@@ -29,7 +30,7 @@ export function LeaderboardPage({ data, lang, num }: { data: Data; lang: Lang; n
       if (el.length < MIN) continue;
       const top = [...el].sort((x, y) => (y.pro ?? 0) - (x.pro ?? 0) || (x.proRank ?? 1e9) - (y.proRank ?? 1e9)), t10 = top.slice(0, TOPN);
       const u = unitBy.get(k);
-      out.push({ id: k, name: tab === "u" ? (lang === "vi" ? u?.name : u?.en || u?.name) ?? k : dName(k, lang), sub: tab === "u" ? (u?.city ?? "") : "", n: list.length, avg: t10.reduce((s, a) => s + (a.pro ?? 0), 0) / t10.length, p1000: list.filter((a) => (a.proRank ?? 1e9) <= 1000).length, cit: list.reduce((s, a) => s + (a.citations ?? 0), 0), top: top.slice(0, 3) });
+      out.push({ id: k, name: tab === "u" ? (lang === "vi" ? u?.name : u?.en || u?.name) ?? k : dName(k, lang), sub: tab === "u" ? provName(u?.city, lang) : "", n: list.length, avg: t10.reduce((s, a) => s + (a.pro ?? 0), 0) / t10.length, p1000: list.filter((a) => (a.proRank ?? 1e9) <= 1000).length, cit: list.reduce((s, a) => s + (a.citations ?? 0), 0), top: top.slice(0, 3) });
     }
     return out.sort((a, b) => b[sort] - a[sort] || b.avg - a.avg);
   }, [data, tab, type, sort, lang, unitBy]);

@@ -2,7 +2,7 @@
 //   node scripts/ingest-affiliation.mjs --mailto <email> --ids id1,id2 [--min-works 2] [--from 2016]
 // Chỉ lấy tác giả có CHÍNH chuỗi cơ quan chứa tên đơn vị trong ≥ --min-works bài (hoặc có ORCID). Sau đó chạy lại build-index như thường lệ.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY, FROM = arg("from", "2016"), MINW = +arg("min-works", 2), ids = (arg("ids", "") || "").split(",").filter(Boolean);
 if (!mailto || !KEY || !ids.length) throw new Error("Cần --mailto, --ids và OPENALEX_API_KEY.");
 const short = (id) => (id ?? "").replace("https://openalex.org/", "");

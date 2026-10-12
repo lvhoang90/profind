@@ -3,7 +3,7 @@
 // Dừng sớm (mã thoát 0, ghi lại việc còn dở) nếu OpenAlex báo hết ngân sách trong ngày; chạy lại ngày hôm sau.
 import { execSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
+import { arg } from "./lib/cli.mjs";
 const mailto = arg("mailto"), from = arg("from", "2021"), max = arg("max-authors", "50");
 const KEY = process.env.OPENALEX_API_KEY; if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
 const run = (c) => execSync(c, { stdio: "inherit", env: { ...process.env, NODE_USE_ENV_PROXY: "1" } });

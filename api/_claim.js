@@ -3,6 +3,7 @@
 // Tick vàng có hiệu lực 2 năm rồi xem xét lại. Tự động duyệt khi: email tổ chức + ORCID trùng hồ sơ OpenAlex + tên tương thích + không xung đột.
 
 export const VERIFY_YEARS = 2;
+const CONTACT = (typeof process !== "undefined" && process.env?.CONTACT_MAILTO) || "luongviethoang.hcm@gmail.com"; // địa chỉ liên hệ gửi OpenAlex/Crossref; đặt CONTACT_MAILTO để đổi
 const FREE = new Set(["gmail.com", "googlemail.com", "yahoo.com", "yahoo.com.vn", "ymail.com", "rocketmail.com", "outlook.com", "outlook.com.vn", "hotmail.com", "live.com", "msn.com", "icloud.com", "me.com", "mac.com", "proton.me", "protonmail.com", "aol.com", "zoho.com", "yandex.com", "yandex.ru", "mail.ru", "qq.com", "163.com", "126.com", "gmx.com", "gmx.net", "vnn.vn", "fpt.vn", "hn.vnn.vn", "hcm.vnn.vn", "vnpt.vn", "viettel.vn", "mail.com", "tutanota.com"]);
 export const emailDomain = (e) => String(e ?? "").split("@")[1]?.toLowerCase().trim() ?? "";
 /** Tên miền có nhãn edu hoặc gov (edu.vn, edu.au, gov.vn…) hoặc ac (ac.uk, ac.vn…) được hiểu là tên miền tổ chức giáo dục hoặc cơ quan nhà nước, ở bất kỳ quốc gia nào. */
@@ -32,7 +33,7 @@ const fetchJson = async (url, headers = {}, ms = 6000) => { const ac = new Abort
 export async function runChecks({ authorId, name, email, orcid, vf = {}, allowedFree = false, emailVerified = true }) {
   const checks = [], add = (k, ok, label, detail = "") => checks.push({ k, ok, label, detail });
   const o = normOrcid(orcid);
-  const oa = await fetchJson(`https://api.openalex.org/authors/${encodeURIComponent(authorId)}?select=id,display_name,orcid,last_known_institutions,works_count,cited_by_count&mailto=luongviethoang.hcm@gmail.com`);
+  const oa = await fetchJson(`https://api.openalex.org/authors/${encodeURIComponent(authorId)}?select=id,display_name,orcid,last_known_institutions,works_count,cited_by_count&mailto=${CONTACT}`);
   const oaOrcid = normOrcid(oa?.orcid);
   // Người gửi chưa khai ORCID thì dùng ORCID đang ghi trên hồ sơ OpenAlex (nếu có) để so tên: chỉ là tín hiệu tham khảo cho quản trị viên, không dùng để tự duyệt.
   const nameOrcid = o || oaOrcid;
@@ -49,7 +50,7 @@ export async function runChecks({ authorId, name, email, orcid, vf = {}, allowed
   add("nameMatch", oa?.display_name ? nameCompat(oa.display_name, name) : null, "Tên người gửi khớp tên hồ sơ", oa?.display_name ? `Hồ sơ: ${oa.display_name}` : "Không tra được tên hồ sơ");
   const inst = (oa?.last_known_institutions ?? []).map((i) => i.display_name).filter(Boolean);
   // Tên miền email so với website của các đơn vị ghi trên hồ sơ (OpenAlex homepage_url): khớp là tín hiệu tốt; không khớp chỉ cảnh báo (nhiều đơn vị dùng nhiều tên miền).
-  const d = emailDomain(email), hosts = (await Promise.all((oa?.last_known_institutions ?? []).slice(0, 3).map((i) => fetchJson(`https://api.openalex.org/institutions/${encodeURIComponent(String(i.id ?? "").split("/").pop())}?select=homepage_url&mailto=luongviethoang.hcm@gmail.com`)))).map((x) => { try { return new URL(x?.homepage_url).hostname.replace(/^www\./, "").toLowerCase(); } catch { return ""; } }).filter(Boolean);
+  const d = emailDomain(email), hosts = (await Promise.all((oa?.last_known_institutions ?? []).slice(0, 3).map((i) => fetchJson(`https://api.openalex.org/institutions/${encodeURIComponent(String(i.id ?? "").split("/").pop())}?select=homepage_url&mailto=${CONTACT}`)))).map((x) => { try { return new URL(x?.homepage_url).hostname.replace(/^www\./, "").toLowerCase(); } catch { return ""; } }).filter(Boolean);
   const domOk = !!d && hosts.some((h) => d === h || d.endsWith(`.${h}`) || h.endsWith(`.${d}`));
   add("domain", domOk ? true : null, "Tên miền email và đơn vị trong hồ sơ", `${d} · hồ sơ: ${inst.join("; ") || "chưa ghi đơn vị"}${domOk ? " · khớp website đơn vị" : hosts.length ? ` · website đơn vị: ${hosts.join(", ")}` : ""}`);
   const conflict = (vf.byAuthor && vf.byAuthor.email !== email) || (vf.byOrcid && vf.byOrcid.authorId !== authorId);
@@ -87,8 +88,8 @@ export function adminMail({ claim, origin }) {
 export const normDoi = (d) => { const s = String(d ?? "").trim().replace(/^(https?:\/\/(dx\.)?doi\.org\/|doi:)/i, "").toLowerCase(); return /^10\.\d{4,9}\/\S{1,200}$/.test(s) ? s : ""; };
 /** Tra công trình tự bổ sung theo DOI: Crossref (nhan đề, năm, tác giả, ORCID) + OpenAlex (đã ghi nhận chưa). matched = tên hoặc ORCID của tác giả có trong danh sách tác giả công trình. */
 export async function lookupWork(doi, { name, orcid }) {
-  const cr = (await fetchJson(`https://api.crossref.org/works/${encodeURIComponent(doi)}?mailto=luongviethoang.hcm@gmail.com`, {}, 8000))?.message;
-  const oa = await fetchJson(`https://api.openalex.org/works/doi:${encodeURIComponent(doi)}?select=id,cited_by_count&mailto=luongviethoang.hcm@gmail.com`);
+  const cr = (await fetchJson(`https://api.crossref.org/works/${encodeURIComponent(doi)}?mailto=${CONTACT}`, {}, 8000))?.message;
+  const oa = await fetchJson(`https://api.openalex.org/works/doi:${encodeURIComponent(doi)}?select=id,cited_by_count&mailto=${CONTACT}`);
   if (!cr) return { found: false, oa: oa ? oa.id : "" };
   const o = normOrcid(orcid), au = cr.author ?? [];
   const byOrcid = !!o && au.some((x) => normOrcid(x.ORCID) === o);
@@ -110,7 +111,7 @@ export async function matchTitles(titles, { name, orcid }) {
   const o = normOrcid(orcid), out = [];
   for (let i = 0; i < titles.length; i += 5) {
     out.push(...(await Promise.all(titles.slice(i, i + 5).map(async (t) => {
-      const j = await fetchJson(`https://api.crossref.org/works?query.bibliographic=${encodeURIComponent(t)}&rows=3&select=DOI,title,author,issued,container-title,type&mailto=luongviethoang.hcm@gmail.com`, {}, 8000);
+      const j = await fetchJson(`https://api.crossref.org/works?query.bibliographic=${encodeURIComponent(t)}&rows=3&select=DOI,title,author,issued,container-title,type&mailto=${CONTACT}`, {}, 8000);
       let best = null;
       for (const c of j?.message?.items ?? []) {
         const ct = String((c.title ?? [])[0] ?? ""), sim = titleSim(t, ct);

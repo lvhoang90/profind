@@ -4,8 +4,8 @@
 // Dùng cho vai trò "chủ đạo" (build-index.mjs): đứng tên đầu HOẶC là tác giả liên hệ (kể cả khi có nhiều tác giả liên hệ), đúng định nghĩa "tác giả chính" của HĐGSNN.
 // Dạng lưu: { <mã công trình W...>: { n: số tác giả, c: số tác giả liên hệ, a: { <mã tác giả ProFind>: "f"|"m"|"l" + ("c" nếu là tác giả liên hệ) } } }, chỉ giữ tác giả có trong dữ liệu ProFind.
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
-const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
-const MAIL = arg("mailto", "luongviethoang.safi@gmail.com"), KEY = process.env.OPENALEX_API_KEY; if (!KEY) throw new Error("Thiếu OPENALEX_API_KEY.");
+import { arg, MAILTO } from "./lib/cli.mjs";
+const MAIL = arg("mailto", MAILTO), KEY = process.env.OPENALEX_API_KEY; if (!KEY) throw new Error("Thiếu OPENALEX_API_KEY.");
 const OUT = "data/raw/_positions.json", have = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : {};
 const mine = new Set(JSON.parse(readFileSync("data/raw-authors.json", "utf8")).authors.map((a) => a.id));
 const need = new Set();
