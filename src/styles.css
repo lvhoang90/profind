@@ -674,3 +674,9 @@ td.who>.meta{margin-top:3px}
   .psp-t th,.psp-t td{font-size:.875rem}
 }
 @media(pointer:coarse){button.linkbtn,.ghost-link,.wlinks a.chip{min-height:44px;display:inline-flex;align-items:center}}
+/* Thẻ Top 2% ở chế độ tối: số đếm dùng màu sáng */
+:root[data-theme=dark] .hchips button.gold em{background:rgba(255,224,138,.2);color:#ffe08a}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .hchips button.gold em{background:rgba(255,224,138,.2);color:#ffe08a}}
+/* Chip hạng (huy hiệu cấp) trên trang PRO-SCORE ở chế độ tối: chữ tối trên nền sáng thay cho chữ trắng */
+:root[data-theme=dark] .psp-tiers li b,:root[data-theme=dark] .psp-tiers li span{color:var(--ink)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .psp-tiers li b,:root:not([data-theme=light]) .psp-tiers li span{color:var(--ink)}}
