@@ -158,3 +158,7 @@ npm run d:check                              # kiểm tra nhất quán
 ## Danh mục Scopus tháng 9/2026 và Top 2% bản 8/2026 (12/10/2026)
 - `scripts/import-scopus-list.py <ext_list_Sep_2026.xlsx>` → `data/scopus-sources.json` (15.407 ISSN của công trình đã tính điểm Scopus hoặc có hạng hiển thị; mỗi ISSN có thể nhiều bản ghi tên cũ/mới). `build-index.mjs` chỉ tính điểm Scopus khi năm công bố (≤ 2025) nằm trong Coverage của đúng nguồn (cùng ISSN và cùng tên); không đủ căn cứ thì giữ như cũ. Đo: 5.966 công trình (ISSN + tên khớp, năm ngoài Coverage) không còn điểm Scopus; PRO-SCORE hầu như không đổi (±1,7), 1.023 hồ sơ giảm tổng điểm HĐGSNN.
 - Top 2% (Mendeley Data v9, 8/2026; 121 người sự nghiệp ở 44 cơ sở, 280 người năm 2025): tệp Drive đúng bằng bản đang dùng. Khớp thêm 15 tên bằng `data/top2/overrides.json` (ghim thủ công sau rà soát), gộp 2 hồ sơ của Phạm Việt Thanh; `data/top2/matches.json` giữ các khớp đã được quản trị viên duyệt (không chạy lại `match-top2.mjs` đè lên, vì script chỉ sinh khớp tự động). Nhãn Top 2%: 225 → 240 hồ sơ; sự nghiệp khớp 98/121.
+
+## Rà hồ sơ Top 2% (2026-10)
+
+240 hồ sơ có nhãn Top 2% được rà bài lạc (bài của người trùng tên) theo cách đã làm với A5008082871: nhóm bài nghi ngờ khách quan (cơ quan/ngành/ORCID khác) do bộ lọc heuristic lập, sau đó chuyên viên AI nhận định từng bài. Chỉ tách khi cả hai điều kiện cùng đúng; không động vào hồ sơ đã xác thực; không tách quá 40% số bài của một hồ sơ. Kết quả: 77 hồ sơ, 465 bài đưa vào `excludeWorks`.
