@@ -1,15 +1,16 @@
 // Chỉ mục tìm kiếm tên công trình: public/data/wsearch/ (bản ghi chia khối theo trích dẫn giảm dần + chỉ mục ngược chia mảnh theo băm từ).
 // Chạy sau build-index.mjs (refresh.mjs đã gọi). Trình duyệt chỉ tải vài mảnh nhỏ cho mỗi lượt tìm.
 import { readFileSync, readdirSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
+import { allWorks } from "./_works-io.mjs";
 export const norm = (s) => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase().replace(/[‐-―−_.,;:()/\\-]+/g, " ").replace(/[  -​  　]/g, " ").replace(/\s+/g, " ").trim();
 export const shardOf = (t, n = 128) => { let h = 5381; for (let i = 0; i < t.length; i++) h = ((h * 33) ^ t.charCodeAt(i)) >>> 0; return h % n; };
 const CH = 500, NS = 128;
 const P = JSON.parse(readFileSync("public/data/profind.json", "utf8"));
 const ok = new Map(P.authors.filter((a) => a.rankable).map((a) => [a.id, a.name]));
 const best = new Map();
-for (const f of readdirSync("public/data/works")) {
-  const id = f.replace(".json", ""); if (!ok.has(id)) continue;
-  for (const w of JSON.parse(readFileSync(`public/data/works/${f}`, "utf8"))) {
+for (const [id, ws] of allWorks()) {
+  if (!ok.has(id)) continue;
+  for (const w of ws) {
     if (!w.title || String(w.title).length < 8) continue;
     const k = w.doi ? `d:${String(w.doi).toLowerCase()}` : `t:${norm(w.title)}`;
     const cur = best.get(k), lead = w.role === "lead" ? 1 : 0;

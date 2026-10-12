@@ -1,10 +1,11 @@
 // data/raw-authors.json + journals.json + sjr-rules.json + institutions.json + corrections.json
-//   -> public/data/profind.json (tác giả, đơn vị, thống kê; nhẹ) + public/data/works/<id>.json (công trình của từng tác giả; tải khi mở hồ sơ)
+//   -> public/data/profind.json (tác giả, đơn vị, thống kê; nhẹ) + public/data/works/wNNNN.json (công trình của các tác giả theo 1024 khối, xem scripts/_works-io.mjs; tải khối khi mở hồ sơ)
 // Điểm công trình = max(điểm tạp chí trong nước theo năm, điểm Scopus theo quy tắc ngành), chỉ khi là tác giả chính theo HĐGSNN (role = "lead").
 // Web of Science (SCIE/SSCI) và kỷ yếu hội nghị không suy ra được từ dữ liệu công khai nên không tính (điểm là mức tham khảo thấp hơn thực tế).
 import { cityOut } from "./lib/province.mjs";
 import { loadRule, buildStats, features, verdict, windowYears, mainCountry } from "./lib/abroad.mjs";
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from "node:fs";
+import { writeAllWorks } from "./_works-io.mjs";
 import { computePro } from "./pro-score.mjs";
 const rd = (f) => JSON.parse(readFileSync(f, "utf8"));
 const J = rd("data/journals.json"), S = rd("data/sjr-rules.json"), I = rd("data/institutions.json"), R = rd("data/raw-authors.json"), C = rd("data/corrections.json");
@@ -253,8 +254,7 @@ for (const a of outAuthors) { if (a.pro === undefined) { a.pro = a.proLo = a.pro
 writeFileSync("public/data/pro-panel.json", JSON.stringify(PRO.panel));
 
 // ---- 5. Ghi tệp ----
-rmSync("public/data/works", { recursive: true, force: true }); mkdirSync("public/data/works", { recursive: true });
-for (const [id, ws] of per) writeFileSync(`public/data/works/${id}.json`, JSON.stringify(ws.map(({ authorId, demo, disc, counted, matched, cOA, ...w }) => w)));
+writeAllWorks(new Map([...per].map(([id, ws]) => [id, ws.map(({ authorId, demo, disc, counted, matched, cOA, ...w }) => w)]))); // 1024 tệp khối (scripts/_works-io.mjs)
 // Chuỗi tìm theo tên tạp chí/ISSN tách riêng (tải khi người dùng bắt đầu gõ), để tệp danh sách nhẹ hơn ~45%.
 const jn = {};
 for (const a of outAuthors) { const ws = per.get(a.id) ?? [], jc = new Map(); for (const w of ws) { if (!w.issn) continue; jc.set(`${w.journal}|${w.issn}`, (jc.get(`${w.journal}|${w.issn}`) ?? 0) + 1); } jn[a.id] = [...jc.entries()].sort((x, y) => y[1] - x[1]).slice(0, 15).map(([k]) => foldS(k)).join(" ; "); }

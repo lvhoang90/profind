@@ -3,6 +3,7 @@
 // Đơn vị/ngành dưới MIN_INDEX nhà khoa học: noindex và không vào sitemap (tránh trang mỏng).
 import { UP, provinceOf } from "./lib/province.mjs";
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
+import { readWorks } from "./_works-io.mjs";
 const SITE = "https://profind.isavn.edu.vn", MIN_INDEX = 3, TOPN = 10;
 const P = JSON.parse(readFileSync("public/data/profind.json", "utf8")), M = P.meta, built = M.built ?? new Date().toISOString().slice(0, 10);
 // Google (ProfilePage) chỉ chấp nhận ngày giờ ISO 8601 đầy đủ kèm múi giờ; ngày trần "2026-10-10" bị báo "Giá trị ngày giờ của dateModified không hợp lệ". Dữ liệu dựng theo ngày, nên lấy 00:00 giờ Việt Nam.
@@ -190,7 +191,7 @@ ${pages.length ? `<h2>Hồ sơ nhà khoa học có tên trong Top 2% (${vn(pages
   { const byU = new Map(); for (const r of pages) for (const x of r.a.institutions ?? []) if (!r.a.instPast?.includes(x)) (byU.get(x) ?? byU.set(x, []).get(x)).push(r);
     for (const [p0, html] of out) if (p0.startsWith("/don-vi/") && html.includes("<!--T2:")) out.set(p0, html.replace(/<!--T2:([^>]*?)-->/, (_, id) => { const l = byU.get(id.replace(/&amp;/g, "&")) ?? []; return l.length ? `<h2>Nhà khoa học thuộc Top 2% thế giới (${vn(l.length)})</h2><ul class="l">${l.slice(0, 40).map((r) => `<li><a href="${r.path}">${esc(r.a.name)}</a><em>Top 2% · ${esc(TOP2_VI[r.a.top2.field] ?? r.a.top2.field)}</em></li>`).join("")}</ul>` : ""; })); }
   // ---- trang hồ sơ tóm tắt cho từng người trong Top 2%
-  const works = (id) => { try { return JSON.parse(readFileSync(`public/data/works/${id}.json`, "utf8")); } catch { return []; } };
+  const works = readWorks;
   const EXW = new Set(JSON.parse(readFileSync("data/corrections.json", "utf8")).excludeWorks ?? []);
   for (const { a, path: ap, unit } of pages) {
     const t2 = a.top2, y = t2.scope === "y2025", fld = TOP2_VI[t2.field] ?? t2.field, uns = (a.institutions ?? []).filter((x) => !a.instPast?.includes(x) && instBy.get(x) && instBy.get(x).type !== "other").map((x) => instBy.get(x));

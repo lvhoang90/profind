@@ -3,6 +3,7 @@
 // Điểm gần đây của một đơn vị = Σ 0,25^(năm mới nhất của tác giả − năm công trình) (mỗi công trình tính một lần cho mỗi đơn vị) trên các công trình ghi cơ quan đó (kể cả đơn vị cha theo lineage OpenAlex).
 // Đơn vị "hiện tại" = điểm ≥ 50% điểm cao nhất; còn lại là đơn vị cũ/liên kết phụ. Ghi data/current-inst.json = { authorId: { unitId: điểm } }.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readWorks } from "./_works-io.mjs";
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
 const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY; if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
 const short = (u) => String(u ?? "").replace("https://openalex.org/", "");
@@ -23,7 +24,7 @@ const unitsOf = (k) => { const m = IM[k]; if (!m) return []; const out = new Set
 // 2. Điểm gần đây theo (tác giả, đơn vị)
 const out = {}; let nA = 0;
 for (const a of P.authors) {
-  let w; try { w = JSON.parse(readFileSync(`public/data/works/${a.id}.json`, "utf8")); } catch { continue; } w = w.works ?? w;
+  const w = readWorks(a.id); if (!w.length) continue;
   const rows = w.filter((x) => AU[x.id]); if (!rows.length) continue; const maxY = Math.max(...rows.map((x) => x.year)), sc = {};
   for (const x of rows) for (const u of new Set(AU[x.id][0].flatMap(unitsOf))) sc[u] = (sc[u] ?? 0) + 0.25 ** (maxY - x.year);
   const ks = Object.keys(sc); if (ks.length) { out[a.id] = Object.fromEntries(ks.map((u) => [u, +sc[u].toFixed(2)])); nA++; }

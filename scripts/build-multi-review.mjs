@@ -5,6 +5,7 @@
 //   - mã định danh: ORCID, OpenAlex, Scopus Author ID (OpenAlex ids.scopus), Google Scholar (do tác giả/quản lý cung cấp), các ORCID khác mà OpenAlex từng thấy trên hồ sơ (observed_orcids: nhiều hơn một = dấu hiệu gộp nhiều người);
 //   - theo từng công trình: ORCID gắn với tác giả trên công trình đó trùng / khác ORCID hồ sơ (khác = người khác), công trình có DOI nằm trong danh sách công trình do chủ ORCID tự quản lý.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readWorks } from "./_works-io.mjs";
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
 const CACHE = arg("cache", "/tmp/multi-orcid-works.json"), MAIL = "luongviethoang.safi@gmail.com";
 const R = JSON.parse(readFileSync("data/multi-affiliation-review.json", "utf8")), P = JSON.parse(readFileSync("public/data/profind.json", "utf8"));
@@ -30,7 +31,7 @@ writeFileSync(CACHE, JSON.stringify(OW));
 const out = [];
 for (const r of R.profiles) {
   const a = by.get(r.id); if (!a) continue;
-  let ws = []; try { const w = JSON.parse(readFileSync(`public/data/works/${a.id}.json`, "utf8")); ws = w.works ?? w; } catch { /* không có */ }
+  const ws = readWorks(a.id);
   const my = a.orcid, ordois = my && OW[my] ? new Set(OW[my]) : null, past = new Set(a.instPast ?? []), sc = CUR[a.id] ?? {}, ids0 = OA.get(a.id) ?? {};
   const titlesBy = new Map(a.institutions.map((u) => [u, []])), T = { works: ws.length, authOrcidSame: 0, authOrcidOther: 0, authOrcidNone: 0, inOrcidRecord: 0, withDoi: 0 }, other = new Map(), per = new Map(a.institutions.map((u) => [u, { n: 0, y0: 9999, y1: 0, same: 0, other: 0, none: 0, inRec: 0, s: [] }]));
   for (const w of ws) {

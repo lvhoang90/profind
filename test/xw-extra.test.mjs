@@ -6,7 +6,7 @@ const A = "A5000000001", shard = [{ id: `${A}-W1111111` }], extra = [{ id: "W222
 let extraStatus = 200; const realFetch = globalThis.fetch;
 globalThis.fetch = async (u, o) => {
   const url = String(u);
-  if (url.includes(`/data/works/${A}.json`)) return new Response(JSON.stringify(shard), { status: 200 });
+  if (url.includes(`/data/works/w${String(Number(A.replace(/\D/g, "")) % 1024).padStart(4, "0")}.json`)) return new Response(JSON.stringify({ [A]: shard }), { status: 200 });
   if (url.includes(`/data/extra/${A}.json`)) return extraStatus === 200 ? new Response(JSON.stringify(extra), { status: 200 }) : new Response("", { status: extraStatus });
   if (url.startsWith("https://api.openalex.org/")) return new Response(JSON.stringify({ results: [] }), { status: 200 });
   return realFetch(u, o);

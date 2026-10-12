@@ -18,6 +18,7 @@ import { StarBtn } from "./StarBtn";
 import { ProBadge, ProBadgeTag } from "./Badge";
 import { AvatarFrame } from "./Frame";
 import { VisitChip } from "./VisitChip";
+import { fetchWorks } from "./worksShard";
 import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg, useVerified, useIsMine, useOwnDisc, useNotMine, reportNotMine, useConf, useConfPoints } from "./Verified";
 import { useHidden } from "./hidden";
 import { NoDataHint } from "./NoData";
@@ -413,9 +414,8 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
     setWorks(null); setWerr(false); setWpage(0); setWsort("year"); setOnlyLead(false); setAllInst(false);
     if (a.worksCount === 0) { setWorks([]); return; }
     const ac = new AbortController();
-    fetch(`./data/works/${encodeURIComponent(a.id)}.json`, { signal: ac.signal }).then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }).then((w) => {
-      if (!Array.isArray(w)) throw new Error("shape");
-      setWorks([...(w as Work[])].sort((x, y) => y.year - x.year));
+    fetchWorks(a.id, ac.signal).then((w) => {
+      setWorks([...w].sort((x, y) => y.year - x.year));
     }).catch(() => { if (ac.signal.aborted) return; setWerr(true); setWorks([]); });
     return () => ac.abort();
   }, [a.id, a.worksCount, tick]);

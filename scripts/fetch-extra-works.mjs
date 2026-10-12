@@ -5,6 +5,7 @@
 // Ghi public/data/extra/<mã>.json = [{ id: mã công trình OpenAlex (W…), t: nhan đề, y: năm, j: tạp chí/nguồn, ty: loại, d: DOI, c: trích dẫn }] và public/data/extra-index.json = { built, n: { <mã>: số công trình } }.
 // Chạy sau build-index.mjs (cần public/data/works). Chạy lại được; tệp của hồ sơ không còn trong nhóm bị xóa.
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, rmSync } from "node:fs";
+import { readWorks } from "./_works-io.mjs";
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
 const mailto = arg("mailto"), KEY = process.env.OPENALEX_API_KEY;
 if (!mailto || !KEY) throw new Error("Cần --mailto và OPENALEX_API_KEY.");
@@ -36,8 +37,8 @@ mkdirSync("public/data/extra", { recursive: true });
 const counts = {};
 for (const id of targets) {
   try {
-    const scored = new Set(), dois = new Set(), wf = `public/data/works/${id}.json`;
-    if (existsSync(wf)) for (const w of JSON.parse(readFileSync(wf, "utf8"))) { scored.add(String(w.id).split("-").pop()); if (w.doi) dois.add(String(w.doi).toLowerCase()); }
+    const scored = new Set(), dois = new Set();
+    for (const w of readWorks(id)) { scored.add(String(w.id).split("-").pop()); if (w.doi) dois.add(String(w.doi).toLowerCase()); }
     const rows = []; let cur = "*", seen = 0;
     while (cur && seen < MAX_WORKS) {
       const r = await get(`https://api.openalex.org/works?filter=author.id:${id}&per-page=100&cursor=${cur}&select=id,doi,title,publication_year,type,primary_location,cited_by_count`);

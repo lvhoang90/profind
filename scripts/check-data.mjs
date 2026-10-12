@@ -1,12 +1,13 @@
 // Kiểm tra tính nhất quán của dữ liệu đã dựng (chạy sau d:index): npm run d:check
 import { readFileSync, existsSync } from "node:fs";
+import { hasWorks } from "./_works-io.mjs";
 const d = JSON.parse(readFileSync("public/data/profind.json", "utf8"));
 const inst = new Set(d.institutions.map((i) => i.id)), errs = [];
 const ids = new Set();
 for (const a of d.authors) {
   if (ids.has(a.id)) errs.push(`trùng id ${a.id}`); ids.add(a.id);
   for (const i of a.institutions) if (!inst.has(i)) errs.push(`${a.id}: đơn vị không tồn tại ${i}`);
-  if (a.worksCount > 0 && !existsSync(`public/data/works/${a.id}.json`)) errs.push(`${a.id}: thiếu tệp công trình`);
+  if (a.worksCount > 0 && !hasWorks(a.id)) errs.push(`${a.id}: thiếu tệp công trình`);
   if (a.countedWorks > a.worksCount) errs.push(`${a.id}: countedWorks > worksCount`);
   if (a.totalScore < 0) errs.push(`${a.id}: điểm âm`);
   if (a.orcid && !/^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(a.orcid)) errs.push(`${a.id}: ORCID sai định dạng ${a.orcid}`);

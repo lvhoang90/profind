@@ -3,12 +3,13 @@
 // Chỉ lấy công trình mà tác giả là tác giả chính (đứng đầu hoặc liên hệ duy nhất), thuộc hồ sơ trong phạm vi Việt Nam và không nghi gộp nhầm,
 // để các bài của nhóm hàng nghìn tác giả (đồng tác giả) không lấn át; mỗi công trình chỉ xuất hiện một lần.
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { allWorks } from "./_works-io.mjs";
 const P = JSON.parse(readFileSync("public/data/profind.json", "utf8"));
 const ok = new Map(P.authors.filter((a) => a.rankable).map((a) => [a.id, a.name])), disc = new Map(P.authors.map((a) => [a.id, a.disciplines ?? []]));
 const all = [], seen = new Set();
-for (const f of readdirSync("public/data/works")) {
-  const id = f.replace(".json", ""); if (!ok.has(id)) continue;
-  for (const w of JSON.parse(readFileSync(`public/data/works/${f}`, "utf8"))) {
+for (const [id, ws] of allWorks()) {
+  if (!ok.has(id)) continue;
+  for (const w of ws) {
     if (w.role !== "lead" || !(w.citations > 0) || String(w.title).trim().toLowerCase() === String(w.journal).trim().toLowerCase()) continue;
     all.push({ t: w.title, y: w.year, j: w.journal, d: w.doi ?? null, c: w.citations, a: id, n: ok.get(id), f: [...new Set([w.scoreDiscipline, ...(disc.get(id) ?? [])].filter(Boolean))], w: String(w.id).split("-").pop() });
   }
