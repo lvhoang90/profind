@@ -25,7 +25,7 @@ const vi = {
   stStars: "★ nhờ lan tỏa",
   strip: "Thành tích",
   streakTip: "Chuỗi ngày liên tiếp",
-  daysN: (n: string) => `${n} ngày`,
+  dayUnit: (_n: number) => "ngày",
   starTip: "Tổng số sao",
   topLevel: "Cấp cao nhất",
   toNext: (n: string, name: string) => `Còn ${n} ★ nữa lên "${name}"`,
@@ -71,7 +71,7 @@ const en: typeof vi = {
   stStars: "★ from inviting",
   strip: "Achievements",
   streakTip: "Daily streak",
-  daysN: (n) => `${n} ${n === "1" ? "day" : "days"}`,
+  dayUnit: (n) => (n === 1 ? "day" : "days"),
   starTip: "Total stars",
   topLevel: "Top level",
   toNext: (n, name) => `${n} ★ to go to "${name}"`,
@@ -220,14 +220,15 @@ export function InviteCard({ user, compact = false }: { user: User; compact?: bo
 export function StarStrip({ user, mine, saved }: { user: User; mine: Mine[] | null; saved: number }) {
   const { lang, num } = useT(), x = L[lang];
   const c = statsOf(user, mine, saved, 0), stars = starsOf(c), lv = levelOf(stars, lang);
-  return <div className="strip" role="group" aria-label={x.strip}><span className="chip fire" title={x.streakTip}>🔥 <b>{x.daysN(num(c.streak)).replace(num(c.streak), "")}</b></span><span className="chip star" title={x.starTip}>★ <b>{num(stars)}</b></span><span className="chip lv" title={lv.next ? x.toNext(num(lv.next[0] - stars), lv.next[1]) : x.topLevel}>{lv.name}</span></div>;
+  return <div className="strip" role="group" aria-label={x.strip}><span className="chip fire" title={x.streakTip}>🔥 <b>{num(c.streak)}</b> {x.dayUnit(c.streak)}</span><span className="chip star" title={x.starTip}>★ <b>{num(stars)}</b></span><span className="chip lv" title={lv.next ? x.toNext(num(lv.next[0] - stars), lv.next[1]) : x.topLevel}>{lv.name}</span></div>;
 }
 
 type Earned = { id: string; name: string; meaning: string; petal: number | "all"; tier: Tier; mark: string };
 export function Achievements({ user, mine }: { user: User; mine: Mine[] | null }) {
+  const { lang, num } = useT(), x = L[lang], PET = petalsOf(lang), TIER = x.tier, CROWN = { id: CROWN_ID, name: x.crownName, hint: x.crownHint, meaning: x.crownMeaning };
   const { favs, searches, views } = useAccount();
   const c = useMemo(() => statsOf(user, mine, favs.size + searches.length, views.length), [user, mine, favs, searches, views]);
-  const stars = starsOf(c), lv = levelOf(stars), st = status(c), all = st.base, got = all.filter((b) => b.done).length + (st.crown ? 1 : 0);
+  const stars = starsOf(c), lv = levelOf(stars, lang), st = status(c, lang), all = st.base, got = all.filter((b) => b.done).length + (st.crown ? 1 : 0);
   const next = all.filter((b) => !b.done).sort((a, b) => b.pct - a.pct)[0];
   const [fresh, setFresh] = useState<Earned[]>([]);
   useEffect(() => { // trao huy hiệu mới nhận kể từ lần xem trước (lần đầu chỉ ghi nhận, không trao hàng loạt)
@@ -242,24 +243,24 @@ export function Achievements({ user, mine }: { user: User; mine: Mine[] | null }
   return (
     <>
       <BadgeDefs />
-      {fresh.slice(0, 3).map((b) => <section key={b.id} className="award" role="status"><BadgeArt petal={b.petal} tier={b.tier} mark={b.mark} done /><div><p className="aw-k">Huy hiệu mới · {TIER[b.tier]}</p><h2>{b.name}</h2><p>{b.meaning}</p></div><button type="button" className="ghost" onClick={() => setFresh((f) => f.filter((x) => x.id !== b.id))} aria-label="Đóng">✕</button></section>)}
-      {fresh.length > 3 && <p className="banner" role="status"><Icon n="star" />Và {fresh.length - 3} huy hiệu mới khác trong bộ sưu tập bên dưới.</p>}
+      {fresh.slice(0, 3).map((b) => <section key={b.id} className="award" role="status"><BadgeArt petal={b.petal} tier={b.tier} mark={b.mark} done /><div><p className="aw-k">{x.newBadge} · {TIER[b.tier]}</p><h2>{b.name}</h2><p>{b.meaning}</p></div><button type="button" className="ghost" onClick={() => setFresh((f) => f.filter((x) => x.id !== b.id))} aria-label={x.close}>✕</button></section>)}
+      {fresh.length > 3 && <p className="banner" role="status"><Icon n="star" />{x.more(num(fresh.length - 3))}</p>}
       <section className="card streak">
         <div className="flame" aria-hidden="true">🔥</div>
-        <div className="sinfo"><h2>{c.streak ? `${c.streak} ngày liên tiếp` : "Bắt đầu chuỗi ngày của bạn"}</h2>
-          <p className="meta">{user.counts.today ? "Hôm nay bạn đã điểm danh rồi (mở ProFind khi đã đăng nhập là tính một ngày). Hẹn gặp lại ngày mai!" : "Mở ProFind khi đã đăng nhập là tự điểm danh một ngày."} Kỷ lục: <b>{Math.max(c.best, c.streak)} ngày</b>.</p>
+        <div className="sinfo"><h2>{c.streak ? x.streakN(num(c.streak)) : x.startStreak}</h2>
+          <p className="meta">{user.counts.today ? x.todayDone : x.todayNot}{x.record}<b>{num(Math.max(c.best, c.streak))} {x.dayUnit(Math.max(c.best, c.streak))}</b>.</p>
           <Week streak={c.streak} today={user.counts.today} /></div>
-        <div className="starbox"><b>★ {stars}</b><span>sao</span></div>
+        <div className="starbox"><b>★ {num(stars)}</b><span>{x.stars}</span></div>
       </section>
-      <section className="card lvl"><div className="lvl-top"><h2>{lv.name}</h2><span className="meta">{lv.next ? `Còn ${lv.next[0] - stars} ★ nữa lên "${lv.next[1]}"` : "Bạn đã đạt cấp cao nhất"}</span></div><div className="lbar" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}><i style={{ width: `${pct}%` }} /></div>
-        <p className="meta">Cấp độ theo sao: Hạt mầm, Chồi non, Nụ hoa, Đóa hoa, Bách hoa. Sao: 1 mỗi ngày có mặt · 5 mỗi bạn mời đăng ký · 20 mỗi bạn mời xác thực thành công · 20 mỗi hồ sơ khoa học đã xác thực · 10 khi khai đủ hồ sơ.{next && <> Mục tiêu gần nhất: <b>{next.name}</b> ({next.have}/{next.want}).</>}</p></section>
+      <section className="card lvl"><div className="lvl-top"><h2>{lv.name}</h2><span className="meta">{lv.next ? x.toNext(num(lv.next[0] - stars), lv.next[1]) : x.topLevelLong}</span></div><div className="lbar" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}><i style={{ width: `${pct}%` }} /></div>
+        <p className="meta">{x.lvInfo(x.levels.join(", "))}{next && <>{x.goal}<b>{next.name}</b> ({num(next.have)}/{num(next.want)}).</>}</p></section>
       <InviteCard user={user} />
-      <section className="card"><h2>Bách hoa tri thức <span className="meta">{got}/{all.length + 1} huy hiệu</span></h2>
-        <p className="meta">Logo ProFind là một bông hoa năm cánh. Mỗi cánh là một con đường: {PETALS.map((p) => p.name).join(", ")}. Nhận huy hiệu ở cánh nào, cánh ấy sáng lên; sáng đủ cả năm cánh, bạn nhận danh hiệu <b>Bách hoa tri thức</b>.</p>
-        <ul className="bloom">{PETALS.map((p, i) => <li key={p.name} className={st.bloomed.has(i) ? "on" : ""} style={{ ["--pc" as string]: p.color }}><i aria-hidden="true" /><b>{p.name}</b></li>)}</ul>
-        <div className="crown"><BadgeArt petal="all" tier="legend" mark="✿" done={st.crown} /><div><h3>{CROWN.name}{st.crown && <span className="tag">Đã đạt</span>}</h3><p className="meta">{CROWN.hint}</p><p>{st.crown ? CROWN.meaning : `Đã sáng ${st.bloomed.size}/5 cánh.`}</p></div></div>
-        {PETALS.map((p, i) => <div key={p.name} className="bgroup" style={{ ["--pc" as string]: p.color }}><h3><i className="pdot" aria-hidden="true" />Cánh {p.name}<small>{p.sub}</small></h3>
-          <ul className="bdg-grid">{all.filter((b) => b.petal === i).map((b) => <li key={b.id} className={`${b.tier}${b.done ? " done" : ""}`}><BadgeArt petal={b.petal} tier={b.tier} mark={b.mark} done={b.done} /><b>{b.name}</b><small>{b.done ? `${TIER[b.tier]} · đã đạt` : `${b.have}/${b.want} · ${b.hint}`}</small>{b.done ? <em>{b.meaning}</em> : <i className="pg"><u style={{ width: `${b.pct * 100}%` }} /></i>}</li>)}</ul></div>)}
+      <section className="card"><h2>{CROWN.name} <span className="meta">{x.gardenCount(num(got), num(all.length + 1))}</span></h2>
+        <p className="meta">{x.logo1(PET.map((p) => p.name).join(", "))}<b>{CROWN.name}</b>.</p>
+        <ul className="bloom">{PET.map((p, i) => <li key={p.name} className={st.bloomed.has(i) ? "on" : ""} style={{ ["--pc" as string]: p.color }}><i aria-hidden="true" /><b>{p.name}</b></li>)}</ul>
+        <div className="crown"><BadgeArt petal="all" tier="legend" mark="✿" done={st.crown} /><div><h3>{CROWN.name}{st.crown && <span className="tag">{x.reached}</span>}</h3><p className="meta">{CROWN.hint}</p><p>{st.crown ? CROWN.meaning : x.lit(num(st.bloomed.size))}</p></div></div>
+        {PET.map((p, i) => <div key={p.name} className="bgroup" style={{ ["--pc" as string]: p.color }}><h3><i className="pdot" aria-hidden="true" />{x.petalOf(p.name)}<small>{p.sub}</small></h3>
+          <ul className="bdg-grid">{all.filter((b) => b.petal === i).map((b) => <li key={b.id} className={`${b.tier}${b.done ? " done" : ""}`}><BadgeArt petal={b.petal} tier={b.tier} mark={b.mark} done={b.done} /><b>{b.name}</b><small>{b.done ? x.earned(TIER[b.tier]) : `${num(b.have)}/${num(b.want)} · ${b.hint}`}</small>{b.done ? <em>{b.meaning}</em> : <i className="pg"><u style={{ width: `${b.pct * 100}%` }} /></i>}</li>)}</ul></div>)}
       </section>
     </>
   );

@@ -26,8 +26,6 @@ const MSG = {
   scholar: ["Đường dẫn Google Scholar chưa đúng.", "The Google Scholar link is not valid."],
   send: ["Không gửi được yêu cầu. Vui lòng thử lại sau.", "The request could not be sent. Please try again later."],
 };
-let LANG = "vi";
-const fail = (code, status) => json({ ok: false, code, error: MSG[code][LANG === "en" ? 1 : 0] }, status);
 const KINDS = { claim: "Xác nhận hồ sơ (đây là tôi)", correct: "Đính chính thông tin / công trình", remove: "Gỡ hồ sơ", add: "Đề nghị bổ sung nhà nghiên cứu" };
 
 const kvConf = () => { const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL, token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN; return url && token ? { url: url.replace(/\/$/, ""), token } : null; };
@@ -53,7 +51,8 @@ async function limited(request) {
 }
 
 export default async function handler(request) {
-  LANG = "vi"; try { if (new URL(request.url).searchParams.get("lang") === "en") LANG = "en"; } catch { /* giữ vi */ }
+  let LANG = "vi"; try { if (new URL(request.url).searchParams.get("lang") === "en") LANG = "en"; } catch { /* giữ vi */ }
+  const fail = (code, status) => json({ ok: false, code, error: MSG[code][LANG === "en" ? 1 : 0] }, status);
   if (request.method !== "POST") return fail("method", 405);
   // Chỉ nhận yêu cầu từ chính trang này (chặn gửi chéo từ trang khác) và nội dung nhỏ.
   const origin = request.headers.get("origin");

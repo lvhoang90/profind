@@ -601,7 +601,7 @@ function useExtraWorks(id: string) {
 }
 
 function Correction({ a }: { a: Author | null }) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const [state, setState] = useState<"idle" | "sending" | "ok" | "err">("idle");
   const [code, setCode] = useState("send");
   const [kind, setKind] = useState(a ? "claim" : "add");
@@ -621,7 +621,7 @@ function Correction({ a }: { a: Author | null }) {
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); setState("sending");
     const f = new FormData(e.currentTarget);
-    f.set("author", a?.id ?? ""); f.set("authorName", a?.name ?? String(f.get("ref") ?? ""));
+    f.set("lang", lang); f.set("author", a?.id ?? ""); f.set("authorName", a?.name ?? String(f.get("ref") ?? ""));
     const ac = new AbortController(), to = setTimeout(() => ac.abort(), 15000);
     try {
       const r = await fetch("/api/correction", { method: "POST", body: f, signal: ac.signal });
@@ -630,7 +630,19 @@ function Correction({ a }: { a: Author | null }) {
       if (r.ok && j && j.ok === true) setState("ok"); else { setCode(j?.error ?? (r.status === 429 ? "rate" : "send")); setState("err"); }
     } catch { setCode("net"); setState("err"); } finally { clearTimeout(to); }
   };
-  const msg = { rate: t("eRate"), "not-configured": t("eConf"), net: t("eNet"), kind: t("eBad"), email: t("eBad"), empty: t("eBad"), scholar: t("eBad") }[code as "rate"] ?? t("sendErr");
+  // Thông báo theo mã lỗi máy chủ (từ điển cục bộ vi/en; không dùng chung câu "gửi email trực tiếp" cho mọi lỗi).
+  const E: Record<string, [string, string]> = {
+    rate: [t("eRate"), t("eRate")], "not-configured": [t("eConf"), t("eConf")], net: [t("eNet"), t("eNet")],
+    orcid: ["Mã ORCID chưa đúng định dạng (0000-0000-0000-0000).", "The ORCID format is not valid (0000-0000-0000-0000)."],
+    origin: ["Yêu cầu không đến từ trang ProFind. Hãy tải lại trang rồi gửi lại.", "The request did not come from the ProFind site. Reload the page and try again."],
+    "too-large": ["Nội dung gửi quá lớn, hãy rút gọn.", "The submission is too large; please shorten it."],
+    "bad-request": ["Dữ liệu gửi lên không đọc được, hãy tải lại trang và thử lại.", "The submitted data could not be read; reload the page and try again."],
+    scholar: ["Đường dẫn Google Scholar chưa đúng (dạng https://scholar.google.com/citations?user=…).", "The Google Scholar link is not valid (format https://scholar.google.com/citations?user=…)."],
+    email: ["Email chưa đúng định dạng.", "The email format is not valid."],
+    kind: [t("eBad"), t("eBad")], empty: [t("eBad"), t("eBad")],
+  };
+  const msg = E[code]?.[0] ? (lang === "en" ? E[code][1] : E[code][0]) : t("sendErr");
+  const direct = !E[code] || code === "not-configured" || code === "net" || code === "rate";
   return (
     <article className="corr">
       <p><a href={a ? `#/tac-gia/${encodeURIComponent(a.id)}` : "#/"}>{t("back")}</a></p>
@@ -653,7 +665,7 @@ function Correction({ a }: { a: Author | null }) {
           <label className="sel"><span>{t("fMsg")}</span><textarea name="msg" rows={5} maxLength={4000} required={kind === "correct"} /></label>
           <input name="_honey" className="honey" tabIndex={-1} autoComplete="off" aria-hidden="true" />
           <p><button className="primary" disabled={state === "sending"}>{state === "sending" ? t("sending") : t("send")}</button></p>
-          <div role="alert">{state === "err" && <p className="banner demo">{msg} <a href={`mailto:${CONTACT}?subject=${encodeURIComponent("[ProFind] " + (a?.name ?? ""))}`}>{CONTACT}</a></p>}</div>
+          <div role="alert">{state === "err" && <p className="banner demo">{msg}{direct && <> <a href={`mailto:${CONTACT}?subject=${encodeURIComponent("[ProFind] " + (a?.name ?? ""))}`}>{CONTACT}</a></>}</p>}</div>
         </form>)}
     </article>
   );
