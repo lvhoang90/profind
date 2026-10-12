@@ -869,7 +869,7 @@
   {
    "id": "hust",
    "name": "Đại học Bách khoa Hà Nội",
-   "en": "HUST School of Information and Communication Technology",
+   "en": "Hanoi University of Science and Technology",
    "abbr": "HUST",
    "type": "public-univ",
    "managedBy": "Đại học",
@@ -884,7 +884,7 @@
   {
    "id": "neu",
    "name": "Đại học Kinh tế Quốc dân",
-   "en": "NEU College of Business",
+   "en": "National Economics University",
    "abbr": "NEU",
    "type": "public-univ",
    "managedBy": "Đại học",
@@ -899,7 +899,7 @@
   {
    "id": "ueh",
    "name": "Đại học Kinh tế Thành phố Hồ Chí Minh",
-   "en": "UEH College of Business",
+   "en": "University of Economics Ho Chi Minh City",
    "abbr": "UEH",
    "type": "public-univ",
    "managedBy": "Đại học",
@@ -914,7 +914,7 @@
   {
    "id": "sict",
    "name": "Đại học Công nghiệp Hà Nội",
-   "en": "HaUI School of Information and Communication Technology",
+   "en": "Hanoi University of Industry",
    "abbr": "SICT",
    "type": "public-univ",
    "managedBy": "Đại học",
@@ -3192,7 +3192,7 @@
   {
    "id": "hutech",
    "name": "Trường Đại học Công nghệ Thành phố Hồ Chí Minh",
-   "en": "Ho Chi Minh City University of Technology",
+   "en": "HUTECH University",
    "abbr": "HUTECH",
    "type": "private-univ",
    "managedBy": "Trường đại học tư thục",
@@ -3724,7 +3724,7 @@
   {
    "id": "dai-hoc-yersin-da-lat",
    "name": "Trường Đại học Yersin Đà Lạt",
-   "en": "Dalat University",
+   "en": "Yersin University of Dalat",
    "abbr": null,
    "type": "private-univ",
    "managedBy": "Trường đại học tư thục",
@@ -4182,7 +4182,7 @@
   {
    "id": "an-giang",
    "name": "Trường Cao đẳng Sư phạm Kiên Giang",
-   "en": "An Giang",
+   "en": "Kien Giang Pedagogical College",
    "abbr": null,
    "type": "college",
    "managedBy": "Trường cao đẳng sư phạm, Trường cao đẳng có đào tạo ngành Giáo dục mầm non",
@@ -4659,7 +4659,7 @@
   {
    "id": "gia-lai",
    "name": "Trường Cao đẳng Y tế Bình Định",
-   "en": "Gia Lai",
+   "en": "Binh Dinh Medical College",
    "abbr": null,
    "type": "college",
    "managedBy": "Trường cao đẳng y tế",
@@ -4725,7 +4725,7 @@
   {
    "id": "an-giang-2",
    "name": "Trường Cao đẳng Y tế Kiên Giang",
-   "en": "An Giang",
+   "en": "Kien Giang Medical College",
    "abbr": null,
    "type": "college",
    "managedBy": "Trường cao đẳng y tế",
@@ -4958,7 +4958,7 @@
   {
    "id": "gia-lai-2",
    "name": "Trường Cao đẳng Kỹ thuật Công nghệ Quy Nhơn",
-   "en": "Gia Lai",
+   "en": "Quy Nhon College of Engineering and Technology",
    "abbr": null,
    "type": "college",
    "managedBy": "Trường cao đẳng chuyên nghiệp khác",
@@ -5002,7 +5002,7 @@
   {
    "id": "an-giang-3",
    "name": "Trường Cao đẳng Kiên Giang",
-   "en": "An Giang",
+   "en": "Kien Giang College",
    "abbr": null,
    "type": "college",
    "managedBy": "Trường cao đẳng chuyên nghiệp khác",
@@ -6989,7 +6989,7 @@
   {
    "id": "v26",
    "name": "Viện Pasteur Thành phố Hồ Chí Minh",
-   "en": "Vietnam National University Ho Chi Minh City",
+   "en": "Pasteur Institute in Ho Chi Minh City",
    "abbr": "V26",
    "type": "institute",
    "managedBy": null,
@@ -7747,7 +7747,7 @@
   {
    "id": "nvs",
    "name": "Nhạc Viện TP. Hồ Chí Minh",
-   "en": "Vietnam National University Ho Chi Minh City",
+   "en": "Ho Chi Minh City Conservatory of Music",
    "abbr": "NVS",
    "type": "public-univ",
    "managedBy": null,
@@ -8135,7 +8135,7 @@
   {
    "id": "dht",
    "name": "Trường Đại Học Khoa Học, Đại Học Huế",
-   "en": "Trường Đại học Khoa học",
+   "en": "Hue University of Sciences",
    "abbr": "DHT",
    "type": "public-univ",
    "managedBy": null,
@@ -8165,7 +8165,7 @@
   {
    "id": "qsx",
    "name": "Trường Đại Học Khoa Học Xã Hội Và Nhân Văn - Đại Học Quốc Gia TP. Hồ Chí Minh",
-   "en": "VNU University of Social Sciences and Humanities",
+   "en": "Ho Chi Minh City University of Social Sciences and Humanities",
    "abbr": "QSX",
    "type": "public-univ",
    "managedBy": null,
@@ -8239,7 +8239,7 @@
   {
    "id": "dtz",
    "name": "Trường Đại Học Khoa Học, Đại Học Thái Nguyên",
-   "en": "Trường Đại học Khoa học",
+   "en": "Thai Nguyen University of Sciences",
    "abbr": "DTZ",
    "type": "public-univ",
    "managedBy": null,
