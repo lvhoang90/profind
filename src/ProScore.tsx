@@ -10,7 +10,7 @@ const PILLARS: { k: string; w: number; icon: IconName; color: string }[] = [
   { k: "impact", w: 42, icon: "chart", color: "#0ea5e9" }, { k: "output", w: 10, icon: "scroll", color: "#6366f1" }, { k: "lead", w: 10, icon: "scholar", color: "#8b5cf6" },
   { k: "quality", w: 10, icon: "book", color: "#d946ef" }, { k: "momentum", w: 17, icon: "spark", color: "#f59e0b" }, { k: "steady", w: 8, icon: "clock", color: "#10b981" }, { k: "recog", w: 3, icon: "star", color: "#ef4444" },
 ];
-const RANKS: Record<Tier, number> = { t10: 10, t50: 50, t100: 100, t500: 500, t1000: 1000, t2000: 2000, t5000: 5000, t10000: 10000 };
+const RANKS: Record<Tier, number> = { t10: 10, t50: 50, t100: 100, t500: 500, t1000: 1000, t2000: 2000, t5000: 5000 };
 
 type Panel = { n: number; seed: number; mean: number[]; sd: number[]; by: Record<string, Record<string, { n: number; label: string; w: number[] }>> };
 const DIM_LABEL: Record<string, [string, string]> = { field: ["Lĩnh vực", "Field"], stage: ["Giai đoạn sự nghiệp", "Career stage"], region: ["Khu vực", "Region"], stance: ["Lập trường đánh giá", "Evaluation stance"] };
@@ -55,7 +55,7 @@ export function ProScorePage() {
     ["shield", "No penalty for missing data", "Sparse data shrinks toward the field average instead of falling to the bottom."],
     ["check", "Anti-inflation", "Per-work citation cap, output cap, and profiles suspected of merging are excluded from ranking."],
   ];
-  const names: Record<Tier, string> = { t10: t("tier_t10"), t50: t("tier_t50"), t100: t("tier_t100"), t500: t("tier_t500"), t1000: t("tier_t1000"), t2000: t("tier_t2000"), t5000: t("tier_t5000"), t10000: t("tier_t10000") };
+  const names: Record<Tier, string> = { t10: t("tier_t10"), t50: t("tier_t50"), t100: t("tier_t100"), t500: t("tier_t500"), t1000: t("tier_t1000"), t2000: t("tier_t2000"), t5000: t("tier_t5000") };
   const ex = { impact: 90, output: 80, lead: 70, quality: 60, momentum: 85, steady: 90, recog: 0 };
   const pl = PILLARS.map((q, i) => ({ ...q, w: panel ? panel.mean[i] : q.w }));
   const exScore = Math.round(pl.reduce((s, p) => s + p.w * (ex[p.k as keyof typeof ex] ?? 0), 0)) / 100;
