@@ -203,3 +203,15 @@ Khi nhiều mã OpenAlex cùng một ORCID được gộp vào một hồ sơ, h
 ## Chức danh từ STI.gov.vn (mức 4)
 - `NODE_USE_ENV_PROXY=1 npm run d:sti-titles -- --fetch [--raw <tệp tạm>] [--sample 100 --seed N]`: tải hồ sơ nhà khoa học công khai của STI (385 yêu cầu tuần tự, nghỉ 0,6 giây; dữ liệu thô ở thư mục tạm ngoài kho, không commit, xóa khi xong), khớp chắc theo `data/sti-titles-rules.md`, ghi `public/data/sti-titles.json` (chỉ mã tác giả -> chức danh). Không chạy trong `npm run build`; chạy lại khi cần cập nhật.
 - Quyết định của quản trị viên khi STI chưa trả lời thư xin phép; chi tiết số liệu, mẫu kiểm tay và điều kiện mở rộng: `docs/STI-DOI-CHIEU.md` mục 4. Không tính vào PRO-SCORE1000™/hạng, không đổi đơn vị.
+
+## Thêm hồ sơ theo yêu cầu bằng một lệnh (`npm run d:add-author`)
+Dùng khi có "Đề nghị bổ sung nhà nghiên cứu" (biểu mẫu hoặc email) và hồ sơ chưa có trong ProFind:
+```bash
+OPENALEX_API_KEY=... npm run d:add-author -- --id A5021889240 --unit ueh --scholar pvflg0MAAAAJ [--citations 357 --as-of 2026-10-13] [--by "ghi chú nguồn"] [--mailto email]
+OPENALEX_API_KEY=... npm run d:add-author -- --orcid 0000-0003-2787-1618 --unit ueh     # tra mã OpenAlex theo ORCID (dừng nếu có nhiều mã)
+npm run d:add-author -- --id A… --unit ueh --dry-run                                     # chỉ kiểm tra, không ghi
+```
+- Lệnh ghi `data/manual-authors.json` (idempotent: chạy lại không nhân đôi; đổi đơn vị của hồ sơ đã có thì báo lỗi) và `data/scholar.json` (tùy chọn), rồi chạy `ingest-manual` (kèm bổ sung công trình theo ORCID), `ingest-openalex` cho **mọi** đơn vị đã có cache, `enrich-authors`, `build-index`, `build-top-works`, `build-wsearch`, `check-data` và in tóm tắt hồ sơ (công trình, trích dẫn, h-index, PRO-SCORE, hạng, link).
+- **Đừng tự chạy `ingest-openalex --only <một đơn vị>`**: dữ liệu trung gian chỉ còn đơn vị đó và `build-index` sẽ dựng lại thiếu hàng chục nghìn hồ sơ (đã xảy ra một lần, 29.803 thay vì 45.462 tác giả). Lệnh `d:add-author` đã gom đủ danh sách đơn vị.
+- Lệnh không chạy git. Sau đó: `npm run build && npm test`, commit và PR như thường lệ. Xác nhận người gửi trước (email miền cơ quan khớp đơn vị, ORCID khớp tên) và ghi căn cứ vào trường `by` của Scholar.
+- Mã logic thuần ở `scripts/lib/add-author.mjs`, test ở `test/add-author.test.mjs`.
