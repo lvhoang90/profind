@@ -4,6 +4,7 @@ import { dName } from "./disciplines";
 import { EcoLink } from "./Footer";
 import { Icon } from "./icons";
 import { mayHas } from "./mayJournals";
+import { useStiJournals, useStiLine } from "./stiJournals";
 import type { Work } from "./types";
 import "./related.css";
 
@@ -37,6 +38,7 @@ export function Related({ disciplines, works, edufind }: { disciplines: string[]
   const { lang, t } = useT(), l = L[lang as LG] ?? L.vi;
   const [openR, setOpenR] = useState(false), [d, setD] = useState<RD | null>(null), [err, setErr] = useState(false), [fld, setFld] = useState(disciplines[0] ?? ""), [copied, setCopied] = useState("");
   useEffect(() => { if (!openR || d) return; let live = true; setErr(false); load().then((x) => live && setD(x)).catch(() => live && setErr(true)); return () => { live = false; }; }, [openR, d]);
+  const sti = useStiJournals(openR), stiLine = useStiLine(sti);
   useEffect(() => { if (!disciplines.includes(fld)) setFld(disciplines[0] ?? ""); }, [disciplines, fld]);
   const own = useMemo(() => { const dois = new Set((works ?? []).map((w) => (w.doi ?? "").toLowerCase()).filter(Boolean)), issns = new Set((works ?? []).map((w) => w.issn).filter(Boolean)); const bag = new Set<string>(); for (const w of (works ?? []).slice(0, 40)) for (const x of words(w.title)) bag.add(x); return { dois, issns, bag }; }, [works]);
   const R = useMemo(() => {
@@ -60,7 +62,7 @@ export function Related({ disciplines, works, edufind }: { disciplines: string[]
               <span className="rel-act"><a className="chip" href={`https://doi.org/${encodeURIComponent(x.d).replace(/%2F/g, "/")}`} target="_blank" rel="noopener">{l.doi} ↗<span className="sr"> {t("newTab")}</span></a><button type="button" className="chip" onClick={() => void copy(x.d)} aria-live="polite">{copied === x.d ? l.copied : l.copy}</button></span></li>)}</ol>
               <p className="rel-eco"><EcoLink app="ami" place="related-article" className="chip"><Icon n="link" size={14} /> {l.ami}<span className="sr"> {t("newTab")}</span></EcoLink> <span className="meta">{l.amiHint}</span></p></div>
             <div><h3>{l.jrs}</h3><ol className="rel-list">{R.jrs.map((x) => <li key={x.i}>
-              <b>{x.j}</b><small>{x.q} · ISSN {x.i} · {l.inProfind(x.n)}{own.issns.has(x.i) ? ` · ${l.used}` : ""}</small>
+              <b>{x.j}</b><small>{x.q} · ISSN {x.i} · {l.inProfind(x.n)}{own.issns.has(x.i) ? ` · ${l.used}` : ""}</small>{stiLine(x.i) && <small className="rel-sti" title={t("stiJTip")}>{stiLine(x.i)}</small>}
               <span className="rel-act"><EcoLink app="ami" place="related-journal" to={amiJournalPath(x.j)} className="chip">{l.amiJ} ↗<span className="sr"> {t("newTab")}</span></EcoLink><a className="chip" href={`${edufind}/${fld}/?tab=international&q=${encodeURIComponent(x.i)}`} target="_blank" rel="noopener">{l.edu} ↗<span className="sr"> {t("newTab")}</span></a>{mayHas(x.i) && <EcoLink app="may" place="related-journal" to={`/?issn=${x.i}`} className="chip">{l.mayJ(t("appMay"))}<span className="sr"> {t("newTab")}</span></EcoLink>}</span></li>)}</ol>
               <p className="rel-eco"><EcoLink app="may" place="related-journal" className="chip"><Icon n="spark" size={14} /> {l.may(t("appMay"))}<span className="sr"> {t("newTab")}</span></EcoLink> <span className="meta">{l.mayHint}</span></p></div>
           </div>}

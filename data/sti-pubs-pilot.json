@@ -1,0 +1,4873 @@
+{
+ "meta": {
+  "unit": "hmu",
+  "unitName": {
+   "vi": "Trường Đại học Y Hà Nội",
+   "en": "Hanoi Medical University"
+  },
+  "dominantFields": [
+   "sinh-hoc",
+   "y-hoc",
+   "duoc"
+  ],
+  "source": "STI.gov.vn (Hệ thống thông tin quốc gia về KH,CN&ĐMST), API công khai",
+  "fetched": "2026-10-13",
+  "queries": [
+   "Đại học Y Hà Nội",
+   "Hanoi Medical University"
+  ],
+  "requests": 46,
+  "status": "chưa xác thực; không tính vào PRO-SCORE1000™ và hạng; STI chưa có điều khoản tái sử dụng (đang xin phép)",
+  "commonNameThreshold": 5,
+  "rules": {
+   "d": "khớp DOI",
+   "t": "như n, cộng nhan đề trùng một công trình đã có của hồ sơ",
+   "n": "họ tên chuẩn hóa (chỉ xoay vòng thứ tự tiếng) + cơ quan của bản ghi chỉ gồm đơn vị + năm trong [năm đầu - 5, năm cuối + 1] + ngành chính là ngành chủ yếu của đơn vị + tên không phổ biến",
+   "ni": "như n, cộng ISSN trùng một công trình khác của hồ sơ (chỉ khi tên không phổ biến)"
+  },
+  "stats": {
+   "scanned": 3668,
+   "mentionUnit": 1137,
+   "profiles": 1900,
+   "matchedPubs": 485,
+   "authorsWithMatch": 227,
+   "byReason": {
+    "d": 0,
+    "t": 82,
+    "ni": 84,
+    "n": 319
+   },
+   "skipped": {
+    "ten-ngan-hoac-viet-tat": 101,
+    "trung-ten-trong-don-vi": 3870,
+    "dau-khong-ro": 30,
+    "dau-khac": 54,
+    "nhieu-co-quan": 327,
+    "nganh-lech": 32,
+    "ten-pho-bien": 103,
+    "nam": 29
+   }
+  }
+ },
+ "byAuthor": {
+  "A5028118334": [
+   {
+    "id": 506410,
+    "title": "Tuân thủ sử dụng thuốc và các yếu tố liên quan ở người bệnh tăng huyết áp điều trị ngoại trú tại Hoàng Mai, Nghệ An năm 2025         ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 503169,
+    "title": "Thực trạng sử dụng thuốc điều trị tăng huyết áp ở một số cơ sở y tế tại Việt Nam năm 2025 ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 487198,
+    "title": "Thực trạng stress và một số yếu tố liên quan của nam giới đến khám tại khoa nam học và y học giới tính - Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 487367,
+    "title": "Điểm cắt vòng bụng tối ưu dự báo mỡ nội tạng cao và hội chứng chuyển hóa ở người trưởng thành",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 487420,
+    "title": "Phân tầng nguy cơ tim mạch bằng thang điểm SCORE2/SCORE2-OP và một số yếu tố nguy cơ ở người khám sức khỏe tại phòng khám  T-Matsuoka ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 487450,
+    "title": "Bước đầu nghiên cứu về mô hình bệnh tật tại Khoa Khám bệnh - Cơ sở Hoàng Mai, Bệnh viện Đại học Y Hà Nội năm 2024 ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405581,
+    "title": "Nghiên cứu tổng quan hệ thống và phân tích gộp về độc tính của thuốc lá nung nóng so với thuốc lá thông thường",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 309488,
+    "title": "Đánh giá nhu cầu và sự sẵn sàng chi trả cho sử dụng dịch vụ mobile app của khách hàng khám sức khỏe định kỳ tại Bệnh viện Đại học Y Hà Nội năm 2018",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5133749591": [
+   {
+    "id": 478791,
+    "title": "Kiến thức, quan niệm nguy cơ về bệnh và vắc xin HPV và mối liên quan với sự chấp nhận tiêm phòng vắc xin HPV của nam sinh viên hệ học dự phòng Trường Đại học Y Hà Nội năm 2024 - 2025",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5119321131": [
+   {
+    "id": 478791,
+    "title": "Kiến thức, quan niệm nguy cơ về bệnh và vắc xin HPV và mối liên quan với sự chấp nhận tiêm phòng vắc xin HPV của nam sinh viên hệ học dự phòng Trường Đại học Y Hà Nội năm 2024 - 2025",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5117585489": [
+   {
+    "id": 459900,
+    "title": "Rối loạn lo âu lan tỏa ở sinh viên chuyên ngành y học dự phòng tại trường Đại học Y Hà Nội năm học 2024-2025 và một số yếu tố liên quan ",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5031876489": [
+   {
+    "id": 478861,
+    "title": "Kết quả triển khai mô hình xét nghiệm, chuyển gửi điều trị và dự phòng HIV tại phòng khám nâng cao sức khỏe tình dục - Bệnh viện Đại học Y Hà Nội, 2019 - 2024",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 478810,
+    "title": "Thực trạng nhiễm giang mai và một số yếu tố liên quan ở nam quan hệ tình dục đồng giới sử dụng liệu pháp dự phòng trước nhiễm HIV (PrEP) tại phòng khám SHP Bệnh viện Đại học Y Hà Nội năm 2024",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 478848,
+    "title": "Sự hài lòng của người sử dụng dịch vụ y tế và một số yếu tố ảnh hưởng thuộc cộng đồng thiểu số tính dục (LGBTQ+) tại phòng khám nâng cao sức khỏe tình dục, Bệnh viện Đại học Y Hà Nội năm 2022 - 2024",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5063204135": [
+   {
+    "id": 478810,
+    "title": "Thực trạng nhiễm giang mai và một số yếu tố liên quan ở nam quan hệ tình dục đồng giới sử dụng liệu pháp dự phòng trước nhiễm HIV (PrEP) tại phòng khám SHP Bệnh viện Đại học Y Hà Nội năm 2024",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5093555675": [
+   {
+    "id": 478818,
+    "title": "Ý định tiêm vắc xin HPV và một số yếu tố liên quan của người trưởng thành từ 18 - 45 tuổi tại phòng tiêm chủng, Trường Đại học Y Hà Nội năm 2024",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 478803,
+    "title": "Đánh giá độ tin cậy và tính giá trị của thang đo thời gian sinh học trên sinh viên Trường Đại học Y Hà Nội năm 2024",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 407970,
+    "title": "Thực trạng bạo lực mạng và cách ứng phó của sinh viên trường Đại học Y Hà Nội năm 2023-2024 \r\n",
+    "year": 2024,
+    "issn": "2354-0613",
+    "journal": "Y học cộng đồng",
+    "citations": 1,
+    "why": "ni"
+   }
+  ],
+  "A5122761586": [
+   {
+    "id": 478818,
+    "title": "Ý định tiêm vắc xin HPV và một số yếu tố liên quan của người trưởng thành từ 18 - 45 tuổi tại phòng tiêm chủng, Trường Đại học Y Hà Nội năm 2024",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 450021,
+    "title": "Đặc điểm lâm sàng, cận lâm sàng bướu nhân tuyến giáp trên bệnh nhân viêm tuyến giáp mạn tính Hashimoto",
+    "year": 2023,
+    "issn": "2354-0613",
+    "journal": "Y học cộng đồng",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5017114802": [
+   {
+    "id": 504823,
+    "title": "Đánh giá ảnh hưởng của axit tranexamic trên một số xét nghiệm đông cầm máu ở bệnh nhân phẫu thuật cột sống do lao ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 504874,
+    "title": "Đánh giá tác dụng giảm mất máu trong và sau mổ của axit tranexamic trên bệnh nhân phẫu thuật cột sống bệnh lý do lao ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 504875,
+    "title": "Hiệu quả giảm đau của gây tê cơ vuông thắt lưng hai bên dưới hướng dẫn siêu âm ở người bệnh cắt túi mật nội soi ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 504932,
+    "title": "Sự hài lòng của sản phụ được giảm đau trong chuyển dạ bằng gây tê ngoài màng cứng và một số yếu tố ảnh hưởng ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 506399,
+    "title": "Tổng quan vai trò tiên lượng của siêu âm tim, phổi và cơ hoành trong cai thở máy ở bệnh nhân hồi sức         ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 501489,
+    "title": "Hiệu quả dự phòng hạ thân nhiệt và giảm run sau mổ của phương pháp giữ ấm cơ học trong phẫu thuật cột sống thắt lưng: can thiệp lâm sàng có đối chứng",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 458755,
+    "title": "Giá trị tiên lượng của chỉ số siêu âm phổi và cơ hoành trong cai thở máy ở bệnh nhân hồi sức ngoại khoa ",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 458743,
+    "title": "Đánh giá chất lượng hồi tỉnh của người bệnh được duy trì mê bằng Sevoflurane so với Desflurane trong phẫu thuật tiết niệu nội soi tán sỏi ống mềm ",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405621,
+    "title": "Đánh giá tác dụng kéo dài giảm đau sau mổ bằng dexamethasone phối hợp Ropivacain trong gây tê mặt phẳng cơ dựng sống cho phẫu thuật cột sống thắt lưng",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405882,
+    "title": "Đánh giá một số yếu tố liên quan đến đau dội ngược sau phong bế tiêm một lần để giảm đau trong mổ nội soi khớp gối",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405884,
+    "title": "Đánh giá kết quả điều trị của những bệnh nhân có nguy cơ tử vong cao so với nguy cơ tử vong không cao theo thang điểm SORT năm 2023 tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405886,
+    "title": "Đánh giá giá trị của thang điểm SORT trong tiên lượng biến chứng sau phẫu thuật lớn",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405887,
+    "title": "Đánh giá thực trạng đau dội ngược của phương pháp phong bế ống cơ khép tiêm một lần để giảm đau sau phẫu thuật nội soi khớp gối",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405910,
+    "title": "Hiệu quả của một số phương pháp dịch chuyển sự chú ý lên sự hợp tác của trẻ em trước gây mê tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 319237,
+    "title": "Đánh giá thay đổi khí máu động mạch và điện giải đồ trong mổ ở bệnh nhân phẫu thuật tán sỏi thận qua da",
+    "year": 2021,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội) ",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 309391,
+    "title": "Khảo sát tình trạng lo âu, stress trước phẫu thuật ở bệnh nhân mổ phiên tại Khoa Chấn thương Chỉnh hình và Y học Thể thao Bệnh viện Đại học Y Hà Nội",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 9,
+    "why": "n"
+   },
+   {
+    "id": 309405,
+    "title": "Phẫu thuật cấp cứu tim hở tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 2,
+    "why": "n"
+   },
+   {
+    "id": 306685,
+    "title": "So sánh giá trị tiên lượng cai thở máy thất bại của chỉ số thở nhanh nông và nhịp thở ở bệnh nhân hồi sức ngoại khoa",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 306674,
+    "title": "Thực trạng và tính hợp lý của sử dụng kháng sinh theo kinh nghiệm trong điều trị viêm phúc mạc thứ phát",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 309364,
+    "title": "Hiệu quả kiểm soát đường thở và mức độ tổn thương vùng hầu họng của mask thanh quản I-gel so với mask thanh quản cổ điển",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 309366,
+    "title": "Xử trí tai biến giảm vận động chi dưới sau tê tủy sống bằng lipid 20% truyền tĩnh mạch: Báo cáo ca lâm sàng",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 309367,
+    "title": "So sánh hiệu quả dự phòng tụt huyết áp của phenylephrine với ephedrine khi khởi mê bằng propofol ở người cao tuổi",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 309390,
+    "title": "Đặc điểm vi sinh và tình trạng kháng kháng sinh của các loại vi khuẩn gây viêm phúc mạc thứ phát",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5108890737": [
+   {
+    "id": 505903,
+    "title": "Đặc điểm Sarcopenia ở bệnh nhân loãng xương  ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 505904,
+    "title": "Thực trạng sử dụng thuốc sinh học trong điều trị viêm khớp cột sống tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 505946,
+    "title": "Nhiễm nấm Candida khớp gối: Báo cáo ca lâm sàng ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 505947,
+    "title": "Viêm đa động mạch nút ở da: Báo cáo ca lâm sàng hiếm gặp ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 481681,
+    "title": "Nhận thức của người bệnh về bệnh viêm khớp dạng thấp theo bộ câu hỏi BIPQ tại Bệnh viện Đại học Y Hà Nội  ",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405924,
+    "title": "Thực trạng sử dụng thuốc sinh học trong điều trị viêm khớp dạng thấp tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 405938,
+    "title": "Đánh giá chất lượng cuộc sống của người bệnh loãng xương tại Bệnh viện Đại học Y Hà Nội bằng bộ câu hỏi EQ-5D-5L",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 405926,
+    "title": "Đánh giá nguy cơ ngã của người bệnh viêm khớp dạng thấp bằng thang điểm MORSE tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405927,
+    "title": "Thực trạng lo âu và một số yếu tố liên quan ở người bệnh đến tiêm và hút dịch khớp tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 385132,
+    "title": "hực trạng điều trị viêm khớp dạng thấp bằng Golimumab tiêm dưới da tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 385283,
+    "title": "Bệnh gaucher: Báo cáo ca lâm sàng",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 309386,
+    "title": "Kết quả điều trị thoái hóa khớp gối nguyên phát bằng liệu pháp huyết tương giàu tiểu cầu sau 6 tháng",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   }
+  ],
+  "A5093658046": [
+   {
+    "id": 379401,
+    "title": "Đánh giá kết quả phẫu thuật nội soi sau phúc mạc lấy sỏi niệu quản tại Bệnh viện Đại học Y Hà Nội giai đoạn 2020 - 2023",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 2,
+    "why": "t"
+   }
+  ],
+  "A5101715919": [
+   {
+    "id": 507636,
+    "title": "Quá trình ra quyết định lâm sàng và một số yếu tố liên quan ở sinh viên điều dưỡng Trường Đại học Y Hà Nội - Phân hiệu Thanh Hóa năm 2025          ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 504778,
+    "title": "Tỷ lệ tái nhập viện không theo kế hoạch sau can thiệp động mạch vành qua da tại Bệnh viện Đại học Y Hà Nội năm 2024",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 504943,
+    "title": "Kiến thức và thực hành tự chăm sóc của người bệnh suy tim mạn tại trung tâm tim mạch - Bệnh viện Đại học Y Hà Nội ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 503504,
+    "title": "Biến chứng trong ca lọc máu ở người bệnh chạy thận nhân tạo tại khoa nội thận - tiết niệu, Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 487841,
+    "title": "Kết quả nhu cầu chăm sóc giảm nhẹ và một số yếu tố liên quan của người bệnh ung thư vú tại Bệnh viện K Cơ sở Tân Triều ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 453084,
+    "title": "Một số yếu tố liên quan đến gánh nặng chăm sóc của người chăm sóc người bệnh ung thư tại trung tâm ung bướu – Bệnh viện Đại học Y Hà Nội",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405915,
+    "title": "Kiến thức và thực hành về phòng ngừa sỏi tái phát ở người bệnh sau phẫu thuật tán sỏi đường tiết niệu tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 405842,
+    "title": "Khảo sát gánh nặng chăm sóc của người chăm sóc người bệnh ung thư tại Trung tâm ung bướu - Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405561,
+    "title": "Sự hài lòng của người bệnh ngoại trú khi sử dụng dịch vụ tại Trung tâm Chẩn đoán hình ảnh và Can thiệp điện quang Bệnh viện Đại học Y Hà Nội năm 2023",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405844,
+    "title": "Kiến thức về chăm sóc sốt của cha mẹ có con dưới 5 tuổi tại khoa nhi Bệnh viện Đại học Y Hà Nội năm 2024",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405920,
+    "title": "Kiến thức và thái độ của điều dưỡng về phòng ngừa nhiễm khuẩn tiết niệu trên người bệnh có đặt ống thông tiểu tại Bệnh Viện Đại Học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5108859449": [
+   {
+    "id": 405794,
+    "title": "Tình trạng dinh dưỡng và một số yếu tố liên quan của người cao tuổi điều trị tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   }
+  ],
+  "A5138220812": [
+   {
+    "id": 458083,
+    "title": "Đánh giá hiệu quả kỹ thuật CNV-seq trong chẩn đoán trước sinh các bất thường nhiễm sắc thể ở thai nhi tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405902,
+    "title": "Đánh giá hiệu quả giải trình tự gen thế hệ mới trong phát hiện bất thường di truyền ở thai có bất thường hình thái tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 306952,
+    "title": "Kiến thức, thái độ về các bệnh lây truyền qua đường tình dục của sinh viên đại học tại Hà Nội năm 2019",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 3,
+    "why": "n"
+   }
+  ],
+  "A5014988819": [
+   {
+    "id": 478794,
+    "title": "Kiến thức, thái độ và dự định tiêm vắc xin phòng herpes zoster ở người đến phòng tiêm chủng Trường Đại học Y Hà Nội năm 2024",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 306006,
+    "title": "Stress nghề nghiệp của điều dưỡng lâm sàng tại Bệnh viện Đại học Y Hà Nội năm 2017",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 6,
+    "why": "n"
+   }
+  ],
+  "A5003048113": [
+   {
+    "id": 506333,
+    "title": "Tiếp cận truyền thông và kiến thức về tác hại thuốc lá của người dân Việt Nam năm 2025 ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 453665,
+    "title": "Thực trạng tham gia nghiên cứu khoa học của sinh viên viện đào tạo y học dự phòng và y tế công cộng trường Đại học Y Hà Nội năm 2023",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 377729,
+    "title": "Thực trạng môi trường học tập của sinh viên năm 6 ngành bác sĩ đa khoa tại trường Đại học Y Hà Nội năm học 2021-2022",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 2,
+    "why": "t"
+   },
+   {
+    "id": 319117,
+    "title": "Chiến lược đối phó với căng thẳng học tập của sinh viên Trường Đại học Y Hà Nội, năm học 2018-2019",
+    "year": 2021,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội) ",
+    "citations": 1,
+    "why": "t"
+   },
+   {
+    "id": 306049,
+    "title": "Thực thi quy định môi trường không khói thuốc tại một số khách sạn, nhà nghỉ tại Hải Phòng và Thái Nguyên năm 2018",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 306494,
+    "title": "Hành vi giảm sử dụng muối của sinh viên Đại học Y Hà Nội năm 2020",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 306032,
+    "title": "Nhận thức về bệnh do virút Zika của sinh viên ngành bác sĩ, trường đại học Y Hà Nội, năm 2017",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5093860586": [
+   {
+    "id": 452916,
+    "title": "Tình trạng dinh dưỡng và kiến thức, thực hành về dinh dưỡng của phụ nữ mang thai đến khám tại khoa sản Bệnh viện Đại học Y Hà Nội năm 2023-2024",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 377729,
+    "title": "Thực trạng môi trường học tập của sinh viên năm 6 ngành bác sĩ đa khoa tại trường Đại học Y Hà Nội năm học 2021-2022",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 2,
+    "why": "t"
+   },
+   {
+    "id": 449790,
+    "title": "Kết quả đào tạo liên tục của trường Đại học Y Hà Nội giai đoạn 2015 - 2020 và nhu cầu đào tạo phát triển nghề nghiệp của cán bộ y tế trong tình hình mới",
+    "year": 2023,
+    "issn": "2354-0613",
+    "journal": "Y học cộng đồng",
+    "citations": 1,
+    "why": "n"
+   }
+  ],
+  "A5094099733": [
+   {
+    "id": 481012,
+    "title": "Ảnh hưởng của năm nhóm tính cách đến kết quả thi kỹ năng y khoa: nghiên cứu trên sinh viên bác sĩ y khoa tại Trường Đại học Y Hà Nội\r\n\r\n",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 481225,
+    "title": "Tìm hiểu nhận thức, thái độ và thực hành của cán bộ khối hành chính về hoạt động kiểm định chất lượng giáo dục tại Trường Đại học Y Hà Nội ",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 377729,
+    "title": "Thực trạng môi trường học tập của sinh viên năm 6 ngành bác sĩ đa khoa tại trường Đại học Y Hà Nội năm học 2021-2022",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 2,
+    "why": "n"
+   },
+   {
+    "id": 405788,
+    "title": "Mối liên quan giữa đặc điểm tính cách và kết quả lượng giá kỹ năng y khoa của sinh viên ngành bác sĩ y khoa, cử nhân điều dưỡng Trường Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 379666,
+    "title": "Mức độ đạt chuẩn đầu ra một số module của sinh viên thuộc chương trình đổi mới bác sĩ đa  khoa tại Trường Đại học Y Hà Nội năm 2021",
+    "year": 2024,
+    "issn": "2354-0613",
+    "journal": "Y học cộng đồng",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5093860588": [
+   {
+    "id": 481012,
+    "title": "Ảnh hưởng của năm nhóm tính cách đến kết quả thi kỹ năng y khoa: nghiên cứu trên sinh viên bác sĩ y khoa tại Trường Đại học Y Hà Nội\r\n\r\n",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 481225,
+    "title": "Tìm hiểu nhận thức, thái độ và thực hành của cán bộ khối hành chính về hoạt động kiểm định chất lượng giáo dục tại Trường Đại học Y Hà Nội ",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 377729,
+    "title": "Thực trạng môi trường học tập của sinh viên năm 6 ngành bác sĩ đa khoa tại trường Đại học Y Hà Nội năm học 2021-2022",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 2,
+    "why": "t"
+   },
+   {
+    "id": 405788,
+    "title": "Mối liên quan giữa đặc điểm tính cách và kết quả lượng giá kỹ năng y khoa của sinh viên ngành bác sĩ y khoa, cử nhân điều dưỡng Trường Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5097335161": [
+   {
+    "id": 504918,
+    "title": "Đánh giá tình trạng liền vết thương và tình trạng sẹo ở người bệnh sau phẫu thuật cắt bao quy đầu sử dụng phương pháp truyền thống tại khoa nam học và y học giới tính - Bệnh viện Đại học Y Hà Nội năm 2025 ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 464314,
+    "title": "Đánh giá tình trạng liền vết thương ở người bệnh sau phẫu thuật cắt bao quy đầu sử dụng kỹ thuật cắt truyền thống tại Khoa Nam học và y học giới tính – Bệnh viện Đại học Y Hà Nội năm 2025 ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 405922,
+    "title": "Đánh giá tình trạng xuất tinh sớm của người bệnh sau phẫu thuật cắt bao quy đầu tại Bệnh viện Đại học Y Hà Nội năm 2024",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 380438,
+    "title": "Đánh giá một số yếu tố ảnh hưởng tới sự hài lòng của người bệnh sau cắt bao quy đầu",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 1,
+    "why": "t"
+   },
+   {
+    "id": 309478,
+    "title": "Đánh giá giấc ngủ và một số yếu tố liên quan của người bệnh đến khám nam học tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 2,
+    "why": "n"
+   }
+  ],
+  "A5044809216": [
+   {
+    "id": 405401,
+    "title": "Điều trị sa sinh dục bằng cố định trục treo đáy chậu trước vào dải chậu lược hai bên qua phẫu thuật nội soi",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 4,
+    "why": "t"
+   },
+   {
+    "id": 405888,
+    "title": "Kết quả xa phẫu thuật nội soi ung thư trực tràng giữa và thấp sau hóa xạ trị tiền phẫu",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "t"
+   }
+  ],
+  "A5021388951": [
+   {
+    "id": 455150,
+    "title": "Tỷ lệ tiêm và dự định tiêm vắc xin phế cầu ở người trưởng thành cùng một số yếu tố liên quan tại phòng tiêm chủng trường Đại học Y Hà Nội, 2024",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học cộng đồng",
+    "citations": 1,
+    "why": "ni"
+   },
+   {
+    "id": 306222,
+    "title": "Một số yếu tố liên quan đến chất lượng cuộc sống của người cao tuổi thành phố Hà Nội năm 2018",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 306123,
+    "title": "Sử dụng dịch vụ chăm sóc cho trẻ rối loạn phổ tự kỷ tại Hà Nội, 2018",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 306972,
+    "title": "Già hóa chủ động của người cao tuổi tại Hà Nội năm 2018 và một số yếu tố liên quan",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 306945,
+    "title": "Sự hài lòng của phụ huynh với dịch vụ chăm sóc trẻ rối loạn phổ tự kỷ tại Hà Nội, 2019",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5087191411": [
+   {
+    "id": 507690,
+    "title": "Khảo sát thái độ của bác sĩ răng hàm mặt về việc ứng dụng trí tuệ nhân tạo trong chẩn đoán viêm xương khớp khớp thái dương hàm trên phim panorama          ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 455116,
+    "title": "Kỹ năng nghiên cứu khoa học của sinh viên y khoa hai năm cuối tại Trường Đại học Y Hà Nội - Phân hiệu Thanh Hóa",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 452345,
+    "title": "Trải nghiệm học trực tuyến trong năm học 2021-2022 của sinh viên năm thứ 5 (khóa 2018-2024) ngành bác sỹ y khoa, trường Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 385992,
+    "title": "Sự hài lòng của người dân về chương trình khám bệnh tình nguyện của Trường Đại học Y Hà Nội tại xã Cẩm Lương, huyện Cẩm Thủy, tỉnh Thanh Hóa năm 2023",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 306042,
+    "title": "Đặc điểm nhân cách và lo âu ở sinh viên năm thứ hai trường đại học Y Hà Nội năm học 2016-2017",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 5,
+    "why": "n"
+   }
+  ],
+  "A5081442531": [
+   {
+    "id": 505738,
+    "title": "Đa hình rs1799971 gen OPRM1 và một số yếu tố liên quan trên người bệnh nghiện chất dạng thuốc phiện điều trị Methadone thay thế ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 503134,
+    "title": "Thiết kế và tối ưu hóa phản ứng PCR khuếch đại toàn bộ gen CPT1A phục vụ chẩn đoán thiếu hụt Carnitine Palmitoyltransferase 1A tại Việt Nam",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 487859,
+    "title": "Thực trạng tham gia ngoại kiểm khí máu của các phòng xét nghiệm tại miền Bắc Việt Nam giai đoạn 2020 - 2024 ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 306233,
+    "title": "Áp dụng thang sigma trong đánh giá một số chỉ số chất lượng giai đoạn trước xét nghiệm",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5127758169": [
+   {
+    "id": 507633,
+    "title": "Đặc điểm khớp cắn trên hệ thống T-Scan Novus ở nhóm sinh viên có dấu hiệu nghiến răng          ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 505745,
+    "title": "Đặc điểm lâm sàng, cận lâm sàng răng khôn hàm dưới mọc lệch/ngầm với độ khó từ trung bình đến cao theo Pederson ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 486251,
+    "title": "Yếu tố ảnh hưởng đến hành vi lựa chọn cơ sở khám chữa bệnh răng hàm mặt của sinh viên Trường Đại học Y Hà Nội năm 2024",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   }
+  ],
+  "A5029439980": [
+   {
+    "id": 486251,
+    "title": "Yếu tố ảnh hưởng đến hành vi lựa chọn cơ sở khám chữa bệnh răng hàm mặt của sinh viên Trường Đại học Y Hà Nội năm 2024",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   }
+  ],
+  "A5072680728": [
+   {
+    "id": 507579,
+    "title": "Đặc điểm hình ảnh FDG PET/CT và mức độ phù hợp với MRI/ EEG ở trẻ động kinh cục bộ kháng thuốc          ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 504820,
+    "title": "Đánh giá kết quả ban đầu nút mạch u xơ tử cung qua đường động mạch quay kết hợp giảm đau đa mô thức ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 506357,
+    "title": "Kết quả phá thai bằng thuốc từ 13 đến 22 tuần của trẻ vị thành niên tại Bệnh viện Phụ sản Trung ương     ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 456252,
+    "title": "Tình trạng dinh dưỡng của sản phụ đến khám thai tại khoa sản Bệnh viện Đại học Y Hà Nội",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam",
+    "citations": 1,
+    "why": "ni"
+   },
+   {
+    "id": 459116,
+    "title": "Kiến thức, thái độ về chăm sóc dinh dưỡng của phụ nữ mang thai đến khám thai tại Bệnh viện Đại học Y Hà Nội năm 2024 ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5117547102": [
+   {
+    "id": 507639,
+    "title": "Kết quả điều trị ung thư tuyến giáp thể biệt hóa nguy cơ tái phát cao     ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 377461,
+    "title": "Đánh giá giá trị sinh thiết hạch cửa trong ung thư biểu mô tuyến giáp thể nhú tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 1,
+    "why": "ni"
+   },
+   {
+    "id": 405909,
+    "title": "Ứng dụng Indocyanine Green nhận diện tuyến cận giáp trong phẫu thuật nội soi tuyến giáp qua đường miệng tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5024286935": [
+   {
+    "id": 507644,
+    "title": "Giá trị chỉ số Hounsfield trên cắt lớp vi tính trong phân biệt viêm xoang do nấm không xâm lấn          ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 506447,
+    "title": "Bước đầu khảo sát đặc điểm biến thể xoang tĩnh mạch sọ não trên MRI ở bệnh nhân đau đầu mạn tính",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 506448,
+    "title": "Độ sâu xâm lấn trên cộng hưởng từ và tình trạng di căn hạch cổ ở ung thư lưỡi    ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5103000811": [
+   {
+    "id": 507649,
+    "title": "Đánh giá mối liên quan giữa chất lượng cuộc sống và mức độ lo âu ở người bệnh điều trị lo âu ngoại trú          ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5124079996": [
+   {
+    "id": 507650,
+    "title": "Can thiệp nội mạch lấy huyết khối ở bệnh nhân đột quỵ nhồi máu não cấp do tắc động mạch cảnh hai bên: Báo cáo ca bệnh        ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 505008,
+    "title": "U xơ thần kinh thể đám rối giả dị dạng tĩnh mạch: Báo cáo hai trường hợp lâm sàng ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5119014777": [
+   {
+    "id": 507684,
+    "title": "Thực trạng kiến thức của bà mẹ về viêm phổi ở trẻ dưới 5 tuổi tại Khoa Nhi - Bệnh viện Đại học Y Hà Nội năm 2025         ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5093131542": [
+   {
+    "id": 507705,
+    "title": "Phản hồi về phương pháp giảng dạy lâm sàng one-minute preceptor của sinh viên Phân hiệu Trường Đại học Y Hà Nội tại Thanh Hóa năm học 2024 - 2025         ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 506418,
+    "title": "Kết quả học tập của sinh viên ngành y khoa theo các phương thức tuyển sinh tại Trường Đại học Y Hà Nội          ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5118630215": [
+   {
+    "id": 507707,
+    "title": "Sản xuất thử nghiệm mẫu ngoại kiểm nước tiểu định lượng dạng lỏng cho xét nghiệm albumin niệu và protein niệu          ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 505738,
+    "title": "Đa hình rs1799971 gen OPRM1 và một số yếu tố liên quan trên người bệnh nghiện chất dạng thuốc phiện điều trị Methadone thay thế ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 487859,
+    "title": "Thực trạng tham gia ngoại kiểm khí máu của các phòng xét nghiệm tại miền Bắc Việt Nam giai đoạn 2020 - 2024 ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 479519,
+    "title": "Đặc điểm nồng độ Methadone huyết thanh trên bệnh nhân nghiện chất dạng thuốc phiện điều trị ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5014496748": [
+   {
+    "id": 507711,
+    "title": "Đánh giá kết quả bước đầu phẫu thuật cắt mảng xơ và ghép bằng tĩnh mạch chủ đồng loài điều trị bệnh xơ cứng vật hang dương vật          ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5120679340": [
+   {
+    "id": 507720,
+    "title": "Đặc điểm tác nhân vi sinh và tình trạng đồng nhiễm ở trẻ em tiêu chảy tại Bệnh viện Đại học Y Hà Nội     Microbiological profile and co-infection patterns among children with diarrhea at Hanoi Medical University Hospital     ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 480646,
+    "title": "Nhận xét kết quả điều trị bệnh nhân nhiễm khuẩn huyết do Staphylococcus aureus kháng methicillin (MRSA) tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2026,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 486944,
+    "title": "Đặc điểm dịch tễ và kháng thuốc của Acinetobacter baumannii trong viêm phổi thở máy tại Bệnh viện Đại học Y Hà Nội \r\n",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 479518,
+    "title": "Giá trị của các xét nghiệm vi sinh trong phát hiện tác nhân vi khuẩn, virus trong bệnh phẩm dịch não tủy ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5058817105": [
+   {
+    "id": 507724,
+    "title": "Kết quả sống còn toàn bộ trên bệnh nhân ung thư phổi không tế bào nhỏ giai đoạn muộn, có đột biến EGFR, điều trị bước 1 bằng afatinib tại Bệnh viện K         ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5026660019": [
+   {
+    "id": 507726,
+    "title": "Thử nghiệm phối hợp aztreonam-avibactam và ceftazidime/avibactam-colistin trên các chủng Pseudomonas aeruginosa kháng carbapenem phân lập tại Bệnh viện Bạch Mai",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 503029,
+    "title": "Đặc điểm và các yếu tố liên quan đến rối loạn giấc ngủ ở trẻ mắc động kinh ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 455047,
+    "title": "Đặc điểm kháng colistin của các chủng Klebsiella pneumoniae phân lập từ các hộ  chăn nuôi khu vực Nam Định năm 2023",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 454308,
+    "title": "Mức độ nhạy cảm với kháng sinh và một số kiều gen đề kháng betalactam của K. aerogenes phân lập tại Bệnh viện Bạch Mai",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405396,
+    "title": "Mức độ nhạy cảm với kháng sinh và kiểu gene carbapenemase của các chủng Pseudomonas aeruginosa phân lập tại Bệnh viện Đại học Y Hà Nội, 2019 - 2022",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5120491485": [
+   {
+    "id": 503133,
+    "title": "Thực trạng tiếp xúc với quảng cáo về thuốc lá điện tử ở sinh viên năm nhất Trường Đại học Y Hà Nội năm 2024 và một số yếu tố liên quan",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5091129556": [
+   {
+    "id": 504545,
+    "title": "Kiến thức, thực hành về tiêu thụ thực phẩm siêu chế biến của sinh viên năm hai và năm ba trường Đại học Y Hà Nội năm học học 2025-2026 và một số yếu tố liên quan",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 306217,
+    "title": "Mối liên quan giữa trầm cảm và thừa cân/béo phì ở trẻ vị thành niên: phân tích gộp và đề xuất các can thiệp",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5131384968": [
+   {
+    "id": 504545,
+    "title": "Kiến thức, thực hành về tiêu thụ thực phẩm siêu chế biến của sinh viên năm hai và năm ba trường Đại học Y Hà Nội năm học học 2025-2026 và một số yếu tố liên quan",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5131214367": [
+   {
+    "id": 504545,
+    "title": "Kiến thức, thực hành về tiêu thụ thực phẩm siêu chế biến của sinh viên năm hai và năm ba trường Đại học Y Hà Nội năm học học 2025-2026 và một số yếu tố liên quan",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 451942,
+    "title": "Phản hồi của sinh viên năm cuối ngành bác sĩ y học dự phòng về chương trình đào tạo của bác sĩ y học dự phòng từ năm 2020 đến năm 2023",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5131439261": [
+   {
+    "id": 504545,
+    "title": "Kiến thức, thực hành về tiêu thụ thực phẩm siêu chế biến của sinh viên năm hai và năm ba trường Đại học Y Hà Nội năm học học 2025-2026 và một số yếu tố liên quan",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 504547,
+    "title": "Thực trạng về an toàn giao thông của sinh viên năm thứ nhất trường Đại học Y Hà Nội và một số yếu tố liên quan giai đoạn 2025-2026",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5106347840": [
+   {
+    "id": 504776,
+    "title": "Nghiên cứu giá trị nội soi nhuộm màu liên kết trong chẩn đoán dị sản ruột ở người bệnh viêm dạ dày mạn tính",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội) ",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 456138,
+    "title": "Đánh giá sự cố y khoa trong nội soi tiêu hoábằng sơ đồ xương cá (Fishbone diagram)",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 321271,
+    "title": "So sánh hiệu quả làm sạch dạ dày bằng epumisan trong chuẩn bị người bệnh nội soi tiêu hóa trên tại Trung tâm Nội soi - Bệnh viện Đại học Y Hà Nội",
+    "year": 2021,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam) ",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5102527502": [
+   {
+    "id": 504778,
+    "title": "Tỷ lệ tái nhập viện không theo kế hoạch sau can thiệp động mạch vành qua da tại Bệnh viện Đại học Y Hà Nội năm 2024",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 504943,
+    "title": "Kiến thức và thực hành tự chăm sóc của người bệnh suy tim mạn tại trung tâm tim mạch - Bệnh viện Đại học Y Hà Nội ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 502275,
+    "title": "Kiến thức và thực hành tự chăm sóc của người bệnh suy tim điều trị ngoại trú tại Bệnh viện Đại học Y Hà Nội năm 2025",
+    "year": 2026,
+    "issn": "1859-1531",
+    "journal": "Tạp chí Tim mạch học Việt Nam",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5095694146": [
+   {
+    "id": 504779,
+    "title": "Kết quả sớm phẫu thuật nội soi cắt túi mật sau dẫn lưu điều trị viêm túi mật cấp nặng tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 504816,
+    "title": "Giải phẫu đường mật trong gan và mối liên quan với kết quả tán sỏi đường mật xuyên gan qua da tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 406152,
+    "title": "Kết quả nội soi tán sỏi điện thuỷ lực qua đường hầm Kehr tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5116159139": [
+   {
+    "id": 504780,
+    "title": "Tỷ lệ mắc và các yếu tố liên quan đến tổn thương thận cấp (AKI) trong 7 ngày đầu sau phẫu thuật tim mở sử dụng tuần hoàn ngoài cơ thể ngoại vi",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 504875,
+    "title": "Hiệu quả giảm đau của gây tê cơ vuông thắt lưng hai bên dưới hướng dẫn siêu âm ở người bệnh cắt túi mật nội soi ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405910,
+    "title": "Hiệu quả của một số phương pháp dịch chuyển sự chú ý lên sự hợp tác của trẻ em trước gây mê tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 306674,
+    "title": "Thực trạng và tính hợp lý của sử dụng kháng sinh theo kinh nghiệm trong điều trị viêm phúc mạc thứ phát",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 309390,
+    "title": "Đặc điểm vi sinh và tình trạng kháng kháng sinh của các loại vi khuẩn gây viêm phúc mạc thứ phát",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5076916151": [
+   {
+    "id": 504785,
+    "title": "Loét dạ dày tá tràng không nhiễm Helicobacter Pylori ở trẻ em: Đặc điểm bệnh học và biến chứng",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5111238003": [
+   {
+    "id": 504785,
+    "title": "Loét dạ dày tá tràng không nhiễm Helicobacter Pylori ở trẻ em: Đặc điểm bệnh học và biến chứng",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 454911,
+    "title": "Kháng kháng sinh của Helicobacter pylori và một số yếu tố liên quan ở trẻ em loét dạ dày tá tràng",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5114204659": [
+   {
+    "id": 504800,
+    "title": "Khảo sát nồng độ 25-hydroxyvitamin D huyết thanh và một số yếu tố liên quan ở trẻ em mắc hội chứng thận hư tại Bệnh viện Nhi Trung ương ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 504954,
+    "title": "Phát triển thể chất ở trẻ sau phẫu thuật cắt ruột và một số yếu tố liên quan ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 480646,
+    "title": "Nhận xét kết quả điều trị bệnh nhân nhiễm khuẩn huyết do Staphylococcus aureus kháng methicillin (MRSA) tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2026,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 503105,
+    "title": "Nồng độ kẽm huyết thanh và một số yếu tố liên quan ở trẻ mắc hội chứng thận hư tại Bệnh viện Nhi Trung ương ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5010082927": [
+   {
+    "id": 504821,
+    "title": "Kết quả bước đầu điều trị ung thư đại tràng di căn bằng phác đồ mFOLFOXIRI phối hợp bevacizumab ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 503062,
+    "title": "Một số yếu tố liên quan đến kết quả điều trị ung thư thực quản di căn bằng phác đồ mDCF tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5101253079": [
+   {
+    "id": 504875,
+    "title": "Hiệu quả giảm đau của gây tê cơ vuông thắt lưng hai bên dưới hướng dẫn siêu âm ở người bệnh cắt túi mật nội soi ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5118998762": [
+   {
+    "id": 504919,
+    "title": "Tổng quan tường thuật có yếu tố hệ thống về quy trình kỹ thuật số khép kín trong chế tạo hàm chỉnh hình mũi-xương ổ răng (NAM) cho trẻ sơ sinh bị khe hở môi vòm miệng  (CL/P) ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 505010,
+    "title": "Đặc điểm chăm sóc người bệnh cố định hàm sau phẫu thuật gãy xương hàm tại khoa răng hàm mặt Bệnh viện Đại học Y Hà Nội: Báo cáo chùm ca bệnh ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5094020978": [
+   {
+    "id": 504923,
+    "title": "Ứng dụng trí tuệ nhân tạo trong nhận dạng giọng nói ở bệnh nhân Parkinson ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 504949,
+    "title": "Ứng dụng mô hình trí tuệ nhân tạo quản lý bệnh nhân rối loạn giọng ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 455287,
+    "title": "Giá trị của thuật toán gaad trong chẩn đoán sớm ung thư biểu mô tế bào gan tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5001195757": [
+   {
+    "id": 504923,
+    "title": "Ứng dụng trí tuệ nhân tạo trong nhận dạng giọng nói ở bệnh nhân Parkinson ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5014087893": [
+   {
+    "id": 504923,
+    "title": "Ứng dụng trí tuệ nhân tạo trong nhận dạng giọng nói ở bệnh nhân Parkinson ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 504949,
+    "title": "Ứng dụng mô hình trí tuệ nhân tạo quản lý bệnh nhân rối loạn giọng ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5119788542": [
+   {
+    "id": 504952,
+    "title": "Kết quả nhân trắc học sau phẫu thuật nam tính hóa khuôn ngực ở bệnh nhân chuyển giới nam: Đánh giá dựa trên tiêu chuẩn nam giới sinh học Anthropometric outcomes after masculinizing chest surgery in transgender men: Comparison with cisgender male standards ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5110620229": [
+   {
+    "id": 504953,
+    "title": "Tình trạng dinh dưỡng và một số yếu tố liên quan ở trẻ em dưới 5 tuổi đến khám tại Bệnh viện Đa khoa Xanh Pôn ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 462603,
+    "title": "So sánh hiệu quả ghép da ở bệnh nhân khuyết phần mềm có và không sử dụng hồng ngoại tại Bệnh viện Đại học Y Hà Nội năm 2025",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 452307,
+    "title": "Một số yếu tố liên quan đến sự hài lòng của người bệnh, người nhà người bệnh về chăm sóc điều dưỡng tại khoa phẫu thuật tạo hình thẩm mỹ, Bệnh viện Đại học Y Hà Nội năm 2023",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 452477,
+    "title": "Chất lượng cuộc sống của bệnh nhân sau phẫu thuật tạo hình thành bụng",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 378808,
+    "title": "Sự hài lòng của người bệnh/người nhà người bệnh về chăm sóc điều dưỡng tại Khoa Phẫu thuật tạo hình thẩm mỹ Bệnh viện Đại học Y Hà Nội năm 2023",
+    "year": 2024,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 3,
+    "why": "n"
+   }
+  ],
+  "A5124111945": [
+   {
+    "id": 505008,
+    "title": "U xơ thần kinh thể đám rối giả dị dạng tĩnh mạch: Báo cáo hai trường hợp lâm sàng ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 456253,
+    "title": "Đặc điểm lâm sàng và hình ảnh của lạc nội mạc tử cung thành bụng của bệnh nhân được điều trị bằng sóng cao tần tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5041162820": [
+   {
+    "id": 505009,
+    "title": "Phẫu thuật điều trị tắc động mạch cảnh chung mạn tính: Báo cáo ca lâm sàng và tổng kết y văn ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 479283,
+    "title": "Vai trò của cộng hưởng từ trong chẩn đoán giai đoạn ung thư trực tràng thấp sau hóa xạ trị tiền phẫu tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2026,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 459085,
+    "title": "Giá trị của cắt lớp vi tính định lượng trong chẩn đoán khí phế thũng ở người bệnh phổi tắc nghẽn mạn tính ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 380406,
+    "title": "Đặc điểm chảy máu đường mật và can thiệp điều trị tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 379888,
+    "title": "So sánh đặc điểm nốt mờ phổi trên cắt lớp vi tính liều thấp và cắt lớp vi tính liều tiêu chuẩn",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 309480,
+    "title": "Đánh giá kết quả bước đầu kỹ thuật nút tắc ống ngực điều trị rò dưỡng chấp tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 309482,
+    "title": "Điều trị rò bạch mạch sau mổ bằng can thiệp qua da xuyên nhu mô gan: Báo cáo ca lâm sàng",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5057489519": [
+   {
+    "id": 505011,
+    "title": "Báo cáo ca lâm sàng viêm bàng quang do sử dụng Ketamine lâu dài ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 487450,
+    "title": "Bước đầu nghiên cứu về mô hình bệnh tật tại Khoa Khám bệnh - Cơ sở Hoàng Mai, Bệnh viện Đại học Y Hà Nội năm 2024 ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 488786,
+    "title": "Áp xe thận trên người bệnh không có yếu tố nguy cơ - điều trị kháng sinh theo kinh nghiệm: Báo cáo ca lâm sàng ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405581,
+    "title": "Nghiên cứu tổng quan hệ thống và phân tích gộp về độc tính của thuốc lá nung nóng so với thuốc lá thông thường",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 309487,
+    "title": "Đặc điểm lâm sàng, cận lâm sàng và chức năng thận của bệnh nhân ứ nước, ứ mủ thận điều trị dẫn lưu thận qua da",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5146842123": [
+   {
+    "id": 505011,
+    "title": "Báo cáo ca lâm sàng viêm bàng quang do sử dụng Ketamine lâu dài ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 488786,
+    "title": "Áp xe thận trên người bệnh không có yếu tố nguy cơ - điều trị kháng sinh theo kinh nghiệm: Báo cáo ca lâm sàng ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5117088355": [
+   {
+    "id": 505012,
+    "title": "Tổn thương thận do lắng đọng amyloid: Báo cáo loạt ca lâm sàng và nhìn lại y văn ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 454937,
+    "title": "Đánh giá rối loạn chuyển hóa lipid và chì số tác nhân xơ vữa trong huyết tương ờ bệnh nhân người lớn mắc viêm thận lupus",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 454941,
+    "title": "Đánh giá một số yếu tố liên quan đến đời sống chức năng của đường vào mạch máu tự thân có biến chứng ở người bệnh thận nhân tạo chu kỳ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5009266134": [
+   {
+    "id": 505015,
+    "title": "Vai trò của vạt phức hợp da cơ đùi trước ngoài trong điều trị viêm xương gót: Báo cáo hai ca lâm sàng ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 503506,
+    "title": "Biến chứng hoại tử da thành bụng sau phẫu thuật hút mỡ tạo hình thành bụng: Hai trường hợp và tổng quan y văn ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5080136017": [
+   {
+    "id": 505896,
+    "title": "Đặc điểm lâm sàng và siêu âm của viêm cân gan chân và kết quả điều trị viêm cân gan chân bằng tiêm Corticoid dưới hướng dẫn của siêu âm tại Bệnh viện Bạch Mai ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 505897,
+    "title": "Đánh giá kết quả điều trị rách bán phần gân cơ trên gai bằng liệu pháp tiêm collagen typ I tại chỗ dưới hướng dẫn của siêu âm tại Bệnh viện E ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 505900,
+    "title": "Các yếu tổ ảnh hưởng đến kết quả tiêm Corticosteroid nội khớp trong điều trị viêm khớp cổ chân do gút cấp ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5117439934": [
+   {
+    "id": 505921,
+    "title": "Thực trạng cơ sở vật chất và năng lực chẩn đoán, điều trị tắc động mạch phổi cấp tại các bệnh viện trên địa bàn tỉnh Thanh Hóa ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 459791,
+    "title": "Đặc điểm hình ảnh khớp háng của bệnh nhân sinh thiết màng hoạt dịch dưới hướng dẫn siêu âm ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 457709,
+    "title": "Đánh giá kết quả sinh thiết màng hoạt dịch khớp háng dưới hướng dẫn siêu âm ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5117691025": [
+   {
+    "id": 505931,
+    "title": "Kết quả kiểm soát đường huyết và chất lượng cuộc sống của bệnh nhân đái tháo đường typ 2 có sử dụng góc ngày đầu tiên kết hợp Gliclazide MR ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5054532289": [
+   {
+    "id": 505931,
+    "title": "Kết quả kiểm soát đường huyết và chất lượng cuộc sống của bệnh nhân đái tháo đường typ 2 có sử dụng góc ngày đầu tiên kết hợp Gliclazide MR ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 506405,
+    "title": "Hiệu quả can thiệp tư vấn dinh dưỡng ở người bệnh Parkinson tại Bệnh viện Lão khoa Trung ương         ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 506408,
+    "title": "Kết quả của tập luyện đối kháng lên tốc độ đi bộ ở người cao tuổi đái tháo đường typ 2 có sarcopenia     ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 455714,
+    "title": "Tỷ lệ suy dinh dưỡng và nguy cơ suy dinh dưỡng cùng các yếu tố liên quan ở bệnh nhân lớn tuổi mắc bệnh tiểu đường týp 2 không được kiểm soát",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5054052009": [
+   {
+    "id": 505954,
+    "title": "Hiệu quả điều trị của phương pháp cận tam châm kết hợp xoa bóp bấm huyệt trên bệnh nhân viêm quanh khớp vai đơn thuần ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5002285759": [
+   {
+    "id": 505956,
+    "title": "Ứng dụng mô hình học máy trong xác định tỷ lệ viêm quanh chóp ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5102023184": [
+   {
+    "id": 506290,
+    "title": "Kết quả giảm đau sau điều trị bằng máng nhai ổn định điều chỉnh có hỗ trợ của ghi khớp cắn số hóa ở người bệnh thoái hóa khớp thái dương hàm ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5099076501": [
+   {
+    "id": 506290,
+    "title": "Kết quả giảm đau sau điều trị bằng máng nhai ổn định điều chỉnh có hỗ trợ của ghi khớp cắn số hóa ở người bệnh thoái hóa khớp thái dương hàm ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 464285,
+    "title": "Nhận xét các đặc điểm hình ảnh cộng hưởng từ khớp thái dương hàm ở bệnh nhân rối loạn nội khớp có triệu chứng hạn chế há miệng ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5093704206": [
+   {
+    "id": 506313,
+    "title": "Hiệu quả hỗ trợ điều trị của viên nén bổ khí thông huyết BVP trên người bệnh suy tĩnh mạch mạn tính chi dưới ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 455114,
+    "title": "Mô hình bệnh tật và tình hình điều trị bệnh nhân nội trú tại Khoa Y học cổ truyền Bệnh viện Hữu Nghị năm 2022",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 377528,
+    "title": "Mức độ lo âu, stress và một số yếu tố liên quan của sinh viên trực tiếp tham gia chống dịch COVID 19 tại các địa phương",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5103018718": [
+   {
+    "id": 506317,
+    "title": "Ảnh hưởng của Domuvar (Bacillus subtilis THC1I) lên nhu động ruột trên động vật thực nghiệm ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 506366,
+    "title": "Đánh giá tác dụng của viên Khôi tím Bavieco trên mô hình thực nghiệm gây trào ngược dạ dày thực quản bằng chế độ ăn          ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 503150,
+    "title": "Nghiên cứu tác dụng bảo vệ gan và chống oxy hóa của Saphia Alkali K90 trên thực nghiệm ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 405839,
+    "title": "Tác dụng của Domuvar trên mô hình gây hội chứng ruột kích thích thực nghiệm",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5116302529": [
+   {
+    "id": 506352,
+    "title": "Giá trị cộng hưởng từ đa thông số trong chẩn đoán tình trạng đột biến gen IDH1 R132H của u thần kinh đệm ở người lớn",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5138231293": [
+   {
+    "id": 506352,
+    "title": "Giá trị cộng hưởng từ đa thông số trong chẩn đoán tình trạng đột biến gen IDH1 R132H của u thần kinh đệm ở người lớn",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 405839,
+    "title": "Tác dụng của Domuvar trên mô hình gây hội chứng ruột kích thích thực nghiệm",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5010377793": [
+   {
+    "id": 506357,
+    "title": "Kết quả phá thai bằng thuốc từ 13 đến 22 tuần của trẻ vị thành niên tại Bệnh viện Phụ sản Trung ương     ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5100045799": [
+   {
+    "id": 506373,
+    "title": "Mối liên quan giữa hình ảnh cộng hưởng từ với mức độ viêm bao hoạt dịch trong phẫu thuật nội soi hội chứng hẹp khoang dưới mỏm cùng vai đơn thuần     ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 478794,
+    "title": "Kiến thức, thái độ và dự định tiêm vắc xin phòng herpes zoster ở người đến phòng tiêm chủng Trường Đại học Y Hà Nội năm 2024",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5092895995": [
+   {
+    "id": 506395,
+    "title": "Phẫu thuật tạo hình loét tỳ đè cùng cụt độ III-IV: Lựa chọn vạt tại chỗ và kết quả phẫu thuật trên 26 bệnh nhân         ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 454504,
+    "title": "Vạt gan chân trong: Chất liệu lý tưởng cho tạo hình khuyết phần mềm vùng tỳ đè gan bàn chân",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5110842120": [
+   {
+    "id": 506402,
+    "title": "Tác dụng bảo vệ gan của dung dịch uống Ích can thanh trên mô hình thực nghiệm gây viêm gan bằng ethanol",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5117238990": [
+   {
+    "id": 506408,
+    "title": "Kết quả của tập luyện đối kháng lên tốc độ đi bộ ở người cao tuổi đái tháo đường typ 2 có sarcopenia     ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 455632,
+    "title": "Nghiên cứu các yếu tố liên quan đến nguy cơ té ngã ở bệnh nhân lớn tuổi yếu ớt",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5130590516": [
+   {
+    "id": 506452,
+    "title": "Đánh giá độ sát khít của onlay được chế tạo bằng công nghệ CAD/CAM và in 3D trên thực nghiệm        ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5140164288": [
+   {
+    "id": 506452,
+    "title": "Đánh giá độ sát khít của onlay được chế tạo bằng công nghệ CAD/CAM và in 3D trên thực nghiệm        ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 306965,
+    "title": "Kiến thức, thái độ về thuốc tránh thai khẩn cấp của nữ sinh viên đại học tại Hà Nội năm 2019",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   }
+  ],
+  "A5068825978": [
+   {
+    "id": 506587,
+    "title": "Tương quan và khác biệt giữa PEEP theo cắt lớp phổi điện kháng và PEEP giả định theo bảng PEEP thấp/FiO2 trong ARDS ngoại khoa          ",
+    "year": 2026,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5115695940": [
+   {
+    "id": 478848,
+    "title": "Sự hài lòng của người sử dụng dịch vụ y tế và một số yếu tố ảnh hưởng thuộc cộng đồng thiểu số tính dục (LGBTQ+) tại phòng khám nâng cao sức khỏe tình dục, Bệnh viện Đại học Y Hà Nội năm 2022 - 2024",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5039695490": [
+   {
+    "id": 478848,
+    "title": "Sự hài lòng của người sử dụng dịch vụ y tế và một số yếu tố ảnh hưởng thuộc cộng đồng thiểu số tính dục (LGBTQ+) tại phòng khám nâng cao sức khỏe tình dục, Bệnh viện Đại học Y Hà Nội năm 2022 - 2024",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5071881918": [
+   {
+    "id": 503029,
+    "title": "Đặc điểm và các yếu tố liên quan đến rối loạn giấc ngủ ở trẻ mắc động kinh ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 503031,
+    "title": "Đặc điểm lâm sàng, điện não đồ và hình ảnh cộng hưởng từ sọ não ở trẻ động kinh cục bộ kháng thuốc tại Bệnh viện Nhi Trung ương ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 308955,
+    "title": "Sang chấn tâm lý và vấn đề cảm xúc ở vị thành niên loét dạ dày tá tràng mạn tính",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 308953,
+    "title": "Một số yếu tố liên quan giữa tâm lý xã hội và viêm loét dạ dày tá tràng mạn tính ở vị thành niên",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5077672092": [
+   {
+    "id": 503053,
+    "title": "Phân tích tính đa hình của một số STR ứng dụng trong xét nghiệm di truyền trước làm tổ bệnh α-thalassemia ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 406293,
+    "title": "Xác định đột biến cấu trúc nhiễm sắc thể trên một số cặp vợ chồng hiếm muộn",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 405618,
+    "title": "Xác định đột biến gen EIF4G1 trên bệnh nhân Parkinson 10",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5003969872": [
+   {
+    "id": 503062,
+    "title": "Một số yếu tố liên quan đến kết quả điều trị ung thư thực quản di căn bằng phác đồ mDCF tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 488785,
+    "title": "Tái điều trị bằng thuốc Gefitinib sau biến chứng viêm phổi kẽ do Osimertinib: Báo cao ca lâm sàng và tổng quan y văn ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 460864,
+    "title": "Kết quả điều trị bằng hóa trị cảm ứng với phác đồ mDCF phối hợp hóa xạ trị triệt căn trong ung thư thực quản ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5085774576": [
+   {
+    "id": 486257,
+    "title": "Báo cáo chùm ca bệnh và tổng quan tài liệu mang thai ở bệnh nhân hội chứng Eisenmenger ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 503070,
+    "title": "Nhận xét kết quả sớm phẫu thuật nội soi lồng ngực điều trị tràn khí màng phổi tiên phát tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 313659,
+    "title": "Kết quả hoạt động của đơn vị phẫu thuật tim mạch - Lồng ngực, Bệnh viện Đại học Y Hà Nội sau 1 năm thành lập",
+    "year": 2021,
+    "issn": "0866-7551",
+    "journal": "Phẫu thuật Tim mạch và Lồng ngực việt nam",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 309443,
+    "title": "Kết quả điều trị bằng Ivabradine ở bệnh nhân nhịp nhanh xoang không thích hợp",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5025150644": [
+   {
+    "id": 504419,
+    "title": "Đặc điểm lâm sàng, kết quả điều trị và đặc điểm kiểu gen vi khuẩn kháng thuốc ở người bệnh nhiễm khuẩn huyết do Enterobacterales kháng carbapenem\r\n",
+    "year": 2026,
+    "issn": "1859-2872",
+    "journal": "Tạp chí Y dược lâm sàng 108",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 455406,
+    "title": "Đánh giá sự thay đổi nồng độ CRP trong tiên lượng nguy cơ tử vong ở người bệnh nhiễm khuẩn huyết",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 503117,
+    "title": "Đặc điểm sử dụng kháng sinh theo phân loại aware ở bệnh nhân nhiễm trùng hô hấp cấp nặng tại Bệnh viện Đa khoa Đức Giang năm 2023-2024",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405885,
+    "title": "Đánh giá tình trạng giảm tiểu cầu ở bệnh nhân nhiễm khuẩn huyết tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5060331088": [
+   {
+    "id": 503131,
+    "title": "Kết quả phẫu thuật tán sỏi qua da đường hầm tiêu chuẩn dưới hướng dẫn siêu âm điều trị sỏi san hô thận tại Bệnh viện Hữu nghị Đa khoa Nghệ An ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5114283809": [
+   {
+    "id": 503157,
+    "title": "Tình trạng dinh dưỡng và thói quen ăn uống của người cao tuổi mắc đái tháo đường type 2 tại Bệnh viện Nội tiết Trung ương ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5101287074": [
+   {
+    "id": 503187,
+    "title": "Chất lượng giấc ngủ và một số yếu tố liên quan ở người bệnh viêm gan B điều trị tại Bệnh viện Đại học Y Hà Nội năm 2025 ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5102938645": [
+   {
+    "id": 503195,
+    "title": "Thực trạng thiếu vi chất dinh dưỡng ở trẻ thừa cân, béo phì đơn thuần tại Bệnh viện Nhi Trung ương ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5067666975": [
+   {
+    "id": 503329,
+    "title": "Mối liên quan của thời gian sử dụng tai nghe và ngưỡng nghe của sinh viên y khoa Trường Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5014128490": [
+   {
+    "id": 503346,
+    "title": "Hội chứng chuyển hóa và một số yếu tố liên quan ở người cao tuổi tỉnh Quảng Bình cũ năm 2022",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 405581,
+    "title": "Nghiên cứu tổng quan hệ thống và phân tích gộp về độc tính của thuốc lá nung nóng so với thuốc lá thông thường",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5089693724": [
+   {
+    "id": 503504,
+    "title": "Biến chứng trong ca lọc máu ở người bệnh chạy thận nhân tạo tại khoa nội thận - tiết niệu, Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405793,
+    "title": "Thực trạng và một số yếu tố liên quan đến vấn đề bỏ bữa ăn sáng của sinh viên Trường Đại học Y Hà Nội năm 2023",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 405916,
+    "title": "So sánh kết quả điều trị giữa mở khí quản sớm so với muộn ở người bệnh tại khoa hồi sức tích cực",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 377629,
+    "title": "Kiến thức và thái độ tự chăm sóc bàn chân của người bệnh đái tháo đường type 2 tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5117693959": [
+   {
+    "id": 478803,
+    "title": "Đánh giá độ tin cậy và tính giá trị của thang đo thời gian sinh học trên sinh viên Trường Đại học Y Hà Nội năm 2024",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5113278538": [
+   {
+    "id": 478803,
+    "title": "Đánh giá độ tin cậy và tính giá trị của thang đo thời gian sinh học trên sinh viên Trường Đại học Y Hà Nội năm 2024",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5120491486": [
+   {
+    "id": 478803,
+    "title": "Đánh giá độ tin cậy và tính giá trị của thang đo thời gian sinh học trên sinh viên Trường Đại học Y Hà Nội năm 2024",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5008710001": [
+   {
+    "id": 478794,
+    "title": "Kiến thức, thái độ và dự định tiêm vắc xin phòng herpes zoster ở người đến phòng tiêm chủng Trường Đại học Y Hà Nội năm 2024",
+    "year": 2025,
+    "issn": "0868-2836",
+    "journal": "Y học Dự phòng",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5092453834": [
+   {
+    "id": 486254,
+    "title": "Nhu cầu và sở thích về can thiệp hỗ trợ dinh dưỡng và hoạt động thể lực ở sinh viên Việt Nam ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 487192,
+    "title": "Thừa cân béo phì và một số yếu tố liên quan của học sinh trung học phổ thông tại thành phố Hà Nội năm 2024",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5006538134": [
+   {
+    "id": 486254,
+    "title": "Nhu cầu và sở thích về can thiệp hỗ trợ dinh dưỡng và hoạt động thể lực ở sinh viên Việt Nam ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5102341526": [
+   {
+    "id": 486254,
+    "title": "Nhu cầu và sở thích về can thiệp hỗ trợ dinh dưỡng và hoạt động thể lực ở sinh viên Việt Nam ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 377571,
+    "title": "Tác động của COVID-19 đến dinh dưỡng và hoạt động thể lực của sinh viên trường Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 306217,
+    "title": "Mối liên quan giữa trầm cảm và thừa cân/béo phì ở trẻ vị thành niên: phân tích gộp và đề xuất các can thiệp",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5026643412": [
+   {
+    "id": 486257,
+    "title": "Báo cáo chùm ca bệnh và tổng quan tài liệu mang thai ở bệnh nhân hội chứng Eisenmenger ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   }
+  ],
+  "A5088134562": [
+   {
+    "id": 486257,
+    "title": "Báo cáo chùm ca bệnh và tổng quan tài liệu mang thai ở bệnh nhân hội chứng Eisenmenger ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 405674,
+    "title": "Can thiệp phình quai động mạch chủ sử dụng kỹ thuật mở cửa sổ thân cánh tay đầu",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 309410,
+    "title": "Kiến thức sử dụng thuốc chống đông của bệnh nhân đang sử dụng thuốc kháng vitamin K và một số yếu tố liên quan",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 309476,
+    "title": "Ứng dụng phương pháp can thiệp kết hợp phẫu thuật trong điều trị bệnh lý phần quai động mạch chủ (phương pháp Hybrid)",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5084661213": [
+   {
+    "id": 486876,
+    "title": "Kết quả điều trị co lợi Cairo I bằng phương pháp trượt vạt về phía thân răng và màng khung da: Báo cáo ca lâm sàng",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5084076112": [
+   {
+    "id": 487192,
+    "title": "Thừa cân béo phì và một số yếu tố liên quan của học sinh trung học phổ thông tại thành phố Hà Nội năm 2024",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 377571,
+    "title": "Tác động của COVID-19 đến dinh dưỡng và hoạt động thể lực của sinh viên trường Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 448878,
+    "title": "Tình trạng dinh dưỡng và một số yếu tố liên quan của người bệnh đái tháo đường týp 2 điều trị tại Bệnh viện Đại học Y Hà Nội năm 2023",
+    "year": 2023,
+    "issn": "2354-0613",
+    "journal": "Y học cộng đồng",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5007185665": [
+   {
+    "id": 487376,
+    "title": "Một số yếu tố liên quan đến đứt gãy DNA tinh trùng ở nam giới làm thụ tinh trong ống nghiệm ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5018077377": [
+   {
+    "id": 487376,
+    "title": "Một số yếu tố liên quan đến đứt gãy DNA tinh trùng ở nam giới làm thụ tinh trong ống nghiệm ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 459376,
+    "title": "Kết quả chuyển phôi trữ trên nhóm bệnh nhân có tình trạng niêm mạc tử cung mỏng được bơm huyết tương giàu tiểu cầu tự thân tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5151569773": [
+   {
+    "id": 487419,
+    "title": "Nghiên cứu tình trạng thoái triển u trên mô bệnh học của bệnh nhân ung thư biểu mô tuyến trực tràng hóa xạ trị tiền phẫu ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5032544977": [
+   {
+    "id": 487430,
+    "title": "Kết quả điều trị biến chứng chảy máu sau tán sỏi thận qua da đường hầm nhỏ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5078542615": [
+   {
+    "id": 487430,
+    "title": "Kết quả điều trị biến chứng chảy máu sau tán sỏi thận qua da đường hầm nhỏ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5021389461": [
+   {
+    "id": 488787,
+    "title": "Tổng quan luận điểm về duy trì trong điều trị nghiện chất dạng thuốc phiện bằng thuốc Buprenorphine tác dụng kéo dài dạng tiêm",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 319108,
+    "title": "Hiệu quả của can thiệp thí điểm giảm sử dụng methamphetamine trên bệnh nhân điều trị methadone tại Hà Nội",
+    "year": 2021,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội) ",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5018549947": [
+   {
+    "id": 488787,
+    "title": "Tổng quan luận điểm về duy trì trong điều trị nghiện chất dạng thuốc phiện bằng thuốc Buprenorphine tác dụng kéo dài dạng tiêm",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5124090608": [
+   {
+    "id": 479239,
+    "title": "Đặc điểm lâm sàng và kết quả điều trị gãy đầu dưới xương quay bằng nẹp vít khoá tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2026,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5124145866": [
+   {
+    "id": 479239,
+    "title": "Đặc điểm lâm sàng và kết quả điều trị gãy đầu dưới xương quay bằng nẹp vít khoá tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2026,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5113299677": [
+   {
+    "id": 483765,
+    "title": "Kết quả của phẫu thuật kết hợp xương điều trị gãy chỏm xương quay ở người trưởng thành tại Bệnh viện Đại học Y Hà Nội Results of open reduction and internal fixation for radial head fractures in adults at Hanoi Medical University Hospital ",
+    "year": 2026,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 405679,
+    "title": "Động lực làm việc của nhân viên y tế và một số yếu tố liên quan tại Bệnh viện Đại học Y Hà Nội năm 2023",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 2,
+    "why": "n"
+   }
+  ],
+  "A5050355725": [
+   {
+    "id": 486906,
+    "title": "Đặc điểm lâm sàng, cận lâm sàng và căn nguyên gây viêm phổi do nấm trên bệnh nhân điều trị tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 479519,
+    "title": "Đặc điểm nồng độ Methadone huyết thanh trên bệnh nhân nghiện chất dạng thuốc phiện điều trị ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 406474,
+    "title": "Xác định bất thường gen liên quan đến ung thư phổi không tế bào nhỏ bằng phương pháp giải trình tự gen thế hệ mới ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 405733,
+    "title": "Một số bất thường gen ở bệnh nhân ung thư phổi không tế bào nhỏ tại Bệnh viện Đại học Y Hà Nội phát hiện bằng phương pháp giải trình tự gen thế hệ mới",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 407373,
+    "title": "Mối liên quan giữa nồng độ NT-proBNP huyết thanh với một số đặc điểm lâm sàng, cận lâm sàng và kết quả điều trị ở bệnh nhân đợt cấp bệnh phổi tắc nghẽn mạn tính ",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 309381,
+    "title": "Kháng thuốc ức chế Tyrosine Kinase thế hệ thứ nhất ở bệnh nhân ung thư phổi không tế bào nhỏ",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 306825,
+    "title": "Đột biến EGFR-T790M liên quan đến kháng thuốc ức chế tyrosine kinase ở bệnh nhân ung thư phổi không tế bào nhỏ",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5113123035": [
+   {
+    "id": 479254,
+    "title": "Đánh giá độ chính xác của các xét nghiệm định lượng trên hệ thống Alinity ci 21 ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 454242,
+    "title": "Xác nhận giá trị sử dụng của một số chỉ số xét nghiệm trên hệ thống phân tích khí máu RAPIDPOINT 500E",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405873,
+    "title": "Thiết lập và ứng dụng giá trị thay đổi tham chiếu của hsTNT trong phê duyệt kết quả tự động",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 319080,
+    "title": "Rối loạn khả năng vận động trên mô hình ruồi giấm biểu hiện protein alpha-synuclein gây bệnh parkinson",
+    "year": 2021,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội) ",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5093658048": [
+   {
+    "id": 479257,
+    "title": "Đặc điểm lâm sàng, cận lâm sàng của bệnh nhân mãn kinh bị  viêm âm đạo do nhiễm trùng tại Bệnh viện Phụ sản Hà Nội \r\n",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   }
+  ],
+  "A5117439966": [
+   {
+    "id": 479519,
+    "title": "Đặc điểm nồng độ Methadone huyết thanh trên bệnh nhân nghiện chất dạng thuốc phiện điều trị ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5124784994": [
+   {
+    "id": 480319,
+    "title": "Đặc điểm đường hô hấp trên bệnh nhân sai hình xương hạng II bằng kĩ thuật CBCT và động lực học dòng chảy (CFD) ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5117405662": [
+   {
+    "id": 480319,
+    "title": "Đặc điểm đường hô hấp trên bệnh nhân sai hình xương hạng II bằng kĩ thuật CBCT và động lực học dòng chảy (CFD) ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5108135536": [
+   {
+    "id": 480448,
+    "title": "Đánh giá kết quả chương trình ngoại kiểm tổng phân tích tế bào máu ngoại vi giai đoạn 2022 - 2024 ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 306353,
+    "title": "Ứng dụng quy trình đông khô huyết tương trong sản xuất mẫu kiểm soát chất lượng đông máu",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5083493915": [
+   {
+    "id": 480459,
+    "title": "Nghiên cứu tổng quan hệ thống về gánh nặng triệu chứng sau mổ tại Việt Nam ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   }
+  ],
+  "A5119092185": [
+   {
+    "id": 480459,
+    "title": "Nghiên cứu tổng quan hệ thống về gánh nặng triệu chứng sau mổ tại Việt Nam ",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "t"
+   }
+  ],
+  "A5111037480": [
+   {
+    "id": 481681,
+    "title": "Nhận thức của người bệnh về bệnh viêm khớp dạng thấp theo bộ câu hỏi BIPQ tại Bệnh viện Đại học Y Hà Nội  ",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5066276170": [
+   {
+    "id": 455636,
+    "title": "Kết quả phẫu thuật thoát vị thành bụng bằng phương pháp khâu nội soi",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5117853104": [
+   {
+    "id": 462603,
+    "title": "So sánh hiệu quả ghép da ở bệnh nhân khuyết phần mềm có và không sử dụng hồng ngoại tại Bệnh viện Đại học Y Hà Nội năm 2025",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 452307,
+    "title": "Một số yếu tố liên quan đến sự hài lòng của người bệnh, người nhà người bệnh về chăm sóc điều dưỡng tại khoa phẫu thuật tạo hình thẩm mỹ, Bệnh viện Đại học Y Hà Nội năm 2023",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 452477,
+    "title": "Chất lượng cuộc sống của bệnh nhân sau phẫu thuật tạo hình thành bụng",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 378808,
+    "title": "Sự hài lòng của người bệnh/người nhà người bệnh về chăm sóc điều dưỡng tại Khoa Phẫu thuật tạo hình thẩm mỹ Bệnh viện Đại học Y Hà Nội năm 2023",
+    "year": 2024,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 3,
+    "why": "n"
+   }
+  ],
+  "A5045902772": [
+   {
+    "id": 462603,
+    "title": "So sánh hiệu quả ghép da ở bệnh nhân khuyết phần mềm có và không sử dụng hồng ngoại tại Bệnh viện Đại học Y Hà Nội năm 2025",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 452307,
+    "title": "Một số yếu tố liên quan đến sự hài lòng của người bệnh, người nhà người bệnh về chăm sóc điều dưỡng tại khoa phẫu thuật tạo hình thẩm mỹ, Bệnh viện Đại học Y Hà Nội năm 2023",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 452477,
+    "title": "Chất lượng cuộc sống của bệnh nhân sau phẫu thuật tạo hình thành bụng",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 378808,
+    "title": "Sự hài lòng của người bệnh/người nhà người bệnh về chăm sóc điều dưỡng tại Khoa Phẫu thuật tạo hình thẩm mỹ Bệnh viện Đại học Y Hà Nội năm 2023",
+    "year": 2024,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 3,
+    "why": "ni"
+   },
+   {
+    "id": 407908,
+    "title": "Kết quả và chất lượng cuộc sống của bệnh nhân sau phẫu thuật nâng mũi\r\n\r\n",
+    "year": 2024,
+    "issn": "2354-0613",
+    "journal": "Y học cộng đồng",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5117690971": [
+   {
+    "id": 462910,
+    "title": "Mức độ đau và các yếu tố liên quan ở người bệnh sau nút mạch u xơ tử cung tại Trung tâm Chẩn đoán Hình ảnh và Can thiệp điện quang Bệnh viện Đại học Y Hà Nội năm 2024-2025   ",
+    "year": 2025,
+    "issn": "2354-0737",
+    "journal": "Điều dưỡng Việt Nam",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5055203313": [
+   {
+    "id": 459376,
+    "title": "Kết quả chuyển phôi trữ trên nhóm bệnh nhân có tình trạng niêm mạc tử cung mỏng được bơm huyết tương giàu tiểu cầu tự thân tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 454669,
+    "title": "Kết quả thụ tinh trong ống nghiệm ở các cặp vợ chồng mang gen Thalassemia tại Trung tâm HTSS & Công nghệ mô ghép Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5117546079": [
+   {
+    "id": 458243,
+    "title": "Đặc điểm lâm sàng, cận lâm sàng, kết quả điều trị nhiễm giun lươn ở Bệnh viện Đại học y Hà Nội ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 1,
+    "why": "t"
+   }
+  ],
+  "A5021772413": [
+   {
+    "id": 457458,
+    "title": "Đánh giá tương đồng kết quả một số xét nghiệm đông máu cơ bản trên máy phân tích đông máu tự động STA-R MAX và ACL TOP 750 tại khoa Huyết học – Truyền máu, Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 457459,
+    "title": "Giá trị của một số chỉ số hồng cầu trong định hướng nguyên nhân hồng cầu nhỏ tại Bệnh viện Đại học Y Hà Nội giai đoạn 2024-2025 ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 457461,
+    "title": "Giá trị của một số chỉ số huyết học trong tiên lượng mức độ nặng của viêm tuỵ cấp ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 448979,
+    "title": "Báo cáo hai trường hợp viêm nội tâm mạc nhiễm khuẩn có thiếu máu hồng cầu nhỏ nhược sắc tại bệnh viện Đại học Y Hà Nội ",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 405936,
+    "title": "Thực trạng và kết quả điều trị thiếu máu ở người bệnh phẫu thuật chỉnh hình lớn tại Bệnh viện Đại học Y Hà Nội giai đoạn 2023-2024",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5130031421": [
+   {
+    "id": 457459,
+    "title": "Giá trị của một số chỉ số hồng cầu trong định hướng nguyên nhân hồng cầu nhỏ tại Bệnh viện Đại học Y Hà Nội giai đoạn 2024-2025 ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 457461,
+    "title": "Giá trị của một số chỉ số huyết học trong tiên lượng mức độ nặng của viêm tuỵ cấp ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5046582798": [
+   {
+    "id": 457702,
+    "title": "Kết quả điều trị và chất lượng cuộc sống người bệnh hẹp ống sống thắt lưng sau phẫu thuật ghép xương liên thân đốt lối bên và nẹp vít qua da lối sau tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 1,
+    "why": "t"
+   },
+   {
+    "id": 455702,
+    "title": "Thực trạng chức năng tình dục của bệnh nhân sau phẫu thuật nội soi điều trị thoát vị đĩa đệm cột sống thắt lưng cùng tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 456520,
+    "title": "Rối loạn lo âu trước phẫu thuật vít qua da của người bệnh chấn thương cột sống ngực, thắt lưng tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5117439594": [
+   {
+    "id": 457702,
+    "title": "Kết quả điều trị và chất lượng cuộc sống người bệnh hẹp ống sống thắt lưng sau phẫu thuật ghép xương liên thân đốt lối bên và nẹp vít qua da lối sau tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 1,
+    "why": "t"
+   },
+   {
+    "id": 457045,
+    "title": "Đánh giá kết quả sử dụng ghim da đầu trong phẫu thuật sọ não tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5117439595": [
+   {
+    "id": 457702,
+    "title": "Kết quả điều trị và chất lượng cuộc sống người bệnh hẹp ống sống thắt lưng sau phẫu thuật ghép xương liên thân đốt lối bên và nẹp vít qua da lối sau tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 1,
+    "why": "t"
+   },
+   {
+    "id": 405593,
+    "title": "Kết quả phẫu thuật hẹp ống sống thắt lưng và trượt đốt sống  thắt lưng bằng đường mổ lối bên tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5091955577": [
+   {
+    "id": 456402,
+    "title": "Đặc điểm di căn hạch quanh thần kinh thanh quản quặt ngược sau phẫu thuật nội soi ngực bụng cắt thực quản tư thế nghiêng 90 độ, nạo vét hạch 3 vùng điều trị ung thư biểu mô thực quản tại Bệnh viện Đại học Y Hà Nội ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5073294923": [
+   {
+    "id": 454844,
+    "title": "Thực trạng tâm lý cùa sinh viên năm thứ tư Trường Đại học Y Hà Nội năm học 2023 - 2024",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 2,
+    "why": "n"
+   }
+  ],
+  "A5138227206": [
+   {
+    "id": 455542,
+    "title": "Biến chứng trên mắt sau tiêm filler - báo cáo ca lâm sàng hiếm gặp và tổng quan y văn",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "ni"
+   }
+  ],
+  "A5011022662": [
+   {
+    "id": 455645,
+    "title": "Đánh giá cải thiện chất lượng cuộc sống ở bệnh nhân sau điều trị giải áp vi mạch cho chứng co giật nửa mặt",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 454251,
+    "title": "Nhân ba trường hợp ứng dụng hệ thống cảnh báo thần kinh trong phẫu thuật sọ não- cột sống tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405593,
+    "title": "Kết quả phẫu thuật hẹp ống sống thắt lưng và trượt đốt sống  thắt lưng bằng đường mổ lối bên tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5052818474": [
+   {
+    "id": 455114,
+    "title": "Mô hình bệnh tật và tình hình điều trị bệnh nhân nội trú tại Khoa Y học cổ truyền Bệnh viện Hữu Nghị năm 2022",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 455669,
+    "title": "Hiệu quả và độ an toàn của kem LX1 trong điều trị lâm sàng vết bầm tím trên mặt",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5056714570": [
+   {
+    "id": 455715,
+    "title": "Động lực làm việc và các yếu tố liên quan của nhân viên y tế tại tỉnh Bắc Giang năm 2024: Nghiên cứu cắt ngang",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5119471238": [
+   {
+    "id": 455130,
+    "title": "Prognostic value of preoperative serum CEA, CA 19-9, and CA 72-4 levels in patients with gastric cancer",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5055546973": [
+   {
+    "id": 454496,
+    "title": "Chi phí trực tiếp cho y tế của người bệnh phồi tắc nghẽn mạn tính mức độ trung bình đến rất nặng: Phân tích dữ liệu lớn từ Bào hiểm Y tế Việt Nam năm 2020",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5101502192": [
+   {
+    "id": 454499,
+    "title": "Nồng độ chất p huyết thanh trong bệnh mày đay mạn tính tự phát",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5016848759": [
+   {
+    "id": 454499,
+    "title": "Nồng độ chất p huyết thanh trong bệnh mày đay mạn tính tự phát",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5120067482": [
+   {
+    "id": 454557,
+    "title": "Kết quả giảm đau và cài thiện há miệng cùa laser trong điều trị rối loạn khớp thái dương hàm",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5017800911": [
+   {
+    "id": 454605,
+    "title": "Kết quả điều trị phẫu thuật tắc ruột sau mổ: Hồi cứu 42 ca bệnh tại một trung tâm",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5092935966": [
+   {
+    "id": 454605,
+    "title": "Kết quả điều trị phẫu thuật tắc ruột sau mổ: Hồi cứu 42 ca bệnh tại một trung tâm",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5138571383": [
+   {
+    "id": 454611,
+    "title": "Huyết thanh chần đoán virus herpes simplex 1,2 ờ các bệnh nhân hồng ban đa dạng, hội chứng Stevens-Johnson và hoại tủ thượng bì nhiễm độc",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5089248687": [
+   {
+    "id": 454629,
+    "title": "Bệnh tim mạch do xơ vữa và yếu tố nguy cơ ở người tăng cholesterol máu gia đinh",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5071131285": [
+   {
+    "id": 454629,
+    "title": "Bệnh tim mạch do xơ vữa và yếu tố nguy cơ ở người tăng cholesterol máu gia đinh",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5091853108": [
+   {
+    "id": 454795,
+    "title": "Kết quả điều trị còi xương phụ thuộc vitamin D loại 1A ở Bệnh viện Nhi Trung ương",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5093864786": [
+   {
+    "id": 454797,
+    "title": "Khảo sát tình trạng dinh dưỡng ở bệnh nhân IBD tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2025,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu Y học (Trường Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5111288522": [
+   {
+    "id": 453583,
+    "title": "Tác động của đào tạo liên tục tại trường Đại học Y Hà Nội giai đoạn 2015-2020: quan điểm của học viên và người sử dụng lao động ",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5115789648": [
+   {
+    "id": 487361,
+    "title": "Hành vi vệ sinh giấc ngủ kém và chất lượng giấc ngủ ở sinh viên y: Phân tích theo mô hình BASNEF tại một trường đại học y ở Việt Nam, 2025  ",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 453619,
+    "title": "Thực trạng thừa cân, béo phì và một số yếu tố liên quan đến lối sống của sinh viên năm thứ tư trường Đại học Y Hà Nội năm 2024 ",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5116061050": [
+   {
+    "id": 450020,
+    "title": "Hội chứng tiền kinh nguyệt và mối liên quan với một số yếu tố nguy cơ ở sinh viên nữ tại trường Đại học Y Hà Nội năm 2022",
+    "year": 2023,
+    "issn": "2354-0613",
+    "journal": "Y học cộng đồng",
+    "citations": 1,
+    "why": "n"
+   }
+  ],
+  "A5116061003": [
+   {
+    "id": 406526,
+    "title": "Kết quả băng ép vị trí chọc động mạch trong phòng thông tim can thiệp tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5092258659": [
+   {
+    "id": 406526,
+    "title": "Kết quả băng ép vị trí chọc động mạch trong phòng thông tim can thiệp tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 405674,
+    "title": "Can thiệp phình quai động mạch chủ sử dụng kỹ thuật mở cửa sổ thân cánh tay đầu",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 309476,
+    "title": "Ứng dụng phương pháp can thiệp kết hợp phẫu thuật trong điều trị bệnh lý phần quai động mạch chủ (phương pháp Hybrid)",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5101305029": [
+   {
+    "id": 405284,
+    "title": "Tác động của COVID-19 đến sức khỏe thể chất và tinh thần của nhân viên y tế tuyến tỉnh tham gia phòng chống COVID-19",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405686,
+    "title": "Thực trạng nguy cơ hội chứng nuôi ăn lại và mối liên quan đến tình trạng dinh dưỡng ở người bệnh điều trị nội khoa tại Bệnh viện Đại học Y Hà Nội năm 2023",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 377528,
+    "title": "Mức độ lo âu, stress và một số yếu tố liên quan của sinh viên trực tiếp tham gia chống dịch COVID 19 tại các địa phương",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5106359822": [
+   {
+    "id": 405561,
+    "title": "Sự hài lòng của người bệnh ngoại trú khi sử dụng dịch vụ tại Trung tâm Chẩn đoán hình ảnh và Can thiệp điện quang Bệnh viện Đại học Y Hà Nội năm 2023",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5010170990": [
+   {
+    "id": 405581,
+    "title": "Nghiên cứu tổng quan hệ thống và phân tích gộp về độc tính của thuốc lá nung nóng so với thuốc lá thông thường",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5114093866": [
+   {
+    "id": 405607,
+    "title": "Đánh giá hiệu quả của SNP Array để phát hiện các bất thường di truyền ở thai chậm phát triển trong tử cung",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5044125224": [
+   {
+    "id": 405607,
+    "title": "Đánh giá hiệu quả của SNP Array để phát hiện các bất thường di truyền ở thai chậm phát triển trong tử cung",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5102100871": [
+   {
+    "id": 405618,
+    "title": "Xác định đột biến gen EIF4G1 trên bệnh nhân Parkinson 10",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5107156609": [
+   {
+    "id": 405674,
+    "title": "Can thiệp phình quai động mạch chủ sử dụng kỹ thuật mở cửa sổ thân cánh tay đầu",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 309476,
+    "title": "Ứng dụng phương pháp can thiệp kết hợp phẫu thuật trong điều trị bệnh lý phần quai động mạch chủ (phương pháp Hybrid)",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5100583700": [
+   {
+    "id": 405739,
+    "title": "Đặc điểm lâm sàng và vi khuẩn học áp xe quanh amiđan tại Bệnh viện Tai Mũi Họng Trung ương từ 01/09/2023 đến 31/03/2024",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   }
+  ],
+  "A5040955367": [
+   {
+    "id": 405787,
+    "title": "Kiến thức, thái độ về việc tiêm vắc xin phòng COVID-19 của người dân xã Bồ Đề, huyện Bình Lục, tỉnh Hà Nam năm 2023 và một số yếu tố liên quan",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5059509901": [
+   {
+    "id": 405787,
+    "title": "Kiến thức, thái độ về việc tiêm vắc xin phòng COVID-19 của người dân xã Bồ Đề, huyện Bình Lục, tỉnh Hà Nam năm 2023 và một số yếu tố liên quan",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5101290669": [
+   {
+    "id": 405787,
+    "title": "Kiến thức, thái độ về việc tiêm vắc xin phòng COVID-19 của người dân xã Bồ Đề, huyện Bình Lục, tỉnh Hà Nam năm 2023 và một số yếu tố liên quan",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5111058816": [
+   {
+    "id": 463387,
+    "title": "Các yếu tố liên quan đến tái phát u nhú đảo ngược mũi xoang ",
+    "year": 2025,
+    "issn": "1859-3704",
+    "journal": "Tai Mũi Họng Việt Nam",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405866,
+    "title": "Tổng quan luận điểm sử dụng thuốc lợi tiểu điều trị bệnh Ménière",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405870,
+    "title": "Tổng quan vai trò tiêm corticosteroid xuyên màng nhĩ với cải thiện triệu chứng chóng mặt và thính lực trong bệnh ",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5140170362": [
+   {
+    "id": 405870,
+    "title": "Tổng quan vai trò tiêm corticosteroid xuyên màng nhĩ với cải thiện triệu chứng chóng mặt và thính lực trong bệnh ",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5010679554": [
+   {
+    "id": 405902,
+    "title": "Đánh giá hiệu quả giải trình tự gen thế hệ mới trong phát hiện bất thường di truyền ở thai có bất thường hình thái tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5064895816": [
+   {
+    "id": 501489,
+    "title": "Hiệu quả dự phòng hạ thân nhiệt và giảm run sau mổ của phương pháp giữ ấm cơ học trong phẫu thuật cột sống thắt lưng: can thiệp lâm sàng có đối chứng",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 458743,
+    "title": "Đánh giá chất lượng hồi tỉnh của người bệnh được duy trì mê bằng Sevoflurane so với Desflurane trong phẫu thuật tiết niệu nội soi tán sỏi ống mềm ",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 405910,
+    "title": "Hiệu quả của một số phương pháp dịch chuyển sự chú ý lên sự hợp tác của trẻ em trước gây mê tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 309364,
+    "title": "Hiệu quả kiểm soát đường thở và mức độ tổn thương vùng hầu họng của mask thanh quản I-gel so với mask thanh quản cổ điển",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5111177435": [
+   {
+    "id": 456601,
+    "title": "Chất lượng cuộc sống của người bệnh phẫu thuật chấn thương cột sống ngực thắt lưng bằng phương pháp cố định cột sống vít qua da ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 2,
+    "why": "t"
+   },
+   {
+    "id": 405938,
+    "title": "Đánh giá chất lượng cuộc sống của người bệnh loãng xương tại Bệnh viện Đại học Y Hà Nội bằng bộ câu hỏi EQ-5D-5L",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 405942,
+    "title": "Kết quả phẫu thuật cố định cột sống và ghép xương liên thân đốt qua lỗ liên hợp xâm lấn tối thiểu điều trị trượt đốt sống thắt lưng đơn tầng",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   },
+   {
+    "id": 405939,
+    "title": "Kết quả phẫu thuật nội soi liên bản sống điều trị thoát vị đĩa đệm cột sống thắt lưng tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 306136,
+    "title": "Quyết định sàng lọc tự kỷ cho con ở bà mẹ và một số yếu tố liên quan năm 2019",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5032901480": [
+   {
+    "id": 456308,
+    "title": "Kết quả giảm đau và phục hồi chức năng cột sống ở người bệnh trượt đốt sống hai tầng điều trị bằng phẫu thuật ít xâm lấn cố định cột sống qua và ghép xương liên thân đốt qua lỗ liên hợp",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam",
+    "citations": 2,
+    "why": "ni"
+   },
+   {
+    "id": 405946,
+    "title": "Chất lượng cuộc sống của người bệnh xẹp đốt sống do loãng xương được điều trị bơm xi măng tạo hình thân đốt sống",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 2,
+    "why": "n"
+   },
+   {
+    "id": 405939,
+    "title": "Kết quả phẫu thuật nội soi liên bản sống điều trị thoát vị đĩa đệm cột sống thắt lưng tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5115616420": [
+   {
+    "id": 405942,
+    "title": "Kết quả phẫu thuật cố định cột sống và ghép xương liên thân đốt qua lỗ liên hợp xâm lấn tối thiểu điều trị trượt đốt sống thắt lưng đơn tầng",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "t"
+   }
+  ],
+  "A5096170806": [
+   {
+    "id": 405960,
+    "title": "Báo cáo ca lâm sàng ít gặp: Giảm áp lực nội sọ do rò dịch não tủy tại cổ cao",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5021894139": [
+   {
+    "id": 405960,
+    "title": "Báo cáo ca lâm sàng ít gặp: Giảm áp lực nội sọ do rò dịch não tủy tại cổ cao",
+    "year": 2024,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 383698,
+    "title": "Ứng dụng tiêm Botulinum Neurotoxin dưới hướng dẫn của siêu âm và điện cơ trong điều trị loạn trương lực cơ cổ: Ca lâm sàng",
+    "year": 2024,
+    "issn": "2354-0931",
+    "journal": "Thần kinh học",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 309486,
+    "title": "Đặc điểm lâm sàng, hình ảnh học cộng hưởng từ và tính an toàn của Rituximab liều thấp trên các trường hợp mắc phổ bệnh lý viêm tuỷ thị thần kinh",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 3,
+    "why": "n"
+   }
+  ],
+  "A5106347841": [
+   {
+    "id": 382834,
+    "title": "Thực trạng lo âu của cha mẹ bệnh nhi nội soi tiêu hóa gây mê và các yếu tố liên quan tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 1,
+    "why": "t"
+   },
+   {
+    "id": 321271,
+    "title": "So sánh hiệu quả làm sạch dạ dày bằng epumisan trong chuẩn bị người bệnh nội soi tiêu hóa trên tại Trung tâm Nội soi - Bệnh viện Đại học Y Hà Nội",
+    "year": 2021,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam) ",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5109786169": [
+   {
+    "id": 383895,
+    "title": "Đặc điểm hình ảnh và điều trị dị vật xâm nhập qua đường tiêu hóa dưới cơ hoành tại Bệnh viện Đại Học Y Hà Nội ",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5100578654": [
+   {
+    "id": 306222,
+    "title": "Một số yếu tố liên quan đến chất lượng cuộc sống của người cao tuổi thành phố Hà Nội năm 2018",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5034680959": [
+   {
+    "id": 306495,
+    "title": "Rối loạn lo âu ở học sinh trường phổ thông trung học Nguyễn Thị Minh Khai, Hà Nội năm học 2018 – 2019 và một số yếu tố liên quan",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5041167069": [
+   {
+    "id": 306042,
+    "title": "Đặc điểm nhân cách và lo âu ở sinh viên năm thứ hai trường đại học Y Hà Nội năm học 2016-2017",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 5,
+    "why": "n"
+   }
+  ],
+  "A5118848032": [
+   {
+    "id": 306048,
+    "title": "Tình trạng suy giảm nhận thức ở người cao tuổi qua sàng lọc tại một số huyện thuộc tỉnh Hà Nam năm 2018",
+    "year": 2020,
+    "issn": "0868-202X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "n"
+   }
+  ],
+  "A5069299163": [
+   {
+    "id": 322010,
+    "title": "Kết quả phẫu thuật nội soi điều trị hẹp khoang dưới mồm cùng vai tại bệnh viện Đại học Y Hà Nội",
+    "year": 2021,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5053256247": [
+   {
+    "id": 322010,
+    "title": "Kết quả phẫu thuật nội soi điều trị hẹp khoang dưới mồm cùng vai tại bệnh viện Đại học Y Hà Nội",
+    "year": 2021,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5059428254": [
+   {
+    "id": 319077,
+    "title": "Đánh giá phương pháp và giá trị lâm sàng của xét nghiệm anti-SARS-CoV-2 trên hệ thống roche cobas e801",
+    "year": 2021,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội) ",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5138047727": [
+   {
+    "id": 319108,
+    "title": "Hiệu quả của can thiệp thí điểm giảm sử dụng methamphetamine trên bệnh nhân điều trị methadone tại Hà Nội",
+    "year": 2021,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội) ",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5024330698": [
+   {
+    "id": 319108,
+    "title": "Hiệu quả của can thiệp thí điểm giảm sử dụng methamphetamine trên bệnh nhân điều trị methadone tại Hà Nội",
+    "year": 2021,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội) ",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5116457784": [
+   {
+    "id": 319218,
+    "title": "Giá trị của test da và kết quả giảm mẫn cảm nhanh với huyết thanh kháng dại tinh chế SAR",
+    "year": 2021,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội) ",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5029559294": [
+   {
+    "id": 319117,
+    "title": "Chiến lược đối phó với căng thẳng học tập của sinh viên Trường Đại học Y Hà Nội, năm học 2018-2019",
+    "year": 2021,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội) ",
+    "citations": 1,
+    "why": "n"
+   }
+  ],
+  "A5012457922": [
+   {
+    "id": 319120,
+    "title": "Thực trạng chất lượng cuộc sống ở người bệnh điều trị methadone khu vực Hà Nội",
+    "year": 2021,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội) ",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5110767154": [
+   {
+    "id": 319145,
+    "title": "Nghiên cứu đặc điểm lâm sàng và cận lâm sàng ung thư cổ tử cung với các type HPV nguy cơ cao",
+    "year": 2021,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội) ",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5106602431": [
+   {
+    "id": 319158,
+    "title": "Nghiên cứu sản xuất một số chủng vi khuẩn dạng đông khô trong kiểm tra chất lượng xét nghiệm vi sinh",
+    "year": 2021,
+    "issn": "2354-080X",
+    "journal": "Tạp chí Nghiên cứu y học (Đại học Y Hà Nội) ",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5090301895": [
+   {
+    "id": 383092,
+    "title": "Giá trị của phương pháp chụp cộng hưởng từ bạch mạch qua hạch bẹn trong đánh giá giải phẫu và chẩn đoán rò ống ngực",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 1,
+    "why": "t"
+   },
+   {
+    "id": 309480,
+    "title": "Đánh giá kết quả bước đầu kỹ thuật nút tắc ống ngực điều trị rò dưỡng chấp tại Bệnh viện Đại học Y Hà Nội",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 1,
+    "why": "ni"
+   },
+   {
+    "id": 309482,
+    "title": "Điều trị rò bạch mạch sau mổ bằng can thiệp qua da xuyên nhu mô gan: Báo cáo ca lâm sàng",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5101237639": [
+   {
+    "id": 309061,
+    "title": "Tiếp cận chẩn đoán bệnh phổi lắng đọng Hemosiderin vô căn ở trẻ em",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5087449933": [
+   {
+    "id": 309205,
+    "title": "Tỷ lệ mắc và diễn biến tự nhiên của rối loạn tiêu hóa chức năng ở trẻ em 0 tháng đến 4 tuổi",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5093632848": [
+   {
+    "id": 309031,
+    "title": "Ảnh hưởng của yếu tố bệnh đến chất lượng cuộc sống liên quan sức khỏe ở trẻ Lupus ban đỏ hệ thống",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 2,
+    "why": "n"
+   }
+  ],
+  "A5003511467": [
+   {
+    "id": 309479,
+    "title": "Ứng dụng phẫu thuật nội soi một lỗ điều trị thoát vị bẹn ở trẻ nữ có sử dụng laser cắt ống phúc tinh mạc",
+    "year": 2020,
+    "issn": "2354-080X",
+    "journal": "Nghiên cứu y học (Đại học Y Hà Nội)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5007985787": [
+   {
+    "id": 459584,
+    "title": "Ảnh hưởng của đột biến nhóm gen TEX với tình trạng hiếm muộn ở nam giới ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 306523,
+    "title": "Đặc điểm lâm sàng của nam giới xuất tinh sớm: sự khác nhau giữa xuất tinh sớm nguyên phát và thứ phát",
+    "year": 2020,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 1,
+    "why": "ni"
+   }
+  ],
+  "A5111117091": [
+   {
+    "id": 377882,
+    "title": "Đặc điểm lâm sàng, Xquang của nhóm bệnh nhân có chỉ định cấy ghép Implant tức thì vùng răng sau có sử dụng kỹ thuật ghép xương 2 vùng",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 1,
+    "why": "t"
+   }
+  ],
+  "A5036723448": [
+   {
+    "id": 504365,
+    "title": "Nang hoạt dịch bao dây thần kinh gây hội chứng đường hầm xương trụ: báo cáo một trường hợp và tổng quan y văn\r\n",
+    "year": 2026,
+    "issn": "1859-2872",
+    "journal": "Tạp chí Y dược lâm sàng 108",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5128113447": [
+   {
+    "id": 481408,
+    "title": "Đánh giá hiệu quả của dẫn lưu ngực có rãnh dọc ở bệnh nhân phẫu thuật tim hở",
+    "year": 2026,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5148450161": [
+   {
+    "id": 463387,
+    "title": "Các yếu tố liên quan đến tái phát u nhú đảo ngược mũi xoang ",
+    "year": 2025,
+    "issn": "1859-3704",
+    "journal": "Tai Mũi Họng Việt Nam",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5062581785": [
+   {
+    "id": 463393,
+    "title": "Đánh giá kết quả phẫu thuật nội soi mở xoang hàm qua khe dưới ",
+    "year": 2025,
+    "issn": "1859-3704",
+    "journal": "Tai Mũi Họng Việt Nam",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 456713,
+    "title": "Kết quả tạo hình hệ thống ống tủy ở nhóm răng hàm nhỏ thứ nhất hàm trên có sử dụng file Race Evo trên thực nghiệm ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 406484,
+    "title": "Kết quả soi mòn bề mặt men răng vĩnh viễn trên thực nghiệm",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 380565,
+    "title": "Đánh giá kết quả điều trị răng viêm quanh chóp mạn tính bằng phương pháp hàn monoblock MTA",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5077673654": [
+   {
+    "id": 463393,
+    "title": "Đánh giá kết quả phẫu thuật nội soi mở xoang hàm qua khe dưới ",
+    "year": 2025,
+    "issn": "1859-3704",
+    "journal": "Tai Mũi Họng Việt Nam",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5119010838": [
+   {
+    "id": 459234,
+    "title": "Phân tích khớp cắn trước và sau phục hình cố định đơn lẻ trên implant vùng răng sau bằng T-Scan ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 457939,
+    "title": "Đặc điểm cận lâm sàng của bệnh nhân bị rối loạn khớp thái dương hàm có chỉ định điều trị bằng máng nhai ổn định ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "n"
+   },
+   {
+    "id": 378417,
+    "title": "Đánh giá hệ thống máy mô phỏng ảo trong thực hành tạo xoang trám loại I tại Viện Đào tạo Răng Hàm Mặt",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "n"
+   }
+  ],
+  "A5119759203": [
+   {
+    "id": 459234,
+    "title": "Phân tích khớp cắn trước và sau phục hình cố định đơn lẻ trên implant vùng răng sau bằng T-Scan ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5074291508": [
+   {
+    "id": 462249,
+    "title": "Khảo sát hội chứng trào ngược dạ dày thực quản trên bệnh nhân đái tháo đường tuýp 2 bằng bộ câu hỏi GERD-Q ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5117693116": [
+   {
+    "id": 457939,
+    "title": "Đặc điểm cận lâm sàng của bệnh nhân bị rối loạn khớp thái dương hàm có chỉ định điều trị bằng máng nhai ổn định ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   },
+   {
+    "id": 459438,
+    "title": "Đặc điểm lâm sàng của bệnh nhân bị rối loạn khớp thái dương hàm có chỉ định điều trị bằng máng nhai ổn định ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5042892477": [
+   {
+    "id": 459438,
+    "title": "Đặc điểm lâm sàng của bệnh nhân bị rối loạn khớp thái dương hàm có chỉ định điều trị bằng máng nhai ổn định ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5060239082": [
+   {
+    "id": 456713,
+    "title": "Kết quả tạo hình hệ thống ống tủy ở nhóm răng hàm nhỏ thứ nhất hàm trên có sử dụng file Race Evo trên thực nghiệm ",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   },
+   {
+    "id": 380565,
+    "title": "Đánh giá kết quả điều trị răng viêm quanh chóp mạn tính bằng phương pháp hàn monoblock MTA",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5093555676": [
+   {
+    "id": 451942,
+    "title": "Phản hồi của sinh viên năm cuối ngành bác sĩ y học dự phòng về chương trình đào tạo của bác sĩ y học dự phòng từ năm 2020 đến năm 2023",
+    "year": 2025,
+    "issn": "2354-0613",
+    "journal": "Y học Cộng đồng",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5054264187": [
+   {
+    "id": 406295,
+    "title": "Tổng quan về xu hướng điều trị liệt mặt do lạnh",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5114450813": [
+   {
+    "id": 406546,
+    "title": "Khảo sát đặc điểm lâm sàng, cận lâm sàng của bệnh nhân viêm gan do thuốc",
+    "year": 2025,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5033373110": [
+   {
+    "id": 383092,
+    "title": "Giá trị của phương pháp chụp cộng hưởng từ bạch mạch qua hạch bẹn trong đánh giá giải phẫu và chẩn đoán rò ống ngực",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 1,
+    "why": "n"
+   }
+  ],
+  "A5054216795": [
+   {
+    "id": 383181,
+    "title": "Đặc điểm lâm sàng, cận lâm sàng và kết quả điều trị người bệnh nhồi máu não cấp tuần hoàn sau",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5114800118": [
+   {
+    "id": 383914,
+    "title": "Đặc điểm lâm sàng, cận lâm sàng và kết quả điều trị của bệnh nhân sốc tim do nhồi máu cơ tim cấp",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5093465097": [
+   {
+    "id": 380072,
+    "title": "Đánh giá kết quả tạo hình che phủ khuyết phần mềm bằng phương pháp ghép da mỏng cố định bằng hệ thống hút áp lực âm",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ],
+  "A5018632671": [
+   {
+    "id": 380565,
+    "title": "Đánh giá kết quả điều trị răng viêm quanh chóp mạn tính bằng phương pháp hàn monoblock MTA",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5117227396": [
+   {
+    "id": 378417,
+    "title": "Đánh giá hệ thống máy mô phỏng ảo trong thực hành tạo xoang trám loại I tại Viện Đào tạo Răng Hàm Mặt",
+    "year": 2024,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "ni"
+   }
+  ],
+  "A5068741058": [
+   {
+    "id": 377403,
+    "title": "Một số kích thước hầu họng trên phim sọ nghiêng từ xa ở nhóm người trưởng thành có tương quan xương khác nhau",
+    "year": 2023,
+    "issn": "1859-1868",
+    "journal": "Tạp chí Y học Việt Nam (Tổng hội Y học Việt Nam)",
+    "citations": 0,
+    "why": "t"
+   }
+  ]
+ }
+}

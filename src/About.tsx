@@ -36,14 +36,16 @@ export function AboutPage({ section }: { section: string }) {
       <li><b>Danh mục tạp chí và điểm của HĐGSNN</b>, hạng Q theo SJR/Scopus: qua EduFind.</li>
       <li><b>Danh sách cơ sở giáo dục</b> do Bộ Giáo dục và Đào tạo công bố.</li>
       <li><b>Danh sách Top 2% nhà khoa học</b> (Elsevier), xem mục Giấy phép.</li>
-      <li><b>Liên kết Google Scholar</b> do tác giả cung cấp. ProFind™ không truy xuất Google Scholar tự động.</li></ul> : <ul>
+      <li><b>Liên kết Google Scholar</b> do tác giả cung cấp. ProFind™ không truy xuất Google Scholar tự động.</li>
+      <li><b>STI.gov.vn</b> (Hệ thống thông tin quốc gia về khoa học, công nghệ và đổi mới sáng tạo): API công khai, robots.txt cho phép. Dùng cho (1) liên kết "Tra trên STI.gov.vn" ở hồ sơ, (2) chỉ số tham khảo cấp tạp chí (số công bố và trích dẫn trong nước theo ISSN), (3) mục thí điểm "Công bố trong nước (nguồn STI)" cho một trường. Dữ liệu STI <b>chưa xác thực, không tính vào PRO-SCORE1000™ và hạng</b>. STI chưa công bố điều khoản tái sử dụng dữ liệu; ProFind™ đang xin phép và chỉ dẫn tới bản ghi gốc, không lấy thông tin cá nhân nhạy cảm.</li></ul> : <ul>
       <li><b>OpenAlex</b> (CC0): author profiles, works, DOI, citations, affiliations.</li>
       <li><b>Semantic Scholar</b>: extra citation counts by DOI (the larger value of the two sources is used per work).</li>
       <li><b>ORCID</b> and <b>ROR</b> (public data, CC0): author and institution identifiers.</li>
       <li><b>State Professorship Council (HĐGSNN) journal catalogue and scores</b>, Q quartiles from SJR/Scopus: via EduFind.</li>
       <li><b>List of education institutions</b> published by the Ministry of Education and Training.</li>
       <li><b>Top 2% scientists list</b> (Elsevier), see the Licences section.</li>
-      <li><b>Google Scholar links</b> provided by the authors. ProFind™ does not scrape Google Scholar.</li></ul> },
+      <li><b>Google Scholar links</b> provided by the authors. ProFind™ does not scrape Google Scholar.</li>
+      <li><b>STI.gov.vn</b> (Vietnam's national information system on science, technology and innovation): public API, allowed by robots.txt. Used for (1) the "Search on STI.gov.vn" link on profiles, (2) journal-level reference figures (domestic papers and citations by ISSN), (3) a pilot "Domestic publications (source: STI)" section for one university. STI data is <b>unverified and not counted in PRO-SCORE1000™ or rank</b>. STI has not published reuse terms; ProFind™ is asking permission and only links to the original record, and collects no sensitive personal data.</li></ul> },
     { id: "diem", icon: "chart", h: vi ? "PRO-SCORE1000™: cách tính và giới hạn" : "PRO-SCORE1000™: method and limits", body: vi ? <>
       <p><a className="chip" href="#/pro-score">Xem trang đầy đủ về PRO-SCORE1000™ →</a></p>
       <p><b>PRO-SCORE1000™ là chỉ số tham khảo riêng của ProFind™ (thang 0 đến 100), không phải xếp hạng chính thức.</b> Ý tưởng do Viện ISA và tác giả Lương Việt Hoàng đề xuất.</p>
@@ -63,7 +65,7 @@ export function AboutPage({ section }: { section: string }) {
       <h3>Dữ liệu do dự án biên soạn: CC BY 4.0</h3>
       <p>Cấu trúc, chuẩn hóa, đối chiếu tác giả, đơn vị và tạp chí, cách tính điểm tham khảo, văn bản và giao diện do ProFind™ biên soạn theo giấy phép <b>Creative Commons Attribution 4.0 (CC BY 4.0)</b>: được dùng, chia sẻ, chỉnh sửa, kể cả thương mại, với điều kiện ghi công "ProFind™, ISA Vietnam, Lương Việt Hoàng" và nêu rõ nếu có chỉnh sửa.</p>
       <h3>Dữ liệu bên thứ ba</h3>
-      <p>OpenAlex, ORCID và ROR theo CC0. Danh mục tạp chí và điểm của HĐGSNN, danh sách cơ sở giáo dục, Semantic Scholar, SCImago/Scopus (Elsevier B.V.) và Web of Science (Clarivate) theo điều khoản và nhãn hiệu của chủ sở hữu.</p>
+      <p>OpenAlex, ORCID và ROR theo CC0. Danh mục tạp chí và điểm của HĐGSNN, danh sách cơ sở giáo dục, Semantic Scholar, SCImago/Scopus (Elsevier B.V.) và Web of Science (Clarivate) theo điều khoản và nhãn hiệu của chủ sở hữu. Dữ liệu từ STI.gov.vn: chưa có điều khoản tái sử dụng được công bố, đang xin phép; chỉ hiển thị tham khảo kèm ghi nguồn và không thuộc CC BY 4.0 của dự án.</p>
       <h3>Nhãn "Top 2% thế giới": CC BY-NC 3.0 (chỉ phi thương mại)</h3>
       <p>Ioannidis J.P.A., Baas J., Klavans R., Boyack K.W. (2026), "Updated science-wide author databases of standardized citation indicators", phiên bản 9 (tháng 8/2026), Elsevier BV (Mendeley Data), DOI 10.17632/btchxktzyw.9, dựa trên dữ liệu Scopus. Giấy phép Creative Commons Attribution-NonCommercial 3.0.</p>
       <p>Trường "Top 2%" (hạng, lĩnh vực) không thuộc CC BY 4.0 của dự án. ISA Vietnam vận hành ProFind™ không nhằm mục đích thương mại. Ai dùng lại bộ dữ liệu của ProFind™ cho mục đích thương mại phải bỏ trường này. Không có tên trong danh sách không có nghĩa là ít được trích dẫn.</p>
@@ -73,7 +75,7 @@ export function AboutPage({ section }: { section: string }) {
       <h3>Project-compiled data: CC BY 4.0</h3>
       <p>The structure, normalisation, author–institution–journal matching, reference scoring, text and interface compiled by ProFind™ are licensed under <b>Creative Commons Attribution 4.0 (CC BY 4.0)</b>: use, share and adapt, including commercially, with credit to "ProFind™, ISA Vietnam, Luong Viet Hoang" and a note of any changes.</p>
       <h3>Third-party data</h3>
-      <p>OpenAlex, ORCID and ROR are CC0. The Council journal catalogue and scores, the institution list, Semantic Scholar, SCImago/Scopus (Elsevier B.V.) and Web of Science (Clarivate) follow their owners' terms and trademarks.</p>
+      <p>OpenAlex, ORCID and ROR are CC0. The Council journal catalogue and scores, the institution list, Semantic Scholar, SCImago/Scopus (Elsevier B.V.) and Web of Science (Clarivate) follow their owners' terms and trademarks. STI.gov.vn data: no reuse terms published yet and permission is being requested; shown for reference with attribution only and not covered by the project's CC BY 4.0.</p>
       <h3>"Top 2% worldwide" label: CC BY-NC 3.0 (non-commercial only)</h3>
       <p>Ioannidis J.P.A., Baas J., Klavans R., Boyack K.W. (2026), "Updated science-wide author databases of standardized citation indicators", version 9 (August 2026), Elsevier BV (Mendeley Data), DOI 10.17632/btchxktzyw.9, based on Scopus data. Licence: Creative Commons Attribution-NonCommercial 3.0.</p>
       <p>The "Top 2%" field (rank, field) is not covered by the project's CC BY 4.0. ISA Vietnam operates ProFind™ for non-commercial purposes. Anyone reusing ProFind™ data commercially must remove this field. Not being on the list does not mean few citations.</p>
