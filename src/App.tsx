@@ -570,7 +570,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
           {a.proParts && <section className="card" aria-label="PRO-SCORE1000™">
             <h2>PRO-SCORE1000™ <small className="meta">{t("proConf" + a.proConf as "proConf0")}</small></h2>
             <ul className="hbars">{(["impact", "output", "lead", "quality", "momentum", "steady", "recog"] as const).map((k) => <li key={k}><span>{t(("pp_" + k) as "pp_impact")}</span><i className="hb"><u className="c1" style={{ width: `${a.proParts![k]}%` }} /></i><b>{a.proParts![k]}</b></li>)}</ul>
-            {a.proStab != null && a.proTier && <p className="meta"><b>{t("proStab", { n: String(a.proStab), t: t(("topN") as "topN", { n: a.proTier.slice(1) }) })}</b></p>}
+            {a.proStab != null && a.proTier && <p className="meta"><b>{t("proStab", { n: String(a.proStab), t: t(("topN") as "topN", { n: num(Number(a.proTier.slice(1))) }) })}</b></p>}
             <p className="meta">{t("proNote")} <a href="#/pro-score">{t("proMore")}</a></p>
           </section>}
         </div>)}
