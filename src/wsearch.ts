@@ -31,16 +31,19 @@ async function records(ids: number[]): Promise<WorkHit[]> {
 }
 
 /** Tìm công trình theo tên (từ nguyên vẹn, không phân biệt dấu/hoa thường). Kết quả theo trích dẫn giảm dần. */
-export function useWorks(query: string, page = 20) {
+/** Tìm công trình theo trang: mỗi trang tối đa 25 kết quả (cùng quy tắc với mọi danh sách khác). */
+export function useWorks(query: string, pageIdx = 0, size = 25) {
   const [st, setSt] = useState<{ q: string; ids: number[]; items: WorkHit[]; busy: boolean; err: boolean }>({ q: "", ids: [], items: [], busy: false, err: false });
-  const tok = useRef(0);
+  const tok = useRef(0), cache = useRef<{ q: string; ids: number[] }>({ q: "", ids: [] });
   useEffect(() => {
     const q = query.trim(); const my = ++tok.current;
-    if (norm(q).replace(/\s/g, "").length < 3) { setSt({ q, ids: [], items: [], busy: false, err: false }); return; }
+    if (norm(q).replace(/\s/g, "").length < 3) { cache.current = { q, ids: [] }; setSt({ q, ids: [], items: [], busy: false, err: false }); return; }
     setSt((s) => ({ ...s, q, busy: true, err: false }));
-    const h = setTimeout(() => { findIds(q).then(async (ids) => { const items = await records(ids.slice(0, page)); if (my === tok.current) setSt({ q, ids, items, busy: false, err: false }); }).catch(() => { if (my === tok.current) setSt({ q, ids: [], items: [], busy: false, err: true }); }); }, 250);
+    const h = setTimeout(() => {
+      const ids = cache.current.q === q && cache.current.ids.length ? Promise.resolve(cache.current.ids) : findIds(q).then((r) => { cache.current = { q, ids: r }; return r; });
+      ids.then(async (all) => { const items = await records(all.slice(pageIdx * size, (pageIdx + 1) * size)); if (my === tok.current) setSt({ q, ids: all, items, busy: false, err: false }); }).catch(() => { if (my === tok.current) setSt({ q, ids: [], items: [], busy: false, err: true }); });
+    }, 250);
     return () => clearTimeout(h);
-  }, [query, page]);
-  const more = async () => { const my = tok.current, n = st.items.length; const add = await records(st.ids.slice(n, n + page)); if (my === tok.current) setSt((s) => ({ ...s, items: [...s.items, ...add] })); };
-  return { total: st.ids.length, items: st.items, busy: st.busy, err: st.err, more, forQ: st.busy ? "" : st.q };
+  }, [query, pageIdx, size]);
+  return { total: st.ids.length, items: st.items, busy: st.busy, err: st.err, forQ: st.busy ? "" : st.q };
 }

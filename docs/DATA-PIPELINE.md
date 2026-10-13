@@ -187,3 +187,6 @@ Khi nhiều mã OpenAlex cùng một ORCID được gộp vào một hồ sơ, h
 
 ## Ảnh chia sẻ (og.jpg)
 `PLAYWRIGHT_PATH=<đường dẫn playwright> node scripts/build-icons.mjs --png` dựng lại `public/og.jpg` và ghi `public/og.json` (số nhà khoa học và công trình làm tròn xuống nghìn, ví dụ "45.000+"). `test/og.test.mjs` báo lỗi khi số trên ảnh lệch dữ liệu hiện hành, nên chạy lại lệnh này sau mỗi lần cập nhật dữ liệu lớn (`scripts/refresh.mjs` đã gọi). Mạng xã hội giữ ảnh cũ trong bộ nhớ đệm: `index.html` thêm `?v=<ngày dựng>` vào đường dẫn ảnh; muốn cập nhật ngay trên Facebook thì dán liên kết vào công cụ Sharing Debugger rồi bấm Scrape Again.
+
+## Phân trang (quy tắc toàn trang)
+- Mọi danh sách kết quả công khai hiển thị tối đa 25 mục mỗi trang (`PAGE` trong `src/Pager.tsx`), xem tiếp bằng bộ chuyển trang `Pager`: danh sách nhà khoa học, bảng xếp hạng đơn vị/ngành, tìm công trình, công trình trong hồ sơ (kể cả mục công trình khác), trang doanh nghiệp. Danh sách mới phải dùng `Pager` chung, không tự đặt cỡ trang hay nút "xem thêm". Trang quản trị có bộ chọn số hàng riêng (mặc định 25); các trang tĩnh SEO chưa phân trang.
