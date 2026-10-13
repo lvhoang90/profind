@@ -17,14 +17,15 @@ test("tệp chức danh: chỉ id -> chức danh hợp lệ, không trường c�
   for (const [id, v] of Object.entries(T.by)) { assert.match(id, /^A\d+$/); assert.match(v, VALID_TITLE); }
 });
 
-test("chỉ hồ sơ thật, không suspect, thuộc trường được bật, hiện đang công tác", () => {
-  assert.deepEqual(T.meta.units, ENABLED_UNITS);
-  assert.ok(ENABLED_UNITS.length <= 5, "lần đầu chỉ bật tối đa 5 trường");
+test("chỉ hồ sơ thật, không suspect, thuộc đơn vị được bật, hiện đang công tác", () => {
+  const all = T.meta.units === "all";
+  assert.ok(all || JSON.stringify(T.meta.units) === JSON.stringify(ENABLED_UNITS), "units phải là \"all\" hoặc danh sách ENABLED_UNITS");
   const risky = new Set([...JSON.parse(rd("data/merge-risk.json")).profiles.map((p) => p.id), ...JSON.parse(rd("data/split-candidates.json")).flatMap((x) => [x.a, x.b]), ...JSON.parse(rd("data/split-hold.json")).flatMap((x) => x.pair)]);
+  const inst = new Set(P.institutions.map((i) => i.id));
   for (const id of Object.keys(T.by)) {
     const a = au.get(id); assert.ok(a, `mã lạ: ${id}`);
     assert.equal(profileProblem(a, risky), null, `${id} không đạt điều kiện hồ sơ sạch`);
-    assert.ok(a.institutions.some((u) => ENABLED_UNITS.includes(u) && !(a.instPast ?? []).includes(u)), `${id} không thuộc trường được bật`);
+    assert.ok(a.institutions.some((u) => inst.has(u) && (all || ENABLED_UNITS.includes(u)) && !(a.instPast ?? []).includes(u)), `${id} không thuộc đơn vị được bật`);
   }
 });
 
@@ -50,6 +51,7 @@ test("tên: bỏ danh xưng, xoay vòng; cơ quan: khớp chắc đúng toàn ch
   assert.equal(orgUnitOf("Trường Đại học Y Dược Cần Thơ", m), "ctump");
   assert.equal(orgUnitOf("Trường Đại học Nam Cần Thơ", m), null);
   assert.equal(orgUnitOf("Bệnh viện Đại học Y Hà Nội", m), null);
+  assert.equal(orgKey("Trường Đại học Sư phạm Kỹ thuật Thành phố Hồ Chí Minh"), orgKey("Trường đại học sư phạm kỹ thuật TP. Hồ Chí Minh"));
   assert.equal(orgUnitOf("Trường Đại học FPT Cần Thơ", m), null);
 });
 

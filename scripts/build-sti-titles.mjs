@@ -25,9 +25,9 @@ export const COMMON = 5;
 export const MAX_WORKS = 300, MAX_CUR_INST = 3;
 /** Cụm ngành "liền mạch": các ngành của hồ sơ phải nằm trọn trong một cụm thì mới coi là một người (nhiều ngành rời rạc là dấu hiệu lẫn nhiều người). */
 export const CLUSTERS = [
-  ["y-hoc", "duoc", "sinh-hoc", "hoa-thuc-pham", "chan-nuoi", "nong-lam", "tam-ly"],
-  ["cntt", "dien-tu", "co-khi", "co-hoc", "xay-dung", "giao-thong", "luyen-kim", "thuy-loi", "vat-ly", "toan-hoc", "hoa-thuc-pham", "trai-dat-mo", "kinh-te"],
-  ["kinh-te", "luat", "giao-duc", "tam-ly", "triet-xhh", "van-hoa", "su-hoc", "ngon-ngu", "van-hoc", "an-ninh", "quan-su", "toan-hoc", "cntt"],
+  ["y-hoc", "duoc", "sinh-hoc", "hoa-thuc-pham", "chan-nuoi", "nong-lam", "tam-ly", "vat-ly", "trai-dat-mo"],
+  ["cntt", "dien-tu", "co-khi", "co-hoc", "xay-dung", "giao-thong", "luyen-kim", "thuy-loi", "vat-ly", "toan-hoc", "hoa-thuc-pham", "trai-dat-mo", "kinh-te", "sinh-hoc", "nong-lam"],
+  ["kinh-te", "luat", "giao-duc", "tam-ly", "triet-xhh", "van-hoa", "su-hoc", "ngon-ngu", "van-hoc", "an-ninh", "quan-su", "toan-hoc", "cntt", "dien-tu"],
 ];
 export const coherent = (ds) => (ds ?? []).length <= 1 || CLUSTERS.some((c) => ds.every((d) => c.includes(d)));
 
@@ -56,6 +56,7 @@ export function orgKey(s) {
   let x = String(s ?? "");
   for (const re of NOISE) x = x.replace(re, " ");
   x = fold(x).replace(/\b(bo gd dt|bo giao duc va dao tao|bo y te)\b.*$/, " ");
+  x = x.replace(/\b(thanh pho ho chi minh|tp ho chi minh|tphcm|tp hcm|hcmc|ho chi minh city)\b/g, "hcm").replace(/\b(thanh pho|tp)\s+(?=ha noi|can tho|da nang|hai phong|hue)/g, "");
   return x.replace(/\s+/g, " ").trim();
 }
 /** Biến thể của một tên đơn vị (khớp CHẮC phải bằng đúng toàn chuỗi một biến thể). */
@@ -73,32 +74,37 @@ export const EXTRA_ALIASES = {
   yds: ["Đại học Y Dược Thành phố Hồ Chí Minh", "Đại học Y Dược TP. Hồ Chí Minh", "Đại học Y Dược TP.HCM", "Đại học Y Dược TP Hồ Chí Minh", "Đại học Y dược Thành phố Hồ Chí Minh", "University of Medicine and Pharmacy at Ho Chi Minh City", "UMP"],
   ctump: ["CTUMP", "Trường Đại học Y Dược Cần Thơ", "Đại học Y Dược Cần Thơ", "Can Tho University of Medicine and Pharmacy"],
 };
-/** Bản đồ cơ quan CHẮC: khóa chuỗi (orgKey) -> mã đơn vị. Một khóa trỏ tới hai đơn vị thì bỏ (mơ hồ). */
+/** Bản đồ cơ quan: khóa chuỗi (orgKey) -> tập mã đơn vị có tên/viết tắt trùng khóa đó (chỉ khớp CHẮC khi tập có đúng một đơn vị). */
 export function buildOrgMap(institutions, units) {
   const m = new Map();
   for (const id of units) {
     const i = institutions.find((x) => x.id === id); if (!i) throw new Error(`Không thấy đơn vị ${id}`);
-    for (const n of [i.name, i.en, i.abbr, ...(EXTRA_ALIASES[id] ?? [])].filter(Boolean)) for (const k of variants(n)) { if (k.length < 3) continue; if (m.has(k) && m.get(k) !== id) m.set(k, null); else if (!m.has(k)) m.set(k, id); }
+    for (const n of [i.name, i.en, i.abbr, ...(EXTRA_ALIASES[id] ?? [])].filter(Boolean)) for (const k of variants(n)) { if (k.length < 3) continue; (m.get(k) ?? m.set(k, new Set()).get(k)).add(id); }
   }
-  for (const [k, v] of [...m]) if (v === null) m.delete(k);
   return m;
 }
-/** Ánh xạ CHẮC một chuỗi cơ quan STI vào đơn vị: đúng toàn chuỗi, hoặc "<Trường|Viện|Khoa|Phòng|Trung tâm|Bộ môn ...> - / , <đơn vị>" (đơn vị con ghi kèm đơn vị mẹ ở cuối). */
-export function orgUnitOf(org, orgMap) {
+const only = (set) => (set && set.size === 1 ? [...set][0] : null);
+const SUB = /^(truong|vien|khoa|phong|trung tam|bo mon) /;
+/** Ánh xạ CHẮC một chuỗi cơ quan STI vào đơn vị: đúng toàn chuỗi (khóa không mơ hồ), hoặc "<đơn vị con> - / , <đơn vị mẹ>" (đơn vị con có thể là đơn vị ProFind có mẹ trùng đơn vị cuối chuỗi, hoặc chỉ là trường/viện/khoa/... bên trong nên quy về đơn vị mẹ). parent: bảng đơn vị con -> đơn vị mẹ. */
+export function orgUnitOf(org, orgMap, parent = {}) {
   const k = orgKey(org); if (!k) return null;
-  if (orgMap.has(k)) return orgMap.get(k);
+  if (orgMap.has(k)) return only(orgMap.get(k));
   const segs = String(org).replace(NOISE[0], " ").split(/\s+[-–]\s+|\s*,\s*/).map((x) => orgKey(x)).filter(Boolean);
-  if (segs.length >= 2 && /^(truong|vien|khoa|phong|trung tam|bo mon) /.test(segs[0]) && !/benh vien/.test(segs[0])) return orgMap.get(segs[segs.length - 1]) ?? null;
-  return null;
+  if (segs.length < 2) return null;
+  const last = only(orgMap.get(segs[segs.length - 1])); if (!last) return null;
+  const first = orgMap.get(segs[0]);
+  if (first) { const kids = [...first].filter((u) => parent[u] === last); if (kids.length === 1) return kids[0]; if (kids.length > 1) return null; }
+  return SUB.test(segs[0]) && !/benh vien/.test(segs[0]) ? last : null;
 }
-/** Khớp lỏng (để phát hiện người trùng tên): chuỗi cơ quan có chứa một biến thể dài (>= 8 ký tự) của đơn vị. Trả về tập mã đơn vị. */
-export function looseUnits(org, units, institutions) {
+/** Chỉ mục khớp lỏng: với mỗi đơn vị, các biến thể tên dài (>= 8 ký tự) hoặc viết tắt. */
+export function looseIndex(units, institutions) {
+  return units.map((id) => { const i = institutions.find((x) => x.id === id); return { id, ks: [...new Set([i.name, i.en, i.abbr, ...(EXTRA_ALIASES[id] ?? [])].filter(Boolean).flatMap(variants).filter((k) => k.length >= 8 || k === fold(i.abbr ?? "")))] }; });
+}
+/** Khớp lỏng (để phát hiện người trùng tên): chuỗi cơ quan có chứa một biến thể của đơn vị. Trả về tập mã đơn vị. */
+export function looseUnits(org, idx) {
   const f = ` ${orgKey(org)} `, out = new Set();
   if (!f.trim()) return out;
-  for (const id of units) {
-    const i = institutions.find((x) => x.id === id);
-    for (const n of [i.name, i.en, i.abbr, ...(EXTRA_ALIASES[id] ?? [])].filter(Boolean)) for (const k of variants(n)) if ((k.length >= 8 || k === fold(i.abbr ?? "")) && f.includes(` ${k} `)) out.add(id);
-  }
+  for (const { id, ks } of idx) if (ks.some((k) => f.includes(` ${k} `))) out.add(id);
   return out;
 }
 
@@ -141,7 +147,7 @@ export function profileProblem(a, risky) {
   if (a.bigFlag) return "nhom-lon";
   if (a.abroadMain) return "nuoc-ngoai";
   if ((a.worksCount ?? 0) >= MAX_WORKS) return "nhieu-cong-trinh";
-  if (!coherent(a.disciplines) || a.discBasis === "khac-biet") return "nhieu-nganh";
+  if (!coherent(a.disciplines)) return "nhieu-nganh";
   if ((a.institutions ?? []).filter((i) => !(a.instPast ?? []).includes(i)).length > MAX_CUR_INST) return "nhieu-don-vi";
   return null;
 }
@@ -166,42 +172,48 @@ export function decide({ a, risky, unit, stiRows, profRows, common, nameVariants
 
 // ---------------------------------------------------------------------------------------------------------------------
 if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())) {
-  const RAW = arg("raw", tmpFile("sti-profiles.json")), UNITS = (arg("units", "") ? arg("units", "").split(",") : ENABLED_UNITS);
+  const RAW = arg("raw", tmpFile("sti-profiles.json")), UNITS_ARG = arg("units", ""); let UNITS = UNITS_ARG === "all" ? null : UNITS_ARG ? UNITS_ARG.split(",") : ENABLED_UNITS;
   if (process.argv.includes("--fetch")) await fetchProfiles(RAW, Number(arg("delay", 600)));
   if (!existsSync(RAW)) throw new Error(`Chưa có dữ liệu thô ${RAW}; chạy với --fetch`);
   const raw = JSON.parse(readFileSync(RAW, "utf8")); if (!raw.done) throw new Error("Dữ liệu thô chưa tải xong (chạy lại với --fetch để tải tiếp).");
   const P = JSON.parse(readFileSync("public/data/profind.json", "utf8")), inst = P.institutions;
+  if (!UNITS) { const alias = JSON.parse(readFileSync("data/unit-alias.json", "utf8")).alias, used = new Set(P.authors.flatMap((a) => a.institutions ?? [])); UNITS = inst.map((i) => i.id).filter((id) => used.has(id) && !alias[id]); }
   const risky = new Set([...JSON.parse(readFileSync("data/merge-risk.json", "utf8")).profiles.map((p) => p.id), ...JSON.parse(readFileSync("data/split-candidates.json", "utf8")).flatMap((x) => [x.a, x.b]), ...JSON.parse(readFileSync("data/split-hold.json", "utf8")).flatMap((x) => x.pair)]);
-  const orgMap = buildOrgMap(inst, UNITS);
+  const LOOSE = looseIndex(UNITS, inst), PARENT = JSON.parse(readFileSync("data/unit-parent.json", "utf8")).parent, orgMap = buildOrgMap(inst, UNITS);
   // Dòng STI: chỉ giữ trường cần để khớp; lập chỉ mục theo (đơn vị, khóa tên) cho khớp chắc và khớp lỏng.
-  const sti = raw.rows.map(([name, hocHam, , hocVi, , codes, org, status, isUpdated]) => ({ name, hocHam, hocVi, codes, org, status, isUpdated, key: keyOf(name), orgUnit: orgUnitOf(org, orgMap), loose: looseUnits(org, UNITS, inst) }));
+  const sti = raw.rows.map(([name, hocHam, , hocVi, , codes, org, status, isUpdated]) => ({ name, hocHam, hocVi, codes, org, status, isUpdated, key: keyOf(name), orgUnit: orgUnitOf(org, orgMap, PARENT), loose: looseUnits(org, LOOSE) }));
   const byUnitKey = new Map(), vars = new Map(), add = (m, k, v) => (m.get(k) ?? m.set(k, []).get(k)).push(v);
+  const ancestors = (u) => { const out = []; for (let x = u; x && out.length < 3; x = PARENT[x]) out.push(x); return out; };
   for (const r of sti) {
     if (!r.key) continue;
-    for (const u of new Set([...(r.orgUnit ? [r.orgUnit] : []), ...r.loose])) add(byUnitKey, `${u}|${r.key}`, r);
-    if (r.orgUnit) add(vars, `${r.orgUnit}|${r.key}`, dKeyOf(r.name));
+    r.units = new Set(r.orgUnit ? ancestors(r.orgUnit) : []);
+    for (const u of new Set([...r.units, ...r.loose])) add(byUnitKey, `${u}|${r.key}`, r);
+    for (const u of r.units) add(vars, `${u}|${r.key}`, dKeyOf(r.name));
   }
   const gcount = new Map(); for (const a of P.authors) if (usableName(stripTitles(a.name))) { const k = keyOf(a.name); gcount.set(k, (gcount.get(k) ?? 0) + 1); }
   const unitKeyCount = new Map(); for (const a of P.authors) for (const u of a.institutions ?? []) if (UNITS.includes(u)) { const k = `${u}|${keyOf(a.name)}`; unitKeyCount.set(k, (unitKeyCount.get(k) ?? 0) + 1); }
 
-  const out = {}, stat = { profiles: 0, matched: 0, byTitle: {}, byUnit: {}, skip: {}, skipByUnit: {} }, picks = [];
+  const reasons = {};
+  const out = {}, stat = { profiles: 0, matched: 0, byTitle: {}, byUnit: {}, skip: {}, skipByUnit: {}, top1000: { profiles: 0, matched: 0, skip: {} } }, picks = [];
   for (const a of P.authors) {
     const units = (a.institutions ?? []).filter((u) => UNITS.includes(u) && !(a.instPast ?? []).includes(u));
     if (!units.length) continue;
-    stat.profiles++;
+    stat.profiles++; const isTop = a.proRank != null && a.proRank <= 1000; if (isTop) stat.top1000.profiles++;
     let res = { skip: "don-vi-lech" };
     for (const u of units) {
       const k = keyOf(a.name), rows = (byUnitKey.get(`${u}|${k}`) ?? []);
-      const strong = rows.filter((r) => r.orgUnit === u), loose = rows.length - strong.length;
-      const r = decide({ a, risky, unit: u, stiRows: loose ? [...strong, ...rows.filter((r) => r.orgUnit !== u)] : strong, profRows: unitKeyCount.get(`${u}|${k}`) ?? 0, common: (gcount.get(k) ?? 0) >= COMMON, nameVariants: new Set(vars.get(`${u}|${k}`) ?? []).size, orgUnit: strong[0]?.orgUnit ?? null });
+      const strong = rows.filter((r) => r.units?.has(u)), loose = rows.length - strong.length;
+      const r = decide({ a, risky, unit: u, stiRows: loose ? [...strong, ...rows.filter((r) => !r.units?.has(u))] : strong, profRows: unitKeyCount.get(`${u}|${k}`) ?? 0, common: (gcount.get(k) ?? 0) >= COMMON, nameVariants: new Set(vars.get(`${u}|${k}`) ?? []).size, orgUnit: strong[0] ? u : null });
       res = r; if (typeof r === "string") { picks.push({ id: a.id, unit: u, row: strong[0] }); break; }
     }
-    if (typeof res === "string") { out[a.id] = res; stat.matched++; stat.byTitle[res] = (stat.byTitle[res] ?? 0) + 1; const u = picks[picks.length - 1].unit; stat.byUnit[u] = (stat.byUnit[u] ?? 0) + 1; }
-    else { stat.skip[res.skip] = (stat.skip[res.skip] ?? 0) + 1; const su = (stat.skipByUnit[units[0]] ??= {}); su[res.skip] = (su[res.skip] ?? 0) + 1; }
+    reasons[a.id] = typeof res === "string" ? "ok" : res.skip;
+    if (typeof res === "string") { out[a.id] = res; stat.matched++; if (isTop) stat.top1000.matched++; stat.byTitle[res] = (stat.byTitle[res] ?? 0) + 1; const u = picks[picks.length - 1].unit; stat.byUnit[u] = (stat.byUnit[u] ?? 0) + 1; }
+    else { if (isTop) stat.top1000.skip[res.skip] = (stat.top1000.skip[res.skip] ?? 0) + 1; stat.skip[res.skip] = (stat.skip[res.skip] ?? 0) + 1; const su = (stat.skipByUnit[units[0]] ??= {}); su[res.skip] = (su[res.skip] ?? 0) + 1; }
   }
+  if (arg("reasons-out", "")) writeFileSync(arg("reasons-out"), JSON.stringify(reasons));
   const keys = Object.keys(out).sort();
   const sorted = Object.fromEntries(keys.map((k) => [k, out[k]]));
-  const text = JSON.stringify({ meta: { source: "STI.gov.vn (hồ sơ nhà khoa học công khai)", fetched: raw.fetched, units: UNITS, status: "chưa xác thực bởi chính chủ; không tính vào PRO-SCORE1000™ và hạng; STI chưa có điều khoản tái sử dụng (đang xin phép)" }, by: sorted }) + "\n";
+  const text = JSON.stringify({ meta: { source: "STI.gov.vn (hồ sơ nhà khoa học công khai)", fetched: raw.fetched, units: UNITS_ARG === "all" ? "all" : UNITS, status: "chưa xác thực bởi chính chủ; không tính vào PRO-SCORE1000™ và hạng; STI chưa có điều khoản tái sử dụng (đang xin phép)" }, by: sorted }) + "\n";
   if (/cccd|maDinhDanh|gioiTinh/i.test(text)) throw new Error("Tệp có trường nhạy cảm: dừng, không ghi.");
   if (!process.argv.includes("--dry")) writeFileSync("public/data/sti-titles.json", text);
   console.log(JSON.stringify({ stiRows: sti.length, ...stat }, null, 1));
@@ -209,7 +221,7 @@ if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop()
   // ---- mẫu kiểm tay: chỉ ghi ra thư mục tạm, kèm bằng chứng độc lập ----
   if (arg("sample", "")) {
     let seed = Number(arg("seed", 7)) >>> 0; const rnd = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
-    const pool = [...picks]; for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+    const pool = process.argv.includes("--sample-top") ? picks.filter((x) => { const a = P.authors.find((y) => y.id === x.id); return a.proRank != null && a.proRank <= 1000; }) : [...picks]; for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
     const au = new Map(P.authors.map((x) => [x.id, x]));
     const sample = pool.slice(0, Number(arg("sample"))).map(({ id, unit, row }) => {
       const a = au.get(id), ws = readWorks(id).slice().sort((x, y) => (y.year ?? 0) - (x.year ?? 0)).slice(0, 6);
