@@ -23,6 +23,7 @@ import { ProBadge, ProBadgeTag } from "./Badge";
 import { rankOf, useIntlRank } from "./intlPref";
 import { Related } from "./Related";
 import { StiPilot, stiSearchUrl, hasDiacritics } from "./StiPilot";
+import { StiTitle } from "./StiTitle";
 import { useStiJournals, useStiLine } from "./stiJournals";
 import { AvatarFrame } from "./Frame";
 import { VisitChip } from "./VisitChip";
@@ -527,6 +528,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
         <AvatarFrame a={a}><div className="av" style={{ background: `linear-gradient(135deg,hsl(${hue} 75% 52%),hsl(${(hue + 55) % 360} 80% 42%))` }} aria-hidden="true"><AvatarImg id={a.id} fallback={initials(a.name)} /></div></AvatarFrame>
         <div className="hero-main">
           <div className="hname"><h1 className="au">{a.name}</h1><VerifiedTick id={a.id} size={28} /></div>
+          <StiTitle id={a.id} hidden={hid.profile.has(a.id) || hid.score.has(a.id)} />
           <div className="hstat"><VerifiedBadge id={a.id} /><ProBadgeTag rank={myRank} />{a.intl && <span className="badge">{t("intlTag")}</span>}<Top2Tag a={a} cls="badge top2b" />{a.suspect && <span className="badge warnb">{t("suspectTag")}</span>}{a.abroadMain && <span className="badge warnb">{t("abroadTag")}</span>}{a.claimed && <span className="badge"><Icon n="check" size={16} />{t("claimedBadge")}</span>}</div>
           <ul className="chips">{(allInst ? inst : inst.slice(0, 4)).map((i) => { const past = a.instPast?.includes(i.id); return <li key={i.id} className={past ? "pastchip" : undefined} title={past ? "Đơn vị trước đây, theo cơ quan ghi trên các công trình gần đây" : undefined}><Icon n="building" size={14} />{past ? (lang === "vi" ? "Trước đây: " : "Formerly: ") : ""}{i.type === "other" ? instLabel(i, lang) : <a href={`/don-vi/${encodeURIComponent(i.id)}/`}>{instLabel(i, lang)}</a>}</li>; })}{inst.length > 4 && <li className="more"><button type="button" onClick={() => setAllInst(!allInst)} aria-expanded={allInst}>{allInst ? t("instLess") : t("instMore", { n: num(inst.length - 4) })}</button></li>}</ul>
           {a.bigFlag && <p className="bigflag" role="note"><Icon n="users" size={18} /><span><b>{t("bigTitle")}</b> {t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}</span></p>}

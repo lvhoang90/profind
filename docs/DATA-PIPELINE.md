@@ -199,3 +199,7 @@ Khi nhiều mã OpenAlex cùng một ORCID được gộp vào một hồ sơ, h
 - Cả hai tệp dữ liệu được đưa vào kho (nhỏ, không cần tạo lại khi dựng `npm run build`).
 - Liên kết "Tra trên STI.gov.vn" ở hồ sơ mở `https://sti.gov.vn/publication?q=<họ tên công khai>` ở tab mới (`rel="noopener noreferrer"`). STI tìm theo từ có dấu nên tên chưa có dấu sẽ có chú thích.
 - Giới hạn đã biết: STI chỉ gắn cơ quan ở mức công bố (không theo từng tác giả), chỉ ~1,5% công bố có DOI, ~8,7% tác giả có mã/cơ quan, tên nhiều người trùng nhau; vì vậy độ phủ của khớp tự động thấp (khoảng 12% hồ sơ của trường thí điểm) và độ chính xác ước lượng nội bộ ~87% (mẫu 40, không thay thế kiểm toán).
+
+## Chức danh từ STI.gov.vn (mức 4)
+- `NODE_USE_ENV_PROXY=1 npm run d:sti-titles -- --fetch [--raw <tệp tạm>] [--sample 100 --seed N]`: tải hồ sơ nhà khoa học công khai của STI (385 yêu cầu tuần tự, nghỉ 0,6 giây; dữ liệu thô ở thư mục tạm ngoài kho, không commit, xóa khi xong), khớp chắc theo `data/sti-titles-rules.md`, ghi `public/data/sti-titles.json` (chỉ mã tác giả -> chức danh). Không chạy trong `npm run build`; chạy lại khi cần cập nhật.
+- Quyết định của quản trị viên khi STI chưa trả lời thư xin phép; chi tiết số liệu, mẫu kiểm tay và điều kiện mở rộng: `docs/STI-DOI-CHIEU.md` mục 4. Không tính vào PRO-SCORE1000™/hạng, không đổi đơn vị.
