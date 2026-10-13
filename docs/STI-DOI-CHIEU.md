@@ -147,3 +147,44 @@ Quy tắc đã được chỉnh qua ba mẫu 40 cặp rút trước đó (mỗi 
 - Cơ quan chỉ ở mức công bố nên công bố nhiều cơ quan bị loại (327 cặp); nếu STI mở trường cơ quan theo từng tác giả (`pOrgan`) thì độ phủ tăng đáng kể.
 - Hồ sơ ProFind bị trộn nhiều người (OpenAlex) làm sai ngành chính; đã có lọc ngành nhưng không loại hết.
 - Nếu mở rộng: xin phép STI, thêm bước kiểm tay lớn hơn (hàng trăm cặp, có người đọc), cân nhắc chuyển hẳn sang khớp theo định danh (ORCID) nếu STI công bố.
+
+## 4. Mức 4: chức danh (học hàm, học vị) từ hồ sơ nhà khoa học STI
+
+**Đây là quyết định của quản trị viên (Lương Việt Hoàng, Viện ISA) ngày 13/10/2026, khi STI.gov.vn chưa trả lời thư xin phép.** Quản trị viên chịu trách nhiệm và liên hệ STI song song; nếu STI từ chối thì gỡ ngay (xóa `public/data/sti-titles.json`, `src/StiTitle.tsx`). Quy tắc chi tiết: `data/sti-titles-rules.md`; script `scripts/build-sti-titles.mjs` (`npm run d:sti-titles`); test `test/sti-titles.test.mjs`.
+
+Cách lấy: `POST /api/public/v2/profiles/search?page=N&size=100`, thân `{}` (trang bắt đầu từ 1), 385 yêu cầu tuần tự, nghỉ 0,6 giây, một lần tải, 38.487 hồ sơ. Chỉ giữ họ tên, học hàm, học vị, lĩnh vực, cơ quan, trạng thái ở thư mục tạm ngoài kho (đã xóa); không lưu mã cán bộ, giới tính, `pCccd`. Tệp sinh ra chỉ có mã tác giả ProFind -> chức danh.
+
+### 4.1. Số hồ sơ được bổ sung (5 trường: hmu, hust, ctu, yds, ctump)
+
+Hồ sơ ProFind đang công tác ở 5 trường: 7.118. **Bổ sung 231 hồ sơ (3,2%).**
+
+| Chức danh | Hồ sơ |
+|---|---|
+| PGS.TS | 74 |
+| GS.TS | 13 |
+| GS.TSKH | 1 |
+| TS | 104 |
+| TSKH | 2 |
+| ThS | 37 |
+
+Theo trường: ctu 111, hust 84, yds 18, hmu 14, ctump 4. Độ phủ thấp có chủ ý: các lý do loại lớn nhất là STI không có hồ sơ cùng tên trong đơn vị (2.913), trùng tên ở ProFind (1.454; nhiều hồ sơ tách đôi hoặc người trùng tên), tên phổ biến (851), ngành không liền mạch (551), tên ngắn/viết tắt (394), hồ sơ suspect hoặc nghi gộp/tách (170).
+
+### 4.2. Kiểm tay mẫu mới (100 cặp ngẫu nhiên, hạt giống 20261013, rút sau khi chốt quy tắc, không chỉnh quy tắc theo mẫu này)
+
+Người kiểm: trợ lý AI (chưa phải người kiểm độc lập). Bằng chứng độc lập: đơn vị, ngành, công trình gần đây của hồ sơ ProFind đối chiếu với cơ quan và mã lĩnh vực của hồ sơ STI; tra web công khai với 3 trường hợp GS (trang hội đồng GS của trường, tin tức).
+
+| Kết quả | Số cặp |
+|---|---|
+| Đúng (người và chức danh nhiều khả năng đúng) | 90 |
+| Không chắc (hồ sơ ProFind có dấu hiệu lẫn công trình nhiều chủ đề; tên xoay vòng mơ hồ; một chức danh GS chưa xác nhận được) | 8 |
+| Sai (hồ sơ ProFind lẫn công trình của người khác ngành) | 2 |
+
+- Độ chính xác chặt (ca không chắc tính là không đạt): **90/100 = 90%**, khoảng tin cậy Wilson 95%: **82,6% đến 94,5%**.
+- Loại ca không chắc: 90/92 = 97,8%, Wilson 92,4% đến 99,4%.
+- **Chưa đạt ngưỡng 95% (chặt) nên không mở rộng sang nhiều trường**; giữ 5 trường.
+
+Hạn chế: người kiểm cũng là người viết quy tắc, không có xác nhận từ chính nhà khoa học; chức danh là dữ liệu STI (nhiều hồ sơ tự khai, `status` khác nhau), một trường hợp GS (Đinh Minh Quang, ĐH Cần Thơ) không xác nhận được ngoài STI (tài liệu công khai tìm thấy chỉ là hồ sơ ứng viên PGS 2020); lỗi chủ yếu do hồ sơ OpenAlex lẫn nhiều người.
+
+### 4.3. Điều kiện mở rộng
+
+Chỉ mở thêm trường khi (1) STI trả lời đồng ý (hoặc quản trị viên quyết định lại), (2) mẫu kiểm tay mới ≥ 100 cặp, tốt nhất có người kiểm độc lập, đạt ≥ 95% theo cách tính chặt, (3) bảng ánh xạ cơ quan của trường mới được thêm vào `EXTRA_ALIASES` và kiểm. Cân nhắc siết thêm: thêm bằng chứng nhất quán công trình-ngành để loại hồ sơ lẫn nhiều người.
