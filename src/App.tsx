@@ -588,7 +588,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
               </div>
               <div className="wr">
                 <StarBtn k={`w|${w.id}`} meta={{ t: w.title, s: [a.name, w.journal, w.year].filter(Boolean).join(" · "), u: w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${w.id.split("-").pop()}` }} />
-                {w.quartile ? <span className={`pill sc ${w.quartile.toLowerCase()}`} title={`Scopus ${w.quartile}`}>{w.quartile}<small>Scopus</small></span> : w.jq ? <span className={`pill sc ${w.jq.toLowerCase()} ref`} title={t("jqTip", { q: w.jq })}>{w.jq}<small>SJR</small></span> : <span className="pill none">{t("noQ")}</span>}
+                {w.quartile ? <span className={`pill sc ${w.quartile.toLowerCase()}`} title={`SJR ${w.quartile} (SCImago, dữ liệu Scopus)`}>{w.quartile}<small>SJR</small></span> : w.jq ? <span className={`pill sc ${w.jq.toLowerCase()} ref`} title={t("jqTip", { q: w.jq })}>{w.jq}<small>SJR</small></span> : <span className="pill none">{t("noQ")}</span>}
                 <span className="wc"><Icon n="chart" size={14} />{num(w.citations)}<span className="sr"> {t("cit")}</span></span>
                 <span className={`role ${w.role}`}>{roleCell(w)}</span>
                 {mine && <button type="button" className="linkbtn" onClick={() => { if (confirm("Bài này không phải của bạn (OpenAlex gán nhầm người trùng tên)? Bài sẽ ẩn khỏi hồ sơ.")) void reportNotMine(a.id, w.id).then(() => setLocalXw((x) => [...x, w.id])).catch((e) => alert((e as Error).message)); }}>Không phải bài của tôi</button>}

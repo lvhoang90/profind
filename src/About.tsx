@@ -33,7 +33,7 @@ export function AboutPage({ section }: { section: string }) {
       <li><b>OpenAlex</b> (CC0): hồ sơ tác giả, công trình, DOI, trích dẫn, đơn vị.</li>
       <li><b>Semantic Scholar</b>: số trích dẫn bổ sung theo DOI (lấy giá trị lớn hơn giữa hai nguồn cho từng công trình).</li>
       <li><b>ORCID</b> và <b>ROR</b> (dữ liệu công khai, CC0): định danh tác giả và đơn vị.</li>
-      <li><b>Danh mục tạp chí và điểm của HĐGSNN</b>, hạng Q theo SJR/Scopus: qua EduFind.</li>
+      <li><b>Danh mục tạp chí và điểm của HĐGSNN</b>, hạng Q theo SJR của SCImago (dữ liệu Scopus, khác hạng CiteScore của Scopus): qua EduFind.</li>
       <li><b>Danh sách cơ sở giáo dục</b> do Bộ Giáo dục và Đào tạo công bố.</li>
       <li><b>Danh sách Top 2% nhà khoa học</b> (Elsevier), xem mục Giấy phép.</li>
       <li><b>Liên kết Google Scholar</b> do tác giả cung cấp. ProFind™ không truy xuất Google Scholar tự động.</li>
@@ -41,7 +41,7 @@ export function AboutPage({ section }: { section: string }) {
       <li><b>OpenAlex</b> (CC0): author profiles, works, DOI, citations, affiliations.</li>
       <li><b>Semantic Scholar</b>: extra citation counts by DOI (the larger value of the two sources is used per work).</li>
       <li><b>ORCID</b> and <b>ROR</b> (public data, CC0): author and institution identifiers.</li>
-      <li><b>State Professorship Council (HĐGSNN) journal catalogue and scores</b>, Q quartiles from SJR/Scopus: via EduFind.</li>
+      <li><b>State Professorship Council (HĐGSNN) journal catalogue and scores</b>, Q quartiles from SCImago SJR (computed on Scopus data, not the Scopus CiteScore quartile): via EduFind.</li>
       <li><b>List of education institutions</b> published by the Ministry of Education and Training.</li>
       <li><b>Top 2% scientists list</b> (Elsevier), see the Licences section.</li>
       <li><b>Google Scholar links</b> provided by the authors. ProFind™ does not scrape Google Scholar.</li>
