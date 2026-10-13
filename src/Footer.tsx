@@ -14,7 +14,14 @@ export function EcoLink({ app, place, to, className, children }: { app: App; pla
 export function Footer({ data: _data }: { data: Data | null }) {
   const { t } = useT();
   const apps: [App, string, string][] = [["edufind", t("appEdu"), t("eEduDesc")], ["ami", "Ami", t("eAmiDesc")], ["may", t("appMay"), t("eMayDesc")]];
-  const info: [string, string][] = [["gioi-thieu", "fAbout2"], ["nguon", "fSrc"], ["bang-xep-hang", "fRank"], ["don-vi", "fUnits"], ["nganh", "fFields"], ["tinh-thanh", "fCities"], ["pro-score", "fProScore"], ["top-2-phan-tram", "fTop2"], ["nha-truong", "fSchool"], ["doanh-nghiep", "fBiz"], ["hop-tac", "fCollab"], ["giay-phep", "fLic"], ["rieng-tu", "fPriv"], ["lien-he", "fContact"]];
+  // Bốn nhóm liên kết cân đối (4 đến 6 mục mỗi nhóm). Mã không bắt đầu bằng "#" hoặc "/" là trang tĩnh/trang thông tin; xem href().
+  const groups: [string, string, [string, string][]][] = [
+    ["sf-h1", "fExplore", [["#/", "fSearch"], ["#/tai-khoan", "mySpace"], ["#/dinh-chinh", "fSuggest"], ["#/dinh-chinh", "fCorrect"]]],
+    ["sf-h5", "fData", [["bang-xep-hang", "fRank"], ["pro-score", "fProScore"], ["top-2-phan-tram", "fTop2"], ["don-vi", "fUnits"], ["nganh", "fFields"], ["tinh-thanh", "fCities"]]],
+    ["sf-h6", "fOrg", [["nha-truong", "fSchool"], ["doanh-nghiep", "fBiz"], ["hop-tac", "fCollab"]]],
+    ["sf-h3", "fInfo", [["gioi-thieu", "fAbout2"], ["nguon", "fSrc"], ["giay-phep", "fLic"], ["rieng-tu", "fPriv"], ["lien-he", "fContact"]]],
+  ];
+  const href = (s: string) => s.startsWith("#") ? s : ({ "gioi-thieu": "#/gioi-thieu", "doanh-nghiep": "#/doanh-nghiep", "nha-truong": "#/nha-truong", "hop-tac": "#/hop-tac", "pro-score": "#/pro-score", "bang-xep-hang": "#/bang-xep-hang", "don-vi": "/don-vi/", "nganh": "/nganh/", "tinh-thanh": "/tinh-thanh/", "top-2-phan-tram": "/top-2-phan-tram/" } as Record<string, string>)[s] ?? `#/gioi-thieu?m=${s}`;
   return (
     <footer className="sf">
       <div className="wrap">
@@ -22,25 +29,18 @@ export function Footer({ data: _data }: { data: Data | null }) {
           <div className="sf-brand">
             <a className="brand" href="#/" aria-label="ProFind"><img className="logo" src="./logo-disc.svg" alt="" width="40" height="40" /><b>Pro<i>Find</i></b></a>
             <p>{t("fAbout")}</p>
+            <section className="sf-who" aria-label={t("sfWho")}>
+              <b>Lương Việt Hoàng</b><span>ISA Vietnam</span>
+              <a href="mailto:vienisavietnam@gmail.com">vienisavietnam@gmail.com</a>
+              <a href="https://zalo.me/0932956067" target="_blank" rel="noopener noreferrer">Zalo +84 932 956 067</a>
+            </section>
           </div>
-          <nav aria-labelledby="sf-h1">
-            <h2 id="sf-h1">{t("fExplore")}</h2>
-            <ul>
-              <li><a href="#/">{t("fSearch")}</a></li>
-              <li><a href="#/tai-khoan">{t("mySpace")}</a></li>
-              <li><a href="#/dinh-chinh">{t("fSuggest")}</a></li>
-              <li><a href="#/dinh-chinh">{t("fCorrect")}</a></li>
-            </ul>
-          </nav>
-          <nav aria-labelledby="sf-h3">
-            <h2 id="sf-h3">{t("fInfo")}</h2>
-            <ul>{info.map(([s, k]) => <li key={s}><a href={s === "gioi-thieu" ? "#/gioi-thieu" : s === "doanh-nghiep" ? "#/doanh-nghiep" : s === "nha-truong" ? "#/nha-truong" : s === "hop-tac" ? "#/hop-tac" : s === "pro-score" ? "#/pro-score" : s === "bang-xep-hang" ? "#/bang-xep-hang" : s === "don-vi" ? "/don-vi/" : s === "nganh" ? "/nganh/" : s === "tinh-thanh" ? "/tinh-thanh/" : s === "top-2-phan-tram" ? "/top-2-phan-tram/" : `#/gioi-thieu?m=${s}`}>{t(k as "fAbout2")}</a></li>)}</ul>
-          </nav>
-          <section className="sf-who" aria-labelledby="sf-h4">
-            <h2 id="sf-h4">{t("sfWho")}</h2>
-            <b>Lương Việt Hoàng</b><span>ISA Vietnam</span>
-              <ul><li><a href="mailto:vienisavietnam@gmail.com">vienisavietnam@gmail.com</a></li><li><a href="https://zalo.me/0932956067" target="_blank" rel="noopener noreferrer">Zalo +84 932 956 067</a></li></ul>
-          </section>
+          {groups.map(([hid, hk, items]) => (
+            <nav key={hid} aria-labelledby={hid}>
+              <h2 id={hid}>{t(hk as "fInfo")}</h2>
+              <ul>{items.map(([s, k]) => <li key={`${s}-${k}`}><a href={href(s)}>{t(k as "fAbout2")}</a></li>)}</ul>
+            </nav>
+          ))}
         </div>
         <nav className="sf-ecow" aria-labelledby="sf-h2">
           <h2 id="sf-h2">{t("fEco")}</h2>
