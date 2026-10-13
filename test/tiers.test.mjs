@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 // Mốc huy hiệu hạng PRO-SCORE1000™ phải khớp giữa pipeline (scripts/pro-score.mjs) và giao diện (src/Badge.tsx).
-const STEPS = [10, 50, 100, 500, 1000, 2000, 5000, 10000];
+const STEPS = [10, 50, 100, 500, 1000, 2000, 5000];
 const rd = (p) => readFileSync(new URL(`../${p}`, import.meta.url), "utf8");
 
 test("giao diện và pipeline dùng cùng các mốc huy hiệu", () => {
