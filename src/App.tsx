@@ -17,6 +17,7 @@ const AboutPage = lazy(() => import("./About").then((m) => ({ default: m.AboutPa
 const AdminPage = lazy(() => import("./Admin").then((m) => ({ default: m.AdminPage })));
 import { HeroArt } from "./HeroArt";
 import { useWorks } from "./wsearch";
+import { Pager, PAGE } from "./Pager";
 import { StarBtn } from "./StarBtn";
 import { ProBadge, ProBadgeTag } from "./Badge";
 import { rankOf, useIntlRank } from "./intlPref";
@@ -39,7 +40,6 @@ const SORTS: SortKey[] = ["pro", "worksCount", "citations", "name", "unit", "las
 const TEXT_KEYS: SortKey[] = ["name", "unit"], RANK_ASC: SortKey[] = [], RANKED: SortKey[] = ["pro", "worksCount", "citations"]; // huy chương chỉ khi xếp giảm dần theo một chỉ số
 const EDUFIND = "https://edufind.isavn.edu.vn";
 const CONTACT = "vienisavietnam@gmail.com";
-const PAGE = 25; // mỗi trang tối đa 25 kết quả
 const TOP2_DOI = "https://doi.org/10.17632/btchxktzyw.9";
 
 /** Giải mã đường dẫn băm an toàn: chuỗi % sai (vd. %E0%A4%A) không được làm sập trang. */
@@ -173,19 +173,6 @@ function Th({ k, label, cls, title, sort, dir, pick }: { k: SortKey; label: stri
   return <th scope="col" className={cls} title={title} aria-sort={on ? (dir === 1 ? "ascending" : "descending") : "none"}><button type="button" className={`thb${on ? " on" : ""}`} onClick={() => pick(k)}>{label}<span aria-hidden="true" className="ar">{on ? (dir === 1 ? "▲" : "▼") : "↕"}</span></button></th>;
 }
 
-function Pager({ page, total, set }: { page: number; total: number; set: (p: number) => void }) {
-  const { t, num } = useT();
-  const pages = Math.ceil(total / PAGE); if (pages <= 1) return null;
-  const nums = [...new Set([0, 1, page - 1, page, page + 1, pages - 2, pages - 1])].filter((p) => p >= 0 && p < pages).sort((a, b) => a - b);
-  return (
-    <nav className="pager" aria-label={t("pages")}>
-      <button className="ghost" disabled={page === 0} onClick={() => set(page - 1)}>‹ {t("prev")}</button>
-      {nums.map((p, i) => <span key={p}>{i > 0 && p - nums[i - 1] > 1 && <span className="gap" aria-hidden="true">…</span>}<button className={p === page ? "ghost cur" : "ghost"} aria-current={p === page ? "page" : undefined} aria-label={`${t("page")} ${p + 1}`} onClick={() => set(p)}>{num(p + 1)}</button></span>)}
-      <button className="ghost" disabled={page >= pages - 1} onClick={() => set(page + 1)}>{t("next")} ›</button>
-    </nav>
-  );
-}
-
 const countryName = (code: string | null | undefined, lang: Lang) => { if (!code) return ""; try { return new Intl.DisplayNames([lang], { type: "region" }).of(code) ?? code; } catch { return code; } };
 const instLabel = (i: Institution | undefined, lang: Lang, fallback = "") => (i ? (lang === "vi" ? i.name : i.en || i.name) : fallback);
 
@@ -209,7 +196,7 @@ function List({ d, query }: { d: Data; query: string }) {
   useEffect(() => { setSlot(document.getElementById("hero-slot")); }, []);
   const [jn, setJn] = useState<Record<string, { t: string; p: string }> | null>(null);
   const dq = useDeferredValue(q);
-  const works = useWorks(dq);
+  const [wsPage, setWsPage] = useState(0), works = useWorks(dq, wsPage);
   const [tab, setTab] = useState<"a" | "w">(qp.get("tb") === "w" ? "w" : "a"), autoW = useRef(false); // autoW: tab Công trình do tự chuyển (không có tác giả), tự quay về khi truy vấn mới có tác giả
   const instById = useMemo(() => new Map(d.institutions.map((i) => [i.id, i])), [d]);
   // Đơn vị con thuộc đơn vị cha (data/unit-parent.json): lọc theo đơn vị cha gồm cả người ở đơn vị con; cột đơn vị chỉ hiện đơn vị cụ thể nhất.
@@ -279,6 +266,7 @@ function List({ d, query }: { d: Data; query: string }) {
       return c * dir || (rankOf(a, intlRank) ?? Infinity) - (rankOf(b, intlRank) ?? Infinity) || (b.pro ?? -1) - (a.pro ?? -1) || b.worksCount - a.worksCount || a.name.localeCompare(b.name, "vi");
     });
   }, [d, dq, disc, type, prov, instSel, withPast, sort, dir, scope, instById, jn, lang, hay, top2only, intlRank]);
+  useEffect(() => setWsPage(0), [dq]);
   useEffect(() => setPage(0), [dq, disc, type, prov, instSel, withPast, sort, dir, scope, top2only]);
   // "Vì sao xuất hiện": chỉ tính cho các dòng của trang đang xem, từ dữ liệu sẵn có ở client.
   const worksAuthors = useMemo(() => new Set(works.items.map((w) => w.authorId)), [works.items]);
@@ -394,7 +382,7 @@ function List({ d, query }: { d: Data; query: string }) {
                 <p className="meta"><a href={`#/tac-gia/${encodeURIComponent(w.authorId)}`}>{w.author}</a>{w.journal ? ` · ${w.journal}` : ""} · {w.year}</p></div>
               <StarBtn k={`w|${w.id}`} meta={{ t: w.title, s: [w.author, w.journal, w.year].filter(Boolean).join(" · "), u: w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${String(w.id).split("-").pop()}` }} />
             </li>)}</ol>
-            {works.items.length < works.total && <button type="button" className="ghost" onClick={() => void works.more()}>{t("moreWorks", { n: num(works.total - works.items.length) })}</button>}
+            <Pager page={wsPage} total={works.total} set={setWsPage} top />
           </>}
         </section>
       ) : (
@@ -424,7 +412,7 @@ function List({ d, query }: { d: Data; query: string }) {
               <td className="meta yrs" data-l={t("years")}>{a.firstYear ?? "-"}–{a.lastYear ?? "-"}</td>
             </tr>); })}</tbody>
         </table></div>)}
-      <Pager page={page} total={rows.length} set={(p) => { setPage(p); window.scrollTo({ top: 0 }); }} />
+      <Pager page={page} total={rows.length} set={setPage} top />
       </>
       )}
       </>
@@ -453,7 +441,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   const xwSet = useNotMine(a.id, localXw);
   const works = useMemo(() => (worksAll && xwSet.size ? worksAll.filter((w) => !xwSet.has(w.id)) : worksAll), [worksAll, xwSet]);
   const [werr, setWerr] = useState(false), [tick, setTick] = useState(0), [wpage, setWpage] = useState(0);
-  const extraRaw = useExtraWorks(a.id), [extraAll, setExtraAll] = useState(false);
+  const extraRaw = useExtraWorks(a.id), [xpage, setXpage] = useState(0);
   const conf = useConf(a.id), confPt = useConfPoints((ownDisc ?? a.disciplines)[0]), pts = (x: number) => num(x, Math.round(x * 100) % 100 === 0 ? 0 : Math.round(x * 100) % 10 === 0 ? 1 : 2);
   const extra = useMemo(() => (extraRaw && xwSet.size ? extraRaw.filter((w) => !xwSet.has(`${a.id}-${w.id}`)) : extraRaw), [extraRaw, xwSet, a.id]); // công trình chủ hồ sơ đã báo "không phải của tôi" ẩn ngay, như phần tính điểm
   const confN = (extra ?? []).filter((w) => conf.ids.has(`${a.id}-${w.id}`)).length; // kỷ yếu chủ hồ sơ khai: hiện điểm ngay, chưa tính vào PRO-SCORE và hạng
@@ -605,14 +593,14 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
         {works && <Pager page={wpage} total={shown.length} set={(p) => setWpage(p)} />}
       </section>
       {extra && extra.length > 0 && <section className="card extra-works" aria-labelledby="xtw"><h2 id="xtw">{t("extraH")} <small>({num(extra.length)})</small></h2><p className="meta">{t("extraNote")}</p>{confN > 0 && <p className="banner"><Icon n="check" />{t("confSum", { n: num(confN), p: pts(confN * confPt) })}</p>}
-        <ol className="wk-list">{(extraAll ? extra : extra.slice(0, 15)).map((w) => (
+        <ol className="wk-list">{extra.slice(xpage * PAGE, (xpage + 1) * PAGE).map((w) => (
           <li key={w.id} className="wk"><span className="wy">{w.y}</span>
             <div className="wm"><a className="wt2" href={w.d ? `https://doi.org/${w.d}` : w.u ?? `https://openalex.org/${w.id}`} target="_blank" rel="noopener">{w.t}<span className="sr"> {t("newTab")}</span></a>
               <div className="wsrc">{w.j && <span>{w.j}</span>}{w.ty && <span className="issn">{EXTRA_TYPE[w.ty]?.[lang === "vi" ? 0 : 1] ?? w.ty}</span>}{conf.ids.has(`${a.id}-${w.id}`) && <span className="issn" title={t("confTip")}>{t("confBadge", { p: pts(confPt) })}</span>}</div></div>
             <div className="wr"><span className="wc"><Icon n="chart" size={14} />{num(w.c)}<span className="sr"> {t("cit")}</span></span>
               {mine && ["conference-paper", "proceedings-article", "article"].includes(w.ty) && (() => { const wid = `${a.id}-${w.id}`, on = conf.ids.has(wid); return <button type="button" className="linkbtn" onClick={() => { if (on || confirm(t("confAsk"))) void conf.mark(wid, !on).catch((e) => alert((e as Error).message)); }}>{on ? t("confOff") : t("confOn")}</button>; })()}
               {mine && <button type="button" className="linkbtn" onClick={() => { const wid = `${a.id}-${w.id}`; if (confirm("Bài này không phải của bạn (OpenAlex gán nhầm người trùng tên)? Bài sẽ ẩn khỏi hồ sơ.")) void reportNotMine(a.id, wid).then(() => setLocalXw((x) => [...x, wid])).catch((e) => alert((e as Error).message)); }}>Không phải bài của tôi</button>}</div></li>))}</ol>
-        {!extraAll && extra.length > 15 && <p><button type="button" className="ghost" onClick={() => setExtraAll(true)}>{t("extraMore", { n: String(extra.length - 15) })}</button></p>}
+        <Pager page={xpage} total={extra.length} set={setXpage} />
       </section>}
       <section className="next compact" aria-labelledby="ecoa"><h2 id="ecoa">{t("ecoHeadAuthor")}</h2>
         <div className="next-grid">

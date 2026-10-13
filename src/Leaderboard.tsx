@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { Author } from "./types";
 import type { Lang } from "./i18n";
 import { dName } from "./disciplines";
+import { Pager, PAGE } from "./Pager";
 
 // Bảng xếp hạng ĐƠN VỊ và NGÀNH. Một nhóm được xếp theo điểm trung bình của tối đa 10 nhà khoa học có PRO-SCORE cao nhất trong nhóm
 // (không thiên vị nhóm đông người), kèm số người thuộc PRO-SCORE1000™, số người có điểm, tổng trích dẫn và 3 người đứng đầu.
@@ -19,7 +20,7 @@ const L = {
 type LB = { types: Record<string, { vi: string; en: string }>; units: LRow[]; fields: LRow[]; unitsAll: LRow[]; fieldsAll: LRow[] };
 type LRow = { id: string; n: number; avg: number; p1000: number; cit: number; top: [string, string, number][]; name?: string; en?: string; city?: string; type?: string };
 export function LeaderboardPage({ lang, num }: { lang: Lang; num: (n: number, d?: number) => string }) {
-  const t = L[lang], [tab, setTab] = useState<"u" | "f">("u"), [type, setType] = useState(""), [sort, setSort] = useState<SortK>("avg");
+  const t = L[lang], [tab, setTab] = useState<"u" | "f">("u"), [type, setType] = useState(""), [sort, setSort] = useState<SortK>("avg"), [pg, setPg] = useState(0);
   // Bảng đã tính sẵn lúc dựng (scripts/build-lite.mjs → data/leaderboard.json, ~80 KB): không cần tải cả bộ hồ sơ.
   const [lb, setLb] = useState<LB | null>(null), [err, setErr] = useState(false), [intl, setIntl] = useIntlRank(); // intl: gồm cả hồ sơ liên kết quốc tế (xếp theo proRankAll)
   useEffect(() => { fetch("./data/leaderboard.json").then((r) => { if (!r.ok) throw new Error("http"); return r.json(); }).then(setLb).catch(() => setErr(true)); }, []);
@@ -28,6 +29,7 @@ export function LeaderboardPage({ lang, num }: { lang: Lang; num: (n: number, d?
     const us = intl ? lb.unitsAll : lb.units, fs = intl ? lb.fieldsAll : lb.fields, src = tab === "u" ? us.filter((r) => !type || r.type === type) : fs;
     return src.map((r): Row => ({ id: r.id, name: tab === "u" ? (lang === "vi" ? r.name : r.en || r.name) ?? r.id : dName(r.id, lang), sub: tab === "u" ? provName(r.city, lang) : "", n: r.n, avg: r.avg, p1000: r.p1000, cit: r.cit, top: r.top.map(([id, name, pro]) => ({ id, name, pro }) as unknown as Author) })).sort((a, b) => b[sort] - a[sort] || b.avg - a.avg);
   }, [lb, tab, type, sort, lang, intl]);
+  useEffect(() => setPg(0), [tab, type, sort, intl]);
   if (err) return <p className="empty" role="alert">{t.none}</p>;
   if (!lb) return <p className="empty" role="status">…</p>;
   const types = Object.entries(lb.types ?? {}).filter(([k]) => k !== "other");
@@ -42,7 +44,7 @@ export function LeaderboardPage({ lang, num }: { lang: Lang; num: (n: number, d?
         <label className="sel"><span>{t.sort}</span><select value={sort} onChange={(e) => setSort(e.target.value as SortK)}>{SORTS.map(([k, l]) => <option key={k} value={k}>{l}</option>)}</select></label>
       </div>
       {rows.length === 0 ? <p className="empty">{t.none}</p> : (
-        <ol className="lb-list">{rows.map((r, i) => (
+        <ol className="lb-list">{rows.slice(pg * PAGE, (pg + 1) * PAGE).map((r, k) => { const i = pg * PAGE + k; return (
           <li key={r.id} className={i < 3 ? `lb-top t${i + 1}` : undefined}>
             <span className="lb-rk" aria-label={`${t.rank} ${i + 1}`}>{i + 1}</span>
             <div className="lb-main">
@@ -56,8 +58,9 @@ export function LeaderboardPage({ lang, num }: { lang: Lang; num: (n: number, d?
               <div><dt>{t.n}</dt><dd>{num(r.n)}</dd></div>
               <div><dt>{t.cit}</dt><dd>{num(r.cit)}</dd></div>
             </dl>
-          </li>))}</ol>
+          </li>); })}</ol>
       )}
+      <Pager page={pg} total={rows.length} set={setPg} top />
       <p className="meta">{t.note}</p>
     </article>
   );

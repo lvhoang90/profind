@@ -1,3 +1,4 @@
+import { Pager, PAGE } from "./Pager";
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { useT } from "./i18n";
 import { DISC, dName } from "./disciplines";
@@ -33,20 +34,19 @@ const L = {
     teamNote: "Units include their parent units; sorted by the number of ranked scientists in the chosen field.", main: "Unit",
   },
 };
-const PAGE = 30;
 const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d");
 
 export function BusinessPage({ d, query }: { d: Data; query: string }) {
   const { lang, num } = useT(), l = L[lang as LG] ?? L.vi, lg = lang as LG, [intl] = useIntlRank();
   const q = new URLSearchParams(query);
   const u = q.get("u") ?? "", t = q.get("t") ?? "", p = q.get("p") ?? "", top = q.get("top") === "1", tab = q.get("tab") === "team" ? "team" : "exp", qq = q.get("q") ?? "";
-  const [kw, setKw] = useState(qq), dkw = useDeferredValue(kw), [lim, setLim] = useState(PAGE);
+  const [kw, setKw] = useState(qq), dkw = useDeferredValue(kw), [pg, setPg] = useState(0);
   const set = (patch: Record<string, string>, replace = false) => {
     const n = new URLSearchParams(query); for (const [k, v] of Object.entries(patch)) { if (v) n.set(k, v); else n.delete(k); }
     const s = n.toString(), h = `#/doanh-nghiep${s ? "?" + s : ""}`;
     if (replace) location.replace(h); else location.hash = h;
   };
-  useEffect(() => { setLim(PAGE); }, [u, t, p, top, dkw, tab]);
+  useEffect(() => { setPg(0); }, [u, t, p, top, dkw, tab]);
   useEffect(() => { if (kw === qq) return; const id = setTimeout(() => set({ q: kw.trim() }, true), 600); return () => clearTimeout(id); }, [kw]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const byId = useMemo(() => new Map(d.institutions.map((i) => [i.id, i] as [string, Institution])), [d]);
@@ -104,7 +104,7 @@ export function BusinessPage({ d, query }: { d: Data; query: string }) {
       <div id="biz-p" role="tabpanel" aria-labelledby={tab === "exp" ? "biz-t1" : "biz-t2"} aria-live="polite">
         {tab === "team" && <p className="meta">{l.teamNote}</p>}
         {total === 0 && <p className="empty">{tab === "exp" ? l.noExp : l.noTeam}</p>}
-        {tab === "exp" && <ul className="biz-list">{res.ranked.slice(0, lim).map(({ a }) => (
+        {tab === "exp" && <ul className="biz-list">{res.ranked.slice(pg * PAGE, (pg + 1) * PAGE).map(({ a }) => (
           <li key={a.id} className="biz-card">
             <div className="biz-main">
               <h3><a href={`#/tac-gia/${encodeURIComponent(a.id)}`}>{a.name}</a></h3>
@@ -117,7 +117,7 @@ export function BusinessPage({ d, query }: { d: Data; query: string }) {
               <a className="btn" href={`#/hop-tac?a=${encodeURIComponent(a.id)}&n=${encodeURIComponent(a.name)}&need=expert`}>{l.invite}</a>
             </div>
           </li>))}</ul>}
-        {tab === "team" && <ul className="biz-list">{res.teams.slice(0, lim).map((e) => { const i = byId.get(e.id), nm = label(i); return (
+        {tab === "team" && <ul className="biz-list">{res.teams.slice(pg * PAGE, (pg + 1) * PAGE).map((e) => { const i = byId.get(e.id), nm = label(i); return (
           <li key={e.id} className="biz-card">
             <div className="biz-main">
               <h3>{nm}</h3>
@@ -127,7 +127,7 @@ export function BusinessPage({ d, query }: { d: Data; query: string }) {
             </div>
             <div className="biz-side"><a className="btn" href={`#/hop-tac?org=${encodeURIComponent(nm)}&need=team`}>{l.propose}</a></div>
           </li>); })}</ul>}
-        {total > lim && <p className="biz-more"><button type="button" className="ghost" onClick={() => setLim(lim + PAGE)}>{l.more(num(total - lim))}</button></p>}
+        <Pager page={pg} total={total} set={setPg} top />
       </div>
       <p className="meta">{l.ref} {l.date(d.meta.built)}</p>
     </section>
