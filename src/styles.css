@@ -531,6 +531,7 @@ td.who>.meta{margin-top:3px}
 .hlinks .idl a{display:inline-flex;align-items:center;gap:8px;color:#cfe6f4;text-decoration:none;border-bottom:1px dotted rgba(207,230,244,.45)}
 .hlinks .idl a:hover{color:#fff;border-bottom-style:solid}
 .hlinks .idk{font-style:normal;font-weight:700;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:6px;background:rgba(255,255,255,.14)}
+.hlinks .sti .idk{background:rgba(255,196,120,.25);color:#ffe3bd}
 .hlinks .orcid .idk{background:rgba(166,206,57,.28);color:#e4f5b8}.hlinks .scholar .idk{background:rgba(138,180,248,.25);color:#d6e4ff}
 .hlinks .idv{font-variant-numeric:tabular-nums;letter-spacing:.02em}
 .hero2 .actions-row{margin-top:4px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
@@ -721,3 +722,6 @@ td.who>.meta{margin-top:3px}
 .sf .sf-who>a{display:block;padding:3px 0;font-size:.88rem;color:#bfe9ff;text-decoration:none}.sf .sf-who>a:hover{text-decoration:underline}
 @media(max-width:1000px){.sf .sf-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 28px}.sf .sf-brand{grid-column:1/-1}.sf .sf-brand p{max-width:60ch}}
 @media(max-width:560px){.sf .sf-grid{gap:22px 18px}.sf .sf-grid li a{font-size:.88rem;padding:8px 0}}
+
+/* Mục công bố trong nước (nguồn STI), thí điểm */
+.sti-pilot .banner{margin:8px 0 12px}

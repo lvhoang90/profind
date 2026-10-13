@@ -22,6 +22,8 @@ import { StarBtn } from "./StarBtn";
 import { ProBadge, ProBadgeTag } from "./Badge";
 import { rankOf, useIntlRank } from "./intlPref";
 import { Related } from "./Related";
+import { StiPilot, stiSearchUrl, hasDiacritics } from "./StiPilot";
+import { useStiJournals, useStiLine } from "./stiJournals";
 import { AvatarFrame } from "./Frame";
 import { VisitChip } from "./VisitChip";
 import { provName } from "./provinces";
@@ -517,6 +519,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
     return wsort === "year" ? l : [...l].sort((x, y) => (wsort === "cit" ? y.citations - x.citations : 0) || y.year - x.year);
   }, [works, wsort, onlyLead]);
   const hue = hueOf(a.id);
+  const stiJ = useStiJournals(), stiLine = useStiLine(stiJ);
   return (
     <article className="ap">
       <p><a className="backl" href="#/">{t("back")}</a></p>
@@ -528,7 +531,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
           <ul className="chips">{(allInst ? inst : inst.slice(0, 4)).map((i) => { const past = a.instPast?.includes(i.id); return <li key={i.id} className={past ? "pastchip" : undefined} title={past ? "Đơn vị trước đây, theo cơ quan ghi trên các công trình gần đây" : undefined}><Icon n="building" size={14} />{past ? (lang === "vi" ? "Trước đây: " : "Formerly: ") : ""}{i.type === "other" ? instLabel(i, lang) : <a href={`/don-vi/${encodeURIComponent(i.id)}/`}>{instLabel(i, lang)}</a>}</li>; })}{inst.length > 4 && <li className="more"><button type="button" onClick={() => setAllInst(!allInst)} aria-expanded={allInst}>{allInst ? t("instLess") : t("instMore", { n: num(inst.length - 4) })}</button></li>}</ul>
           {a.bigFlag && <p className="bigflag" role="note"><Icon n="users" size={18} /><span><b>{t("bigTitle")}</b> {t("bigText", { n: num(a.bigWorks ?? 0), p: num(a.bigShare ?? 0) })}</span></p>}
           {(ownDisc ?? a.disciplines).length > 0 && <p className="hdisc" title={!ownDisc && a.discBasis ? t(("discBasis_" + a.discBasis) as "discUncertain") : undefined}>{(ownDisc ?? a.disciplines).map((s) => dName(s, lang) + (!ownDisc && a.discShares && a.disciplines.length > 1 && a.discShares[s] ? ` ${a.discShares[s]}%` : "")).join(" · ")}{!ownDisc && a.discBasis === "khac-biet" && <small className="meta"> · {t("discUncertain")}</small>}</p>}
-          {(a.scholar || a.orcid) && <ul className="hlinks" aria-label="Định danh học thuật">{a.scholar && <li className="idl scholar"><a href={`https://scholar.google.com/citations?user=${a.scholar}&hl=${lang === "vi" ? "vi" : "en"}`} target="_blank" rel="noopener"><i className="idk">Google Scholar</i><span className="sr"> {t("newTab")}</span></a></li>}{a.orcid && <li className="idl orcid"><a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener"><i className="idk">ORCID</i><span className="idv">{a.orcid}</span><span className="sr"> {t("newTab")}</span></a></li>}</ul>}
+          <ul className="hlinks" aria-label="Định danh học thuật">{a.scholar && <li className="idl scholar"><a href={`https://scholar.google.com/citations?user=${a.scholar}&hl=${lang === "vi" ? "vi" : "en"}`} target="_blank" rel="noopener"><i className="idk">Google Scholar</i><span className="sr"> {t("newTab")}</span></a></li>}{a.orcid && <li className="idl orcid"><a href={`https://orcid.org/${a.orcid}`} target="_blank" rel="noopener"><i className="idk">ORCID</i><span className="idv">{a.orcid}</span><span className="sr"> {t("newTab")}</span></a></li>}<li className="idl sti"><a href={stiSearchUrl(a.name)} target="_blank" rel="noopener noreferrer" title={hasDiacritics(a.name) ? t("stiLinkTip") : `${t("stiLinkTip")} ${t("stiAscii")}`}><i className="idk">STI</i><span className="idv">{t("stiLink")}</span><span className="sr"> {t("newTab")}</span></a></li></ul>
           <p className="actions-row">{cfg?.enabled !== false && <button className={`ghost light${favs.has(`a|${a.id}`) ? " on" : ""}`} aria-pressed={favs.has(`a|${a.id}`)} onClick={() => void saveAuthor()}><Icon n="star" size={16} />{!user ? t("saveGate") : favs.has(`a|${a.id}`) ? t("savedA") : t("saveA")}</button>}<button className="ghost light" onClick={() => void shareProfile()} aria-live="polite"><Icon n="external" size={16} />{shared ? (lang === "vi" ? "Đã sao chép ✓" : "Copied ✓") : (lang === "vi" ? "Chia sẻ" : "Share")}</button><button className="ghost light" onClick={csv} disabled={!works?.length}><Icon n="download" size={16} />{t("csv")}</button><a className="ghost-link light" href={`#/hop-tac?a=${encodeURIComponent(a.id)}&n=${encodeURIComponent(a.name)}`}><Icon n="link" size={16} />{t("collabAbout")}</a><a className="ghost-link light" href={mine ? "#/tai-khoan" : `#/dinh-chinh/${encodeURIComponent(a.id)}`}><Icon n="user" size={16} />{mine ? "Quản lý hồ sơ của tôi" : isVerified ? "Đính chính / gỡ hồ sơ" : t("corrLink")}</a></p>
         </div>
       </header>
@@ -546,6 +549,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
       {a.abroadMain && !a.intl && <p className="banner demo" role="note"><Icon n="info" />{a.abroadBasis === "main" ? (a.mainCountryWorks == null ? t("abroadNoteMain2").replace("{c}", countryName(a.mainCountry, lang)) : t("abroadNoteMain").replace("{c}", countryName(a.mainCountry, lang)).replace("{w}", num(a.mainCountryWorks ?? 0)).replace("{v}", num(a.mainCountryVn ?? 0))) : a.abroadBasis === "recent" ? t("abroadNoteRecent").replace("{y}", (d.meta.abroad?.window ?? []).join(", ")).replace("{p}", num(a.vnRecent ?? 0, 1)).replace("{m}", String(d.meta.abroad?.recentMinShare ?? "")) : t("abroadNoteOverall").replace("{p}", num(a.vnShare ?? 0, 1)).replace("{m}", String(d.meta.abroad?.maxVnShare ?? ""))}</p>}
       {hid.score.has(a.id) ? <p className="banner" role="note"><Icon n="info" />{t("hiddenScore")}</p> : <p className="meta prodisc" role="note">{t("proDisc")} {mine ? <a href="#/tai-khoan">Quản lý quyền riêng tư của hồ sơ</a> : <a href={`#/dinh-chinh/${encodeURIComponent(a.id)}`}>{t("proHide")}</a>}</p>}
       <AuthorExtras id={a.id} />
+      <StiPilot id={a.id} institutions={a.institutions} />
       {works && works.length > 0 && (
         <div className="insights">
           <section className="card" aria-label={t("chartYear")}>
@@ -579,7 +583,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
               <span className="wy">{w.year}</span>
               <div className="wm">
                 <a className="wt2" onClick={() => openWork(w)} href={w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${w.id.split("-").pop()}`} target="_blank" rel="noopener">{w.title}<span className="sr"> {t("newTab")}</span></a>
-                <div className="wsrc">{w.journal && <span>{w.journal}</span>}{w.issn ? <span className="issn">ISSN {w.issn}</span> : <span className="issn noissn">{t("noIssn")}</span>}</div>
+                <div className="wsrc">{w.journal && <span>{w.journal}</span>}{w.issn ? <span className="issn">ISSN {w.issn}</span> : <span className="issn noissn">{t("noIssn")}</span>}{stiLine(w.issn) && <span className="issn sti-j" title={t("stiJTip")}>{stiLine(w.issn)}</span>}</div>
                 <div className="wlinks">{(w.na ?? 0) >= 50 && <span className="chip big" title={t("bigWorkTip")}><Icon n="users" size={13} />{(w.na ?? 0) > 100 ? t("authorsOver100") : t("authorsN", { n: String(w.na) })}</span>}{w.doi ? <a className="chip" onClick={() => openWork(w)} href={`https://doi.org/${w.doi}`} target="_blank" rel="noopener">DOI ↗<span className="sr"> {t("newTab")}</span></a> : <span className="chip mute">{t("noDoi")}</span>}{w.scoreDiscipline && <a className="chip" target="_blank" rel="noopener" href={`${EDUFIND}/${w.scoreDiscipline}/?${w.scoreKind === "scopus" ? "tab=international&" : ""}q=${encodeURIComponent(w.issn)}`}>{t("lookup")} ↗<span className="sr"> {t("newTab")}</span></a>}</div>
               </div>
               <div className="wr">
