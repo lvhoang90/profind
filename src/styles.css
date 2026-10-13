@@ -725,4 +725,5 @@ td.who>.meta{margin-top:3px}
 
 /* Mục công bố trong nước (nguồn STI), thí điểm */
 .sti-pilot .banner{margin:8px 0 12px}
-.sti-title{margin:2px 0 6px}.sti-title b{font-weight:700}.sti-title a{white-space:nowrap}
+.sti-title{margin:2px 0 8px;font-size:.95rem;color:#d6ebf7}.sti-title b{font-weight:700;color:#fff;font-size:1.05rem}.sti-title a{white-space:nowrap;color:#9fd8ff;text-decoration:underline}
+@media print{.sti-title,.sti-title b,.sti-title a{color:#000}}
