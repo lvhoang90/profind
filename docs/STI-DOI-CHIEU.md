@@ -188,3 +188,22 @@ Hạn chế: người kiểm cũng là người viết quy tắc, không có xá
 ### 4.3. Điều kiện mở rộng
 
 Chỉ mở thêm trường khi (1) STI trả lời đồng ý (hoặc quản trị viên quyết định lại), (2) mẫu kiểm tay mới ≥ 100 cặp, tốt nhất có người kiểm độc lập, đạt ≥ 95% theo cách tính chặt, (3) bảng ánh xạ cơ quan của trường mới được thêm vào `EXTRA_ALIASES` và kiểm. Cân nhắc siết thêm: thêm bằng chứng nhất quán công trình-ngành để loại hồ sơ lẫn nhiều người.
+
+### 4.4. Mở rộng cho mọi đơn vị (13/10/2026, theo yêu cầu của quản trị viên: cần phủ được nhiều hồ sơ trong top 1.000 PRO-SCORE1000™)
+
+Tải lại 38.491 hồ sơ STI (385 yêu cầu, lần tải thứ hai vì dữ liệu thô lần trước đã xóa theo quy định). Thay đổi quy tắc so với 4.1 đến 4.3: ánh xạ cơ quan cho mọi đơn vị (tên, tên Anh, viết tắt, đơn vị con - đơn vị mẹ qua `data/unit-parent.json`, chuẩn hóa "TP.HCM"); cụm ngành liền mạch rộng hơn (y-sinh, kỹ thuật-tự nhiên, xã hội-nhân văn) và bỏ điều kiện loại cơ sở ngành "khác biệt" (bằng chứng ngành đã có từ mã lĩnh vực STI). Các điều kiện (a), (b), (c), (d), (e) khác giữ nguyên.
+
+| Chỉ tiêu | Số |
+|---|---|
+| Hồ sơ ProFind xét | 45.344 |
+| **Hồ sơ được bổ sung** | **1.783** (3,9%), 211 đơn vị |
+| PGS.TS / GS.TS / GS.TSKH / PGS.TSKH / PGS / GS | 481 / 67 / 11 / 2 / 4 / 2 |
+| TS / TSKH / ThS | 902 / 5 / 309 |
+| Trong top 1.000 PRO-SCORE1000™ | **127/991** hồ sơ có đơn vị (12,8%) |
+
+Vì sao top 1.000 chỉ phủ khoảng 13%: trong số hồ sơ top 1.000 chưa được bổ sung, khoảng 250 người không có hồ sơ STI cùng tên, 134 tên ProFind viết tắt/quá ngắn, 140 trùng tên với hồ sơ ProFind khác trong đơn vị, 78 tên phổ biến, 88 nằm trong danh sách nghi gộp/tách; khoảng 830/1.000 tên ProFind không dấu nên càng khó khớp chắc. Không thể phủ toàn bộ top 1.000 mà vẫn giữ độ chính xác: phần còn lại cần đối chiếu thủ công hoặc ORCID từ STI.
+
+Kiểm tay mẫu mới (rút sau khi chốt quy tắc, hạt giống 31337 cho 100 cặp ngẫu nhiên toàn bộ; hạt giống 4242 cho 40 cặp trong top 1.000), người kiểm là trợ lý AI:
+- Mẫu 100 cặp: 95 đúng, 5 không chắc (hồ sơ ProFind lẫn công trình nhiều chủ đề; tên xoay vòng mơ hồ; một chức danh GS/PGS chưa xác nhận được), 0 sai. **95%** theo cách tính chặt, Wilson 95%: 88,8% đến 97,8% (loại ca không chắc: 95/95 = 100%).
+- Mẫu 40 cặp top 1.000: 40/40 đúng nhiều khả năng (Wilson 91,2% đến 100%); chức danh GS/PGS của vài người nổi tiếng khớp kiến thức công khai.
+- Đạt ngưỡng 95% ở ước lượng điểm nhưng cận dưới khoảng tin cậy 88,8%; vì vậy vẫn là kết quả tham khảo, cần người kiểm độc lập trước khi coi là chắc chắn.
