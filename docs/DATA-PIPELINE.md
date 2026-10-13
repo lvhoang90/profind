@@ -184,3 +184,6 @@ Quy tắc xếp hạng bổ sung (2026-10): hồ sơ không có đơn vị nào 
 
 ## Hồ sơ gộp theo ORCID: h-index và Google Scholar (2026-10)
 Khi nhiều mã OpenAlex cùng một ORCID được gộp vào một hồ sơ, h-index nay lấy giá trị lớn nhất trong các hồ sơ gốc (trước đây lấy của hồ sơ đích, có thể chỉ là mảnh nhỏ với h = 0 nên điểm Tác động bị thấp). Ảnh hưởng 90 hồ sơ. Hồ sơ Google Scholar khai theo mã hồ sơ gốc (data/scholar.json) cũng chuyển sang hồ sơ đích. Ví dụ: A5108957051 (Tran Van Dat): h 0 lên 11, PRO-SCORE 78,0 lên 88,8, hạng 4.229 lên 669.
+
+## Ảnh chia sẻ (og.jpg)
+`PLAYWRIGHT_PATH=<đường dẫn playwright> node scripts/build-icons.mjs --png` dựng lại `public/og.jpg` và ghi `public/og.json` (số nhà khoa học và công trình làm tròn xuống nghìn, ví dụ "45.000+"). `test/og.test.mjs` báo lỗi khi số trên ảnh lệch dữ liệu hiện hành, nên chạy lại lệnh này sau mỗi lần cập nhật dữ liệu lớn (`scripts/refresh.mjs` đã gọi). Mạng xã hội giữ ảnh cũ trong bộ nhớ đệm: `index.html` thêm `?v=<ngày dựng>` vào đường dẫn ảnh; muốn cập nhật ngay trên Facebook thì dán liên kết vào công cụ Sharing Debugger rồi bấm Scrape Again.
