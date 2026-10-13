@@ -49,13 +49,13 @@ export function AboutPage({ section }: { section: string }) {
       <p><b>PRO-SCORE1000™ là chỉ số tham khảo riêng của ProFind™ (thang 0 đến 100), không phải xếp hạng chính thức.</b> Ý tưởng do Viện ISA và tác giả Lương Việt Hoàng đề xuất.</p>
       <p><b>Lưu ý quan trọng:</b> chỉ số được tạo bởi một <b>mô phỏng</b> gồm 1000 cấu hình trọng số (mô hình tính toán), không phải khảo sát 1000 chuyên gia hay nhà nghiên cứu thật. Mỗi cấu hình có bộ trọng số riêng cho 7 chỉ báo (Tác động, Sản lượng, Chủ đạo, Chất lượng, Đà phát triển, Đều đặn, Ghi nhận); điểm cuối là trung bình của 1000 điểm, kèm khoảng điểm, khoảng hạng và độ vững của huy hiệu.</p>
       <ul><li>Mọi chỉ báo được quy về bách phân vị trong cùng ngành chính; trích dẫn mỗi công trình bị cắt trần; dữ liệu thiếu được làm trơn về trung bình ngành.</li>
-      <li>Hạng chỉ xếp cho hồ sơ từ 10 công trình và hoạt động từ 3 năm; huy hiệu Tinh hoa (Top 10), Xuất sắc (50), Ưu tú (100), Nổi bật (500), Tiêu biểu (1000).</li>
+      <li>Hạng chỉ xếp cho hồ sơ từ 10 công trình và hoạt động từ 3 năm; huy hiệu Tinh hoa (Top 10), Xuất sắc (50), Ưu tú (100), Nổi bật (500), Tiêu biểu (1000), Vững vàng (2000), Năng động (5000), Khởi sắc (10000).</li>
       <li>OpenAlex chưa cho số tác giả mỗi công trình; hạng Q và vai trò chỉ có ở một phần công trình; sách, kỷ yếu, bằng sáng chế chưa được tính; hồ sơ có thể gộp nhầm hoặc tách đôi một người.</li></ul></> : <>
       <p><a className="chip" href="#/pro-score">Open the full PRO-SCORE1000™ page →</a></p>
       <p><b>PRO-SCORE1000™ is ProFind™’s own reference index (scale 0 to 100), not an official ranking.</b> The idea was proposed by ISA Institute and author Luong Viet Hoang.</p>
       <p><b>Important:</b> the index is produced by a <b>simulation</b> of 1000 weighting configurations (a computational model), not a survey of 1000 real experts or researchers. Each configuration has its own weights for the 7 indicators (Impact, Output, Leadership, Quality, Momentum, Consistency, Recognition); the final score is the mean of the 1000 scores, with a score range, rank range and badge robustness.</p>
       <ul><li>Every indicator is a percentile within the primary field; per-work citations are capped; missing data is smoothed toward the field average.</li>
-      <li>Ranks are given only to profiles with 10+ works and 3+ active years; badges Elite (Top 10), Distinguished (50), Eminent (100), Notable (500), Rising (1000).</li>
+      <li>Ranks are given only to profiles with 10+ works and 3+ active years; badges Elite (Top 10), Distinguished (50), Eminent (100), Notable (500), Rising (1000), Established (2000), Active (5000), Emerging (10000).</li>
       <li>OpenAlex gives no author count per work; quartile and role exist for only some works; books, proceedings and patents are not counted; a profile may merge or split people.</li></ul></> },
     { id: "giay-phep", icon: "shield", h: vi ? "Giấy phép" : "Licences", body: vi ? <>
       <h3>Mã nguồn: MIT</h3>

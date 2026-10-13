@@ -104,16 +104,16 @@ export function computePro(authors, per, year) {
   // Hạng của từng hồ sơ dưới góc nhìn của từng chuyên gia ảo, để đo độ vững (khoảng hạng P10-P90 và tỉ lệ chuyên gia đồng ý huy hiệu).
   const N = elig.length, rk = new Uint16Array(N * E), order = Array.from({ length: N }, (_, i) => i);
   for (let e = 0; e < E; e++) { order.sort((i, j) => elig[j]._sc[e] - elig[i]._sc[e]); for (let r = 0; r < N; r++) rk[e * N + order[r]] = r + 1; }
-  const tierOf = (r) => (r <= 10 ? 10 : r <= 50 ? 50 : r <= 100 ? 100 : r <= 500 ? 500 : r <= 1000 ? 1000 : 0);
+  const tierOf = (r) => (r <= 10 ? 10 : r <= 50 ? 50 : r <= 100 ? 100 : r <= 500 ? 500 : r <= 1000 ? 1000 : r <= 2000 ? 2000 : r <= 5000 ? 5000 : r <= 10000 ? 10000 : 0);
   elig.forEach((a, i) => {
     const v = new Uint16Array(E); for (let e = 0; e < E; e++) v[e] = rk[e * N + i]; v.sort();
     a.proR10 = v[Math.floor(0.1 * E)]; a.proR90 = v[Math.floor(0.9 * E)];
     const t = tierOf(a.proRank); let ok = 0; if (t) for (let e = 0; e < E; e++) if (v[e] <= t) ok++; a.proStab = t ? Math.round((100 * ok) / E) : null;
   });
-  // Huy hiệu theo hạng: Top 10, 50, 100, 500, 1000 (tự cập nhật mỗi lần dữ liệu đổi).
+  // Huy hiệu theo hạng: Top 10, 50, 100, 500, 1000, 2000, 5000, 10000 (tự cập nhật mỗi lần dữ liệu đổi).
   for (const a of authors) {
     if (a.proRank == null) { a.proRank = null; a.proTier = null; a.proR10 = a.proR90 = a.proStab = null; if (a.pro == null) { a.pro = null; a.proLo = a.proHi = null; a.proParts = null; a.proConf = null; } continue; }
-    const r = a.proRank; a.proTier = r <= 10 ? "t10" : r <= 50 ? "t50" : r <= 100 ? "t100" : r <= 500 ? "t500" : r <= 1000 ? "t1000" : null;
+    const r = a.proRank; a.proTier = r <= 10 ? "t10" : r <= 50 ? "t50" : r <= 100 ? "t100" : r <= 500 ? "t500" : r <= 1000 ? "t1000" : r <= 2000 ? "t2000" : r <= 5000 ? "t5000" : r <= 10000 ? "t10000" : null;
   }
   for (const a of authors) { if (a.proRankAll === undefined) a.proRankAll = null; delete a._s; delete a._sc; delete a._m; }
   return { eligible: elig.length, eligibleAll: eligAll.length, panel: summarize(panel, SEED) };
