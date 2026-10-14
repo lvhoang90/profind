@@ -222,3 +222,9 @@ npm run d:add-author -- --id A… --unit ueh --dry-run                          
 - Lưu ở Redis `profind:cr` (`{ authorId: [{ w, at }] }`), API `author-work-role` (chủ hồ sơ; `confirm: true` để khai, `undo: true` để bỏ), công khai qua `author-public` (`cr`) và `my-profiles`; quản trị viên xem ở tab Xác thực (`admin-claims` trả `cr`) và gỡ bằng `admin-claim-role`.
 - Chạy thử: `npx esbuild api/account.js --bundle --format=esm --platform=node --outfile=/tmp/h.mjs && HANDLER=/tmp/h.mjs node test/role-decl.test.mjs`.
 
+## Chỉ mục Web of Science (SCIE, SSCI, AHCI, ESCI): chỉ hiển thị
+- Một số tạp chí (nhất là ESCI) không có hạng Q của SJR nên chưa có điểm. `npm run d:wos` (`scripts/import-wos.mjs`) đọc các tệp CSV danh sách tạp chí của Clarivate (Master Journal List, tải danh sách theo bộ sưu tập; mỗi tệp một chỉ mục, tên tệp chứa `scie`/`ssci`/`ahci`/`esci`) trong `data/wos/` và ghi `public/data/wos.json` (`ISSN -> chỉ mục`, chỉ ISSN có công trình trong ProFind).
+- `data/wos/` đã `.gitignore`: **không commit tệp gốc của Clarivate** (điều khoản của họ); chỉ commit tệp dẫn xuất `public/data/wos.json` (chỉ cờ chỉ mục theo ISSN).
+- Hồ sơ hiện nhãn "WoS ESCI" (tooltip nêu chỉ hiển thị, chưa tính điểm) bên cạnh ISSN từng công trình. Thiếu `wos.json` thì không hiện gì. **Chưa tính điểm**: quy tắc điểm WoS/ESCI của HĐGSNN khác nhau theo ngành (một số ngành tính ESCI, theo IF) nên cần chuyển từ `council.json` của EduFind thành quy tắc riêng, làm ở bước sau.
+- Logic thuần ở `scripts/lib/wos.mjs`, test `test/wos.test.mjs`.
+
