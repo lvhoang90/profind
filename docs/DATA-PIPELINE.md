@@ -215,3 +215,10 @@ npm run d:add-author -- --id A… --unit ueh --dry-run                          
 - **Đừng tự chạy `ingest-openalex --only <một đơn vị>`**: dữ liệu trung gian chỉ còn đơn vị đó và `build-index` sẽ dựng lại thiếu hàng chục nghìn hồ sơ (đã xảy ra một lần, 29.803 thay vì 45.462 tác giả). Lệnh `d:add-author` đã gom đủ danh sách đơn vị.
 - Lệnh không chạy git. Sau đó: `npm run build && npm test`, commit và PR như thường lệ. Xác nhận người gửi trước (email miền cơ quan khớp đơn vị, ORCID khớp tên) và ghi căn cứ vào trường `by` của Scholar.
 - Mã logic thuần ở `scripts/lib/add-author.mjs`, test ở `test/add-author.test.mjs`.
+
+## Khai báo tác giả liên hệ của chủ hồ sơ (`author-work-role`)
+- Nhiều tạp chí chỉ ghi tác giả liên hệ bằng dấu `*` hoặc biểu tượng lá thư mà OpenAlex không ghi nhận, nên bài bị tính là đồng tác giả. Chủ hồ sơ đã xác thực thấy nút "Tôi là tác giả liên hệ" ở từng bài chưa có vai trò chính (xác nhận một lần); bài hiện nhãn "Liên hệ (tác giả khai)" viền nét đứt.
+- **Chỉ hiển thị nhãn**: khai báo chưa vào PRO-SCORE1000™ và hạng (ProFind™ không kiểm chứng được), cùng nguyên tắc với kỷ yếu có ISBN. Muốn tính điểm cần một bước duyệt riêng của quản trị viên (chưa làm).
+- Lưu ở Redis `profind:cr` (`{ authorId: [{ w, at }] }`), API `author-work-role` (chủ hồ sơ; `confirm: true` để khai, `undo: true` để bỏ), công khai qua `author-public` (`cr`) và `my-profiles`; quản trị viên xem ở tab Xác thực (`admin-claims` trả `cr`) và gỡ bằng `admin-claim-role`.
+- Chạy thử: `npx esbuild api/account.js --bundle --format=esm --platform=node --outfile=/tmp/h.mjs && HANDLER=/tmp/h.mjs node test/role-decl.test.mjs`.
+

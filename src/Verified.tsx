@@ -221,7 +221,7 @@ export function ClaimBox({ authorId, authorName, mode = "claim", knownOrcid = ""
 }
 
 // ---------- Dữ liệu công khai do chủ hồ sơ đã xác thực khai báo ----------
-export interface AuthorPub { verified: boolean; xw?: string[]; cf?: string[]; profile?: { disc?: string[]; orcid: string; scholar: string; site: string; bio: string; hasAvatar: boolean | number; email: string; phone: string }; works?: { doi: string; title: string; venue: string; year: number; oa: string; status: string }[] }
+export interface AuthorPub { verified: boolean; xw?: string[]; cf?: string[]; cr?: string[]; profile?: { disc?: string[]; orcid: string; scholar: string; site: string; bio: string; hasAvatar: boolean | number; email: string; phone: string }; works?: { doi: string; title: string; venue: string; year: number; oa: string; status: string }[] }
 export function useAuthorPub(id: string): AuthorPub | null {
   const ok = useVerified(id); const [d, setD] = useState<AuthorPub | null>(null);
   useEffect(() => { setD(null); if (ok) api<AuthorPub>("author-public", undefined, `&id=${encodeURIComponent(id)}`).then(setD).catch(() => {}); }, [id, ok]);
@@ -413,6 +413,13 @@ export function useConf(id: string): { ids: Set<string>; mark: (w: string, on: b
   useEffect(() => { setOver({}); }, [id]);
   const ids = new Set([...(d?.cf ?? []), ...Object.keys(over).filter((w) => over[w])].filter((w) => over[w] !== false));
   return { ids, mark: (w, on) => (on ? api("author-work-conf", { authorId: id, workId: w, confirm: true }) : api("author-work-conf", { authorId: id, workId: w, undo: true })).then(() => setOver((o) => ({ ...o, [w]: on }))) };
+}
+/** Bài chủ hồ sơ khai mình là tác giả liên hệ (OpenAlex thiếu dấu liên hệ): chỉ hiện nhãn "tác giả khai", chưa vào PRO-SCORE và hạng. Mã công trình dạng A…-W…. */
+export function useRoleDecl(id: string): { ids: Set<string>; mark: (w: string, on: boolean) => Promise<void> } {
+  const d = useAuthorPub(id), [over, setOver] = useState<Record<string, boolean>>({});
+  useEffect(() => { setOver({}); }, [id]);
+  const ids = new Set([...(d?.cr ?? []), ...Object.keys(over).filter((w) => over[w])].filter((w) => over[w] !== false));
+  return { ids, mark: (w, on) => (on ? api("author-work-role", { authorId: id, workId: w, confirm: true }) : api("author-work-role", { authorId: id, workId: w, undo: true })).then(() => setOver((o) => ({ ...o, [w]: on }))) };
 }
 let confPts: Promise<{ default: number; points: Record<string, number> }> | null = null;
 /** Điểm một kỷ yếu theo ngành (quy tắc HĐGSNN, public/data/conf-points.json do build-index.mjs ghi); chưa biết ngành thì mức mặc định 0,5. */
