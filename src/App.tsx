@@ -25,6 +25,7 @@ import { Related } from "./Related";
 import { StiPilot, stiSearchUrl, hasDiacritics } from "./StiPilot";
 import { StiTitle } from "./StiTitle";
 import { useStiJournals, useStiLine } from "./stiJournals";
+import { useWos, wosLabel } from "./wosIndex";
 import { AvatarFrame } from "./Frame";
 import { VisitChip } from "./VisitChip";
 import { provName } from "./provinces";
@@ -520,7 +521,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
     return wsort === "year" ? l : [...l].sort((x, y) => (wsort === "cit" ? y.citations - x.citations : 0) || y.year - x.year);
   }, [works, wsort, onlyLead]);
   const hue = hueOf(a.id);
-  const stiJ = useStiJournals(), stiLine = useStiLine(stiJ);
+  const stiJ = useStiJournals(), stiLine = useStiLine(stiJ), wos = useWos();
   return (
     <article className="ap">
       <p><a className="backl" href="#/">{t("back")}</a></p>
@@ -585,7 +586,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
               <span className="wy">{w.year}</span>
               <div className="wm">
                 <a className="wt2" onClick={() => openWork(w)} href={w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${w.id.split("-").pop()}`} target="_blank" rel="noopener">{w.title}<span className="sr"> {t("newTab")}</span></a>
-                <div className="wsrc">{w.journal && <span>{w.journal}</span>}{w.issn ? <span className="issn">ISSN {w.issn}</span> : <span className="issn noissn">{t("noIssn")}</span>}{stiLine(w.issn) && <span className="issn sti-j" title={t("stiJTip")}>{stiLine(w.issn)}</span>}</div>
+                <div className="wsrc">{w.journal && <span>{w.journal}</span>}{w.issn ? <span className="issn">ISSN {w.issn}</span> : <span className="issn noissn">{t("noIssn")}</span>}{wosLabel(wos, w.issn) && <span className="issn wos" title={t("wosTip", { i: wosLabel(wos, w.issn) })}>WoS {wosLabel(wos, w.issn)}</span>}{stiLine(w.issn) && <span className="issn sti-j" title={t("stiJTip")}>{stiLine(w.issn)}</span>}</div>
                 <div className="wlinks">{(w.na ?? 0) >= 50 && <span className="chip big" title={t("bigWorkTip")}><Icon n="users" size={13} />{(w.na ?? 0) > 100 ? t("authorsOver100") : t("authorsN", { n: String(w.na) })}</span>}{w.doi ? <a className="chip" onClick={() => openWork(w)} href={`https://doi.org/${w.doi}`} target="_blank" rel="noopener">DOI ↗<span className="sr"> {t("newTab")}</span></a> : <span className="chip mute">{t("noDoi")}</span>}{w.scoreDiscipline && <a className="chip" target="_blank" rel="noopener" href={`${EDUFIND}/${w.scoreDiscipline}/?${w.scoreKind === "scopus" ? "tab=international&" : ""}q=${encodeURIComponent(w.issn)}`}>{t("lookup")} ↗<span className="sr"> {t("newTab")}</span></a>}</div>
               </div>
               <div className="wr">
