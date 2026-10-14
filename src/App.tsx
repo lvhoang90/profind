@@ -30,7 +30,7 @@ import { VisitChip } from "./VisitChip";
 import { provName } from "./provinces";
 import { fetchDetail } from "./authorDetail";
 import { fetchWorks } from "./worksShard";
-import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg, useVerified, useIsMine, useOwnDisc, useNotMine, reportNotMine, useConf, useConfPoints } from "./Verified";
+import { VerifiedTick, VerifiedBadge, ClaimBox, AuthorExtras, AvatarImg, useVerified, useIsMine, useOwnDisc, useNotMine, reportNotMine, useConf, useConfPoints, useRoleDecl } from "./Verified";
 import { useHidden } from "./hidden";
 import { NoDataHint } from "./NoData";
 import { TrustBlock, WhyChips, type WhyKey } from "./Trust";
@@ -445,7 +445,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
   const works = useMemo(() => (worksAll && xwSet.size ? worksAll.filter((w) => !xwSet.has(w.id)) : worksAll), [worksAll, xwSet]);
   const [werr, setWerr] = useState(false), [tick, setTick] = useState(0), [wpage, setWpage] = useState(0);
   const extraRaw = useExtraWorks(a.id), [xpage, setXpage] = useState(0);
-  const conf = useConf(a.id), confPt = useConfPoints((ownDisc ?? a.disciplines)[0]), pts = (x: number) => num(x, Math.round(x * 100) % 100 === 0 ? 0 : Math.round(x * 100) % 10 === 0 ? 1 : 2);
+  const roleDecl = useRoleDecl(a.id), conf = useConf(a.id), confPt = useConfPoints((ownDisc ?? a.disciplines)[0]), pts = (x: number) => num(x, Math.round(x * 100) % 100 === 0 ? 0 : Math.round(x * 100) % 10 === 0 ? 1 : 2);
   const extra = useMemo(() => (extraRaw && xwSet.size ? extraRaw.filter((w) => !xwSet.has(`${a.id}-${w.id}`)) : extraRaw), [extraRaw, xwSet, a.id]); // công trình chủ hồ sơ đã báo "không phải của tôi" ẩn ngay, như phần tính điểm
   const confN = (extra ?? []).filter((w) => conf.ids.has(`${a.id}-${w.id}`)).length; // kỷ yếu chủ hồ sơ khai: hiện điểm ngay, chưa tính vào PRO-SCORE và hạng
   const [wsort, setWsort] = useState<WSort>("year"), [onlyLead, setOnlyLead] = useState(false), [allInst, setAllInst] = useState(false);
@@ -592,7 +592,8 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
                 <StarBtn k={`w|${w.id}`} meta={{ t: w.title, s: [a.name, w.journal, w.year].filter(Boolean).join(" · "), u: w.doi ? `https://doi.org/${w.doi}` : `https://openalex.org/${w.id.split("-").pop()}` }} />
                 {w.quartile ? <span className={`pill sc ${w.quartile.toLowerCase()}`} title={`SJR ${w.quartile} (SCImago, dữ liệu Scopus)`}>{w.quartile}<small>SJR</small></span> : w.jq ? <span className={`pill sc ${w.jq.toLowerCase()} ref`} title={t("jqTip", { q: w.jq })}>{w.jq}<small>SJR</small></span> : <span className="pill none">{t("noQ")}</span>}
                 <span className="wc"><Icon n="chart" size={14} />{num(w.citations)}<span className="sr"> {t("cit")}</span></span>
-                <span className={`role ${w.role}`}>{roleCell(w)}</span>
+                <span className={`role ${w.role}${roleDecl.ids.has(`${a.id}-${w.id}`) ? " decl" : ""}`} title={roleDecl.ids.has(`${a.id}-${w.id}`) ? t("roleDeclTip") : undefined}>{roleDecl.ids.has(`${a.id}-${w.id}`) && w.role !== "lead" ? t("roleDecl") : roleCell(w)}</span>
+                {mine && w.role !== "lead" && (() => { const wid = `${a.id}-${w.id}`, on = roleDecl.ids.has(wid); return <button type="button" className="linkbtn" onClick={() => { if (on || confirm(t("roleAsk"))) void roleDecl.mark(wid, !on).catch((e) => alert((e as Error).message)); }}>{on ? t("roleOff") : t("roleOn")}</button>; })()}
                 {mine && <button type="button" className="linkbtn" onClick={() => { if (confirm("Bài này không phải của bạn (OpenAlex gán nhầm người trùng tên)? Bài sẽ ẩn khỏi hồ sơ.")) void reportNotMine(a.id, w.id).then(() => setLocalXw((x) => [...x, w.id])).catch((e) => alert((e as Error).message)); }}>Không phải bài của tôi</button>}
               </div>
             </li>))}</ol>)}
