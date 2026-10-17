@@ -229,3 +229,9 @@ npm run d:add-author -- --id A… --unit ueh --dry-run                          
 - Logic thuần ở `scripts/lib/wos.mjs`, test `test/wos.test.mjs`.
 - **Nạp tạm 14/10/2026:** quản trị viên cung cấp tệp "SCIENCE CITATION INDEX EXPANDED - JOURNAL LIST" (8.717 tạp chí, 1.787 trang PDF, không ghi ngày, có vẻ cũ). Tách ra `data/wos/{scie,ssci,ahci}.csv` (SCIE 8.713 ISSN, trong đó 614 cũng thuộc SSCI và 68 thuộc AHCI; 4 mục không có ISSN bị bỏ) rồi chạy `node scripts/import-wos.mjs --note "…"`: 6.275 ISSN có công trình trong ProFind được gắn nhãn. **Chưa có ESCI**, và danh sách SCIE không ghi ngày nên tạp chí vào SCIE sau đó có thể thiếu nhãn: nhãn có chỉ là có trong danh sách, không có nhãn không có nghĩa là không thuộc Web of Science. Khi có danh sách ESCI/SSCI/AHCI đầy đủ và mới hơn, đặt vào `data/wos/` rồi chạy lại.
 
+## Thùng rác 30 ngày cho khai báo bị gỡ (`admin-claim-restore`)
+- Khi quản trị viên bấm "Gỡ" ở khai báo kỷ yếu có ISBN (`admin-claim-conf`) hoặc khai báo tác giả liên hệ (`admin-claim-role`), mục không bị xóa hẳn mà chuyển vào Redis `profind:cbin` (field `loại|authorId|workId` -> `{ k: "cf"|"cr", a, w, at, del }`), lưu 30 ngày. Hết hạn thì bị dọn khi mở tab Xác thực.
+- Tab Xác thực có mục "Đã gỡ gần đây, lưu 30 ngày" với nút "Khôi phục" (`admin-claim-restore`, chỉ quản trị viên; trả 404 nếu quá hạn hoặc đã khôi phục; nếu chủ hồ sơ đã khai lại thì chỉ dọn thùng rác, không nhân đôi). `admin-claims` trả thêm `bin`.
+- Chỉ áp dụng cho các khai báo từ lần cập nhật này; mục gỡ trước đó không còn dữ liệu để khôi phục (chủ hồ sơ khai lại).
+- Chạy thử: `npx esbuild api/account.js --bundle --format=esm --platform=node --outfile=/tmp/h.mjs && HANDLER=/tmp/h.mjs node test/conf-marks.test.mjs` (và `test/role-decl.test.mjs`).
+
