@@ -50,4 +50,20 @@ eq((await call("admin-claim-conf", { authorId: A, workId: W }, admin)).status, 4
 j = await (await call("author-public", null, "", "GET", `&id=${A}`)).json(); eq(j.cf.join(), W2, "chỉ còn 1");
 // 5. Chủ hồ sơ tự bỏ đánh dấu
 j = await (await call("author-work-conf", { authorId: A, workId: W2, undo: true }, owner)).json(); eq(j.cf.length, 0, "tự bỏ đánh dấu");
+
+// 6. Thùng rác 30 ngày: gỡ rồi khôi phục được; người thường không dùng được; quá 30 ngày thì mất
+await call("author-work-conf", { authorId: A, workId: W, confirm: true }, owner);
+eq((await call("admin-claim-conf", { authorId: A, workId: W }, admin)).status, 200, "quản trị gỡ lần nữa");
+j = await (await call("admin-claims", null, admin, "GET")).json(); eq(j.bin.some((x) => x.authorId === A && x.workId === W && x.kind === "cf"), true, "mục gỡ nằm trong thùng rác");
+j = await (await call("author-public", null, "", "GET", `&id=${A}`)).json(); eq(j.cf.includes(W), false, "công khai không còn");
+eq((await call("admin-claim-restore", { kind: "cf", authorId: A, workId: W }, owner)).status, 403, "chủ hồ sơ không khôi phục được");
+eq((await call("admin-claim-restore", { kind: "cf", authorId: A, workId: W }, admin)).status, 200, "quản trị khôi phục");
+j = await (await call("author-public", null, "", "GET", `&id=${A}`)).json(); eq(j.cf.includes(W), true, "công khai thấy lại");
+eq((await call("admin-claim-restore", { kind: "cf", authorId: A, workId: W }, admin)).status, 404, "khôi phục lần hai: không còn trong thùng rác");
+j = await (await call("admin-claims", null, admin, "GET")).json(); eq(j.bin.some((x) => x.workId === W && x.kind === "cf"), false, "thùng rác đã sạch mục này");
+// 7. Quá 30 ngày thì thùng rác tự xóa
+eq((await call("admin-claim-conf", { authorId: A, workId: W }, admin)).status, 200, "gỡ để thử hạn 30 ngày");
+{ const real = Date.now, later = real() + 31 * 864e5; Date.now = () => later;
+  try { eq((await call("admin-claim-restore", { kind: "cf", authorId: A, workId: W }, admin)).status, 404, "quá 30 ngày không khôi phục được");
+    j = await (await call("admin-claims", null, admin, "GET")).json(); eq(j.bin.some((x) => x.workId === W && x.kind === "cf"), false, "quá hạn bị dọn khỏi thùng rác"); } finally { Date.now = real; } }
 console.log(`OK ${ok} kiểm tra`);
