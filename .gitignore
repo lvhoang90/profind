@@ -5,6 +5,7 @@ data/raw
 data/raw-authors.json
 data/scimago
 data/wos
+data/scopus
 
 # sinh bởi scripts/build-lite.mjs trong npm run build
 public/data/profind-lite.json
