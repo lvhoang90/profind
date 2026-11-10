@@ -166,6 +166,21 @@
    "url": "https://scholar.google.com/citations?view_op=view_citation&hl=vi&user=6cMbcLcAAAAJ&citation_for_view=6cMbcLcAAAAJ:NaGl4SEjCO4C"
   },
   {
+   "id": "A5147802931-W9927234291",
+   "authorId": "A5147802931",
+   "doi": "10.17605/osf.io/fnu25",
+   "title": "From Detection to Disclosure: Rethinking AI Governance for Academic Integrity. Protocol for a two-stream scoping review",
+   "year": 2026,
+   "journal": "OSF Registries",
+   "type": "registration",
+   "citations": 0,
+   "role": "co",
+   "corr": 0,
+   "demo": false,
+   "manual": true,
+   "url": "https://osf.io/fnu25/"
+  },
+  {
    "id": "A5147802931-W9975836940",
    "authorId": "A5147802931",
    "doi": null,
@@ -183,6 +198,21 @@
    "demo": false,
    "manual": true,
    "url": "https://tcgd.tapchigiaoduc.edu.vn/index.php/tapchi/article/view/6818"
+  },
+  {
+   "id": "A5147802931-W9976674807",
+   "authorId": "A5147802931",
+   "doi": "10.17605/osf.io/fkzsp",
+   "title": "AI Leadership and the Future of Thinking in Southeast Asian Education: Protocol for a Cross-Cultural Scoping Review",
+   "year": 2026,
+   "journal": "OSF Registries",
+   "type": "registration",
+   "citations": 0,
+   "role": "co",
+   "corr": 0,
+   "demo": false,
+   "manual": true,
+   "url": "https://osf.io/fkzsp/"
   }
  ]
 }
