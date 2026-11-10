@@ -621,7 +621,7 @@ function AuthorPage({ a, d }: { a: Author; d: Data }) {
 }
 
 /** "Công trình khác (không tính điểm)": chỉ có ở hồ sơ trong data/full-works-authors.json hoặc đã xác thực (scripts/fetch-extra-works.mjs). Chỉ mục nhỏ tải một lần; không có thì không gọi thêm. */
-const EXTRA_TYPE: Record<string, [string, string]> = { "conference-paper": ["Kỷ yếu hội nghị", "Conference paper"], "proceedings-article": ["Kỷ yếu hội nghị", "Conference paper"], article: ["Bài báo", "Article"], preprint: ["Bản thảo", "Preprint"], book: ["Sách", "Book"], "book-chapter": ["Chương sách", "Book chapter"], dissertation: ["Luận văn", "Dissertation"], report: ["Báo cáo", "Report"], review: ["Tổng quan", "Review"], letter: ["Thư", "Letter"], editorial: ["Bài xã luận", "Editorial"], dataset: ["Bộ dữ liệu", "Dataset"] };
+const EXTRA_TYPE: Record<string, [string, string]> = { "conference-paper": ["Kỷ yếu hội nghị", "Conference paper"], "proceedings-article": ["Kỷ yếu hội nghị", "Conference paper"], article: ["Bài báo", "Article"], preprint: ["Bản thảo", "Preprint"], registration: ["Đăng ký nghiên cứu", "Study registration"], book: ["Sách", "Book"], "book-chapter": ["Chương sách", "Book chapter"], dissertation: ["Luận văn", "Dissertation"], report: ["Báo cáo", "Report"], review: ["Tổng quan", "Review"], letter: ["Thư", "Letter"], editorial: ["Bài xã luận", "Editorial"], dataset: ["Bộ dữ liệu", "Dataset"] };
 type ExtraWork = { id: string; t: string; y: number; j: string; ty: string; d: string; c: number; u?: string }; // u: đường dẫn công khai khi bài không có DOI/OpenAlex (công trình bổ sung theo danh sách tác giả)
 let extraIndex: Promise<Record<string, number>> | null = null;
 function useExtraWorks(id: string) {
