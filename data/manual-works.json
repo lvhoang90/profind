@@ -164,6 +164,25 @@
    "demo": false,
    "manual": true,
    "url": "https://scholar.google.com/citations?view_op=view_citation&hl=vi&user=6cMbcLcAAAAJ&citation_for_view=6cMbcLcAAAAJ:NaGl4SEjCO4C"
+  },
+  {
+   "id": "A5147802931-W9975836940",
+   "authorId": "A5147802931",
+   "doi": null,
+   "title": "Quản lí giáo dục AI và Robotics ở trường phổ thông: Khung lí luận theo mô hình xã hội hóa và thực tiễn tại Việt Nam",
+   "year": 2026,
+   "journal": "Tạp chí Giáo dục",
+   "issn": "2354-0753",
+   "issns": [
+    "2354-0753"
+   ],
+   "type": "article",
+   "citations": 0,
+   "role": "co",
+   "corr": 0,
+   "demo": false,
+   "manual": true,
+   "url": "https://tcgd.tapchigiaoduc.edu.vn/index.php/tapchi/article/view/6818"
   }
  ]
 }

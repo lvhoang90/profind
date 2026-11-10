@@ -2,7 +2,7 @@
 // hồ sơ thiếu bài. Quản trị viên ghi MÃ CÔNG TRÌNH OPENALEX (W…) vào data/manual-work-ids.json, script này tải từng công trình và ghi data/manual-works.json.
 //   OPENALEX_API_KEY=... node scripts/fetch-manual-works.mjs --mailto <email>
 // Công trình không có trong OpenAlex nhưng có đường dẫn công khai (ví dụ trang Google Scholar của bài, khi bài không có DOI): ghi đối tượng
-// { "title": "...", "year": 2017, "venue": "...", "url": "https://...", "type": "article" | "proceedings-article" | ... } thay cho mã W…; không có ISSN nên vào "Công trình khác", mở bằng
+// { "title": "...", "year": 2017, "venue": "...", "url": "https://...", "type": "article" | "proceedings-article" | ..., "issn": "NNNN-NNNN" (tùy chọn: có ISSN thì vào danh sách tính điểm), "role": "lead" | "co" (tùy chọn, mặc định co) } thay cho mã W…; không có ISSN nên vào "Công trình khác", mở bằng
 // đường dẫn đó, mã nội bộ W99… sinh từ đường dẫn (khớp định dạng mã công trình). Cần có năm và đường dẫn https; không có thì không thêm.
 // data/manual-work-ids.json: { "<mã tác giả A…>": ["W…", ...] }; thêm ":lead" hoặc ":co" sau mã ("W…:lead") để ghi đè vai trò khi OpenAlex không có danh sách tác giả (dựa vào thứ tự tác giả tác giả cung cấp). Chạy lại được. Công trình có ISSN vào danh sách tính điểm (build-index.mjs); không có ISSN (kỷ yếu, sách) vào
 // "Công trình khác" (fetch-extra-works.mjs). Chỉ nhận công trình có trong OpenAlex (có thể truy vết bằng DOI); bài chỉ có trên Google Scholar thì không thêm.
@@ -29,7 +29,7 @@ for (const [aid, list] of Object.entries(ids)) {
     if (!e || typeof e !== "object") continue;
     if (!e.title || !Number.isInteger(e.year) || !/^https:\/\//.test(e.url ?? "")) { console.warn(`${aid}: bỏ qua mục thiếu nhan đề/năm/đường dẫn: ${JSON.stringify(e).slice(0, 80)}`); continue; }
     const n = String(parseInt(createHash("sha1").update(e.url).digest("hex").slice(0, 8), 16) % 1e8).padStart(8, "0");
-    works.push({ id: `${aid}-W99${n}`, authorId: aid, doi: null, title: e.title, year: e.year, journal: e.venue ?? "", type: e.type ?? "article", citations: 0, role: "co", corr: 0, demo: false, manual: true, url: e.url });
+    works.push({ id: `${aid}-W99${n}`, authorId: aid, doi: null, title: e.title, year: e.year, journal: e.venue ?? "", ...(/^\d{4}-\d{3}[\dX]$/.test(e.issn ?? "") ? { issn: e.issn, issns: [e.issn] } : {}), type: e.type ?? "article", citations: 0, role: e.role === "lead" ? "lead" : "co", corr: 0, demo: false, manual: true, url: e.url });
   }
   for (let i = 0; i < list.length; i += 40) {
     const forced = new Map(list.slice(i, i + 40).filter((e) => typeof e === "string").map((e) => String(e).split(":")).filter(([w]) => /^W\d+$/.test(w)).map(([w, r]) => [w, r]));
